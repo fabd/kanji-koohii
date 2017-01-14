@@ -23,13 +23,15 @@ You can find it at : **staging • koohii • com**
 
 ## Contributing Feedback
 
-Both **issues and suggestions ** can be posted in the Issues tab. Just click [New issue]() and voila! I will assign tags eventually.
+Both **issues and suggestions** can be posted in the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila! I will assign tags eventually.
 
 If I assign the tag `someday-maybe` it means I like the idea but as a solo developer doing this in my spare time I'm just being honest and acknowledging it is not planned any time soon. That said if such an issue is seeing repeated activity, who knows. It really depends how complex it is, and whether some work can be delegated.
 
 ## Other Ways to Contribute
 
-I am looking at ways to accept contributions via components. For example if I author a Vue JS component I may upload it.
+The website is not in a state for publishing fully on Github. See [Open Source Status](https://github.com/fabd/kanji-koohii/wiki/Open-Source-Status).
+
+Instead, I am looking at ways to accept contributions via components. For example if I author a Vue JS component I may upload it.
 
 The outdated documentation page of the website is also a good example of content that could be community maintained (as a Markdown file that I can include in the site build).
 
@@ -37,4 +39,4 @@ I'll figure out things like that as I get to grips with Github.
 
 ## Open Source... Not yet
 
-See [Open Source Status](https://github.com/fabd/kanji-koohii/wiki/Open-Source-Status) in the wiki.
+

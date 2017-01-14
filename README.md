@@ -1,6 +1,6 @@
 # Kanji Koohii
 
-**Kanji Koohii** (previously known as "Reviewing the Kanki") is a web application designed to help Japanese language learners memorize the kanji. This repository is used to track development of the website, and allow users to report bugs and make suggestions. http://kanji.koohii.com
+**Kanji Koohii** (previously known as "Reviewing the Kanji") is a web application designed to help Japanese language learners memorize the kanji. This repository is used to track development of the website, and allow users to report bugs and make suggestions. http://kanji.koohii.com
 <br>
 <br>
 <p align="center">

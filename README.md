@@ -1,12 +1,6 @@
 # Kanji Koohii
 
-**Kanji Koohii** (previously known as "Reviewing the Kanki") is a web application designed to help Japanese language learners memorize the kanji. This repository is used to track development of the website, and allow users to report bugs and make suggestions.
-
-http://kanji.koohii.com
-
-* [The "Staging" Website](https://github.com/fabd/kanji-koohii#the-staging-website)
-* [Contributing Feedback & Issues](https://github.com/fabd/kanji-koohii#contributing-feedback)
-* [Other Ways to Contribute](https://github.com/fabd/kanji-koohii#contributing-feedback)
+**Kanji Koohii** (previously known as "Reviewing the Kanki") is a web application designed to help Japanese language learners memorize the kanji. This repository is used to track development of the website, and allow users to report bugs and make suggestions. http://kanji.koohii.com
 
 
 <p align="center">

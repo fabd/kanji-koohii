@@ -25,6 +25,8 @@ You can find it at : **staging • koohii • com**
 
 Both **issues and suggestions** can be posted in the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila! I will assign tags eventually.
 
+Consider **Watching** this repository (dropdown at the top of the screen) if you want to see what's going on, what changes on staging, and follow up on discussions.
+
 ## Other Ways to Contribute
 
 The website is not in a state for publishing fully on Github. See [Open Source Status](https://github.com/fabd/kanji-koohii/wiki/Open-Source-Status).

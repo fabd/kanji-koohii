@@ -31,4 +31,6 @@ The website is not in a state for publishing fully on Github. See [Open Source S
 
 I am looking at ways to accept contributions via components. For example if I author a Vue JS component I could create a separate repo for that, so I can both share re-usable parts and accept improvements for the website. In that way I can expose just parts that are more up to date, and don't have to worry too much about all the legacy code I have to manage.
 
+The [design/PSDs folder](https://github.com/fabd/kanji-koohii/tree/master/design/PSDs)  contains some resources that you can use if you want to contribute alternative better designs. Ask me if I can add something there.
+
 The outdated documentation page of the website is also a good example of content that could be community maintained (as a Markdown file that I can include in the site build). I'll figure out things like that as I get to grips with Github.

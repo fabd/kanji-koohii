@@ -23,9 +23,13 @@ You can find it at : **staging • koohii • com**
 
 ## Contributing Feedback
 
-Both **issues and suggestions** can be posted in the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila! I will assign tags eventually.
+Both **issues and suggestions** can be posted in the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila!
 
 Consider **Watching** this repository (dropdown at the top of the screen) if you want to see what's going on, what changes on staging, and follow up on discussions.
+
+**NEXT ITEMS**: [issues I'm working on next](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3ANEXT) are labelled `NEXT`.
+
+**DISCUSSIONS**: [issues labelled discussion](https://github.com/fabd/kanji-koohii/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Adiscussion%20) are opened indefinitely and are less focused. They are intended to brainstorm fixes or features. Any concrete steps that come out of it will be added as separate issues.
 
 ## Other Ways to Contribute
 

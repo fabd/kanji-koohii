@@ -39,8 +39,6 @@ Another good way to follow up changes to staging, is **Watching** the repository
 
 ## Other Ways to Contribute
 
-The website is not in a state for publishing fully on Github, yet. See [Open Source Status](https://github.com/fabd/kanji-koohii/wiki/Open-Source-Status).
-
-I may chose to go with a private repository and talk with Gitter, we'll see. I can't accept **pull requests** without prior discussion because I am continually maintaining a codebase with code written over the past ten years. Lots of decisions I make that are not explicit in the code necessarily, because I know I will phase out this or that, or refactor some parts, at some later point. So I don't think a public repository is manageable. Talk to me on Gitter if you are interested! (still planning this)
+The website is not in a state for publishing fully on Github, yet. I may chose to go with a private repository and talk with Gitter, we'll see. I can't accept **pull requests** without prior discussion because I am continually maintaining a codebase with code written over the past ten years. Lots of decisions I make that are not explicit in the code necessarily, because I know I will phase out this or that, or refactor some parts, at some later point. So I don't think a public repository is manageable. Talk to me on Gitter if you are interested! (still planning this)
 
 **Design**: the [design/PSDs folder](https://github.com/fabd/kanji-koohii/tree/master/design/PSDs)  contains resources that you can use if you want to contribute alternative better designs. Ask me if I can add something there.

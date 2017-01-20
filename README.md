@@ -47,6 +47,6 @@ In general there is a lot of refactoring to update the front end (Javascript) to
 
 On the back end side, it's still using Symfony 1.x. There is also quite a bit of refactoring in places because the site was not originally written for Symfony, and still uses custom classes. For example it doesn't use Symfony's built in ORM, but a Zend Db -like API with queries that can be built programmatically but also lacking lots of advanced things from Zend Db.
 
-With that said there are many other ways to contribute. Providing feedback, posting / updating issues, helping me test the site on mobile devices via the Gitter channel, suggest new designs (I would always make PSD templates before making significant changes anyway), etc.
+With that said there are many other ways to contribute. Providing feedback, posting / updating issues, helping me test the site on mobile devices via the Gitter channel, suggest new designs (I would always make PSD templates before making significant changes anyway), etc. I will also try to make more CodePens in the future where appropriate. It's fun, and is one way to contribute (eg. [#25 3D Leitner boxes](https://github.com/fabd/kanji-koohii/issues/25)).
 
 **Design**: the [design/PSDs folder](https://github.com/fabd/kanji-koohii/tree/master/design/PSDs)  contains resources that you can use if you want to contribute alternative better designs. Ask me if I can add something there.

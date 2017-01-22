@@ -23,19 +23,18 @@ You can find it at : **staging • koohii • com**
 
 *VERY IMPORTANT: it is connected to the live database, meaning you login with your same credentials, any changes happen to your real account.*
 
-## Contributing Feedback
+## Feedback & Issue System
 
-Post **issues and ideas** on the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila!
+**First check NEXT issues**: [issues labelled NEXT](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3ANEXT) are what I'm working on or plan to fix soon. If it's a bug it may be already there.
 
-Join the *feedback room* on [![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge). Note Gitter, on desktop at least, has a history of Issues and Comments, so it's a good way also to keep track of conversations.
+**Post bugs & suggestions** on the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila!
 
-Another good way to follow up changes to staging, is **Watching** the repository (dropdown at the top of the screen).
+**For general feedback/brainstorming** see if a topic already exists in [issues labelled DISCUSSIONS](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3Adiscussion).
 
-## Labels USed in the Issue System
+**For faster iteration** join [![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge). On desktop it shows a pane with all the Github repo activity.
 
-**NEXT**: [issues I'm working on](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3ANEXT)
+Consider **Watching** the repository, if you often visit Github (dropdown at the top of the screen).
 
-**DISCUSSION**: [issues labelled discussion](https://github.com/fabd/kanji-koohii/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Adiscussion%20) are opened indefinitely and are less focused. They are intended to brainstorm fixes or features. Any concrete steps that come out of it will be added as separate issues.
 
 ## Other Ways to Contribute
 

@@ -27,9 +27,9 @@ You can find it at : **staging • koohii • com**
 
 **First check NEXT issues**: [issues labelled NEXT](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3ANEXT) are what I'm working on or plan to fix soon. If it's a bug it may be already there.
 
-**Post bugs & suggestions** on the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila!
+**Post bugs & suggestions** on the Issues tab: [New issue](https://github.com/fabd/kanji-koohii/issues/new).
 
-**For general feedback/brainstorming** see if a topic already exists in [issues labelled DISCUSSIONS](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3Adiscussion).
+**Brainstorming & open topics**: see if a topic already exists in [issues labelled DISCUSSIONS](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3Adiscussion).
 
 **For faster iteration** join [![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge). On desktop it shows a pane with all the Github repo activity.
 

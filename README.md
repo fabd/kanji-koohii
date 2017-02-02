@@ -6,12 +6,12 @@
 <br>
 <br>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/kanji-koohii-desktop-preview-2017-01-14.png"><br>
+  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/README - desktop.png"><br>
   <em>The desktop view</em>
 </p>
 <br>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/kanji-koohii-mobile-preview-2017-01-14.png"><br>
+  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/README - mobile.png"><br>
   <em>The mobile view</em>
 </p>
 

@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # php handler for versioning of front end assets and css/js concatenation
+  RewriteRule ^(.*)_v[0-9.]+(css|js)$   /version/cache.php?env=dev&app=revtk&path=$1.$2 [L]
+
+  # we skip all files with .something
+  RewriteCond %{REQUEST_URI} \..+$
+  RewriteCond %{REQUEST_URI} !\.html$
+  RewriteRule .* - [L]
+
+  # we check if the .html version is here (caching)
+  RewriteRule ^$ index.html [QSA]
+  RewriteRule ^([^.]+)$ $1.html [QSA]
+  RewriteCond %{REQUEST_FILENAME} !-f
+
+  # no, so we redirect to our front web controller
+  RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

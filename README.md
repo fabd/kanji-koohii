@@ -19,7 +19,25 @@
 Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
 
 
+## Project History
+
+Fabrice created Kanji Koohii (previously "Reviewing the Kanji") in late 2005 and maintained the website up to this day in early 2017. This website started in the days of php4, long before modern client side Javascript frameworks, SPAs, and even before the explosion of smartphones and tablets!
+
+For this reason managing the source code has been an continual exercise in phasing out things, while adding new things and trying to keep everything manageable. As such the code quality is kind of all over the place. Overall I think it's still very maintainable today but of course it makes a lot more sense to me than to someone who first dives into the code.
+
+Going forward I think for a contributor the good news is i've recently added a webpack / Babel / VueJS build. This allows to write new functionality with modern ES6 and VueJS library. Someone really motivated could help me also refactor bits of php templating to VueJS components.
+
+On the backend side there is definitely room to improve things with Composer perhaps, and modern php syntax, which I haven't taken the time to look into. In general for me the backend "just works" and is sufficient for Kanji Koohii's purposes but any improvements on that end are very welcome.
+
+
+### Project Organization
+
+Let's talk [on Gitter](https://gitter.im/kanji-koohii/development). The "feedback" room is intended for user feedback and testing. The "development" room is where we can talk about the code (that way testers can opt out of notifications from the development chat). Note there are Android and iOS clients with push notification support. Desktop client also shows the recent repository activity.
+
+
 ## Contributing
+
+[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  Ask any questions about the repo, issues, etc. in the *development* channel.
 
 ### Getting started
 
@@ -27,11 +45,7 @@ Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-k
 * [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build) for basic info about dev/test environments
 * [Docs](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Docs) has links to the MVC framework documentation (Symfony).
 
-[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  Ask any questions about the repo, issues, etc. in the *development* channel.
-
 Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc.
-
-For anything that isn't currently on the issue board reach me on Gitter! (Note the Gitter desktop client has a useful Github activity feed on the side pane).
 
 
 ### Project Roadmap

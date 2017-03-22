@@ -1,0 +1,119 @@
+#
+# Setup instructions
+# 
+#   1. Copy this file to `settings.yml` (same folder)
+#   
+#  
+# VERY IMPORTANT ! ! ! 
+# 
+#   escaping_strategy      This should really be on for security as it enables escaping all
+#                          variables output in php templates by default.
+#                          
+#                          For legacy reasons (remember, code base is 10 years old), it was
+#                          too complex to refactor to Symfony with escaping on by default.
+#                          
+#                          And besides, the basics are not complicated. However we have to
+#                          assume that you KNOW what you are doing. ie. Be aware of code
+#                          injection and the like. Anything that comes from database fields,
+#                          or user input, directly or indirectly, MUST be escaped with
+#                          helpers such as escape_once().
+#                          
+#                          DONT use php for escaping, use Symfony helpers wherever possible:
+#                          
+#                            escape_once()
+#                          
+#                          Standard escaping helpers are available in all templates via the
+#                          default "Tag" helper. See
+#                          
+#                          ./lib/vendor/symfony/lib/helper/TagHelper.php
+#                          
+#                          http://www.symfony-project.org/api/1_4/TagHelper
+#
+#  
+# Quick settings overview
+# 
+#   web_debug         Set it to `true` to see some Symfony debug info (top right)
+#   
+#   no_script_name    If true, Symfony routing removes the "index.php" from generated links
+#   
+#   cache             Usually best kept disabled in development as it is annoying
+#                     Set to true temporarily when testing new cached content
+#                     
+#                     
+#   use_database      We do not use Symfony "PDO" (Doctrine?) for legacy reasons. Koohii
+#                     uses a barebones API modelled after ZendDB. This api could realistically
+#                     be refactored to the real Zend DB if necessary. This ZendDb-like API allows
+#                     programmatically building queries, and takes care of escaping everything.
+#    
+# 
+# Clearing the cache
+# 
+#   Remember to update symfony cache if something doesn't work! Symfony compiles
+#   yml files to php files into a cache. Normally symfony detects when these files
+#   change but not always. So in doubt do this:
+# 
+#   $ sf cache:clear --type=config
+#   
+#   (In my experience this is only required when adding classes, as the autoloader
+#   doesn't see them. Changes to .yml files usually doesn't require a cache:clear)
+# 
+#      
+# Other
+# 
+#   `sf` is an alias to `php lib/vendor/symfony/data/bin/symfony'
+#
+#
+# Symfony docs
+# 
+#   http://www.symfony-project.org/reference/1_4/en/04-Settings
+#   
+
+test:
+  .settings:
+    error_reporting:        <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
+    web_debug:              false
+    no_script_name:         false
+    logging_enabled:        false     # Disable logging
+    compressed:             true      # Enable response compression
+
+dev:
+  .settings:
+    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    web_debug:              false
+    no_script_name:         false
+    cache:                  false
+
+all:
+  .actions:
+    error_404_module:       default   # To be called when a 404 error is raised
+    error_404_action:       error404  # Or when the requested URL doesn't match any route
+
+    secure_module:          default   # To be called when a user doesn't have
+    secure_action:          secure    # The credentials required for an action
+
+    login_module:           home      # To be called when a non-authenticated user
+    login_action:           login     # Tries to access a secure page
+
+  .settings:
+    # Optional features
+    use_database:           false     # Not using sf's PDO (yet?)
+    compressed:             false     # Enable PHP response compression
+    #check_lock:             true     # Enable the application lock system
+
+    default_culture:        en_US
+
+    # Form security secret (CSRF protection)
+    csrf_secret:            false
+
+    # Output escaping settings
+    escaping_strategy:      false
+    #escaping_method:        ESC_SPECIALCHARS
+
+    # Helpers included in all templates by default (in addition to: Helper, Tag, Url, Asset)
+    standard_helpers:       [Partial, Cache, Bootstrap]
+
+    # Enable the database manager
+
+    # Cache settings
+    cache:                  true        # Enable caching functionality
+    etag:                   false       # Enable etag handling (md5)

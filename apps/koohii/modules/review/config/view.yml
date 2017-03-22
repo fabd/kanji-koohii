@@ -1,0 +1,14 @@
+indexSuccess:
+  metas:
+    title: 'Review Status'
+  stylesheets:  [ /revtk/review-home.juicy.css ]
+
+reviewSuccess:
+  metas:
+    title: 'Flashcard Review'
+  stylesheets: [ /revtk/kanji-flashcardreview.juicy.css ]
+  javascripts: [ /revtk/kanji-flashcardreview.juicy.js ]
+
+summarySuccess:
+  metas:
+    title: 'Review Summary'

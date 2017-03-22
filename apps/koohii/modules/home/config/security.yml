@@ -1,0 +1,14 @@
+indexMember:
+  is_secure: true
+
+contact:
+  is_secure: false
+
+contactEmailSent:
+  is_secure: false
+
+memberslist:
+  is_secure: false
+
+all:
+  is_secure: false

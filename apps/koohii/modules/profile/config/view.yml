@@ -1,0 +1,7 @@
+all:
+  metas:
+    title: 'Profile'
+    robots: 'noindex, nofollow'
+
+  stylesheets: [ '/revtk/study-base.juicy.css' ]
+  javascripts: [ '/revtk/study-base.juicy.js' ]

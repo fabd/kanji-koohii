@@ -1,0 +1,67 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/05-Factories
+
+prod:
+  logger:
+    class:   sfNoLogger
+    param:
+      level:   err
+      loggers: ~
+
+test:
+  logger:
+    class:   sfNoLogger
+    param:
+      level:   err
+      loggers: ~
+
+  #storage:
+  #  class: sfSessionTestStorage
+  #  param:
+  #    session_path: %SF_TEST_CACHE_DIR%/sessions
+
+  #response:
+  #  class: sfWebResponse
+  #  param:
+  #    send_http_headers: false
+
+  mailer:
+    param:
+      delivery_strategy: none
+
+dev:
+  mailer:
+    param:
+      delivery_strategy: none
+
+all:
+  request:
+    class: coreRequest
+
+  response:
+    class: coreWebResponse
+
+  user:
+    class: rtkUser
+  #  param:
+  #    timeout:         1800
+  #   logging:         %SF_LOGGING_ENABLED%
+  #   use_flash:       true
+  #   default_culture: %SF_DEFAULT_CULTURE%
+
+  storage:
+    class: sfSessionStorage
+    param:
+      session_name: koohii
+
+  view_cache_manager:
+    class: sfViewCacheManager
+    param:
+      cache_key_use_vary_headers: true
+      cache_key_use_host_name:    true
+
+  routing:
+    class: sfPatternRouting
+    param:
+      generate_shortest_url:            true
+      extra_parameters_as_query_string: true

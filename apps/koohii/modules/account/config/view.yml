@@ -1,0 +1,27 @@
+createSuccess:
+  metas:
+    title: 'Create Account'
+
+editSuccess:
+  metas:
+    title: 'Edit Account'
+
+flashcardsSuccess:
+  metas:
+    title: 'Flashcards Settings'
+
+forgotPasswordSuccess:
+  metas:
+    title: 'Forgot your password?',
+
+passwordSuccess:
+  metas:
+    title: 'Change Password'
+
+sequenceSuccess:
+  metas:
+    title: 'Select Kanji Sequence'
+
+all:
+  metas:
+    robots: 'noindex, nofollow'

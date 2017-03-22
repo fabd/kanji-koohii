@@ -1,0 +1,94 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+
+api:
+  url:          /api/v1/:api_method/:api_method2/*
+  param:        { module: api, action: v1, api_method: '', api_method2: '' }
+
+contact:
+  url:          /contact
+  param:        { module: home, action: contact }
+
+forgot_password:
+  url:          /forgot_password
+  param:        { module: account, action: forgotPassword }
+
+homepage:
+  url:          /
+  param:        { module: home, action: index }
+
+learnmore:
+  url:          /learnmore
+  param:        { module: about, action: learnmore }
+
+login:
+  url:          /login
+  param:        { module: home, action: login }
+
+logout:
+  url:          /logout
+  param:        { module: home, action: logout }
+
+manage:
+  url:          /manage
+  param:        { module: manage, action: index }
+
+members_list:
+  url:          /members
+  param:        { module: home, action: memberslist }
+
+news_by_id:
+  url:          /news/id/:id
+  param:        { module: news, action: detail, id: 0 }
+  requirements: { id: '\d+' }
+  
+news_by_yyyymm:
+  url:          /news/:year/:month
+  param:        { module: news, action: index, year: 0, month: 0 }
+  requirements: { year: '\d{4}', month: '\d+' }
+
+overview:
+  url:          /main
+  param:        { module: review, action: index }
+
+profile:
+  url:          /profile/:username
+  param:        { module: profile, username: '' }
+
+progress:
+  url:          /progress
+  param:        { module: member, action: progress }
+
+review:
+  url:          /review
+  param:        { module: review, action: review }
+
+review_summary:
+  url:          /review/summary
+  param:        { module: review, action: summary }
+
+sightreading:
+  url:          /sightreading
+  param:        { module: misc, action: reading }
+
+study_edit:
+  url:          /study/kanji/:id
+  param:        { module: study, action: edit, id: '' }
+  requirements: { id: '[^/]+' } # matches dots in keywords
+
+#study:
+#  url:          /study:slash
+#  param:        { module: study, action: index }
+#  requirements: { slash: '[/]{0,1}' } # ignore trailing slash
+
+# generic rules
+# please, remove them by adding more specific rules
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

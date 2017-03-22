@@ -1,0 +1,5 @@
+reading:
+  metas:
+    title: 'Sight Reading'
+  javascripts: [ '/revtk/bundles/yui-base.juicy.js' ]
+

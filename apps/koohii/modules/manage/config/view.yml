@@ -1,0 +1,23 @@
+flashcardlistSuccess:
+  metas:
+    title: 'Detailed flashcard list'
+
+addcustom:
+  metas:
+    title: 'Add custom selection'
+
+removelist:
+  metas:
+    title: 'Remove from list'
+
+editkeywords:
+  metas:
+    title: 'Edit Keywords'
+
+all:
+  metas:
+    title: 'Manage Flashcards'
+  
+  stylesheets: [ '/revtk/manage.juicy.css' ]
+  javascripts: [ '/revtk/manage.juicy.js' ]
+

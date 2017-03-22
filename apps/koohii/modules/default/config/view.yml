@@ -1,0 +1,9 @@
+error404Success:
+  metas:
+    title: 'Oops! Page Not Found'
+    robots: 'noindex, nofollow'
+
+secureSuccess:
+  metas:
+    title: 'Credentials Required'
+    robots: 'noindex, nofollow'

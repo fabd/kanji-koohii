@@ -1,0 +1,3 @@
+_SharedStoriesList:
+  enabled:     true
+  lifetime:    60*60*24   # seconds

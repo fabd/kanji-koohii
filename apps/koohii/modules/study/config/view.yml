@@ -1,0 +1,19 @@
+index:
+  metas:
+    title: 'Study: Introduction'
+  
+edit:
+  metas:
+    title: 'Index'
+  
+failedlist:
+  metas:
+    title: 'Study: Failed Kanji List'
+  
+mystories:
+  metas:
+    title: 'Study: My Stories List'
+  
+all:
+  stylesheets: [ '/revtk/study-base.juicy.css' ]
+  javascripts: [ '/revtk/study-base.juicy.js' ]

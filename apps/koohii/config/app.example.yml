@@ -1,0 +1,71 @@
+#
+# Setup instructions
+# 
+#   1. Copy this file to `app.yml` (same folder)
+#   2. Edit database connections parameters
+#   3. Edit the website_url to whatever your virtual domain is
+# 
+# 
+# Clearing the cache
+# 
+#   Remember to update symfony cache if something doesn't work! Symfony compiles
+#   yml files to php files into a cache. Normally symfony detects when these files
+#   change but not always. So in doubt do this:
+# 
+#   $ sf cache:clear --type=config
+#   
+#   (In my experience this is only required when adding classes, as the autoloader
+#   doesn't see them. Changes to .yml files usually doesn't require a cache:clear)
+# 
+#     
+# Other
+# 
+#   `sf` is an alias to `php lib/vendor/symfony/data/bin/symfony'
+#
+#
+# Symfony docs
+# 
+#   http://www.symfony-project.org/reference/1_4/en/11-App
+#   
+
+test:
+  .dummy:
+    db_connection:
+      database:        'kanjikoohii'
+      host:            'localhost'
+      username:        'root'
+      password:        '**********'
+      set_names_utf8:  true
+
+dev:
+  # MUST place everything under 2nd level for php arrays/hashes to work
+  .dummy:
+    # Connection info for koohiiConfiguration::getDatabase()
+    db_connection:
+      database:        'kanjikoohii'
+      host:            'localhost'
+      username:        'root'
+      password:        '**********'
+      set_names_utf8:  true
+
+# default values
+all:
+  .dummy:
+    # from (email, name) for automatic mailings (registration, password change, ...)
+    email_robot:       { email: 'admin@koohii.local', name: 'Kanji Koohii' }
+    # to   (email, name) for contact page form
+    email_feedback_to: { email: 'feedback@koohii.local',  name: 'Fabrice' }
+
+  # Server timezone to adjust MySQL time to the local time of the user
+  server_timezone:   0
+
+  # The full URL for the application
+  website_url:       'http://koohii.local'
+  # The full URL for the Community forum (appears in navigation, comment out to hide the nav link)
+  forum_url:         'http://mybb.local'
+
+  # name of cookie for user session
+  cookie_name:     'RevTK'
+
+  # enable this to skip live site specifics like affiliate banner
+  fork:             true

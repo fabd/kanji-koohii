@@ -1,0 +1,22 @@
+index:
+  metas:
+    title: 'Index'
+  #stylesheets: [ '/revtk/kanji-flashcardreview.juicy.css' ]
+  
+shuffle1Success:
+  metas:
+    title: 'Vocab Shuffle'
+
+  stylesheets: [ '/revtk/labs-alpha-flashcardreview.juicy.css' ]
+  javascripts: [ '/revtk/labs-alpha-flashcardreview.juicy.js' ]
+
+shuffle2Success:
+  metas:
+    title: 'Vocab Shuffle'
+
+  stylesheets: [ '/revtk/labs-alpha-flashcardreview.juicy.css' ]
+  javascripts: [ '/revtk/labs-alpha-flashcardreview.juicy.js' ]
+
+all:
+  metas:
+    title: 'Labs'

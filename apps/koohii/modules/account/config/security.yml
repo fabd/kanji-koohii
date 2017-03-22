@@ -1,0 +1,14 @@
+create:
+  is_secure: false
+
+createDone:
+  is_secure: false
+
+forgotPassword:
+  is_secure: false
+
+forgotPasswordMailSent:
+  is_secure: false
+
+all:
+  is_secure: true

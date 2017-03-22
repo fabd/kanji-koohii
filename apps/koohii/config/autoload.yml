@@ -1,0 +1,5 @@
+autoload:
+  # exproject
+  project:
+    exclude:        [peer]
+

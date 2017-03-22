@@ -1,0 +1,26 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        'Kanji Koohii'
+    description:  'Study the Japanese characters with James Heisig''s "Remembering the Kanji" method, and review with kanji flashcards.'
+    #keywords:     symfony, project
+    #language:     en
+    #robots:       NE PAS INCLURE ROBOTS SINON CA REMPLACE LE STAGING (cf. layout)
+
+  # Currently, the styles from .vue files is concatenated by the Webpack Extract Text Plugin
+  # in the app-vue.css file. This is temporary, and should eventually be merged into the main
+  # css file.
+  stylesheets:    ['/revtk/main.juicy.css', '/build/pack/app-vue.css']
+
+  # yui-base is a bundle from legacy YUI 2 based code, it needs to be phased out eventually
+  # so we can use only the vue bundle.
+  javascripts:    ['/revtk/bundles/yui-base.juicy.js']
+
+  has_layout:     true
+  layout:         layout
+

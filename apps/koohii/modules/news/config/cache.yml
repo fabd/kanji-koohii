@@ -1,0 +1,9 @@
+# recent posts partial included on the homepage (guest & member)
+_recent:
+  enabled:   true
+  lifetime:  60*60*24   # one day
+
+# news/index  (with sidebars) ( /news/id/:id, /news/:year/:month )
+index:
+  enabled:   true
+  lifetime:  60*60*24

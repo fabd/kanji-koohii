@@ -40,10 +40,11 @@
   </table>
   </section>
 
-<?php 
+<?php
+if (null === sfConfig::get('app_fork')) {
   require_once(sfConfig::get('sf_lib_dir').'/vendor/Patreon/__patreon.php');
   $patron_info = PatreonPeer::getPatronInfo($sf_user->getUserId());
- ?>
+?>
 
   <h3>Patreon</h3>
   <div class="padded-box-inset">
@@ -61,14 +62,6 @@
 <?php endif ?>
   </div>
 
-<?php /*
-  require_once(sfConfig::get('sf_lib_dir').'/vendor/Patreon/__patreon.php');
-  
-
-  <div class="padded-box-inset">
-    <a href="<?php echo $login_link ?>">Link your Patreon account</a>
-  </div>
-*/
-?>
+<?php } ?>
 
 <?php decorate_end() ?>

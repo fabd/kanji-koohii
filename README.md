@@ -25,9 +25,9 @@ Fabrice created Kanji Koohii (previously "Reviewing the Kanji") in late 2005 and
 
 For this reason managing the source code has been an continual exercise in phasing out things, while adding new things and trying to keep everything manageable. As such the code quality is kind of all over the place. Overall I think it's still very maintainable today but of course it makes a lot more sense to me than to someone who first dives into the code.
 
-Going forward I think for a contributor the good news is i've recently added a webpack / Babel / VueJS build. This allows to write new functionality with modern ES6 and VueJS library. Someone really motivated could help me also refactor bits of php templating to VueJS components.
+Going forward I think for a contributor the good news is i've recently added a webpack / Babel / VueJS build. This allows to write new functionality with modern [ES6](https://babeljs.io/learn-es2015/) and [VueJS](https://vuejs.org/). Someone really motivated could also help me also refactor bits of php templating to VueJS components.
 
-On the backend side there is definitely room to improve things with Composer perhaps, and modern php syntax, which I haven't taken the time to look into. In general for me the backend "just works" and is sufficient for Kanji Koohii's purposes but any improvements on that end are very welcome.
+On the backend side there is definitely room to improve things with Composer perhaps, and modern php syntax, which I haven't taken the time to look into. In general for me the backend is "good enough" for Kanji Koohii's purposes but it can definitely use improvements.
 
 
 ### Project Organization

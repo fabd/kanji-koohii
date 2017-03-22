@@ -47,6 +47,8 @@ Let's talk [on Gitter](https://gitter.im/kanji-koohii/development). The "feedbac
 
 Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc.
 
+Please de **not** submit a random pull request unless it is a minor typo or an obvious bug. I really don't want to be in a position to turn down a pull request so talk to me on Gitter first. It's really important to discuss changes to keep such a project maintainable.
+
 
 ### Project Roadmap
 

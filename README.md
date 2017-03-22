@@ -18,8 +18,6 @@
 
 Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
 
-**Post bugs & suggestions** on the Issues tab: 
-
 
 ## Contributing
 

@@ -14,22 +14,22 @@
 </p>
 
 
-## Feedback & Issue System
+## Feedback & Suggestions
 
-**Post bugs & suggestions** on the Issues tab: [New issue](https://github.com/fabd/kanji-koohii/issues/new).
+Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
+
+**Post bugs & suggestions** on the Issues tab: 
 
 
 ## Contributing
 
-**Update March 22**: Full repo should be working. **Issue system + docs** still need to be worked on.
+**Setting up the repo**: start with [First Time Setup](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-First-Time-Setup) then [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build). [Docs](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Docs) has links to the MVC framework documentation (Symfony).
 
 [![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  Ask any questions about the repo, issues, etc. in the *development* channel.
 
-Consider **Watching** the repository, if you often visit Github (dropdown at the top of the screen).
+Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc.
 
-Let me know **if you have an area of interest** like the flashcards or Study pages, or maybe general SQL knowledge you'd like to contribute and we'll figure out something.
-
-I use [Milestones](https://github.com/fabd/kanji-koohii/milestones) to group issues in categories of interests such as front end / user experience / back end / etc.
+For anything that isn't currently on the issue board reach me on Gitter! (Note the Gitter desktop client has a useful Github activity feed on the side pane).
 
 
 ### Project Roadmap

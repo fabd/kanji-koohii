@@ -6,12 +6,12 @@
 <br>
 <br>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/README - mobile.png"><br>
+  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/doc/github/README - mobile.png"><br>
   <em>The mobile view</em>
 </p>
 <br>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/README - desktop.png"><br>
+  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/doc/github/README - desktop.png"><br>
   <em>The desktop view</em>
 </p>
 

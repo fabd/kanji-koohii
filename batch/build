@@ -1,0 +1,225 @@
+#! /bin/bash
+#
+# Build frontend files for test & production environments.
+#
+#
+#    PACKAGING
+#
+#    Juicer is used to package assets, and concatenate css/js from many files (typically
+#    organized into smaller reusable units aka "components"). While doing so, Juicer creates
+#    a folder structure in web/build/
+#
+#    Juicer maps all the referenced assets in the stylesheets (ie. images), to the /web/build/
+#    folder, and copies all the provided assets there. This is signaled to Juicer with special
+#    directives such as =require and =provide (which are declared in normal css comments).
+#
+#    MINIFYING
+#
+#    Once files are "juiced" (*.juiced.css/js) they are compressed. Currently yuicompressor is
+#    used for css, closure is used for js. This could be changed to other tools (TODO).
+#
+#    VERSIONING
+#
+#    Once css/js files are packaged and minified into the web/build/ folder, we want to scan
+#    them and use the timestamp for versioning files to the clients. The timestamps are used
+#    to create unique filenames; to ensure client browsers refresh their cache.
+#
+#    batch/build_app.php scans the web/ folder for css/js files and generates a config file
+#    with filenames and timestamps in config/versioning.inc.php
+#
+#    This file is used by coreWebResponse.php (extending Symfony's sfWebResponse) to output
+#    versioned css/js urls.
+#
+#    Finally, the .htaccess file has a rewrite rule which maps versioned assets to the
+#    build files.
+#
+#    DEVELOPMENT VS TEST/PROD
+#
+#    In development, versioning is disabled. coreWebResponse generates asset urls that point
+#    directly to the *.juicy.(css|js) files, via a php script. This php script requests files
+#    through Juicer, and pipes the result back to the browser. Thus providing a form of
+#    "hot reload" for stylesheets.
+#
+#
+#  Usage:
+#
+#    Run from the root folder!
+#
+#    $ batch/build
+#
+#
+#  See:
+#
+#    /lib/core/coreWebResponse.php    ( => getVersionUrl() )
+#    /lib/juicer/Juicer.php
+#    /batch/build_app.php
+#    /web/version/cache.php
+#
+#
+#  Docs:
+#
+#    CSSLint
+#    https://github.com/CSSLint/csslint/wiki/Command-line-interface
+#
+#    Google Closure Compiler
+#    https://developers.google.com/closure/compiler/docs/gettingstarted_app
+#
+#    Annotating JavaScript for the Closure Compiler
+#    https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler
+#
+#
+#  Requirements to consider:
+#
+#    - A way to prerve Copyright / License info in minified output
+#
+#
+#  Other tools to consider:
+#
+#    CSSNano, csso, UglifyJS
+#
+#
+#  TODO
+#
+#  - production urls generated in coreWebResponse is inefficient, pre-generate them in
+#    the versioning.inc.php ?
+#
+
+
+function show_help()
+{
+  echo "Usage:"
+  echo "  `basename $0`"
+  echo '                   Lint & minify all CSS and JS'
+  echo ''
+  echo '       --css       Build only stylesheets'
+  echo '       --js        Build only javascripts'
+  exit
+}
+
+
+P_CMD=$1
+
+
+# Juicer strips some debug code (not "console.log" which is checked for further below)
+JUICEROPTS='-v --strip ''Core.log,Core.warn,Core.halt,Core.assert'' --webroot web --config apps/koohii/config/juicer.config.php'
+
+YUIOPTS='-jar batch/tools/yuicompressor/yuicompressor-2.4.8.jar'
+
+
+# CSSLint (unfinished)
+#
+#   errors
+#
+#     Ignore syntax errors because of the %REPLACEMENTS% from Juicer. (We just want a few select warnings)
+#
+#
+#CSSLINT_IGNORE='--format=compact --ignore=box-model,duplicate-background-images,empty-rules,errors,font-sizes,ids,order-alphabetical,overqualified-elements,qualified-headings,unique-headings'
+# css linting
+#csslint --format=compact --ignore=$CSSLINT_IGNORE web/revtk/main.juicy.css
+#exit
+
+
+# Run JsLint on all javascript files, using nodejs (http://nodejs.org/) and jslint-utils by Mike West.
+batch/lint
+if (( $? )) ; then
+  exit;  # Non-zero value means a file did not lint
+fi
+
+# Detect uncommented console.log() calls and stops if any is found.
+# Even if those can be stripped with Juicer, it's likely there is debugging code left behind.
+ack-grep -g '(?<!.juiced)(?<!.min)\.js' '^\s*console\.log\('
+if [ $? -eq 0 ]; then
+  echo ""
+  echo "Uncommented console.log() call. Build aborted."
+  exit
+fi
+
+# Files to build
+
+javascripts=(
+  'web/revtk/labs-alpha-flashcardreview.juicy.js,web/build/revtk/labs-alpha-flashcardreview.juiced.js,web/build/revtk/labs-alpha-flashcardreview.min.js',
+
+  'web/revtk/bundles/flashcardreview-1.0.juicy.js,web/build/revtk/bundles/flashcardreview-1.0.juiced.js,web/build/revtk/bundles/flashcardreview-1.0.min.js',
+
+  'web/revtk/manage.juicy.js,web/build/revtk/manage.juiced.js,web/build/revtk/manage.min.js',
+
+  'web/revtk/study-base.juicy.js,web/build/revtk/study-base.juiced.js,web/build/revtk/study-base.min.js',
+
+  'web/revtk/kanji-flashcardreview.juicy.js,web/build/revtk/kanji-flashcardreview.juiced.js,web/build/revtk/kanji-flashcardreview.min.js',
+
+  'web/revtk/bundles/yui-base.juicy.js,web/build/revtk/bundles/yui-base.juiced.js,web/build/revtk/bundles/yui-base.min.js'
+)
+
+stylesheets=(
+  'web/koohii/home.juicy.css,web/build/koohii/home.juiced.css,web/build/koohii/home.min.css',
+
+  'web/revtk/main.juicy.css,web/build/revtk/main.juiced.css,web/build/revtk/main.min.css',
+
+  'web/revtk/labs-alpha-flashcardreview.juicy.css,web/build/revtk/labs-alpha-flashcardreview.juiced.css,web/build/revtk/labs-alpha-flashcardreview.min.css',
+  'web/revtk/bundles/flashcardreview-1.0.juicy.css,web/build/revtk/bundles/flashcardreview-1.0.juiced.css,web/build/revtk/bundles/flashcardreview-1.0.min.css',
+
+  'web/revtk/manage.juicy.css,web/build/revtk/manage.juiced.css,web/build/revtk/manage.min.css',
+
+  'web/revtk/study-base.juicy.css,web/build/revtk/study-base.juiced.css,web/build/revtk/study-base.min.css',
+
+  'web/revtk/kanji-flashcardreview.juicy.css,web/build/revtk/kanji-flashcardreview.juiced.css,web/build/revtk/kanji-flashcardreview.min.css',
+
+  'web/revtk/review-home.juicy.css,web/build/revtk/review-home.juiced.css,web/build/revtk/review-home.min.css'
+)
+
+for files in ${stylesheets[*]}; do
+  # Split
+  f=(`echo $files | tr "," "\n"`)
+
+  # Juice
+  php lib/juicer/JuicerCLI.php $JUICEROPTS -i ${f[0]} -o ${f[1]}
+  if (( $? )) ; then
+    echo " ERROR: Juicer failed."
+    exit;
+  fi
+
+  # TODO: lint css files (jslint chokes on YUI's minified styles)
+
+  # Minify
+  java $YUIOPTS ${f[1]} -o ${f[2]}
+  if (( $? )) ; then
+    echo " ERROR: Minification failed."
+    exit;
+  fi
+
+done
+
+
+for files in ${javascripts[*]}; do
+  # Split
+  f=(`echo $files | tr "," "\n"`)
+
+  # Juice
+  php lib/juicer/JuicerCLI.php $JUICEROPTS -i ${f[0]} -o ${f[1]}
+  if (( $? )) ; then
+    echo " ERROR: Juicer failed."
+    exit;
+  fi
+
+  # TODO: lint css files (jslint chokes on YUI's minified styles)
+
+  # Minify
+  #java $YUIOPTS ${f[1]} -o ${f[2]}
+
+  # Closure is slow...
+  echo " ... minifying with Closure..."
+  java -jar batch/tools/closure/closure-compiler.jar --js ${f[1]} --js_output_file ${f[2]} --warning_level QUIET
+
+  if (( $? )) ; then
+    echo " ERROR: Minification failed."
+    exit;
+  fi
+
+done
+
+
+# build version file for revisioning css & js assets
+mv config/versioning.inc.php config/.versioning.inc.php
+php batch/build_app.php -w web -o config/versioning.inc.php
+
+

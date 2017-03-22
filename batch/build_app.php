@@ -1,0 +1,224 @@
+<?php
+/**
+ * Generate a data file with timestamps which is used by factory /lib/core/coreWebResponse
+ * to add versioning of javascript and stylesheets on the client.
+ * 
+ * Notes:
+ *
+ *   EXCLUDES /web/sf/  DIRECTORY !  (symfony's own assets)
+ * 
+ * Example:
+ * 
+ *   php batch/build_app.php -w web -o config/versioning.inc.php
+ * 
+ * Someday/Maybe:
+ *
+ * - If we match includeAssets to fully qualified filename, the patterns could
+ *   also match directories, eg. include only files from "web/js/foo/*.js"
+ *
+ * Usage: php build_app.php --webroot <path> --out <file>
+ *
+ *  --webroot <path>  The web document root to crawl for resources (required)
+ *  --out <file>      Output filename (required)
+ *  -v                Verbose mode (optional)
+ * 
+ * 
+ * @author   Fabrice Denis
+ */
+
+require_once(realpath(dirname(__FILE__).'/..').'/lib/batch/Command_CLI.php');
+
+
+class BuildApp extends Command_CLI
+{
+  protected
+    $includeAssets   = array();
+  
+  const
+    /**
+     * Files for which we save versioning information.
+     * 
+     */
+    INCLUDE_ASSETS   = '*.css,*.js';
+  
+  public function __construct()
+  {
+    parent::__construct(array(
+      'webroot|w=s'  => 'The web document root to crawl for resources (required)',
+      'out|o=s'      => 'Output filename (required)',
+      'list|l'       => 'List all versioned resources and exits'
+    ));
+
+    $this->webPath = $this->opts->webroot;
+    if (null === $this->webPath) {
+      $this->throwError('Required --webroot flag. Type --help for help.');      
+    }
+
+    // set filters
+    $this->includeAssets = array();
+    $filters = explode(',', self::INCLUDE_ASSETS);
+    foreach ($filters as $filter)
+    {
+      // backslash characters in the filter that have a regexp meaning
+      $filter = preg_replace('|[\[\]\$\\\\.\+\-\^]|', '\\\$0', trim($filter));
+      // create a ready-to-use regexp pattern with the star meaning
+      $pattern = '|^' . str_replace('*', '.+', $filter) . '$|i';
+      
+      $this->includeAssets[] = $pattern;
+    }
+    //die(implode(' - ', $this->includeAssets));
+
+    $files = $this->crawl($this->webPath);
+    if ($this->getFlag('list'))
+    {
+      echo implode("\n", $files);
+      echo sprintf("\n\n%s versioned resources.\n", count($files));
+      exit();
+    }
+
+    $this->verbose("\n%s versioned resources.\n", count($files));
+
+    $outfile = $this->getFlag('o');
+    if (null === $outfile) {
+      $this->throwError('Required --out flag. Type --help for help.');
+    }
+    
+    $contents = $this->build($files);
+
+    if (false === file_put_contents($outfile, $contents))
+    {
+      $this->throwError('Error writing to outfile "%s".', $outfile);
+    }
+    
+    $this->verbose('Success! (output file "%s").', $outfile);
+  }
+  
+  /**
+   * Crawl from the given root path and look through all sub directories,
+   * collect all resource files. 
+   * 
+   */
+  private function crawl($path)
+  {
+    $files = array();
+
+    $path = realpath($path);
+
+    $handle = opendir($path);
+    while (false !== ($file = readdir($handle)))
+    {
+      if ($file=='.' || $file=='..')
+      {
+        continue;
+      }
+      
+      $fullname = $path . DIRECTORY_SEPARATOR . $file;
+  
+      if (is_dir($fullname))
+      {
+        // FIXME configurable? may never be needed
+        $sf_exclude_path = realpath($this->webPath).'/sf';
+        if ($sf_exclude_path === $fullname)
+        {
+          //echo "Excluding symfony web path /sf\n";
+          //exit;
+          continue;
+        }
+
+        $files = array_merge($files, $this->crawl($fullname));
+      }
+
+      if ($this->isIncludedAsset($file))
+      {
+        array_push($files, $this->fixUrlPathname($fullname));
+      }
+    }
+  
+    // tidy up: close the handler
+    closedir($handle);
+    
+    return $files;
+  }
+
+  /**
+   * Replace any Windows-style backslashes with slashes.
+   * 
+   * @param  string $path  Fully qualified path name
+   * @return string
+   */
+  protected function fixUrlPathname($path)
+  {
+    return preg_replace('/[\/\\\]/', '/', $path);
+  }
+
+
+  /**
+   * Returns true if the file is a revved resource.
+   * 
+   * The filename must match one of the INCLUDE_ASSETS patterns.
+   * 
+   * @param  string $file   Filename
+   * @return boolean
+   */
+  private function isIncludedAsset($file)
+  {
+    foreach ($this->includeAssets as $pattern)
+    {
+      if (preg_match($pattern, $file) === 1) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+
+  /**
+   * Create the php file that can be included to have timestamp information
+   * for all the revved files.
+   * 
+   * @return string    Content to save as a php file 
+   */
+  private function build($files)
+  {
+    $doc_file = __FILE__;
+
+    $doc_time = date('F j, Y G:i:s');
+    
+    // start buffering content of this file
+    ob_start();
+    
+echo <<<EOD
+<?php
+/**
+ * This file was generated by script "$doc_file"
+ * 
+ * @date    $doc_time
+ */
+EOD;
+
+    echo "\nreturn array(\n";
+
+    // format basepath of document root to substract from the resource urls
+    $basePath = $this->fixUrlPathname(realpath($this->webPath));
+
+    $assets = array();
+
+    foreach ($files as $file)
+    {
+      $timestamp = filemtime($file);
+      
+      // use as array key, the absolute url relative from the web root
+      // (this should match the url passed to the stylesheet and javascript include helpers)
+      $resourcePath = '/' . $this->getRelativePathFrom($file, $basePath);
+      
+      $assets[] = "'$resourcePath' => $timestamp";
+    }
+    
+    echo implode(",\n", $assets) . "\n);";
+    
+    return ob_get_clean();
+  }
+}
+
+$cmd = new BuildApp();
+

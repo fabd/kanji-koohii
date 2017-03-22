@@ -1,0 +1,61 @@
+{
+  "masterPicture": "batch/favicon/favicon-master.png",
+  "iconsPath": "/favicons/",
+  "design": {
+    "ios": {
+      "pictureAspect": "noChange",
+      "assets": {
+        "ios6AndPriorIcons": false,
+        "ios7AndLaterIcons": false,
+        "precomposedIcons": false,
+        "declareOnlyDefaultIcon": true
+      },
+      "appName": "Koohii"
+    },
+    "desktopBrowser": {},
+    "windows": {
+      "pictureAspect": "noChange",
+      "backgroundColor": "#f8c5e3",
+      "onConflict": "override",
+      "assets": {
+        "windows80Ie10Tile": false,
+        "windows10Ie11EdgeTiles": {
+          "small": false,
+          "medium": true,
+          "big": false,
+          "rectangle": false
+        }
+      },
+      "appName": "Koohii"
+    },
+    "androidChrome": {
+      "pictureAspect": "shadow",
+      "themeColor": "#f0ddd4",
+      "manifest": {
+        "name": "Koohii",
+        "display": "standalone",
+        "orientation": "notSet",
+        "onConflict": "override",
+        "declared": true
+      },
+      "assets": {
+        "legacyIcon": false,
+        "lowResolutionIcons": false
+      }
+    },
+    "safariPinnedTab": {
+      "pictureAspect": "blackAndWhite",
+      "threshold": 81.40625,
+      "themeColor": "#deb214"
+    }
+  },
+  "settings": {
+    "compression": 1,
+    "scalingAlgorithm": "Lanczos",
+    "errorOnImageTooSmall": false
+  },
+  "versioning": {
+    "paramName": "v",
+    "paramValue": "20170121"
+  }
+}

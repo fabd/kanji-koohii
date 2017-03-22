@@ -11,6 +11,7 @@
 # don't automatically add these
 .*
 !.gitignore
+!.babelrc
 
 # temporary/work-in-progress, and personal files
 __*

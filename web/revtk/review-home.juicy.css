@@ -1,0 +1,73 @@
+/**
+ * Review Dashboard
+ * 
+ * Juicer build:
+ *  php lib/juicer/JuicerCLI.php -v --webroot web --config apps/koohii/config/juicer.config.php --infile web/revtk/review-home.juicy.css
+ * 
+ *   
+ * @author  Fabrice Denis
+ */
+
+/* =require from "%WEB%" */
+
+#srs-summary { }
+#srs-summary .total { }
+#srs-summary .today { color:#484; margin-left:0.5em; }
+#srs-summary div { margin:2px 0 0; }
+
+  /* bootstrap-md-lg */
+/*@media (min-width: 992px) {
+  #srs-summary .today { margin-left:0.5em; display:inline-block; }
+}
+*/
+
+/* due/new/failed review buttons */
+#srs-home_actions { margin:0 0 1em; }
+#srs-home_actions .btn { margin-right:0.5em; margin-bottom:0.4em; }
+#srs-home_actions .btn-lg { padding:10px 15px; font-size:16px; } /* helps fit new/due/restudy in there */
+
+@media (max-width: 374px) {
+  #srs-home_actions .btn-lg { font-size:13px; margin-right:5px; } /* iPhone 5 */
+}
+
+
+/* ---------------------------- */
+/* Due cards graph */
+/* ---------------------------- */
+
+/* barchart widget TODO */
+.barchart-container { height:100%; padding-top:24px; padding-bottom:24px; }
+.barchart-chart     { height:150px; position:relative; }
+.barchart-grid      { position:absolute; bottom:0; width:100%; height:4px; background:#ccc; }
+.barchart-cols      { margin:0; padding:0; width:100%; height:100%; }
+.barchart-cols li   { width:14.28%; margin:0; position:relative; display:inline-block; min-width:12px; height:100%; text-align:center; }
+.barchart-cols .bar { 
+  position:absolute; bottom:0; background:#72c569; width:75%; left:12%;
+  transition:height .3s ease-out;
+}
+.barchart-cols .lbl {
+  color: #929292; font-size:12px; line-height: 19px; white-space:nowrap;
+  position:absolute; left:50%; bottom:-31px;
+  width:72px; height:24px;
+  margin-left:-36px; margin-bottom:4px;
+}
+.barchart-cols .lbl strong { color:#444; }
+.barchart-cols .val {
+  /*font-size:15px;*/ white-space:nowrap; color:#72c569; font-weight:bold;
+  position:absolute; top:-26px; left:50%;
+  width:48px; padding:0;
+  margin-left:-24px;
+}
+.barchart-cols .bar.zero { background:#888; }
+.barchart-cols .bar.zero .val { color:#a5a59c; }
+.barchart-cols .bar.zero .lbl {}
+
+
+/* ---------------------------- */
+/* Vue.js  Leitner Chart */
+/* ---------------------------- */
+
+/* leitner chart component (root) */
+#leitner-chart_pane { padding:1em; }
+
+

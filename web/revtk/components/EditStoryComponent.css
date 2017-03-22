@@ -1,0 +1,100 @@
+/**
+ * EditStoryComponent CSS.
+ *
+ * Used on Study page & Edit Story Dialog (review page).
+ *
+ */
+
+#EditStoryComponent { margin:0 0 2em; }
+#EditStoryComponent h2 {
+  font-size:26px; line-height:34px; /* align to the button*/
+}
+
+/* self story */
+#my-story {
+  position:relative; background:#fff; border:1px solid #E8E5C9; 
+  box-shadow:0 1px 2px 0px rgba(170, 165, 130, 0.3); 
+}
+#my-story .rtkframe { border:none; padding:16px 17px 0; background:none; }
+#my-story .bottom {
+  width:100%; height:23px; overflow:hidden; clear:both;
+  background:#fff;
+  background: -webkit-linear-gradient(top,  #fff 0%,#f8f8f8 100%);
+  background: linear-gradient(to bottom,  #fff 0%,#f8f8f8 100%);
+}
+
+#my-story .msg-relearned { color:#61932B; font-size:11px; padding:10px 5px 0; }
+
+.rtkframe { clear:both; position:relative; background:white; padding:15px; }
+.rtkframe .left        { float:left; width:68px; text-align:center; }
+.rtkframe .right       { margin-left:82px; }
+
+  /* left col */
+.rtkframe .framenum    { font-size:14px; line-height:1em; margin:0 0 20px; }
+.rtkframe .kanji       { width:100%; min-height:50px; margin:0 0 8px; font-size:50pt; line-height:1em; }
+.rtkframe .strokecount { color:#8e8e8e; }
+
+.rtkframe .keyword     { font:20px Georgia, Times New Roman; letter-spacing:2px; text-align:right; }
+.rtkframe .keyword .edition { font-size:0.6em; }
+
+.rtkframe #storybox    { padding:1.5em 0 0;  } /* story 'view' mode */
+.rtkframe #sv-textarea { padding:5px; border:1px solid #fff; height:100px; }
+#storyview > #sv-textarea { height:auto; min-height:100px; } /* ie7/moz */
+.rtkframe #sv-textarea.hover { border:1px solid #fff; background:#f5f5f5; }
+.rtkframe .bookstyle .empty { color:#888; }
+
+ /* favorited story sign */
+.rtkframe .favstory { display:inline-block; margin:1em 0 0; line-height:18px; padding:5px 0; color:#666; }
+.rtkframe .favstory .ico { width:22px; height:18px; display:inline-block; background:url(../../images/1.0/ico/study-story-actions.gif) no-repeat 0 0; }
+
+#storyview .controls   { padding-right:16px; margin:4px 0 0; text-align:right; }
+
+.rtkframe #storyedit { display:none; }
+.rtkframe #storyedit textarea {
+  width:100%; height:153px; padding:5px; border:1px solid #e8e5c9; background:#f5f5f5;
+  -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+  font:14px/1.2em Georgia, Times New Roman, serif;
+}
+.rtkframe #storyedit .controls { margin:4px 0 0; height:25px; }
+
+.viewtoggle a, .viewtoggle a:active, .viewtoggle a:visited, .viewtoggle a:hover { font-size:80%; font-weight:normal; }
+
+ /* story content styling (My Stories and Shared Stories) */
+.rtkframe .bookstyle {
+  color:#100800; font-size:14px; line-height:1.5em; text-align:justify; /*ie fix expandbox*/word-wrap:break-word;
+  /*-moz-osx-font-smoothing:auto; -webkit-font-smoothing:subpixel-antialiased;*/
+}
+.bookstyle em     { letter-spacing:0.05em; }
+/*.bookstyle strong { }*/
+
+.rtkframe .bookstyle a { font-weight:normal; text-decoration:none; }
+.rtkframe .bookstyle a:hover { text-decoration:underline; }
+.rtkframe .bookstyle .frnr { color:#484; font-family:sans-serif; }
+
+#storyview .bookstyle { line-height:1.5em; }
+
+/* Story popup (flashcard review page) kanji shows on mouseover */
+
+#my-story .onhover { font-size:40pt; background:url(../../images/1.0/hidden-kanji.gif) no-repeat 50% 50%; }
+#my-story .onhover span { visibility:hidden; color:#fff; }
+#my-story .onhover:hover { background:none; }
+#my-story .onhover:hover span { visibility:visible; color:#000; background:#fff; }
+
+/* Story edit form errors */
+#my-story .formerrormessage { background:none; margin:0.5em 0; padding:0 5px; border:none; }
+
+
+/* DIALOG mode */
+
+ /* desktop dialog : use a fixed width (looks nicer), hide the big close button */
+.rtk-skin-dlg #my-story { width:500px; border:none; }
+.rtk-skin-dlg .editstory-close { display:none; }
+
+ /* mobile dialog */
+.rtk-mobl-dlg #my-story { box-shadow:none; border:none; /* remove decorations */ }
+.rtk-mobl-dlg #my-story .rtkframe { padding:16px 10px 0; }
+.rtk-mobl-dlg .left  { width:50px; display:none; }
+.rtk-mobl-dlg #my-story .right { margin-left:0; }
+.rtk-mobl-dlg #sv-textarea { border:1px solid #fff; background:#f5f5f5; border-radius:5px; } /* hint edit box by default for touch */
+
+.rtk-mobl-dlg #JSEditStoryLoading { width:auto; }

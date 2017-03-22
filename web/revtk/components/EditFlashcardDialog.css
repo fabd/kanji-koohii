@@ -1,0 +1,70 @@
+/**
+ * EditFlashcardDialog CSS
+ *
+ */
+
+.uiIBtnAjax {
+	text-decoration: none;
+	cursor: pointer;
+	outline: none;
+	color:#111;
+	font-family:/*"Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",*/Verdana,sans-serif;
+	display:inline-block;
+	vertical-align:top;
+	position:relative;
+	font-size:12px;
+	text-align:center;
+	background-color:#aaa;
+	background: #aaa -moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
+	background: #aaa -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
+	text-shadow:1px 1px 0 rgba(255,255,255,.67);
+	line-height:24px;
+	height:24px;
+  -moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;
+  border-style:solid; border-width:1px; border-color:rgba(0, 0, 0, 0.4);
+}
+
+.uiIBtnAjax:hover {
+  background-image:-moz-linear-gradient(top, rgba(255,255,255,.9), rgba(255,255,255,0.2));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.9)), to(rgba(255,255,255,0.2)));
+  text-decoration:none;
+}
+  
+
+a.uiIBtnAjax { padding:0 10px; /* Make the text unselectable */ -moz-user-select: none; -webkit-user-select: none; }
+
+/**
+ * Disable selection for GUI items.
+ */
+.uiGUI { /* no outline */ outline:none; -moz-user-select: none; -webkit-user-select: none; }
+
+/**
+ * Edit Flashcard Dialog.
+ */
+#editflashcarddlg { width:270px; padding-top:0; padding-bottom:0; }
+
+#editflashcarddlg .stats { width:100%; padding:10px 0; }
+#editflashcarddlg .stats th,
+#editflashcarddlg .stats td { padding:4px 5px 6px 0; font-size:14px; line-height:1.1em; text-align:left; }
+#editflashcarddlg .stats th { color:#737373; width:30%; white-space:nowrap; }
+
+.uiBMenuMsg {
+  padding:1em 0; 
+  font:bold 16px/1.1em "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+  color:#000; text-decoration:none;
+}
+.uiBMenuMsg .note { display:block; padding:1em 0 0; color:#888; font-weight:normal; }
+
+/* message colours (ie. "delete flashcard?" or "confirmation") */
+.uiBMenuRed   { color:red; }
+.uiBMenuGreen { color:#2ba23b; padding:14px 0 12px 32px; background:url(../../images/ui/icons/uiBMenu-sprite.gif) no-repeat 0 14px; }
+
+
+/* Edit Flashcard button on the Study page */
+#EditFlashcard { position:absolute; right:0; top:0; }
+#EditFlashcard.is-toggle-0 .is-1,
+#EditFlashcard.is-toggle-1 .is-0 { display:none; }
+
+/*#EditFlashcard .btn.is-1 { border:1px solid #23527c; }*/
+
+

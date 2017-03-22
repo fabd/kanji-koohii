@@ -1,0 +1,62 @@
+/* Mobile Flashcard Review layout - included by kanji-flashcardreview.juicy.CSS (at bottom) - and also by Labs modes! */
+
+/* overwrite the response layout of the desktop (including the media query styles) */
+#fr-body { width:100%; margin-top:0; }
+
+#rd-tops { }
+
+#rd-main { }
+
+  #uiFcReview   { width:90%; margin:0 auto; position:relative; }
+  #uiFcButtons  { }
+  #uiFcButtons u { text-decoration:none; } /* hide the keyboard shortcut hints */
+
+#rd-side { }
+
+#uiFcOptions     {  }
+
+/* progress bar */
+#uiFcProgressBar { width:90%; }
+
+/* target additional fonts for Android */
+.cj-k { font-family:"Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝", "Droid Sans Japanese", "Droid Serif", serif; }
+
+#JsBtnHelp { display:none; }  /* hide the keyboard shortcuts help */
+
+/* error messages */
+#uiFcAjaxLoading { height:32px; position:absolute; right:22px; top:3px; z-index:1000; }
+#uiFcAjaxError { height:32px; position:absolute; right:22px; top:3px; z-index:1000; }
+
+
+/* Kanji flashcard layout */
+#keyword    { padding:4px 0 0 8px; }
+#kanjibig   { top:40%; margin-top:-35px; }
+#kanjibig p { font-size:100px; }
+
+/* Hanzi flashcard layout */
+.cj-hanzi #kanjibig { top:40%; margin-top:-50px; }
+#pinyin { }
+
+/* With Onyomi (Labs review modes) */
+#uiFcYomi .vyc   { font-size:16px; padding:2px 3px; }
+#uiFcYomi .vyr   { font-size:14px; padding:3px 3px; }
+#uiFcYomi .vyg   { font-size:13px; padding-top:0.5em; }
+
+/* flashcard drop down menu */
+#uiFcMenu { }
+
+/* secondary stats boxes (bottom) */
+.uiFcStats  { width:100%; margin:0 auto; }
+
+#uiFcStDeld { margin:1em 0 0; }
+
+.uiFcStBoxClear { width:100%; clear:both; padding:0 0 9px; }
+
+/* javascript based dialogs */
+#editflashcarddlg { width:auto; }
+.uiBMenuBody      { box-shadow:none; }
+#editflashcarddlg .uiBMenuItem  { width:auto; }
+
+/* EditKeywordDialog */
+#edit-keyword { width:auto; }
+#edit-keyword .txt-ckw { width:auto; background:none; border:none; padding:0; }

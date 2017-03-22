@@ -6,6 +6,8 @@ They are not included in the repository. You'll only need to build them once.
 
 For more info, see http://realfavicongenerator.net
 
+## First time setup
+
 Install the Node.js [Favicon Generator](https://realfavicongenerator.net/favicon/node_cli)
 ```shell
 npm install cli-real-favicon
@@ -15,6 +17,8 @@ Make an alias (optional).
 ```shell
 alias real-favicon=./node_modules/.bin/real-favicon
 ```
+
+## Re-generating icons
 
 Now generate the icons, this will add a bunch of files to `web/favicons/`
 ```shell

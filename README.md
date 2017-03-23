@@ -1,6 +1,6 @@
 # Kanji Koohii
 
-**Kanji Koohii** is a web application designed to help Japanese language learners memorize the kanji. This repository is used to track development of the website, and allow users to report bugs and make suggestions. http://kanji.koohii.com
+**Kanji Koohii** is a web application designed to help Japanese language learners remember the kanji. http://kanji.koohii.com
 <br>
 <br>
 <p align="center">
@@ -19,6 +19,30 @@
 Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
 
 
+## Contributing
+
+Let's talk [on Gitter](https://gitter.im/kanji-koohii/development). The "feedback" room is intended for user feedback and testing. The "development" room is where we can talk about the code (that way testers can opt out of notifications from the development chat). Note there are Android and iOS clients with push notification support. Desktop client also shows the recent repository activity.
+
+[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc.
+
+If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
+
+
+### Installation
+
+* [First Time Setup](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-First-Time-Setup) for setting up the repository and database
+* [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build) for basic info about dev/test environments
+* [Docs](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Docs) has links to the MVC framework documentation (Symfony).
+
+
+### Project Roadmap
+
+* [Milestones](https://github.com/fabd/kanji-koohii/milestones) helps to keep track of issues in various categories
+* [Roadmap #54](https://github.com/fabd/kanji-koohii/issues/54) for general refactoring & architecture
+
+
 ## Project History
 
 Fabrice created Kanji Koohii (previously "Reviewing the Kanji") in late 2005 and maintained the website up to this day in early 2017. This website started in the days of php4, long before modern client side Javascript frameworks, SPAs, and even before the explosion of smartphones and tablets!
@@ -28,31 +52,6 @@ For this reason managing the source code has been an continual exercise in phasi
 Going forward I think for a contributor the good news is i've recently added a webpack / Babel / VueJS build. This allows to write new functionality with modern [ES6](https://babeljs.io/learn-es2015/) and [VueJS](https://vuejs.org/). Someone really motivated could also help me also refactor bits of php templating to VueJS components.
 
 On the backend side there is definitely room to improve things with Composer perhaps, and modern php syntax, which I haven't taken the time to look into. In general for me the backend is "good enough" for Kanji Koohii's purposes but it can definitely use improvements.
-
-
-### Project Organization
-
-Let's talk [on Gitter](https://gitter.im/kanji-koohii/development). The "feedback" room is intended for user feedback and testing. The "development" room is where we can talk about the code (that way testers can opt out of notifications from the development chat). Note there are Android and iOS clients with push notification support. Desktop client also shows the recent repository activity.
-
-
-## Contributing
-
-[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  Ask any questions about the repo, issues, etc. in the *development* channel.
-
-### Getting started
-
-* [First Time Setup](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-First-Time-Setup) for setting up the repository and database
-* [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build) for basic info about dev/test environments
-* [Docs](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Docs) has links to the MVC framework documentation (Symfony).
-
-Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc.
-
-Please de **not** submit a random pull request unless it is a minor typo or an obvious bug. I really don't want to be in a position to turn down a pull request so talk to me on Gitter first. It's really important to discuss changes to keep such a project maintainable.
-
-
-### Project Roadmap
-
-See [Roadmap #54](https://github.com/fabd/kanji-koohii/issues/54) as well as [Milestones](https://github.com/fabd/kanji-koohii/milestones).
 
 
 ## LICENSE

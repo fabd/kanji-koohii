@@ -30,14 +30,16 @@ Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I 
 If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
 
 
-### Installation
+## Development setup
+
+Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell. The setup is currently tested on Ubuntu. The build script should work with very little changes on OS X. For Windows, you'll probably want a virtual machine with a linux distro so you can use grep, npm etc.
 
 * [First Time Setup](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-First-Time-Setup) for setting up the repository and database
 * [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build) for basic info about dev/test environments
 * [Docs](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Docs) has links to the MVC framework documentation (Symfony).
 
 
-### Project Roadmap
+## Project Roadmap
 
 * [Milestones](https://github.com/fabd/kanji-koohii/milestones) helps to keep track of issues in various categories
 * [Roadmap #54](https://github.com/fabd/kanji-koohii/issues/54) for general refactoring & architecture

@@ -45,9 +45,7 @@ Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell. The s
 * [Milestones](https://github.com/fabd/kanji-koohii/milestones) helps to keep track of issues in various categories
 * [Roadmap #54](https://github.com/fabd/kanji-koohii/issues/54) for general refactoring & architecture
 
-### The Big Picture
-
-The next major area of development in my mind is to add **vocabulary**. This would provide a transition from RTK to words and sentences, and continue to support learners with their textbooks and other material.
+**The next major area of development is to add vocabulary**. This would provide a transition from RTK to words and sentences, and continue to support learners with their textbooks and other material.
 
 * Let user "star" dictionary entries under each Study page
   (thus creating a link between a kanji card and vocab cards)

@@ -41,8 +41,24 @@ Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell. The s
 
 ## Project Roadmap
 
+* **HTTPS / SSL** : will be enabled on the live site soon (hopefully in April)
 * [Milestones](https://github.com/fabd/kanji-koohii/milestones) helps to keep track of issues in various categories
 * [Roadmap #54](https://github.com/fabd/kanji-koohii/issues/54) for general refactoring & architecture
+
+### The Big Picture
+
+The next major area of development in my mind is to add **vocabulary**. This would provide a transition from RTK to words and sentences, and continue to support learners with their textbooks and other material.
+
+* Let user "star" dictionary entries under each Study page
+  (thus creating a link between a kanji card and vocab cards)
+* "starred" vocab is displayed as example words on corresponding kanji cards
+  (note here that a user can pick the same word for different matching kanji)
+* "starred" vocab becoms vocab cards in a **separate vocab SRS**
+
+After some time, aggregating user data we can:
+
+* ... sort displayed vocab entries under Study pages by usefulness
+* ... suggest new vocab cards that are not currently in user's deck which use known kanji
 
 
 ## Project History

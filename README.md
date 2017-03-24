@@ -41,33 +41,7 @@ Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell. The s
 
 ## Project Roadmap
 
-* **HTTPS / SSL** : will be enabled on the live site soon (hopefully in April)
-* [Milestones](https://github.com/fabd/kanji-koohii/milestones) helps to keep track of issues in various categories
-* [Roadmap #54](https://github.com/fabd/kanji-koohii/issues/54) for general refactoring & architecture
-
-**The next major area of development is to add vocabulary**. This would provide a transition from RTK to words and sentences, and continue to support learners with their textbooks and other material.
-
-* Let user "star" dictionary entries under each Study page
-  (thus creating a link between a kanji card and vocab cards)
-* "starred" vocab is displayed as example words on corresponding kanji cards
-  (note here that a user can pick the same word for different matching kanji)
-* "starred" vocab becoms vocab cards in a **separate vocab SRS**
-
-After some time, aggregating user data we can:
-
-* ... sort displayed vocab entries under Study pages by usefulness
-* ... suggest new vocab cards that are not currently in user's deck which use known kanji
-
-
-## Project History
-
-Fabrice created Kanji Koohii (previously "Reviewing the Kanji") in late 2005 and maintained the website up to this day in early 2017. This website started in the days of php4, long before modern client side Javascript frameworks, SPAs, and even before the explosion of smartphones and tablets!
-
-For this reason managing the source code has been an continual exercise in phasing out things, while adding new things and trying to keep everything manageable. As such the code quality is kind of all over the place. Overall I think it's still very maintainable today but of course it makes a lot more sense to me than to someone who first dives into the code.
-
-Going forward I think for a contributor the good news is i've recently added a webpack / Babel / VueJS build. This allows to write new functionality with modern [ES6](https://babeljs.io/learn-es2015/) and [VueJS](https://vuejs.org/). Someone really motivated could also help me also refactor bits of php templating to VueJS components.
-
-On the backend side there is definitely room to improve things with Composer perhaps, and modern php syntax, which I haven't taken the time to look into. In general for me the backend is "good enough" for Kanji Koohii's purposes but it can definitely use improvements.
+See [Open Source](https://github.com/fabd/kanji-koohii/wiki/Open-Source) on the wiki.
 
 
 ## LICENSE

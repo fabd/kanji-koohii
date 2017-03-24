@@ -44,6 +44,7 @@ Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell. The s
 * **HTTPS** will be enabled soon (hopefully April 2017)
 * **Refactoring** legacy php templating to Vuejs client-side components
 * **Vocabulary features** : "favorite" example words in Study pages, create a vocab deck and review with SRS
+* **Improve Study pages** : better moderation & voting system, stroke order animations, better search
 * **Improve the API** for third party clients like [Kanji Ryokucha](http://forum.koohii.com/thread-12829.html)
 
 

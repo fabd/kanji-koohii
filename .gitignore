@@ -28,8 +28,6 @@ error_log*
 
 # tools
 /batch/deploy
-/batch/maintenance
-!/batch/maintenance/createUser.php
 /batch/tools/closure
 /batch/tools/yuicompressor
 

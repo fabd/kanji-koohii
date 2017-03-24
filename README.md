@@ -41,7 +41,13 @@ Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell. The s
 
 ## Project Roadmap
 
-See [Open Source](https://github.com/fabd/kanji-koohii/wiki/Open-Source) on the wiki.
+* **HTTPS** will be enabled soon (hopefully April 2017)
+* **Refactoring** legacy php templating to Vuejs client-side components
+* **Vocabulary features** : "favorite" example words in Study pages, create a vocab deck and review with SRS
+* **Improve the API** for third party clients like [Kanji Ryokucha](http://forum.koohii.com/thread-12829.html)
+
+
+For more details see [Open Source](https://github.com/fabd/kanji-koohii/wiki/Open-Source) on the wiki.
 
 
 ## LICENSE

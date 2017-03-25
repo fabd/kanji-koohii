@@ -25,9 +25,15 @@ Let's talk [on Gitter](https://gitter.im/kanji-koohii/development). The "feedbac
 
 [![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc.
+Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc. If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
 
-If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
+### Branches
+
+I find this basic master/develop/feature-branch to be sufficient so far.
+
+* **master** is meant to be the last stable, production version.
+* **develop** is a branch where features are merged.
+* **f_feature** a feature branch.
 
 
 ## Development setup

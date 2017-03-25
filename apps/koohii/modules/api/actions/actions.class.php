@@ -430,4 +430,15 @@ echo $result;exit;
 
     return $this->createResponseOk($rsp);
   }
+    
+  protected function API_srsLearned($request)
+  {
+      $rsp = new stdClass;
+      $user = $this->getUser();
+      $userId = $user->getUserId();
+
+      $rsp->ids = LearnedKanjiPeer::getKanji($userId);
+      
+      return $this->createResponseOk($rsp);
+  }
 }

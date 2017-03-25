@@ -77,4 +77,16 @@ class LearnedKanjiPeer extends coreDatabaseTable
 
     return self::getInstance()->delete('userid = ?', $userId);
   }
+
+  /**
+   * Return array of relearned kanji for given user
+   *
+   * @return array  kanji ids
+   */
+  public static function getKanji($userId)
+  {
+    $select = self::getInstance()->select('ucs_id');
+    $select->where('userid = ?', $userId);
+    return self::$db->fetchCol($select);
+  }
 }

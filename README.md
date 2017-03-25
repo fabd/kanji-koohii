@@ -18,7 +18,6 @@
 
 Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
 
-
 ## Contributing
 
 Let's talk [on Gitter](https://gitter.im/kanji-koohii/development). The "feedback" room is intended for user feedback and testing. The "development" room is where we can talk about the code (that way testers can opt out of notifications from the development chat). Note there are Android and iOS clients with push notification support. Desktop client also shows the recent repository activity.

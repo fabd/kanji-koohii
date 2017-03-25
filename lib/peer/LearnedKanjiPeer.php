@@ -87,6 +87,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select('ucs_id');
     $select->where('userid = ?', $userId);
-    return self::$db->fetchCol($select);
+    $ids = self::$db->fetchCol($select);
+    return array_map('intval', $ids);
   }
 }

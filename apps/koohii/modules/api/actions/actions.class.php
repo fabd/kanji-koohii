@@ -437,7 +437,7 @@ echo $result;exit;
       $user = $this->getUser();
       $userId = $user->getUserId();
 
-      $rsp->ids = LearnedKanjiPeer::getKanji($userId);
+      $rsp->items = LearnedKanjiPeer::getKanji($userId);
       
       return $this->createResponseOk($rsp);
   }

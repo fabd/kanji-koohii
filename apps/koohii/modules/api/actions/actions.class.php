@@ -415,6 +415,7 @@ echo $result;exit;
     $rsp->new_cards     = ReviewsPeer::getCountUntested($userId);
     $rsp->due_cards     = 0;
     $rsp->relearn_cards = $carddata[0]['expired_cards'];
+    $rsp->learned_cards = LearnedKanjiPeer::getCount($userId);
 
     for ($i = 0; $i < count($carddata); $i++)
     {

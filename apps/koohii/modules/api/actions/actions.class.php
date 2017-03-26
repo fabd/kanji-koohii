@@ -468,4 +468,46 @@ echo $result;exit;
 
       return $this->createResponseOk($rsp);
   }
+    
+  protected function studySync($request)
+  {
+      $rsp = new stdClass;
+      
+      if ($request->getMethod() !== sfRequest::POST) {
+          return $this->createResponseFail(1, 'Should be a POST request');
+      }
+      
+      $body = file_get_contents("php://input");
+      if ($body)
+      {
+          try {
+              $json = coreJson::decode($body);
+          } catch (Exception $e) {
+              $json = null;
+          }
+      }
+      
+      if (!is_object($json) || !isset($json->learned) || !is_array($json->learned) !isset($json->notLearned) || !is_array($json->notLearned)) {
+          return $this->createResponseFail(2, 'Invalid request (malformed JSON, learned is not set, learned is not array, notLearned is not set, notLearned is not array)');
+      }
+      
+      if (count($json->learned) > rtkApi::API_REVIEW_SYNC_LIMIT) {
+          return $this->createResponseFail(3, 'Too many learned items (sync limit)');
+      }
+      if (count($json->notLearned) > rtkApi::API_REVIEW_SYNC_LIMIT) {
+          return $this->createResponseFail(3, 'Too many notLearned items (sync limit)');
+      }
+      
+      $user = $this->getUser();
+      $userId = $user->getUserId();
+
+      if (!empty($json->learned)) {
+          $rsp->learnedSuccess = LearnedKanjiPeer::addKanjis($userId, $json->learned);
+      }
+      if (!empty($json->notLearned)) {
+          $rsp->notLearnedSuccess = LearnedKanjiPeer::clearKanjis($userId, $json->notLearned);
+      }
+      
+      return $this->createResponseOk($rsp);
+  }
 }

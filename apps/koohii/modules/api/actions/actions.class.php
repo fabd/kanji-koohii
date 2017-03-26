@@ -431,6 +431,10 @@ echo $result;exit;
     return $this->createResponseOk($rsp);
   }
     
+  /**
+  *
+  * Returns ids of kanjis marked as learned
+  */
   protected function API_srsLearned($request)
   {
       $rsp = new stdClass;
@@ -439,6 +443,29 @@ echo $result;exit;
 
       $rsp->items = LearnedKanjiPeer::getKanji($userId);
       
+      return $this->createResponseOk($rsp);
+  }
+    
+  /**
+  *
+  * Returns ids of all restudy kanji plus the ids of those which are marked as learned
+  * (for clients updating their study info, single rq synthesizing what they could get via multiple rq's)
+  */
+  protected function API_studyStart($request)
+  {
+      $rsp = new stdClass;
+      
+      $box        = 1;
+      $type       = 'expired';
+      $filt       = '';
+      
+      $rsp->items = ReviewsPeer::getFlashcardsForReview($box, $type, $filt);
+      
+      $user = $this->getUser();
+      $userId = $user->getUserId();
+      
+      $rsp->learnedItems = LearnedKanjiPeer::getKanji($userId);
+
       return $this->createResponseOk($rsp);
   }
 }

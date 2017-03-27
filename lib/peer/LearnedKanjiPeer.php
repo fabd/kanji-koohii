@@ -91,12 +91,11 @@ class LearnedKanjiPeer extends coreDatabaseTable
       {
           assert('(int)$ucsId > 0x3000');
       }
-      $placeholders = join(',', array_fill(0, count($ucsIds), '?'));
       
       $values = array($userId);
       array_push($values, $ucsIds);
       
-      return self::getInstance()->delete('userid = ? AND ucs_id in ('.$placeholders.')', $values);
+      return self::getInstance()->delete('userid = ? AND ucs_id in (?)', $values);
   }
 
   /**

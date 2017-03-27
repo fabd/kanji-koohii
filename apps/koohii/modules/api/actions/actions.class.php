@@ -506,7 +506,7 @@ echo $result;exit;
 
       if (!empty($json->learned)) {
           if (LearnedKanjiPeer::addKanjis($userId, $json->learned)) {
-              $rsp->putLearned = $json->notLearned;
+              $rsp->putLearned = $json->learned;
           }
       }
       if (!empty($json->notLearned)) {

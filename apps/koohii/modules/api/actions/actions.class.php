@@ -469,7 +469,7 @@ echo $result;exit;
       return $this->createResponseOk($rsp);
   }
     
-  protected function studySync($request)
+  protected function API_studySync($request)
   {
       $rsp = new stdClass;
       
@@ -487,7 +487,7 @@ echo $result;exit;
           }
       }
       
-      if (!is_object($json) || !isset($json->learned) || !is_array($json->learned) !isset($json->notLearned) || !is_array($json->notLearned)) {
+      if (!is_object($json) || !isset($json->learned) || !is_array($json->learned) || !isset($json->notLearned) || !is_array($json->notLearned)) {
           return $this->createResponseFail(2, 'Invalid request (malformed JSON, learned is not set, learned is not array, notLearned is not set, notLearned is not array)');
       }
       
@@ -500,12 +500,19 @@ echo $result;exit;
       
       $user = $this->getUser();
       $userId = $user->getUserId();
+      
+      $rsp->putLearned = array();
+      $rsp->putNotLearned = array();
 
       if (!empty($json->learned)) {
-          $rsp->learnedSuccess = LearnedKanjiPeer::addKanjis($userId, $json->learned);
+          if (LearnedKanjiPeer::addKanjis($userId, $json->learned)) {
+              $rsp->putLearned = $json->notLearned;
+          }
       }
       if (!empty($json->notLearned)) {
-          $rsp->notLearnedSuccess = LearnedKanjiPeer::clearKanjis($userId, $json->notLearned);
+          if (LearnedKanjiPeer::clearKanjis($userId, $json->notLearned)) {
+              $rsp->putNotLearned = $json->notLearned;
+          }
       }
       
       return $this->createResponseOk($rsp);

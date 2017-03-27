@@ -44,16 +44,16 @@ class LearnedKanjiPeer extends coreDatabaseTable
     
   public static function addKanjis($userId, $ucsIds)
   {
-     $placeholders = join(',', array_fill(0, count($ucsIds), '(?, ?)'));
-     $values = array();
-     foreach ($ucsIds as $ucsId)
-     {
-         assert('(int)$ucsId > 0x3000');
-         array_push($values, $userId);
-         array_push($values, $ucsId);
-     }
+    $placeholders = join(',', array_fill(0, count($ucsIds), '(?, ?)'));
+    $values = array();
+    foreach ($ucsIds as $ucsId)
+    {
+      assert('(int)$ucsId > 0x3000');
+      array_push($values, $userId);
+      array_push($values, $ucsId);
+    }
      
-     return self::$db->query('REPLACE INTO '.self::getInstance()->getName().' (userid, ucs_id) VALUES '.$placeholders,
+    return self::$db->query('REPLACE INTO '.self::getInstance()->getName().' (userid, ucs_id) VALUES '.$placeholders,
                               $values);
   }
 
@@ -87,15 +87,15 @@ class LearnedKanjiPeer extends coreDatabaseTable
   */
   public static function clearKanjis($userId, $ucsIds)
   {
-      foreach ($ucsIds as $ucsId)
-      {
-          assert('(int)$ucsId > 0x3000');
-      }
+    foreach ($ucsIds as $ucsId)
+    {
+      assert('(int)$ucsId > 0x3000');
+    }
       
-      $values = array($userId);
-      array_push($values, $ucsIds);
+    $values = array($userId);
+    array_push($values, $ucsIds);
       
-      return self::getInstance()->delete('userid = ? AND ucs_id in (?)', $values);
+    return self::getInstance()->delete('userid = ? AND ucs_id in (?)', $values);
   }
 
   /**

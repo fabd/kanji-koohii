@@ -309,16 +309,23 @@ class apiActions extends sfActions
       $type       = $request->getParameter('type', ''); // no valid default
       $filt       = '';
 
-      if (!preg_match('/^(due|new|failed)$/', $type)) {
+      if (!preg_match('/^(due|new|failed|learned)$/', $type)) {
         return $this->createResponseFail(3, 'Invalid type for SRS review ("type")');
       }
 
-      // translate API parameters
-      if ($type === 'due') $type = 'expired';
-      if ($type === 'new') $type = 'untested';
-      if ($type === 'failed') { $type = 'expired'; $box = 1; }
+      if ($type === 'learned') {
+        $user = $this->getUser();
+        $userId = $user->getUserId();
+        $rsp->items = LearnedKanjiPeer::getKanji($userId);
+      } else {
 
-      $rsp->items = ReviewsPeer::getFlashcardsForReview($box, $type, $filt);
+        // translate API parameters
+        if ($type === 'due') $type = 'expired';
+        if ($type === 'new') $type = 'untested';
+        if ($type === 'failed') { $type = 'expired'; $box = 1; }
+
+        $rsp->items = ReviewsPeer::getFlashcardsForReview($box, $type, $filt);
+      }
     }
     else {
       return $this->createResponseFail(1, 'Missing or invalid review mode ("mode")');
@@ -433,25 +440,10 @@ echo $result;exit;
     
   /**
   *
-  * Returns ids of kanjis marked as learned
-  */
-  protected function API_srsLearned($request)
-  {
-    $rsp = new stdClass;
-    $user = $this->getUser();
-    $userId = $user->getUserId();
-
-    $rsp->items = LearnedKanjiPeer::getKanji($userId);
-      
-    return $this->createResponseOk($rsp);
-  }
-    
-  /**
-  *
   * Returns ids of all restudy kanji plus the ids of those which are marked as learned
   * (for clients updating their study info, single rq synthesizing what they could get via multiple rq's)
   */
-  protected function API_studyStart($request)
+  protected function API_studyInfo($request)
   {
     $rsp = new stdClass;
       

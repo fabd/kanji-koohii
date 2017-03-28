@@ -323,7 +323,7 @@ simple string substitition here to insert HTML elements for styling, or just rem
     <dd>(FREE REVIEW) : <var>1</var> to shuffle the selection</dd>
 
     <dt><code>type</code> (required)</dt>
-    <dd>(SRS REVIEW) : <var>due</var> (expired cards), <var>new</var> (untested, blue pile), <var>failed</var> (red pile)</dd>
+    <dd>(SRS REVIEW) : <var>due</var> (expired cards), <var>new</var> (untested, blue pile), <var>failed</var> (red pile), <var>learned</var> (red pile filtered by learned mark)</dd>
   </dl>
 
 <h5>URL STRUCTURE</h5>
@@ -446,7 +446,7 @@ SKIP    = 5
 
   <p>Note that unlike the Leitner chart seen on the website, this method does not filter between RTK1, RTK3, and non-RTK cards.
   
-  <p>Information returned: total count of new (blue), due (orange) and failed/restudy (red) cards.
+  <p>Information returned: total count of new (blue), due (orange) and failed/restudy (red) cards, plus the number of restudy cards marked as learned.
 
 <h5>URL STRUCTURE</h5>
 <p><samp><?php echo $api_url ?>/srs/info</samp>?api_key=TESTING</p>
@@ -459,7 +459,8 @@ SKIP    = 5
   "stat":           "ok",
   "new_cards":      20,
   "due_cards":      15,
-  "relearn_cards":  5
+  "relearn_cards":  5,
+  "learned_cards":  2
 }
 </code></pre>
 </div>
@@ -477,6 +478,74 @@ SKIP    = 5
 
 </div>
 -->
+
+  <h3>Study</h3>
+
+<div class="doc-m">
+  <?php echo method_header('/study/sync') ?>
+
+<p>Send flashcard 'learned' marks back to the server. You can send a list of cards to be marked and a list of cards
+to be unmarked. This is only relevant for cards in the red pile, but there is no need to reference all of them.</p>
+
+<p>There is a built in limit of N cards that applies to either list (see <var>limit_sync</var> in /review/start response).</p>
+
+<p>Please try, as much as possible, to sync the marks in batches, instead of making an API call each time the user marks or unmarks a card.</p>
+
+<h5>URL STRUCTURE</h5>
+<p><samp><?php echo $api_url ?>/study/sync</samp></p>
+
+<h5>METHOD</h5>
+<p><samp>POST</samp> : <span style="color:red">this method requires the data to be sent in JSON format</span> with <samp>Content-Type: application/json</samp> HTTP header.
+
+<p><var>learned</var>: is an array of ids (the UCS code of the kanji) for the flashcards that should be marked as learned.</p>
+
+<p><var>notLearned</var>: is an array of ids for the flashcards that should be <strong>unmarked</strong> as learned.</p>
+
+<p>Note both arrays are required. Send an empty array when there are no ids to send for either list.</p>
+
+<pre><code class="json">{
+  "learned": [22244,22242,22241],
+  "notLearned": []
+} 
+</code></pre>
+
+<h5>SAMPLE JSON RESPONSE</h5>
+<p><var>putLearned</var>: is an array that confirms each item that has been succesfully marked as learned.
+<p><var>putNotLearned</var>: is an array that confirms each item that has been succesfully unmarked as learned.
+
+<p>For successful operations, the arrays contain the same ids as the corresponding input. On failure, an empty array is returned.</p>
+
+<pre><code class="json">{
+  "stat": "ok",
+  "putLearned": [22244,22242,22241],
+  "putNotLearned": []
+} 
+</code></pre>
+</div>
+
+
+<div class="doc-m">
+  <?php echo method_header('/study/info') ?>
+
+  <p>Returns the ids of the user’s restudy flashcards (red pile), plus the ids of flaschards currently marked as learned.</p>
+
+  <p>Note that the second list is a subset of the first one: any learned flashcards appear in both.</p>
+
+<h5>URL STRUCTURE</h5>
+<p><samp><?php echo $api_url ?>/study/info</samp>?api_key=TESTING</p>
+
+<h5>METHOD</h5>
+<p><samp>GET</samp></p>
+
+<h5>SAMPLE JSON RESPONSE</h5>
+<pre><code class="json">{
+  "stat": "ok",
+  "items": [22244,22242,22241,22240],
+  "learnedItems": [22242,22241],
+}
+</code></pre>
+
+</div>
 
 
 <?php decorate_end() ?>

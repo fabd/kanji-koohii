@@ -58,7 +58,7 @@ if (null === sfConfig::get('app_fork')) {
 <?php else: ?>
   <p><strong>Support Kanji Koohii development</strong> and (soon) enjoy some perks!</p>
   <p><a href="https://www.patreon.com/kanjikoohii" style="color:#e6461a;font-size:120%;">Become a patron</a></p>
-  <p>Already a patron? <?php echo kkPatreon::get_login_link() ?></p>
+  <p>Already a patron? <?php echo kkPatreon::get_login_link('Link your account') ?></p>
 <?php endif ?>
   </div>
 

@@ -10,6 +10,9 @@
   <!-- the docute client styles -->
 <?php 
   // $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
+  
+  // reset default app css/js
+  $sf_response->clearStuffsRefactorMe();
 ?>
 <?php include_stylesheets() ?>
   <link rel="stylesheet" href="https://unpkg.com/docute/dist/docute.css">
@@ -30,6 +33,29 @@
   <meta name="theme-color" content="#f0ddd4"></head>
 
   <style type="text/css">
+
+/* docute theme */
+body {  }
+
+h1, h2, h3, h4, h5 { color:#7f7d75; }
+h2, h3 { color:#fa3d60; }
+h4 { color:#42b983; }
+
+.sidebar-toggle, .sidebar { background:#f8f8f8; }
+.main { background:#fff; }
+
+.sidebar { border-right:none; }
+
+.markdown-body h4 {
+  background: #efe;
+  margin: 24px -30px 16px;
+  padding: 16px 30px;
+}
+
+.markdown-body code { color:#fa3d60;  }
+.markdown-body pre code { color:#444; }
+
+
 <?php if(has_slot('inline_styles')): ?>
 <?php include_slot('inline_styles') ?>
 <?php endif ?>
@@ -46,7 +72,7 @@
   
 <!-- bootstrap your docute app! -->
 <script>
-  docute.init(<?php echo json_encode(get_slot('docute.init')) ?>);
+  docute.init(<?php echo get_slot('docute.init') ?>);
 </script>
 
 </body>

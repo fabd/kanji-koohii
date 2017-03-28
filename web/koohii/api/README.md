@@ -39,14 +39,14 @@ All API responses are sent in JSON format (see [json.org](http://json.org/)).
 
 A succesful response has `Content-Type: application/json; charset=utf-8` in the HTTP response header.
 
-When a request is successful the response starts with the "stat" field with the value "ok":
+**Successful response** starts with "stat" => "ok":
 
     {
       "stat": "ok",
       //(misc. data follows...)
     }
 
-When a request fails the following format is used. Note that this is a failure from the API logic, which is always HTTP 200 OK. A low level failure needs to be handled separately, such as HTTP 403, etc. and will not contain JSON.
+**Failed response** returns "stat" => "fail". Note that an API error is HTTP 200. A low level failure such as HTTP 403, etc. will not return this response.
 
     {
       "stat":    "fail",
@@ -63,13 +63,11 @@ When a request fails the following format is used. Note that this is a failure f
 
 Returns information about the current user.
 
-URL STRUCTURE
-`http://kanji.koohii.com/api/v1/account/info?api_key=TESTING` 
+**URL STRUCTURE** `/api/v1/account/info?api_key=TESTING`
 
-METHOD
-`GET` 
+**METHOD** `GET` 
 
-SAMPLE JSON RESPONSE
+**SAMPLE JSON RESPONSE**
 
     {
       "stat": "ok",
@@ -86,7 +84,7 @@ SAMPLE JSON RESPONSE
 
 #### /keywords/list
 
-TODO
+TODO.
 
 
 ### Review
@@ -105,23 +103,22 @@ A suggestion to handle reviews similarly to the Kanji Koohi javascripts works li
 - fetch the initial set of card data at position #0 in your array of card ids (such as returned by `/review/start` or a custom sequence)
 - fetch 10 more cards at position #5, #15, #25, etc. through the array of card ids. That way, the user will not wait for new cards to load since you will be fetching the next ten cards before the user finished reviewing the previously fetched cards.
 
+**URL STRUCTURE** `/api/v1/review/fetch?api_key=TESTING&yomi=1&items=20108,20845,19968,20843,19977,21313,22235,19971,20061,20116` 
 
-yomi **(optional)**
+**METHOD** `GET` 
 
-  1 to include sample On/Kun readings, 0 to disable.
+... | ...
+:-- | :--
+**yomi** (optional) | `1` to include sample On/Kun readings, `0` to disable.
 
-URL STRUCTURE
-`http://kanji.koohii.com/api/v1/review/fetch?api_key=TESTING&yomi=1&items=20108,20845,19968,20843,19977,21313,22235,19971,20061,20116` 
 
-METHOD
-`GET` 
-
-SAMPLE JSON RESPONSE
-The response contains an array of objects. The kanji is *not* included.
+**SAMPLE JSON RESPONSE**
 
     {
-      "stat":       "ok",
-      "card_data":      [
+      "stat": "ok",
+    
+      // an array of kanji cards
+      "card_data": [
         {
           "keyword":      "correct",
           "id":           27491,
@@ -136,9 +133,9 @@ If the **yomi** option is enabled, each **card_data** entry will also contain a 
 In this example the kanji 正 is enclosed in brackets along with the part of the reading that corresponds. You can use simple string substitition here to insert HTML elements for styling, or just remove them.
 
     {
-      "card_data":      [
+      "card_data": [
         {
-          (...)
+          // ...
           "v_on": {
              "compound": "[正]午",
              "reading":  "[ショウ]ゴ",
@@ -157,35 +154,22 @@ The **free reviews** selection is really just a helper, since you can easily mak
 
 Note while testing you can repeat a SRS review any number of times so long as you don't update the flashcards. Keep in mind the selection returned for a SRS review can seem to change because it is shuffled by default (further, the shuffling of cards is done in sets of cards that expire on the same date, so that the most "urgent" cards still appear sooner in the selection).
 
-mode
+... | ...
+:--- | :---
+**mode**          | `free` for free (infinite) reviews, `srs` for spaced repetitions
+**from** (req)    | (FREE REVIEW) : Heisig index for start of range (based on user's RTK Edition setting)
+**to** (req)      | (FREE REVIEW) : Heisig index for end of range (based on user's RTK Edition setting)
+**shuffle** (opt) | (FREE REVIEW) : 1 to shuffle the selection
+**type** (req)    | (SRS REVIEW) : due (expired cards), new (untested, blue pile), failed (red pile), learned (red pile filtered by learned mark)
 
-  free for free (infinite) reviews, srs for spaced repetitions
+**URL STRUCTURE** `/api/v1/review/start?api_key=TESTING&mode=free&from=1&to=10&shuffle=1`
 
-from (required)
+**URL STRUCTURE** `/api/v1/review/start?api_key=TESTING&mode=srs&type=new` 
 
-  (FREE REVIEW) : Heisig index for start of range (based on user's RTK Edition setting)
+**METHOD** `GET` 
 
-to (required)
+**SAMPLE JSON RESPONSE**
 
-  (FREE REVIEW) : Heisig index for end of range (based on user's RTK Edition setting)
-
-shuffle (optional)
-
-  (FREE REVIEW) : 1 to shuffle the selection
-
-type (required)
-
-  (SRS REVIEW) : due (expired cards), new (untested, blue pile), failed (red pile), learned (red pile filtered by learned mark)
-
-URL STRUCTURE
-`http://kanji.koohii.com/api/v1/review/start?api_key=TESTING&mode=free&from=1&to=10&shuffle=1` 
-
-`http://kanji.koohii.com/api/v1/review/start?api_key=TESTING&mode=srs&type=new` 
-
-METHOD
-`GET` 
-
-SAMPLE JSON RESPONSE
 **items** is an array of flashcard ids. Since Kanji Koohii only deals in kanji flashcards, the unicode value is used as a unique id. Approximately 20,000 kanji and hanzi that are supported on the website all have a UCS code that fits in 16 bit storage (ie. "smallint" in MySQL).
 
 **limit_fetch** and **limit_sync** are the maximum number of items that can be handled by /review/fetch and /review/sync. These may change at a later time if the complexity of the flashcard data increases.
@@ -212,11 +196,9 @@ This can be used in two ways:
 
 Please do NOT sync one card at a time! It is easier on the server, and causes less delay in the app, to sync flashcard answers in batches.
 
-URL STRUCTURE
-`http://kanji.koohii.com/api/v1/review/sync` 
+**URL STRUCTURE** `/api/v1/review/sync` 
 
-METHOD
-`POST` : this method requires the data to be sent in JSON format with Content-Type: application/json HTTP header.
+**METHOD** `POST` (Content-Type: application/json HTTP header)
 
 **time** is currently ignored, and should be set to 0.
 
@@ -239,16 +221,17 @@ The flashcard ratings for the SRS are:
     DELETE  = 4
     SKIP    = 5
 
-SAMPLE JSON RESPONSE
-**put**: is an array that confirms each item that has been succesfully updated (or deleted).
-
-**ignored** (optional): if this is returned, it means the items have already been handled during this session and the card status has not been updated. A session is reset with /review/start . This is to avoid rating cards multiple times in case of an API request being sent twice.
+**SAMPLE JSON RESPONSE**
 
     {
       "stat":    "ok",
       "put":     [22244,22242,22241,22240],
       "ignored": [22244]
     } 
+
+**put**: is an array that confirms each item that has been succesfully updated (or deleted).
+
+**ignored** (optional): if this is returned, it means the items have already been handled during this session and the card status has not been updated. A session is reset with /review/start . This is to avoid rating cards multiple times in case of an API request being sent twice.
 
 
 ### SRS
@@ -261,8 +244,7 @@ Note that unlike the Leitner chart seen on the website, this method does not fil
 
 Information returned: total count of new (blue), due (orange) and failed/restudy (red) cards, plus the number of restudy cards marked as learned.
 
-URL STRUCTURE
-`http://kanji.koohii.com/api/v1/srs/info?api_key=TESTING` 
+**URL STRUCTURE** `/api/v1/srs/info?api_key=TESTING` 
 
 METHOD
 `GET` 
@@ -288,11 +270,9 @@ There is a built in limit of N cards that applies to either list (see **limit_sy
 
 Please try, as much as possible, to sync the marks in batches, instead of making an API call each time the user marks or unmarks a card.
 
-URL STRUCTURE
-`http://kanji.koohii.com/api/v1/study/sync` 
+**URL STRUCTURE** `/api/v1/study/sync` 
 
-METHOD
-`POST` : this method requires the data to be sent in JSON format with Content-Type: application/jsonHTTP header.
+**METHOD** `POST` (Content-Type: application/json HTTP header)
 
 **learned**: is an array of ids (the UCS code of the kanji) for the flashcards that should be marked as learned.
 
@@ -304,7 +284,7 @@ Note both arrays are required. Send an empty array when there are no ids to send
       "notLearned": []
     } 
 
-SAMPLE JSON RESPONSE
+**SAMPLE JSON RESPONSE**
 
 **putLearned**: is an array that confirms each item that has been succesfully marked as learned.
 
@@ -325,13 +305,11 @@ Returns the ids of the user’s restudy flashcards (red pile), plus the ids of f
 
 Note that the second list is a subset of the first one: any learned flashcards appear in both.
 
-URL STRUCTURE
-`http://kanji.koohii.com/api/v1/study/info?api_key=TESTING` 
+**URL STRUCTURE** `/api/v1/study/info?api_key=TESTING` 
 
-METHOD
-`GET` 
+**METHOD** `GET` 
 
-SAMPLE JSON RESPONSE
+**SAMPLE JSON RESPONSE**
 
     {
       "stat": "ok",

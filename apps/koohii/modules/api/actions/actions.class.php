@@ -106,6 +106,7 @@ class apiActions extends sfActions
 
   public function executeDocs()
   {
+    $this->setLayout('docuteLayout');
   }
 
   protected function validateAPIKey($api_key)

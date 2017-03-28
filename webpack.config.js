@@ -100,7 +100,8 @@ module.exports = {
 
   performance: {
     // turn off asset size warnings in development build
-    hints: isProduction
+    // webpack 2.3.2 "npm run build" chokes on this...
+    //hints: isProduction
   }
 }
 

@@ -1,9 +1,23 @@
 <?php
 /**
  * LearnedKanji Peer.
+ *
+ * Methods:
+ *  getCount($userId)
+ *
+ *  getKanji($userId)
+ *  
+ *  addKanji($userId, $ucsId)
+ *  addKanjis($userId, array $ucsIds)
+ *
+ *  hasKanji($userId, $ucsId)
+ *
+ *  clearKanji($userId, $ucsId)
+ *  clearKanjis($userId, array $ucsIds)
+ *
+ *  clearAll($userId)
  * 
  * 
- * @author  Fabrice Denis
  */
 
 class LearnedKanjiPeer extends coreDatabaseTable
@@ -59,7 +73,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
 
   /**
    * 
-   * @return
+   * @return boolean
    */
   public static function hasKanji($userId, $ucsId)
   {

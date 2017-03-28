@@ -42,7 +42,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
       array($userId, $ucsId));
   }
     
-  public static function addKanjis($userId, $ucsIds)
+  public static function addKanjis($userId, array $ucsIds)
   {
     $placeholders = join(',', array_fill(0, count($ucsIds), '(?, ?)'));
     $values = array();
@@ -85,7 +85,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
   *
   * @return boolean
   */
-  public static function clearKanjis($userId, $ucsIds)
+  public static function clearKanjis($userId, array $ucsIds)
   {
     foreach ($ucsIds as $ucsId)
     {

@@ -50,6 +50,10 @@ function output_sidenav_item($text, $internal_uri)
     <?php output_sidenav_item('/srs/info', $_internal_uri) ?></li>
 
     <!--<?php output_sidenav_item('/stories/list', $_internal_uri) ?></li>-->
+
+    <?php output_sidenav_item('/study/sync', $_internal_uri) ?></li>
+    <?php output_sidenav_item('/study/info', $_internal_uri) ?></li>
+
   </ul>
 </div>
 

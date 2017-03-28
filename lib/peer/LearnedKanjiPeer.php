@@ -41,6 +41,21 @@ class LearnedKanjiPeer extends coreDatabaseTable
     return self::$db->query('REPLACE INTO '.self::getInstance()->getName().' (userid, ucs_id) VALUES (?, ?)',
       array($userId, $ucsId));
   }
+    
+  public static function addKanjis($userId, $ucsIds)
+  {
+    $placeholders = join(',', array_fill(0, count($ucsIds), '(?, ?)'));
+    $values = array();
+    foreach ($ucsIds as $ucsId)
+    {
+      assert('(int)$ucsId > 0x3000');
+      array_push($values, $userId);
+      array_push($values, $ucsId);
+    }
+     
+    return self::$db->query('REPLACE INTO '.self::getInstance()->getName().' (userid, ucs_id) VALUES '.$placeholders,
+                              $values);
+  }
 
   /**
    * 
@@ -64,6 +79,24 @@ class LearnedKanjiPeer extends coreDatabaseTable
 
     return self::getInstance()->delete('userid = ? AND ucs_id = ?', array($userId, $ucsId));
   }
+  
+  /**
+  * Remove relearned kanjis from the selection.
+  *
+  * @return boolean
+  */
+  public static function clearKanjis($userId, $ucsIds)
+  {
+    foreach ($ucsIds as $ucsId)
+    {
+      assert('(int)$ucsId > 0x3000');
+    }
+      
+    $values = array($userId);
+    array_push($values, $ucsIds);
+      
+    return self::getInstance()->delete('userid = ? AND ucs_id in (?)', $values);
+  }
 
   /**
    * Clear the relearned kanji list for this user.
@@ -76,5 +109,18 @@ class LearnedKanjiPeer extends coreDatabaseTable
     $user->getAttributeHolder()->remove(rtkUser::IS_RESTUDY_SESSION);
 
     return self::getInstance()->delete('userid = ?', $userId);
+  }
+
+  /**
+   * Return array of relearned kanji for given user
+   *
+   * @return array  kanji ids
+   */
+  public static function getKanji($userId)
+  {
+    $select = self::getInstance()->select('ucs_id');
+    $select->where('userid = ?', $userId);
+    $ids = self::$db->fetchCol($select);
+    return array_map('intval', $ids);
   }
 }

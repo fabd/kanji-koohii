@@ -71,13 +71,18 @@ class reviewActions extends sfActions
    * Free Review Mode (Labs page):
    *
    *   from, to     Range of Heisig numbers (1-xxxx)
-   *    yomi        Include example words (optional)
-   *   shuffle      Shuffle cards (with from, to)
-   *   reverse      Kanki to Keyword
+   *   
+   *   lesson       Lesson Id (sets from, to)
    *
    *   known        N cards to review from known kanji.
    *
-   * Otherwise the SRS parameters are expected:
+   * Options:
+   * 
+   *   yomi         Include example words (optional)
+   *   shuffle      Shuffle cards (with from, to)
+   *   reverse      Kanki to Keyword
+   *
+   * SRS mode:
    * 
    *   type = 'expired'|'untested'|'relearned'|'fresh'
    *   box  = 'all'|[1-5]
@@ -94,7 +99,15 @@ class reviewActions extends sfActions
     $reviewTo     = $request->getParameter('to',   0);
     $reviewKnown  = $request->getParameter('known', 0);
     $reviewShuffle= $request->getParameter('shuffle', 0) > 0;
-//DBG::request();exit;
+// DBG::request();exit;
+
+    if ($lesson = $request->getParameter('lesson', 0))
+    {
+      $lessonInfo = rtkIndex::getLessonInfo((int)$lesson);
+      $this->forward404If($lessonInfo === null);
+      $reviewFrom = $lessonInfo['from'];
+      $reviewTo   = $lessonInfo['from'] + $lessonInfo['count'] - 1;
+    }
 
     // kanji > keyword
     $options['fc_reverse'] = $request->getParameter('reverse') ? true : false;

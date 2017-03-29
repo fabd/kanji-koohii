@@ -29,10 +29,10 @@ $db->dumpResultSet($rs);
       # for Study page we need the kanj in the url because Save story reloads the page and URL location ?>
 <?php $requestUri = $reviewMode ? 'study/editstory' : 'study/edit?id='.$kanjiData->framenum ?>
 
-<?php echo form_tag($requestUri, array('name' => 'EditStory')) ?>
+<?= form_tag($requestUri, array('name' => 'EditStory')) ?>
 
   <?php # state variables ?>
-  <?php echo input_hidden_tag('ucs_code', $kanjiData->ucs_id) ?>
+  <?= input_hidden_tag('ucs_code', $kanjiData->ucs_id) ?>
   <?php if ($reviewMode): ?>
     <input type="hidden" name="reviewMode" value="1" />
   <?php endif ?>
@@ -41,18 +41,18 @@ $db->dumpResultSet($rs);
     <div class="padding rtkframe">
 
       <div class="left">
-        <div class="framenum" title="Frame number"><?php echo $kanjiData->framenum ?></div>
+        <div class="framenum" title="Frame number"><?= $kanjiData->framenum ?></div>
 <?php if ($reviewMode): ?>
-        <div class="kanji onhover"><?php echo cjk_lang_ja($kanjiData->kanji) ?></div>
+        <div class="kanji onhover"><?= cjk_lang_ja($kanjiData->kanji) ?></div>
 <?php else: ?>
-        <div class="kanji"><?php echo cjk_lang_ja($kanjiData->kanji) ?></div>
+        <div class="kanji"><?= cjk_lang_ja($kanjiData->kanji) ?></div>
 <?php endif ?> 
-        <div class="strokecount" title="Stroke count">[<?php echo $kanjiData->strokecount ?>]<br/><?php echo $kanjiData->readings ?></div>
+        <div class="strokecount" title="Stroke count">[<?= $kanjiData->strokecount ?>]<br/><?= $kanjiData->readings ?></div>
       </div>
 
       <div class="right">
         <div class="keyword">
-          <span class="JSEditKeyword" title="Click to edit the keyword" data-url="<?php echo $sf_context->getController()->genUrl('study/editkeyword?id='.$kanjiData->ucs_id); ?>"><?php
+          <span class="JSEditKeyword" title="Click to edit the keyword" data-url="<?= $sf_context->getController()->genUrl('study/editkeyword?id='.$kanjiData->ucs_id); ?>"><?php
             # do the "multiple/edition" thing for original keywords, print the custom keyword as is.
             echo (null !== $custKeyword) ? esc_specialchars($custKeyword) : getEditionKeyword($kanjiData->keyword);
           ?></span>
@@ -63,19 +63,19 @@ $db->dumpResultSet($rs);
         <div id="storybox">
 
           <?php # Story Edit ?>
-          <div id="storyedit" style="display:<?php echo $dispEdit ?>;">
+          <div id="storyedit" style="display:<?= $dispEdit ?>;">
 
-            <?php echo form_errors(); ?>
+            <?= form_errors(); ?>
 
-            <?php echo textarea_tag('txtStory', '', /*rows="12" cols="55"*/ array('id' => 'frmStory')) ?>
+            <?= textarea_tag('txtStory', '', /*rows="12" cols="55"*/ array('id' => 'frmStory')) ?>
 
             <div class="controls valign">
               <div style="float:left;">
-                <?php echo checkbox_tag('chkPublic', '1', false, array('id' => 'chkPublic')) ?>
-                <?php echo label_for('chkPublic', 'Share this story') ?>
+                <?= checkbox_tag('chkPublic', '1', false, array('id' => 'chkPublic')) ?>
+                <?= label_for('chkPublic', 'Share this story') ?>
               </div>
               <div style="float:right;">
-                <?php echo submit_tag('Save changes', array('name' => 'doUpdate', 'title' => 'Save/Update story')) ?>
+                <?= submit_tag('Save changes', array('name' => 'doUpdate', 'title' => 'Save/Update story')) ?>
                 <input type="button" id="storyedit_cancel" value="Cancel" name="cancel" title="Cancel changes" />
               </div>
               <div class="clear"></div>
@@ -83,7 +83,7 @@ $db->dumpResultSet($rs);
           </div>
           
           <?php # Story View ?>
-          <div id="storyview" style="display:<?php echo $dispView ?>;">
+          <div id="storyview" style="display:<?= $dispView ?>;">
             <div id="sv-textarea" class="bookstyle" title="Click to edit your story" style="display:block;">
 <?php
   if (!empty($formatted_story)) { 
@@ -101,7 +101,7 @@ $db->dumpResultSet($rs);
 <?php if (!$reviewMode && $isRestudyKanji): ?>
   <?php if (!$isRelearnedKanji): ?>
             <div class="controls">
-              <?php echo input_tag('doLearned', '', array(
+              <?= input_tag('doLearned', '', array(
                 'type' => 'image', 'src' => '/images/2.0/study/restudy-button.gif',
                 'alt'  => 'Add to restudied list',
                 'title'=> 'Add kanji that you have relearned to a list for review later' )) ?>

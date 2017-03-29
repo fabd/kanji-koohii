@@ -39,6 +39,12 @@
         to
         <?php echo input_tag('to', 10, array('style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i')) ?>
       </div>
+
+      <div class="form-group">
+      <?php $options_lessons = array_merge([0 => '---'], rtkIndex::getLessonsDropdown()) ?>
+        RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-control form-control-i', 'style' => 'width:14em;margin:0 0.3em;']); ?>
+      </div>
+
 <?php 
       echo _bs_form_group(
         _bs_input_checkbox('shuffle', array('label' => 'Shuffle cards'))

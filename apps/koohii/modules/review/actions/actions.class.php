@@ -104,7 +104,7 @@ class reviewActions extends sfActions
 
     $options['ts_start'] = UsersPeer::intLocalTime();
 
-    if (!$request->hasParameter('known') && !$request->hasParameter('from'))
+    if (false === $options['freemode'])
     {
       // in SRS mode the yomi option comes from user's account settings
       $options['fc_yomi'] = $this->getUser()->getUserSetting('OPT_READINGS');

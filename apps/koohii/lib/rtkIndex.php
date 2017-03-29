@@ -367,14 +367,48 @@ class rtkIndex
   }
 
   /**
-   * Returns lessons indexed by number with kanji count for each lesson.
+   * Returns lessons as a hash (id => kanji_count).
    * 
-   * @param  
-   * @return 
+   * @return array
    */
   public static function getLessons()
   {
     return self::inst()->lessons;
+  }
+
+  /**
+   * Returns hash for lessons dropdown selection (lesson_id => label).
+   * 
+   * @return array
+   */
+  public static function getLessonsDropdown()
+  {
+    $lessons = self::getLessons();
+    $options = [];
+    foreach ($lessons as $k => $v) {
+      $options[$k] = "Lesson ${k} (${v} kanji)";
+    }
+    return $options;
+  }
+
+  /**
+   * Returns lesson metadata given lesson id from getLessons().
+   *
+   * @return mixed   [from => (int), count => (int)]  or  null if invalid lesson
+   */
+  public static function getLessonInfo($lessonId)
+  {
+    $lessons = self::getLessons();
+
+    $from = 1;
+
+    foreach ($lessons as $lessNr => $lessCount) {
+      if ($lessNr == $lessonId) {
+        return ['from' => $from, 'count' => $lessCount];
+      }
+      $from += $lessCount;
+    }
+    return null;
   }
 
   /**

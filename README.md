@@ -25,10 +25,13 @@ Don't hesitate to ask questions [on Gitter](https://gitter.im/kanji-koohii/devel
 
 Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). Issues are grouped in categories of interests such as front-end performance, UX improvements, etc. If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
 
+#### Requirements
+Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell (ie. Linux, OS X or a VM on Windows).
 
-## Development setup
+- **Php 7.0+** with xml, mbstring, curl.
+- **OPTIONAL**: JRE (Java Runtime Env.) for Closure compiler and yuicompressor (.jar).
 
-Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell. The setup is currently tested on Ubuntu. The build script should work with very little changes on OS X. For Windows, you'll probably want a virtual machine with a linux distro so you can use grep, npm etc.
+#### Development setup
 
 * [First Time Setup](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-First-Time-Setup) for setting up the repository and database
 * [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build) for basic info about dev/test environments

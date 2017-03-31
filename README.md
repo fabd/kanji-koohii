@@ -2,6 +2,7 @@
 
 **Kanji Koohii** is a web application designed to help Japanese language learners remember the kanji. http://kanji.koohii.com
 <br>
+[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <br>
 <p align="center">
   <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/doc/github/README - mobile.png"><br>
@@ -20,19 +21,9 @@ Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-k
 
 ## Contributing
 
-Let's talk [on Gitter](https://gitter.im/kanji-koohii/development). The "feedback" room is intended for user feedback and testing. The "development" room is where we can talk about the code (that way testers can opt out of notifications from the development chat). Note there are Android and iOS clients with push notification support. Desktop client also shows the recent repository activity.
+Don't hesitate to ask questions [on Gitter](https://gitter.im/kanji-koohii/development). It'll save you time getting into the codebase.
 
-[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use them to group issues in categories of interests such as front-end performance, UX improvements, etc. If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
-
-### Branches
-
-I find this basic master/develop/feature-branch to be sufficient so far.
-
-* **master** is meant to be the last stable, production version.
-* **develop** is a branch where features are merged.
-* **f_feature** a feature branch.
+Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). Issues are grouped in categories of interests such as front-end performance, UX improvements, etc. If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
 
 
 ## Development setup
@@ -64,14 +55,14 @@ The source code is licensed as [AGPLv3](http://www.fsf.org/licensing/licenses/ag
 
 ### Acknowledgments
 
-Note: the license of each particular project can be found on their respective websites. This list is not exhaustive and may be updated from time to time. The main purpose is to give an overview of things Kanji Koohii is built on.
+This list is not exhaustive and may be updated from time to time. The main purpose is to give an overview of things Kanji Koohii is built on.
 
 * Symfony 1.4 (main framework)
 * Zend Framework (bits and pieces)
-* [UTF-8 to Code Point Array Converter in PHP](https://hsivonen.fi/php-utf8/) by Henri Sivonen
 * [Vue.js](https://vuejs.org/)
 * [YUI2](http://yui.github.io/yui2/) (legacy Javascript being phased out)
-* FontAwesome icons (free)
+* [UTF-8 to Code Point Array Converter in PHP](https://hsivonen.fi/php-utf8/) by Henri Sivonen
+* FontAwesome (icons)
 
 ### Copyright Notices
 

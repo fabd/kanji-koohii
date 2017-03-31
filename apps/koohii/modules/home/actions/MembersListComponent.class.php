@@ -36,37 +36,38 @@ class MembersListBinding implements uiSelectTableBinding
 {
   public function getConfig()
   {
+    // MUST BE VALID JSON! ! !
     return <<< EOD
     {
-      settings: {
-        primaryKey: ['userid'],
-        sortColumn:  'ts_lastreview',
-        sortOrder:  1
+      "settings": {
+        "primaryKey": ["userid"],
+        "sortColumn":  "ts_lastreview",
+        "sortOrder":  1
       },
-      columns: [
+      "columns": [
         {
-          caption:   'Member',
-          width:     28,
-          colData:  'username',
-          colDisplay: '_username'
+          "caption":   "Member",
+          "width":     28,
+          "colData":  "username",
+          "colDisplay": "_username"
         },
         {
-          caption:   'From',
-          width:     33,
-          colData:  'location'
+          "caption":   "From",
+          "width":     33,
+          "colData":  "location"
         },
         {
-          caption:   'Last review',
-          width:     25,
-          cssClass: 'center',
-          colData:  'ts_lastreview',
-          colDisplay:'_lastreview'
+          "caption":   "Last review",
+          "width":     25,
+          "cssClass": "center",
+          "colData":  "ts_lastreview",
+          "colDisplay":"_lastreview"
         },
         {
-          caption:   'Flashcards',
-          width:     10,
-          cssClass: 'right',
-          colData:  'fc_count'
+          "caption":   "Flashcards",
+          "width":     10,
+          "cssClass": "right",
+          "colData":  "fc_count"
         }
       ]
     }

@@ -25,12 +25,15 @@ class aboutActions extends sfActions
 
     $throttler->setTimeout();
   }
-
-  /* DISABLED 
-  public function executeAdvertise()
+ 
+  public function executePhpinfo()
   {
+    if ($this->getUser()->isAdministrator()) {
+      phpinfo();exit;
+    }
+    // dont do a 404 + log on staging
+    exit;
   }
-  */
 
   public function executeLicense()
   {

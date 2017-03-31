@@ -33,40 +33,22 @@ class coreJson
    * Option to pass to decode() to get associative arrays instead of objects.
    */
   const JSON_ASSOC = 1;
-
-  /**
-   * Set this to true to use the native php json encoding & decoding.
-   */
-  const USE_NATIVE = false;
   
   /**
    * Check if the native json encoding/decoding functions are present.
    * 
    * @return bool   Returns true if native functions are available & enabled (see USE_NATIVE).
    */
-  public static function checkNative()
+  private static function checkNative()
   {
-    static $native = null;
-    static $loaded = false;
+    static $native = false;
 
-    if (self::USE_NATIVE) {
-      if ($native===null) {
-        if ($native = function_exists('json_decode')) {
-          return true;
-        }
-      }
-      return true;
+    if (null === $native) {
+      $native = function_exists('json_decode');
     }
 
-    if (!$loaded)
-    {
-      require_once(dirname(__FILE__).'/lib/Services_JSON.php');
-      $loaded = true;
-    }
-
-    return false;
+    return $native;
   }
-  
   
   /**
    * Encode data to a JSON string.
@@ -80,14 +62,7 @@ class coreJson
    */
   public static function encode($object, $php_json_options = 0)
   {
-    if (self::checkNative()) {
-      $json_string = json_encode($object, $php_json_options);
-    }
-    else {
-      $json = new Services_JSON();
-      $json_string = $json->encode($object);
-    }
-    return $json_string;
+    return json_encode($object, $php_json_options);
   }
 
   /**
@@ -99,16 +74,13 @@ class coreJson
    */  
   public static function decode($json_string, $options = 0)
   {
-    if (self::checkNative()) {
-      $result = json_decode($json_string, $options===self::JSON_ASSOC);
-      if (!is_array($result) && !is_object($result)) {
-        throw new sfException('coreJson decode error');
-      }
+// DBG::printr($json_string);exit;
+
+    $result = json_decode($json_string, $options===self::JSON_ASSOC);
+    if (!is_array($result) && !is_object($result)) {
+      throw new sfException(sprintf('coreJson::decode() error : %s', json_last_error_msg()));
     }
-    else {
-      $json = new Services_JSON($options===self::JSON_ASSOC ? SERVICES_JSON_LOOSE_TYPE : 0);
-      $result = $json->decode($json_string);
-    }
+
     return $result;
   }
 }

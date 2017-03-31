@@ -44,46 +44,46 @@ class FailedListTableBinding implements uiSelectTableBinding
 {
   public function getConfig()
   {
+    // MUST BE VALID JSON! ! !
     return <<< EOD
     {
-      settings: {
-        primaryKey: ['seq_nr']
+      "settings": {
+        "primaryKey": ["seq_nr"]
       },
-      columns: [
+      "columns": [
         {
-          caption:   'Framenum',
-          width:     5,
-          cssClass:  'center',
-          colData:  'seq_nr'
+          "caption":   "Framenum",
+          "width":     5,
+          "cssClass":  "center",
+          "colData":  "seq_nr"
         },
         {
-          caption:   'Keyword',
-          width:     19,
-          cssClass:  'keyword',
-          colData:  'keyword',
-          colDisplay:  '_keyword'
+          "caption":   "Keyword",
+          "width":     19,
+          "cssClass":  "keyword",
+          "colData":  "keyword",
+          "colDisplay":  "_keyword"
         },
         
-        /* flashcard data */
         {
-          caption:   'Pass',
-          width:     8,
-          cssClass:  'bold center',
-          colData:  'successcount'
+          "caption":   "Pass",
+          "width":     8,
+          "cssClass":  "bold center",
+          "colData":  "successcount"
         },
         {
-          caption:   'Fail',
-          width:     8,
-          cssClass:  'center red',
-          colData:  'failurecount',
-          colDisplay: '_failurecount'
+          "caption":   "Fail",
+          "width":     8,
+          "cssClass":  "center red",
+          "colData":  "failurecount",
+          "colDisplay": "_failurecount"
         },
         {
-          caption:   'Last&nbsp;Review',
-          width:     15,
-          cssClass:  'center nowrap',
-          colData:  'ts_lastreview',
-          colDisplay:'_lastreview'
+          "caption":   "Last&nbsp;Review",
+          "width":     15,
+          "cssClass":  "center nowrap",
+          "colData":  "ts_lastreview",
+          "colDisplay":"_lastreview"
         }
       ]
     }

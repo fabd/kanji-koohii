@@ -39,72 +39,70 @@ class FlashcardListBinding implements uiSelectTableBinding
   {
     sfProjectConfiguration::getActive()->loadHelpers(array('CJK'));
   
-    $colReading = _CJ('Onyomi');
-    
+    // MUST BE VALID JSON! ! !
     return <<< EOD
     {
-      settings: {
-        primaryKey: ['seq_nr']
+      "settings": {
+        "primaryKey": ["seq_nr"]
       },
-      columns: [
+      "columns": [
         {
-          caption:   '#',
-          width:     5,
-          cssClass:  'center',
-          colData:  'seq_nr'
+          "caption":   "#",
+          "width":     5,
+          "cssClass":  "center",
+          "colData":  "seq_nr"
         },
         {
-          caption:   'Char.',
-          width:     7,
-          cssClass:  'kanji',
-          colData:  'kanji',
-          colDisplay:  '_kanji'
+          "caption":   "Char.",
+          "width":     7,
+          "cssClass":  "kanji",
+          "colData":  "kanji",
+          "colDisplay":  "_kanji"
         },
         {
-          caption:   'Keyword',
-          width:     19,
-          cssClass:  'keyword',
-          colData:  'keyword',
-          colDisplay:  '_keyword'
+          "caption":   "Keyword",
+          "width":     19,
+          "cssClass":  "keyword",
+          "colData":  "keyword",
+          "colDisplay":  "_keyword"
         },
         {
-          caption:   '$colReading',
-          width:     15,
-          cssClass:  'nowrap',
-          colData:  'onyomi'
+          "caption":   "Onyomi",
+          "width":     15,
+          "cssClass":  "nowrap",
+          "colData":  "onyomi"
         },
         {
-          caption:  '<span class="visible-xs-sm">S</span><span class="visible-md-lg">Strokecount</span>',
-          width:    15,
-          cssClass: 'center',
-          colData:  'strokecount'
+          "caption":  "<span class=\"visible-xs-sm\">S</span><span class=\"visible-md-lg\">Strokecount</span>",
+          "width":    15,
+          "cssClass": "center",
+          "colData":  "strokecount"
         },
         
-        /* flashcard data */
         {
-          caption:   'Pass',
-          width:     8,
-          cssClass:  'bold center',
-          colData:  'successcount'
+          "caption":   "Pass",
+          "width":     8,
+          "cssClass":  "bold center",
+          "colData":  "successcount"
         },
         {
-          caption:   'Fail',
-          width:     8,
-          cssClass:  'center red',
-          colData:  'failurecount'
+          "caption":   "Fail",
+          "width":     8,
+          "cssClass":  "center red",
+          "colData":  "failurecount"
         },
         {
-          caption:   'Box',
-          width:     8,
-          cssClass:  'bold center',
-          colData:  'leitnerbox'
+          "caption":   "Box",
+          "width":     8,
+          "cssClass":  "bold center",
+          "colData":  "leitnerbox"
         },
         {
-          caption:   'Last&nbsp;Review',
-          width:     15,
-          cssClass:  'center',
-          colData:  'ts_lastreview',
-          colDisplay:'_lastreview'
+          "caption":   "Last&nbsp;Review",
+          "width":     15,
+          "cssClass":  "center",
+          "colData":  "ts_lastreview",
+          "colDisplay":"_lastreview"
         }
       ]
     }

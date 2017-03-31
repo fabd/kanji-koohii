@@ -50,44 +50,45 @@ class EditKeywordsTableBinding implements uiSelectTableBinding
   {
     sfProjectConfiguration::getActive()->loadHelpers(array('Asset', 'SimpleDate', 'CJK'));
     
+    // MUST BE VALID JSON! ! !
     return <<< EOD
     {
-      settings: {
-        primaryKey: ['ucs_id']
+      "settings": {
+        "primaryKey": ["ucs_id"]
       },
-      columns: [
+      "columns": [
         {
-          caption:   'Index',
-          width:     5,
-          cssClass:  'center',
-          colData:  'seq_nr'
+          "caption":   "Index",
+          "width":     5,
+          "cssClass":  "center",
+          "colData":  "seq_nr"
         },
         {
-          caption:   'Char.',
-          width:     7,
-          cssClass:  'kanji',
-          colData:  'kanji',
-          colDisplay:  '_kanji'
+          "caption":   "Char.",
+          "width":     7,
+          "cssClass":  "kanji",
+          "colData":  "kanji",
+          "colDisplay":  "_kanji"
         },
         {
-          caption:   'Heisig&nbsp;Keyword',
-          width:     20,
-          cssClass:  'keyword',
-          colData:  'keyword',
-          colDisplay:  '_keyword'
+          "caption":   "Heisig&nbsp;Keyword",
+          "width":     20,
+          "cssClass":  "keyword",
+          "colData":  "keyword",
+          "colDisplay":  "_keyword"
         },
         {
-          caption:   'Customized&nbsp;Keyword',
-          width:     20,
-          cssClass:  'keyword JSCkwTd',
-          colData:   'custkeyword',
-          colDisplay:  '_custkeyword'
+          "caption":   "Customized&nbsp;Keyword",
+          "width":     20,
+          "cssClass":  "keyword JSCkwTd",
+          "colData":   "custkeyword",
+          "colDisplay":  "_custkeyword"
         },
         {
-          caption:   'Edit',
-          width:     5,
-          cssClass:  'center edit-keyword',
-          colDisplay:   '_edit'
+          "caption":   "Edit",
+          "width":     5,
+          "cssClass":  "center edit-keyword",
+          "colDisplay":   "_edit"
         }
         
       ]

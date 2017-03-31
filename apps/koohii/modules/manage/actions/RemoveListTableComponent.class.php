@@ -52,64 +52,64 @@ class RemoveListTableBinding implements uiSelectTableBinding
     
     $this->_selection = uiSelectionState::getSelection(manageActions::REMOVE_FLASHCARDS);
     
+    // MUST BE VALID JSON! ! !
     return <<< EOD
     {
-      settings: {
-        primaryKey: ['ucs_id']
+      "settings": {
+        "primaryKey": ["ucs_id"]
       },
-      columns: [
+      "columns": [
         {
-          caption:   'Index',
-          width:     5,
-          cssClass:  'center',
-          colData:  'seq_nr'
+          "caption":   "Index",
+          "width":     5,
+          "cssClass":  "center",
+          "colData":  "seq_nr"
         },
         {
-          caption:   'Char.',
-          width:     7,
-          cssClass:  'kanji',
-          colData:  'kanji',
-          colDisplay:  '_kanji'
+          "caption":   "Char.",
+          "width":     7,
+          "cssClass":  "kanji",
+          "colData":  "kanji",
+          "colDisplay":  "_kanji"
         },
         {
-          caption:   'Keyword',
-          width:     10,
-          cssClass:  'keyword',
-          colData:  'keyword'/*,
-          colDisplay:  '_keyword'*/
+          "caption":   "Keyword",
+          "width":     10,
+          "cssClass":  "keyword",
+          "colData":  "keyword"
         },
         
         {
-          caption:   'Pass',
-          width:     1,
-          cssClass:  'bold center',
-          colData:  'successcount'
+          "caption":   "Pass",
+          "width":     1,
+          "cssClass":  "bold center",
+          "colData":  "successcount"
         },
         {
-          caption:   'Fail',
-          width:     1,
-          cssClass:  'center red',
-          colData:  'failurecount',
-          colDisplay: '_failurecount'
+          "caption":   "Fail",
+          "width":     1,
+          "cssClass":  "center red",
+          "colData":  "failurecount",
+          "colDisplay": "_failurecount"
         },
         {
-          caption:   'Box',
-          width:     8,
-          cssClass:  'bold center',
-          colData:  'leitnerbox'
+          "caption":   "Box",
+          "width":     8,
+          "cssClass":  "bold center",
+          "colData":  "leitnerbox"
         },
         {
-          caption:   'Last&nbsp;Review',
-          width:     15,
-          cssClass:  'center',
-          colData:  'ts_lastreview',
-          colDisplay:  '_lastreview'
+          "caption":   "Last&nbsp;Review",
+          "width":     15,
+          "cssClass":  "center",
+          "colData":  "ts_lastreview",
+          "colDisplay":  "_lastreview"
         },
         {
-          caption:   '<input type="checkbox" name="chkAll" value="all" class="chkAll" />',
-          width:     1,
-          cssClass:  'center',
-          colDisplay:  '_checkbox'
+          "caption":   "<input type=\"checkbox\" name=\"chkAll\" value=\"all\" class=\"chkAll\" />",
+          "width":     1,
+          "cssClass":  "center",
+          "colDisplay":  "_checkbox"
         }
       ]
     }

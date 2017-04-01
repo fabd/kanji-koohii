@@ -825,6 +825,7 @@ class ReviewsPeer extends coreDatabaseTable
     }
 
     // clear relearned kanji if successfull answer
+    // NOTE: expected for API
     if ($result 
         && ($oData->r === uiFlashcardReview::UIFR_HARD ||
             $oData->r === uiFlashcardReview::UIFR_YES  ||

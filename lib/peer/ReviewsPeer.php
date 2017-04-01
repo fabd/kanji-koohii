@@ -826,7 +826,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     // clear relearned kanji if successfull answer
     // NOTE: expected for API
-    if ($result 
+    if ($result && rtkApi::isApiModule()
         && ($oData->r === uiFlashcardReview::UIFR_HARD ||
             $oData->r === uiFlashcardReview::UIFR_YES  ||
             $oData->r === uiFlashcardReview::UIFR_NO   ||

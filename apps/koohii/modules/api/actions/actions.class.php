@@ -44,6 +44,7 @@ class apiActions extends sfActions
   {
 //DBG::request();exit;
 
+    $public_api = true;
     $api_method  = $request->getParameter('api_method', '');
     $api_method2 = $request->getParameter('api_method2', '');
 
@@ -53,7 +54,7 @@ class apiActions extends sfActions
     {
 
     }
-    else
+    else if (false === $public_api)
     {
       $api_key = $request->getParameter('api_key', false);
 

@@ -539,7 +539,9 @@ div.col-box-bis { margin-top:10px; }
 
 #sitenews { line-height:1.5em; font-family:Arial, sans-serif; }
 
-#sitenews ul { list-style:none; margin:0 0 20px 0; padding:0; }
+#sitenews_list { list-style:none; margin:0 0 20px 0; padding:0; }
+
+#sitenews .content ul { margin:1em 0 1em 2em; }
 
  /* titles */
 #sitenews h3 { padding:4px 0; }

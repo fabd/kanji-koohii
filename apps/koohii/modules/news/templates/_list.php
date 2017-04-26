@@ -1,6 +1,6 @@
 <?php $css_is_home = isset($isHome) ? ' is-home' : ''; ?>
 <div id="sitenews" class="<?php echo $css_is_home ?>">
-  <ul>
+  <ul id="sitenews_list">
   <?php for ($i = 0; $i < count($posts); $i++) { $post = $posts[$i]; ?>
     <li>
       <h3><span class="newsdate"><?php echo $post->date ?></span><?php echo $post->link ?></h3>

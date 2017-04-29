@@ -4,8 +4,8 @@
 <div id="uiFcAjaxLoading" style="display:none"><span class="spinner"></span>Loading</div>
 
 <?php # Connection timeout message ?>
-<div id="uiFcAjaxError" class="uiFcErrorMsg" style="display:none">
-  Oops!&nbsp;&nbsp;<a href="#">Reconnect</a>
+<div id="uiFcAjaxError" style="display:none">
+  <span class="uiFcAjaxError_msg">Oops!</span>&nbsp;&nbsp;<a href="#">Reconnect</a>
 </div>
 
 <?php # Fixes: Change Koohii Font script -- http://userscripts.org/scripts/show/6896 ?>

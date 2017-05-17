@@ -66,7 +66,7 @@ return array
       (
         'match'     => true,
         'pattern'     => '/^[\x20-\x7e]+$/',
-        'match_error'   => 'Password: please use only <a target="_blank" href="http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters">ASCII printable characters</a>.'
+        'match_error'   => 'Password: please use only ASCII printable characters.'
       )
     ),
     'password2' => array

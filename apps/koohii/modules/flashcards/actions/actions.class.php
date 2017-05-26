@@ -43,6 +43,9 @@ class flashcardsActions extends sfActions
     $message = false;            // confirmation message, if any
     $confirm = false;            // if confirming an action, display Ok/Cancel and pass this id to menuitem as "data-action"
     $tron = new JsTron();
+    $tron->add(array(
+      'dialogTitle'   => 'Edit Flashcard'
+    ));
     $tron->setStatus(JsTron::STATUS_PROGRESS);
     
     sfProjectConfiguration::getActive()->loadHelpers('CJK');

@@ -856,7 +856,8 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 
 /* dialog body */
 .rtk-skin-dlg .yui-panel { outline:none; }
-.rtk-skin-dlg .yui-panel .hd { font:16px/1em Verdana, sans-serif; color:#ddd; padding:10px 10px 0; background:none; }
+.rtk-skin-dlg .yui-panel .hd,
+.rtk-mobl-dlg .yui-panel .hd { font:16px/1em Verdana, sans-serif; color:#ddd; padding:10px 10px 0; background:none; }
 .rtk-skin-dlg .yui-panel .bd { padding:10px 10px 10px; background:none; font-size:12px; line-height:19px; color:#000; }
 .rtk-skin-dlg .yui-panel .ft { padding:5px 10px 10px; background:none; font-size:12px; line-height:1.2em; color:#000; }
 
@@ -876,8 +877,8 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 /* MOBILE DIALOGS use a different "skin" parameter that lets them extend from edge to edge */
 .rtk-mobl-dlg { left:0; right:0; }
 .rtk-mobl-dlg .yui-panel { margin:0 auto; outline:none; }
-/*.rtk-mobl-dlg .yui-panel .hd { display:none; padding:0; background:none; }*/
-.rtk-mobl-dlg .yui-panel .bd { background:none; /* space for the close icon without hd div */ padding-top:35px; }
+/*.rtk-mobl-dlg .yui-panel .hd {  }*/
+.rtk-mobl-dlg .yui-panel .bd { background:none; /* space for the close icon without hd div */ /*padding-top:35px;*/ }
 .rtk-mobl-dlg .yui-panel .ft { padding:0; }
 
 /* dialog buttons, vertically stacked (mobile & desktop) */

@@ -1,22 +1,27 @@
 <?php
 /**
- * Wrapper for JSON communication.
+ * Wrapper for JSON communication, extends sfParameterHolder.
+ * 
+ * See Core.Helper.TRON (lib/front/corejs/core/core-json.js) for the front end side.
  *
+ * 
  * Methods:
  *   setStatus($status)
  *   setError($message)
  *   setHtml($html)
  *
  *   render($action)
- *   renderJson($action)     Proxy for render().
+ *   renderJson($action)         Proxy for render().
  *
- *   renderPartial($action, $templateName, $vars = null)
- *   renderComponent($action, $moduleName, $componentName, $vars = null)
+ *   renderPartial()             setHtml() with a Symfony partial render
+ *   renderComponent()           ... likewise for ....... component render
  *
- * Set properties of the message (see sfParameterHolder for more):
+ * 
+ * Set properties of the message via sfParameterHolder:
  *
  *   set($name, $value)
  *   add($parameters)
+ *   ...
  *
  *
  * Return a simple SUCCESS message:
@@ -24,6 +29,7 @@
  *   $tron = new JsTron();
  *   $tron->setStatus(JsTron::STATUS_SUCCESS);
  *   return $tron->renderJson($this);
+ *   
  *
  * Return some data:
  *
@@ -31,12 +37,14 @@
  *   $tron->setStatus(JsTron::STATUS_SUCCESS);
  *   return $tron->renderJson($this);
  *   
+ *   
  * Return a session error to be displayed by client:
  *
  *   $tron = new JsTron(array('login' => true));
  *   $tron->setError('Session expired. Please log in.');
  *   $tron->setStatus(JsTron::STATUS_FAILED);
  *   return $tron->renderJson($this);
+ *   
  *
  * @TODO    Strip \n \r \t and whitespace to reduce output.
  *
@@ -148,10 +156,9 @@ class JsTron extends sfParameterHolder
   /**
    * Render a JSON response.
    *
-   * Use this with the return statement of yoru ajax action,
-   * for example:
+   * Use this as the return statement of a symfony action, eg:
    *
-   * <code>return $tron->render();</code>
+   *   return $tron->render($this);
    * 
    * @param  mixed $action 
    *

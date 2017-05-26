@@ -73,7 +73,7 @@
       }
 
       // clear the old html while loading
-      this.dialog.getBody().innerHTML = '<div style="width:480px" class="body ajax-loading"></div>';
+      this.dialog.getBody().innerHTML = '<div style="min-width:200px" class="body ajax-loading"></div>';
       
       this.ucsId = ucsId;
       

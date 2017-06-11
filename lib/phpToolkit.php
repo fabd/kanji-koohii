@@ -19,9 +19,16 @@ class phpToolkit
   {
     if (!function_exists('mb_ucfirst') && function_exists('mb_substr'))
     {
-      $charset = sfConfig::get('sf_charset');
-      $first = mb_substr($string, 0, 1, $charset);
-      $string = mb_strtoupper($first, $charset) . mb_substr($string, 1, mb_strlen($string, $charset), $charset);
+      $charset = "UTF-8";
+      #$charset = sfConfig::get('sf_charset');
+      preg_match("/(?P<start>[^A-Za-z]*)(?P<first_letter>[A-Za-z])(?P<end>.*$)/",
+                       $string,
+                       $matches);
+      $start = $matches["start"];
+      $first = $matches["first_letter"];
+      $end = $matches["end"];
+      $string = $start . mb_strtoupper($first, $charset) . $end;
+
     }
     else
     {

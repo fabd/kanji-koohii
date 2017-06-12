@@ -144,10 +144,14 @@ class StoriesPeer extends coreDatabaseTable
     // Links helper is used by getFormattedKanjiLink() call
     sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url'));
 
-    // minimal punctuation : upper case first beginning of text
-    $s = phpToolkit::mb_ucfirst($story);
+    $s = $story;
 
-//echo error_reporting();exit;
+    // minimal punctuation : upper case first word (ignore non-alphabet & multibyte)
+    if (preg_match('/[a-z]/i', $s, $match, PREG_OFFSET_CAPTURE))
+    {
+      $i = $match[0][1];
+      $s = substr($s, 0, $i) . ucfirst(substr($s, $i));
+    }
 
     // minimal punctuation : end sentence with dot (accepts "quote." spelling)
     if (preg_match ('/[^.!?][^.!?]$/', $s))

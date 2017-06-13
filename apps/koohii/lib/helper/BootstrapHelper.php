@@ -120,7 +120,7 @@ function _bs_form_group() {
 }
 
 function _bs_input($type, $name, $options = array()) {
-  $html = '';
+  $html = array();
 
   if (null !== ($label = _get_option($options, 'label'))) {
     $html[] = "\n  ".label_for($name /* id */, $label, array('class' => 'control-label'));

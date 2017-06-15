@@ -127,7 +127,8 @@ fi
 
 # Detect uncommented console.log() calls and stops if any is found.
 # Even if those can be stripped with Juicer, it's likely there is debugging code left behind.
-ack-grep -g '(?<!.juiced)(?<!.min)\.js' '^\s*console\.log\('
+ack --ignore-dir web/vendor -g -i '(?<!.juiced)(?<!.min)\.js' | ack -x '^\s*console\.log\('
+
 if [ $? -eq 0 ]; then
   echo ""
   echo "Uncommented console.log() call. Build aborted."

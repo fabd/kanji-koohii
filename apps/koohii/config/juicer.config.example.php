@@ -1,6 +1,6 @@
 <?php
 /**
- * Configuration file used by Juicer (a build tool for css/js files).
+ * Configuration file used by Juicer (a build tool for css/js).
  *
  * 
  * Setup
@@ -12,8 +12,11 @@
  *   
  * What is Juicer?
  * 
- *   Juicer is a simple php build tool for front-end assets. It was originally modelled
- *   after "Sprockets" by the authors of Prototype.
+ *   Juicer is a build tool for css/js files with both CLI use (build script)
+ *   and "hot reload" via Apache mod_rewrite.
+ *
+ *   It was inspired by https://github.com/rails/sprockets and has similar
+ *   syntax.
  *
  *   In a nutshell, Juicer allows to split up js and css into small, maintainable files,
  *   then create “meta-files” that include the smaller files in a logical order.
@@ -92,25 +95,25 @@
 
 return array
 (
-  // new landing page (Nov 2016)
-  //'BOOTSTRAP' => '/home/fab/Development/Frameworks/bootstrap-3.3.7-dist',
+  // ABSOLUTE paths must start with "/"
+  // RELATIVE paths must start with "./" and are relative to SF_ROOT_DIR (Symfony root path)
 
   // old
   'YUI2'     => '/home/fab/Development/Frameworks/yui_2.9.0/build',
 
-  'FRONT'    => '/home/user/github/kanji-koohii/lib/front',
+  'FRONT'    => './lib/front',
 
   // vendor libraries
-  'VENDOR'   => '/home/user/github/kanji-koohii/web/vendor',
+  'VENDOR'   => './web/vendor',
 
   // assets from Core  widgets will go to web/corejs/
-  'CORE'     => '/home/user/github/kanji-koohii/lib/front/corejs',
+  'CORE'     => './lib/front/corejs',
 
   // assets from RevTK widgets will go to web/build/revtk
-  'REVTK'    => '/home/user/github/kanji-koohii/lib/front/revtk',
+  'REVTK'    => './lib/front/revtk',
 
   // Include source for legacy front end code still living in the web/ folder
-  'WEB'      => '/home/user/github/kanji-koohii/web',
+  'WEB'      => './web',
 
   //
   // Stylesheet color constants
@@ -145,10 +148,10 @@ return array
   'MAPPINGS' => array
   (
     // CoreJs dependencies
-    '/home/user/github/kanji-koohii/lib/front/corejs'  => 'build/corejs',
+    './lib/front/corejs'  => 'build/corejs',
 
     // RevTK front end assets go to the build/ folder
-    '/home/user/github/kanji-koohii/lib/front/revtk'   => 'build/revtk',
+    './lib/front/revtk'   => 'build/revtk',
 
     // Mapping YUI asset dependencies to the Web folder
     '/home/fab/Development/Frameworks/yui_2.9.0/build'     => 'build/yui2'

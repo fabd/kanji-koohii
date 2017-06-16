@@ -264,11 +264,15 @@ class Juicer
         $fromValue = $this->getConstant($constName);
         if ($fromValue !== NULL) {
           $fromValue = $this->removeTrailingSlash($fromValue);
+
+          // normalize relative paths in Juicer config
+          $fromValue = $this->normalizeConfigPath($fromValue);
         }
         else {
           $this->throwException('Woops, constant "%s" is not defined, trying to use at line %d.', $constName, $lineNr);
         }
       }
+
       
       // set the current path for includes
       $from = $this->normalizeSlashes($fromValue);
@@ -662,8 +666,10 @@ class Juicer
   private function getWebPath($srcPath)
   {
     // todo: mappings: if one of mapped forlders matches beginning of $srcPath, return webPath + mapped path 
-    foreach ($this->mappings as $absPath => $relWebPath)
+    foreach ($this->mappings as $configPath => $relWebPath)
     {
+      $absPath = $this->normalizeConfigPath($configPath);
+
       if (stripos($srcPath, $this->normalizeSlashes($absPath)) === 0)
       {
         // TODO: add diff path (eg. mapping to a sub part of require from path
@@ -676,6 +682,31 @@ class Juicer
 
     return $this->webPath;
   } 
+
+  /**
+   * Normalize paths used in Juicer Config file constants, to absolute paths.
+   *
+   * Relative paths MUST start with './', are relative to SF_ROOT_DIR (project
+   * root).
+   *
+   */
+  private function normalizeConfigPath($path)
+  {
+    if (false !== stripos($path, './'))
+    {
+      $absPath = realpath(SF_ROOT_DIR.'/'.$path);
+    }
+    else if (0 === stripos($path, '/'))
+    {
+      $absPath = $path;
+    }
+    else
+    {
+      $this->throwException(" The path '%s' is invalid (should be ./relative or /absolute", $path);
+    }
+
+    return $absPath;
+  }
 
   /**
    * Remove method calls from the output javascript, such as Firebug's console.log().

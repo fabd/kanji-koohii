@@ -129,12 +129,14 @@ class CacheResource
   
   private function getJuicerConfig()
   {
+    // Juicer.php requires this to handle relative paths in the config file
+    define('SF_ROOT_DIR', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RELATIVE_PATH_TO_ROOT));
+
     // include Juicer from here only as needed to speedup things
-    $CORE_ROOT_DIR = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RELATIVE_PATH_TO_ROOT);
-    require_once($CORE_ROOT_DIR.'/lib/juicer/Juicer.php');
+    require_once(SF_ROOT_DIR.'/lib/juicer/Juicer.php');
 
     $appName = $this->getParameter('app');
-    $configFile = $CORE_ROOT_DIR . '/apps/' . $appName . '/config/juicer.config.php';
+    $configFile = SF_ROOT_DIR.'/apps/'.$appName.'/config/juicer.config.php';
     $config = require($configFile);
     return $config; 
   }

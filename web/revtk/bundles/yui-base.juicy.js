@@ -22,7 +22,6 @@
 
 /* Dependencies for the custom tooltip on the "reading" page */
 /* =require from "%YUI2%" */
-/* =provide "/assets/skins/sam" */
 /* =require "/container/container-min.js" */
 
 /* KoohiiNav */

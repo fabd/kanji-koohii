@@ -67,7 +67,7 @@
  *
  * Explanations
  * 
- *   YUI2      Yahoo's YUI2 is the current javascript library in use in RevTK.
+ *   YUI2      Yahoo's YUI2 (legacy code, to be phased out)
  *
  *   FRONT     This is meant to be the equivalent of the /lib folder, but for
  *             front end code. Any files in here can only be sourced through
@@ -81,10 +81,6 @@
  *             to copy them in the web folder. This keeps things neatly arranged
  *             and also in a predictable location.
  * 
- * Installation
- * 
- * - Download YUI2 "Full Developer Kit" from http://developer.yahoo.com/yui/2/
- *   and set the YUI2  paths accordingly (point them to the /build folder).
  * 
  * See
  *
@@ -98,13 +94,13 @@ return array
   // ABSOLUTE paths must start with "/"
   // RELATIVE paths must start with "./" and are relative to SF_ROOT_DIR (Symfony root path)
 
-  // old
-  'YUI2'     => '/home/fab/Development/Frameworks/yui_2.9.0/build',
-
   'FRONT'    => './lib/front',
 
   // vendor libraries
   'VENDOR'   => './web/vendor',
+
+  // legacy dependency, to be phased out
+  'YUI2'     => './web/vendor/yui2-build',
 
   // assets from Core  widgets will go to web/corejs/
   'CORE'     => './lib/front/corejs',
@@ -154,6 +150,6 @@ return array
     './lib/front/revtk'   => 'build/revtk',
 
     // Mapping YUI asset dependencies to the Web folder
-    '/home/fab/Development/Frameworks/yui_2.9.0/build'     => 'build/yui2'
+    './web/vendor/yui2-build' => 'build/yui2'
   )
 );

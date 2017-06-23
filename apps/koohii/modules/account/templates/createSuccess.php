@@ -36,6 +36,9 @@
     );
 
     echo _bs_form_group(
+      array(
+        'style'     => 'margin-bottom:0'
+      ),
       _bs_input_text('location', array(
         'label'     => 'Where do you live?',
         'optional'  => true,
@@ -43,19 +46,28 @@
         'autocomplete' => 'off'
       ))
     );
+?>
+</div><!-- /padded-box -->
 
+<div class="padded-box-inset mb-1" style="max-width:380px">
+<?php
     echo _bs_form_group(
       array('class' => 'form-section' /*, 'style' => 'background:#eeeaab;'*/),
 
       _bs_input_text('question', array(
-        'label'     => 'What is the capital of Japan? <span style="font-weight:normal">(main city)</span>',
+        'label'     => 'What is the capital of Japan?',
         'helptext'  => '(Help us stop spam!)',
         'autocomplete' => 'off'
       ))
     );
 ?>
     <p>If you are stuck you can <?php echo link_to('request an account', '@contact') ?></p>
+
+</div><!-- /padded-box -->
+
+<div class="padded-box-inset mb-1" style="max-width:380px">
 <?php
+
     echo _bs_form_group(
       _bs_submit_tag('Create Account')
     );

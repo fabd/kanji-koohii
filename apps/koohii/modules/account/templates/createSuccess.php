@@ -48,7 +48,7 @@
       array('class' => 'form-section' /*, 'style' => 'background:#eeeaab;'*/),
 
       _bs_input_text('question', array(
-        'label'     => 'What is the capital of Japan? <span style="font-weight:normal">(main city)</span>',
+        'label'     => 'What is the capital of Japan?',
         'helptext'  => '(Help us stop spam!)',
         'autocomplete' => 'off'
       ))

@@ -3,8 +3,10 @@
 /**
  * Helpers to output Bootstrap 3 css/components.
  *
- * Options are passed to the Symfony tag helpers, therefore supporting
- * 'class', 'style', and any other custom html attributes.
+ * OPTIONS
+ *
+ *   $options     are passed to the Symfony tag helpers, therefore supporting
+ *                'class', 'style', and any other custom html attributes.
  *
  * Common Helpers:
  *

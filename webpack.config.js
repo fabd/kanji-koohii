@@ -1,3 +1,18 @@
+//
+// faB: I don't know why the "dev" / "build" aliases in package.json stopped working, so
+//      use the following instead:
+//
+//   Development build:
+//
+//   $ export NODE_ENV=development && webpack --hide-modules
+//
+//
+//   Production build:
+//
+//   $ export NODE_ENV=production && webpack --progress --hide-modules
+//
+//
+
 const webpack = require("webpack");
 
 const isProduction = (process.env.NODE_ENV === 'production');

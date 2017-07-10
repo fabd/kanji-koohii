@@ -782,7 +782,7 @@ class ReviewsPeer extends coreDatabaseTable
    * @param  int      $id     Flashcard id (UCS-2 code value)
    * @param  object   $oData  Flashcard answer data
    *
-   * @return boolean  Returns true if update went succesfully
+   * @return boolean   True if update/skip/delete went succesfully
    */
   public static function putFlashcardData($id, $oData)
   {
@@ -816,7 +816,8 @@ class ReviewsPeer extends coreDatabaseTable
       $select->query();
       $curData = self::$db->fetchObject();
       if (!$curData) {
-        throw new sfException('putFlashcardData(): no record for id #'.$id);
+        // if the card is deleted somehow this could happen
+        return false;
       }
 
       $oUpdateData = LeitnerSRS::rateCard($curData, $oData->r);

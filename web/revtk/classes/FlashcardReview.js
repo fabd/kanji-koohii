@@ -75,8 +75,9 @@
  *                        are automatically loaded into the element (innerHTML, html allowed), other properties
  *                        may be used by the peer class.
  *                        Returned objects must have the property "id" set to the corresponding flashcard id's.
- *   put                  Integer, should return the same number as flashcard answers that were posted to the server.
- *                        The same number of items are cleared from the postCache. If not cleared, these items will
+ *
+ *   put                  Array of flashcard ids which were succesfully handled.
+ *                        The items are cleared from the postCache. If not cleared, these items will
  *                        be posted again during the next prefetchs.
  * 
  * Flashcard markup:

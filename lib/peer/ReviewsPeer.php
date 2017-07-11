@@ -816,8 +816,8 @@ class ReviewsPeer extends coreDatabaseTable
       $select->query();
       $curData = self::$db->fetchObject();
       if (!$curData) {
-        // if the card is deleted somehow this could happen
-        return false;
+        // if the card was somehow deleted, return true so the client can clear the card from sync buffer
+        return true;
       }
 
       $oUpdateData = LeitnerSRS::rateCard($curData, $oData->r);

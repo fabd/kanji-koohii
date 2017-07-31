@@ -34,14 +34,55 @@ class StopForumSpam
   }
 
   /**
-   * Helper to get the IP address.
    *
-   * @return string  IP address eg. '127.0.0.1'
+   * @return string   Readable IPv4 or IPv6 address
    */
-  public function getRemoteAddress()
+  public static function getRemoteAddress()
   {
     $pathArray = sfContext::getInstance()->getRequest()->getPathInfoArray();
-    return $pathArray['REMOTE_ADDR'];
+    $remote_addr = $pathArray['REMOTE_ADDR'];
+
+    $ip = strtolower($remote_addr);
+
+    // check forwarded IP ?
+    /*
+    if (true === $ip_forwarded_check)
+    {
+      $addresses = array();
+
+      if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+      {
+        $addresses = explode(',', strtolower($_SERVER['HTTP_X_FORWARDED_FOR']));
+      }
+      elseif(isset($_SERVER['HTTP_X_REAL_IP']))
+      {
+        $addresses = explode(',', strtolower($_SERVER['HTTP_X_REAL_IP']));
+      }
+
+      if(is_array($addresses))
+      {
+        foreach($addresses as $val)
+        {
+          $val = trim($val);
+          // Validate IP address and exclude private addresses
+          if (my_inet_ntop(my_inet_pton($val)) == $val && !preg_match("#^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|fe80:|fe[c-f][0-f]:|f[c-d][0-f]{2}:)#", $val))
+          {
+            $ip = $val;
+            break;
+          }
+        }
+      }
+    }*/
+
+    if (!$ip)
+    {
+      if (isset($_SERVER['HTTP_CLIENT_IP']))
+      {
+        $ip = strtolower($_SERVER['HTTP_CLIENT_IP']);
+      }
+    }
+
+    return $ip;
   }
 
   /**
@@ -61,7 +102,7 @@ class StopForumSpam
     // timeout for fsock/curl connection to StopForumSpam, in seconds
     $timeout = 5;
 
-    $ip  = $this->getRemoteAddress();
+    $ip  = self::getRemoteAddress();
     $now = time();
 
     // &unix for unix time

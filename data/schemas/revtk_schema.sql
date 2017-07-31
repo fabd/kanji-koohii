@@ -316,9 +316,11 @@ CREATE TABLE `users` (
   `lastlogin`    DATETIME DEFAULT NULL,
   `email`        VARCHAR(100) DEFAULT NULL,
   `location`     VARCHAR(32) DEFAULT NULL,
+  'regip'        VARCHAR(45) NOT NULL DEFAULT '',
   `timezone`     FLOAT NOT NULL DEFAULT '-6',
   `opt_sequence` tinyint(3) unsigned NOT NULL,
   
   PRIMARY KEY  (`userid`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+

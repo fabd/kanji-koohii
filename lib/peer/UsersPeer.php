@@ -160,6 +160,7 @@ class UsersPeer extends coreDatabaseTable
    * 
    * Optional:
    *   userlevel
+   *   regip                OPTIONAL because of createuser CLI
    *   
    * @param array $userinfo  Assoc.array of form registration data
    */
@@ -167,6 +168,7 @@ class UsersPeer extends coreDatabaseTable
   {
     $user = sfContext::getInstance()->getUser();
     $hashed_password = $user->getSaltyHashedPassword($userinfo['raw_password']);
+
 
     $userdata = array(
       'username'      => $userinfo['username'],
@@ -178,6 +180,9 @@ class UsersPeer extends coreDatabaseTable
 
     // automatically set all new users to the last edition
     $userdata['opt_sequence'] = rtkIndex::getDefaultUserSequence();
+
+    // registration IP won't be set by createuser CLI tool
+    $userdata['regip'] = isset($userinfo['regip']) ? $userinfo['regip'] : '';
 
     // may be explicitly set by maintenance tools
     if (isset($userinfo['userlevel'])) {

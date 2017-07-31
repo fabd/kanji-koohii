@@ -111,11 +111,15 @@ class accountActions extends sfActions
           */
         }
 
+        // log IPs to investigate bots/spam wasting database space
+        $regip = StopForumSpam::getRemoteAddress();
+
         $userinfo = array(
           'username'     => trim($request->getParameter('username')),
           'raw_password' => $raw_password,
           'email'        => $email,
-          'location'     => trim($request->getParameter('location', ''))
+          'location'     => trim($request->getParameter('location', '')),
+          'regip'        => $regip
         );
 
         // username is available, create user

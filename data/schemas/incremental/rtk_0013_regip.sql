@@ -9,3 +9,10 @@
 
 ALTER TABLE users ADD COLUMN `regip` VARCHAR(45) NOT NULL DEFAULT '' AFTER location;
 
+
+# Date: 2017.08.01
+#
+#   Add a key for query to check max registrations within timespan.
+#
+
+ALTER TABLE users ADD KEY `regip` (`regip`);

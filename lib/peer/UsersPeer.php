@@ -272,6 +272,24 @@ class UsersPeer extends coreDatabaseTable
   }
 
   /**
+   * Returns number of registrations by given IP in last N hours interval.
+   *
+   * @param   string  Unpacked ip
+   * @param   int     Interval to check in hours
+   */
+  public static function getRegistrationCount($regip, $since_hours)
+  {
+    // SELECT COUNT(*) FROM users WHERE (regip = '127.0.0.1') AND (joindate > DATE_SUB(NOW(), INTERVAL 24 HOUR))
+
+    $select = self::getInstance()
+      ->select(array('count' => 'COUNT(*)'))
+      ->where('regip = ?', $regip)
+      ->where('joindate > DATE_SUB(NOW(), INTERVAL ? HOUR)', (int)$since_hours);
+
+    return (int)self::$db->fetchOne($select);
+  }
+
+  /**
    * Returns server timestamp adjusted to user's timezone, as a SQL expression.
    *
    * The date returned by this statement will switch at midnight time of the user's timezone

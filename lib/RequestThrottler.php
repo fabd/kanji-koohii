@@ -1,11 +1,11 @@
 <?php
 /**
- * RequestThrottler
+ * Simple class to check a minimum time period between two requests from the same user.
+ *
+ *   setInterval($seconds)
+ *   isValid()
+ *   setTimeout()
  * 
- * Simple class to check a minimum time period between two requests
- * from the same user.
- * 
- * @package    
  * @author     Fabrice Denis
  */
 

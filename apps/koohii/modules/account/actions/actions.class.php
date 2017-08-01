@@ -10,6 +10,23 @@ class accountActions extends sfActions
   //
   const VALID_ANSWERS = '^\s*(t[oō]+u?[ky][kiy][oō]+u?|東京|とうきょう|とき[ょお]|t[óÓ][kq]u?io)\s*$';
 
+  // period to enforce max. registrations (hours)
+  const BETWEEN_REGS_TIME = 24;
+
+  // max registrations within period
+  const MAX_REGS_BETWEEN_TIME = 2;
+
+  // returns false if max registrations within period has been reached by unique IP
+  private function checkMaxRegsWithinPeriod($regip)
+  {
+    $time = time();
+    $ts_since = $time - (60 * 60 * self::BETWEEN_REGS_TIME);
+
+    $regcount = UsersPeer::getRegistrationCount($regip, self::BETWEEN_REGS_TIME);
+
+    return ($regcount < self::MAX_REGS_BETWEEN_TIME);
+  }
+
   public function executeIndex($request)
   {
     $userId = $this->getUser()->getUserId();
@@ -30,6 +47,34 @@ class accountActions extends sfActions
    */
   public function executeCreate($request)
   {
+    //$throttler = new RequestThrottler($this->getUser(), 'badbot');
+    //$throttler->setInterval(2);
+    /*
+    if (!$throttler->isValid()) {
+      $throttler->setTimeout();
+      $response->setContentType('html');
+      return $this->renderPartial('misc/requestThrottleError');
+    }*/
+    
+    $sfs = new StopForumSpam();
+
+    // log IPs to investigate bots/spam wasting database space
+    $regip = StopForumSpam::getRemoteAddress();
+
+    // limit number of registrations per IP within a period of time
+    if (!$this->checkMaxRegsWithinPeriod($regip))
+    {
+      // save database queries on next requests (needs testing)
+      //$throttler->setInterval(60*60): // 1 hour
+      //$throttler->setTimeout();
+
+      $sfs->logActivity($regip, 'Too many registrations');
+
+      $this->setLayout(false);
+      $this->getResponse()->setStatusCode(403);
+      return $this->renderText('Too many registrations within '.self::BETWEEN_REGS_TIME.'h period.');
+    }  
+
     if ($request->getMethod() != sfRequest::POST)
     {
       // setup form
@@ -65,7 +110,6 @@ class accountActions extends sfActions
 
         $answer = trim($request->getParameter('question'));
         
-        $sfs = new StopForumSpam();
 
         // log activity of spam bots se we know if there is abuse
         mb_regex_encoding('UTF-8');
@@ -73,7 +117,7 @@ class accountActions extends sfActions
         {
           if (empty($answer))
           {
-            $sfs->logActivity($sfs->getRemoteAddress(), 'NO answer to the anti-spam question');
+            $sfs->logActivity($regip, 'NO answer to the anti-spam question');
             // on va tester un 403 au lieu du 404 (qui semble inciter le bot à doubler la requête)
             $this->getResponse()->setStatusCode(403);
 
@@ -83,7 +127,7 @@ class accountActions extends sfActions
           else
           {
             $request->setError('question', 'Woops, did you spell the answer to the question correctly?');
-            $sfs->logActivity($sfs->getRemoteAddress(), 'WRONG answer to the anti-spam question ("'.$answer.'")');
+            $sfs->logActivity($regip, 'WRONG answer to the anti-spam question ("'.$answer.'")');
             return sfView::SUCCESS;
           }
         }
@@ -110,9 +154,6 @@ class accountActions extends sfActions
           return sfView::SUCCESS;
           */
         }
-
-        // log IPs to investigate bots/spam wasting database space
-        $regip = StopForumSpam::getRemoteAddress();
 
         $userinfo = array(
           'username'     => trim($request->getParameter('username')),

@@ -386,9 +386,9 @@ class StoriesPeer extends coreDatabaseTable
     $select->from('stories s')
            ->joinLeft('stories_shared ss', 'ss.sid = s.sid')
            ->joinLeft('kanjis', 'kanjis.ucs_id = s.ucs_id');
-//    $select = KanjisPeer::joinLeftUsingUCS($select);
+//   $select->joinLeft(StoriesSharedPeer::getInstance()->getName(), 'stories.sid = stories_shared.sid');
+//   $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
- //   $select->joinLeft(StoryScoresPeer::TABLE, sprintf('authorid=%d AND stories.ucs_id = storiesscores.ucs_id', $userId));
     $select->where('s.userid = ?', $userId);
 
     return $select;

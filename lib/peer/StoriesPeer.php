@@ -4,6 +4,7 @@
  *
  * Methods:
  *   getStory($userId, $ucsId)
+ *   getStoryId($userId, $ucsId)
  *   updateStory($userId, $ucsId, $data)
  *   deleteStory($userId, $ucsId)
  *   getFormattedStory($story, $keyword, $bSubstituteLinks = true, $linebreaks = true)
@@ -53,6 +54,18 @@ class StoriesPeer extends coreDatabaseTable
       ->where('userid = ? AND ucs_id = ?', array($userId, $ucsId))
       ->query();
     return self::$db->fetchObject();
+  }
+
+  /**
+   * Return unique identifier for story
+   *
+   * @return  int    story id (sid), or false (no result)
+   */
+  public static function getStoryId($userId, $ucsId)
+  {
+    $select = self::getInstance()->select('sid')->where('userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    $sid = self::$db->fetchOne($select);
+    return (false === $sid) ? false : (int)$sid;
   }
 
   /**
@@ -122,7 +135,11 @@ class StoriesPeer extends coreDatabaseTable
   {
     assert('(int)$ucsId >= 0x3000');
 
-    return self::getInstance()->delete('userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    if (false !== ($storyId = self::getStoryId($userId, $ucsId)))
+    {
+      self::getInstance()->delete('sid = ?', $storyId);
+      StoriesSharedPeer::deleteStoryRef($storyId);
+    }
   }
 
   /**

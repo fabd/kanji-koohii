@@ -20,6 +20,8 @@
   var Y = YAHOO,
       Dom = Y.util.Dom;
 
+  var isMobile = Core.Ui.Mobile.isMobile();
+
   App.Ui.EditStoryDialog.prototype =
   {
     // App.Ui.EditStoryComponent created by onDialogInit()
@@ -36,14 +38,12 @@
 
       this.requestUri = url;
 
-      var mobile = Core.Ui.Mobile.isMobile();
-
       var dlgopts = {
         requestUri:  this.requestUri,
         requestData: { ucs_code: ucsId, reviewMode: true },
-        skin:        mobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
-        mobile:      mobile,
-        close:       !mobile,
+        skin:        isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+        mobile:      isMobile,
+        close:       !isMobile,
         width:       480,
         scope:       this,
         events:      {
@@ -56,13 +56,38 @@
       // FIXME position dialog near flashcard to avoid current issue with centering
       // and the "ajax loading" content (ie. we don't know what the real width
       // will be until content is loaded, and we dont want dialog to move around)
-      if (!mobile)
+      if (!isMobile)
       {
         dlgopts.context = ["uiFcMain", "tl", "tl", null, [-10, -36]];
       }
 
       this.dialog = new Core.Ui.AjaxDialog(null, dlgopts);
       this.dialog.show();
+
+      // Issue #106
+      if (isMobile) {
+        this.addCloseButton();
+      }
+    },
+
+    // Issue #106 / hacky solution but this will be refactored to Vue anyway
+    // - we don't want to add a Close button at higher level in AjaxDialog
+    // - we add the html for the Close button, it gets replaced by the ajax content
+    addCloseButton: function()
+    {
+      Core.log("addCloseButton()");
+
+      var el = document.createElement('div');
+
+      el.innerHTML = 
+'<div class="uiBMenu">' +
+  '<div class="uiBMenuItem">' +
+    '<a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>' +
+  '</div>' +
+'</div>';
+
+      var elBody = this.dialog.getBody();
+      elBody.appendChild(el);
     },
 
     load: function(ucsId)
@@ -72,9 +97,15 @@
         return;
       }
 
+      var sLoadingHTML = '<div style="min-width:200px" class="body ajax-loading"></div>';
+
       // clear the old html while loading
-      this.dialog.getBody().innerHTML = '<div style="min-width:200px" class="body ajax-loading"></div>';
-      
+      this.dialog.getBody().innerHTML = sLoadingHTML;
+
+      if (isMobile) {
+        this.addCloseButton();
+      }
+
       this.ucsId = ucsId;
       
       this.dialog.getAjaxPanel().get({ucs_code: ucsId, reviewMode: true}, this.requestUri);

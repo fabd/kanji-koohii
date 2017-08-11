@@ -10,8 +10,12 @@
     <li>Enter a range of cards, by using a "+" prefix, for example "+10" to add 10 flashcards.</li>
   </ul>
 
-
-  <p>  <?php echo input_tag('txtSelection', '', array('class' => 'textfield', 'style' => 'width:80px')) ?>&nbsp;&nbsp;<?php echo submit_tag('Add Cards') ?></p>
+<?php 
+  echo _bs_form_group(
+    _bs_input_text('txtSelection', array('class' => 'form-control-i', 'style' => 'width:80px;margin-right:1em;')),
+    _bs_submit_tag('Add Cards')
+  );
+?>
 
   <div class="padded-box-inset" style="color:#000;padding:5px 10px; font-size:11px;">
     Note: adding flashcards here will always fill in the gaps if there are any

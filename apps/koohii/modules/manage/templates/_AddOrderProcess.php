@@ -16,6 +16,6 @@
 ?>
   </div>
 
-  <p><a href="#" class="proceed JSManageReset">Add more cards</a></p>
+  <p><a href="#" class="btn btn-primary JSManageReset">Add more cards</a></p>
 
 </form>

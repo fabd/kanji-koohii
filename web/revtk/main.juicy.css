@@ -110,7 +110,7 @@ blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
 
 /* spacing (use Bootstrap 4 conventions for potential refactor to v4) */
 .mt-p33 { margin-bottom:0.33em; }
-.mt-1   { margin-top:1em; }
+.mt-1   { margin-top:1em; }
 .mt-2   { margin-top:2em; }
 
 .mb-p33 { margin-bottom:0.33em; }

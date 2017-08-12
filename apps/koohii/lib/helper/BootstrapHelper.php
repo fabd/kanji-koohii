@@ -33,6 +33,12 @@
  *  _bs_class_merge()
  * 
  *
+ * Form Layout:
+ *
+ *  INLINE       Add class "form-control-i" to inline elements within _bs_formgroup()
+ *
+ *
+ *
  * See:
  *   http://getbootstrap.com/css/
  * 

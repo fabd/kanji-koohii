@@ -12,7 +12,10 @@
  */
 #manage-cards .app-header { border:0; margin-bottom:0; }
 
-#manage-cards em.note { color:green; font-style:italic; }
+#manage-cards em.note {
+  color:green; font-style:italic;
+  display:inline-block; margin:0 0 0 1em;
+}
 
 
 /* view pane styles */

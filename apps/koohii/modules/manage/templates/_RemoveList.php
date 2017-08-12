@@ -14,9 +14,14 @@
   <div class="selection-table">
     <?php include_component('manage', 'RemoveListTable') ?>
   </div>
-  
-  <?php echo form_tag('manage/removeListConfirm', array('class' => 'main-form')) ?>
-    <p> <?php echo submit_tag('Remove Cards') ?>&nbsp;&nbsp;<em class="note">Note: there will be a confirmation step.</em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo link_to('Clear selection', 'manage/removelist', array('class' => 'cancel')) ?></p>
-  </form>
+
+<div class="mt-1 mb-2">
+<?php echo form_tag('manage/removeListConfirm', array('class' => 'main-form')) ?>
+<?php
+    echo _bs_submit_tag('Remove Cards') . '<em class="note">Note: there will be a confirmation step.</em>';
+    echo link_to('Clear selection', 'manage/removelist', array('class' => 'btn btn-danger', 'style' => 'margin-left:2em'));
+?>
+</form>
+</div>
 
 <?php endif ?>

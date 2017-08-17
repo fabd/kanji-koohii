@@ -109,7 +109,8 @@ class KanjisPeer extends coreDatabaseTable
    * @param  object  $options   Options for the flashcard format (optional)
    *
    * Options:
-   *   yomi 
+   *   yomi          (OPTIONAL) true to include example words with pronunciations
+   *   api_mode      (OPTIONAL) true to return data according to API /review/fetch
    * 
    * @return mixed   Object with flashcard data, or null
    */

@@ -123,8 +123,10 @@
 #uiFcYomi        { position:absolute; left:50%; top:0; width:50%; }
 
 #uiFcYomi .yomi  { }
-#uiFcYomi .vyc span  { /*border-bottom:1px solid #f00; padding-bottom:2px;*/ }   /* not legible on small font size (mobile) */
-#uiFcYomi .vyr span  { color:#ff0000; background:#ffe0e0; }  /* highlighted reading */
+
+  /* highlight the split reading */
+/*#uiFcYomi .vyc span  { padding-bottom:2px; border-bottom:2px solid #f00; }*/
+#uiFcYomi .vyr span  { padding-bottom:2px; border-bottom:2px solid #f00; }
 
 #uiFcYomi .pad   { padding:62px 8px 8px; }
 

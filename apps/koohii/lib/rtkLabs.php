@@ -524,6 +524,13 @@ class rtkLabs
    * uiFlashcardReview callback for the free review mode when example readings
    * are enabled.
    *
+   * Try to get ONE example On, and ONE example Kun words for the given kanji,
+   * and highlight its reading in each example word.
+   *
+   * NOTE  Because we are looking for On/Kun, words like 明日 "あした" are not
+   * selected (since they are not cross-referenced in dictsplit).
+   *
+   *
    * Adds:
    *    v_on:   { compound: '...', reading: '...', glossary: '...', type: 0|1 }
    *            OR  false
@@ -540,6 +547,8 @@ class rtkLabs
   public static function getSampleWords($ucsId, $cardData, $highlight = false)
   {
     $db = sfProjectConfiguration::getActive()->getDatabase();
+
+    // obtain a limited set of randomized example words for given kanji
 
     $select = $db->select(array('dictid', 'compound', 'reading', 'glossary', 'type'))
                  ->from(array('jd' => self::TABLE_JDICT))
@@ -563,21 +572,29 @@ class rtkLabs
       if (false === $on && $row->type == self::TYPE_ON)
       {
         mb_regex_encoding('UTF-8');
-        $compound = mb_ereg_replace($u8kanji, $highlight[0].$u8kanji.$highlight[1], $row->compound);
+
+        // highlight kanji in word (fabd: disabled, reduce visual overload)
+        $compound = $row->compound; //mb_ereg_replace($u8kanji, $highlight[0].$u8kanji.$highlight[1], $row->compound);
+
+        // highlight kanji pronunciation in the full reading
         if ($highlight[0] !== '') {
-//          $reading  = self::highlightKanjiReading($row->dictid, $ucsId, $highlight);
-$reading = $row->reading;
+          $reading  = self::getFormattedReading($row->dictid, $ucsId, $highlight);
+//$reading = $row->reading;
         }
+        
         $on = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
       }
       elseif (false === $kun && $row->type == self::TYPE_KUN)
       {
         mb_regex_encoding('UTF-8');
-        $compound = mb_ereg_replace($u8kanji, $highlight[0].$u8kanji.$highlight[1], $row->compound);
+        
+        $compound = $row->compound; //mb_ereg_replace($u8kanji, $highlight[0].$u8kanji.$highlight[1], $row->compound);
+        
         if ($highlight[0] !== '') {
-//          $reading  = self::highlightKanjiReading($row->dictid, $ucsId, $highlight);
-$reading = $row->reading;
+          $reading  = self::getFormattedReading($row->dictid, $ucsId, $highlight);
+//$reading = $row->reading;
         }
+        
         $kun = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
       }
     }
@@ -588,16 +605,16 @@ $reading = $row->reading;
 
   /**
    * Return kanji compound reading with the pronunciation of one kanji
-   * highlighted with a SPAN.
+   * surrounded by given opening/closing tags.
    * 
    * @param   int     $dictId     JDICT.dictid
    * @param   int     $ucsId      UCS-2 code value of kanji to highlight
-   * @param   array   $highlight  Array with opening and closing tags to
-   *                              highlight kanji reading
+   * @param   array   $format     Opening and closing tags to surround the
+   *                              highlighted kanji reading
    *
    * @return string  
    */
-  public static function highlightKanjiReading($dictId, $ucsId, $highlight)
+  public static function getFormattedReading($dictId, $ucsId, $format)
   {
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
@@ -612,10 +629,11 @@ $reading = $row->reading;
 
     while ($row = $db->fetchObject())
     {
+      // (fabd) no idea what this was for!
       // convert Onyomi to katakana
-      $pron = $row->type == self::TYPE_ON ? CJK::toKatakana($row->pron) : $row->pron;
+      //$pron = $row->type == self::TYPE_ON ? CJK::toKatakana($row->pron) : $row->pron;
 
-      $prons[(int)$row->position] = $row->kanji == $ucsId ? $highlight[0].$pron.$highlight[1] : $pron;
+      $prons[(int)$row->position] = $row->kanji == $ucsId ? $format[0].$row->pron.$format[1] : $row->pron;
       $proncount++;
     }
 

@@ -27,8 +27,6 @@
 
       <p>Start a vocab session with words selected based on RTK index.</p>
 
-      <p>This mode is currently limited to <em style="color:red">5th edition frame numbers</em>.</p>
-      
       <p>Session length: up to <?php echo rtkLabs::VOCABSHUFFLE_LENGTH ?> cards (depending on existing vocabulary matching the RTK index below).</p>
 
 <?php

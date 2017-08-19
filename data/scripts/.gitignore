@@ -1,0 +1,10 @@
+# /data/scripts
+#
+
+# generated output from scripts
+*.utf8
+
+# not ready for public repo
+/lib
+kanji.php
+

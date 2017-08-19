@@ -36,9 +36,6 @@ error_log*
 /config/_*
 /config/versioning*
 
-# scripts are not ready (half broken)
-/data/scripts/
-
 # npm install
 /node_modules
 

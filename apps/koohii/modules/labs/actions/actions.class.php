@@ -20,11 +20,11 @@ class labsActions extends sfActions
       $this->forward404If($max_framenum < 1 || $max_framenum > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
     }
 
-    $options['items'] = rtkLabs::getVocabShuffleMode1Items($max_framenum);
-    $this->uiFR = new uiFlashcardReview(array(), true);
+    $templateVars['items']    = rtkLabs::getVocabShuffleMode1Items($max_framenum);
+    $templateVars['exit_url'] = 'review/vocab';
+    $this->templateVars       = $templateVars;
 
-    // partial vars
-    $this->reviewOptions = $options;
+    $uiFR = new uiFlashcardReview(array(), true);
   }
 
   /**
@@ -35,12 +35,11 @@ class labsActions extends sfActions
   {
     $this->setLayout('fullscreenLayout');
 
-    $options['items'] = rtkLabs::getVocabShuffleMode2Items();
+    $templateVars['items']    = rtkLabs::getVocabShuffleMode2Items();
+    $templateVars['exit_url'] = 'review/vocab';
+    $this->templateVars       = $templateVars;
 
-    $this->uiFR = new uiFlashcardReview(array(), true);
-
-    // partial vars
-    $this->reviewOptions = $options;
+    $uiFR = new uiFlashcardReview(array(), true);
   }
 
   /**

@@ -12,7 +12,8 @@
 <div class="signin" style="display:none"><div class="m"><strong><?= $sf_user->getUsername() ?></strong></div></div>
 
 <div class="uiFcOptions">
-  <?= link_to('<span>Exit</span>', 'review/custom', array('absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review')) ?>
+  <?= link_to('<span>Exit</span>', $exit_url, array('absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review')) ?>
+
   <?= link_to('<span><u>B</u>ack</span>', '', array('absolute' => 'true',
     'id'    => 'JsBtnBack',
     'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction', 

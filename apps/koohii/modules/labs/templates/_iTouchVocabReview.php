@@ -70,7 +70,7 @@
   <div id="rd-side">
     <div id="uiFcStats" class="uiFcStats" style="display:none">
 
-       <?= ui_ibtn('Exit', 'review/custom', array('class' => 'uiIBtnGreen')); ?>
+       <?= ui_ibtn('Exit', $exit_url, array('class' => 'uiIBtnGreen')); ?>
 
        <?= ui_ibtn('Search on google.co.jp', '', array('id' => 'search-google-jp', 'class' => 'uiIBtnGreen', 'title' => 'Search this word on Google Japan', 'target' => '_blank')); ?>
 
@@ -84,7 +84,7 @@
 var options =
 {
   // the page to go to when clicking End with 0 reviews
-  back_url:    "<?= url_for('review/custom', true) ?>",
+  back_url:    "<?= url_for($exit_url, true) ?>",
   
   fcr_options: {
     max_undo:    10,

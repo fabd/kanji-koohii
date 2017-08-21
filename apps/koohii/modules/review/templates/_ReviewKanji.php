@@ -12,7 +12,7 @@
 <div class="signin" style="display:none"><div class="m"><strong><?= $sf_user->getUsername() ?></strong></div></div>
 
 <div id="uiFcOptions" class="uiFcOptions">
-  <?= link_to('<span>Exit</span>', $back_url, array('absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review')) ?>
+  <?= link_to('<span>Exit</span>', $exit_url, array('absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review')) ?>
   <a href="#" id="JsBtnHelp" class="uiFcOptBtn uiFcOptBtnHelp uiFcAction" data-action="help" title="Shows help dialog."><span>Help</span></a>
   <a href="#" class="uiFcOptBtn uiFcOptBtnStory uiFcAction" data-action="story" title="View/Edit story for this flashcard"><span><u>S</u>tory</span></a>
   <a href="#" id="JsBtnDict" class="uiFcOptBtn uiFcOptBtnDict uiFcAction" data-action="dict" title="Dictionary lookup"><span><u>D</u>ict</span></a>
@@ -190,7 +190,7 @@ var options =
 
     //num_prefetch: 10,
     ajax_url:     "<?= $sf_data->get('ajax_url', ESC_JS_NO_ENTITIES) ?>",
-    back_url:     "<?= url_for($back_url, true) ?>",
+    back_url:     "<?= url_for($exit_url, true) ?>",
     items:        [<?= implode(',', $sf_data->getRaw('items')) ?>]
   }
 };

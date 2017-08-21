@@ -36,7 +36,7 @@
       <div class="form-group">
         Use only kanji with RTK index up to
 <?php
-        echo input_tag('max_level', '20', array('style' => 'width:50px;margin:0 0.3em;', 'class' => 'form-control form-control-i'))
+        echo input_tag('max_framenum', '20', array('style' => 'width:50px;margin:0 0.3em;', 'class' => 'form-control form-control-i'))
 ?>
       </div>
 <?php

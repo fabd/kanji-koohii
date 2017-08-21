@@ -13,14 +13,14 @@ class labsActions extends sfActions
   {
     $this->setLayout('fullscreenLayout');
 
-    $max_level = $request->getParameter('max_level', 0);
+    $max_framenum = $request->getParameter('max_framenum', 0);
       
-    if ($request->hasParameter('max_level'))
+    if ($request->hasParameter('max_framenum'))
     {
-      $this->forward404If($max_level < 1 || $max_level > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
+      $this->forward404If($max_framenum < 1 || $max_framenum > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
     }
 
-    $options['items'] = rtkLabs::iVocabShuffleBegin($max_level);
+    $options['items'] = rtkLabs::getVocabShuffleMode1Items($max_framenum);
     $this->uiFR = new uiFlashcardReview($options, true);
     $this->reviewOptions = $options;
   }
@@ -33,7 +33,7 @@ class labsActions extends sfActions
   {
     $this->setLayout('fullscreenLayout');
 
-    $options['items'] = rtkLabs::iVocabShuffleMagicBegin();
+    $options['items'] = rtkLabs::getVocabShuffleMode2Items();
 
     $this->uiFR = new uiFlashcardReview($options, true);
     $this->reviewOptions = $options;

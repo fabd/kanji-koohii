@@ -345,7 +345,7 @@ class rtkLabs
    * 
    * @return array  Array of flashcard ids for uiFlashcardReview frontend
    */
-  public static function iVocabShuffleBegin($max_framenum = 20)
+  public static function getVocabShuffleMode1Items($max_framenum = 20)
   {
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
@@ -377,7 +377,7 @@ class rtkLabs
    *
    * @return array   Array of flashcard ids for uiFlashcardReview frontend
    */
-  public static function iVocabShuffleMagicBegin()
+  public static function getVocabShuffleMode2Items()
   {
     $db     = sfProjectConfiguration::getActive()->getDatabase();
     $userId = sfContext::getInstance()->getUser()->getUserId();

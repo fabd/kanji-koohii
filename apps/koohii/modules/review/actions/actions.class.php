@@ -189,7 +189,7 @@ class reviewActions extends sfActions
     // route for Exit button and 'empty' review url
     $options['back_url'] = $options['freemode'] ? 'review/custom' : '@overview';
 
-    $this->uiFR = new uiFlashcardReview($options, true);
+    $this->uiFR = new uiFlashcardReview(array(), true);
     
     // these will become the review template partial options
     $this->reviewOptions = $options;

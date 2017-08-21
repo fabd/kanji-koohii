@@ -21,7 +21,9 @@ class labsActions extends sfActions
     }
 
     $options['items'] = rtkLabs::getVocabShuffleMode1Items($max_framenum);
-    $this->uiFR = new uiFlashcardReview($options, true);
+    $this->uiFR = new uiFlashcardReview(array(), true);
+
+    // partial vars
     $this->reviewOptions = $options;
   }
 
@@ -35,7 +37,9 @@ class labsActions extends sfActions
 
     $options['items'] = rtkLabs::getVocabShuffleMode2Items();
 
-    $this->uiFR = new uiFlashcardReview($options, true);
+    $this->uiFR = new uiFlashcardReview(array(), true);
+
+    // partial vars
     $this->reviewOptions = $options;
   }
 
@@ -51,11 +55,12 @@ class labsActions extends sfActions
 
     if (!empty($oJson))
     {
-      $options = array(
-        'fn_get_flashcard' => array('rtkLabs', 'getVocabShuffleCardData')
+      $flashcardReview = new uiFlashcardReview(
+        array(
+          'fn_get_flashcard' => array('rtkLabs', 'getVocabShuffleCardData')
+        )
       );
 
-      $flashcardReview = new uiFlashcardReview($options);
       $this->getResponse()->setContentType('application/json');
       return $this->renderText( $flashcardReview->handleJsonRequest($oJson) );
     }

@@ -20,10 +20,14 @@
 Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
 
 ## Contributing
+Let's talk on [on Gitter](https://gitter.im/kanji-koohii/development)! It'll save you time getting into the codebase. If you'd like to help on existing issues have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use milestones to group issues in categories such as [UX Improvements](https://github.com/fabd/kanji-koohii/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22UX+Misc.+Improvements%22), [Front End Performance](https://github.com/fabd/kanji-koohii/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Front+End+Performance%22), etc.
 
-Don't hesitate to ask questions [on Gitter](https://gitter.im/kanji-koohii/development). It'll save you time getting into the codebase.
+#### Project History
+As you look at the code, please keep in mind I started the website all the way back in the [August 2005](https://kanji.koohii.com/news/2005/8). The website was pretty much one-php-script-per-page for the first year. It was known then as "Reviewing the Kanji". A year or so later, I created a very barebones MVC inspired by Symfony 1. Thankfully because I followed the same API and conventions than Symfony a few years later I was able to refactor to the actual Symfony 1 package.
 
-Have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). Issues are grouped in categories of interests such as front-end performance, UX improvements, etc. If you'd like to contribute something not on the issue board, reach me on Gitter and we'll see how it fits into the site, then break it down into smaller tasks and create issue(s) as required.
+This is the reason why this may not look like a typical Symfony project. For example, I had my own database API largely inspired by ZendDb, called "coreDatabase". It is still used as of writing. I've never used "Doctrine" nor any of the "scaffolding" utility.
+
+Right now the main issue is to document. I have a sort of cheatsheet which has been invaluable for me over the years and I can imagine without it it is difficult for someone else to get into the codebase. This documentation was a separate Symfony app. I need to convert it to a github repository so it is viewable online.
 
 #### Requirements
 Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell (ie. Linux, OS X or a VM on Windows).
@@ -40,7 +44,6 @@ Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell (ie. L
 
 ## Project Roadmap
 
-* **HTTPS** will be enabled soon (hopefully April 2017)
 * **Refactoring** legacy php templating to Vuejs client-side components
 * **Vocabulary features** : "favorite" example words in Study pages, create a vocab deck and review with SRS
 * **Improve Study pages** : better moderation & voting system, stroke order animations, better search

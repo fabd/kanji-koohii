@@ -313,7 +313,7 @@ class rtkLabs
   {
     $db = sfProjectConfiguration::getActive()->getDatabase();
     $select = 
-      $db->select(array('jdict.dictid', 'compound', 'reading', 'glossary', 'jdict.pri',   'pos','verb','misc','field' ))
+      $db->select(array('jdict.dictid', 'compound', 'reading', 'glossary', 'jdict.pri'))
          ->from(self::TABLE_JDICT)
          ->joinUsing(self::TABLE_DICTSPLIT, 'dictid')
          ->where('kanji = ?', $ucsId)

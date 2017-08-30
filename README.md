@@ -27,19 +27,21 @@ As you look at the code, please keep in mind I started the website all the way b
 
 This is the reason why this may not look like a typical Symfony project. For example, I had my own database API largely inspired by ZendDb, called "coreDatabase". It is still used as of writing. I've never used "Doctrine" nor any of the "scaffolding" utility.
 
-Right now the main issue is to document. I have a sort of cheatsheet which has been invaluable for me over the years and I can imagine without it it is difficult for someone else to get into the codebase. This documentation was a separate Symfony app. I need to convert it to a github repository so it is viewable online.
-
 #### Requirements
 Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell (ie. Linux, OS X or a VM on Windows).
 
 - **Php 7.0+** with xml, mbstring, curl.
 - **OPTIONAL**: JRE (Java Runtime Env.) for Closure compiler and yuicompressor (.jar).
 
+#### Documentation
+The [documentation](https://fabd.github.io/kanji-koohii-docs/project-structure.html) is manually updated and intended to work as a cheatsheet for common MVC & custom APIs. It has been very helpful for me over the years for that purpose. For more fine-grained documentation refer to the phpdoc comments. For Koohii classes I tend to keep a summary of the methods at the top of the file.
+
+*The documentation is a work in progress.* (I am converting the docs to an online repo using Hexo).
+
 #### Development setup
 
 * [First Time Setup](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-First-Time-Setup) for setting up the repository and database
 * [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build) for basic info about dev/test environments
-* [Docs](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Docs) has links to the MVC framework documentation (Symfony).
 
 
 ## Project Roadmap

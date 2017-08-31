@@ -23,20 +23,16 @@ Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-k
 Let's talk on [on Gitter](https://gitter.im/kanji-koohii/development)! It'll save you time getting into the codebase. If you'd like to help on existing issues have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use milestones to group issues in categories such as [UX Improvements](https://github.com/fabd/kanji-koohii/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22UX+Misc.+Improvements%22), [Front End Performance](https://github.com/fabd/kanji-koohii/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Front+End+Performance%22), etc.
 
 #### Project History
-As you look at the code, please keep in mind I started the website all the way back in the [August 2005](https://kanji.koohii.com/news/2005/8). The website was pretty much one-php-script-per-page for the first year. It was known then as "Reviewing the Kanji". A year or so later, I created a very barebones MVC inspired by Symfony 1. Thankfully because I followed the same API and conventions than Symfony a few years later I was able to refactor to the actual Symfony 1 package.
+Keep in mind I started the website all the way back in the [August 2005](https://kanji.koohii.com/news/2005/8). The website was pretty much one-php-script-per-page for the first year. It was known then as "Reviewing the Kanji". A year or so later, I created a very barebones MVC inspired by Symfony 1. Thankfully because I followed the same API and conventions than Symfony a few years later I was able to refactor to the actual Symfony 1 package.
 
-This is the reason why this may not look like a typical Symfony project. For example, I had my own database API largely inspired by ZendDb, called "coreDatabase". It is still used as of writing. I've never used "Doctrine" nor any of the "scaffolding" utility.
+#### Documentation
+The [documentation](https://kanji-koohii.github.io/kanji-koohii-docs/) is manually updated and intended to work as a cheatsheet for common MVC & custom APIs. It has been very helpful for me over the years for that purpose. For more fine-grained documentation refer to the phpdoc comments. For Koohii classes I tend to keep a summary of the methods at the top of the file.
 
 #### Requirements
 Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell (ie. Linux, OS X or a VM on Windows).
 
 - **Php 7.0+** with xml, mbstring, curl.
 - **OPTIONAL**: JRE (Java Runtime Env.) for Closure compiler and yuicompressor (.jar).
-
-#### Documentation
-The [documentation](https://fabd.github.io/kanji-koohii-docs/project-structure.html) is manually updated and intended to work as a cheatsheet for common MVC & custom APIs. It has been very helpful for me over the years for that purpose. For more fine-grained documentation refer to the phpdoc comments. For Koohii classes I tend to keep a summary of the methods at the top of the file.
-
-*The documentation is a work in progress.* (I am converting the docs to an online repo using Hexo).
 
 #### Development setup
 

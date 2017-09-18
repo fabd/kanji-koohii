@@ -49,25 +49,28 @@ module.exports = {
     rules: [
       {
         test:    /\.vue$/,
-        loader:  "vue-loader",
-        // vue-loader options goes here
-        options: {
-          loaders: {
+        use: [
+          {
+            loader: "vue-loader",
+            options: {
+              loaders: {
 
-            css: ExtractTextPlugin.extract({
-              loader: "css-loader",
-              fallbackLoader: "vue-style-loader" // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
-            }),
+                css: ExtractTextPlugin.extract({
+                  use: [ { loader: "css-loader" } ],
+                  fallback: "vue-style-loader" // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                }),
 
-            js: "babel-loader"
+                js: "babel-loader"
+              }
+            }
           }
-        }
+        ]
       },
 
       {
         // Ask webpack to check: If this file ends with .js, then apply some transforms
         test:    /\.js$/,
-        loader:  "babel-loader",
+        use: [ { loader:  "babel-loader" } ],
         exclude: /node_modules/,
 
         // Options are in .babelrc 
@@ -85,10 +88,12 @@ module.exports = {
 
       {
         test:    /\.(png|jpg|gif|svg)$/,
-        loader:  'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
+        use: [ {
+          loader:  'file-loader',
+          options: {
+            name: '[name].[ext]?[hash]'
+          }
+        } ]
       }
     ]
   },

@@ -1,9 +1,13 @@
 /**
  * Study page - includes (Still using old prototype-based javascript)
  * 
- * @author  Fabrice Denis
+ * yuicompressor globals:
+ *
+ *   Vue       vue-bundle, VueJs
+ *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
+ *   
  */
-/*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist */
+/*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii*/
 
 /* =require from "%WEB%" */
 /* !require "/revtk/bundles/yui-base.juicy.js" déjà inclus */
@@ -113,20 +117,36 @@
           elPanel = Dom.get("DictPanel"),
           data    = Dom.getDataset(elPanel);
 
-      if (!this.dictPanel)
-      {
-        this.dictPanel = new Core.Ui.AjaxPanel(elPanel);
-        this.dictPanel.get({ "ucs": data.ucs }, data.uri);
+      var that = this;
+
+      if (!this.dictPanel) {  
+
+        var onAjaxResponse = function(o) {
+          Core.log('Dict onAjaxResponse(%o)', o);
+          that.dictPanel = true;
+
+          // create and mount a Vue component instance
+          var DictListComponent = Vue.extend(Koohii.UX.KoohiiDictList);
+          var vueInst = new DictListComponent({
+            propsData: {
+              items: o.responseJSON.props.items
+            }
+          });
+
+          // replace the "loading..." div
+          var elMount = elPanel.querySelector('.JsDictLoading');
+          vueInst.$mount(elMount);
+
+          // this doesn't replace the container, unlike `.$mount(el)`
+          //elPanel.appendChild(vueInst.$el);
+        };
+
+        var ajaxRequest = new Core.Ui.AjaxRequest(data.uri, {
+          parameters: { "ucs": data.ucs },
+          success:    onAjaxResponse,
+          scope:      this
+        });
       }
-/*
-//REMOVE MEEEEE      
-      else if (visible === true)
-      {
-//        this.dictPanel = new Core.Ui.AjaxPanel(elPanel);
-        this.dictPanel.get({ "ucs": data.ucs }, data.uri);
-      
-      }
-*/
 
       Dom.toggle(elBody, visible);
       this.dictVisible = visible;

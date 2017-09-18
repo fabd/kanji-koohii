@@ -58,7 +58,9 @@ EOD;
       Dictionary
     </div>
     <div id="DictBody" style="display:none">
-      <div id="DictPanel" data-uri="<?php echo $sf_context->getController()->genUrl('study/dict') ?>" data-ucs="<?php echo $kanjiData->ucs_id ?>"><div class="info"><p>Loading...</p></div></div>
+      <div id="DictPanel" data-uri="<?php echo $sf_context->getController()->genUrl('study/dict') ?>" data-ucs="<?php echo $kanjiData->ucs_id ?>">
+        <div class="JsDictLoading">Loading...</p></div>
+      </div>
     </div>
   </div>
   <?php endif ?>

@@ -617,25 +617,36 @@ class studyActions extends sfActions
   {
     $ucsId = intval($request->getParameter('ucs'));
 
-    //TODO throttle requests
-
-/*    $c_utf = rtkIndex::getCharForIndex($ucsId);
-    if (!$ucsId || null === $c_utf)
-    {
-      throw new rtkAjaxException('Bad request.');
-    }*/
-
     if (!CJK::isCJKUnifiedUCS($ucsId)) {
       throw new rtkAjaxException('Bad request.');
     }
 
     //sfProjectConfiguration::getActive()->loadHelpers(array('CJK'));
 
+    // FIXME  don't really need TRON here
     $tron = new JsTron();
     $tron->setStatus(JsTron::STATUS_PROGRESS);
     $tron->set('dialogTitle', 'Dictionary Lookup'); // for '.cjk_lang_ja($c_utf));
-//    $tron->set('dialogWidth', 600);
-//    $tron->set('dialogHeight', 600);
-    return $tron->renderComponent($this, 'study', 'DictStudy', array('ucs_id' => $ucsId));
+
+    $tron->set('items', $this->getDictListItems($ucsId));
+
+    return $tron->renderJson($this);
+  }
+
+  // get Dictionary entries for given character
+  private function getDictListItems($ucsId)
+  {
+    $select = rtkLabs::getSelectForDictStudy($ucsId);
+    $result = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($select);
+
+    $kanji = utf8::fromUnicode(array($ucsId));
+
+    mb_regex_encoding('UTF-8');
+
+    foreach ($result as &$r) {
+      $r['compound'] = mb_ereg_replace($kanji, '<u>'.$kanji.'</u>', $r['compound']);
+    }
+
+    return $result;
   }
 }

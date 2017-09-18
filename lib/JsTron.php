@@ -6,6 +6,10 @@
  *
  * 
  * Methods:
+ *   set($name, $value)          Set properties of the message (cf. sfParameterHolder)
+ *   add($parameters)
+ *   ...
+ *
  *   setStatus($status)
  *   setError($message)
  *   setHtml($html)
@@ -15,13 +19,6 @@
  *
  *   renderPartial()             setHtml() with a Symfony partial render
  *   renderComponent()           ... likewise for ....... component render
- *
- * 
- * Set properties of the message via sfParameterHolder:
- *
- *   set($name, $value)
- *   add($parameters)
- *   ...
  *
  *
  * Return a simple SUCCESS message:

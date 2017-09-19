@@ -68,6 +68,9 @@ body { padding-top:0;  }
 <!--[if lt IE 9]></div><![endif]-->
 
 <?php
+  $ext = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
+  $sf_response->addJavascript("/build/pack/vue-bundle$ext.js", "first"); //add before legacy code so it kicks in sooner
+
   include_javascripts();
   if (has_slot('inline_javascript')) {
     echo "<script>\n" . get_slot('inline_javascript') . "</script>\n";

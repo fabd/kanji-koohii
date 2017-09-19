@@ -3,14 +3,18 @@
  *
  * Dictionary lookup for a given character.
  * 
- * init() crèer le dialogue et l'affiche
- * hide() 
- * show()
- * load() pour charger le contenu avec un autre kanji (évite de détruire et recréer le dialogue, et
- *        maintient sa position drag-drop)
+ *  init() crèer le dialogue et l'affiche
+ *  hide() 
+ *  show()
+ *  load()   load another result (avoids recreating dialog and maintains drag/drop position)
+ *       
+
+ * yuicompressor globals:
+ *
+ *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
  * 
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/*global YAHOO, window, alert, console, document, Core, App, Koohii */
 
 (function(){
 
@@ -36,13 +40,14 @@
         requestUri:  this.requestUri,
         requestData: { ucs: ucsId },
         //invisMask:   true,
+        width:       300,
         skin:        "rtk-skin-dlg",
         //context:     options.context,
         scope:       this,
         events:      {
-          onDialogInit:    this.onDialogInit,
-          onDialogDestroy: this.onDialogDestroy,
-          onDialogHide:    this.onDialogHide
+          onDialogResponse: this.onDialogResponse,
+          onDialogDestroy:  this.onDialogDestroy,
+          onDialogHide:     this.onDialogHide
         }
       };
 
@@ -57,11 +62,12 @@
         return;
       }
 
-      // clear the old html while loading
-      this.dialog.getBody().innerHTML = '<div id="JSEditStoryLoading">&nbsp;</div>';
+      // FIXME  here ideally we should $destroy the Vue instance
       
+
+      // this is a bit hacky, we are using the ancestor AjaxPanel class underlying AjaxDialog, should use AjaxDialog API
+      this.dialog.getBody().innerHTML = Core.Ui.AjaxDialog.DIALOG_LOADING_HTML;
       this.ucsId = ucsId;
-      
       this.dialog.getAjaxPanel().get({ucs: ucsId}, this.requestUri);
     },
 
@@ -84,8 +90,16 @@
       return false;
     },
 
-    onDialogInit: function()
+    // tron message, cf. core-json.js
+    onDialogResponse: function(tron)
     {
+      Core.log('DictLookupDialog::onDialogResponse()');
+
+      var props = tron.getProps();
+
+      var mountPoint = this.dialog.getBody().querySelector('div'); // replace the loading div
+
+      Koohii.UX.KoohiiDictList.mount({ items: props.items }, mountPoint);
     },
     
     onDialogDestroy: function()

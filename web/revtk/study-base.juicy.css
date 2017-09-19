@@ -13,8 +13,6 @@
 /* =require "/revtk/components/EditStoryComponent.css" */
 /* =require "/revtk/components/EditFlashcardDialog.css" */
 
-/* =require "/revtk/components/DictStudyComponent.css" */
-
 
  /* bootstrap-xs-sm */
 @media (max-width: 991px) {
@@ -27,6 +25,29 @@
 .edition { padding-left:0.5em; font-size:0.83em; /* 10px */ color:#979797; }
 
 #rtkmain { margin-bottom:1em; }
+
+
+
+/* ------------------ */
+/* Dictionary         */
+/* ------------------ */
+#DictStudy {
+  padding-top:0; padding-bottom:0; margin-bottom:1em;
+}
+
+#DictHead { 
+  font-size:1.1em; line-height:33px; padding:0 15px; zoom:1;
+  color:#646250; cursor:pointer;
+  text-shadow:0 1px rgba(255,255,255,0.75);
+
+  background: #cfd67f; /* Old browsers */
+  background: -webkit-linear-gradient(top,  #cfd67f 0%,#e3ecb1 100%); /* Chrome10+,Safari5.1+ */
+  background: linear-gradient(to bottom,  #e3ecb1 0%,#cfd67f 100%); /* W3C */
+}
+
+#DictPanel {  color:#111; }
+#DictPanel .is-loading { padding:1em 20px 0; color:#838279; }
+
 
 
 /* ------------------ */

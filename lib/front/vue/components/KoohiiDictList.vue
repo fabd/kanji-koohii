@@ -1,6 +1,6 @@
 <template>
 
-  <div v-if="items.length > 0">
+  <div v-if="items.length > 0" class="dict-panel">
 
     <dl class="dict-list">
       <template v-for="$item in items">
@@ -25,6 +25,9 @@
 
 <style>
 /* Dictionary Lookup Component */
+
+  /* try to improve layout of the AjaxDialog on FLashcard Review */
+.dict-panel { /*max-width:400px;*/ }
 
 .dict-list { margin:0; background:#fff; }
 .dict-list .cj-k  { line-height:1em; }
@@ -63,15 +66,9 @@ export default {
     Core.log('KoohiiDictList::created(%o)', this.items);
   },
 
-  methods: {
-    load(request_uri, ucs_code) {
-
-      Core.log('KoohiiDictList::load()')
-
-      // for now we are using legacy code to keep refactoring manageable
-
-
-    }
+  beforeDestroy() {
+    Core.log('KoohiiDictList::beforeDestroy()');
   }
+
 }
 </script>

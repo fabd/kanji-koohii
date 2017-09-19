@@ -125,20 +125,9 @@
           Core.log('Dict onAjaxResponse(%o)', o);
           that.dictPanel = true;
 
-          // create and mount a Vue component instance
-          var DictListComponent = Vue.extend(Koohii.UX.KoohiiDictList);
-          var vueInst = new DictListComponent({
-            propsData: {
-              items: o.responseJSON.props.items
-            }
-          });
+          var elMount = elPanel.querySelector('div'); // replace the loading div
 
-          // replace the "loading..." div
-          var elMount = elPanel.querySelector('.JsDictLoading');
-          vueInst.$mount(elMount);
-
-          // this doesn't replace the container, unlike `.$mount(el)`
-          //elPanel.appendChild(vueInst.$el);
+          Koohii.UX.KoohiiDictList.mount({ items: o.responseJSON.props.items }, elMount);
         };
 
         var ajaxRequest = new Core.Ui.AjaxRequest(data.uri, {

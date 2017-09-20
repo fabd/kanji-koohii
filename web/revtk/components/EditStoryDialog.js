@@ -97,7 +97,7 @@
         return;
       }
 
-      var sLoadingHTML = '<div style="min-width:200px" class="body ajax-loading"></div>';
+      var sLoadingHTML = '<div style="min-width:200px" class="body JsAjaxDlgLoading"></div>';
 
       // clear the old html while loading
       this.dialog.getBody().innerHTML = sLoadingHTML;

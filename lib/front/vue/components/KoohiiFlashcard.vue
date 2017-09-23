@@ -190,7 +190,7 @@ export default {
 
   /* highlight the split reading */
 /*#uiFcYomi .vyc span  { padding-bottom:2px; border-bottom:2px solid #f00; }*/
-#uiFcYomi .vyr span  { padding-bottom:2px; border-bottom:2px solid #f00; }
+#uiFcYomi .vyr em { padding-bottom:2px; border-bottom:2px solid #f00; font-style:normal; }
 
 #uiFcYomi .pad   { padding:62px 8px 8px; }
 

@@ -161,7 +161,7 @@ class KanjisPeer extends coreDatabaseTable
     if (isset($options->yomi))
     {
       // v_on, v_kun
-      $highlight = isset($options->api_mode) ? array('[', ']') : array('<span>', '</span>');
+      $highlight = isset($options->api_mode) ? array('[', ']') : array('<em>', '</em>');
       rtkLabs::getSampleWords($cardData->id, $cardData, $highlight);
     }
 

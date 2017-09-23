@@ -5,7 +5,13 @@
   <div
     v-if="is_displayed"
     v-bind:style="{ height: this.cardHeight + 'px' }"
-    class="uiFcCard uiFcAction" :class="{'is-reverse': reviewMode.fc_reverse}" data-action="flip">
+    class="uiFcCard uiFcAction"
+    :class="{
+      'is-reverse': reviewMode.fc_reverse,
+      'uiFcState-0': fc_state === 0,
+      'uiFcState-1': fc_state === 1
+    }"
+    data-action="flip">
  
     <template v-if="!reviewMode.freemode">
       <a id="uiFcMenu" href="#" title="Edit Flashcard" class="uiGUI uiFcAction"

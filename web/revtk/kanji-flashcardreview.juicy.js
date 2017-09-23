@@ -167,6 +167,7 @@
       
     onFlashcardState: function(iState)
     {
+      // Core.log('onFlashcardState(%d)', iState);
       Dom.toggle('uiFcButtons0', iState === 0);
       Dom.toggle('uiFcButtons1', iState !== 0);
     },

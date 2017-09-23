@@ -57,8 +57,8 @@
  * 
  *   onBeginReview        When review begins, during FlashcardReview initialization
  *   onEndReview          Notified when the last flashcard is answered and the post cache has been successfully handled by server
- *   onFlashcardCreate    A new flashcard is created, before json content is inserted into the card and it is shown.
- *                        Flashcard data is available and can be changed with getFlashcardData()
+ *   onFlashcardCreate    Before new flashcard is created and shown. Flashcard data is available and can be changed
+ *                        with getFlashcardData()
  *   onFlashcardState(n)  Called just after 'onFlashcardCreate' for default state 0, and then everytime the state
  *                         is set with setFlashcardState(). Argument n is the state number.
  *   onFlashcardDestroy   Before the current flashcard is destroyed
@@ -79,13 +79,6 @@
  *   put                  Array of flashcard ids which were succesfully handled.
  *                        The items are cleared from the postCache. If not cleared, these items will
  *                        be posted again during the next prefetchs.
- * 
- * Flashcard markup:
- *
- *   <span class="fcData fcData-xxx">...</span>
- *
- *   Elements with fcData class have their inner html content set with the xxx property of
- *   the flashcard data in the Ajax responses.
  *
  * Usage:
  * 
@@ -221,10 +214,11 @@
       this.postCache = [];
       this.undoLevel = 0;
       
-      
+      // flashcard as a Vue component (wip)
       this.curCard  = null;
+  
   //    this.ofs_prefetch = Math.floor(this.num_prefetch);
-      
+    
       this.beginReview();
     },
 
@@ -418,25 +412,25 @@
       // clear event
       this.disconnect('onWaitCache');
 
+      // notify BEFORE flashcard is created
+      this.notify('onFlashcardCreate');
+
       // we have a cached item for current position
       var oItem = this.getFlashcardData();
 
-// instance vue comp
-var vueConst = Vue.extend(Koohii.UX.KoohiiFlashcard);
-var vueInst  = new vueConst({ "propsData": {
-  cardData:   oItem,
-  reviewMode: Koohii.UX.reviewMode
-}});
-vueInst.$mount('#uiFcMain');
+      // (wip, refactor) instance Vue comp
+      var vueConst = Vue.extend(Koohii.UX.KoohiiFlashcard);
+      var vueInst  = new vueConst({ "propsData": {
+        cardData:   oItem,
+        reviewMode: Koohii.UX.reviewMode
+      }});
+      vueInst.$mount();
+      var mountPoint = Dom.get('uiFcMain');
+      mountPoint.appendChild(vueInst.$el);
 
       this.curCard = vueInst;
-
-
-      this.notify('onFlashcardCreate');
-      // this.curCard.setContent(oItem);
       
       this.setFlashcardState(0);
-      this.notify('onFlashcardState', 0 /*state*/);
 
       this.curCard.display(true);
     },
@@ -449,8 +443,14 @@ vueInst.$mount('#uiFcMain');
     {
       if (this.curCard) {
         this.notify('onFlashcardDestroy');
-        this.curCard.display(false);
+
+        // doesn't work when followed by $destroy()
+        //this.curCard.display(false);
+
         this.curCard.$destroy();
+
+        var $el = this.curCard.$el; $el && $el.parentNode.removeChild($el);
+
         this.curCard = null;
       }
     },
@@ -664,6 +664,8 @@ vueInst.$mount('#uiFcMain');
       if (this.curCard) {
         this.curCard.setState(iState);
       }
+
+      this.notify('onFlashcardState', iState);
     },
     
     getFlashcardState: function()

@@ -166,8 +166,8 @@ Koohii.UX.reviewMode = {
   fc_yomi:        <?php var_export(!!$fc_yomi) ?>,
 
   // (NOT freemode) edit flashcard menu
-  fc_edit_uri:    "<?php $sf_context->getController()->genUrl('flashcards/dialog') ?>",
-  fc_edit_params: "<?php escape_once(coreJson::encode(array('review' => 1))) ?>"
+  fc_edit_uri:    "<?= $sf_context->getController()->genUrl('flashcards/dialog') ?>",
+  fc_edit_params: '{"review": 1}'
 };
 
 App.ready(function(){

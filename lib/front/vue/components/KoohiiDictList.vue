@@ -6,8 +6,8 @@
       <template v-for="$item in items">
 
         <dt>
-          <span class="c cj-k" lang="ja" xml:lang="ja" v-html="$item.compound"></span>
-          <span class="r cj-k" lang="ja" xml:lang="ja">{{ $item.reading  }}</span>
+          <cjk_lang_ja className="c" :html="$item.compound"></cjk_lang_ja>
+          <cjk_lang_ja className="r" :html="$item.reading"></cjk_lang_ja>
         </dt>
         <dd>{{ $item.glossary }}</dd>
 
@@ -52,8 +52,14 @@
  * 
  */
 
+import cjk_lang_ja from './cjk_lang_ja.vue'
+
 export default {
   name: 'KoohiiDictList',
+
+  components: {
+    cjk_lang_ja
+  },
 
   props: [ 'items' ],
 

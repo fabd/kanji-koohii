@@ -115,41 +115,8 @@
 .uiFcState-1.is-reverse .vyg       { visibility:visible; }
 
 
-/* Onyomi */
-.with-yomi #kanjibig  { width:50%; }
-
-#uiFcYomi        { position:absolute; left:50%; top:0; width:50%; }
-
-#uiFcYomi .yomi  { }
-
-  /* highlight the split reading */
-/*#uiFcYomi .vyc span  { padding-bottom:2px; border-bottom:2px solid #f00; }*/
-#uiFcYomi .vyr span  { padding-bottom:2px; border-bottom:2px solid #f00; }
-
-#uiFcYomi .pad   { padding:62px 8px 8px; }
-
-#uiFcYomi .y_o   { margin:0 0 20px }
-
-#uiFcYomi .cj-k  { line-height:1em; }
-#uiFcYomi .vyc   { font-size:22px; padding:5px 3px; display:inline-block; background:#eee; border-radius:3px;  }
-#uiFcYomi .vyr   { font-size:18px; padding:7px 3px; display:inline-block; margin:0 0 0 1em; }
-
-#uiFcYomi .vyg   { 
-  font:italic 15px/1.1em Georgia, serif; color:#888; padding:8px 0 0; 
-  /* FIX #81 */
-  overflow-y:auto; max-height:6em;
-}
 
 
-/* Edit Flashcard menu icon */
-#uiFcMenu {
-  display:block; position:absolute;
-  right:0; top:0; width:40px; height:38px;
-  background:#f2f2f2; text-decoration:none; text-align:center;
-  z-index:1; /* clickable on top of .pad */
-}
-#uiFcMenu .fa { font-size:18px; line-height:38px; color:#9b9b9b; }
-#uiFcMenu:hover, #uiFcMenu.active { background:#e8e8e8; }
 
 /* Deleted Cards box */
 #uiFcStDeldK { padding:0 5px 5px; margin:0; width:165px; font-size:18px; line-height:1.2em; letter-spacing:0px; color:red; }

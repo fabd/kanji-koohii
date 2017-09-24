@@ -20,15 +20,17 @@
 </template>
 
 <script>
-import KoohiiFlashcardKanji from './KoohiiFlashcardKanji.vue'
+import KoohiiFlashcardKanji        from './KoohiiFlashcardKanji.vue'
+import KoohiiFlashcardVocabShuffle from './KoohiiFlashcardVocabShuffle.vue'
 
 export default {
 
   name: 'KoohiiFlashcard',
 
   components: {
-    // views
-    KoohiiFlashcardKanji
+    // reviewMode.fc_view => Vue template
+    'kanji':        KoohiiFlashcardKanji,
+    'vocabshuffle': KoohiiFlashcardVocabShuffle
   },
 
   data() {
@@ -113,10 +115,14 @@ export default {
 
   created() {
     Core.log('KoohiiFlashcard::created(%o)', this.cardData);
+
+    // handle flashcard layout & interactivity as a child component according to review mode
+    this.currentView = this.reviewMode.fc_view;
   }
 }
 </script>
 
 <style>
-/* ... */
+
+
 </style>

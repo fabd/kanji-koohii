@@ -164,6 +164,7 @@ Koohii.UX.reviewMode = {
   freemode:       <?php var_export($freemode) ?>,
   fc_reverse:     <?php var_export($fc_reverse) ?>,
   fc_yomi:        <?php var_export(!!$fc_yomi) ?>,
+  fc_view:        'kanji',
 
   // (NOT freemode) edit flashcard menu
   fc_edit_uri:    "<?= $sf_context->getController()->genUrl('flashcards/dialog') ?>",

@@ -37,7 +37,7 @@
   </div>
 
   <div id="rd-main">
-    <div id="uiFcReview" class="uiFcReview">
+    <div id="uiFcReview">
 
       <div id="uiFcMain">
         <!-- Vue flashcard component goes here -->

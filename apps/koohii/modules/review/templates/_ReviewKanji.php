@@ -63,7 +63,7 @@
     if ($fc_yomi) { $rdMainClass[] = 'with-yomi'; }
   ?>
   <div id="rd-main" class="<?= implode(' ', $rdMainClass) ?>">
-    <div id="uiFcReview" class="uiFcReview">
+    <div id="uiFcReview">
 
       <div id="uiFcMain">
         <!-- Vue flashcard component goes here -->

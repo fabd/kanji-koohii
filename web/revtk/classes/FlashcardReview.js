@@ -102,15 +102,13 @@
  * - create a simple ajax queueing class (only when refactored to yui 2), solves
  *
  *
- * @author   Fabrice Denis
+ * yuicompressor globals:
+ *
+ *   Vue       vue-bundle
+ *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
+ *
  */
-
-/*global YAHOO, window, alert, console, document, Core, App */
-
-/**
- * 
- * 
- */
+/*global YAHOO, window, alert, console, document, Core, App, Koohii, Vue */
 
 (function(){
   
@@ -449,7 +447,8 @@
 
         this.curCard.$destroy();
 
-        var $el = this.curCard.$el; $el && $el.parentNode.removeChild($el);
+        var $el = this.curCard.$el;
+        if ($el) { $el.parentNode.removeChild($el); }
 
         this.curCard = null;
       }

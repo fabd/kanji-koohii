@@ -156,9 +156,6 @@ stylesheets=(
 
   'web/revtk/main.juicy.css,web/build/revtk/main.juiced.css,web/build/revtk/main.min.css',
 
-  'web/revtk/labs-alpha-flashcardreview.juicy.css,web/build/revtk/labs-alpha-flashcardreview.juiced.css,web/build/revtk/labs-alpha-flashcardreview.min.css',
-  'web/revtk/bundles/flashcardreview-1.0.juicy.css,web/build/revtk/bundles/flashcardreview-1.0.juiced.css,web/build/revtk/bundles/flashcardreview-1.0.min.css',
-
   'web/revtk/manage.juicy.css,web/build/revtk/manage.juiced.css,web/build/revtk/manage.min.css',
 
   'web/revtk/study-base.juicy.css,web/build/revtk/study-base.juiced.css,web/build/revtk/study-base.min.css',

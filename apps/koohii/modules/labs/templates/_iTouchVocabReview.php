@@ -23,7 +23,7 @@
   <div class="clear"></div>
 </div>
 
-<div id="fr-body">
+<div id="fr-body" class="fr-mode-vshuffle">
 
   <div id="rd-tops">
     <div id="uiFcProgressBar">

@@ -46,6 +46,24 @@ export default {
 
 <style>
 
+/* =============================== */
+/* refactor of Vocab Shuffle bundle, affects elements rom the php template, put here for now */ 
+/* =============================== */
+
+/* side buttons */
+.fr-mode-vshuffle .uiFcStats .uiIBtn { text-align:center; font-weight:normal; margin:0 0 0.5em; }
+.fr-mode-vshuffle .uiFcStats .uiIBtn span { font-size:14px; font-weight:normal; }
+
+/* "Continue" button */
+#uiFcBtnAC { width:100%; background:#6fa300;
+  background: -webkit-linear-gradient(top,  #6fa300 0%,#649300 100%);
+  background: linear-gradient(to bottom,  #6fa300 0%,#649300 100%); }
+
+
+
+/* =============================== */
+/* component styles */
+/* =============================== */
 .fc-vshuffle .ta-c { text-align: center; }
 
 .fc-vshuffle .dispword { display:block; font-size:80px; line-height:1em; padding:50px 0 40px; }

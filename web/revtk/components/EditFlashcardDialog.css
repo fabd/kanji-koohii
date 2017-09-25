@@ -41,7 +41,7 @@ a.uiIBtnAjax { padding:0 10px; /* Make the text unselectable */ -moz-user-select
 /**
  * Edit Flashcard Dialog.
  */
-#editflashcarddlg { width:270px; padding-top:0; padding-bottom:0; }
+#editflashcarddlg { min-width:270px; padding-top:0; padding-bottom:0; }
 
 #editflashcarddlg .stats { width:100%; padding:10px 0; }
 #editflashcarddlg .stats th,

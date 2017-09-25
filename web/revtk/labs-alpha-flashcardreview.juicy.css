@@ -8,13 +8,6 @@
  * @author  Fabrice Denis
  */
 
-/* =require from "%WEB%" */
-/* =require "/revtk/bundles/flashcardreview-1.0.juicy.css" */
-
-/* ! START FROM THE KANJI FLASHCARD REVIEW STYLES !  */
-/* =require "/revtk/kanji-flashcardreview.juicy.css" */
-
-
 
 /* side buttons */
 #uiFcStats .uiIBtn { text-align:center; font-weight:normal; margin:0 0 0.5em; }

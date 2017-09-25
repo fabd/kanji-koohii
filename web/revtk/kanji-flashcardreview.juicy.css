@@ -3,18 +3,20 @@
  *
  * VUE REFACTORING
  *
- *   This stylesheet may eventually move to a "flashcard page" Vue component, which
- *   will contain KoohiiFlashcard component.
+ *   This bundle remains until Edit Story dialog, Edit Keyword, etc. become
+ *   Vue components.
  *
- *   This component would handle layout out the card, progress bar, buttons etc.
- *   for desktop / mobile. This is more complex and easy to break.
+ *   All the styles moved to KoohiiFlashcard.vue component. Ideally they need
+ *   to go into a "flashcard review page" parent component. But for now the
+ *   point is that these will be part of a webpack bundle for the Flashcard
+ *   Review page.
+ *
+ *   In retrospect I moved these styles too early since the following make
+ *   this bundle still necessary...
  *   
  */
-
-/* ------ these will eventually move to Vue components ----- */
 
 /* =require "/revtk/components/EditStoryComponent.css" */
 /* =require "/revtk/components/EditKeywordDialog.css" */
 /* =require "/revtk/components/EditFlashcardDialog.css" */
 
-/* ------ the rest moved to  KoohiiFlashcard.vue ----------- */

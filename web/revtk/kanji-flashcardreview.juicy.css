@@ -1,169 +1,22 @@
 /**
- * Kanji Flashcard Review - note the MOBILE (media query) stylesheet included at bottom.
+ * Kanji Flashcard Review
  *
- * @author  Fabrice Denis
+ * VUE REFACTORING
+ *
+ *   This bundle remains until Edit Story dialog, Edit Keyword, etc. become
+ *   Vue components.
+ *
+ *   All the styles moved to KoohiiFlashcard.vue component. Ideally they need
+ *   to go into a "flashcard review page" parent component. But for now the
+ *   point is that these will be part of a webpack bundle for the Flashcard
+ *   Review page.
+ *
+ *   In retrospect I moved these styles too early since the following make
+ *   this bundle still necessary...
+ *   
  */
 
-/* =require from "%WEB%" */
-/* =require "/revtk/bundles/flashcardreview-1.0.juicy.css" */
 /* =require "/revtk/components/EditStoryComponent.css" */
 /* =require "/revtk/components/EditKeywordDialog.css" */
 /* =require "/revtk/components/EditFlashcardDialog.css" */
-
-
-/* desktop layout*/
-
-#fr-body     { width:900px; margin:50px auto 0; }
-
-#rd-tops     { float:right; width:175px; padding:0 0 12px; }
-
-#rd-main     { float:left; width:500px; margin:0 0 0 175px; }
-
-  #uiFcReview  { width:500px; }
-  #uiFcButtons { width:100%; }
-
-#rd-side     { float:right; width:175px; }
-
-  #uiFcProgressBar { width:100%; margin:0 auto; position:relative; }
-  .uiFcPrBarMod       { padding:24px 0 0; } /* space for h3 above bar */
-  #uiFcProgressBar h3 { position:absolute; width:100%; top:0; padding:4px 0 0; }
-
-
-  #uiFcStats       { width:100%; margin:0 auto; }
-  #uiFcPiles       { margin-bottom:1em; }
-    #uiFcPiles  { width:64%; float:left; padding-right:0; }
-    #uiFcEnd    { width:28%; float:right; }
-  #uiFcStDeld      { margin:1em 0 0; }
-
-
-/* responsive layout */
-@media screen and (max-width:900px) {
-
-  #fr-body   { width:700px; }
-  #rd-main   { margin-left:0; }
-
-}
-
-@media screen and (max-width:700px) {
-
-  #fr-body  { width:500px; }
-
-  #rd-tops  { float:none; width:100%; padding-top:4px; }
-
-    /* use a "minified" version of progress bar with text overlaid on top */
-    #uiFcProgressBar { width:250px; margin:0 auto; }
-    .uiFcPrBarMod    { padding:0; }
-    #uiFcProgressBar .uiFcStBox { padding:0; background:none;/* remove padding so it aligns neatly */ }
-    #uiFcProgressBar h3 { line-height:21px; color:#ddd; padding:0; font-weight:normal; }
-    #uiFcProgressBar em { color:#fff; }
-
-  #rd-main  { float:none; width:100%; margin:0; }
-    #uiFcButtons { padding:12px 0 15px; }
-    #uiFcButtons h3 { display:none; } /* remove prompts to save space */
-
-  #rd-side  { float:none; width:250px; margin:0 auto; }
-    #uiFcStats  { width:100%; }
-
-}
-
-
-/* typography */
-#uiFcProgressBar, #uiFcStats { font-family:Arial, sans-serif; }
-
-/* main card size */
-.uiFcCard   { 
-  width:100%; position:relative;
-  height:366px; background:#fff;
-  box-shadow:0px 1px 5px 0px rgba(0,0,0,0.2); /* works in Firefox 25 */
-}
-
-
-/* Kanji flashcard layout */
-#keyword { font:16px Georgia, Times New Roman, serif; position:absolute; left:8px; top:4px; width:204px; }
-#keyword a { text-decoration:none; }
-#keyword a:hover { text-decoration:underline; }
-
-#kanjibig { position:absolute; left:0px; width:100%; top:40%; margin-top:-50px; text-align:center; }
-#kanjibig p { margin:0; padding:0; font-size:100pt; line-height:1em; }
-#kanjibig p img { display:none; }
-
-#strokecount { position:absolute; left:8px; bottom:6px; font:12px Georgia, Times New Roman; color:#a0a0a0; }
-#strokecount .kanji { font-size:20pt; }
-
-#framenum { font:12px Georgia, Times New Roman; position:absolute; bottom:7px; right:8px; color:#a0a0a0; }
-
-
-/* states (applied to div.uiFcCard) : default review mode */
-.uiFcState-0 #keyword     { color:#000; }
-.uiFcState-0 #kanjibig    { visibility:hidden; color:#fff; }
-.uiFcState-0 #strokecount { visibility:hidden; }
-.uiFcState-0 #framenum    { visibility:hidden; }
-.uiFcState-0 #uiFcYomi    { display:none; } /* vocab */
-
-.uiFcState-1 #keyword     { color:#a0a0a0 }
-.uiFcState-1 #kanjibig    { visibility:visible; color:#000; }
-.uiFcState-1 #strokecount { visibility:visible; }
-.uiFcState-1 #framenum    { visibility:visible; }
-.uiFcState-1 #uiFcYomi    { display:block; } /* vocab */
-
-/* states (kanji to keyword) : be sure to explicitly override the defaults above */
-.uiFcState-0.is-reverse #keyword   { visibility:hidden; }
-.uiFcState-0.is-reverse #kanjibig  { visibility:visible; color:#000; }
-.uiFcState-0.is-reverse #uiFcYomi  { display:block; }
-  /* show kanji compounds on front side, show meanings on back side */
-.uiFcState-0.is-reverse .vyg       { visibility:hidden; }
-.uiFcState-1.is-reverse .vyg       { visibility:visible; }
-
-
-/* Onyomi */
-.with-yomi #kanjibig  { width:50%; }
-
-#uiFcYomi        { position:absolute; left:50%; top:0; width:50%; }
-
-#uiFcYomi .yomi  { }
-
-  /* highlight the split reading */
-/*#uiFcYomi .vyc span  { padding-bottom:2px; border-bottom:2px solid #f00; }*/
-#uiFcYomi .vyr span  { padding-bottom:2px; border-bottom:2px solid #f00; }
-
-#uiFcYomi .pad   { padding:62px 8px 8px; }
-
-#uiFcYomi .y_o   { margin:0 0 20px }
-
-#uiFcYomi .cj-k  { line-height:1em; }
-#uiFcYomi .vyc   { font-size:22px; padding:5px 3px; display:inline-block; background:#eee; border-radius:3px;  }
-#uiFcYomi .vyr   { font-size:18px; padding:7px 3px; display:inline-block; margin:0 0 0 1em; }
-
-#uiFcYomi .vyg   { 
-  font:italic 15px/1.1em Georgia, serif; color:#888; padding:8px 0 0; 
-  /* FIX #81 */
-  overflow-y:auto; max-height:6em;
-}
-
-
-/* Edit Flashcard menu icon */
-#uiFcMenu {
-  display:block; position:absolute;
-  right:0; top:0; width:40px; height:38px;
-  background:#f2f2f2; text-decoration:none; text-align:center;
-  z-index:1; /* clickable on top of .pad */
-}
-#uiFcMenu .fa { font-size:18px; line-height:38px; color:#9b9b9b; }
-#uiFcMenu:hover, #uiFcMenu.active { background:#e8e8e8; }
-
-/* Deleted Cards box */
-#uiFcStDeldK { padding:0 5px 5px; margin:0; width:165px; font-size:18px; line-height:1.2em; letter-spacing:0px; color:red; }
-
-/* CSS3 Animation disabled for now (users find it distracting/slow)
-#uiFcMain { opacity:0.3; }
-#uiFcMain.JsPlayCardIn {
-  transition-property:opacity;
-  transition-duration:0.3s;
-  transition-timing-function:ease-in;
-  opacity:1;
-}*/
-
-@media screen and (max-width:700px) {
-/* =require "/revtk/components/MobileFlashcardReview.css" */
-}
 

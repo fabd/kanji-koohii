@@ -145,45 +145,6 @@
       Dom.toggle('JsBtnUndo', this.oReview.getNumUndos() > 0);
 
       this.updateStatsPanel();
-
-      // example On and Kun vocabulary (option)
-      if (this.options.yomi)
-      {
-        var elYomi = Dom.get('uiFcYomi');
-        var oCard  = this.oReview.getFlashcardData();
-        var elOn   = Dom.down(elYomi, 'y_o');
-        var elKun  = Dom.down(elYomi, 'y_k');
-
-        Dom.toggle(elOn, !!oCard.v_on);
-        if (oCard.v_on)
-        {
-          this.addVocab(elOn, oCard.v_on);
-        }
-
-        Dom.toggle(elKun, !!oCard.v_kun);
-        if (oCard.v_kun)
-        {
-          this.addVocab(elKun, oCard.v_kun);
-        }
-      }
-    },
-
-    /**
-     * Inserts example vocab item data in the card.
-     *
-     * data.compound
-     *     .gloss
-     *     .reading
-     *     .type
-     *
-     * @param  {HTMLElement}   el      Parent element
-     * @param  {Object}        data    
-     */
-    addVocab: function(el, data)
-    {
-      Dom.down(el, 'vyc').innerHTML = data.compound;
-      Dom.down(el, 'vyr').innerHTML = data.reading;
-      Dom.down(el, 'vyg').innerHTML = data.gloss;
     },
 
     /**
@@ -206,6 +167,7 @@
       
     onFlashcardState: function(iState)
     {
+      // Core.log('onFlashcardState(%d)', iState);
       Dom.toggle('uiFcButtons0', iState === 0);
       Dom.toggle('uiFcButtons1', iState !== 0);
     },

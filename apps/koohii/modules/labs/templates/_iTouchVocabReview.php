@@ -23,7 +23,7 @@
   <div class="clear"></div>
 </div>
 
-<div id="fr-body">
+<div id="fr-body" class="fr-mode-vshuffle">
 
   <div id="rd-tops">
     <div id="uiFcProgressBar">
@@ -37,16 +37,11 @@
   </div>
 
   <div id="rd-main">
-    <div id="uiFcReview" class="uiFcReview">
+    <div id="uiFcReview">
 
-      <?php # flashcard container ?>
-      <div id="uiFcMain" class="uiFcCard" style="diplay:none">
-
-        <?= cjk_lang_ja('&nbsp;', array('fcData', 'fcData-dispword')) ?>
-        <?= cjk_lang_ja('&nbsp;', array('fcData', 'fcData-reading')) ?>
-        <div class="fcData fcData-glossary">&nbsp;</div>
-        
-      </div><!-- uiFcMain -->
+      <div id="uiFcMain">
+        <!-- Vue flashcard component goes here -->
+      </div>
       
       <?php # flashcard anwser buttons ?>
       <div class="uiFcButtons" id="uiFcButtons">
@@ -92,6 +87,11 @@ var options =
     put_request: false,
     items:       [<?= implode(',', $items) ?>]
   }
+};
+
+// (wip) Vue refactoring
+Koohii.UX.reviewMode = {
+  fc_view:        'vocabshuffle'
 };
 
 App.ready(function(){

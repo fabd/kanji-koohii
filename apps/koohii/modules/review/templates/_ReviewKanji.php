@@ -63,47 +63,11 @@
     if ($fc_yomi) { $rdMainClass[] = 'with-yomi'; }
   ?>
   <div id="rd-main" class="<?= implode(' ', $rdMainClass) ?>">
-    <div id="uiFcReview" class="uiFcReview">
+    <div id="uiFcReview">
 
-      <!-- flashcard container -->
-      <div id="uiFcMain" class="uiFcCard uiFcAction <?= $fc_reverse ? 'is-reverse':'' ?>" data-action="flip" style="display:none">
-        
-        <?php if (!$freemode) {
-          # Edit Flashcard Menu
-          $dialogUri  = $sf_context->getController()->genUrl('flashcards/dialog');
-          $params     = escape_once(coreJson::encode(array('review' => 1))); // flag for the Edit Flashcard Menu dialog
-        ?>
-        <a id="uiFcMenu" href="#" title="Edit Flashcard" class="uiGUI uiFcAction" data-action="fcmenu" data-uri="<?= $dialogUri ?>" data-param="<?= $params ?>"><i class="fa fa-bars"></i></a>
-        <?php } ?>
-
-        <div id="keyword" class="fcData fcData-keyword">&nbsp;</div>
-        <div id="kanjibig">
-          <p>
-            <?= cjk_lang_ja('&nbsp;', array('fcData', 'fcData-kanji')) ?>
-  <?php if (CJ_HANZI): ?>
-            <div id="pinyin" class="fcData fcData-pinyin">&nbsp;</div>
-  <?php endif ?>
-          </p>
-        </div>
-        <div id="strokecount" title="Stroke count"><?= cjk_lang_ja('&#30011;&#25968;', array('kanji')) ?> <span class="fcData fcData-strokecount">&nbsp;</span></div>
-        <div id="framenum" class="fcData fcData-framenum">&nbsp;</div>
-        
-  <?php if ($fc_yomi): ?>
-        <div id="uiFcYomi">
-          <div class="pad">
-            <div class="yomi y_o">
-              <div><?= cjk_lang_ja('&nbsp;', array('class' => 'vyc')) ?><?= cjk_lang_ja('&nbsp;', array('class' => 'vyr')) ?></div>
-              <div class="vyg">&nbsp;</div>
-            </div>
-            <div class="yomi y_k">
-              <div><?= cjk_lang_ja('&nbsp;', array('class' => 'vyc')) ?><?= cjk_lang_ja('&nbsp;', array('class' => 'vyr')) ?></div>
-              <div class="vyg">&nbsp;</div>
-            </div>
-          </div>
-        </div>
-  <?php endif ?>
-
-      </div><!-- uiFcMain -->
+      <div id="uiFcMain">
+        <!-- Vue flashcard component goes here -->
+      </div>
 
       <div class="uiFcButtons" id="uiFcButtons">
         
@@ -193,6 +157,18 @@ var options =
     back_url:     "<?= url_for($exit_url, true) ?>",
     items:        [<?= implode(',', $sf_data->getRaw('items')) ?>]
   }
+};
+
+// (wip) Vue refactoring
+Koohii.UX.reviewMode = {
+  freemode:       <?php var_export($freemode) ?>,
+  fc_reverse:     <?php var_export($fc_reverse) ?>,
+  fc_yomi:        <?php var_export(!!$fc_yomi) ?>,
+  fc_view:        'kanji',
+
+  // (NOT freemode) edit flashcard menu
+  fc_edit_uri:    "<?= $sf_context->getController()->genUrl('flashcards/dialog') ?>",
+  fc_edit_params: '{"review": 1}'
 };
 
 App.ready(function(){

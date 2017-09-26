@@ -57,8 +57,8 @@
  * 
  *   onBeginReview        When review begins, during FlashcardReview initialization
  *   onEndReview          Notified when the last flashcard is answered and the post cache has been successfully handled by server
- *   onFlashcardCreate    A new flashcard is created, before json content is inserted into the card and it is shown.
- *                        Flashcard data is available and can be changed with getFlashcardData()
+ *   onFlashcardCreate    Before new flashcard is created and shown. Flashcard data is available and can be changed
+ *                        with getFlashcardData()
  *   onFlashcardState(n)  Called just after 'onFlashcardCreate' for default state 0, and then everytime the state
  *                         is set with setFlashcardState(). Argument n is the state number.
  *   onFlashcardDestroy   Before the current flashcard is destroyed
@@ -79,13 +79,6 @@
  *   put                  Array of flashcard ids which were succesfully handled.
  *                        The items are cleared from the postCache. If not cleared, these items will
  *                        be posted again during the next prefetchs.
- * 
- * Flashcard markup:
- *
- *   <span class="fcData fcData-xxx">...</span>
- *
- *   Elements with fcData class have their inner html content set with the xxx property of
- *   the flashcard data in the Ajax responses.
  *
  * Usage:
  * 
@@ -109,15 +102,13 @@
  * - create a simple ajax queueing class (only when refactored to yui 2), solves
  *
  *
- * @author   Fabrice Denis
+ * yuicompressor globals:
+ *
+ *   Vue       vue-bundle
+ *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
+ *
  */
-
-/*global YAHOO, window, alert, console, document, Core, App */
-
-/**
- * 
- * 
- */
+/*global YAHOO, window, alert, console, document, Core, App, Koohii, Vue */
 
 (function(){
   
@@ -221,10 +212,11 @@
       this.postCache = [];
       this.undoLevel = 0;
       
-      
+      // flashcard as a Vue component (wip)
       this.curCard  = null;
+  
   //    this.ofs_prefetch = Math.floor(this.num_prefetch);
-      
+    
       this.beginReview();
     },
 
@@ -418,13 +410,26 @@
       // clear event
       this.disconnect('onWaitCache');
 
+      // notify BEFORE flashcard is created
+      this.notify('onFlashcardCreate');
+
       // we have a cached item for current position
       var oItem = this.getFlashcardData();
 
-      this.curCard = new App.Ui.Flashcard(this);
-      this.notify('onFlashcardCreate');
-      this.curCard.setContent(oItem);
+      // (wip, refactor) instance Vue comp
+      var vueConst = Vue.extend(Koohii.UX.KoohiiFlashcard);
+      var vueInst  = new vueConst({ "propsData": {
+        cardData:   oItem,
+        reviewMode: Koohii.UX.reviewMode
+      }});
+      vueInst.$mount();
+      var mountPoint = Dom.get('uiFcMain');
+      mountPoint.appendChild(vueInst.$el);
+
+      this.curCard = vueInst;
+      
       this.setFlashcardState(0);
+
       this.curCard.display(true);
     },
 
@@ -436,7 +441,15 @@
     {
       if (this.curCard) {
         this.notify('onFlashcardDestroy');
-        this.curCard.destroy();
+
+        // doesn't work when followed by $destroy()
+        //this.curCard.display(false);
+
+        this.curCard.$destroy();
+
+        var $el = this.curCard.$el;
+        if ($el) { $el.parentNode.removeChild($el); }
+
         this.curCard = null;
       }
     },
@@ -650,6 +663,8 @@
       if (this.curCard) {
         this.curCard.setState(iState);
       }
+
+      this.notify('onFlashcardState', iState);
     },
     
     getFlashcardState: function()
@@ -742,113 +757,6 @@
       }
     }
     
-  };
-
-
-  /**
-   * uiFlashcard handles display of a flashcard and its contents.
-   * 
-   */
-  App.Ui.Flashcard = Core.make();
-
-  App.Ui.Flashcard.prototype =
-  {
-    init: function(oReview)
-    {
-      Core.log('uiFlashcard::initialize()');
-
-      // FlashcardReview parent object
-      this.oFR = oReview;
-      this.elFlashcard = Dom.down(document.body, 'uiFcCard', 'div');
-    },
-
-    setContent: function(cardData)
-    {
-      Core.log('uiFlashcard::setContent(%o)', cardData);
-      
-      var i, elems = Dom.getElementsByClassName('fcData', null, this.elFlashcard);
-      
-      for (i = 0; i < elems.length; i++)
-      {
-        if (/fcData-(\w+)/.test(elems[i].className))
-        {
-          var sProp = RegExp.$1;
-          elems[i].innerHTML = cardData[sProp] || '';
-        }
-      }      
-    },
-
-    /**
-     * Sets the current flashcard state with a class applied to the
-     * flashcard container element. This class can be used by css rules
-     * to set visible or hidden status of flashcard information.
-     * 
-     * @param {Number} iState
-     */
-    setState: function(iState)
-    {
-      var aClassNames = this.elFlashcard.className.replace(/uiFcState-\w+/, '').split(/\s+/);
-      var sClass = 'uiFcState-' + iState;
-      aClassNames.push(sClass);
-      this.elFlashcard.className = aClassNames.join(' ');
-
-      this.iState = iState;
-      
-      this.oFR.notify('onFlashcardState', iState);
-    },
-
-    getState: function()
-    {
-      return this.iState;
-    },
-
-    display: function(bDisplay)
-    {
-
-      // mobile view support
-      if (window.innerWidth <= 700)
-      {
-        if (!App.Ui.resizedCard)
-        {
-          App.Ui.resizedCard = 0;
-        }
-
-        if (bDisplay)
-        {
-    //alert(App.Ui.resizedCard);
-          var wh = window.innerHeight; //document.documentElement.
-          if (parseInt(wh))
-          {
-            var cardh = wh - (43+37+67);
-            if (/*App.Ui.resizedCard === 0 &&*/ cardh > 150)
-            {
-              App.Ui.resizedCard = cardh;
-              Dom.setStyle(this.elFlashcard, 'height', cardh+'px');
-  Core.log("@@@ resized card to "+cardh);
-            }
-          }
-        }
-      }
-
-      //Core.log('uiFlashcard::display(%o)', bDisplay);
-      Dom.toggle(this.elFlashcard, bDisplay);
-
-      // CSS3 animation
-      // var that = this;
-      // window.setTimeout(function(){ Dom.addClass(that.elFlashcard, 'JsPlayCardIn'); }, 10);
-
-    },
-    
-    /**
-     * Cleanup events, hide the flashcard, reset html template
-     * 
-     */
-    destroy: function()
-    {
-    //  Core.log('uiFlashcard::destroy()');
-      Dom.removeClass(this.elFlashcard, 'JsPlayCardIn');
-      this.display(false);
-    }
   };
 
 }());

@@ -153,9 +153,12 @@ export default {
 }
 #uiFcAjaxError a { color:#fff; font-weight:bold; }
 
-
-/* FIXME obsolete? */
-.uiFcLayout { background:#92C3E4 url(/images/2.0/review/gradient.jpg) repeat-x 0 0; }
+/* we'll turn this into a theme some day, for now it's just a background */
+.uiFcLayout {
+  /* http://colorzilla.com/gradient-editor/#c4e6ff+0,92c3e4+100 */
+  background: #92c3e4;
+  background: #92c3e4 linear-gradient(to bottom, #c4e6ff 0%,#92c3e4 100%) 100%/200% no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
 
 /* top row of option buttons */
 .uiFcOptions { margin:0 0 .5em; padding:0 0 0 10px; }

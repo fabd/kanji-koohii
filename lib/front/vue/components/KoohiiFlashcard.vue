@@ -60,7 +60,7 @@ export default {
     
     setState(iState)
     {
-      Core.log('setState(%i)', iState);
+      // Core.log('setState(%i)', iState);
       this.fc_state = iState;
     },
 
@@ -71,7 +71,7 @@ export default {
 
     display(bDisplay)
     {
-      Core.log('KoohiiFlashcard::display(%o)', bDisplay);
+      // Core.log('KoohiiFlashcard::display(%o)', bDisplay);
 
       // mobile view support
       if (window.innerWidth <= 700)
@@ -93,7 +93,7 @@ export default {
               this.resizedCard = cardh;
               
               this.cardHeight = cardh;
-              Core.log("@@@ resized card to "+cardh);
+              // Core.log("@@@ resized card to "+cardh);
             }
           }
         }
@@ -106,15 +106,15 @@ export default {
   // life cycle events
 
   beforeDestroy() {
-    Core.log('KoohiiFlashcard::beforeDestroy()');
+    // Core.log('KoohiiFlashcard::beforeDestroy()');
   },
 
   beforeMount() {
-    Core.log('KoohiiFlashcard::beforeMount(%o)', this.cardData);
+    // Core.log('KoohiiFlashcard::beforeMount(%o)', this.cardData);
   },
 
   created() {
-    Core.log('KoohiiFlashcard::created(%o)', this.cardData);
+    // Core.log('KoohiiFlashcard::created(%o)', this.cardData);
 
     // handle flashcard layout & interactivity as a child component according to review mode
     this.currentView = this.reviewMode.fc_view;

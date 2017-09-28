@@ -9,38 +9,41 @@
 
   <div class="d-keyword" v-html="cardData.keyword"></div>
 
-  <div class="d-kanji">
-    <p>
-      <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
-    </p>
-  </div>
-
   <div class="d-strokec" title="Stroke count">
     <cjk_lang_ja html="&#30011;&#25968;" className="kanji"></cjk_lang_ja><span>{{ cardData.strokecount }}</span>
   </div>
 
   <div class="d-framenr" v-html="cardData.framenum"></div>
-  
-  <div class="d-yomi" v-if="reviewMode.fc_yomi">
-    <div class="pad">
 
-      <div class="y_o" v-if="cardData.v_on">
-        <div>
-          <cjk_lang_ja className="vyc">{{ cardData.v_on.compound }}</cjk_lang_ja>
-          <cjk_lang_ja className="vyr" :html="cardData.v_on.reading"></cjk_lang_ja>
-        </div>
-        <div class="vyg">{{ cardData.v_on.gloss }}</div>
-      </div>
-      
-      <div class="y_k" v-if="cardData.v_kun">
-        <div>
-          <cjk_lang_ja className="vyc">{{ cardData.v_kun.compound }}</cjk_lang_ja>
-          <cjk_lang_ja className="vyr" :html="cardData.v_kun.reading"></cjk_lang_ja>
-        </div>
-        <div class="vyg">{{ cardData.v_kun.gloss }}</div>
-      </div>
+  <!-- inner content -->
+  <div class="uiFcInner">
 
+    <div class="uiFcHalf d-kanji">
+      <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
     </div>
+    
+    <div class="uiFcHalf d-yomi" v-if="reviewMode.fc_yomi">
+      <div class="d-yomi_pad">
+
+        <div class="y_o" v-if="cardData.v_on">
+          <div>
+            <cjk_lang_ja className="vyc">{{ cardData.v_on.compound }}</cjk_lang_ja>
+            <cjk_lang_ja className="vyr" :html="cardData.v_on.reading"></cjk_lang_ja>
+          </div>
+          <div class="vyg">{{ cardData.v_on.gloss }}</div>
+        </div>
+        
+        <div class="y_k" v-if="cardData.v_kun">
+          <div>
+            <cjk_lang_ja className="vyc">{{ cardData.v_kun.compound }}</cjk_lang_ja>
+            <cjk_lang_ja className="vyr" :html="cardData.v_kun.reading"></cjk_lang_ja>
+          </div>
+          <div class="vyg">{{ cardData.v_kun.gloss }}</div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -84,13 +87,12 @@ export default {
 <style>
 
 /* Kanji flashcard layout */
-.fc-kanji .d-keyword { font:16px Georgia, Times New Roman, serif; position:absolute; left:8px; top:4px; width:204px; }
+.fc-kanji .d-keyword { font-size:1.5em; padding:4px 40px 0 8px; min-height:40px; }
 .fc-kanji .d-keyword a { text-decoration:none; }
 .fc-kanji .d-keyword a:hover { text-decoration:underline; }
 
-.fc-kanji .d-kanji { position:absolute; left:0px; width:100%; top:40%; margin-top:-50px; text-align:center; }
-.fc-kanji .d-kanji p { margin:0; padding:0; font-size:100pt; line-height:1em; }
-.fc-kanji .d-kanji p img { display:none; }
+.fc-kanji .d-kanji { text-align:center; }
+.fc-kanji .d-kanji .cj-k { font-size:100pt; line-height:1em; display:block; }
 
 .fc-kanji .d-strokec { position:absolute; left:8px; bottom:6px; font:12px Georgia, Times New Roman; color:#a0a0a0; }
 .fc-kanji .d-strokec .kanji { font-size:20pt; }
@@ -132,25 +134,41 @@ export default {
 #uiFcMenu:hover, #uiFcMenu.active { background:#e8e8e8; }
 
 /* Onyomi */
-.with-yomi .d-kanji { width:50%; }
 
-.d-yomi   { position:absolute; left:50%; top:0; width:50%; }
+.d-yomi   { font-size:20px; }
 
   /* highlight the split reading */
 .d-yomi .vyr em { padding-bottom:2px; border-bottom:2px solid #f00; font-style:normal; }
 
-.d-yomi .pad   { padding:62px 8px 8px; }
+.d-yomi_pad    { padding:62px 8px 8px; }
 
 .d-yomi .y_o   { margin:0 0 20px }
 
 .d-yomi .cj-k  { line-height:1em; }
-.d-yomi .vyc   { font-size:22px; padding:5px 3px; display:inline-block; background:#eee; border-radius:3px;  }
-.d-yomi .vyr   { font-size:18px; padding:7px 3px; display:inline-block; margin:0 0 0 1em; }
+.d-yomi .vyc   { font-size:1.5em; padding:5px 3px; display:inline-block; /*background:#eee; border-radius:3px;*/ }
+.d-yomi .vyr   { font-size:1.2em; padding:7px 3px; display:inline-block; margin:0 0 0 1em; }
 
 .d-yomi .vyg   { 
-  font:italic 15px/1.1em Georgia, serif; color:#888; padding:8px 0 0; 
+  font-size:0.85em; line-height:1.1em;
+  font-style:italic;
+  font-family:sans-serif;
+  color:#888; padding:8px 0 0; 
   /* FIX #81 */
   overflow-y:auto; max-height:6em;
+}
+
+/* layout of inner content */
+
+.uiFcInner { position:absolute; left:0px; top:50px; width:100%; height:70%; display:flex; flex-wrap:wrap; /*border:1px solid #eee;*/  }
+.uiFcInner .uiFcHalf { flex:0 0 100%; }
+.d-kanji   { align-self:center; }
+
+/* inner layout */
+@media screen and (min-width:701px) {
+  
+  /* adjust layout for yomi */
+  .with-yomi .uiFcHalf { flex:0 0 50%; }
+
 }
 
 
@@ -161,13 +179,15 @@ export default {
 @media screen and (max-width:700px) {
 
   /* Kanji flashcard layout */
-  .d-keyword     { padding:4px 0 0 8px; }
-  .d-kanji       { top:40%; margin-top:-35px; }
-  .d-kanji p     { font-size:100px; }
+  .fc-kanji .d-keyword     { /*font-size:2em;*/ padding:4px 0 0 8px; }
 
-  .d-yomi .vyc   { font-size:16px; padding:2px 3px; }
-  .d-yomi .vyr   { font-size:14px; padding:3px 3px; }
-  .d-yomi .vyg   { font-size:13px; padding-top:0.5em; }
+  .fc-kanji .d-kanji .cj-k { padding-bottom:20px; }
+
+  .d-yomi        { font-size:25px; }
+  .d-yomi_pad    { padding:0.5em 0.5em 0; }
+  .d-yomi .vyc   { }
+  .d-yomi .vyr   { }
+  .d-yomi .vyg   { }
 
 }
 

@@ -111,6 +111,8 @@ class reviewActions extends sfActions
 
     // kanji > keyword
     $options['fc_reverse'] = $request->getParameter('reverse') ? true : false;
+
+    $options['fc_yomi']    = $request->getParameter('yomi') ? true : false;
     
     // flag to indentify free review mode
     $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0;
@@ -119,8 +121,10 @@ class reviewActions extends sfActions
 
     if (false === $options['freemode'])
     {
-      // in SRS mode the yomi option comes from user's account settings
-      $options['fc_yomi'] = $this->getUser()->getUserSetting('OPT_READINGS');
+      // SRS mode uses account setting option, but allow query string override (helps debugging)
+      if (!$request->hasParameter('yomi')) {
+        $options['fc_yomi'] = $this->getUser()->getUserSetting('OPT_READINGS');
+      }
 
       // SRS review
       $reviewBox  = $request->getParameter('box', 'all');

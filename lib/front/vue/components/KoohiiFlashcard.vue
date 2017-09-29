@@ -254,7 +254,7 @@ export default {
 
 /* MAIN PAGE LAYOUT  */
 
-#fr-body     { width:900px; margin:50px auto 0; }
+#fr-body     { width:900px; margin:50px auto 0; padding:0 10px; }
 
 #rd-tops     { float:right; width:175px; padding:0 0 12px; }
 
@@ -299,7 +299,7 @@ export default {
 @media screen and (max-width:700px) {
 
   /* overwrite the response layout of the desktop (including the media query styles) */
-  #fr-body { width:100%; margin-top:0; }
+  #fr-body { width:auto; margin-top:0; }
 
   #rd-tops  { float:none; width:100%; padding-top:4px; }
 
@@ -308,7 +308,7 @@ export default {
     #uiFcButtons u { text-decoration:none; } /* hide the keyboard shortcut hints */
     #uiFcButtons h3 { display:none; } /* remove prompts to save space */
 
-    #uiFcReview   { width:90%; margin:0 auto; position:relative; }
+    #uiFcReview   { width:auto; margin:0 auto; position:relative; }
 
   #rd-side  { float:none; width:250px; margin:0 auto; }
     #uiFcStats  { width:100%; }
@@ -316,7 +316,7 @@ export default {
   #uiFcOptions     {  }
 
   /* use a "minified" version of progress bar with text overlaid on top */
-  #uiFcProgressBar { width:90%; margin:0 auto; }
+  #uiFcProgressBar { }
   .uiFcPrBarMod    { padding:0; }
   #uiFcProgressBar .uiFcStBox { padding:0; background:none;/* remove padding so it aligns neatly */ }
   #uiFcProgressBar h3 { line-height:21px; color:#ddd; padding:0; font-weight:normal; }

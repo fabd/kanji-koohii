@@ -19,7 +19,12 @@
   <div class="uiFcInner">
 
     <div class="uiFcHalf d-kanji">
-      <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
+      <!-- do this for now, until we position everything dynamically --> 
+      <div class="tb">
+        <div class="td">
+          <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
+        </div>
+      </div>
     </div>
     
     <div class="uiFcHalf d-yomi" v-if="reviewMode.fc_yomi">
@@ -91,8 +96,8 @@ export default {
 .fc-kanji .d-keyword a { text-decoration:none; }
 .fc-kanji .d-keyword a:hover { text-decoration:underline; }
 
-.fc-kanji .d-kanji { text-align:center; }
-.fc-kanji .d-kanji .cj-k { font-size:100pt; line-height:1em; display:block; }
+.fc-kanji .d-kanji { text-align:center; font-size:150px; line-height:1em; }
+.fc-kanji .d-kanji .cj-k { display:block; /* v align */padding:0 0 0.2em; }
 
 .fc-kanji .d-strokec { position:absolute; left:8px; bottom:6px; font:12px Georgia, Times New Roman; color:#a0a0a0; }
 .fc-kanji .d-strokec .kanji { font-size:20pt; }
@@ -135,12 +140,16 @@ export default {
 
 /* Onyomi */
 
-.d-yomi   { font-size:20px; }
+.d-yomi {
+  font-size:20px;
+  /* FIX #81 (don't overlap buttons below) */
+  overflow-y:auto;
+}
 
   /* highlight the split reading */
 .d-yomi .vyr em { padding-bottom:2px; border-bottom:2px solid #f00; font-style:normal; }
 
-.d-yomi_pad    { padding:62px 8px 8px; }
+.d-yomi_pad    { padding:8px; }
 
 .d-yomi .y_o   { margin:0 0 20px }
 
@@ -153,35 +162,55 @@ export default {
   font-style:italic;
   font-family:sans-serif;
   color:#888; padding:8px 0 0; 
-  /* FIX #81 */
-  overflow-y:auto; max-height:6em;
 }
 
-/* layout of inner content */
+/* LAYOUT */
 
-.uiFcInner { position:absolute; left:0px; top:50px; width:100%; height:70%; display:flex; flex-wrap:wrap; /*border:1px solid #eee;*/  }
-.uiFcInner .uiFcHalf { flex:0 0 100%; }
-.d-kanji   { align-self:center; }
+.uiFcInner {
+  /* exclude top and bottom area of the card */
+  position:absolute; top:40px; bottom:40px;
+
+  /* flex layout of the main card content */
+  width:100%; display:flex; /* FIREFOX bug? flex-wrap:wrap; */
+
+  /*border:1px solid #fdd;  */
+}
+.uiFcInner .uiFcHalf {
+  flex:0 0 100%; 
+  /*border:1px solid #bfb;*/
+}
+
+.d-kanji .tb { display:table; width:100%; height:100%; border:none; }
+.d-kanji .td { display:table-cell; vertical-align:middle; }
 
 /* inner layout */
 @media screen and (min-width:701px) {
   
   /* adjust layout for yomi */
-  .with-yomi .uiFcHalf { flex:0 0 50%; }
+  .with-yomi .uiFcHalf { flex:0 0 50%; height:100%; align-self:center; }
 
 }
 
 
-/* ================================================================================= */
-/* MOBILE LAYOUT */
-/* ================================================================================= */
+/* ================================================================================= 
+   MOBILE LAYOUT 
+
+   This stuff is a nightmare. Eventually we need a parent "flashcard page" container
+   Vue template, which will figure out the position and size of the KoohiiFlashcard
+   (this), based on window dimensions (so no media queries).
+   And then the flashcard contents dynamically positioned (js).
+
+   Either everything is CSS positioned (headaches), or dynamically (js) but atm
+   with refactoring both are used, which makes this a mess.
+
+   It's very hard also to properly center and balance elements vertically with css
+   alone. But... can't be done until the full page is a vue template.
+
+   =================================================================================  */
 
 @media screen and (max-width:700px) {
 
-  /* Kanji flashcard layout */
   .fc-kanji .d-keyword     { /*font-size:2em;*/ padding:4px 0 0 8px; }
-
-  .fc-kanji .d-kanji .cj-k { padding-bottom:20px; }
 
   .d-yomi        { font-size:25px; }
   .d-yomi_pad    { padding:0.5em 0.5em 0; }
@@ -189,6 +218,32 @@ export default {
   .d-yomi .vyr   { }
   .d-yomi .vyg   { }
 
+  /* PORTRAIT : vertical flow */
+  .uiFcInner { flex-direction:column; flex-wrap:nowrap; }
+  .d-yomi    { overflow-y:auto; }
+
+  .with-yomi .uiFcHalf { flex:0 0 50%; }
+  .with-yomi .d-kanji { flex:0 0 40%; }
+  .with-yomi .d-yomi  { flex:0 0 60%; }
+
+}
+
+/* medium phone */
+@media screen and (max-width:500px) {
+  
+  .fc-kanji .d-kanji { font-size:150px; }
+
+  .d-yomi { font-size:25px; }
+}
+
+/* iPhone 5s & old devices + portrait */
+@media screen and (max-width:320px) {
+  
+  /*.uiFcCard { background:#fee; }*/
+
+  .with-yomi .d-kanji { font-size:70px; }
+
+  .d-yomi { font-size:20px; }
 }
 
 </style>

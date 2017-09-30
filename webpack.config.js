@@ -100,8 +100,10 @@ module.exports = {
   resolve: {
     // aliases used in lib/front/vue/vue-bundle.js
     alias: {
+      // Soon we may use the "runtime" (needs to fix Leitner chart component)
+      //  'runtime' = 88.1 kb minified, 'common' = 99.9 kb minified
+      //vue:     'vue/dist/vue.runtime.js'
       vue:     'vue/dist/vue.common.js'
-      // coreJS:  '/lib/front/vue/lib'
     }
   },
 

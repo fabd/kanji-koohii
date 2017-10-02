@@ -825,6 +825,8 @@ class ReviewsPeer extends coreDatabaseTable
       // delete the flashcard
       $deleted = self::deleteFlashcards($userId, array($id));
       $result = count($deleted) > 0;
+      
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', array()));
     }
     else
     {
@@ -904,6 +906,9 @@ class ReviewsPeer extends coreDatabaseTable
     if (count($cards))
     {
       ActiveMembersPeer::updateFlashcardCount($userId);
+
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', array()));
+
     }
     return $cards;
   }
@@ -923,6 +928,8 @@ class ReviewsPeer extends coreDatabaseTable
     if (is_array($cards) && count($cards))
     {
       ActiveMembersPeer::updateFlashcardCount($userId);
+
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', array()));
     }
     return $cards;
   }

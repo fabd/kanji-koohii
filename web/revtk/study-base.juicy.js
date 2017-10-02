@@ -127,11 +127,20 @@
 
           var elMount = elPanel.querySelector('div'); // replace the loading div
 
-          Koohii.UX.KoohiiDictList.mount({ items: o.responseJSON.props.items }, elMount);
+          var props = o.responseJSON.props;
+
+          Koohii.UX.KoohiiDictList.mount({
+            items:       props.items,
+            known_kanji: props.known_kanji 
+          }, elMount);
         };
 
+        // request known kanji, as it is otherwise not provided in the Study pages
         var ajaxRequest = new Core.Ui.AjaxRequest(data.uri, {
-          parameters: { "ucs": data.ucs },
+          parameters: {
+            "ucs": data.ucs,
+            "req_known_kanji": true
+          },
           success:    onAjaxResponse,
           scope:      this
         });

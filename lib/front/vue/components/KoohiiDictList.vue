@@ -27,9 +27,6 @@
 <style>
 /* Dictionary Lookup Component */
 
-  /* try to improve layout of the AjaxDialog on FLashcard Review */
-.dict-panel { /*max-width:400px;*/ }
-
 .dict-list { margin:0; background:#fff; }
 .dict-list .cj-k  { line-height:1em; }
 
@@ -50,6 +47,15 @@
 
 /* message when no words are found */
 .dict-list_info { padding:1em 20px 1px; color:#838279; background:#fff; }
+
+
+/* desktop & wider screens */
+@media screen and (min-width:701px) {
+ 
+  /* prevent dict dialog from stretching too wide */
+  .yui-panel .dict-panel { max-width:400px; } 
+
+}
 
 </style>
 

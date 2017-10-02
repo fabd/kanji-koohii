@@ -166,6 +166,8 @@ Koohii.UX.reviewMode = {
   fc_yomi:        <?php var_export(!!$fc_yomi) ?>,
   fc_view:        'kanji',
 
+  fc_known_kanji: <?php var_export($sf_user->getUserKnownKanji()) ?>,
+
   // (NOT freemode) edit flashcard menu
   fc_edit_uri:    "<?= $sf_context->getController()->genUrl('flashcards/dialog') ?>",
   fc_edit_params: '{"review": 1}'

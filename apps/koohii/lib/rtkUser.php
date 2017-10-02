@@ -105,7 +105,7 @@ class rtkUser extends sfBasicSecurityUser
    *
    * @param bool   $refresh   set true to refresh the cache  
    */
-  public function getUserKnownKanji(bool $refresh = false)
+  public function getUserKnownKanji($refresh = false)
   {
 
     if (!$refresh && null !== ($knownKanji = $this->getAttribute(self::KNOWN_KANJI, null))) {

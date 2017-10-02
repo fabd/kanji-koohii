@@ -49,7 +49,7 @@
 .dict-list dt u  { color:#f00; text-decoration:none; }
 
 /* message when no words are found */
-.dict-list_info { padding:1em 20px 0; color:#838279; }
+.dict-list_info { padding:1em 20px 1px; color:#838279; background:#fff; }
 
 </style>
 

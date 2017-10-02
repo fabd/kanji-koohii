@@ -8,6 +8,7 @@
  *  getFlashcardData($userId, $ucsId)
  *  getFlashcardsByIndex($userId, $filter = null)
  *  getFlashcardCount()
+ *  getKnownKanji()
  *  getTodayCount()
  *  getCountExpired()
  *  getCountUntested()
@@ -181,6 +182,25 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getFlashcardCount($userId)
   {
     return self::_getFlashcardCount($userId);
+  }
+
+  /**
+   * Returns a string of all kanji known by user. Currently 'known' simply
+   * means the user has a flashcard for it.
+   */
+  public static function getKnownKanji($userId)
+  {
+    $user = sfContext::getInstance()->getUser();
+
+    // get array of known kanji as ucs ids (this simple SELECT uses INDEX)
+    $select = self::getInstance()->select()->columns('ucs_id');
+    $select = self::filterByUserId($select, $userId);
+    $ucs_array = self::$db->fetchCol($select);
+
+    // convert to utf8 string for storage
+    $knownKanji = count($ucs_array) ? utf8::fromUnicode($ucs_array) : '';
+
+    return $knownKanji;
   }
 
   /**

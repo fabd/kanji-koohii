@@ -42,7 +42,7 @@
         //invisMask:   true,
         width:       300,
         skin:        "rtk-skin-dlg",
-        //context:     options.context,
+        context:     [document.body, "tl", "tl", null, [1, 1]],  // YUI2 container "context" option
         scope:       this,
         events:      {
           onDialogResponse: this.onDialogResponse,

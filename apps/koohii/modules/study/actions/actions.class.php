@@ -610,7 +610,13 @@ class studyActions extends sfActions
    * 
    * Request parameters:
    *
-   *   ucs          UCS-2 code of the character to lookup.
+   *   ucs               UCS-2 code of the character to lookup.
+   *   req_known_kanji   (OPTIONAL) Also return a string of known kanji
+   *
+   * Returns:
+   *
+   *   items             Array of vocab entries (compound, reading, etc)
+   *   known_kanji       (IF "req_known_kanji") String of known kanji 
    *
    */
   public function executeDict($request)
@@ -621,14 +627,17 @@ class studyActions extends sfActions
       throw new rtkAjaxException('Bad request.');
     }
 
-    //sfProjectConfiguration::getActive()->loadHelpers(array('CJK'));
-
-    // FIXME  don't really need TRON here
+    // use a TRON response because of AjaxDialog used in Flashcard Review page
     $tron = new JsTron();
     $tron->setStatus(JsTron::STATUS_PROGRESS);
     $tron->set('dialogTitle', 'Dictionary Lookup'); // for '.cjk_lang_ja($c_utf));
 
     $tron->set('items', $this->getDictListItems($ucsId));
+
+    // requires known kanji list?
+    if ($request->hasParameter('req_known_kanji')) {
+      $tron->set('known_kanji', $this->getUser()->getUserKnownKanji());
+    }
 
     return $tron->renderJson($this);
   }
@@ -642,10 +651,6 @@ class studyActions extends sfActions
     $kanji = utf8::fromUnicode(array($ucsId));
 
     mb_regex_encoding('UTF-8');
-
-    foreach ($result as &$r) {
-      $r['compound'] = mb_ereg_replace($kanji, '<u>'.$kanji.'</u>', $r['compound']);
-    }
 
     return $result;
   }

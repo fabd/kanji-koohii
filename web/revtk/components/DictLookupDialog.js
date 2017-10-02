@@ -42,7 +42,7 @@
         //invisMask:   true,
         width:       300,
         skin:        "rtk-skin-dlg",
-        //context:     options.context,
+        context:     [document.body, "tl", "tl", null, [1, 1]],  // YUI2 container "context" option
         scope:       this,
         events:      {
           onDialogResponse: this.onDialogResponse,
@@ -99,7 +99,16 @@
 
       var mountPoint = this.dialog.getBody().querySelector('div'); // replace the loading div
 
-      Koohii.UX.KoohiiDictList.mount({ items: props.items }, mountPoint);
+      // ^ grab "known kanji" from the FLashcard Review page, since the state is preserved
+      // during the entire review session, it's more efficient this way. The user's known
+      // kanji could realistically be 2000 to 3000 utf8 characters. So even though they
+      // are also cached in php session, it's better to avoid returning several KBs of data
+      // with each dictionary lookup request
+      //
+      Koohii.UX.KoohiiDictList.mount({
+        items:       props.items,
+        known_kanji: Koohii.UX.reviewMode.fc_known_kanji   // ^
+      }, mountPoint);
     },
     
     onDialogDestroy: function()

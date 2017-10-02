@@ -43,6 +43,9 @@ class rtkUser extends sfBasicSecurityUser
   // Misc. states that do not need database permanence
   const IS_RESTUDY_SESSION = 'study.restudy.start';
 
+  // misc. session attributes 
+  const KNOWN_KANJI = 'kanji.known';
+
   /**
    * 
    */
@@ -80,9 +83,7 @@ class rtkUser extends sfBasicSecurityUser
     return $this->getAttribute('username', '');
   }
 
-  /**
-   * @return  int|null
-   */
+  // returns int | null
   public function getUserId()
   {
     $uid = $this->getAttribute('userid', null);
@@ -97,6 +98,36 @@ class rtkUser extends sfBasicSecurityUser
   public function getUserSequence()
   {
     return $this->getAttribute('usersequence', 0);
+  }
+
+  /**
+   * Known kanji: cache a string of al the kanji known by user
+   *
+   * @param bool   $refresh   set true to refresh the cache  
+   */
+  public function getUserKnownKanji($refresh = false)
+  {
+
+    if (!$refresh && null !== ($knownKanji = $this->getAttribute(self::KNOWN_KANJI, null))) {
+      return $knownKanji;
+    }
+    
+    $knownKanji = ReviewsPeer::getKnownKanji($this->getUserId());
+    $this->setUserKnownKanji($knownKanji);
+
+    return $knownKanji;
+  }
+
+  public function setUserKnownKanji(string $kanjis)
+  {
+    $this->setAttribute(self::KNOWN_KANJI, $kanjis);
+  }
+
+  // [listener] atm the query is fast, so no add/delete/etc, just invalidate the cached data
+  static public function eventUpdateUserKnownKanji(sfEvent $event)
+  {
+    $user = sfContext::getInstance()->getUser();
+    $user->getAttributeHolder()->remove(self::KNOWN_KANJI);
   }
 
   /**

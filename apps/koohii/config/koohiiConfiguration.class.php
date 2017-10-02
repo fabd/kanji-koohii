@@ -28,6 +28,9 @@ class koohiiConfiguration extends sfApplicationConfiguration
       require(sfConfig::get('sf_lib_dir').'/core/coreAutoload.php');
       coreAutoload::register();
     }
+
+    // events
+    $this->dispatcher->connect('flashcards.update', array('rtkUser', 'eventUpdateUserKnownKanji'));
   }
 
   /**

@@ -181,15 +181,15 @@ blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
 
 .col-m-2 { flex:0 0 16.666667%; }
 .col-m-3 { flex:0 0 25%; }
-.col-m-4 { flex:0 0 33.333333%; }
+.col-m-4 { flex:0 0 33.333333%; }
 .col-m-5 { flex:0 0 41.666667%; }
 .col-m-6 { flex:0 0 50%; }
 .col-m-7 { flex:0 0 58.333333%; }
-.col-m-8 { flex:0 0 66.666667%; }
+.col-m-8 { flex:0 0 66.666667%; }
 .col-m-9 { flex:0 0 75%; }
 .col-m-10 { flex:0 0 83.333333%; }
 .col-m-11 { flex:0 0 91.666667%; }
-.col-m-12 { flex:0 0 100%; }
+.col-m-12 { flex:0 0 100%; }
 
  /* bootstrap-md-lg */
 @media (min-width: 992px) {
@@ -239,11 +239,10 @@ p.intro { margin-top:0; }
 p.small { line-height:1.2em; color:#666; }
 
 /* headings */
-h1, h2, h3, h4, h5 { margin:0 0 1em; color:#7f7d75; }
+h1, h2, h3, h4, h5 { margin:0 0 1em; color:#7f7d85; }
 
- /*h2 { color:#ff5f7c; }*/
- h3 { color:#fa3d60; }
- .padded-box-inset h3 { color:#7f7d75; }
+ /*h3 { color:#fa3d60; }*/
+ /*.padded-box-inset h3 { color:#7f7d75; }*/
 
 h1 { font-size:13px; font-family:Verdana, sans-serif; }
 h2 { font-weight:normal;  margin:0 0 0.5em; }
@@ -532,7 +531,15 @@ div.col-box-bis { margin-top:10px; }
 
 
 /* ---------------------------- */
-/* Site news */
+/* Markdown content */
+/* ---------------------------- */
+
+/* =require from "%WEB%" */
+/* =require "/koohii/markdown.css" */
+
+
+/* ---------------------------- */
+/* Site news (old posts using raw html) */
 /* ---------------------------- */
 
 /*.layout-news span.news-date { font-size:16px; color:#69664E; white-space:nowrap; }*/
@@ -684,30 +691,6 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
   #learn-more-menu { position:fixed; min-width:218px; }
 }
 
-/* MARKDOWN (Parsedown output) (use a .markdown container) */
-
-.markdown h2 { margin:1em 0 0.5em; }
-.markdown h2:first-child { margin-top:0; }
-
-.markdown p, .markdown li { line-height:1.5em; }
-
- /* lists */
-.markdown ol { margin-bottom:2em; }
-.markdown li { margin-bottom:0.5em; }
-
- /* images */
-.markdown .img-block { border:1px solid %CSS_BG_1S%; margin:0 0 1.5em; }
-
- /* tables */
-.markdown table { width:100%; margin:0.5em 0 1em 0; border-left:1px solid %CSS_BG_1M%; border-collapse:collapse; }
-.markdown th { background-color:%CSS_BG_1%; border-top-width:0; color:#4f4e45; }
-.markdown th,
-.markdown td { border-top:1px solid #E8E5CA; border-right:1px solid #E8E5CA; padding:5px 10px; text-align:left; }
-.markdown td { background:%CSS_BG_NAV%; }
-.markdown td a:link, 
-.markdown td a:visited, 
-.markdown td a:active { font-weight:normal; }
-.markdown th a { font-weight:bold; }
 
 
 

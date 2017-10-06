@@ -5,7 +5,7 @@
   $html = markdown_parsedown_extra($filename);
 
 ?>
-<div id="learn-more" class="markdown">
+<div id="learn-more">
 
   <div class="row">
 
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-9 markdown">
 <?php echo $html ?>
     </div><!-- /col -->
 

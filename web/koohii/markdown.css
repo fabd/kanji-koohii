@@ -1,0 +1,59 @@
+/**
+ * Styles for Markdown content (included by main.juicy.css)
+ *
+ * - Learn More page
+ * - NEW blog posts (Oct 2017) are stored in Markdown.
+ *
+ *
+ * DOCS
+ *
+ *   http://parsedown.org/tests/
+ *   https://github.com/erusev/parsedown
+ *   https://github.com/erusev/parsedown-extra
+ * 
+ *
+ * MARKDOWN EXTRA
+ *
+ *   - HTML can be used in Parsedown.
+ *   - to parse markdown inside html tag, use attribute <... markdown="1">&
+ *   - special attributes block {#id .class} for headers, images, links
+ * 
+ */
+
+
+/* ---------------------------- */
+/* Parsedown output */
+/* ---------------------------- */
+
+.markdown h2 { margin:1em 0 0.5em; }
+.markdown h2:first-child { margin-top:0; }
+
+.markdown h3 { margin:0.5em 0 0.8em; }
+
+.markdown p, .markdown li { line-height:1.5em; }
+
+ /* lists */
+.markdown ol { margin-bottom:2em; }
+.markdown li { margin-bottom:0.5em; }
+
+.markdown ul { margin:1em 0 2em 2em; }
+
+ /* images */
+.markdown img { box-sizing:content-box; padding:3px; border:1px solid #C9C7B5; display:block; margin:0 auto; max-width:100%; height:auto; }
+.markdown .img-block { border:1px solid %CSS_BG_1S%; margin:0 0 1.5em; }
+
+ /* tables */
+.markdown table { width:100%; margin:0.5em 0 1em 0; border-left:1px solid %CSS_BG_1M%; border-collapse:collapse; }
+.markdown th { background-color:%CSS_BG_1%; border-top-width:0; color:#4f4e45; }
+.markdown th,
+.markdown td { border-top:1px solid #E8E5CA; border-right:1px solid #E8E5CA; padding:5px 10px; text-align:left; }
+.markdown td { background:%CSS_BG_NAV%; }
+.markdown td a:link, 
+.markdown td a:visited, 
+.markdown td a:active { font-weight:normal; }
+.markdown th a { font-weight:bold; }
+
+ /* code */
+.markdown code { background:#fff; }
+.markdown pre { background:%CSS_BG_NAV%; padding:1em 1em; border-left:4px solid %CSS_BG_1%; }
+.markdown pre code { background:none; }

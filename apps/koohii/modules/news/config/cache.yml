@@ -3,7 +3,7 @@ _recent:
   enabled:   true
   lifetime:  60*60*24   # one day
 
-# news/index  (with sidebars) ( /news/id/:id, /news/:year/:month )
+# news/index (/news/:year/:month )
 index:
   enabled:   true
   lifetime:  60*60*24

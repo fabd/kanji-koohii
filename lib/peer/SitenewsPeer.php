@@ -27,10 +27,16 @@ class SitenewsPeer extends coreDatabaseTable
   private static function getPostCols()
   {
     $select = self::getInstance()->select(array(
-      'id', 'date' => 'DATE_FORMAT(created_on,\'%e %M %Y\')', 'subject', 'text', 'ts_updated_on' => 'UNIX_TIMESTAMP(updated_on)'
+      'id', 'date' => 'UNIX_TIMESTAMP(created_on)' /* => 'DATE_FORMAT(created_on,\'%e %M %Y\')'*/, 'subject', 'text', 'ts_updated_on' => 'UNIX_TIMESTAMP(updated_on)'
     ));
 
     return $select;
+  }
+
+  public static function getRawPostById($id)
+  {
+    $select = self::getInstance()->select('*')->where('id = ?', $id)->query();
+    return self::$db->fetchObject();
   }
 
   /**
@@ -128,8 +134,23 @@ s   * @return array<Object>  Array of posts, empty array if no matches
    * @param  int    $msg_id  Id of the news post if $brief is True
    * @return string
    */
-  private static function formatPost($text, $brief = false, $msg_id = 0)
+  public static function formatPost($text, $brief = false, $msg_id = 0)
   {
+    // NEW post format uses Markdown (old posts have been prefixed by '@@@' in database)
+    
+    if (0 !== strpos($text, '@@@'))
+    {
+      $Parsedown = new ParsedownExtra();
+      $Parsedown->setMarkupEscaped(false);
+      $Parsedown->setUrlsLinked(false);
+      $html = $Parsedown->text($text);
+      return $html;
+    }
+
+    // OLD post formatting ...
+
+    $text = substr($text, 3);
+
     // brief mode
     if (($pos = strpos($text, '<more>')))
     {
@@ -172,26 +193,12 @@ s   * @return array<Object>  Array of posts, empty array if no matches
     {
       // the post id is used for the "read more..." link when $brief is True
       $post->text = self::formatPost($post->text, $brief, $post->id);
-
-      // create the post URL
-      $post->link = link_to($post->subject, '@news_by_id?id='.$post->id);
-
-/* disable because of the cache FFS ...
-      // set a css class to highlight recent posts (3 days)
-      $days_since = max(($curtime - (int)$post->ts_updated_on), 0) / (60*60*24);
-//$days_since= (int)rand(0,5);
-      if ($days_since <= 3)
-      {
-        $post->recent = ' class="recent"';
-      }
-      else
-      {
-        $post->recent = '';
-      }
-*/
-        $post->recent = '';
     }
     return $posts;
   }
 
+  public static function lastInsertId()
+  {
+    return self::$db->lastInsertId();
+  }
 }

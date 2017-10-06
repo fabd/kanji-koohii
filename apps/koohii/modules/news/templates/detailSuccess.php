@@ -1,4 +1,6 @@
-
+<?php 
+  $post_id = $posts ? $posts[0]->id : 0; 
+?>
 <div class="row">
 
   <div class="col-md-9">
@@ -18,6 +20,10 @@
 
     <div id="sitenews_back">
       <?php echo _bs_button('&laquo; Back', '@homepage', array('class' => 'btn btn-success')) ?>
+      <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()): ?>
+        <?php echo '&nbsp;&nbsp;'.link_to('<i class="fa fa-pencil"></i> Edit Post', "news/post?post_id=$post_id", array('class' => 'btn btn-ghost')) ?>
+      <?php endif; ?>
+
     </div>
 
   </div><!-- /col -->

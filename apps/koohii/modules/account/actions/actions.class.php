@@ -104,7 +104,7 @@ class accountActions extends sfActions
         
         if (UsersPeer::usernameExists($this->username))
         {
-          $request->setError('username', 'Sorry, that username is already taken, please pick another one.');
+          $request->setError('username', 'Sorry, that username is taken, please use another one.');
           return sfView::SUCCESS;
         }
 

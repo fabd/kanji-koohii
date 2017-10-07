@@ -6,7 +6,7 @@
 <h2>Register an account</h2>
 
 <p>
-  Your email is NOT shared with any other service.<br/>
+  Your email is private and will NOT be shared with any other service.<br/>
   <em>Please use a valid email so you can retrieve your password if you forget it!</em> 
 </p>
 
@@ -14,8 +14,9 @@
 
 <div class="padded-box-inset mb-1" style="max-width:380px">
 
-<?php 
-    echo form_errors();
+<?php
+    // we use new 'validate' option to display error message below the input field
+    // echo form_errors()
       
     echo form_tag('account/create', ['class'=>'', 'autocomplete' => 'false']);
 
@@ -75,7 +76,7 @@
 <?php
 
     echo _bs_form_group(
-      _bs_submit_tag('Create Account')
+      _bs_submit_tag('Create Account', ['class' => 'btn-lg'])
     );
 
     /*

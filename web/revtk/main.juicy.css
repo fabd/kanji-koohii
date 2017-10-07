@@ -54,21 +54,29 @@
   .container { width: 970px; } /* same as min-width 992px */
 }
 
-/* we don't use Boostrap's structure here, see BootstrapHelper.php :: _bs_input_checkbox() */
-/*.form-group label { font-weight: normal; }*/
+/* cf. BootstrapHelper */
+
+  /* we don't use Boostrap's structure here, see BootstrapHelper.php :: _bs_input_checkbox() */
+  /*.form-group label { font-weight: normal; }*/
 .form-group input[type="checkbox"] { vertical-align: middle; margin:0; padding:0;  }
 .form-group input[type="checkbox"] + span { vertical-align: middle; padding-left:0.5em; font-weight:normal; }
 
-/* make this similar to the input */
+  /* make this similar to the input */
 .form-control-static {
   border:1px solid %CSS_BG_1S%; border-radius: 4px;
   display: block; font-size: 14px; height: 34px; line-height: 1.42857; padding: 6px 12px;
   width: 100%;
 }
 
-/* we use .form-group > .form-control.form-control-i for inline-block regardless of @media */
+  /* we use .form-group > .form-control.form-control-i for inline-block regardless of @media */
 .form-control-i { display:inline-block; vertical-align:middle; }
 
+  /* style an '(Optional)' <span> next to label of optional inputs */
+.form-optional { color:#716c5c; margin-left:0.5em; }
+
+  /* form errors are added by BootstrapHelper methods, after the input */
+.has-error-msg { /*background:#ffc4bc;*/ color:#913535; padding:4px 0 0 6px; }
+/*.form-group.has-error .form-control { background:#ffd; }*/
 
 
 /* ---------------------------- */
@@ -355,7 +363,6 @@ table.shaded td { padding:5px 10px; background:#f2efd7; }
 /* ---------------------------- */
 
 .form-legend { font-size:90%; }
-.form-optional { color:#716c5c; margin-left:0.5em; }
 
 .panel-body .form-section {
   padding:1em 15px; margin:0 -15px 1em;

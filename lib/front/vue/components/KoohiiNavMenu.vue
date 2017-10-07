@@ -11,6 +11,7 @@
 </style>
 
 <script>
+import $ from '../lib/coreJS.js'
 
 import KoohiiNavMenuItem from './KoohiiNavMenuItem.vue'
 

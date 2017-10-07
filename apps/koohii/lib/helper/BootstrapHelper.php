@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Helpers to output Bootstrap 3 css/components.
  *
@@ -8,15 +7,22 @@
  *   $options     are passed to the Symfony tag helpers, therefore supporting
  *                'class', 'style', and any other custom html attributes.
  *
- * Common Helpers:
+ * 
+ * COMMON HELPERS
  *
  *  _bs_button()                                       MUST add Bootstrap css as option 'class' => 'btn btn-success ...'
  *  _bs_button_with_icon()                             DONT add 'btn btn-success' ... MUST add 'icon' => 'fa-icon-id'
  *
  *
- * Form Helpers:
+ * FORM HELPERS
  *  
  *  _bs_formgroup([array $options], ...)
+ *  
+ *      OPTIONAL attributes as per Symfony tag helpers, must be an array as first argument.
+ *      
+ *      Set 'validate' to input name to add "has-error" class to the form-group if matching error in Request.
+ *
+ *        _bs_formgroup(['validate' => 'username'], ...)
  *
  *  _bs_input_checkbox($name, $options = array())      ALWAYS: value="1" ... OPTIONAL: 'label' => 'Label text'
  *  _bs_input_text    ($name, $options = array())      ...
@@ -25,24 +31,24 @@
  *
  *  _bs_submit_tag    ($label, $options = array())
  *
+ *
+ * FORM LAYOUT
+ *
+ *   Inline: add class "form-control-i" to children of _bs_formgroup()  (cf. main.juicy.css)
+ *
+ *
+ * EXAMPLES
+ *
+ *   _bs_formgroup(
+ *     ['validate' => 'username'],
+ *     _bs_input_text('username', ['label' => 'Username', 'style' => 'color:red'])
+ *   )
  * 
- * Helper helpers (not meant to be directly used):
  *
- *  _bs_input         ($type, $name, $options = array())
- *  
- *  _bs_class_merge()
+ * SEE
  * 
- *
- * Form Layout:
- *
- *  INLINE       Add class "form-control-i" to inline elements within _bs_formgroup()
- *
- *
- *
- * See:
  *   http://getbootstrap.com/css/
  * 
- * @author  Fabrice Denis
  */
 
 /**
@@ -79,10 +85,8 @@ function _bs_button_with_icon($name, $internal_uri, array $options = array())
   return link_to($name, $internal_uri, $options);
 }
 
-/**
- * Classnames are appended to $options['class'] if present.
- * 
- */
+
+// Merge classnames to $options['class'], add if not present
 function _bs_class_merge(array & $options, $classnames) {
   if (isset($options['class'])) {
     if (!is_array($options['class'])) {
@@ -118,7 +122,17 @@ function _bs_form_group() {
   // pull the optional first argument : array $options
   $options = is_array($args[0]) ? array_shift($args) : array();
 
-  _bs_class_merge($options, 'form-group');
+  $merge_class = 'form-group'; 
+
+  // add Bootstrap 'has-error' class
+  if (false !== ($input_name = $options['validate'] ?? false)) {
+    unset($options['validate']);
+    if (sfContext::getInstance()->getRequest()->hasError($input_name)) {
+      $merge_class .= ' has-error';
+    }
+  }
+
+  _bs_class_merge($options, $merge_class);
 
   $html = "\n<div "._tag_options($options).'>'
         . implode($args)

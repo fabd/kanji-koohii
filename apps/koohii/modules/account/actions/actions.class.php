@@ -104,7 +104,7 @@ class accountActions extends sfActions
         
         if (UsersPeer::usernameExists($this->username))
         {
-          $request->setError('username_duplicate', 'Sorry, that username is already taken, please pick another one.');
+          $request->setError('username', 'Sorry, that username is already taken, please pick another one.');
           return sfView::SUCCESS;
         }
 
@@ -126,7 +126,7 @@ class accountActions extends sfActions
           }
           else
           {
-            $request->setError('question', 'Woops, did you spell the answer to the question correctly?');
+            $request->setError('question', 'The answer is not correct, or misspelled.');
             $sfs->logActivity($regip, 'WRONG answer to the anti-spam question ("'.$answer.'")');
             return sfView::SUCCESS;
           }

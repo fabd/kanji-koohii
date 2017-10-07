@@ -17,34 +17,38 @@
 <?php 
     echo form_errors();
       
-    echo form_tag('account/create', array('class'=>'', 'autocomplete' => 'false'));
+    echo form_tag('account/create', ['class'=>'', 'autocomplete' => 'false']);
 
     echo _bs_form_group(
-      _bs_input_text('username', array('label' => 'Username'))
+      ['validate' => 'username'],
+      _bs_input_text('username', ['label' => 'Username'])
     );
 
     echo _bs_form_group(
-      _bs_input_email('email', array('label' => 'Email', 'autocomplete' => 'email'))
+      ['validate' => 'email'],
+      _bs_input_email('email', ['label' => 'Email', 'autocomplete' => 'email'])
     );
 
     echo _bs_form_group(
-      _bs_input_password('password', array('label' => 'Password', 'autocomplete' => 'current-password'))
+      ['validate' => 'password'],
+      _bs_input_password('password', ['label' => 'Password', 'autocomplete' => 'current-password'])
     );
 
     echo _bs_form_group(
-      _bs_input_password('password2', array('label' => 'Confirm password', 'autocomplete' => 'new-password'))
+      ['validate' => 'password2'],
+      _bs_input_password('password2', ['label' => 'Confirm password', 'autocomplete' => 'new-password'])
     );
 
     echo _bs_form_group(
-      array(
+      [
         'style'     => 'margin-bottom:0'
-      ),
-      _bs_input_text('location', array(
+      ],
+      _bs_input_text('location', [
         'label'     => 'Where do you live?',
         'optional'  => true,
         'helptext'  => 'Eg. "Tokyo, Japan" or just "Japan"',
         'autocomplete' => 'off'
-      ))
+      ])
     );
 ?>
 </div><!-- /padded-box -->
@@ -52,8 +56,10 @@
 <div class="padded-box-inset mb-1" style="max-width:380px">
 <?php
     echo _bs_form_group(
-      array('class' => 'form-section' /*, 'style' => 'background:#eeeaab;'*/),
-
+      [
+        'validate'  => 'question', 
+        'class'     => 'form-section'
+      ],
       _bs_input_text('question', array(
         'label'     => 'What is the capital of Japan?',
         'helptext'  => '(Help us stop spam!)',

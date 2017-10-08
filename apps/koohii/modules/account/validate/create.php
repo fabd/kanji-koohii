@@ -93,7 +93,7 @@ return array
       (
         'match'     => true,
         'pattern'     => '/^([a-zA-Z0-9])+([a-zA-Z0-9 \'-])*$/',
-        'match_error'   => 'Location: only letters and digits, spaces, single quotes or dashes.'
+        'match_error'   => 'Only letters and digits, spaces, single quotes or dashes.'
       )
     )
   )

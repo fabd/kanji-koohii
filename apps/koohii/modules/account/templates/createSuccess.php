@@ -41,6 +41,7 @@
 
     echo _bs_form_group(
       [
+        'validate'  => 'location',
         'style'     => 'margin-bottom:0'
       ],
       _bs_input_text('location', [

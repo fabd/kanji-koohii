@@ -97,8 +97,8 @@ DOM
 
   echo nav_item('manage-', 'Flashcards', '@manage', array(), <<<DOM
 <ul class="k-nav_dropdown">
+  <li><a href="@/manage">Manage Flashcards</a></li>
   <li><a href="@/manage/flashcardlist">Flashcard List</a></li>
-  <li><a href="@/manage">Manage Cards</a></li>
 </ul>
 DOM
   );
@@ -179,8 +179,8 @@ if (!$sf_user->isAuthenticated()) {
   ));
 
   $nav_items[] = nav_m_t('Flashcards', 'flashcards', 'fa-copy', array(
-    nav_m_i('List',   's-i', 'manage/flashcardlist'),
-    nav_m_i('Manage', 's-r', 'manage/addcustom')
+    nav_m_i('Manage', 's-r', 'manage/addcustom'),
+    nav_m_i('List',   's-i', 'manage/flashcardlist')
   ));
 
   $nav_items[] = nav_m_t('Account', 'account', 'fa-user', array(

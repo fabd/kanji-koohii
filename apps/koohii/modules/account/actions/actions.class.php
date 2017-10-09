@@ -266,8 +266,8 @@ class accountActions extends sfActions
       }
       else
       {
-        $request->setError('email_invalid', 'Sorry, no user found with that email address.');
-         return sfView::SUCCESS;
+        $request->setError('email', 'Sorry, no user found with that email address.');
+        return sfView::SUCCESS;
       }
     }
   }
@@ -330,7 +330,7 @@ class accountActions extends sfActions
       }
       else
       {
-        $request->setError('login_invalid', "Old password doesn't match.");
+        $request->setError('password', "Old password doesn't match.");
       }
     }
 

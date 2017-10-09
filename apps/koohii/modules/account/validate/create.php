@@ -91,9 +91,12 @@ return array
       ),
       'RegexValidator'   => array
       (
-        'match'     => true,
-        'pattern'     => '/^([a-zA-Z0-9])+([a-zA-Z0-9 \'-])*$/',
-        'match_error'   => 'Only letters and digits, spaces, single quotes or dashes.'
+        'match'       => true,
+        'pattern'     => '/^[\x20-\x7e]+$/',
+        'match_error' => 'Location: please use only ASCII printable characters.'
+        // 'match'     => true,
+        // 'pattern'     => '/^([a-zA-Z0-9])+([a-zA-Z0-9 \'-])*$/',
+        // 'match_error'   => 'Only letters and digits, spaces, single quotes or dashes.'
       )
     )
   )

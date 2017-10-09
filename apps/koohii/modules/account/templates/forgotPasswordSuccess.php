@@ -7,9 +7,7 @@
 
     <p>  Enter your email address below and you will receive new password instructions.</p>
     
-    <p style="color:#822">If you do not receive an email
-        <strong>check the spam folder</strong> of your email service!<br/><br/> Also double check that you typed in the email address
-        correctly. </p>
+    <p style="color:#822"><strong>If you do not receive an email please check the SPAM folder!</strong></p>
 
 <div class="padded-box-inset mb-1">
 

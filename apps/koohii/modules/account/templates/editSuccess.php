@@ -7,7 +7,7 @@
   <h2>Edit Account</h2>
 
 <?php
-    echo form_errors();
+    // echo form_errors();
 
     echo form_tag('account/edit', array('class'=>'block'));
 
@@ -17,18 +17,24 @@
     );
 
     echo _bs_form_group(
-      _bs_input_email('email', array('label' => 'Email', 'helptext' => 'Please use a valid e-mail address so you can retrieve your password! We do NOT share your email.'))
+      ['validate' => 'email'],
+      _bs_input_email('email', [
+        'label'    => 'Email',
+        'helptext' => 'Please use a valid e-mail address so you can retrieve your password! We do NOT share your email.'
+      ])
     );
 
     echo _bs_form_group(
-      _bs_input_text('location', array(
+      ['validate' => 'location'],
+      _bs_input_text('location', [
         'label'     => 'Where do you live?',
         'optional'  => true,
         'helptext'  => 'Eg. "Tokyo, Japan" or just "Japan"'
-      ))
+      ])
     );
 
     echo _bs_form_group(
+      ['validate' => 'timezone'],
       '<label for="form[timezone]">Timezone</label>'
     . select_tag('timezone', options_for_select(rtkTimezones::$timezones, $sf_request->getParameter('timezone')), array('class' => 'form-control'))
     . '<span class="help-block">'

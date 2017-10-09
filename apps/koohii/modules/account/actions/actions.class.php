@@ -75,6 +75,7 @@ class accountActions extends sfActions
       return $this->renderText('Too many registrations within '.self::BETWEEN_REGS_TIME.'h period.');
     }  
 
+
     if ($request->getMethod() != sfRequest::POST)
     {
       // setup form
@@ -175,6 +176,12 @@ class accountActions extends sfActions
         
         return 'Done';
       }
+
+      // temporary, log validation errors to get a better idea of what user is trying to enter and improve validation
+      if ($request->hasError('location')) {
+        $sfs->logActivity($regip, 'Location error: "'.$request->getParameter('location').'"');
+      }
+
     }
   }
 

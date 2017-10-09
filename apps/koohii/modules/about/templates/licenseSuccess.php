@@ -7,17 +7,17 @@
     </div>
   </div>
 
-  <div class="">
+  <div class="markdown">
     <div class="col-box learn-more">
 
       <div class="section">
-        <h1>License Information</h1>
+        <h2>License Information</h2>
         <p>
           All user-contributed content on this website is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons BY-NC-SA</a>.
         </p>
       </div>  
       <div class="section">
-        <h1>Attribution Requirements</h1>
+        <h2>Attribution Requirements</h2>
         <p>
           Please note the attribution clause in the license:
         </p>
@@ -27,7 +27,7 @@
         <p>
 If you republish this content on a WWW server or software package, we require that you:
         </p>
-        <ul class="content">
+        <ul>
           <li>
 <strong>Visually indicate that the content is from <?php _CJ('Kanji Koohii!') ?></strong> in some way. The acknowledgement doesn’t have to be obnoxious; a discreet footer text is fine.
           </li>

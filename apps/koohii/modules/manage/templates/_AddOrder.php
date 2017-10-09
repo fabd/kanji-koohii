@@ -4,11 +4,13 @@
 
   <?php echo form_errors() ?>
   
+<div class="markdown">
   <p> To add flashcards for <?php echo _CJ('RTK') ?>:</p>
-  <ul class="content">
+  <ul>
     <li>Enter a frame number, and all cards up to that number will be added</li>
     <li>Enter a range of cards, by using a "+" prefix, for example "+10" to add 10 flashcards.</li>
   </ul>
+</div>
 
 <?php 
   echo _bs_form_group(

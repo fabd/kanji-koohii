@@ -1,9 +1,10 @@
 <?php use_helper('Form', 'Validation', 'Widgets') ?>
 
+<div class="markdown">
   <p> To import customized keywords each line should contain the following two fields, separated by spaces (tabs, comma):</p>
-  <ul class="content">
-    <li><?php echo _CJ_U('kanji') ?> <em style="color:green">or</em> index number ("frame number") <em style="color:green">or</em> <?php echo link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set') ?> code.
-    <li>Custom keyword.
+  <ul>
+    <li><?php echo _CJ_U('kanji') ?> <em style="color:green">or</em> index number ("frame number") <em style="color:green">or</em> <?php echo link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set') ?> code.</li>
+    <li>Custom keyword.</li>
   </ul>
 
   <p> <strong>To import a list of keywords from a text file</strong>, select the contents and paste into
@@ -13,6 +14,7 @@
       column the keyword. Then make a selection of the two columns and as many rows as needed, and you
       should be able to copy and paste into the box below.
   </p>
+</div>
 
   <?php echo form_errors() ?>
   

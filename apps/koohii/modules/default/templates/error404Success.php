@@ -1,11 +1,6 @@
-<?php include_partial('home/homeSide') ?>
+<div class="pure-u-1 pure-u-md-3-5 markdown">
 
-<div class="pure-u-1 pure-u-md-3-5">
-
-  <div class="app-header">
-    <h2>Oops! We couldn't find this page for you.</h2>
-    <div class="clear"></div>
-  </div>
+  <h2>Oops! We couldn't find this page for you.</h2>
 
   <h3>Did you type the URL?</h3>
   
@@ -19,7 +14,7 @@
   
   <p> Links from other sites can sometimes be outdated or misspelled. <?php echo link_to('Let us know','@contact') ?> where you came from and we can try to contact the other site in order to fix the problem.</p>
 
-  <ul class="content">
+  <ul>
       <li><a href="javascript:history.go(-1)">Go back to previous page</a></li>
       <li><?php echo link_to('Visit the home page', '@homepage') ?></li>
   </ul>

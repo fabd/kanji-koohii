@@ -34,9 +34,9 @@
 
  /* lists */
 .markdown ol { margin-bottom:2em; }
-.markdown li { margin-bottom:0.5em; }
+.markdown li { margin-bottom:0.5em; list-style:disc; }
 
-.markdown ul { margin:1em 0 2em 2em; }
+.markdown ul { margin:1em 0 2em; padding-left:2em; }
 
  /* images */
 .markdown img { box-sizing:content-box; padding:3px; border:1px solid #C9C7B5; display:block; margin:0 auto; max-width:100%; height:auto; }

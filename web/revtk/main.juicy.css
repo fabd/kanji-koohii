@@ -256,13 +256,6 @@ h1 { font-size:13px; font-family:Verdana, sans-serif; }
 h2 { font-weight:normal;  margin:0 0 0.5em; }
 h3 { font-size:18px; font-weight:normal; margin:0 0 0.5em; }
 
-/* lists */
-.content ul { position:relative; /* fixes IE display bug */ list-style:none; margin-left:1em; padding-left:0; }
-.content li { list-style:disc; }
-
-/* input fields */
-input.textfield, textarea { background:#fff; /*removed gradient gif*/ color: #000; border: 1px solid #cfcfcf; border-top: 1px solid #afafaf; border-left: 1px solid #afafaf; padding:2px 4px; font-size:13px; line-height:1.4em; }
-
 /* css3 fixes */
 .border-box { -moz-box-sizing:border-box; box-sizing:border-box; }
 

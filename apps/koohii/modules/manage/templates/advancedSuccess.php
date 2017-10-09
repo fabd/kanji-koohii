@@ -24,23 +24,23 @@
 <ul>
   <li>
     <span class="lbl"><?php echo label_for('f_kanji', 'Kanji (character)') ?></span>
-    <span class="fld medium"><?php echo input_tag('f_kanji', '', array('class' => 'textfield')) ?></span>
+    <span class="fld medium"><?php echo input_tag('f_kanji', '', array('class' => '')) ?></span>
   </li>
   <li>
     <span class="lbl"><?php echo label_for('f_leitnerbox', 'Leitner Box') ?></span>
-    <span class="fld medium"><?php echo input_tag('f_leitnerbox', '2', array('class' => 'textfield')) ?> (1 = fail/new, 2 = one review, ...)</span>
+    <span class="fld medium"><?php echo input_tag('f_leitnerbox', '2', array('class' => '')) ?> (1 = fail/new, 2 = one review, ...)</span>
   </li>
   <li>
     <span class="lbl"><?php echo label_for('f_expiredays', 'Due date') ?></span>
-    <span class="fld medium"><?php echo input_tag('f_expiredays', '0', array('class' => 'textfield')) ?> (in DAYS from now, 0 = due)</span>
+    <span class="fld medium"><?php echo input_tag('f_expiredays', '0', array('class' => '')) ?> (in DAYS from now, 0 = due)</span>
   </li>
   <li>
     <span class="lbl"><?php echo label_for('f_failurecount', 'Fail count') ?></span>
-    <span class="fld medium"><?php echo input_tag('f_failurecount', '0', array('class' => 'textfield')) ?></span>
+    <span class="fld medium"><?php echo input_tag('f_failurecount', '0', array('class' => '')) ?></span>
   </li>
   <li>
     <span class="lbl"><?php echo label_for('f_successcount', 'Sucess count') ?></span>
-    <span class="fld medium"><?php echo input_tag('f_successcount', '1', array('class' => 'textfield')) ?></span>
+    <span class="fld medium"><?php echo input_tag('f_successcount', '1', array('class' => '')) ?></span>
   </li>
 
   <li><span class="lbl"></span>

@@ -34,7 +34,7 @@
         <?php echo submit_tag('Show', array('class' => 'pure-button')) ?>
       </form>
 
-      <div id="introduction" class="content">
+      <div id="introduction" class="markdown">
         <h3>Purpose of this page</h3>
     
         <p> In <?php echo _CJ('Remembering the Kanji') ?>, the Japanese characters are studied and reviewed
@@ -49,7 +49,7 @@
         
         <h3>Resources</h3>
         
-        <ul class="content">
+        <ul>
           <li>Japanese text: <a href="http://www.yomiuri.co.jp" target="_blank">Yomiuri Online</a>,
             <a href="http://www.geocities.co.jp/HeartLand-Gaien/7211/" target="_blank">Old Stories of Japan</a>,
             <a href="http://www.aozora.gr.jp/" target="_blank">Aozora Bunko</a>.

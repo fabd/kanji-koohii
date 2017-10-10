@@ -40,9 +40,11 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
 <section class="row">
   <div class="col-md-6">
     <div class="f_text">
-      <h2>Japanese-English dictionary</h2>
+      <h2>Smart dictionary</h2>
       <p>
-<span class="break">See example vocabulary and readings.</span> Available in the study pages and flashcard review sessions.
+Koohii's dictionary highlights words <em>which uses only the kanji
+that you have learned</em>. This helps you acquire words 
+gradually, building from your previous knowledge.
       </p>
     </div>
   </div>

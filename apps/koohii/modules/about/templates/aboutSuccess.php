@@ -39,8 +39,8 @@
       </p>
 
       <p>
-        This website uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">JMDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> files.
-        These files are the property of the <a href="http://www.csse.monash.edu.au/~jwb/edrdg/">Electronic Dictionary Research and Development Group</a> at Monash University,
+        This website uses the <a href="http://www.edrdg.org/jmdict/edict_doc.html">JMDICT</a> and <a href="http://www.edrdg.org/kanjidic/kanjidic.html">KANJIDIC</a> files.
+        These files are the property of the <a href="http://www.edrdg.org/">Electronic Dictionary Research and Development Group</a> at Monash University,
         and are used in conformance with the Group's <a href="http://www.csse.monash.edu.au/~jwb/edrdg/licence.html">licence</a>.
       </p>
     </section>

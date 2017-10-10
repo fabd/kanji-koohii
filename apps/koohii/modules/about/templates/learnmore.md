@@ -43,19 +43,26 @@ If you have previously forgotten kanji from SRS reviews, select **Restudy > Star
 * Select the red pile in the SRS to go to the list of failed (forgotten) kanji.
 
 
+## The Dictionary {#help-dictionary}
+
+**Kanji Koohii features a simple, yet smart dictionary. The Koohii dictionary is aware of your kanji knowledge: as you progress and add flashcards the dictionary will highlight vocabulary entries that are made of only those known kanji.**
+
+Currently _known kanji_ means a kanji for which the user added a flashcard. This simple requirement is the most flexible for various needs. New cards will be learned soon, and failed cards are meant to be re-studied eventually so this works out.
+
+<img class="img-block img-responsive" src="/koohii/help/help-dict-example-21.png" />
+
+In the screenshot above the user has studied kanji #1 to #50. The second word "合唱" is not highlighted yet, since
+the user has not yet learned 合 which is kanji #269 and will be seen later. Yet on kanji 21 already the dictionary can highlight a vocabulary entry (the verb "唱える") which is based on the user's previous knowledge.
+
+This works in Flashcard Review too! So as you do reviews over weeks and months, and you open the dictionary you may discover new words which weren't highlighted before.
 
 
-## What is Spaced Repetition?
+### Technical Information
+Kanji Koohii's dictionary uses Jim Breen's [JMdict/EDICT](http://www.edrdg.org/jmdict/edict_doc.html) Japanese-English dictionary (full acknowlegments in the About page).
 
-Kanji Koohii uses a _spaced repetition system_ (also known as "SRS") based on the popular [Leitner System](http://en.wikipedia.org/wiki/Leitner_system):
+**Koohii's dictionary only shows "priority" entries, approx. 16000 of the most common words**. This is done in order to provide meaningful results for Koohii users. The dictionary would otherwise show rare, archaic and obsolete words as well as place names from a total of 170,000+ entries which you'll likely never use even after being fully fluent in Japanese.
 
-> In the Leitner system, flashcards are sorted into groups according to how well you know each one in the Leitner's learning box. This is how it works: you try to recall the solution written on a flashcard. If you succeed, you send the card to the next group. But if you fail, you send it back to the first group. Each succeeding group has a longer period of time before you are required to revisit the cards. -- Source: [Wikipedia](http://en.wikipedia.org/wiki/Leitner_system)
-
-The Leitner System helps you to:
-
-*   Make sure that you review all the information that you have learned.
-*   Review at increasingly longer intervals to stimulate long term memory.
-*   Review more of the difficult flashcards, and less of those that you know well.
+As such, Koohii's dictionary is not an exhaustive reference. There are already excellent resources dedicated to this such as jisho.org. The goal for Koohii's dictionary is to help you stay focused while getting through the 2000+ common use kanji.
 
 
 ## Adding Flashcards {#help-manage-cards}
@@ -72,6 +79,20 @@ If you are not studying the kanji in the RTK sequence (say, JLPT), or you want t
 
 
 ## The Spaced Repetition System (SRS) {#help-srs}
+
+### What is Spaced Repetition?
+
+Kanji Koohii uses a _spaced repetition system_ (also known as "SRS") based on the popular [Leitner System](http://en.wikipedia.org/wiki/Leitner_system):
+
+> In the Leitner system, flashcards are sorted into groups according to how well you know each one in the Leitner's learning box. This is how it works: you try to recall the solution written on a flashcard. If you succeed, you send the card to the next group. But if you fail, you send it back to the first group. Each succeeding group has a longer period of time before you are required to revisit the cards.
+
+The Leitner System helps you to:
+
+* Make sure that you review all the information that you have learned.
+* Review at increasingly longer intervals to stimulate long term memory.
+* Review more of the difficult flashcards, and less of those that you know well.
+
+### The SRS Bar Chart
 
 The SRS bar chart represents stacks of flashcards. Stacks are shown from left to right. Stacks on the left side are relatively new. With each review, a card will move towards the right, representing a better knowledge.
 

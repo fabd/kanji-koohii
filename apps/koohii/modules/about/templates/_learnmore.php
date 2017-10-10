@@ -15,6 +15,8 @@
         <ul>
           <li><a href="#help-rtk">Remembering the Kanji</a></li>
           <li><a href="#help-study">Study and Share Stories</a></li>
+          <li><a href="#help-dictionary">The Dictionary</a></li>
+
           <li><a href="#help-manage-cards">Adding Flashcards</a></li>
 
           <li><a href="#help-srs">Spaced Repetition</a></li>

@@ -140,8 +140,9 @@ class rtkLabs
    *   count of ichi1,news1:       15751
    *   count of ichi1:              9267
    *
-   * Entries marked (P) in EDICT and EDICT2 (priority entries) (ichi1, news1, spec1, gai1)
-   *   count of (P) entries:       16062
+   * "Entries with news1, ichi1, spec1/2 and gai1 values are marked with a "(P)" in the EDICT files."
+   *   ichi1,news1,spec1,gai1     16062
+   *   ichi1,news1,spec1/2, gai1  17642  (P)
    */
   public static 
     $pricodes = array(
@@ -319,7 +320,7 @@ class rtkLabs
          ->where('kanji = ?', $ucsId)
          ->where('jdict.pri & ?', self::EDICT_PRI_FREEMODE)
          ->order('jdict.pri DESC')
-         ->limit(10);
+         ->limit(30); //FIXME
 
     return $select;
   }

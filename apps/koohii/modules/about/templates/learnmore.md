@@ -2,9 +2,10 @@
 
 **Kanji Koohii** is a website and community dedicated to help you complete the kanji learning method called _Remembering the Kanji_.
 
-- Edit and share kanji mnemonics (called "stories")
-- Improve long term memory with kanji flashcards and a spaced repetition system (SRS)
-- Track your progress to stay motivated
+- Edit and share **kanji mnemonics** (called "stories")
+- Improve long term memory with **kanji flashcards** and a spaced repetition system (SRS)
+- **Track your progress** to stay motivated
+- Learn words based on your kanji knowledge with the **smart dictionary**
 
 
 ## About Remembering the Kanji {#help-rtk}

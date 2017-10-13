@@ -220,5 +220,14 @@ Clicking any of the keywords will take you to the corresponding character in the
 
 ## FAQ  {#help-faq}
 
+### How do I reset my flashcards?
+First, note that _stories and kanji flashcards are separate_. With that in mind, you can simply delete all the flashcards, your stories won't be affected.
+
+1. Go to [Remove Custom Flashcard Selection](/manage/removecustom) (from the Flashcards > Manage Flashcards menu)
+2. Enter `1-3000` and click _Remove Flashcards_, then confirm
+3. Now you can add cards back as you see fit, either one by one advancing through the Study pages (top right _Add Card_ buton), or add in small batches via _Manage Flashcards_ menu
+
 ### I can not see Japanese characters in my browser.
-You have to enable East Asian languages support in Windows in order to see the kanji correctly. See [Installing Japanese Support](http://greggman.com/japan/xp-ime/xp-ime.htm) for a detailed how-to on installing East Asian language characters and the Input Method Editor (IME) which lets you type in Japanese.
+In old versions of Windows and some OS'es you may have to enable "East Asian languages support", or add the language support for Japanese specifically. Most Linux / Windows / OS X desktops these days already have Japanese and Chinese fonts included. You may also want to look into enabling the *input method editor* (IME) to input kanji.
+
+

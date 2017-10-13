@@ -2,10 +2,9 @@
 
 **Kanji Koohii** is a website and community dedicated to help you complete the kanji learning method called _Remembering the Kanji_.
 
-*   Edit and share kanji stories with fellow learners
-*   Vote for the best stories, copy the ones you like
-*   Review with scheduled flashcards
-*   Track your progress
+- Edit and share kanji mnemonics (called "stories")
+- Improve long term memory with kanji flashcards and a spaced repetition system (SRS)
+- Track your progress to stay motivated
 
 
 ## About Remembering the Kanji {#help-rtk}
@@ -218,15 +217,6 @@ The table can be sorted on any column by clicking on the column headers. In the 
 
 Clicking any of the keywords will take you to the corresponding character in the Study area, where you can check your mnemonics, adapt them, or maybe use a mnemonic shared by another member if yours wasn't working so well.
 
-
-
-
-## Benefits {#help-benefits}
-
-*   With the Leitner system, each cardbox represents a level of knowledge of the kanji. You can get a rapid estimate of your current progress simply by checking how many cards are in each box.
-*   You are able to set your own priorities simply by choosing the card box you want to work on. If you feel tired or you don't have enough time, review the higher compartments. If you are ready to tackle difficult kanji, work on the lower compartments.
-*   Too many reviews in a short period is a waste of time, as the information learned will remain in short term memory. Wait too long before reviewing, and you have lost the information. The scheduling system in "Kanji Koohii!" uses increasingly longer spaced reviews, in order to promote long-term memory retention.
-*   You can optimize your reviewing time thanks to the scheduling system. There will be lots of reviews early on, but once your cards spread into the higher compartments, they will be scheduled for longer intervals, during which you can focus on the kanji that needs more attention.
 
 ## FAQ  {#help-faq}
 

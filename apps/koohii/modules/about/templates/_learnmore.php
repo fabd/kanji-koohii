@@ -22,7 +22,6 @@
           <li><a href="#help-srs">Spaced Repetition</a></li>
           <li><a href="#help-scheduling">Review Scheduling</a></li>
           <li><a href="#help-reviewing">Reviewing</a></li>
-          <li><a href="#help-benefits">Benefits</a></li>
           <li><a href="#help-faq">FAQ</a></li>
         </ul>
       </div>

@@ -34,7 +34,8 @@
 
  /* lists */
 .markdown ol { margin-bottom:2em; }
-.markdown li { margin-bottom:0.5em; list-style:disc; }
+.markdown li { margin-bottom:0.5em; }
+.markdown ul li { list-style:disc; }
 
 .markdown ul { margin:1em 0 2em; padding-left:2em; }
 
@@ -53,7 +54,8 @@
 .markdown td a:active { font-weight:normal; }
 .markdown th a { font-weight:bold; }
 
- /* code */
-.markdown code { background:#fff; }
+ /* code : applies to `this` */
+.markdown code { background:%CSS_BG_NAV%; padding: 0.3em 0.8em; }
+ /* code : applies to ```code blocks``` */
 .markdown pre { background:%CSS_BG_NAV%; padding:1em 1em; border-left:4px solid %CSS_BG_1%; }
 .markdown pre code { background:none; }

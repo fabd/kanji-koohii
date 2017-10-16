@@ -563,7 +563,7 @@ div.col-box-bis { margin-top:10px; }
 #sitenews .hd a { font-weight:bold; color:#10348F; text-decoration:none; }
 #sitenews .hd { padding:5px 0; margin-bottom:5px; border:0; font-size:17px; }
 #sitenews .bd {
-  margin:0 0 25px; padding:0 0 2em; border-bottom:1px solid %CSS_BG_1%;
+  margin:0 0 25px; padding:0 0 2em; /*border-bottom:1px solid %CSS_BG_1%;*/
   font-size:14px; line-height:1.5em;
   color:#3c3c3c; clear:both; text-align:justify; 
 }

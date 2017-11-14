@@ -10,7 +10,7 @@
  *
  *   getUserSetting()                Proxy and cache for UsersSettingsPeer (account settings)
  *   setUserSetting()
- *   setUserSettingArray($settings)
+ *   cacheUserSettings($settings)    Cache application setting(s) (cf. UserSettingsPeer)
  *
  *   getUserDetails()                Get UsersPeer record for an authorized user
  *   getLocalPrefs()
@@ -147,9 +147,9 @@ class rtkUser extends sfBasicSecurityUser
       return $value;
     }
 
-    // otherwise cache settings from database
+    // otherwise get all settings and cache them
     $settings = UsersSettingsPeer::getUserSettings($this->getUserId());
-    UsersSettingsPeer::cacheUserSettings($settings);
+    $this->cacheUserSettings($settings);
     return $this->getAttribute($attrName);
   }
 
@@ -165,7 +165,12 @@ class rtkUser extends sfBasicSecurityUser
     $this->setAttribute($attrName, $value);
   }
 
-  public function setUserSettingArray($settings)
+  private function getUserSettingName($setting)
+  {
+    return 'usersetting.'.$setting;
+  }
+
+  public function cacheUserSettings(array $settings)
   {
     foreach ($settings as $name => $value)
     {
@@ -173,10 +178,6 @@ class rtkUser extends sfBasicSecurityUser
     }
   }
 
-  private function getUserSettingName($setting)
-  {
-    return 'usersetting.'.$setting;
-  }
 
   /**
    * Proxy method to set one or more attributes.

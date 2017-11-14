@@ -342,11 +342,13 @@ class accountActions extends sfActions
 
   public function executeFlashcards($request)
   {
+    $user = $this->getUser();
+
     if ($request->getMethod() != sfRequest::POST)
     {
       $form_data = array(
-        'opt_no_shuffle' => $this->getUser()->getUserSetting('OPT_NO_SHUFFLE'),
-        'opt_readings'   => $this->getUser()->getUserSetting('OPT_READINGS')
+        'opt_no_shuffle' => $user->getUserSetting('OPT_NO_SHUFFLE'),
+        'opt_readings'   => $user->getUserSetting('OPT_READINGS')
       );
       $request->getParameterHolder()->add($form_data);
     }
@@ -357,8 +359,8 @@ class accountActions extends sfActions
         'OPT_READINGS'   => $request->getParameter('opt_readings', 0)
       );
 
-      UsersSettingsPeer::saveUserSettings($this->getUser()->getUserId(), $settings);
-      UsersSettingsPeer::cacheUserSettings($settings);
+      UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);
+      $user->cacheUserSettings($settings);
     }
   }
 

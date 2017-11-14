@@ -6,7 +6,6 @@
  * rtkUser::getUserSetting().
  * 
  * Methods:
- *  cacheUserSettings($settings)      Cache setting(s) in the user session (rtkUser).
  *  getDefaultSettings()
  *  getUserSettings($userId)
  *  hasUserSettings($userId)
@@ -56,21 +55,6 @@ class UsersSettingsPeer extends coreDatabaseTable
     }
 
     return $colData;
-  }
-
-  /**
-   * Cache setting(s) in the user session.
-   *
-   * @param   array   Settings assoc. array
-   */
-  public static function cacheUserSettings($settings)
-  {
-    $user = sfContext::getInstance()->getUser();
-
-    foreach ($settings as $name => $value)
-    {
-      $user->setUserSetting($name, $value);
-    }
   }
 
   /**

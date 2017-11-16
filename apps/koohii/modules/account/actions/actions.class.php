@@ -364,6 +364,13 @@ class accountActions extends sfActions
     }
   }
 
+  public function executeSpacedrepetition($request)
+  {
+    $user = $this->getUser();
+
+    
+  }
+
   public function executeSequence($request)
   {
     if ($request->getMethod() != sfRequest::POST)

@@ -20,8 +20,9 @@ function output_sidenav_item($id, $text, $internal_uri)
 <div class="side-menu">
   <h2>Settings</h2>
   <ul>
-    <?php output_sidenav_item('flashcards', 'Flashcards', 'account/flashcards') ?></li>
     <?php output_sidenav_item('sequence', 'RTK Edition', 'account/sequence') ?></li>
+    <?php output_sidenav_item('flashcards', 'Flashcards', 'account/flashcards') ?></li>
+    <?php output_sidenav_item('spacedrepetition', 'Spaced Repetition', 'account/spacedrepetition') ?></li>
     <?php #output_sidenav_item('opt22', 'Study Options', 'account/studyoptions') ?></li>
   </ul>
 </div>

@@ -1,9 +1,11 @@
 <?php
 /**
  * The User Settings table stores various settings/options related to the
- * application features (rather than the user profile). The settings are
- * cached in the user attributes the first time one is accessed through
- * rtkUser::getUserSetting().
+ * application features (rather than the user profile).
+ * 
+ * The settings are cached in the user attributes the first time one is
+ * accessed via rtkUser::getUserSetting().
+ *
  * 
  * Methods:
  *  getDefaultSettings()
@@ -19,13 +21,21 @@ class UsersSettingsPeer extends coreDatabaseTable
 {
   // array to map settings names to database fields
   public static $map = array(
-    'OPT_NO_SHUFFLE'  => 'no_shuffle',
-    'OPT_READINGS'    => 'show_onkun'
+    'OPT_NO_SHUFFLE'   => 'no_shuffle',
+    'OPT_READINGS'     => 'show_onkun',
+
+    'OPT_SRS_MAX_BOX'  => 'srs_max_box',
+    'OPT_SRS_MULT'     => 'srs_mult',
+    'OPT_SRS_HARD_BOX' => 'srs_hard_box'
   );
 
   private static $defaultSettings = array(
-    'OPT_NO_SHUFFLE'  => 0,    // do not shuffle new cards (blue pile)
-    'OPT_READINGS'    => 0     // do not show example words in flashcard reviews
+    'OPT_NO_SHUFFLE'   => 0,    // do not shuffle new cards (blue pile)
+    'OPT_READINGS'     => 0,    // do not show example words in flashcard reviews
+
+    'OPT_SRS_MAX_BOX'  => 7,
+    'OPT_SRS_MULT'     => 205,  // 205 means 2.05
+    'OPT_SRS_HARD_BOX' => 0     // zero means default behaviour
   );
 
   protected
@@ -76,39 +86,42 @@ class UsersSettingsPeer extends coreDatabaseTable
    */
   public static function getUserSettings($userId)
   {
-    // get the default values
-    $settings = self::getDefaultSettings();
-
-    // overwrite with saved settings, if present
     $select  = self::getInstance()->select('*')->where('userid = ?', $userId)->query();
     if ($row = self::$db->fetch())
     {
-      $savedSettings = array(
-        'OPT_NO_SHUFFLE'  => $row['no_shuffle'],
-        'OPT_READINGS'    => $row['show_onkun']
-      );
+      // fab: not worth making more fancy code atm ...
+      $settings = array(
+        'OPT_NO_SHUFFLE'   => $row['no_shuffle'],
+        'OPT_READINGS'     => $row['show_onkun'],
 
-      $settings = array_merge($settings, $savedSettings);
+        'OPT_SRS_MAX_BOX'  => $row['srs_max_box'],
+        'OPT_SRS_MULT'     => $row['srs_mult'],
+        'OPT_SRS_HARD_BOX' => $row['srs_hard_box']
+      );
+    }
+    else
+    {
+      $settings = self::getDefaultSettings();
     }
 
     // normalize the settings
-    $settings['OPT_NO_SHUFFLE'] = intval($settings['OPT_NO_SHUFFLE']);
-    $settings['OPT_READINGS']   = intval($settings['OPT_READINGS']);
+    $settings['OPT_NO_SHUFFLE']   = intval($settings['OPT_NO_SHUFFLE']);
+    $settings['OPT_READINGS']     = intval($settings['OPT_READINGS']);
+
+    $settings['OPT_SRS_MAX_BOX']  = intval($settings['OPT_SRS_MAX_BOX']);
+    $settings['OPT_SRS_MULT']     = intval($settings['OPT_SRS_MULT']);
+    $settings['OPT_SRS_HARD_BOX'] = intval($settings['OPT_SRS_HARD_BOX']);
 
     return $settings;
   }
   
-  /**
-   * 
-   * @return  bool    True if user has saved settings.
-   */
   public static function hasUserSettings($userId)
   {
     $count = self::getInstance()->count('userid = ?', $userId);
     return (bool)$count;
   }
 
-  public static function saveUserSettings($userId, $settings)
+  public static function saveUserSettings($userId, array $settings)
   {
     // if the settings aren't saved yet, fill in the defaults
     if (!self::hasUserSettings($userId))

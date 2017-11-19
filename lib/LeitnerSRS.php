@@ -67,10 +67,9 @@ class LeitnerSRS
     // cards in the last box can not move higher, so they stay in the last box
     $card_box = min($card_box, self::MAXSTACKS);
 
-    if ($answer === uiFlashcardReview::UIFR_HARD && $card_box === 2)
+    if ($answer === uiFlashcardReview::UIFR_HARD && $curData->leitnerbox == 2)
     {
-      // new cards with "hard" answer always are due for tomorrow
-      // TODO  card *falling* back from box 3 should use the default 3 day interval of box 2 ?
+      // cards in 1+ box with "hard" answer stay in 1+ box with 1 DAY interval
       $card_interval = 1;
     }
     else

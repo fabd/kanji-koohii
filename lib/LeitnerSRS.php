@@ -2,32 +2,71 @@
 /**
  * LeitnerSRS handles the flashcard scheduling system.
  * 
- * This class needs to be refactored to remove dependencies, so it can be included
- * in Trinity etc as a "spaced repetition engine".
  * 
- * Methods:
- * 
- *  rateCard($curData, $answer)
- *   
- * 
- * 
- * @author  Fabrice Denis
  */
 
 class LeitnerSRS
 {
-  const    MAXSTACKS   = 8;
   const    FAILEDSTACK = 1;
 
   static
-    // Leitner base intervals for flashcard going in box N
-    // Offset 0 = Leitner box 1 (box 1 = failed/untested, box 2 = 1 review, ...)
-    $SCHEDULE_DAYS     = array(0, 3, 7, 14, 30, 60, 120, 240),
-
     // Variance +/- for base interval for flashcard going in box N
-    // Offset 0 = Leitner box 1 (box 1 = failed/untested, box 2 = 1 review, ...)
+    // Offset 0 = Leitner box 1 (box 1 = failed/untested, box 2 = 1() review, ...)
     $SCHEDULE_VARIANCE = array(0, 1, 2,  3,  5, 10,  15,  30);
-  
+ 
+  // return max Leitner Box, including Failed & New as box #1
+  private static function getMaxBox()
+  {
+    static $cached = false;
+    if (false === $cached) {
+      $user   = sfContext::getInstance()->getUser();
+      $cached = $user->getUserSetting('OPT_SRS_MAX_BOX') + 1;
+      error_log('cache max box '.$cached);
+    }
+    else { error_log('cached '.$cached); }
+
+    return $cached;
+  }
+
+  // return SRS multiplier setting as a float
+  private static function getMultiplier()
+  {
+    $user = sfContext::getInstance()->getUser();
+    $mult = (int) $user->getUserSetting('OPT_SRS_MULT');
+    if ($mult < 100 || $mult > 500) {
+      // in case something's wrong with the session? paranoia
+      error_log('Invalid SRS multiplier: '.$mult.' (using default value)');
+      $mult = 205;
+    }
+    $mult = $mult / 100;
+error_log('getMultiplier() '.$mult);
+    return $mult;
+  } 
+
+  // Return interval in days, for given box EXCLUDING the leftmost (so 1 means 1st interval)
+  private static function getNthInterval(int $box)
+  {
+    static $intervals = null;
+
+    assert('$box > 0');
+
+    if (null === $intervals) {
+      $max_box = self::getMaxBox() - 1; 
+      $mult    = self::getMultiplier();
+      $first   = 3.0;
+
+      for ($n  = 0; $n < $max_box; $n++) {
+        $days  = ceil($first * pow($mult, $n));
+        $intervals[] = $days;
+      }
+
+      error_log('getNthInterval() cached: '.json_encode($intervals));
+    }
+    else { error_log(sprintf('getNthInterval(%d) = %d days', $box, $intervals[$box - 1])); }
+
+    return $intervals[$box - 1];
+  }
+
   /**
    * Rate a flashcard, and update its review status accordingly.
    * 
@@ -64,18 +103,23 @@ class LeitnerSRS
       $card_box = max($card_box, 2);
     }
 
-    // cards in the last box can not move higher, so they stay in the last box
-    $card_box = min($card_box, self::MAXSTACKS);
+    // clamp highest box to SRS setting
+    $card_box = min($card_box, self::getMaxBox());
 
     if ($answer === uiFlashcardReview::UIFR_HARD && $curData->leitnerbox == 2)
     {
       // cards in 1+ box with "hard" answer stay in 1+ box with 1 DAY interval
       $card_interval = 1;
     }
+    else if ($card_box === 1)
+    {
+      // Failed pile
+      $card_interval = 0;
+    }
     else
     {
       // in all other cases, the interval is based on the new box + variance
-      $card_interval = self::$SCHEDULE_DAYS[$card_box - 1];
+      $card_interval = self::getNthInterval($card_box - 1);
       
       // easy answers get a higher interval
       if ($answer === uiFlashcardReview::UIFR_EASY) {

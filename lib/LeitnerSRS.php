@@ -108,29 +108,5 @@ class LeitnerSRS
     
     return $oUpdate;
   }
-  
-  /**
-   * Returns update data for flashcard to move back into the review cycle,
-   * and out of the red stack. The card is rescheduled for review in 3 days.
-   * 
-   * @return Array   Updated data to store in the flashcard review storage
-   */
-  public static function relearnCard()
-  {
-    // move back into stack 2
-    $card_box = 2;
-    $card_interval = self::$SCHEDULE_DAYS[$card_box - 1];
-    
-    // fixme: don't store "localized" dates in database
-    $sqlExprExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', UsersPeer::sqlLocalTime(), $card_interval);
-
-    $oUpdate = array(
-      'leitnerbox'    => 2,
-      'expiredate'    => new coreDbExpr($sqlExprExpireDate)
-    );
-    
-    return $oUpdate;
-  }
-  
 }
 

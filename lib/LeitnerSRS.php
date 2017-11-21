@@ -7,7 +7,9 @@
 
 class LeitnerSRS
 {
-  const    FAILEDSTACK = 1;
+  const  FAILEDSTACK = 1;
+
+  const  EASY_FACTOR = 1.5;
 
   static
     // Variance +/- for base interval for flashcard going in box N
@@ -123,7 +125,7 @@ error_log('getMultiplier() '.$mult);
       
       // easy answers get a higher interval
       if ($answer === uiFlashcardReview::UIFR_EASY) {
-        $card_interval = (int)($card_interval * 1.5);
+        $card_interval = (int)($card_interval * self::EASY_FACTOR);
       }
 
       // add variance to spread due cards so that they don't all fall onto the same days

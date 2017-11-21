@@ -238,6 +238,10 @@ class UsersPeer extends coreDatabaseTable
     $table = StoryVotesPeer::getInstance()->getName();
     $result = $result && self::$db->delete($table, $where, $userid);
 
+    // delete settings
+    $table = UsersSettingsPeer::getInstance()->getName();
+    $result = $result && self::$db->delete($table, $where, $userid);
+
     if (true !== $result)
     {
       throw new sfException("An error occured while deleting user id $userid");

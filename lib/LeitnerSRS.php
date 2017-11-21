@@ -135,9 +135,9 @@ class LeitnerSRS
     // clamp highest box to SRS setting
     $card_box = min($card_box, self::getMaxBox());
 
-    if ($answer === uiFlashcardReview::UIFR_HARD && $curData->leitnerbox == 2)
+    if ($answer === uiFlashcardReview::UIFR_HARD && $curData->leitnerbox <= 2)
     {
-      // cards in 1+ box with "hard" answer stay in 1+ box with 1 DAY interval
+      // cards in "1+" box OR the "New" pile with "hard" answer get a fixed 1 day interval
       $card_interval = 1;
       $card_variance = 0;
 

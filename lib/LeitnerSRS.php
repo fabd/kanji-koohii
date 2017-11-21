@@ -14,6 +14,20 @@ class LeitnerSRS
   const  VARIANCE_FACTOR = 0.15;
   const  VARIANCE_LIMIT  = 30;   // days
 
+  // returns upper limit for Hard answer (excluding failed&new pile, 1 = 1+ reviews) 
+  private static function getHardIntervalLimit()
+  {
+    static $cached = false;
+    if (false === $cached) {
+      $user   = sfContext::getInstance()->getUser();
+      $cached = $user->getUserSetting('OPT_SRS_HARD_BOX');
+
+      // 0 means use default behaviour
+      $cached = $cached > 0 ? $cached : self::getMaxBox() - 1;
+    }
+    return $cached;
+  }
+
   // return max Leitner Box, including Failed & New as box #1
   private static function getMaxBox()
   {
@@ -106,10 +120,16 @@ class LeitnerSRS
     else if ($answer === uiFlashcardReview::UIFR_YES ||
              $answer === uiFlashcardReview::UIFR_EASY) {
       $card_box = $curData->leitnerbox + 1;
-    } else {
-      // uiFlashcardReview::UIFR_HARD
+    }
+    else if ($answer === uiFlashcardReview::UIFR_HARD) {
+
       $card_box = $curData->leitnerbox - 1;
-      $card_box = max($card_box, 2);
+
+      // clamp bottom
+      $card_box = max(2, $card_box);
+
+      // clamp top
+      $card_box = min($card_box, (self::getHardIntervalLimit() + 1));
     }
 
     // clamp highest box to SRS setting

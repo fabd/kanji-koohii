@@ -11,11 +11,9 @@ class LeitnerSRS
 
   const  EASY_FACTOR = 1.5;
 
-  static
-    // Variance +/- for base interval for flashcard going in box N
-    // Offset 0 = Leitner box 1 (box 1 = failed/untested, box 2 = 1() review, ...)
-    $SCHEDULE_VARIANCE = array(0, 1, 2,  3,  5, 10,  15,  30);
- 
+  const  VARIANCE_FACTOR = 0.15;
+  const  VARIANCE_LIMIT  = 30;   // days
+
   // return max Leitner Box, including Failed & New as box #1
   private static function getMaxBox()
   {
@@ -23,10 +21,7 @@ class LeitnerSRS
     if (false === $cached) {
       $user   = sfContext::getInstance()->getUser();
       $cached = $user->getUserSetting('OPT_SRS_MAX_BOX') + 1;
-      error_log('cache max box '.$cached);
     }
-    else { error_log('cached '.$cached); }
-
     return $cached;
   }
 
@@ -36,16 +31,16 @@ class LeitnerSRS
     $user = sfContext::getInstance()->getUser();
     $mult = (int) $user->getUserSetting('OPT_SRS_MULT');
     if ($mult < 100 || $mult > 500) {
+      error_log(sprintf('Invalid SRS multiplier: %d (using default value) (uid %d)', $mult, $user->getUserId()));
       // in case something's wrong with the session? paranoia
-      error_log('Invalid SRS multiplier: '.$mult.' (using default value)');
       $mult = 205;
     }
     $mult = $mult / 100;
-error_log('getMultiplier() '.$mult);
+
     return $mult;
   } 
 
-  // Return interval in days, for given box EXCLUDING the leftmost (so 1 means 1st interval)
+  // return interval in days for nth review box (excluding failed&new pile, 1 = 1+ reviews)
   private static function getNthInterval(int $box)
   {
     static $intervals = null;
@@ -58,15 +53,27 @@ error_log('getMultiplier() '.$mult);
       $first   = 3.0;
 
       for ($n  = 0; $n < $max_box; $n++) {
-        $days  = ceil($first * pow($mult, $n));
-        $intervals[] = $days;
+        $intervals[] = ceil($first * pow($mult, $n));
       }
-
-      error_log('getNthInterval() cached: '.json_encode($intervals));
+      // error_log('getNthInterval() CACHE => '.json_encode($intervals));
     }
-    else { error_log(sprintf('getNthInterval(%d) = %d days', $box, $intervals[$box - 1])); }
 
     return $intervals[$box - 1];
+  }
+
+  // return variance in days for nth review box (excluding failed&new pile, 1 = 1+ reviews)
+  private static function getNthVariance(int $box)
+  {
+    static $variance = null;
+    if (null === $variance) {
+      $max_box = self::getMaxBox() - 1; 
+      for ($n = 1; $n <= $max_box; $n++) {
+        $variance[] = min(self::VARIANCE_LIMIT, ceil(self::VARIANCE_FACTOR * self::getNthInterval($n)));
+      }
+      // error_log('getNthVariance() CACHE => '.json_encode($variance));
+    }
+
+    return $variance[$box - 1];
   }
 
   /**
@@ -112,11 +119,17 @@ error_log('getMultiplier() '.$mult);
     {
       // cards in 1+ box with "hard" answer stay in 1+ box with 1 DAY interval
       $card_interval = 1;
+      $card_variance = 0;
+
+      // error_log(sprintf('RATING [ Hard ] box 2 > 2, scheduled in 1 day'));
     }
     else if ($card_box === 1)
     {
       // Failed pile
       $card_interval = 0;
+      $card_variance = 0;
+
+      // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData->leitnerbox));
     }
     else
     {
@@ -129,9 +142,14 @@ error_log('getMultiplier() '.$mult);
       }
 
       // add variance to spread due cards so that they don't all fall onto the same days
-      $card_variance = self::$SCHEDULE_VARIANCE[$card_box - 1]; // days plus or minus
+      $card_variance = self::getNthVariance($card_box - 1);
       $card_interval = ($card_interval - $card_variance) + rand(0, $card_variance * 2);
+
+      // $s_rating = [1 => 'No', 'h' => 'Hard', 2 => 'Yes', 3 => 'Easy', 4 => 'Delete', 5 => 'Skip'];
+      // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)',
+      //   $s_rating[$answer], $curData->leitnerbox, $card_box, $card_interval, $card_variance));
     }
+
     
     $user = sfContext::getInstance()->getUser(); // for sqlLocalTime()
     

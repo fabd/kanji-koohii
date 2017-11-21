@@ -158,7 +158,7 @@ class LeitnerSRS
       
       // easy answers get a higher interval
       if ($answer === uiFlashcardReview::UIFR_EASY) {
-        $card_interval = (int)($card_interval * self::EASY_FACTOR);
+        $card_interval = ceil($card_interval * self::EASY_FACTOR);
       }
 
       // add variance to spread due cards so that they don't all fall onto the same days

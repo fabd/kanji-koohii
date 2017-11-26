@@ -3,6 +3,8 @@
 ?>
 
   <div id="srs-home_actions">
+      <?php # link_to('<i class="fa fa-cog"></i>', 'account/spacedrepetition', ['class' => 'uiGUI btn btn-ghost btn-lg btn-align-right']) ?>
+
 <?php
 // test for small screens
 // $untested_cards = 100;
@@ -29,6 +31,7 @@
     ));
   }
 ?>
+    <div class="clear"></div>
   </div>
 
   <?php /* OBSOLETE

@@ -30,13 +30,8 @@
   text-decoration:none;
 }
   
-
 a.uiIBtnAjax { padding:0 10px; /* Make the text unselectable */ -moz-user-select: none; -webkit-user-select: none; }
 
-/**
- * Disable selection for GUI items.
- */
-.uiGUI { /* no outline */ outline:none; -moz-user-select: none; -webkit-user-select: none; }
 
 /**
  * Edit Flashcard Dialog.

@@ -326,6 +326,12 @@ a.admin-edit { font-size:80%; letter-spacing:normal; color:#408040; text-decorat
 /* =require from "%WEB%" */
 /* =require "/koohii/navbar.juicy.css" */
 
+/* disable selection for GUI items */
+.uiGUI { outline:none; -moz-user-select: none; -webkit-user-select: none; }
+
+/* */
+/*.action_top-right { position:absolute; right:0; top:0; }*/
+
 
 /**
  * ui_select_pager() helper

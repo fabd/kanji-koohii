@@ -2,13 +2,14 @@
 /**
  * Crude way of editing a flashcard, undocumented in site navigation.
  * 
- * @author     Fabrice Denis
  */
 
 class advancedAction extends sfAction
 {
   public function execute($request)
   {
+    $MAX_STACKS = 50;
+
     $this->status = '';
 
     $userId = $this->getUser()->getUserId();
@@ -26,8 +27,8 @@ class advancedAction extends sfAction
       $ucsId = (int)$kanji_data->ucs_id;
 
       $leitnerbox = $request->getParameter('f_leitnerbox');
-      if (!BaseValidators::validateInteger($leitnerbox) || $leitnerbox < 1 || $leitnerbox > LeitnerSRS::MAXSTACKS) {
-        $request->setError('box', sprintf('Leitnerbox must be between 1 and %s', LeitnerSRS::MAXSTACKS));
+      if (!BaseValidators::validateInteger($leitnerbox) || $leitnerbox < 1 || $leitnerbox > $MAX_STACKS) {
+        $request->setError('box', sprintf('Leitnerbox must be between 1 and %s', $MAX_STACKS));
         return;
       }
 

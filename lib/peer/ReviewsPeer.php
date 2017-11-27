@@ -259,21 +259,19 @@ class ReviewsPeer extends coreDatabaseTable
 
 
   /**
-   * Return flashcard counts for each Leitner card box.
+   * Return flashcard counts for Leitner boxes.
    * 
-   * Return value format:
-   *   array(
-   *     array(
+   * Returns
+   *
+   *     [
    *       'expired_cards' => 20,
    *       'fresh_cards'   => 10,
    *       'total_cards'   => 30
-   *     ),
-   *     ...
-   *   )
+   *     ],
    * 
    * @param  string   $filter  Filter by RtK Volume 1, 3, or all (see filterByRtk())
    * 
-   * @return array
+   * @return array   Array of box data (including empty boxes), index 0 = failed/new cards.
    */
   public static function getLeitnerBoxCounts($filter = '')
   {
@@ -281,46 +279,33 @@ class ReviewsPeer extends coreDatabaseTable
 
     $select = self::getInstance()->select(array(
         'box'   => 'leitnerbox',
-        'v1'    => sprintf('(%s >= expiredate)', UsersPeer::sqlLocalTime()),
+        'due'   => sprintf('(%s >= expiredate)', UsersPeer::sqlLocalTime()),
         'count' => 'COUNT(*)'
       ))
       ->where('totalreviews > 0')
-      ->group(array('leitnerbox', 'v1 ASC'));
+      ->group(array('leitnerbox', 'due ASC'));
     
     $select = self::filterByUserId($select, $user->getUserId());
+    $select = self::filterByRtk($select, $filter); // FIXME  we don't strictly need sequences JOIN here
+    $rows   = self::$db->fetchAll($select);
 
-    // FIXME  we don't strictly need sequences JOIN here
-    $select = self::filterByRtk($select, $filter);
-    $select->query();
+    // do not assume a fixed box setting, do assume SQL data is not messed up
+    $highest_box = count($rows) ? max(array_column($rows, 'box')) : 1;
 
-    $boxes = array();
-
-    for ($i = 0; $i < LeitnerSRS::MAXSTACKS; $i++)
-    {
-      $boxes[$i] = array('expired_cards' => 0, 'fresh_cards' => 0, 'total_cards' => 0);
+    $boxes = [];
+    for ($i = 0; $i < $highest_box; $i++) {
+      $boxes[$i] = ['expired_cards' => 0, 'fresh_cards' => 0, 'total_cards' => 0];
     }
 
-    while ($row = self::$db->fetchObject())
-    {
-      $i = intval($row->box - 1);
-
-      if (!isset($boxes[$i]))
-      {
-        throw new sfException('getCardBoxCounts() unexpected box number');
-      }
-
-      if ($row->v1)
-      {
-        $boxes[$i]['expired_cards'] += $row->count;
-      }
-      else
-      {
-        $boxes[$i]['fresh_cards'] += $row->count;
-      }
+    // set due & undue counts
+    foreach ($rows as $row) {
+      $i    = intval($row['box'] - 1);
+      $pile = $row['due'] ? 'expired_cards' : 'fresh_cards';
+      $boxes[$i][$pile] += $row['count'];
     }
 
-    for ($i = 0; $i < LeitnerSRS::MAXSTACKS; $i++)
-    {
+    // set totals per box
+    for ($i = 0; $i < $highest_box; $i++) {
       $boxes[$i]['total_cards'] = $boxes[$i]['expired_cards'] + $boxes[$i]['fresh_cards'];
     }
     

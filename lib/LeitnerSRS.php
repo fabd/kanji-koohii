@@ -2,32 +2,94 @@
 /**
  * LeitnerSRS handles the flashcard scheduling system.
  * 
- * This class needs to be refactored to remove dependencies, so it can be included
- * in Trinity etc as a "spaced repetition engine".
  * 
- * Methods:
- * 
- *  rateCard($curData, $answer)
- *   
- * 
- * 
- * @author  Fabrice Denis
  */
 
 class LeitnerSRS
 {
-  const    MAXSTACKS   = 8;
-  const    FAILEDSTACK = 1;
+  const  FAILEDSTACK = 1;
 
-  static
-    // Leitner base intervals for flashcard going in box N
-    // Offset 0 = Leitner box 1 (box 1 = failed/untested, box 2 = 1 review, ...)
-    $SCHEDULE_DAYS     = array(0, 3, 7, 14, 30, 60, 120, 240),
+  const  EASY_FACTOR = 1.5;
 
-    // Variance +/- for base interval for flashcard going in box N
-    // Offset 0 = Leitner box 1 (box 1 = failed/untested, box 2 = 1 review, ...)
-    $SCHEDULE_VARIANCE = array(0, 1, 2,  3,  5, 10,  15,  30);
-  
+  const  VARIANCE_FACTOR = 0.15;
+  const  VARIANCE_LIMIT  = 30;   // days
+
+  // returns upper limit for Hard answer (excluding failed&new pile, 1 = 1+ reviews) 
+  private static function getHardIntervalLimit()
+  {
+    static $cached = false;
+    if (false === $cached) {
+      $user   = sfContext::getInstance()->getUser();
+      $cached = $user->getUserSetting('OPT_SRS_HARD_BOX');
+
+      // 0 means use default behaviour
+      $cached = $cached > 0 ? $cached : self::getMaxBox() - 1;
+    }
+    return $cached;
+  }
+
+  // return max Leitner Box, including Failed & New as box #1
+  private static function getMaxBox()
+  {
+    static $cached = false;
+    if (false === $cached) {
+      $user   = sfContext::getInstance()->getUser();
+      $cached = $user->getUserSetting('OPT_SRS_MAX_BOX') + 1;
+    }
+    return $cached;
+  }
+
+  // return SRS multiplier setting as a float
+  private static function getMultiplier()
+  {
+    $user = sfContext::getInstance()->getUser();
+    $mult = (int) $user->getUserSetting('OPT_SRS_MULT');
+    if ($mult < 100 || $mult > 500) {
+      error_log(sprintf('Invalid SRS multiplier: %d (using default value) (uid %d)', $mult, $user->getUserId()));
+      // in case something's wrong with the session? paranoia
+      $mult = 205;
+    }
+    $mult = $mult / 100;
+
+    return $mult;
+  } 
+
+  // return interval in days for nth review box (excluding failed&new pile, 1 = 1+ reviews)
+  private static function getNthInterval(int $box)
+  {
+    static $intervals = null;
+
+    assert('$box > 0');
+
+    if (null === $intervals) {
+      $max_box = self::getMaxBox() - 1; 
+      $mult    = self::getMultiplier();
+      $first   = 3.0;
+
+      for ($n  = 0; $n < $max_box; $n++) {
+        $intervals[] = ceil($first * pow($mult, $n));
+      }
+      // error_log('getNthInterval() CACHE => '.json_encode($intervals));
+    }
+
+    return $intervals[$box - 1];
+  }
+
+  // return variance in days for nth review box (excluding failed&new pile, 1 = 1+ reviews)
+  private static function getNthVariance(int $box)
+  {
+    static $variance = null;
+    if (null === $variance) {
+      $max_box = self::getMaxBox() - 1; 
+      for ($n = 1; $n <= $max_box; $n++) {
+        $variance[] = min(self::VARIANCE_LIMIT, ceil(self::VARIANCE_FACTOR * self::getNthInterval($n)));
+      }
+      // error_log('getNthVariance() CACHE => '.json_encode($variance));
+    }
+
+    return $variance[$box - 1];
+  }
+
   /**
    * Rate a flashcard, and update its review status accordingly.
    * 
@@ -58,35 +120,56 @@ class LeitnerSRS
     else if ($answer === uiFlashcardReview::UIFR_YES ||
              $answer === uiFlashcardReview::UIFR_EASY) {
       $card_box = $curData->leitnerbox + 1;
-    } else {
-      // uiFlashcardReview::UIFR_HARD
+    }
+    else if ($answer === uiFlashcardReview::UIFR_HARD) {
+
       $card_box = $curData->leitnerbox - 1;
-      $card_box = max($card_box, 2);
+
+      // clamp bottom
+      $card_box = max(2, $card_box);
+
+      // clamp top
+      $card_box = min($card_box, (self::getHardIntervalLimit() + 1));
     }
 
-    // cards in the last box can not move higher, so they stay in the last box
-    $card_box = min($card_box, self::MAXSTACKS);
+    // clamp highest box to SRS setting
+    $card_box = min($card_box, self::getMaxBox());
 
-    if ($answer === uiFlashcardReview::UIFR_HARD && $card_box === 2)
+    if ($answer === uiFlashcardReview::UIFR_HARD && $curData->leitnerbox <= 2)
     {
-      // new cards with "hard" answer always are due for tomorrow
-      // TODO  card *falling* back from box 3 should use the default 3 day interval of box 2 ?
+      // cards in "1+" box OR the "New" pile with "hard" answer get a fixed 1 day interval
       $card_interval = 1;
+      $card_variance = 0;
+
+      // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData->leitnerbox, $card_box));
+    }
+    else if ($card_box === 1)
+    {
+      // Failed pile
+      $card_interval = 0;
+      $card_variance = 0;
+
+      // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData->leitnerbox));
     }
     else
     {
       // in all other cases, the interval is based on the new box + variance
-      $card_interval = self::$SCHEDULE_DAYS[$card_box - 1];
+      $card_interval = self::getNthInterval($card_box - 1);
       
       // easy answers get a higher interval
       if ($answer === uiFlashcardReview::UIFR_EASY) {
-        $card_interval = (int)($card_interval * 1.5);
+        $card_interval = ceil($card_interval * self::EASY_FACTOR);
       }
 
       // add variance to spread due cards so that they don't all fall onto the same days
-      $card_variance = self::$SCHEDULE_VARIANCE[$card_box - 1]; // days plus or minus
+      $card_variance = self::getNthVariance($card_box - 1);
       $card_interval = ($card_interval - $card_variance) + rand(0, $card_variance * 2);
+
+      // $s_rating = [1 => 'No', 'h' => 'Hard', 2 => 'Yes', 3 => 'Easy', 4 => 'Delete', 5 => 'Skip'];
+      // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)',
+      //   $s_rating[$answer], $curData->leitnerbox, $card_box, $card_interval, $card_variance));
     }
+
     
     $user = sfContext::getInstance()->getUser(); // for sqlLocalTime()
     
@@ -109,29 +192,5 @@ class LeitnerSRS
     
     return $oUpdate;
   }
-  
-  /**
-   * Returns update data for flashcard to move back into the review cycle,
-   * and out of the red stack. The card is rescheduled for review in 3 days.
-   * 
-   * @return Array   Updated data to store in the flashcard review storage
-   */
-  public static function relearnCard()
-  {
-    // move back into stack 2
-    $card_box = 2;
-    $card_interval = self::$SCHEDULE_DAYS[$card_box - 1];
-    
-    // fixme: don't store "localized" dates in database
-    $sqlExprExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', UsersPeer::sqlLocalTime(), $card_interval);
-
-    $oUpdate = array(
-      'leitnerbox'    => 2,
-      'expiredate'    => new coreDbExpr($sqlExprExpireDate)
-    );
-    
-    return $oUpdate;
-  }
-  
 }
 

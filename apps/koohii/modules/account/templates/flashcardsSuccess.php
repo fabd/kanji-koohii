@@ -23,7 +23,9 @@ p.info { margin:0.5em 0 1em 1.3em; }
     based on their frequency of use as documented in JMDICT (roughly 16000 entries in JMDICT). For common kanji where there
     are several suitable On and/or Kun readings, the example words will be picked at random.</p>
 
-    <p><span class="btn"><?php echo submit_tag('Save Changes') ?></span></p>
+    <p>
+      <?php echo submit_tag('Save changes', array('class' => 'btn btn-success')) ?>
+    </p>
 
   </form>
 

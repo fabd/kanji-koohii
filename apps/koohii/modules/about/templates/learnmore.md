@@ -160,22 +160,25 @@ long term memory, therefore it is not possible to select the green piles. Often 
 
 ## Scheduling {#help-scheduling}
 
-When a card has been tested, it is scheduled for review in a number of days corresponding to which compartment it is moving to :
+You can customize the Spaced Repetition scheduling in _Account Settings_ menu:
 
-| Cards moving to compartment... | Are scheduled for review in... |
-| - | ---------------------- |
-| 1 | 0 days (incorrectly answered cards)
-| 2 | 3 days
-| 3 | 7 days
-| 4 | 14 days
-| 5 | 30 days
-| 6 | 60 days
-| 7 | 120 days
-| 8 * | 240 days
+* **Number of boxes** for successive reviews corresponds to the intervals for positive reviews and what the _maximum_ interval will be
+* **Review interval multiplier** determines the spacing between reviews (in days). Consider using a smaller multiplier when you start out, if you'd like to get more reviews. When you complete RTK, consider increasing the multiplier to reduce the review load over time
+* **Maximum box for cards marked 'Hard'** determines the maximum interval for a Hard answer
 
-**\*** : cards tested succesfully in the last box remain in the last box and are scheduled again at the maximum time interval.  
+Here is a screenshot of the default options:
 
-There is also an amount of _variance_ added to the interval to help shuffle the flashcards over time. It is roughly one sixth of the interval so for example, a card going on a 30 day interval may be scheduled anywhere from 25 days to 35 days.  
+<img class="img-block img-responsive" src="/koohii/help/help-srs-options-defaults.png" />
+
+### Cards in the last box (maximum interval)
+
+Cards answered "Yes" or "Easy" in the last box remain in the last box and are scheduled again at the last box's interval. To increase the maximum interval you can either increase the number of boxes, or the multiplier, or use a combination of both.
+
+### Variance
+
+There is also an amount of **variance**, which adds a little "fuzziness" to the interval by moving the date a little bit backward or forward. This helps spread due cards over time, so that they don't come in big batches on the same date.
+
+The variance factor is currently `0.15` of the interval, and there is a limit of `30` days. For example, a card scheduled in 26 days with a variance of 4 days will be scheduled anywhere from 22 to 30 days.
 
 
 ## Reviewing {#help-reviewing}

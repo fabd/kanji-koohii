@@ -342,11 +342,13 @@ class accountActions extends sfActions
 
   public function executeFlashcards($request)
   {
+    $user = $this->getUser();
+
     if ($request->getMethod() != sfRequest::POST)
     {
       $form_data = array(
-        'opt_no_shuffle' => $this->getUser()->getUserSetting('OPT_NO_SHUFFLE'),
-        'opt_readings'   => $this->getUser()->getUserSetting('OPT_READINGS')
+        'opt_no_shuffle' => $user->getUserSetting('OPT_NO_SHUFFLE'),
+        'opt_readings'   => $user->getUserSetting('OPT_READINGS')
       );
       $request->getParameterHolder()->add($form_data);
     }
@@ -357,9 +359,50 @@ class accountActions extends sfActions
         'OPT_READINGS'   => $request->getParameter('opt_readings', 0)
       );
 
-      UsersSettingsPeer::saveUserSettings($this->getUser()->getUserId(), $settings);
-      UsersSettingsPeer::cacheUserSettings($settings);
+      UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);
+      $user->cacheUserSettings($settings);
     }
+  }
+
+  public function executeSpacedrepetition($request)
+  {
+    $user = $this->getUser();
+
+    if ($request->getMethod() != sfRequest::POST)
+    {
+      //
+    }
+    else
+    {
+      // validate
+      $opt_srs_max_box  = intval($request->getParameter('opt_srs_max_box'));
+      $opt_srs_mult     = intval($request->getParameter('opt_srs_mult'));
+      $opt_srs_hard_box = intval($request->getParameter('opt_srs_hard_box'));
+
+      // needs to match the Vue form validation
+      if ($opt_srs_max_box < 5 || $opt_srs_max_box > 10 ||
+          $opt_srs_mult < 130 || $opt_srs_mult > 400 ||
+          $opt_srs_hard_box >= $opt_srs_max_box) {
+        $request->setError('x', 'Invalid form submission');
+      }
+      else
+      {
+        $settings = [
+          'OPT_SRS_MAX_BOX'  => $opt_srs_max_box,
+          'OPT_SRS_MULT'     => $opt_srs_mult,
+          'OPT_SRS_HARD_BOX' => $opt_srs_hard_box
+        ];
+
+        UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);
+        $user->cacheUserSettings($settings);
+      }
+    }
+
+    $this->srs_settings = [
+      $user->getUserSetting('OPT_SRS_MAX_BOX'),
+      $user->getUserSetting('OPT_SRS_MULT'),
+      $user->getUserSetting('OPT_SRS_HARD_BOX')
+    ];
   }
 
   public function executeSequence($request)

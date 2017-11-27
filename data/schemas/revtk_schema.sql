@@ -325,3 +325,26 @@ CREATE TABLE `users` (
   KEY `regip` (`regip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+
+-- ----------------------------------------------------------------------------
+-- users_settings
+-- ----------------------------------------------------------------------------
+-- This table stores application related settings, which otherwise have builtin
+-- defaults in the code. The data is retrieved and cached the first time the
+-- code wants one of these values (rt:User::getUserSetting()).
+--
+--  no_shuffle     do not shuffle new cards (blue pile)
+--  show_onkun     show example words in flashcard reviews
+--
+-- ----------------------------------------------------------------------------
+
+CREATE TABLE `users_settings` (
+  `userid`       MEDIUMINT(4) UNSIGNED NOT NULL,
+  `created_on`   TIMESTAMP NOT NULL DEFAULT 0,
+  `updated_on`   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  `no_shuffle`   TINYINT(1) UNSIGNED NOT NULL,
+  `show_onkun`   TINYINT UNSIGNED NOT NULL,
+
+  PRIMARY KEY  (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

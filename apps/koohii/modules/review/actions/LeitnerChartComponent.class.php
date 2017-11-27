@@ -63,6 +63,11 @@ class LeitnerChartComponent extends sfComponent
         array( 'value' => $carddata[$i]['fresh_cards']   )
       );
     }
+
+    // fill up with empty boxes so it doesn't stretch too much
+    for ($i = count($boxes); $i < 5; $i++) {
+      $boxes[] = [ ['value' => 0], ['value' => 0] ];
+    }
     
     $data->boxes = $boxes;
 

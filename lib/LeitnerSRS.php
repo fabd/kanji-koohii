@@ -141,7 +141,7 @@ class LeitnerSRS
       $card_interval = 1;
       $card_variance = 0;
 
-      // error_log(sprintf('RATING [ Hard ] box 2 > 2, scheduled in 1 day'));
+      // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData->leitnerbox, $card_box));
     }
     else if ($card_box === 1)
     {

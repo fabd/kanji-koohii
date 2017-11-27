@@ -163,7 +163,7 @@ long term memory, therefore it is not possible to select the green piles. Often 
 You can customize the Spaced Repetition scheduling in _Account Settings_ menu:
 
 * **Number of boxes** for successive reviews corresponds to the intervals for positive reviews and what the _maximum_ interval will be
-* **Review interval multiplier** determines the spacing between reviews (in days). Consider using a smaller multiplier when you start out, if you'd like to get more reviews. When you complet RTK, consider increasing the multiplier to reduce the review load over time
+* **Review interval multiplier** determines the spacing between reviews (in days). Consider using a smaller multiplier when you start out, if you'd like to get more reviews. When you complete RTK, consider increasing the multiplier to reduce the review load over time
 * **Maximum box for cards marked 'Hard'** determines the maximum interval for a Hard answer
 
 Here is a screenshot of the default options:
@@ -176,7 +176,9 @@ Cards answered "Yes" or "Easy" in the last box remain in the last box and are sc
 
 ### Variance
 
-There is also an amount of **variance**, which adds a little "fuzziness" to the interval by moving the date a little bit backward or forward. This helps spread due cards over time, so that they don't come in big batches on the same date. For example, a card scheduled in 24 days with a variance factor of `0.15` (default) can be scheduled anywhere from 22 to 30 days. 
+There is also an amount of **variance**, which adds a little "fuzziness" to the interval by moving the date a little bit backward or forward. This helps spread due cards over time, so that they don't come in big batches on the same date.
+
+The variance factor is currently `0.15` of the interval, and there is a limit of `30` days. For example, a card scheduled in 26 days with a variance of 4 days will be scheduled anywhere from 22 to 30 days.
 
 
 ## Reviewing {#help-reviewing}

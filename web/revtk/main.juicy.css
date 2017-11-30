@@ -262,8 +262,8 @@ h3 { font-size:18px; font-weight:normal; margin:0 0 0.5em; }
 /* SRS color coding used for text */
 .clr-srs-due   { color:%CSS_SRS_DUE%; }
 .clr-srs-undue { color:%CSS_SRS_UNDUE%; }
-.clr-srs-fail  { color:#f16232; }
-.clr-srs-new   { color:rgb(64, 168, 229); }
+.clr-srs-fail  { color:#f1311a; }
+.clr-srs-new   { color:#1c90d4; }
 
 
 /* misc. effects */

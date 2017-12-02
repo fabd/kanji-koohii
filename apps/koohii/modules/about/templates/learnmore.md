@@ -226,9 +226,9 @@ Clicking any of the keywords will take you to the corresponding character in the
 
 ### Tips for rating cards with the SRS
 
-- Use the **Hard** answer instead of "No" if you want to skip the <span class="clr-srs-fail">Restudy pile</span> (cards marked _Hard_ never fall below the 1+ review pile)
-- Using the **Hard** answer for <span class="clr-srs-new">NEW</span> cards gives them a fixed **1 day** interval, instead of the default ~3 days
- 
+- Use the **Hard** answer instead of "No" **to skip** the <span class="clr-srs-fail">Restudy pile</span> (cards rated _Hard_ never fall below the 1+ review pile)
+- Use the **Hard** answer for <span class="clr-srs-new">New</span> cards if you want a fixed **1 day** interval ( instead of the default 2-4 days)
+
 ### How do I reset my flashcards?
 First, note that _stories and kanji flashcards are separate_. With that in mind, you can simply delete all the flashcards, your stories won't be affected.
 

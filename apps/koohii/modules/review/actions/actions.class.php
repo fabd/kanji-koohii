@@ -133,7 +133,7 @@ class reviewActions extends sfActions
       $reviewMerge= $request->getParameter('merge') ? true : false;
 
       // validate
-      $this->forward404Unless( preg_match('/^(all|[1-9]+)$/', $reviewBox) );
+      $this->forward404Unless( preg_match('/^(all|[0-9]+)$/', $reviewBox) );
       $this->forward404Unless( preg_match('/^(expired|untested|relearned|fresh|known)$/', $reviewType) );
       $this->forward404Unless( $reviewFilt=='' || preg_match('/(rtk1|rtk3)/', $reviewFilt) );
 

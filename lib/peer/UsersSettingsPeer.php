@@ -33,7 +33,7 @@ class UsersSettingsPeer extends coreDatabaseTable
     'OPT_NO_SHUFFLE'   => 0,    // do not shuffle new cards (blue pile)
     'OPT_READINGS'     => 0,    // do not show example words in flashcard reviews
 
-    'OPT_SRS_MAX_BOX'  => 7,
+    'OPT_SRS_MAX_BOX'  => 7,    // num intervals (excludes Failed & New box)
     'OPT_SRS_MULT'     => 205,  // 205 means 2.05
     'OPT_SRS_HARD_BOX' => 0     // zero means default behaviour
   );

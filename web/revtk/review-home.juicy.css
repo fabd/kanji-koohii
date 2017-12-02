@@ -70,6 +70,5 @@
 /* ---------------------------- */
 
 /* leitner chart component (root) */
-#leitner-chart_pane { padding:1em; }
-
+#leitner-chart_pane { padding:1em; min-height:10px; }
 

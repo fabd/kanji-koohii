@@ -56,16 +56,24 @@ class LeitnerChartComponent extends sfComponent
     $data  = new stdClass();
     $boxes = array();
 
+    $numDisplayBoxes = max(5, $this->getUser()->getUserSetting('OPT_SRS_MAX_BOX') + 1);
+
     for ($i = 0; $i < count($carddata); $i++) {
-      $boxes[] = array(
-        // left stack, right stack
-        array( 'value' => $carddata[$i]['expired_cards'] ),
-        array( 'value' => $carddata[$i]['fresh_cards']   )
-      );
+
+      if ($i < $numDisplayBoxes) {
+        $boxes[] = [
+          ['value' => $carddata[$i]['expired_cards'] ],
+          ['value' => $carddata[$i]['fresh_cards']   ]
+        ];
+      }
+      else {
+        $boxes[$numDisplayBoxes - 1][0]['value'] += $carddata[$i]['expired_cards'];
+        $boxes[$numDisplayBoxes - 1][1]['value'] += $carddata[$i]['fresh_cards'];
+      }
     }
 
-    // fill up with empty boxes so it doesn't stretch too much
-    for ($i = count($boxes); $i < 5; $i++) {
+    // initialize remaining empty boxes
+    for ($i = count($boxes); $i < $numDisplayBoxes; $i++) {
       $boxes[] = [ ['value' => 0], ['value' => 0] ];
     }
     

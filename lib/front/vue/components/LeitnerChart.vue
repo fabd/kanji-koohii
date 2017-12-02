@@ -36,7 +36,7 @@ export default {
 
       box_urls: /* global */ leitner_chart_data.urls,
       
-      box_labels: [ 'Fail &<br>New', '1+', '2+', '3+', '4+', '5+', '6+', '7+' ],
+      box_labels: [ 'Fail &<br>New', '1+', '2+', '3+', '4+', '5+', '6+', '7+', '8+', '9+', '10+' ],
 
       colors: {
         // bar.type
@@ -49,9 +49,10 @@ export default {
     }
   },
 
-  props: [
-    'containerId'
-  ],
+  props: {
+    // id of a parent container used to determine the available horizontal space
+    'containerId': { type: String, required: true }
+  },
 
   methods: {
     getColor(bar, face) {
@@ -125,12 +126,19 @@ export default {
   },
 
   computed: {
-    // abandoned because headaches with orientation detection + not really needed
+    // less than ideal solution due to device orientation switch
     numDisplayBoxes() {
-      // console.log(this.containerId)
-      // let el = document.getElementById(this.containerId)
-      // return el.offsetWidth <= 500 ? 5 : 8
-      return 8
+      let numSrsBoxes = this.box_data.length;
+
+      let el, containerWidth = (el = document.getElementById(this.containerId)) && el.offsetWidth || 0
+     
+      // console.log('container width: %d     num boxes: %d', containerWidth, numSrsBoxes)
+
+      let isWide = (containerWidth >= 500)
+
+      let maxVisibleBoxes = isWide ? 11 : 8
+
+      return Math.min(maxVisibleBoxes, numSrsBoxes)
     },
 
     // was intended to display 5 boxes in portrait, 8 in landscape
@@ -147,6 +155,10 @@ export default {
           boxes[maxBox-1][1].value += b[1].value
         }
       })
+
+      while (boxes.length < maxBox) {
+        boxes.push([{"value":0},{"value":0}])
+      }
 
       return boxes
     },

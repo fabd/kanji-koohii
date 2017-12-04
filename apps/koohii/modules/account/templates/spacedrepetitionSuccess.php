@@ -128,7 +128,7 @@ App.ready(function(){
       nthInterval(n) {
         let first  = 3;
         let mult   = 1.0 * Number(this.srs_mult / 100).toFixed(2); // 205 => 2.05
-        return  Math.ceil( first * (mult ** (n - 1)) );
+        return  Math.ceil( first * Math.pow(mult, n - 1) );
       }
 
     },

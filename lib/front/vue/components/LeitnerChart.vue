@@ -132,7 +132,7 @@ export default {
     // less than ideal solution due to device orientation switch
     numDisplayBoxes() {
       let numSrsBoxes = this.box_data.length;
-console.log('numdispboxes')
+
       let el, containerWidth = (el = document.getElementById(this.containerId)) && el.offsetWidth || 0
      
       // console.log('container width: %d     num boxes: %d', containerWidth, numSrsBoxes)

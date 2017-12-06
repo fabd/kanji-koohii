@@ -3,7 +3,7 @@
 
     <div v-for="(bar, b) in displayBoxes" class="box">
       <div class="box_inner">
-        <div :class="{ lbl: true, first: b===0 }" v-html="box_labels[b]"></div>
+        <div :class="{ lbl: true, first: b===0 }" v-html="getBoxLabel(b)"></div>
         <a href="#" @click="onClick($event, bar[0])" class="bar bar1" :style="{
           height: getHeight(bar[0]),
           backgroundColor: getColor(bar[0], 0)
@@ -36,8 +36,6 @@ export default {
 
       box_urls: /* global */ leitner_chart_data.urls,
       
-      box_labels: [ 'Fail &<br>New', '1+', '2+', '3+', '4+', '5+', '6+', '7+', '8+', '9+', '10+' ],
-
       colors: {
         // bar.type
         failed: ['#ff8257','#d2633f','#ffa994'],
@@ -55,6 +53,11 @@ export default {
   },
 
   methods: {
+    getBoxLabel(box) {
+      const lastBox = this.numDisplayBoxes - 1
+      return box === 0 ? 'Fail &<br>New' : (box < lastBox ? box : box + '+')
+    },
+
     getColor(bar, face) {
       return this.colors[bar.type][face]
     },
@@ -129,7 +132,7 @@ export default {
     // less than ideal solution due to device orientation switch
     numDisplayBoxes() {
       let numSrsBoxes = this.box_data.length;
-
+console.log('numdispboxes')
       let el, containerWidth = (el = document.getElementById(this.containerId)) && el.offsetWidth || 0
      
       // console.log('container width: %d     num boxes: %d', containerWidth, numSrsBoxes)

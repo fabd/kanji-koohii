@@ -9,6 +9,9 @@ const isProduction = (process.env.NODE_ENV === 'production');
 //  https://github.com/webpack/extract-text-webpack-plugin
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
+
+var path = require('path');
+
 module.exports = {
   
   // The base directory (absolute path!) for resolving the entry option.
@@ -103,7 +106,9 @@ module.exports = {
       // Soon we may use the "runtime" (needs to fix Leitner chart component)
       //  'runtime' = 88.1 kb minified, 'common' = 99.9 kb minified
       //vue:     'vue/dist/vue.runtime.js'
-      vue:     'vue/dist/vue.common.js'
+      'vue':     'vue/dist/vue.common.js',
+
+      'components': path.resolve(__dirname, 'lib/front/vue/components')
     }
   },
 

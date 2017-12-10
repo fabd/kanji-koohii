@@ -1,7 +1,6 @@
 index:
   metas:
     title: 'Index'
-  #stylesheets: [ '/revtk/kanji-flashcardreview.juicy.css' ]
   
 shuffle1Success:
   metas:

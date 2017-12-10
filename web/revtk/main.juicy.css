@@ -700,6 +700,12 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 }
 
 
+/* ---------------------------- */
+/* SRS Chart page */
+/* ---------------------------- */
+
+/* =require from "%WEB%" */
+/* =require "/revtk/review-home.juicy.css" */
 
 
 /* ---------------------------- */

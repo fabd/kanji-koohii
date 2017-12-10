@@ -233,3 +233,10 @@ li#tweet-button { margin-left:2em; }
 }
 
 
+/* ---------------------------- */
+/* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
+/* ---------------------------- */
+
+/* =require from "%WEB%" */
+/* =require "/build/pack/root-bundle.css" */
+

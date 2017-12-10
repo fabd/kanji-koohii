@@ -20,7 +20,6 @@
 
   if ($landingPage) {
     $sf_response->addStylesheet('/koohii/home.juicy.css', 'first');
-    $sf_response->addStylesheet('/build/pack/app-vue.css');
   }
 ?>
 <?php include_stylesheets() ?>
@@ -68,10 +67,13 @@
 <?php } ?>
 
 <?php
-  if (1 || !$landingPage) {
-    $ext = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
-    $sf_response->addJavascript("/build/pack/vue-bundle$ext.js", "first"); //add before legacy code so it kicks in sooner
+  $ext = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
+  $sf_response->addJavascript("/build/pack/root-bundle$ext.js", "first"); //add before legacy code so it kicks in sooner
+
+  if (!$landingPage) {
+    $sf_response->addJavascript("/build/pack/main-bundle$ext.js");
   }
+
   include_javascripts();
 
   if(has_slot('inline_javascript')) {

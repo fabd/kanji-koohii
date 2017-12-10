@@ -10,6 +10,7 @@ const isProduction = (process.env.NODE_ENV === 'production');
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 
+
 var path = require('path');
 
 module.exports = {
@@ -19,7 +20,10 @@ module.exports = {
   //context: __dirname + "/src",
 
   // Here the application starts executing and webpack starts bundling
-  entry: './lib/front/vue/vue-bundle.js',
+  entry: {
+    'root-bundle': './lib/front/vue/vue-bundle.js',
+    'main-bundle': './lib/front/vue/main-bundle.js'
+  },
 
   output: {
 
@@ -29,8 +33,8 @@ module.exports = {
     // The publicPath specifies the public URL address of the output files when referenced in a browser
     publicPath: "/build/pack/",
 
-    // ...naming it using the output.filename naming template
-    filename:  isProduction ? "vue-bundle.min.js" : "vue-bundle.raw.js",
+    // [name] : using entry name ( https://webpack.js.org/configuration/output/#output-filename )
+    filename:  isProduction ? "[name].min.js" : "[name].raw.js",
   },
 
   module: {
@@ -89,8 +93,16 @@ module.exports = {
   },
 
   plugins: [
-    // web/build/pack/app-vue.css
-    new ExtractTextPlugin("app-vue.css"),
+    // https://webpack.js.org/plugins/commons-chunk-plugin/
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'root-bundle',
+      minChunks: Infinity
+    }),
+
+    // https://webpack.js.org/plugins/extract-text-webpack-plugin/
+    new ExtractTextPlugin({
+      filename: '[name].css'
+    }),
 
     // remove all debug code (including Vue.js warnings) in production
     new webpack.DefinePlugin({

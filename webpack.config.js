@@ -9,6 +9,10 @@ const isProduction = (process.env.NODE_ENV === 'production');
 //  https://github.com/webpack/extract-text-webpack-plugin
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
+
+
+var path = require('path');
+
 module.exports = {
   
   // The base directory (absolute path!) for resolving the entry option.
@@ -16,7 +20,11 @@ module.exports = {
   //context: __dirname + "/src",
 
   // Here the application starts executing and webpack starts bundling
-  entry: './lib/front/vue/vue-bundle.js',
+  entry: {
+    'root-bundle': './lib/front/vue/vue-bundle.js',
+    'study-bundle': './lib/front/vue/study-bundle.js',
+    'review-bundle': './lib/front/vue/review-bundle.js'
+  },
 
   output: {
 
@@ -26,8 +34,8 @@ module.exports = {
     // The publicPath specifies the public URL address of the output files when referenced in a browser
     publicPath: "/build/pack/",
 
-    // ...naming it using the output.filename naming template
-    filename:  isProduction ? "vue-bundle.min.js" : "vue-bundle.raw.js",
+    // [name] : using entry name ( https://webpack.js.org/configuration/output/#output-filename )
+    filename:  isProduction ? "[name].min.js" : "[name].raw.js",
   },
 
   module: {
@@ -86,8 +94,16 @@ module.exports = {
   },
 
   plugins: [
-    // web/build/pack/app-vue.css
-    new ExtractTextPlugin("app-vue.css"),
+    // https://webpack.js.org/plugins/commons-chunk-plugin/
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'root-bundle',
+      minChunks: Infinity
+    }),
+
+    // https://webpack.js.org/plugins/extract-text-webpack-plugin/
+    new ExtractTextPlugin({
+      filename: '[name].css'
+    }),
 
     // remove all debug code (including Vue.js warnings) in production
     new webpack.DefinePlugin({
@@ -103,7 +119,9 @@ module.exports = {
       // Soon we may use the "runtime" (needs to fix Leitner chart component)
       //  'runtime' = 88.1 kb minified, 'common' = 99.9 kb minified
       //vue:     'vue/dist/vue.runtime.js'
-      vue:     'vue/dist/vue.common.js'
+      'vue':     'vue/dist/vue.common.js',
+
+      'components': path.resolve(__dirname, 'lib/front/vue/components')
     }
   },
 

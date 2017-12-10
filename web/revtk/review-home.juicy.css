@@ -1,14 +1,9 @@
 /**
- * Review Dashboard
+ * Styles for the SRS bar chart.
  * 
- * Juicer build:
- *  php lib/juicer/JuicerCLI.php -v --webroot web --config apps/koohii/config/juicer.config.php --infile web/revtk/review-home.juicy.css
- * 
- *   
- * @author  Fabrice Denis
+ * This is now included by main.juicy.css
+ *  
  */
-
-/* =require from "%WEB%" */
 
 #srs-summary { }
 #srs-summary .total { }

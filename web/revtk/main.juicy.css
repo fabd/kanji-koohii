@@ -17,6 +17,8 @@
 /* =require "/bootstrap-build/css/bootstrap.css" */
 
 
+
+
 /* ---------------------------- */
 /* RESPONSIVE utilities */
 /* ---------------------------- */
@@ -698,6 +700,12 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 }
 
 
+/* ---------------------------- */
+/* SRS Chart page */
+/* ---------------------------- */
+
+/* =require from "%WEB%" */
+/* =require "/revtk/review-home.juicy.css" */
 
 
 /* ---------------------------- */
@@ -890,3 +898,11 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 .cj-s { font-family:"Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC", sans-serif; }
 .cj-t { font-family:"TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC", serif; }
 
+
+/* ---------------------------- */
+/* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
+/* ---------------------------- */
+
+/* =require from "%WEB%" */
+/* =require "/build/pack/root-bundle.css" */
+/* =require "/build/pack/study-bundle.css" */

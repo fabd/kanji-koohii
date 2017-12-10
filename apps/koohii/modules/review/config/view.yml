@@ -1,7 +1,6 @@
 indexSuccess:
   metas:
     title: 'Review Status'
-  stylesheets:  [ /revtk/review-home.juicy.css ]
 
 reviewSuccess:
   metas:

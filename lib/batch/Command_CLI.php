@@ -66,7 +66,7 @@ require_once(ZEND_LIB_DIR.'/Zend/Loader.php');
 spl_autoload_register(array('Zend_Loader', 'autoload'));
 
 // Console colour output
-require(SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php');
+require_once(SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php');
 
 
 //exit(is_numeric($statusCode) ? $statusCode : 0);

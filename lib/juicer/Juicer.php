@@ -36,12 +36,16 @@
  *
  * Command line options:
  *   For command line usage, see JuicerCLI.php documentation. 
+ *
+ *
+ * UPDATES
+ *
+ *   v1.1
+ *   - Absolute URLs are ignored, warning issued in CLI (with -v).
  * 
- * Todos:
- *   For a list of todos, and further development ideas, please see the TODOS file.
  * 
  * @author   Fabrice Denis
- * @version  1.0
+ * @version  1.1
  */
 
 class Juicer
@@ -325,8 +329,9 @@ class Juicer
 
       $this->copyAssets($providePath, $from);
     }
-    else
+    else if (0 !== stripos($buffer, '='))
     {
+      // if it's not a /* ====... style header in the comments, could be a Juicer command typo?
       $this->verbose('Improperly formatted Juicer command at line %d ? ==> %s', $lineNr, $buffer);
     }
 
@@ -550,7 +555,16 @@ class Juicer
   
       // can not work with absolute asset urls
       if (!$this->isRelativePath($assetUrl)) {
-        $this->throwException('Invalid absolute asset url "%s" in source file "%s" (fix: use relative paths).', $matches[1], $this->preg_srcFile);
+
+        // $this->throwException('Invalid absolute asset url "%s" in source file "%s" (fix: use relative paths).', $matches[1], $this->preg_srcFile);
+        
+        // TODO : create a warning() function that formats in yellow
+        $msg = sprintf('  Warning: absolute url "%s" in file "%s" (use rel. path).', $matches[1], $this->preg_srcFile);
+        require_once(SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php');
+        $fmt = new ConsoleFormatter();
+        $this->verbose($fmt->setForeground('yellow')->setOption('bold')->apply($msg));
+
+        return 'url(#' . $matches[1] . ')';
       }
   
       // find the qualified asset path in the source location

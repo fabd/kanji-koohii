@@ -71,8 +71,7 @@ body { padding-top:0;  }
   $ext = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
   $sf_response->addJavascript("/build/pack/root-bundle$ext.js", "first"); //add before legacy code so it kicks in sooner
 
-  // todo : should become "review" bundle
-  $sf_response->addJavascript("/build/pack/main-bundle$ext.js");
+  $sf_response->addJavascript("/build/pack/review-bundle$ext.js");
 
   include_javascripts();
   if (has_slot('inline_javascript')) {

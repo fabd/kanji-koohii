@@ -22,7 +22,8 @@ module.exports = {
   // Here the application starts executing and webpack starts bundling
   entry: {
     'root-bundle': './lib/front/vue/vue-bundle.js',
-    'main-bundle': './lib/front/vue/main-bundle.js'
+    'study-bundle': './lib/front/vue/study-bundle.js',
+    'review-bundle': './lib/front/vue/review-bundle.js'
   },
 
   output: {

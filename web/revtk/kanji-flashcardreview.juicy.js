@@ -11,9 +11,8 @@
  */
 /*global alert, console, document, window, App, Core, YAHOO */
 
-
 /* =require from "%WEB%" */
-/* =require "/revtk/bundles/flashcardreview-1.0.juicy.js" */
+
 /* =require "/revtk/components/EditStoryComponent.js" */
 /* =require "/revtk/components/EditStoryDialog.js" */
 /* =require "/revtk/components/EditKeywordDialog.js" */

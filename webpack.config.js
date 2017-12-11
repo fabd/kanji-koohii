@@ -121,7 +121,11 @@ module.exports = {
       //vue:     'vue/dist/vue.runtime.js'
       'vue':     'vue/dist/vue.common.js',
 
-      'components': path.resolve(__dirname, 'lib/front/vue/components')
+      'components': path.resolve(__dirname, 'lib/front/vue/components'),
+
+      // legacy code
+      'core_legacy': path.resolve(__dirname, 'lib/front/corejs'),
+      'web_revtk':   path.resolve(__dirname, 'web/revtk')
     }
   },
 

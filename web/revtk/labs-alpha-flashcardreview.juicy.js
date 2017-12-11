@@ -5,8 +5,6 @@
  */
 /*global alert, console, document, window, App, Core, YAHOO */
 
-/* =require from "%WEB%" */
-/* =require "/revtk/bundles/flashcardreview-1.0.juicy.js" */
 
 (function(){
 

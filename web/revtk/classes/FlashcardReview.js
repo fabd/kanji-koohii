@@ -110,15 +110,13 @@
  */
 /*global YAHOO, window, alert, console, document, Core, App, Koohii, Vue */
 
-(function(){
-  
-  App.Ui.FlashcardReview = Core.make();
+const FlashcardReview = Core.make();
 
-  var Y = YAHOO,
+  const Y = YAHOO,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
-  App.Ui.FlashcardReview.prototype =
+  FlashcardReview.prototype =
   {
     // flashcard selection as an array of flashcard ids
     items: null,
@@ -214,7 +212,7 @@
       
       // flashcard as a Vue component (wip)
       this.curCard  = null;
-  
+
   //    this.ofs_prefetch = Math.floor(this.num_prefetch);
     
       this.beginReview();
@@ -759,5 +757,4 @@
     
   };
 
-}());
-
+export { FlashcardReview }

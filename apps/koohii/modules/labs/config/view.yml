@@ -6,12 +6,14 @@ shuffle1Success:
   metas:
     title: 'Vocab Shuffle'
 
+  stylesheets: [ /revtk/kanji-flashcardreview.juicy.css ]
   javascripts: [ '/revtk/labs-alpha-flashcardreview.juicy.js' ]
 
 shuffle2Success:
   metas:
     title: 'Vocab Shuffle'
 
+  stylesheets: [ /revtk/kanji-flashcardreview.juicy.css ]
   javascripts: [ '/revtk/labs-alpha-flashcardreview.juicy.js' ]
 
 all:

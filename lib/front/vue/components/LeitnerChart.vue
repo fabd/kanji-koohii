@@ -1,4 +1,7 @@
 <template>
+
+  <transition name="chart-fade" appear>
+
   <div class="leitner-chart_outer" v-once>
 
     <div v-for="(bar, b) in displayBoxes" class="box">
@@ -24,6 +27,9 @@
     </div>
 
   </div>
+
+  </transition>
+
 </template>
 
 <script>
@@ -44,6 +50,8 @@ export default {
         due:    ['#ffae57','#d2633f','#ffcc7f'],
         nill:   ['#929292','#818181','#b1b1b1']
       }
+
+      // itsMounted: false
     }
   },
 
@@ -185,10 +193,23 @@ export default {
   beforeMount() {
     this.prepareStacks()
   }
+
+  /*
+  mounted: function () {
+    this.$nextTick(function () {
+      // Code that will run only after the entire view (+children) has been rendered
+      console.log('mounted yo')
+      this.itsMounted = true
+    })
+  }*/
 }
 </script>
 
 <style>
+
+  /* fade in the bar chart, along with the min-height on container, looks nicer when page load is slow */
+.chart-fade-enter { opacity:0; }
+.chart-fade-enter-active { transition:opacity 0.3s; }
 
 .leitner-chart_outer { display:table; width:100%; padding:30px 0 40px; }
 .leitner-chart_outer .box  { display:table-cell; }

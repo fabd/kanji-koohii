@@ -124,8 +124,7 @@ module.exports = {
       'components': path.resolve(__dirname, 'lib/front/vue/components'),
 
       // legacy code
-      'core_legacy': path.resolve(__dirname, 'lib/front/corejs'),
-      'web_revtk':   path.resolve(__dirname, 'web/revtk')
+      'legacy':     path.resolve(__dirname, 'lib/front/vue/legacy')
     }
   },
 

@@ -140,8 +140,6 @@ fi
 javascripts=(
   'web/revtk/labs-alpha-flashcardreview.juicy.js,web/build/revtk/labs-alpha-flashcardreview.juiced.js,web/build/revtk/labs-alpha-flashcardreview.min.js',
 
-  'web/revtk/bundles/flashcardreview-1.0.juicy.js,web/build/revtk/bundles/flashcardreview-1.0.juiced.js,web/build/revtk/bundles/flashcardreview-1.0.min.js',
-
   'web/revtk/manage.juicy.js,web/build/revtk/manage.juiced.js,web/build/revtk/manage.min.js',
 
   'web/revtk/study-base.juicy.js,web/build/revtk/study-base.juiced.js,web/build/revtk/study-base.min.js',

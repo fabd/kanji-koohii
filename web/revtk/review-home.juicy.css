@@ -59,14 +59,3 @@
 .barchart-cols .bar.zero .val { color:#a5a59c; }
 .barchart-cols .bar.zero .lbl {}
 
-
-/* ---------------------------- */
-/* Vue.js  Leitner Chart */
-/* ---------------------------- */
-
-/* leitner chart component (root) */
-#leitner-chart_pane {
-  padding:1em;
-  /* to avoid content jumping while loading */
-  min-height:298px;
-}

@@ -207,6 +207,9 @@ export default {
 
 <style>
 
+  /* this is the parent container of this vue component... FIXME should move here eventually */
+#leitner-chart_pane { padding:1em; /* to avoid content jumping while loading */min-height:298px; }
+
   /* fade in the bar chart, along with the min-height on container, looks nicer when page load is slow */
 .chart-fade-enter { opacity:0; }
 .chart-fade-enter-active { transition:opacity 0.3s; }
@@ -261,6 +264,7 @@ export default {
 
 @media (max-width:767px) {
   .box_inner { height:170px; }
+  #leitner-chart_pane { min-height:268px; }
 }
 
 @media screen and (max-width: 500px) {

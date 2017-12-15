@@ -31,7 +31,7 @@
         </div>
 
         <div class="sharedstory_meta flex">
-          <div class="lastmodified flex-a-c" title="Last edited"><i class="fa fa-clock-o"></i> <?php echo time_ago_in_words($S['ts_dispdate']) ?> ago</div>
+          <div class="lastmodified flex-a-c" title="Last edited"><i class="far fa-clock"></i> <?php echo time_ago_in_words($S['ts_dispdate']) ?> ago</div>
 
 <?php if ($S['share']): ?>
           <div class="actions col-m ta-r">

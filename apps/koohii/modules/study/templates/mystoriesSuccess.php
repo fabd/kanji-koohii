@@ -13,7 +13,7 @@
 
 <div class="mb-1" style="position:relative;">
   <div style="position:absolute;right:0;top:0;">
-    <?php echo _bs_button_with_icon('Export to CSV', 'study/export', array('icon' => 'fa-file-o')) ?>
+    <?php echo _bs_button_with_icon('Export to CSV', 'study/export', array('icon' => 'fa-file')) ?>
   </div>
 
   <div id="app-vue" class="mb-1">

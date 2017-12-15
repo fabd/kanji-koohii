@@ -81,7 +81,7 @@ function _bs_button_with_icon($name, $internal_uri, array $options = array())
 
   _bs_class_merge($options, 'btn btn-success');
 
-  $name = "<i class=\"fa $iconId\"></i>$name";
+  $name = "<i class=\"far $iconId\"></i>$name";
 
   return link_to($name, $internal_uri, $options);
 }

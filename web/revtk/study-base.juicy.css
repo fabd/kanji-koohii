@@ -117,9 +117,7 @@
 
 .sharedstory_btn { display:inline-block; padding:0.5em 0.5em; }
 .sharedstory_btn, .sharedstory_btn:focus { text-decoration:none; }
-.sharedstory_btn .fa:before { margin-right:0.5em; font-size:120%; }
-
-.sharedstory_btn.fa-exclamation { /**/ margin-right:0.5em; }
+.sharedstory_btn span { margin-left:0.5em; }
 
  /* desktop :hover */
 .sharedstory_btn:hover { color:#444; text-decoration:none; }

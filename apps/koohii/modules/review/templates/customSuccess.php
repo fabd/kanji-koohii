@@ -10,7 +10,7 @@
 
     <div class="section">
       <div class="p-notice">
-        <i class="fa fa-question-circle-o"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
+        <i class="far fa-question-circle"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
       </div>
 
       <p class="mb-p33">

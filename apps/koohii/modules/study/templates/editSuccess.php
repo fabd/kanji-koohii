@@ -14,7 +14,7 @@ function get_flashcard_button($user, $context, $ucsId)
   <a href="#" class="uiGUI btn btn-success JsEditFlashcard is-0" title="Add  Card" data-uri="$dialogUri" data-param="$params"
 ><i class="fa fa-plus"></i>Add Card</a>
   <a href="#" class="uiGUI btn btn-ghost JsEditFlashcard is-1" title="Edit Card" data-uri="$dialogUri" data-param="$params"
-><i class="fa fa-pencil"></i>Edit Card</a>
+><i class="fa fa-edit"></i>Edit Card</a>
 </div>
 EOD;
 }
@@ -90,13 +90,13 @@ EOD;
         </div>
 
         <div class="sharedstory_meta flex">
-          <div class="lastmodified col-m-1 flex-a-c"><i class="fa fa-clock-o"></i> <?php echo $o->lastmodified ?></div>
+          <div class="lastmodified col-m-1 flex-a-c"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
 
           <div class="actions col-m ta-r JsAction" data-uid="<?php echo $o->authorid ?>" data-cid="<?php echo $ucsId ?>" appv1="<?php echo $o->stars ?>" appv2="<?php echo $o->kicks ?>">
             <span class="JsMsg"></span>
-            <a href="#" class="sharedstory_btn JsTip JsCopy"><i class="fa fa-copy"></i></a>
+            <a href="#" class="sharedstory_btn JsTip JsCopy"><i class="far fa-fw fa-lg fa-copy"></i></a>
 <?php if ($userId != $o->authorid): ?>
-            <a href="#" class="sharedstory_btn JsTip JsStar"><i class="fa fa-star"></i><span><?php echo $o->stars ?></span></a>
+            <a href="#" class="sharedstory_btn JsTip JsStar"><i class="far fa-fw fa-lg fa-star"></i><span><?php echo $o->stars ?></span></a>
 <?php else: ?>
             <em class="star"><?php echo $o->stars ?></em>
 <?php endif ?>

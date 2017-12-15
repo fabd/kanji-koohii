@@ -88,9 +88,6 @@ body   { padding-top:46px; }
 #k-nav_d .align-right { float:right; }
 #k-nav_d .sign-up a { background:#82b110; color:#fff; }
 
-/* icons */
-/*#k-nav_d i.fa { display:none; } */
-
 /* donate tab */
 #k-nav_d .donate a { color:#e9575e; }
 #k-nav_d .donate a:hover { color:#e70053; background-color:#fc8dda; -webkit-transition:background-color 0.2s; transition:background-color 0.2s; }

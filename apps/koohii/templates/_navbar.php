@@ -172,7 +172,7 @@ if (!$sf_user->isAuthenticated()) {
     nav_m_i('My Stories', 's-ms', 'study/mystories' )
   ));
     
-  $nav_items[] = nav_m_t('Review', 'review', 'fa-bar-chart', array(
+  $nav_items[] = nav_m_t('Review', 'review', 'fa-signal', array(
     nav_m_i('SRS',   'r-a', '@overview'),
     nav_m_i('Kanji', 'r-b', 'review/custom'),
     nav_m_i('Vocab', 'r-c', 'review/vocab')

@@ -24,7 +24,7 @@ use_helper('Widgets');
 <ul>
   <li><?php echo link_to('<i class="fa fa-comment"></i>Blog','news/index')
 ?></li><li><?php echo link_to('<i class="fa fa-envelope"></i>Contact', '@contact')
-?></li><li class="ne"><?php echo link_to('<i class="fa fa-bar-chart"></i>About', 'about/index') ?>
+?></li><li class="ne"><?php echo link_to('<i class="fa fa-question"></i>About', 'about/index') ?>
 </ul>
       </section>
     </div>

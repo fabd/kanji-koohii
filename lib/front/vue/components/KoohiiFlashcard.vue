@@ -235,7 +235,7 @@ export default {
 #uiFcPiles .stack .fa  { font-size:24px; margin-right:0.2em; }
 #uiFcPiles .stack span { color:#474747; }
 #uiFcPiles .fa-check { color:#27ae60; }
-#uiFcPiles .fa-close { color:#c0392b; }
+#uiFcPiles .fa-times { color:#c0392b; }
 
 /* finish review button ("End") */
 #uiFcEnd { padding:1px 0 0; } 

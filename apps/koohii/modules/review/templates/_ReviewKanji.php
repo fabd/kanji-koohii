@@ -103,7 +103,7 @@ if (!$freemode) {
 
       <div id="uiFcPiles" class="stacks">
         <div class="td stack" title="Cards remembered"><i class="fa fa-check"></i><span class="JsPass">0</span></div>
-        <div class="td stack" title="Cards forgotten"><i class="fa fa-close"></i><span class="JsFail">0</span></div>
+        <div class="td stack" title="Cards forgotten"><i class="fa fa-times"></i><span class="JsFail">0</span></div>
       </div>
       
       <div id="uiFcEnd" class="">

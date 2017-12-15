@@ -133,15 +133,14 @@ export default {
 /* ================================================================================= */
 
 
-/* Ajax loading indicator */
+/* Ajax loading indicator (using FontAwesome5 spinners) */
 #uiFcAjaxLoading {
   position:absolute; right:22px; top:3px; z-index:1000; 
-  padding:0.5em 0.8em; background:#76b6e2; border-radius:3px;
+  padding:0.5em 0.8em; background:#4a9dd6; border-radius:3px;
   color:#fff; font-size:14px; font-weight:bold; line-height:16px;
 }
-#uiFcAjaxLoading .spinner {
-  display:inline-block; width:16px; height:16px; margin-right:0.3em; vertical-align:middle;
-  background:url(/images/2.0/review/ajax-loader.gif) no-repeat 100% 50%;
+#uiFcAjaxLoading i {
+  margin-right:0.3em;
 }
 
 
@@ -329,6 +328,8 @@ export default {
 
   /* error messages */
   #uiFcAjaxLoading { height:32px; position:absolute; right:22px; top:3px; z-index:1000; }
+  #uiFcAjaxLoading span { /* hide "loading" label */ display:none; }
+
   #uiFcAjaxError { height:32px; position:absolute; right:22px; top:3px; z-index:1000; }
 
 

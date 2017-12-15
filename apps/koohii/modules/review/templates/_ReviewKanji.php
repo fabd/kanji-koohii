@@ -1,7 +1,7 @@
 <?php use_helper('CJK', 'Form', 'Widgets', 'Gadgets') ?>
 
 <?php # Ajax loading indicator ?>
-<div id="uiFcAjaxLoading" style="display:none"><span class="spinner"></span>Loading</div>
+<div id="uiFcAjaxLoading" style="display:none"><i class="fa fa-spinner fa-spin"></i><span>Loading</span></div>
 
 <?php # Connection timeout message ?>
 <div id="uiFcAjaxError" style="display:none">

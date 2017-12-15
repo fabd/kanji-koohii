@@ -44,7 +44,7 @@
         skin:        isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
         mobile:      isMobile,
         close:       !isMobile,
-        width:       480,
+        width:       500,
         scope:       this,
         events:      {
           onDialogInit:    this.onDialogInit,

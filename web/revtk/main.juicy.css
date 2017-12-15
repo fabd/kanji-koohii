@@ -856,8 +856,13 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 .rtk-skin-dlg .body { background:#fff; padding:10px; border-radius:3px; box-shadow:0 1px 3px rgba(0,0,0,0.2) inset; }
 .rtk-mobl-dlg .body { background:#fff; padding:10px; }
 
-/* dialog ajax loading icon (width set in javascript) ATTENTION selector must overwrite .rtk-xxxx-dlg .body */
-.yui-panel .JsAjaxDlgLoading { /*NO width, see ajaxdialog.js*/ height:150px; background:#fff url(../images/1.0/ico/ajax_activity.gif) no-repeat 50% 45%; }
+/* dialog loading spinner with FontAwesome5 (see AjaxDialog.js -- selector must overwrite .rtk-xxxx-dlg .body) */
+.yui-panel .JsAjaxDlgLoading {
+  /* width is set in js! */ height:150px; background:#fff; position:relative;
+}
+.yui-panel .JsAjaxDlgLoading .fa-spin {
+  font-size:2em; position:absolute; left:50%; top:60px; margin-left:-0.5em; color:#888;
+}
 
 /* MOBILE DIALOGS use a different "skin" parameter that lets them extend from edge to edge */
 .rtk-mobl-dlg { left:0; right:0; }

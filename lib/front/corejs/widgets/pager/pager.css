@@ -3,9 +3,7 @@
  *
  */
 
-/* =provide "assets" */
-
-.uiPager { margin:0; padding:0; float:right; padding-left:14px; background:url(assets/ico-pager.gif) no-repeat 0 55%; }
+.uiPager { margin:0; padding:0; float:right; }
 .uiPager li { float:left; list-style:none; background:none; border-right:1px solid #E3E0C9; font:11px/1.1em Arial; padding:0; margin:0; }
 .uiPager li.active { background:none; font-weight:bold; padding:4px 8px; color:#000; }
 .uiPager li.disabled { background:none; font-weight:bold; padding:4px 8px; color:#888888; }

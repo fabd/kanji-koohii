@@ -107,7 +107,7 @@ DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/learnmore">Help</a></li>
   <li><a href="@/contact">Contact</a></li>
-  <li><a href="@/about/support">Donate <span id="k-nav_d_pp"></span><span id="k-nav_d_pa"></span></a></li>
+  <li><a href="@/about/support">Donate</a></li>
   <li><a href="http://forum.koohii.com">Koohii Forum</a></li>
 </ul>
 DOM

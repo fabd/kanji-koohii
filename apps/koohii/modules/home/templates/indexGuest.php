@@ -127,13 +127,6 @@ Kanji Koohii uses a friendly spaced repetition system: flashcard reviews are sch
     <li><?php echo link_to('<i class="fa fa-comment"></i>Blog','news/index') ?></li>
     <li><?php echo link_to('<i class="fa fa-envelope"></i>Contact', '@contact') ?></li>
     <li class="ne"><?php echo link_to('<i class="fa fa-bar-chart"></i>About', 'about/index') ?></li>
-    <li id="tweet-button">
-<?php 
-function koohii_tweet_query() {
-  return http_build_query(array('url' => sfConfig::get('app_website_url'), 'text' => 'Kanji Koohii'));
-} ?>
-      <a href="https://twitter.com/intent/tweet?<?php echo koohii_tweet_query() ?>" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i><span>Tweet this page</span></a>
-    </li>
   </ul>
 </footer>
 

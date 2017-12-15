@@ -176,12 +176,11 @@ section p  { font-size:1em; line-height:1.8em; margin-bottom:1.5em; }
 /* fontawesome icons */
 #footer .fa {  margin-right:0.5em; }
 
-li#tweet-button { margin-left:2em; }
+/*li#tweet-button { margin-left:2em; }
 #tweet-button a {
   padding:4px 8px; color:#fff; text-decoration:none; 
-  background:#1191dc; /*1b95e0*/ border-radius:3px;
-}
-
+  background:#1191dc; border-radius:3px;
+}*/
 
 
 /* RESPONSIVE LAYOUT */

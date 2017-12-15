@@ -24,11 +24,7 @@ use_helper('Widgets');
 <ul>
   <li><?php echo link_to('<i class="fa fa-comment"></i>Blog','news/index')
 ?></li><li><?php echo link_to('<i class="fa fa-envelope"></i>Contact', '@contact')
-?></li><li class="ne"><?php echo link_to('<i class="fa fa-bar-chart"></i>About', 'about/index')
-?></li>
-  <li id="ft-tweet_btn">
-    <a href="https://twitter.com/intent/tweet?<?php echo koohii_tweet_query() ?>" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i><span>Tweet this page</span></a>
-  </li>
+?></li><li class="ne"><?php echo link_to('<i class="fa fa-bar-chart"></i>About', 'about/index') ?>
 </ul>
       </section>
     </div>

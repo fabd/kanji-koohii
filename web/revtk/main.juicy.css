@@ -522,7 +522,7 @@ div.col-box-bis { margin-top:10px; }
 #footer a:hover { color:#e400b1; text-decoration:underline; }
 
 /* fontawesome icons */
-#footer .fas { color:#9c3d7b; margin-right:0.5em; }
+#footer .fa { color:#9c3d7b; margin-right:0.5em; }
 
 @media (max-width:600px) {
   #footer { font-size:15px; }

@@ -27,6 +27,8 @@
 <style>
 /* Dictionary Lookup Component */
 
+.dict-panel { max-height:80vh; overflow-y:auto; }
+
 .dict-list { margin:0; background:#fff; }
 .dict-list .cj-k  { line-height:1em; }
 
@@ -53,7 +55,7 @@
 @media screen and (min-width:701px) {
  
   /* prevent dict dialog from stretching too wide */
-  .yui-panel .dict-panel { max-width:400px; } 
+  .dict-panel { max-width:400px; } 
 
 }
 

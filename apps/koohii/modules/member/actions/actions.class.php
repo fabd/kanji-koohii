@@ -7,6 +7,10 @@ class memberActions extends sfActions
 
   public function executeProgress()
   {
+    $curIndex = rtkIndex::inst();
+
+    define('RTK_VOLUME_3_LESSON', $curIndex->getNumLessonsVol1() + 1);
+
     // get progress data for last completed frame number in order
     $this->progress = rtkIndex::getProgressSummary();
 
@@ -20,10 +24,10 @@ class memberActions extends sfActions
 
     //  lessons always show even if empty
     $lessons = array();
-    for ($i = 1, $from = 1; $i <= rtkIndex::inst()->getNumLessonsVol1(); $i++)
+    for ($i = 1, $from = 1; $i <= RTK_VOLUME_3_LESSON; $i++)
     {
       $lessons[$i] = array(
-        'label'      => '<span class="visible-md-lg">Lesson </span>'.$i,
+        'label'      => $i < RTK_VOLUME_3_LESSON ? '<span class="visible-md-lg">Lesson </span>'.$i : 'RTK Vol.3',
         'index'      => $i,
         'passValue'  => 0,
         'failValue'  => 0,
@@ -37,7 +41,6 @@ class memberActions extends sfActions
    
     $this->rtk1NotStarted = true;
 
-    $curIndex = rtkIndex::inst();
 
     foreach ($card_data as $lessNr => $p)
     {
@@ -59,10 +62,10 @@ class memberActions extends sfActions
       if ($p->lessonId > $curIndex->getNumLessonsVol1())
       {
           // RTK Vol.3
-          if ($p->lessonId === $curIndex->getNumLessonsVol1() + 1)
+          if ($p->lessonId === RTK_VOLUME_3_LESSON)
           {
-            $lesson['label'] = 'RTK Vol.3';
-            $lesson['from']  = $lessons[$curIndex->getNumLessonsVol1()]['from'] + $lessons[$curIndex->getNumLessonsVol1()]['maxValue'];
+            // $lesson['label'] = 'RTK Vol.3';
+            // $lesson['from']  = $lessons[$curIndex->getNumLessonsVol1()]['from'] + $lessons[$curIndex->getNumLessonsVol1()]['maxValue'];
           }
           // RTK Supplement
           elseif ($p->lessonId === 58)

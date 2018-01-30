@@ -124,11 +124,8 @@ class StopForumSpam
       {
         $lastseen_days = (time() - intval($r['ip']['lastseen'])) / (24 * 60 * 60);
 
-        // We have to be lenient here, because we already filtered most automated subsmissions with the
-        // question, users in eastern asia countries (philippines, indonesia, ...) can have few
-        // reports, likely due to mobile internet ISPs and dynamic IPs
-        //
-        if ($r['ip']['frequency'] > 50 && $lastseen_days < 7)
+        // not as lenient as used to be as spambots now get through the question
+        if ($lastseen_days < 7 || $r['ip']['frequency'] > 10)
         {
           // reported more than once, OR reported just once but recently enough
 

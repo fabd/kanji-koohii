@@ -137,12 +137,16 @@ class accountActions extends sfActions
         $sfs_result = $sfs->checkRegistration($this->username, $email, $answer);
         if (StopForumSpam::SFS_CR_FAILED === $sfs_result)
         {
-          $s = 'Woops, if you are seeing this message and you are not a spam bot '.
-               'don\'t worry, just click the link below "Request an account" and '.
-               'Fabrice (admin) will create an account for you as soon as possible. Please make '.
-               'sure to include in the message the exact username you would like.';
-          $request->setError('error', $s);
-          return sfView::SUCCESS;
+          // $s = 'Woops, if you are seeing this message and you are not a spam bot '.
+          //      'don\'t worry, just click the link below "Request an account" and '.
+          //      'Fabrice (admin) will create an account for you as soon as possible. Please make '.
+          //      'sure to include in the message the exact username you would like.';
+          // $request->setError('error', $s);
+          // return sfView::SUCCESS;
+          
+          $this->getResponse()->setStatusCode(403);
+
+          return $this->renderText('Invalid request');
         }
         else if (StopForumSpam::SFS_CR_TIMEOUT === $sfs_result)
         {

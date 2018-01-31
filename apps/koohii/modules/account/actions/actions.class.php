@@ -133,6 +133,12 @@ class accountActions extends sfActions
           }
         }
 
+        // increase of spam from Russia
+        if (preg_match('/\.ru$/', $email)) {
+          $this->getResponse()->setStatusCode(403);
+          return $this->renderText('.ru email address is not accepted (99.99% of these are spam bots)');
+        }
+
         // if the user answers correctly it is very unlikely to be a bot, however it could be a human spammer
         $sfs_result = $sfs->checkRegistration($this->username, $email, $answer);
         if (StopForumSpam::SFS_CR_FAILED === $sfs_result)

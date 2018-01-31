@@ -140,9 +140,9 @@ class homeActions extends sfActions
       // add the IP address to detect trolls/spammers
       $pathArray   = sfContext::getInstance()->getRequest()->getPathInfoArray();
 
-      // fabd: disabled Feb 10, 2017 (helped identify spam but not that useful)
-      //$remote_addr = $pathArray['REMOTE_ADDR'];
-      //$message     = 'IP address: '.$remote_addr."\n\n".$message;
+      // fabd: help identify spam bots
+      $remote_addr = $pathArray['REMOTE_ADDR'];
+      $message     = 'IP address: '.$remote_addr."\n\n".$message;
 
       if (CORE_ENVIRONMENT !== 'dev')
       {

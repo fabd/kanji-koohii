@@ -147,7 +147,7 @@ long term memory, therefore it is not possible to select the green piles. Often 
 * **No** : send card back to the restudy pile.
 * **Hard** : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
 
-  The "Hard" answer is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
+  The "Hard" answer is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
 
   Cards that are in box 2 (one review) and rated "Hard" stay in box 2, but they always come for review the next day (instead of using the default of ~3 days).
 

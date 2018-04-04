@@ -18,6 +18,9 @@
 
 /*.become-a-patron { margin-left:3em;color:#e6461a; } */
 
+#patreon-patrons a { text-decoration:none; }
+#patreon-patrons a.is-patron { /*background:#d6f6b7;*/ color:#159815; font-weight:bold; padding:0.2em 0.8em; }
+
  /* bootstrap-xs-sm */
 @media (max-width: 991px) {
   #patreon-patrons li { width:50%; font-size:14px; }
@@ -64,8 +67,15 @@ Maintaining and developing new features takes a considerable amount of time. You
   <div class="padded-box no-gutter-xs-sm">
   <ul id="patreon-patrons">
   <?php //DBG::printr($patrons); ?>
-<?php foreach ($patrons as $pa) {
-    $display_name = !empty($pa['username']) ? link_to_member($pa['username']) : escape_once($pa['pa_full_name']);
+<?php
+  $sf_user_name = $sf_user->getUserName();
+
+  foreach ($patrons as $pa)
+  {
+    $style        = $pa['username'] == $sf_user_name ? ['class' => 'is-patron'] : [];
+    $display_name = !empty($pa['username']) ?
+      link_to_member($pa['username'], $style) :
+      escape_once($pa['pa_full_name']);
     echo '<li><span class="ws-nw">'.$display_name.'</span></li>';
   }
 ?>

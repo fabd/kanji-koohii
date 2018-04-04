@@ -449,7 +449,7 @@ class accountActions extends sfActions
   /**
    * Patreon login redirect (OAuth)
    *
-   *  http://kanji.koohii.com/account/patreon ? code=<single use code> & state=<string>
+   *  https://kanji.koohii.com/account/patreon ? code=<single use code> & state=<string>
    *  
    */
   public function executePatreon($request)
@@ -465,9 +465,10 @@ class accountActions extends sfActions
     $tokens = $oauth_client->get_tokens($single_use_code, PATREON_REDIRECT_URI);
     $patron_access_token = $tokens['access_token'];
 
+// DBG::printr($tokens);exit;
+
     // sanity checks
     $this->forward404If(empty($tokens) || isset($tokens['error']), 'Invalid request (#2).');
-    $this->forward404If(strlen($patron_access_token) !== 30, 'Invalid access token (#3).');
 
 // DBG::printr($tokens);exit;
 

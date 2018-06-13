@@ -17,7 +17,7 @@
   foreach($rows as $o) {
     $evil_story = $o->kicks >= 10 && ($o->stars / $o->kicks < 10);
 ?>
-    <div class="sharedstory rtkframe <?php echo $evil_story ? ' is-moderated':'' ?>">
+    <div class="sharedstory rtkframe <?php echo $evil_story ? ' is-moderated':'' ?>" lang="ja">
 
       <div class="sharedstory_author">
         <?php echo link_to_member($o->username) ?>

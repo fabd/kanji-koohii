@@ -37,7 +37,7 @@ $db->dumpResultSet($rs);
     <input type="hidden" name="reviewMode" value="1" />
   <?php endif ?>
 
-  <div id="my-story">
+  <div id="my-story" lang="ja">
     <div class="padding rtkframe">
 
       <div class="left">

@@ -11,7 +11,7 @@
   $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $sf_user->getUserId(), 'newest');
   foreach($stories as $o) {
 ?>
-    <div class="sharedstory rtkframe">
+    <div class="sharedstory rtkframe" lang="ja">
 
       <div class="sharedstory_author">
         <?php echo link_to_member($o->username) ?>

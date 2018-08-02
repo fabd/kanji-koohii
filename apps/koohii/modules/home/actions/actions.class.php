@@ -144,6 +144,18 @@ class homeActions extends sfActions
       $remote_addr = $pathArray['REMOTE_ADDR'];
       $message     = 'IP address: '.$remote_addr."\n\n".$message;
 
+      // fabd: spam prevention, refuse message with links for non-authenticated users
+      if (!$this->getUser()->isAuthenticated() && preg_match('#https?://#', $message)) {
+        $request->setError('spam', 'Note: due to spam, we have to block messages containing links. (Pssst! If you are a real person, simply remove the http prefix from the URL and it will go through.)');
+        $this->getResponse()->setStatusCode(403);
+
+        $sfs = new StopForumSpam();
+        //$regip = StopForumSpam::getRemoteAddress();
+        $sfs->logActivity($remote_addr, '/contact : blocked message with link (403)');
+
+        return;
+      }
+
       if (CORE_ENVIRONMENT !== 'dev')
       {
         try

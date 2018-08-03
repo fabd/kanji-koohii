@@ -49,7 +49,7 @@ Maintaining and developing new features takes a considerable amount of time. You
     </a>
   </div>
 
-  <img class="support-logo" style="width:126px" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png"><br>
+  <img class="support-logo" style="width:126px" src="/images/3.0/support/paypal.png"><br>
 
   <div id="support-paypal" class="padded-box no-gutter-xs-sm mb-2">
     <p>PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).</p>

@@ -120,7 +120,6 @@ CREATE TABLE `kanjis` (
   `onyomi`       VARCHAR(50) NOT NULL DEFAULT '',
   `idx_olded`    SMALLINT UNSIGNED NOT NULL,
   `idx_newed`    SMALLINT UNSIGNED NOT NULL,
-  `lessonnum`    TINYINT UNSIGNED NOT NULL,
   `strokecount`  TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`ucs_id`),
   UNIQUE KEY `idx_olded` (`idx_olded`),

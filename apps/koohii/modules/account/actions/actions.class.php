@@ -201,6 +201,8 @@ class accountActions extends sfActions
    */
   public function executeEdit($request)
   {
+    $user = $this->getUser();
+
     if ($request->getMethod() != sfRequest::POST)
     {
       // fill in form with current account details
@@ -219,19 +221,30 @@ class accountActions extends sfActions
       
       if ($validator->validate($request->getParameterHolder()->getAll()))
       {
-        $userdata = array(
+        $updateInfo = array(
           'email'    => trim($request->getParameter('email')),
           'location' => trim($request->getParameter('location', '')),
           'timezone' => (float) trim($request->getParameter('timezone'))
         );
+
+        $userDetails = $user->getUserDetails();
+
+        // confirm current password if email is updated
+        if ($updateInfo['email'] !== $userDetails['email'])
+        {
+          $oldpassword = trim($request->getParameter('oldpassword'));
+          if ($user->getSaltyHashedPassword($oldpassword) !== $userDetails['password']) {
+            $request->setError('oldpassword', 'Please confirm your current password.');
+            return;
+          }
+        }
         
-        if (UsersPeer::updateUser($this->getUser()->getUserId(), $userdata))
+        if (UsersPeer::updateUser($user->getUserId(), $updateInfo))
         {
           $this->redirect('account/index');
         }
       }
     }
-
   }
 
   /**

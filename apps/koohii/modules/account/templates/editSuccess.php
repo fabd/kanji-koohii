@@ -44,6 +44,16 @@
     . '</span>'
     );
 
+
+    echo _bs_form_group(
+      ['validate' => 'oldpassword'],
+      _bs_input_password('oldpassword', [
+        'label'    => 'Current Password',
+        'helptext' => 'If you update the email, confirm your current password.'
+      ])
+    );
+
+
     echo _bs_form_group(
       _bs_submit_tag('Save changes')
     );

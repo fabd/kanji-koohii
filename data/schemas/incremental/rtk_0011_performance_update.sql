@@ -41,6 +41,16 @@
 #    by adding AND public IN(0, 1) to the WHERE clause.
 #
 #
+#    Update Aug. 04 2018
+#
+#    +--------+----------+
+#    | public | COUNT(*) |
+#    +--------+----------+
+#    |      0 |  4927419 |
+#    |      1 |   409551 |   7 %
+#    +--------+----------+
+#
+#
 #  Resources:
 #
 #    Converting Tables from MyISAM to InnoDB

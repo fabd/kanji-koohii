@@ -229,14 +229,14 @@ class coreValidator
   protected function StringValidator($value, $params)
   {
       $min = $this->getParameter($params, 'min');
-      if ($min !== null && strlen(trim($value)) < $min)
+      if ($min !== null && mb_strlen(trim($value)) < $min)
       {
       // too short
       return $this->getParameter($params, 'min_error');
       }
   
       $max = $this->getParameter($params, 'max');
-      if ($max !== null && strlen(trim($value)) > $max)
+      if ($max !== null && mb_strlen(trim($value)) > $max)
       {
       // too long
       return $this->getParameter($params, 'max_error');

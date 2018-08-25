@@ -54,7 +54,8 @@ class MembersListBinding implements uiSelectTableBinding
         {
           "caption":   "From",
           "width":     33,
-          "colData":  "location"
+          "colData":  "location",
+          "colDisplay": "_location"
         },
         {
           "caption":   "Last review",
@@ -82,6 +83,8 @@ EOD;
     $rowData['_username'] = link_to_member($rowData['username']);
 
     $rowData['_lastreview'] = simple_format_date((int)$rowData['ts_lastreview'], rtkLocale::DATE_SHORT);
+
+    $rowData['_location'] = escape_once($rowData['location']);
 
     return $rowData;
   }

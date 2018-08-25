@@ -34,14 +34,10 @@ class rtkValidators
     return $valid;
   }
 
-  /**
-   * Use this validator to prevent HTML tags.
-   *
-   * @return boolean   Returns true if no HTML tags found.
-   */
-  public static function validateNoHtmlTags($value)
+  public static function validateUserLocation($value)
   {
-    return (strip_tags($value) == $value);
+    return BaseValidators::validateNoHtmlTags($value) &&
+           BaseValidators::validateMysqlUtf8($value);
   }
 
   /**

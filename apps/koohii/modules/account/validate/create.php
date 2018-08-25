@@ -89,15 +89,10 @@ return array
         'max'       => 30,
         'max_error'   => 'Location is too long (max 30 characters).'
       ),
-      'RegexValidator'   => array
-      (
-        'match'       => true,
-        'pattern'     => '/^[\x20-\x7e]+$/',
-        'match_error' => 'Location: please use only ASCII printable characters.'
-        // 'match'     => true,
-        // 'pattern'     => '/^([a-zA-Z0-9])+([a-zA-Z0-9 \'-])*$/',
-        // 'match_error'   => 'Only letters and digits, spaces, single quotes or dashes.'
-      )
+      'CallbackValidator' => [
+        'callback'        => ['rtkValidators', 'validateUserLocation'],
+        'invalid_error'   => 'Location: invalid characters'
+      ]
     )
   )
 );

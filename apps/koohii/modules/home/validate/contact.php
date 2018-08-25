@@ -45,8 +45,8 @@ return array
       ),
       'CallbackValidator' => array
       (
-        'callback'    => array('rtkValidators', 'validateNoHtmlTags'),
-        'invalid_error' => ''
+        'callback'    => array('BaseValidators', 'validateNoHtmlTags'),
+        'invalid_error' => 'No html formatting'
       )
     ),
   )

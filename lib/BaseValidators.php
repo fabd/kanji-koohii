@@ -13,19 +13,12 @@
 
 class BaseValidators
 {
-  /**
-   * Value can not be empty.
-   * 
-   */
   public static function validateNotEmpty($value)
   {
     return !empty($value) || ($value!=='0' && $value!==0);
   }
 
   /**
-   * Checks that every character is a digit (must be a positive integer).
-   * 
-   * @param  mixed   $value
    *
    * @return bool    Returns TRUE if $value is an integer or if the string is only 0-9 digits.
    */
@@ -35,10 +28,23 @@ class BaseValidators
     return ctype_digit($value);
   }
 
+  public static function validateNoHtmlTags($value)
+  {
+    return (strip_tags($value) == $value);
+  }
+
+  /**
+   * Checks that the string doesn't use 4 byte characters (ie. for mysql's broken "utf8" charset).
+   *
+   * @return  bool    true if string fits in mysql "utf8"
+   */
+  public static function validateMysqlUtf8($value)
+  {
+    return (preg_match('/[\x{10000}-\x{10FFFF}]/u', $value) === 0);
+  }
+
   /**
    * Returns a positive integer, or throws an exception.
-   * 
-   * @param  mixed  $value
    *
    * @return int
    */
@@ -52,6 +58,4 @@ class BaseValidators
 
     return intval($value);
   }
-
-
 }

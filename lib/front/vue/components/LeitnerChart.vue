@@ -259,6 +259,7 @@ export default {
   position: absolute; left:4px; top:-28px; width:100%;
   padding: 0;
   color:#444; font-weight:normal; white-space: nowrap; text-align:center;
+  z-index:1; /* fix "due" label overlapped by a taller "undue" bar */
 }
 .box .val-zero { color:#a09a8b; display:none; }
 

@@ -4,7 +4,8 @@
   $ucsId  = $kanjiData->ucs_id;
 ?>
   <div id="sharedstories-new">
-    <div class="title JsNewest">
+    <div class="sharedstories_title title JsNewest">
+      <i class="fa fa-chevron-down" style="position:absolute;right:0;top:0;width:33px;height:33px;line-height:33px;"></i>
       New &amp; updated stories
     </div>
 <?php
@@ -43,7 +44,7 @@
   </div>
 
   <div id="sharedstories-fav">
-    <div class="title">
+    <div class="sharedstories_title title">
       Shared stories
     </div>
 

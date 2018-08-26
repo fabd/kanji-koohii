@@ -69,7 +69,7 @@ EOD;
   <div id="SharedStoriesComponent" class="col-box no-gutter-xs-sm">
 
     <div id="sharedstories-top">
-      <div class="title">
+      <div class="sharedstories_title title">
         Favourite(s)
       </div>
 <?php

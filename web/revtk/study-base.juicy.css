@@ -56,17 +56,19 @@
 
 #SharedStoriesComponent { padding-top:0; }
 
-/* shared stories */
+.sharedstories_title {
+  margin:0 0 12px; font-size:1.1em; line-height:33px; padding:0 15px; zoom:1;
+  text-shadow:0 1px rgba(255,255,255,0.75);
+  position:relative; /* for the toggle icon */
+}
+
+  /* "Favourites" */
 #sharedstories-top { padding:0 0 4px; }
 #sharedstories-top .title {
-  margin:0 0 1em; font-size:1.1em; line-height:33px; padding:0 15px; zoom:1;
-  color:#583d8a;
-  text-shadow:0 1px rgba(255,255,255,0.75);
+  margin:0 0 1em;
+  color:#583d8a; text-shadow:0 1px rgba(255,255,255,0.75);
 
   background: #ddcdfc; /* Old browsers */
-  background: -moz-linear-gradient(top,  #e4d9ff 0%, #d2c8e5 100%); /* FF3.6+ */
-  background: -webkit-linear-gradient(top,  #e4d9ff 0%,#d2c8e5 100%); /* Chrome10+,Safari5.1+ */
-  background: -ms-linear-gradient(top,  #e4d9ff 0%,#d2c8e5 100%); /* IE10+ */
   background: linear-gradient(to bottom,  #e4d9ff 0%,#d2c8e5 100%); /* W3C */
 
   border-bottom:1px solid #b5a5d5;
@@ -75,18 +77,28 @@
 /* when a story is favourited, do not show the report icon (this avoids some inconsistencies) */
 #sharedstories-top .report { display:none; }
 
-#sharedstories-new .title,
-#sharedstories-fav .title { margin:0 0 12px; font-size:1.1em; line-height:33px; padding:0 15px; zoom:1; }
+  /* New & updated" */
 #sharedstories-new .title { 
-  background:#D6D1B2 url(../images/1.0/layout/study-stories-titlebar.gif) repeat-x 0 0;
   color:#646250; cursor:pointer;
-  text-shadow:0 1px rgba(255,255,255,0.75);
+
+  /* http://colorzilla.com/gradient-editor/#eeedd0+0,d9d6b7+100 */
+  background: #eeedd0; /* Old browsers */
+  background: linear-gradient(to bottom, #eeedd0 0%,#d9d6b7 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  
+  border-bottom:1px solid #bdbcaa;
 }
+
+  /* Shared stories (main section) */
 #sharedstories-fav .title { 
-  background:#C8E5AA url(../images/1.0/layout/study-stories-titlebar.gif) repeat-x 0 -66px;
   color:#42651D; margin-top:1.5em;
-  text-shadow:0 1px rgba(255,255,255,0.75);
+
+  /* http://colorzilla.com/gradient-editor/#d9f5bf+0,cde8ad+100 */
+  background: #d9f5bf; /* Old browsers */
+  background: linear-gradient(to bottom, #d9f5bf 0%,#cde8ad 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  
+  border-bottom:1px solid #bccdac;
 }
+
  /* newest stories toggle */
 #sharedstories-new.JsHide .title { margin-bottom:-1.5em; }
 #sharedstories-new.JsHide .sharedstory { display:none; }

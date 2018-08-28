@@ -101,13 +101,10 @@ $db->dumpResultSet($rs);
 <?php if (!$reviewMode && $isRestudyKanji): ?>
   <?php if (!$isRelearnedKanji): ?>
             <div class="controls">
-              <?= input_tag('doLearned', '', array(
-                'type' => 'image', 'src' => '/images/2.0/study/restudy-button.gif',
-                'alt'  => 'Add to restudied list',
-                'title'=> 'Add kanji that you have relearned to a list for review later' )) ?>
+              <?= submit_tag('Add to learned list', array('name' => 'doLearned', 'class' => 'btn btn-success')) ?>
             </div>
   <?php else: ?>
-            <div class="msg-relearned">This kanji is ready for review in the <strong>restudied</strong> list.</div>
+            <div class="msg-relearned">This kanji is ready for review in the <strong>learned</strong> list.</div>
   <?php endif ?>
 <?php endif ?>
 

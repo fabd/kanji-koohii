@@ -71,9 +71,9 @@ class studyActions extends sfActions
     else
     {
       $ucsId = $this->parseUcsIdParameter($request);
-      
-      // Learned kanji (doLearned.x, from input type="image")
-      if ($request->hasParameter('doLearned_x'))
+
+      // "Add to learned list"
+      if ($request->hasParameter('doLearned'))
       {
         LearnedKanjiPeer::addKanji($userId, $ucsId);
 

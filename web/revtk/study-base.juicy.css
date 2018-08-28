@@ -163,7 +163,8 @@
   /* show background between vertica stories */
   .sharedstory { margin-bottom:0.5em; }
 
-  .rtkframe .bookstyle { font-size:16px; }
+  .rtkframe .bookstyle,
+  .rtkframe #storyedit textarea { font-size:16px; }
 
   /* big kanji to the left on desktop */
   #my-stories .rtkframe { padding-left:6.25em; }

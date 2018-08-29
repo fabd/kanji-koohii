@@ -92,7 +92,6 @@ class studyActions extends sfActions
     if ($ucsId && ($this->kanjiData = KanjisPeer::getKanjiByUCS($ucsId)))
     {
       sfProjectConfiguration::getActive()->loadHelpers('CJK');
-      $this->kanjiData->readings = format_readings($this->kanjiData->onyomi);
 
       $this->custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
 
@@ -440,7 +439,6 @@ class studyActions extends sfActions
 
     $kanjiData = KanjisPeer::getKanjiByUCS($ucsId);
     sfProjectConfiguration::getActive()->loadHelpers('CJK');
-    $kanjiData->readings = format_readings($kanjiData->onyomi);
 
     $tron = new JsTron();
     $tron->add(array(

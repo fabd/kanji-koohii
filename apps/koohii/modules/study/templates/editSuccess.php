@@ -47,8 +47,9 @@ EOD;
       <h2><?php echo $title; ?></h2>
       <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($sf_user, $sf_context, $kanjiData->ucs_id); } ?>
     </div>
-  
-    <?php include_component('study', 'EditStory', array('kanjiData' => $kanjiData, 'reviewMode' => false, 'custKeyword' => $custKeyword)) ?>
+
+    <div id="JsEditStoryInst" style="min-height:100px;"></div>
+
   </div>
 
   <?php if (!CJ_HANZI): ?>
@@ -122,3 +123,13 @@ EOD;
 
 </div><!-- /row -->
 
+
+<?php koohii_onload_slot() ?>
+// syntax highlight my <script> :)
+"use strict";
+
+  var propsData = <?php echo json_encode(['kanjiData' => $kanjiData, 'reviewMode' => false, 'custKeyword' => $custKeyword]) ?>;
+ 
+  VueInstance(Koohii.UX.KoohiiEditStory, '#JsEditStoryInst', propsData);
+
+<?php end_slot() ?>

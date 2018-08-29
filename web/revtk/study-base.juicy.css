@@ -10,8 +10,11 @@
 /* =require from "%WEB%" */
 
 /* =require "/revtk/components/EditKeywordDialog.css" */
-/* =require "/revtk/components/EditStoryComponent.css" */
 /* =require "/revtk/components/EditFlashcardDialog.css" */
+
+
+#EditStoryComponent { margin:0 0 2em; }
+#EditStoryComponent h2 { font-size:26px; line-height:34px; /* align to the button*/ }
 
 
  /* bootstrap-xs-sm */

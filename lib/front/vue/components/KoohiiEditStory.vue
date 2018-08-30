@@ -33,7 +33,7 @@
         <div class="right">
           
           <div class="keyword">
-            <span class="JSEditKeyword" title="Click to edit the keyword" :data-url="editKeywordUrl">{{ kanjiData.keyword }}</span>
+            <span class="JSEditKeyword" v-on:click="onKeyword" title="Click to edit the keyword">{{ displayKeyword }}</span>
           </div>
 
           <div id="storybox">
@@ -94,15 +94,21 @@ export default {
 
   props: {
     
+    // framenum, kanji, ucs_id, keyword, onyomi, strokecount, ... (cf. kanjisPeer::getKanjiByUCS())
     kanjiData: Object,
 
+    // user edted keyword, or null
     custKeyword: String,
 
+    // true if instanced as a dialog within Flashcard Review page
     reviewMode: Boolean
-
   },
 
   computed: {
+    displayKeyword() {
+      return this.custKeyword || this.kanjiData.keyword
+    },
+
     editKeywordUrl() {
       return '/study/editkeyword/id/' + this.kanjiData.ucs_id
     },
@@ -114,6 +120,38 @@ export default {
 
   data() {
     return {
+      // Edit Keyword dialog instance
+      oEditKeyword: null
+    }
+  },
+
+  methods: {
+
+    // FIXME : legacy code until refactor EditKeyword dialog to Vue
+    onKeyword(event) {
+      const el = event.target
+      // Core.log('onKeyword() %o', el)
+
+      // callback with the modified keyword
+      const callback = (keyword) => {
+        // Core.log('onKeyword callback()')
+        el.innerHTML = keyword;
+        
+        // invalidate cached dialog
+        this.oEditKeyword.destroy()
+        this.oEditKeyword = null
+      }
+
+      if (!this.oEditKeyword) {
+        const url     = this.editKeywordUrl
+        const options = { context: ["my-story", "tr", "tr", null, [-6, 6]] }
+        this.oEditKeyword = new App.Ui.EditKeywordComponent(url, options, callback)
+      }
+      else {
+        this.oEditKeyword.show()
+      }
+
+      return false
     }
   },
 
@@ -121,7 +159,6 @@ export default {
     Core.log('KoohiiEditStory::created()')
 
     Core.log('kanjiData %o', this.kanjiData)
-
   }
 
 }

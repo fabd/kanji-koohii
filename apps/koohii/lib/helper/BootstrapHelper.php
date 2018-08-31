@@ -233,5 +233,7 @@ function _bs_submit_tag($label, $options = array()) {
  */
 function koohii_onload_slot() {
   $name = 'inline_javascript';
+  $prevContent = get_slot($name);
   slot($name);
+  print $prevContent;
 }

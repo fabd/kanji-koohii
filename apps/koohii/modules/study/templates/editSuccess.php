@@ -1,8 +1,10 @@
-<?php $oRTK = rtkIndex::inst() ?>
-<?php 
-function get_flashcard_button($user, $context, $ucsId)
+<?php
+
+  $userId = $sf_user->getUserId();
+
+function get_flashcard_button($userId, $context, $ucsId)
 {
-  $has_flashcard = intval(ReviewsPeer::hasFlashcard($user->getUserId(), $ucsId));
+  $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
   $dialogUri  = $context->getController()->genUrl('flashcards/dialog');
   $params     = esc_specialchars(coreJson::encode(array('ucs' => intval($ucsId))));
 //<div id="EditFlashcard" class="f$bFlashcard">
@@ -33,6 +35,8 @@ EOD;
     <div class="clear"></div>
   </div>
   
+  <?php $oRTK = rtkIndex::inst() ?>
+
   <p> Sorry, there are no results for "<strong><?php echo esc_specialchars($sf_params->get('id')) ?></strong>".</p>
 
   <p> Valid frame numbers for <strong><?php echo $oRTK->getSequenceName() ?></strong> are #1 to #<?php echo $oRTK->getNumCharacters() ?>.</p>
@@ -45,7 +49,7 @@ EOD;
     
     <div style="position:relative;">
       <h2><?php echo $title; ?></h2>
-      <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($sf_user, $sf_context, $kanjiData->ucs_id); } ?>
+      <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($userId, $sf_context, $kanjiData->ucs_id); } ?>
     </div>
 
     <div id="JsEditStoryInst" style="min-height:100px;"></div>
@@ -75,8 +79,7 @@ EOD;
       </div>
 <?php
   use_helper('Links');
-  $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $sf_user->getUserId(), 'starred');
-  $userId  = $sf_user->getUserId();
+  $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $userId, 'starred');
   $ucsId   = $kanjiData->ucs_id;
   foreach($stories as $o) {
 ?>
@@ -123,13 +126,29 @@ EOD;
 
 </div><!-- /row -->
 
+<?php
 
-<?php koohii_onload_slot() ?>
-// syntax highlight my <script> :)
-"use strict";
+  // keyword auto-bolded in user story view
+  $formatKeyword  = $custKeyword ?: $kanjiData->keyword;
 
-  var propsData = <?php echo json_encode(['kanjiData' => $kanjiData, 'reviewMode' => false, 'custKeyword' => $custKeyword]) ?>;
- 
-  VueInstance(Koohii.UX.KoohiiEditStory, '#JsEditStoryInst', propsData);
+  // prepare story component
+  $savedStory     = StoriesPeer::getStory($userId, $ucsId);
+  $savedStoryText = $savedStory->text ?: '';
+  $formattedStory = StoriesPeer::getFormattedStory($savedStoryText, $formatKeyword, true);
+
+  $propsData = json_encode([
+    'kanjiData'     => $kanjiData,
+    'reviewMode'    => false,
+    'custKeyword'   => $custKeyword,
+
+    'initStory_Edit'   => $savedStoryText,
+    'initStory_View'   => $formattedStory,
+    'initStory_Public' => (bool) $savedStory->public
+  ]);
+
+  koohii_onload_slot();
+?>
+
+  VueInstance(Koohii.UX.KoohiiEditStory, '#JsEditStoryInst', <?= $propsData ?>);
 
 <?php end_slot() ?>

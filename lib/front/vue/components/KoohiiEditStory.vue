@@ -38,25 +38,44 @@
 
           <div id="storybox">
 
-            <div id="storyedit" style="display:none;">
+
+            <!-- view / edit story -->
+
+            <div v-if="isEditing" id="storyedit">
             
-              <textarea name="txtStory" id="frmStory"></textarea>
+              <textarea name="txtStory" id="frmStory" v-model="editingStory"></textarea>
 
               <div class="controls valign">
                 <div style="float:left;">
-                  <input type="checkbox" name="chkPublic" value="1" id="chkPublic">
-                  <label for="chkPublic">Share this story</label>
+                  <input type="checkbox" name="chkPublic" id="storyedit_public" v-model="chkPublicStory">
+                  <label for="storyedit_public">Share this story</label>
                 </div>
                 <div style="float:right;">
                   <input type="submit" name="doUpdate" value="Save changes" title="Save/Update story">
-                  <input type="button" id="storyedit_cancel" value="Cancel" name="cancel" title="Cancel changes">
+                  <input v-on:click="onCancel" type="button" value="Cancel" name="cancel" title="Cancel changes">
                 </div>
                 <div class="clear"></div>
               </div>
             </div>
                     
-            <div id="storyview" style="display:block;">
-              <div id="sv-textarea" class="bookstyle" title="Click to edit your story" style="display:block;"></div>
+            <div v-else id="storyview">
+
+              <div id="sv-textarea" class="bookstyle" title="Click to edit your story" v-on:click="onEditStory">
+                
+                <template v-if="formattedStory">
+                  <div v-html="formattedStory"></div>
+                </template>
+
+                <template v-else>
+                  <div  class="empty">[ click here to enter your story ]</div>              
+                </template>
+
+                <div v-if="isFavoriteStory" class="favstory">
+                  <div class="ico">&nbsp;</div>Starred story (click to edit)
+                </div>
+
+
+              </div>
             </div>
 
           </div>
@@ -69,10 +88,10 @@
       </div>
       <!-- /rtkframe -->
 
+      <div class="bottom"></div>
+
     </div>
     <!-- /#my-story -->
-
-    <div class="bottom"></div>
 
   </form>
 
@@ -84,6 +103,11 @@
 
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
+import $$ from '../lib/coreJS.js'
+
+// (legacy code)
+const Y = YAHOO,
+      Dom = Y.util.Dom;
 
 export default {
   name: 'KoohiiEditStory',
@@ -93,15 +117,38 @@ export default {
   },
 
   props: {
-    
+    // See ./apps/koohii/modules/study/templates/editSuccess.php
+
     // framenum, kanji, ucs_id, keyword, onyomi, strokecount, ... (cf. kanjisPeer::getKanjiByUCS())
     kanjiData: Object,
-
     // user edted keyword, or null
     custKeyword: String,
-
     // true if instanced as a dialog within Flashcard Review page
-    reviewMode: Boolean
+    reviewMode: Boolean,
+
+    initStory_Edit:   String,
+    initStory_View:   String,
+    initStory_Public: Boolean
+  },
+
+  data() {
+    return {
+      // Edit Keyword dialog instance
+      oEditKeyword: null,
+
+      formattedStory: '',
+
+      isFavoriteStory: false,
+
+      isEditing: false,
+
+      // keepa copy to cancel changes
+      uneditedStory: '',
+
+      // form state
+      editingStory: '',
+      chkPublicStory: false,
+    }
   },
 
   computed: {
@@ -118,16 +165,48 @@ export default {
     }
   },
 
-  data() {
-    return {
-      // Edit Keyword dialog instance
-      oEditKeyword: null
-    }
-  },
-
   methods: {
 
-    // FIXME : legacy code until refactor EditKeyword dialog to Vue
+    onEditStory() {
+      this.editStory()
+    },
+
+    onCancel() {
+      this.doCancel()
+    },
+
+    doCancel() {
+      this.editingStory = this.uneditedStory
+      this.isEditing = false
+    },
+
+    /**
+     * Edit Story or Edit a copy of another user's story.
+     * 
+     * @param {Object} sCopyStory   The "copy" story feature will set this to the copied story text.
+     */  
+    editStory:function(sCopyStory)  
+    {
+      // edit a new story, cancel will restore the previous one
+      if (sCopyStory) {
+        this.editingStory = sCopyStory
+      }
+      
+      this.uneditedStory = this.editingStory
+      this.isEditing = true
+
+      // note:AFTER toggling isEditing,order is important!
+      this.$nextTick(function() {
+       
+        const elTextArea = $$('#frmStory')[0];
+        Core.log(elTextArea)
+        // DOM is now updated
+        this.setCaretToEnd(elTextArea)
+      })
+
+    },
+
+    // (legacy code) instance Edit Keyword dialog, not yet refactored to Vue
     onKeyword(event) {
       const el = event.target
       // Core.log('onKeyword() %o', el)
@@ -152,13 +231,38 @@ export default {
       }
 
       return false
+    },
+
+    // cross-browser (now obsolete?) move caret to end of input field
+    setCaretToEnd(element)
+    {
+      if (element.createTextRange) {
+        var range = element.createTextRange()
+        range.collapse(false)
+        range.select()
+      }
+      else if (element.setSelectionRange) {
+        element.focus()
+        var length = element.value.length
+        element.setSelectionRange(length, length)
+      }
+    }
+  },
+
+  beforeDestroy() {
+    // (legacy code) free resources/events used by Edit Keyword dialog
+    if (this.oEditKeyword) {
+      this.oEditKeyword.destroy()
+      this.oEditKeyword = null
     }
   },
 
   created() {
     Core.log('KoohiiEditStory::created()')
 
-    Core.log('kanjiData %o', this.kanjiData)
+    this.editingStory   = this.initStory_Edit
+    this.formattedStory = this.initStory_View
+    this.chkPublicStory = this.initStory_Public
   }
 
 }
@@ -200,9 +304,9 @@ export default {
 .rtkframe .keyword .edition { font-size:0.6em; }
 
 .rtkframe #storybox    { padding:14px 0 0;  } /* story 'view' mode */
-.rtkframe #sv-textarea { padding:5px; height:auto; min-height:100px; }
 
-.rtkframe #sv-textarea.hover {  background:#f5f5f5; }
+.rtkframe #sv-textarea { padding:5px; height:auto; min-height:100px; }
+.rtkframe #sv-textarea:hover { background:#f5f5f5; }
 
 .rtkframe .bookstyle .empty { color:#888; }
 
@@ -212,7 +316,6 @@ export default {
 
 #storyview .controls   { padding-right:16px; margin:12px 0 0; text-align:right; }
 
-.rtkframe #storyedit { display:none; }
 .rtkframe #storyedit textarea {
   width:100%; height:153px; padding:5px; border:1px solid #e8e5c9; background:#f5f5f5; box-sizing: border-box;
 }

@@ -17,7 +17,6 @@
 
 /* =require from "%WEB%" */
 /* !require "/revtk/study/keywords.js" */
-/* =require "/revtk/components/EditStoryComponent.js" */
 /* =require "/revtk/components/EditKeywordDialog.js" */
 /* =require "/revtk/components/EditFlashcardDialog.js" */
 /* =require "/revtk/components/SharedStoriesComponent.js" */

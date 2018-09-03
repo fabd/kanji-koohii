@@ -51,7 +51,7 @@
                   <label for="storyedit_public">Share this story</label>
                 </div>
                 <div style="float:right;">
-                  <input type="submit" name="doUpdate" value="Save changes" title="Save/Update story">
+                  <input v-on:click="onSubmit" type="button" value="Save changes" title="Save/Update story">
                   <input v-on:click="onCancel" type="button" value="Cancel" name="cancel" title="Cancel changes">
                 </div>
                 <div class="clear"></div>
@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import api from '../lib/api.js'
 
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
@@ -169,6 +170,11 @@ export default {
 
     onEditStory() {
       this.editStory()
+    },
+
+    onSubmit() {
+      api.postUserStory(this.kanjiData.ucs_id, this.editingStory)
+      return false
     },
 
     onCancel() {

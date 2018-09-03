@@ -144,16 +144,31 @@ class homeActions extends sfActions
       $remote_addr = $pathArray['REMOTE_ADDR'];
       $message     = 'IP address: '.$remote_addr."\n\n".$message;
 
-      // fabd: spam prevention, refuse message with links for non-authenticated users
-      if (!$this->getUser()->isAuthenticated() && preg_match('#https?://#', $message)) {
-        $request->setError('spam', 'Note: due to spam, we have to block messages containing links. (Pssst! If you are a real person, simply remove the http prefix from the URL and it will go through.)');
-        $this->getResponse()->setStatusCode(403);
+      // fabd: spam prevention for unauthenticated users
+      //  refuse message with links for non-authenticated users
+      if (!$this->getUser()->isAuthenticated())
+      {
+        if (preg_match('#https?://#', $message))
+        {
+          $request->setError('spam', 'Note: due to spam, we have to block messages containing links. (Pssst! If you are a real person, simply remove the http prefix from the URL and it will go through.)');
+          $this->getResponse()->setStatusCode(403);
 
-        $sfs = new StopForumSpam();
-        //$regip = StopForumSpam::getRemoteAddress();
-        $sfs->logActivity($remote_addr, '/contact : blocked message with link (403)');
+          $sfs = new StopForumSpam();
+          $sfs->logActivity($remote_addr, '/contact : blocked message with link (403)');
 
-        return;
+          return $this->renderText('Spam.');
+        }
+
+        if ($this->isRussianText($message))
+        {
+          $request->setError('spam', 'Spam.');
+          $this->getResponse()->setStatusCode(403);
+
+          $sfs = new StopForumSpam();
+          $sfs->logActivity($remote_addr, '/contact : blocked Russian (403)');
+
+          return $this->renderText('Spam.');
+        }
       }
 
       if (CORE_ENVIRONMENT !== 'dev')
@@ -174,7 +189,18 @@ class homeActions extends sfActions
       return 'EmailSent';
     }
   }
-  
+
+  /**
+   * Detect Russian in message (at least N characters)
+   *  
+   * @return boolean
+   */
+  private function isRussianText($text)
+  {
+    $count = (int) preg_match_all('/[А-Яа-яЁё]/u', $text);
+    return $count > 10;
+  }
+
   /**
    * Display the active members list.
    *

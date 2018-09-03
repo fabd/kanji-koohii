@@ -5,10 +5,15 @@
  * These should be used with request variables. Therefore even when validating
  * an integer, the value argument is always a string coming from GET/POST requests.
  *
- * Methods:
- *  validateUsername($value)
- *  validateNoHtmlTags($value)
- *  validateArrayKeys(array $input, array $valid_keys)
+ * Validate methods:
+ *   
+ *   validateUsername($value)
+ *   validateNoHtmlTags($value)
+ *   validateArrayKeys(array $input, array $valid_keys)
+ *
+ * Sanitize methods (validate & return value in the expected type or throws exception):
+ *   
+ *   sanitizeCJKUnifiedUCS($value)
  * 
  * 
  * @author     Fabrice Denis
@@ -60,5 +65,21 @@ class rtkValidators
     }
 
     return true;
+  }
+
+  /**
+   * Cast value to an int, and makes sure it checks against supported CJK range.
+   *
+   * @return int
+   */
+  public static function sanitizeCJKUnifiedUCS($value)
+  {
+    $ucs_code = BaseValidators::sanitizeInteger($value);
+
+    if (!CJK::isCJKUnifiedUCS($value)) {
+      throw new sfException(__METHOD__);
+    }
+
+    return $ucs_code;
   }
 }

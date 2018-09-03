@@ -420,11 +420,13 @@ class studyActions extends sfActions
    */
 
   /**
-   * EditStoryDialog ajax handler for the Review pages.
+   * EditStoryDialog ajax handler.
    * 
    * Request parameters:
-   *   ucs_code     UCS-2 code.
-   *   reviewMode   True if used from the Review page EditStory window.
+   *   ucs_code     int
+   *   reviewMode   boolean    True if used from the Review page EditStory window.
+   *   txtStory     string
+   *   chkPublic    boolean
    * 
    * See study/edit action (parameters) and EditStoryDialog.js
    *
@@ -432,24 +434,85 @@ class studyActions extends sfActions
    */
   public function executeEditstory($request)
   {
-    $ucsId = $request->getParameter('ucs_code', false);
-    $this->forward404Unless(BaseValidators::validateInteger($ucsId) && intval($ucsId));
-
-    $reviewMode = $request->hasParameter('reviewMode');
-
-    $kanjiData = KanjisPeer::getKanjiByUCS($ucsId);
-    sfProjectConfiguration::getActive()->loadHelpers('CJK');
-
+    $this->getResponse()->setContentType('application/json');
+    
+    $json = $request->getContentJson();
     $tron = new JsTron();
-    $tron->add(array(
-      'dialogTitle'   => 'Edit Story' // for '.$kanjiData->kanji.' (#'.$kanjiData->framenum.')'
-    ));
-    $tron->setStatus(JsTron::STATUS_PROGRESS);
-//sleep( 3);
 
-    $custKeyword = CustkeywordsPeer::getCustomKeyword($this->getUser()->getUserId(), $ucsId);
+    //
+    $userId     = $this->getUser()->getUserId();
+    $savedStory = '';
 
-    return $tron->renderComponent($this, 'study', 'EditStory', array('kanjiData' => $kanjiData, 'reviewMode' => $reviewMode, 'custKeyword' => $custKeyword));
+    // request parameters
+    $ucsId      = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs_code);
+    $txtStory   = trim($json->txtStory);
+    $chkPublic  = (bool) $json->chkPublic;
+    $reviewMode = (bool) $json->reviewMode;
+
+
+    // disallow markup
+    if ($txtStory !== strip_tags($txtStory)) {
+      $tron->setError('HTML markup (tags) formatting not allowed in stories.');
+      return $tron->renderJson($this);
+    }
+
+    // validate story length with helpful message
+    mb_internal_encoding('utf-8');
+    $count = mb_strlen($txtStory);
+    if ($count > rtkStory::MAXIMUM_STORY_LENGTH) {
+      $n = $count - rtkStory::MAXIMUM_STORY_LENGTH;
+      $tron->setError(sprintf('Story is too long (512 characters maximum, %d over the limit).', $n));
+      return $tron->renderJson($this);
+    }
+    
+    // validate kanji links within story
+    if (true !== ($errorMsg = rtkStory::validateKanjiLinks($txtStory))) {
+      $tron->setError($errorMsg);
+      return $tron->renderJson($this);
+    }
+
+    // delete story if empty text
+    if (empty($txtStory))
+    {
+      StoriesPeer::deleteStory($userId, $ucsId);
+      $savedStory = '';
+    }
+    else
+    // update story
+    {
+      $savedStory = rtkStory::substituteKanjiLinks($txtStory);
+
+      if (true !== StoriesPeer::updateStory($userId, $ucsId, ['text' => $savedStory, 'public' => (int) $chkPublic]))
+      {
+        $tron->setError("Woops, the story couldn't be saved. Try again in a few moments.");
+        return $tron->renderJson($this);
+      }
+    }
+    
+    // FIXME for now always invalidate the cache (TODO skip if story was private and remains private)
+    StoriesSharedPeer::invalidateStoriesCache($ucsId);
+
+    // ONLY for flashcard reviews -- get favorite story, if user's story is empty
+    $tron->set('isFavoriteStory', false);
+    if ($reviewMode && $savedStory === '')
+    {
+      if (false !== ($favStory = StoriesPeer::getFavouriteStory($userId, $ucsId)))
+      {
+        $savedStory = $favStory->text; // story to format
+        $tron->set('isFavoriteStory', true);
+      }
+    }
+
+    // keyword to auto-format
+    $kanjiData     = KanjisPeer::getKanjiByUCS($ucsId);
+    $custKeyword   = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $formatKeyword = $custKeyword ?? $kanjiData->keyword;
+
+    // response
+
+    $tron->set('formattedStory', StoriesPeer::getFormattedStory($savedStory, $formatKeyword, true));
+
+    return $tron->renderJson($this);
   }
 
   /**

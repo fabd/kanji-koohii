@@ -10,7 +10,7 @@
     <div class="k-fx-collapse__wrap" ref="contentWrap">
       <div ref="content">
       <ul v-if="sm.children.length" class="k-nav-menu" >
-        <koohii-nav-menu-item v-for="$item in sm.children" :sm="$item"/>
+        <koohii-nav-menu-item v-for="$item in sm.children" :sm="$item" :key="$item.id" />
       </ul>
       </div>
     </div>

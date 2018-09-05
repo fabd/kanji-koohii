@@ -1,17 +1,15 @@
 //
 
-const webpack = require("webpack");
+const Webpack = require("webpack");
 
 const isProduction = (process.env.NODE_ENV === 'production');
 
 // Extract all the processed CSS in all Vue components into a single CSS file:
 //  https://vue-loader.vuejs.org/en/configurations/extract-css.html
 //  https://github.com/webpack/extract-text-webpack-plugin
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-
-
-var path = require('path');
+const Path = require('path');
 
 module.exports = {
   
@@ -51,8 +49,8 @@ module.exports = {
               loaders: {
 
                 css: ExtractTextPlugin.extract({
-                  use: [ { loader: "css-loader" } ],
-                  fallback: "vue-style-loader" // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                  use: "css-loader",
+                  fallback: "vue-style-loader"
                 }),
 
                 js: "babel-loader"
@@ -94,8 +92,11 @@ module.exports = {
   },
 
   plugins: [
+    // enable Scope Hoisting (very small gains)
+    new Webpack.optimize.ModuleConcatenationPlugin(),
+
     // https://webpack.js.org/plugins/commons-chunk-plugin/
-    new webpack.optimize.CommonsChunkPlugin({
+    new Webpack.optimize.CommonsChunkPlugin({
       name: 'root-bundle',
       minChunks: Infinity
     }),
@@ -106,7 +107,7 @@ module.exports = {
     }),
 
     // remove all debug code (including Vue.js warnings) in production
-    new webpack.DefinePlugin({
+    new Webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: isProduction ? '"production"' : '"development"'
       }
@@ -121,10 +122,10 @@ module.exports = {
       //vue:     'vue/dist/vue.runtime.js'
       'vue':     'vue/dist/vue.common.js',
 
-      'components': path.resolve(__dirname, 'lib/front/vue/components'),
+      'components': Path.resolve(__dirname, 'lib/front/vue/components'),
 
       // legacy code
-      'legacy':     path.resolve(__dirname, 'lib/front/vue/legacy')
+      'legacy':     Path.resolve(__dirname, 'lib/front/vue/legacy')
     }
   },
 
@@ -140,13 +141,13 @@ if (process.env.NODE_ENV === 'production')
 
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.optimize.UglifyJsPlugin({
+    new Webpack.optimize.UglifyJsPlugin({
       //fab-- sourceMap: true,
       compress: {
         warnings: false
       }
     }),
-    new webpack.LoaderOptionsPlugin({
+    new Webpack.LoaderOptionsPlugin({
       minimize: true
     })
   ])

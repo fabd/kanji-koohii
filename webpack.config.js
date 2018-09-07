@@ -53,7 +53,22 @@ module.exports = {
                   fallback: "vue-style-loader"
                 }),
 
-                js: "babel-loader"
+                js: [
+                  // testing but we won't use this
+                  // {
+                  //   loader: 'string-replace-loader',
+                  //   options: {
+                  //     multiple: [
+                  //       { search: '\\sCore\\.log\\(', replace: '//Core.log(', flags: 'g' },
+                  //       { search: '\\sCore\\.warn\\(', replace: '//Core.warn(', flags: 'g' }
+                  //     ]
+                  //   }
+                  // },
+                  {
+                    loader: 'babel-loader'
+                  }
+                  
+                ]
               }
             }
           }
@@ -63,21 +78,23 @@ module.exports = {
       {
         // Ask webpack to check: If this file ends with .js, then apply some transforms
         test:    /\.js$/,
-        use: [ { loader:  "babel-loader" } ],
         exclude: /node_modules/,
-
-        // Options are in .babelrc 
-        //options: { presets: ["es2015"] }
+        use: [
+          // testing but we won't use this
+          // {
+          //   loader: 'string-replace-loader',
+          //   options: {
+          //     multiple: [
+          //       { search: '\\sCore\\.log\\(', replace: '//Core.log(', flags: 'g' },
+          //       { search: '\\sCore\\.warn\\(', replace: '//Core.warn(', flags: 'g' }
+          //     ]
+          //   }
+          // },
+          {
+            loader: 'babel-loader'
+          }
+        ]
       },
-
-      /* FIXME : only in production + work with .vue files
-      {
-        // strip debug code
-        test:    /\.js$/,
-        loader:  "strip-loader?strip[]=core.log,strip[]=console.log",
-        exclude: /node_modules/,
-      },
-      */
 
       {
         test:    /\.(png|jpg|gif|svg)$/,

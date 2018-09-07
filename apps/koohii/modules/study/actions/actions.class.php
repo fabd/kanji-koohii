@@ -682,11 +682,7 @@ class studyActions extends sfActions
    */
   public function executeDict($request)
   {
-    $ucsId = intval($request->getParameter('ucs'));
-
-    if (!CJK::isCJKUnifiedUCS($ucsId)) {
-      throw new rtkAjaxException('Bad request.');
-    }
+    $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($request->getParameter('ucs'));
 
     // use a TRON response because of AjaxDialog used in Flashcard Review page
     $tron = new JsTron();

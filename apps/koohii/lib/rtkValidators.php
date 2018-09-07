@@ -76,7 +76,7 @@ class rtkValidators
   {
     $ucs_code = BaseValidators::sanitizeInteger($value);
 
-    if (!CJK::isCJKUnifiedUCS($value)) {
+    if (!CJK::isCJKUnifiedUCS($ucs_code)) {
       throw new sfException(__METHOD__);
     }
 

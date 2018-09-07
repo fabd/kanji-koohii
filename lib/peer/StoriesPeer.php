@@ -163,12 +163,8 @@ class StoriesPeer extends coreDatabaseTable
 
     $s = $story;
 
-    // minimal punctuation : upper case first word (ignore non-alphabet & multibyte)
-    if (preg_match('/[a-z]/i', $s, $match, PREG_OFFSET_CAPTURE))
-    {
-      $i = $match[0][1];
-      $s = substr($s, 0, $i) . ucfirst(substr($s, $i));
-    }
+    // minimal punctuation : upper case first letter if alphabetic
+    $s = ucfirst($s);
 
     // minimal punctuation : end sentence with dot (accepts "quote." spelling)
     if (preg_match ('/[^.!?][^.!?]$/', $s))

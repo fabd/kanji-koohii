@@ -8,7 +8,7 @@ class accountActions extends sfActions
   // - hiragana : とうきょう
   // 
   //
-  const VALID_ANSWERS = '^\s*(t[oō]+u?[ky][kiy][oō]+u?|東京|とうきょう|とき[ょお]|t[óÓ][kq]u?io)\s*$';
+  const VALID_ANSWERS = '^(t[oō]+u?[ky]i?[kiy][oō]+u?|東京|とうきょう|とき[ょお]|t[óÓ][kq]u?io)$';
 
   // period to enforce max. registrations (hours)
   const BETWEEN_REGS_TIME = 24;
@@ -109,11 +109,12 @@ class accountActions extends sfActions
           return sfView::SUCCESS;
         }
 
-        $answer = trim($request->getParameter('question'));
-        
+        mb_regex_encoding('UTF-8');
+
+        // ignore spaces in the answer
+        $answer = mb_ereg_replace('\s+', '', $request->getParameter('question', ''));
 
         // log activity of spam bots se we know if there is abuse
-        mb_regex_encoding('UTF-8');
         if (true !== mb_ereg_match(self::VALID_ANSWERS, strtolower($answer)))
         {
           if (empty($answer))
@@ -127,7 +128,7 @@ class accountActions extends sfActions
           }
           else
           {
-            $request->setError('question', 'The answer is not correct, or misspelled.');
+            $request->setError('question', 'Incorrect answer (note: it\'s a city).');
             $sfs->logActivity($regip, 'WRONG answer to the anti-spam question ("'.$answer.'")');
             return sfView::SUCCESS;
           }

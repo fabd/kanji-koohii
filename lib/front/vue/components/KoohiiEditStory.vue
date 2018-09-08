@@ -42,7 +42,11 @@
             <!-- view / edit story -->
 
             <div v-if="isEditing" id="storyedit">
-            
+              
+              <div v-if="formErrors.length" class="form_errors" style="color:red;padding:0 0 .5em;font-size:80%;">
+                <div v-for="errorTxt in formErrors">{{ errorTxt}}</div>
+              </div>
+
               <textarea name="txtStory" id="frmStory" v-model="editingStory"></textarea>
 
               <div class="controls valign">
@@ -144,10 +148,13 @@ export default {
 
       isEditing: false,
 
-      // keepa copy to cancel changes
+      // keep a copy to cancel changes
       uneditedStory: '',
 
-      // form state
+      // form state : generic (todo, some kind of mixin?)
+      formErrors: [],
+
+      // form state : specific
       editingStory: '',
       chkPublicStory: false,
     }
@@ -182,10 +189,14 @@ export default {
       KoohiiAPI.postUserStory(this.kanjiData.ucs_id, this.editingStory, {
         then: (tron) => {
           const props =  tron.getProps()
-          Core.log('then()  props %o', tron.getProps())
 
-          this.formattedStory = props.formattedStory
-          this.isEditing = false
+          // form handling
+          this.formErrors = tron.getErrors()
+
+          if (!tron.hasErrors()) {
+            this.formattedStory = props.formattedStory
+            this.isEditing = false
+          }
         }
       })
 

@@ -100,9 +100,9 @@
 </template>
 
 <script>
-import $$    from '../lib/coreJS.js'
-import api   from '../lib/api.js'
-import TRON  from '../lib/tron.js'
+import $$            from '../lib/coreJS.js'
+
+import { KoohiiAPI, TRON } from '../lib/KoohiiAPI.js'
 
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
@@ -179,9 +179,9 @@ export default {
 
     onSubmit()
     {
-      api.postUserStory(this.kanjiData.ucs_id, this.editingStory, {
+      KoohiiAPI.postUserStory(this.kanjiData.ucs_id, this.editingStory, {
         then: (tron) => {
-          let props =  tron.getProps()
+          const props =  tron.getProps()
           Core.log('then()  props %o', tron.getProps())
 
           this.formattedStory = props.formattedStory

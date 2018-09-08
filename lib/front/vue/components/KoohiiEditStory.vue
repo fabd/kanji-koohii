@@ -43,8 +43,8 @@
 
             <div v-if="isEditing" id="storyedit">
               
-              <div v-if="formErrors.length" class="form_errors" style="color:red;padding:0 0 .5em;font-size:80%;">
-                <div v-for="errorTxt in formErrors">{{ errorTxt}}</div>
+              <div v-if="koohiiformGetErrors" class="formerrormessage">
+                <span v-html="koohiiformGetErrors"></span>
               </div>
 
               <textarea name="txtStory" id="frmStory" v-model="editingStory"></textarea>
@@ -107,6 +107,7 @@
 import $$            from '../lib/coreJS.js'
 
 import { KoohiiAPI, TRON } from '../lib/KoohiiAPI.js'
+import KoohiiForm          from '../lib/mixins/KoohiiForm.js'
 
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
@@ -121,6 +122,10 @@ export default {
   components: {
     cjk_lang_ja
   },
+
+  mixins: [
+    KoohiiForm
+  ],
 
   props: {
     // See ./apps/koohii/modules/study/templates/editSuccess.php
@@ -150,9 +155,6 @@ export default {
 
       // keep a copy to cancel changes
       uneditedStory: '',
-
-      // form state : generic (todo, some kind of mixin?)
-      formErrors: [],
 
       // form state : specific
       editingStory: '',
@@ -190,8 +192,7 @@ export default {
         then: (tron) => {
           const props =  tron.getProps()
 
-          // form handling
-          this.formErrors = tron.getErrors()
+          this.koohiiformHandleResponse(tron)
 
           if (!tron.hasErrors()) {
             this.formattedStory = props.formattedStory

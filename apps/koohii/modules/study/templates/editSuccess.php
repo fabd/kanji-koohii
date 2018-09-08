@@ -135,6 +135,13 @@ EOD;
   $savedStory     = StoriesPeer::getStory($userId, $ucsId);
   $savedStoryText = $savedStory->text ?: '';
   $formattedStory = StoriesPeer::getFormattedStory($savedStoryText, $formatKeyword, true);
+  
+    // // Learned button for Study page only
+    // if (!$request->hasParameter('reviewMode'))
+    // {
+    //   $this->isRestudyKanji = ReviewsPeer::isFailedCard($userId, $ucsId);
+    //   $this->isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
+    // }
 
   $propsData = json_encode([
     'kanjiData'     => $kanjiData,

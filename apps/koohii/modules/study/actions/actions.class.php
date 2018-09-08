@@ -434,8 +434,6 @@ class studyActions extends sfActions
    */
   public function executeEditstory($request)
   {
-    $this->getResponse()->setContentType('application/json');
-    
     $json = $request->getContentJson();
     $tron = new JsTron();
 

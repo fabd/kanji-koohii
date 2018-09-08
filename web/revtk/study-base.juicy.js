@@ -73,10 +73,6 @@
         this.elSearch.focus();
       }
 
-      if ((el = Dom.get('EditStoryComponent')))
-      {
-        this.editStoryComponent = new App.Ui.EditStoryComponent(el);
-      }
 
       if ((el = Dom.get('DictStudy')))
       {

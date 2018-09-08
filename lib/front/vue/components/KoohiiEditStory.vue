@@ -100,11 +100,12 @@
 </template>
 
 <script>
-import api from '../lib/api.js'
+import $$    from '../lib/coreJS.js'
+import api   from '../lib/api.js'
+import TRON  from '../lib/tron.js'
 
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
-import $$ from '../lib/coreJS.js'
 
 // (legacy code)
 const Y = YAHOO,
@@ -153,35 +154,51 @@ export default {
   },
 
   computed: {
-    displayKeyword() {
+    displayKeyword()
+    {
       return this.custKeyword || this.kanjiData.keyword
     },
 
-    editKeywordUrl() {
+    editKeywordUrl()
+    {
       return '/study/editkeyword/id/' + this.kanjiData.ucs_id
     },
 
-    isReviewMode() {
+    isReviewMode()
+    {
       return this.reviewMode === true
     }
   },
 
   methods: {
 
-    onEditStory() {
+    onEditStory()
+    {
       this.editStory()
     },
 
-    onSubmit() {
-      api.postUserStory(this.kanjiData.ucs_id, this.editingStory)
+    onSubmit()
+    {
+      api.postUserStory(this.kanjiData.ucs_id, this.editingStory, {
+        then: (tron) => {
+          let props =  tron.getProps()
+          Core.log('then()  props %o', tron.getProps())
+
+          this.formattedStory = props.formattedStory
+          this.isEditing = false
+        }
+      })
+
       return false
     },
 
-    onCancel() {
+    onCancel()
+    {
       this.doCancel()
     },
 
-    doCancel() {
+    doCancel()
+    {
       this.editingStory = this.uneditedStory
       this.isEditing = false
     },
@@ -191,7 +208,7 @@ export default {
      * 
      * @param {Object} sCopyStory   The "copy" story feature will set this to the copied story text.
      */  
-    editStory:function(sCopyStory)  
+    editStory(sCopyStory)
     {
       // edit a new story, cancel will restore the previous one
       if (sCopyStory) {
@@ -213,7 +230,8 @@ export default {
     },
 
     // (legacy code) instance Edit Keyword dialog, not yet refactored to Vue
-    onKeyword(event) {
+    onKeyword(event)
+    {
       const el = event.target
       // Core.log('onKeyword() %o', el)
 
@@ -255,7 +273,8 @@ export default {
     }
   },
 
-  beforeDestroy() {
+  beforeDestroy()
+  {
     // (legacy code) free resources/events used by Edit Keyword dialog
     if (this.oEditKeyword) {
       this.oEditKeyword.destroy()
@@ -263,7 +282,8 @@ export default {
     }
   },
 
-  created() {
+  created()
+  {
     Core.log('KoohiiEditStory::created()')
 
     this.editingStory   = this.initStory_Edit

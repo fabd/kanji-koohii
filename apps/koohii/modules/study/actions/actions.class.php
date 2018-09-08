@@ -469,6 +469,10 @@ class studyActions extends sfActions
       return $tron->renderJson($this);
     }
 
+    // see cache invalidation below
+    $storedStory = StoriesPeer::getStory($userId, $ucsId);
+    $storyCurrentlyShared = $storedStory && (bool)$storedStory->public;
+
     // delete story if empty text
     if (empty($txtStory))
     {
@@ -487,8 +491,13 @@ class studyActions extends sfActions
       }
     }
     
-    // FIXME for now always invalidate the cache (TODO skip if story was private and remains private)
-    StoriesSharedPeer::invalidateStoriesCache($ucsId);
+    // invalidate cache -- approx 7% of stories are public,
+    //  so skipping cache invalidation is worthwhile if possible
+    // error_log(sprintf("public %d > %d", $storyCurrentlyShared, $chkPublic));
+    if ($chkPublic || $storyCurrentlyShared) {
+      error_log(sprintf("invalidating the cache"));
+      StoriesSharedPeer::invalidateStoriesCache($ucsId);
+    }
 
     // ONLY for flashcard reviews -- get favorite story, if user's story is empty
     $tron->set('isFavoriteStory', false);

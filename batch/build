@@ -85,6 +85,11 @@
 #
 
 
+# colored output  eg.  echo "${red}red text ${green}green text${reset}"
+TEXT_FAIL=`tput bold ; tput setaf 1`
+TEXT_RESET=`tput sgr0`
+
+
 function show_help()
 {
   echo "Usage:"
@@ -106,19 +111,6 @@ JUICEROPTS='-v --strip ''Core.log,Core.warn,Core.halt,Core.assert'' --webroot we
 YUIOPTS='-jar batch/tools/yuicompressor/yuicompressor-2.4.8.jar'
 
 
-# CSSLint (unfinished)
-#
-#   errors
-#
-#     Ignore syntax errors because of the %REPLACEMENTS% from Juicer. (We just want a few select warnings)
-#
-#
-#CSSLINT_IGNORE='--format=compact --ignore=box-model,duplicate-background-images,empty-rules,errors,font-sizes,ids,order-alphabetical,overqualified-elements,qualified-headings,unique-headings'
-# css linting
-#csslint --format=compact --ignore=$CSSLINT_IGNORE web/revtk/main.juicy.css
-#exit
-
-
 # Run JsLint on all javascript files, using nodejs (http://nodejs.org/) and jslint-utils by Mike West.
 batch/lint
 if (( $? )) ; then
@@ -127,13 +119,19 @@ fi
 
 # Detect uncommented console.log() calls and stops if any is found.
 # Even if those can be stripped with Juicer, it's likely there is debugging code left behind.
-ack --ignore-dir web/vendor -g -i '(?<!.juiced)(?<!.min)\.js' | ack -x '^\s*console\.log\('
-
-if [ $? -eq 0 ]; then
-  echo ""
-  echo "Uncommented console.log() call. Build aborted."
+failMessage() {
+  error_msg=$1
+  printf "\n${TEXT_FAIL}   FAIL   ${error_msg}\n\n${TEXT_RESET}"
   exit
-fi
+}
+
+ack-grep --ignore-dir web/vendor --ignore-dir web/build/pack -g -i '(?<!.juiced)(?<!.min)\.js' | ack-grep -x '^\s*console\.log\('
+if [ $? -eq 0 ] ; then failMessage "Uncommented console.log() call." ; fi
+
+#ack-grep -g -i 'lib/front/vue/.*(\.vue|\.js)'| ack-grep -x '^\s*Core\.log\('
+#if [ $? -eq 0 ] ; then failMessage "Uncommented Core.log() call." ; fi
+#exit
+
 
 # Files to build
 

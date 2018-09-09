@@ -234,7 +234,7 @@ export default {
       this.$nextTick(function() {
        
         const elTextArea = $$('#frmStory')[0];
-        Core.log(elTextArea)
+        console.log(elTextArea)
         // DOM is now updated
         this.setCaretToEnd(elTextArea)
       })
@@ -245,11 +245,11 @@ export default {
     onKeyword(event)
     {
       const el = event.target
-      // Core.log('onKeyword() %o', el)
+      // console.log('onKeyword() %o', el)
 
       // callback with the modified keyword
       const callback = (keyword) => {
-        // Core.log('onKeyword callback()')
+        // console.log('onKeyword callback()')
         el.innerHTML = keyword;
         
         // invalidate cached dialog
@@ -296,7 +296,7 @@ export default {
 
   created()
   {
-    Core.log('KoohiiEditStory::created()')
+    console.log('KoohiiEditStory::created()')
 
     this.editingStory   = this.initStory_Edit
     this.formattedStory = this.initStory_View

@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev":  "cross-env NODE_ENV=development webpack --hide-modules",
-    "prod": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "prod": "cross-env NODE_ENV=production  webpack --hide-modules --progress"
   },
   "dependencies": {
     "vue": "^2.5.17"
@@ -19,8 +19,9 @@
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "3.0.2",
     "style-loader": "^0.13.2",
+    "uglifyjs-webpack-plugin": "^1.3.0",
     "vue-loader": "^13.3.0",
     "vue-template-compiler": "^2.5.17",
-    "webpack": ">=3.6.0 <4.0.0"
+    "webpack": "^3.12.0 <4.0.0"
   }
 }

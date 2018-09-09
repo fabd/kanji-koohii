@@ -153,15 +153,22 @@ module.exports = {
   }
 }
 
-if (process.env.NODE_ENV === 'production')
+if (isProduction)
 {
+  const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new Webpack.optimize.UglifyJsPlugin({
-      //fab-- sourceMap: true,
-      compress: {
-        warnings: false
+
+    // https://github.com/webpack-contrib/uglifyjs-webpack-plugin#uglifyoptions
+    // https://github.com/mishoo/UglifyJS2/tree/harmony#compress-options
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        warnings: false,
+        compress: {
+          drop_console: true,
+          // pure_funcs: [ 'Core.log' ],
+          warnings: false
+        }
       }
     }),
     new Webpack.LoaderOptionsPlugin({

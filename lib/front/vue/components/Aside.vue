@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import $ from '../lib/coreJS.js'
-import {getScrollBarWidth} from '../lib/utils.js'
+import Dom from '../lib/koohii/dom.js'
+import {getScrollBarWidth} from '../lib/koohii/utils.js'
 
 export default {
 
@@ -52,7 +52,7 @@ export default {
 
     maskBeforeEnter(el) {
       // console.log("maskBeforeEnter()")
-      const $body = $(document.body)
+      const $body = Dom(document.body)
       const scrollBarWidth = getScrollBarWidth()
 
       this.bodyOverflow = $body.css('overflow')
@@ -67,7 +67,7 @@ export default {
     maskAfterLeave() {
       // console.log("maskAfterLeave()")
 
-      $(document.body).css({
+      Dom(document.body).css({
         'padding-right': this.bodyPaddingRight,
         'overflow':      this.bodyOverflow
       })

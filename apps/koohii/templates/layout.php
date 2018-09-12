@@ -84,7 +84,7 @@
 <script type="text/javascript">
 var koohii_nav_data = <?php echo json_encode(get_slot('koohii.nav.data'), /*JSON_PRETTY_PRINT |*/ JSON_UNESCAPED_SLASHES) ?>;
 
-CoreJS('#k-slide-nav-btn').on("click", function(){
+Koohii.Dom('#k-slide-nav-btn').on("click", function(){
   Koohii.UX.KoohiiAside.open({
     navOptionsMenu: koohii_nav_data
   })

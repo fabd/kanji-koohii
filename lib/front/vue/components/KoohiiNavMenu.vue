@@ -11,7 +11,7 @@
 </style>
 
 <script>
-import $ from '../lib/coreJS.js'
+import Dom from '../lib/koohii/dom.js'
 
 import KoohiiNavMenuItem from './KoohiiNavMenuItem.vue'
 
@@ -77,10 +77,10 @@ export default {
           // console.log('mounted(%s) scroll height %d', oMenuItem.sm.label, oMenuItem.contentHeight)
 
           if (oMenuItem.opened) {
-            $(elHead).css('height', oMenuItem.contentHeight + 'px')
+            Dom(elHead).css('height', oMenuItem.contentHeight + 'px')
           }
           else {
-            $(elHead).css({ height: '0', display: 'none' })
+            Dom(elHead).css({ height: '0', display: 'none' })
           }
         }
       }

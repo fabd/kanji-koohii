@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import $ from '../lib/coreJS.js'
+import Dom from '../lib/koohii/dom.js'
 
 export default {
   name: 'KoohiiNavMenuItem',
@@ -57,7 +57,7 @@ export default {
 
       this.opened = true
 
-      const $elWrap = $(this.$refs.contentWrap);
+      const $elWrap = Dom(this.$refs.contentWrap);
 
       //$(elContentWrap).setStyles({ display: 'block', height: 0 })
       
@@ -81,7 +81,7 @@ export default {
 
       this.opened = false
 
-      const $elWrap = $(this.$refs.contentWrap);
+      const $elWrap = Dom(this.$refs.contentWrap);
       this.contentHeight = $elWrap[0].scrollHeight
 // console.log('elWrap scroll height is  %d', this.contentHeight)
 
@@ -97,15 +97,15 @@ export default {
       }, 10)
     },
 
-    onMenuItemClick($event, id) {
+    onMenuItemClick(event, id) {
       // console.log('onMenuItemClick(%s)', id);
 
       // handle folder
       if (this.hasChildren) {
         this.rootMenu.handleSelect(this.sm.id, this)
 
-        $event.preventDefault()
-        $event.stopPropagation()
+        event.preventDefault()
+        event.stopPropagation()
         return
       }
 

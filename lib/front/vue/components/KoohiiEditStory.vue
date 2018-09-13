@@ -31,13 +31,12 @@
 
         <!-- right -->
         <div class="right">
-          
+         
           <div class="keyword">
             <span class="JSEditKeyword" v-on:click="onKeyword" title="Click to edit the keyword">{{ displayKeyword }}</span>
           </div>
 
           <div id="storybox">
-
 
             <!-- view / edit story -->
 
@@ -47,11 +46,11 @@
                 <span v-html="koohiiformGetErrors"></span>
               </div>
 
-              <textarea name="txtStory" id="frmStory" v-model="editingStory"></textarea>
+              <textarea name="txtStory" id="frmStory" v-model="frmStoryEdit"></textarea>
 
               <div class="controls valign">
                 <div style="float:left;">
-                  <input type="checkbox" name="chkPublic" id="storyedit_public" v-model="chkPublicStory">
+                  <input type="checkbox" name="chkPublic" id="storyedit_public" v-model="frmStoryPublic">
                   <label for="storyedit_public">Share this story</label>
                 </div>
                 <div style="float:right;">
@@ -104,17 +103,16 @@
 </template>
 
 <script>
-import $$            from '../lib/coreJS.js'
+import Dom from '../lib/koohii/dom.js'
 
 import { KoohiiAPI, TRON } from '../lib/KoohiiAPI.js'
 import KoohiiForm          from '../lib/mixins/KoohiiForm.js'
 
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
+// instantiated after publishing a story
+import KoohiiSharedStory from '../components/KoohiiSharedStory.vue'
 
-// (legacy code)
-const Y = YAHOO,
-      Dom = Y.util.Dom;
 
 export default {
   name: 'KoohiiEditStory',
@@ -153,12 +151,15 @@ export default {
 
       isEditing: false,
 
+      // holds instance of a KoohiiSharedStory component (visual feedback for sharing a story)
+      vmStoryPublished: null,
+
       // keep a copy to cancel changes
       uneditedStory: '',
 
-      // form state : specific
-      editingStory: '',
-      chkPublicStory: false,
+      // model
+      frmStoryEdit: '',
+      frmStoryPublic: false,
     }
   },
 
@@ -188,20 +189,59 @@ export default {
 
     onSubmit()
     {
-      KoohiiAPI.postUserStory(this.kanjiData.ucs_id, this.editingStory, {
-        then: (tron) => {
-          const props =  tron.getProps()
-
-          this.koohiiformHandleResponse(tron)
-
-          if (!tron.hasErrors()) {
-            this.formattedStory = props.formattedStory
-            this.isEditing = false
-          }
+      KoohiiAPI.postUserStory(
+        { 
+          ucsId: this.kanjiData.ucs_id,
+          txtStory: this.frmStoryEdit,
+          isPublic: this.frmStoryPublic,
+          reviewMode: this.reviewMode
+        },
+        { 
+          then: this.onSaveStoryResponse.bind(this)
         }
-      })
+      )
 
       return false
+    },
+
+    onSaveStoryResponse(tron)
+    {
+      const props = tron.getProps()
+
+      this.koohiiformHandleResponse(tron)
+      
+      if (tron.hasErrors()) return
+
+      this.formattedStory = props.formattedStory
+      this.isEditing = false
+
+      // FIXME -- temporary code for user feedback (should use Vue based SharedStories list)
+
+      // destroy previous instance if created
+      if (this.vmStoryPublished) {
+        this.vmStoryPublished.$destroy()
+        this.vmStoryPublished = null
+      }
+
+      // delete story from page if already shared
+      let $elSharedStory = Dom('#'+props.sharedStoryId)
+      if ($elSharedStory.el()) {
+        let el = $elSharedStory.closest('.rtkframe')
+        Dom(el).remove()
+      }
+
+      // visual feedback : add the story in "new & updated"
+      if (props.isStoryShared) {
+        const elMount = document.createElement('div')
+        Dom('#sharedstories-new .title').insertAfter(elMount)
+
+        const vmProps = {
+          profileLink: props.profileLink,
+          story:  this.formattedStory.replace(/<br\/>/g, ' '), // remove the line breaks
+          divId:  props.sharedStoryId
+        }
+        this.vmStoryPublished = VueInstance(KoohiiSharedStory, elMount, vmProps)
+      }
     },
 
     onCancel()
@@ -211,7 +251,7 @@ export default {
 
     doCancel()
     {
-      this.editingStory = this.uneditedStory
+      this.frmStoryEdit = this.uneditedStory
       this.isEditing = false
     },
 
@@ -224,16 +264,16 @@ export default {
     {
       // edit a new story, cancel will restore the previous one
       if (sCopyStory) {
-        this.editingStory = sCopyStory
+        this.frmStoryEdit = sCopyStory
       }
       
-      this.uneditedStory = this.editingStory
+      this.uneditedStory = this.frmStoryEdit
       this.isEditing = true
 
       // note:AFTER toggling isEditing,order is important!
       this.$nextTick(function() {
        
-        const elTextArea = $$('#frmStory')[0];
+        const elTextArea = Dom('#frmStory')[0];
         console.log(elTextArea)
         // DOM is now updated
         this.setCaretToEnd(elTextArea)
@@ -298,9 +338,10 @@ export default {
   {
     console.log('KoohiiEditStory::created()')
 
-    this.editingStory   = this.initStory_Edit
     this.formattedStory = this.initStory_View
-    this.chkPublicStory = this.initStory_Public
+
+    this.frmStoryEdit   = this.initStory_Edit
+    this.frmStoryPublic = this.initStory_Public
   }
 
 }

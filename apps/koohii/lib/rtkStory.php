@@ -30,7 +30,7 @@ class rtkStory
       }
       
       if (!$valid) {
-        return sprintf('The link {%s} is not a valid Heisig frame number, or CJK Unified Ideograph character/index.', $match);
+        return sprintf('The link "{%s}" is not a valid Heisig or CJK Unified Ideograph character/index.', $match);
       }
     }
 

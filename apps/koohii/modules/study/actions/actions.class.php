@@ -447,12 +447,12 @@ class studyActions extends sfActions
     $chkPublic  = (bool) $json->chkPublic;
     $reviewMode = (bool) $json->reviewMode;
 
-
     // disallow markup
     if ($txtStory !== strip_tags($txtStory)) {
       $tron->setError('HTML markup (tags) formatting not allowed in stories.');
       return $tron->renderJson($this);
     }
+// $this->forward404();
 
     // validate story length with helpful message
     mb_internal_encoding('utf-8');
@@ -516,8 +516,20 @@ class studyActions extends sfActions
     $formatKeyword = $custKeyword ?? $kanjiData->keyword;
 
     // response
+     
+    $isStoryShared = $chkPublic && $savedStory;
+    $tron->set('isStoryShared', $isStoryShared);
+    
+    // these are used for visual feedback, adding the new/updated story to the page
+    $tron->set('sharedStoryId', "story-${userId}-${ucsId}");
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
+    $tron->set('profileLink', link_to_member($this->getUser()->getUserName()));
 
+    // ...
     $tron->set('formattedStory', StoriesPeer::getFormattedStory($savedStory, $formatKeyword, true));
+
+
+// sleep(2);
 
     return $tron->renderJson($this);
   }

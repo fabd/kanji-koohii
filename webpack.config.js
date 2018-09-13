@@ -140,9 +140,8 @@ module.exports = {
       'vue':     'vue/dist/vue.common.js',
 
       'components': Path.resolve(__dirname, 'lib/front/vue/components'),
-
-      // legacy code
-      'legacy':     Path.resolve(__dirname, 'lib/front/vue/legacy')
+      'legacy':     Path.resolve(__dirname, 'lib/front/vue/legacy'),
+      'lib':        Path.resolve(__dirname, 'lib/front/vue/lib')
     }
   },
 

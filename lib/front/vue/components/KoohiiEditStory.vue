@@ -103,16 +103,15 @@
 </template>
 
 <script>
-import Dom from '../lib/koohii/dom.js'
+import Dom from 'lib/koohii/dom.js'
 
-import { KoohiiAPI, TRON } from '../lib/KoohiiAPI.js'
-import KoohiiForm          from '../lib/mixins/KoohiiForm.js'
+import { KoohiiAPI, TRON } from 'lib/KoohiiAPI.js'
+import KoohiiForm          from 'lib/mixins/KoohiiForm.js'
 
-import cjk_lang_ja from './cjk_lang_ja.vue'
+import cjk_lang_ja from 'components/cjk_lang_ja.vue'
 
 // instantiated after publishing a story
-import KoohiiSharedStory from '../components/KoohiiSharedStory.vue'
-
+import KoohiiSharedStory from 'components/KoohiiSharedStory.vue'
 
 export default {
   name: 'KoohiiEditStory',

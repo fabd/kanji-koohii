@@ -11,7 +11,7 @@
   
     <div id="my-story" lang="ja">
 
-      <div class="padding rtkframe">
+      <div class="padding rtkframe" ref="maskArea">
 
         <!-- left -->
         <div class="left">
@@ -54,7 +54,7 @@
                   <label for="storyedit_public">Share this story</label>
                 </div>
                 <div style="float:right;">
-                  <input v-on:click="onSubmit" type="button" value="Save changes" title="Save/Update story">
+                  <input v-on:click.prevent="onSubmit" type="button" value="Save changes" title="Save/Update story">
                   <input v-on:click="onCancel" type="button" value="Cancel" name="cancel" title="Cancel changes">
                 </div>
                 <div class="clear"></div>
@@ -107,11 +107,13 @@ import Dom, { insertAfter } from 'lib/koohii/dom.js'
 
 import { KoohiiAPI, TRON } from 'lib/KoohiiAPI.js'
 import KoohiiForm          from 'lib/mixins/KoohiiForm.js'
+import KoohiiLoading       from 'lib/mixins/KoohiiLoading.js'
 
 import cjk_lang_ja from 'components/cjk_lang_ja.vue'
 
 // instantiated after publishing a story
 import KoohiiSharedStory from 'components/KoohiiSharedStory.vue'
+
 
 export default {
   name: 'KoohiiEditStory',
@@ -121,7 +123,8 @@ export default {
   },
 
   mixins: [
-    KoohiiForm
+    KoohiiForm,
+    KoohiiLoading
   ],
 
   props: {
@@ -188,6 +191,8 @@ export default {
 
     onSubmit()
     {
+      this.koohiiloadingShow({ target: this.$refs.maskArea })
+
       KoohiiAPI.postUserStory(
         { 
           ucsId: this.kanjiData.ucs_id,
@@ -199,13 +204,13 @@ export default {
           then: this.onSaveStoryResponse.bind(this)
         }
       )
-
-      return false
     },
 
     onSaveStoryResponse(tron)
     {
       const props = tron.getProps()
+
+      this.koohiiloadingHide()
 
       this.koohiiformHandleResponse(tron)
       
@@ -232,7 +237,7 @@ export default {
       // visual feedback : add the story in "new & updated"
       if (props.isStoryShared) {
         const elMount = document.createElement('div')
-        Dom('#sharedstories-new .title').insertAfter(elMount)
+        insertAfter(elMount, '#sharedstories-new .title')
 
         const vmProps = {
           profileLink: props.profileLink,

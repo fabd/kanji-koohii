@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import Dom from 'lib/koohii/dom.js'
+import Dom, { insertAfter } from 'lib/koohii/dom.js'
 
 import { KoohiiAPI, TRON } from 'lib/KoohiiAPI.js'
 import KoohiiForm          from 'lib/mixins/KoohiiForm.js'

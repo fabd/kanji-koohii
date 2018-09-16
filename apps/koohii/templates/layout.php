@@ -71,7 +71,7 @@
   $sf_response->addJavascript("/build/pack/root-bundle$ext.js", "first"); //add before legacy code so it kicks in sooner
 
   if (!$landingPage) {
-    $sf_response->addJavascript("/build/pack/study-bundle$ext.js");
+    $sf_response->addJavascript("/build/pack/study-bundle$ext.js", "first");
   }
 
   include_javascripts();

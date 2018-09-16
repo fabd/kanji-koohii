@@ -33,7 +33,6 @@
      *
      * Options:
      *   URL_SEARCH             
-     *   URL_SHAREDSTORIES
      */
     initialize:function(options)
     {

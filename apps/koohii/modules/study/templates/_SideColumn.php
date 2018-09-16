@@ -42,8 +42,7 @@ Core.ready(function(){
   };
 
   App.StudyPage.initialize({
-    URL_SEARCH:        "<?php echo url_for('study/kanji', true) ?>",
-    URL_SHAREDSTORIES: "<?php echo url_for('study/ajax', true) ?>"
+    URL_SEARCH:        "<?php echo url_for('study/kanji', true) ?>"
   });
 });
 <?php end_slot() ?>

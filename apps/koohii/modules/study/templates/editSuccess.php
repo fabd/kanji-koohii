@@ -52,7 +52,14 @@ EOD;
       <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($userId, $sf_context, $kanjiData->ucs_id); } ?>
     </div>
 
-    <div id="JsEditStoryInst" style="min-height:100px;"></div>
+    <div id="JsEditStoryInst" style="min-height:100px;">
+      
+
+TODO
+
+
+
+    </div>
 
   </div>
 
@@ -143,7 +150,7 @@ EOD;
     //   $this->isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
     // }
 
-  $propsData = json_encode([
+  $propsData = [
     'kanjiData'     => $kanjiData,
     'reviewMode'    => false,
     'custKeyword'   => $custKeyword,
@@ -151,11 +158,11 @@ EOD;
     'initStory_Edit'   => $savedStoryText,
     'initStory_View'   => $formattedStory,
     'initStory_Public' => (bool) $savedStory->public
-  ]);
+  ];
 
   koohii_onload_slot();
 ?>
 
-  VueInstance(Koohii.UX.KoohiiEditStory, '#JsEditStoryInst', <?= $propsData ?>);
+  Koohii.Refs.vueEditStory = mountEditStoryComponent('#JsEditStoryInst', <?= json_encode($propsData) ?>);
 
 <?php end_slot() ?>

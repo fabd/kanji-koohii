@@ -213,7 +213,7 @@ export default {
       this.koohiiloadingHide()
 
       this.koohiiformHandleResponse(tron)
-      
+
       if (tron.hasErrors()) return
 
       this.formattedStory = props.formattedStory
@@ -248,6 +248,25 @@ export default {
       }
     },
 
+    // currently called by SharedStoriesComponent.js ajax handler (after user clicked a "copy" button)
+    onCopySharedStory(storyText)
+    {
+      if (this.isEditing) {
+        window.alert('Can not copy a story since you are currently editing a story.')
+        return
+      }
+
+      this.editStory(storyText)
+
+      this.$nextTick(function() {
+        // Dom('#main_container')[0].scrollIntoView(true)
+
+        // scroll to top of window
+        let dx = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
+        window.scrollTo(dx, 0)
+      })
+    },
+
     onCancel()
     {
       this.doCancel()
@@ -266,19 +285,20 @@ export default {
      */  
     editStory(sCopyStory)
     {
+      this.uneditedStory = this.frmStoryEdit
+
       // edit a new story, cancel will restore the previous one
       if (sCopyStory) {
         this.frmStoryEdit = sCopyStory
+        this.frmStoryPublic = false      // default to private after copying a story
       }
       
-      this.uneditedStory = this.frmStoryEdit
       this.isEditing = true
 
       // note:AFTER toggling isEditing,order is important!
       this.$nextTick(function() {
        
         const elTextArea = Dom('#frmStory')[0];
-        console.log(elTextArea)
         // DOM is now updated
         this.setCaretToEnd(elTextArea)
       })

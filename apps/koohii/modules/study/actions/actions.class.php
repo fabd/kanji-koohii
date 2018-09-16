@@ -529,7 +529,7 @@ class studyActions extends sfActions
     $tron->set('formattedStory', StoriesPeer::getFormattedStory($savedStory, $formatKeyword, true));
 
 
-// sleep(2);
+sleep(1);
 
     return $tron->renderJson($this);
   }
@@ -646,40 +646,34 @@ class studyActions extends sfActions
    */
   public function executeAjax($request)
   {
-    if ($request->getMethod()===sfRequest::GET)
+    $json = $request->getContentJson();
+
+    // request parameters
+    $sRequest   = $json->request;
+    $sUid       = BaseValidators::sanitizeInteger($json->uid);
+    $sSid       = BaseValidators::sanitizeInteger($json->sid);
+
+    // $this->forward404Unless(preg_match('/^(star|report|copy)$/', $sRequest));
+
+    if ($sRequest === 'copy')
     {
-      // obsolete code
-    }
-    else
-    {
-      $sRequest = $request->getParameter('request', '');
-      $sUid = $request->getParameter('uid');
-      $sSid = $request->getParameter('sid');
-      
-      if (!preg_match('/^(star|report|copy)$/', $sRequest)
-        || !BaseValidators::validateInteger($sUid)
-        || !BaseValidators::validateInteger($sSid))
+      // get unformatted story with original tags for copy story feature
+      $oStory = StoriesPeer::getStory($sUid, $sSid);
+      if ($oStory)
       {
-        throw new rtkAjaxException('Badrequest');
-      }
-  
-      if ($sRequest==='copy')
-      {
-        // get unformatted story with original tags for copy story feature
-        $oStory = StoriesPeer::getStory($sUid, $sSid);
-        if ($oStory)
-        {
-          StoriesPeer::useOldStoriesFix();
-          $tron = new JsTron(array('text' => rtxIndexOldStoriesFix::fixOldStoriesKanjiLinks($oStory->text)));
-          return $tron->renderJson($this);
-        }
-      }
-      elseif ($sRequest === 'star' || $sRequest === 'report')
-      {
-        $params = (array) StoryVotesPeer::voteStory($this->getUser()->getUserId(), $sUid, $sSid, $sRequest === 'star');
-        $tron = new JsTron($params);
+        StoriesPeer::useOldStoriesFix();
+        $tron = new JsTron([
+          'storyText' => rtxIndexOldStoriesFix::fixOldStoriesKanjiLinks($oStory->text)
+        ]);
         return $tron->renderJson($this);
       }
+    }
+    elseif ($sRequest === 'star' || $sRequest === 'report')
+    {
+      // [ uid, sid, vote, lastvote, stars, kicks ]
+      $params = (array) StoryVotesPeer::voteStory($this->getUser()->getUserId(), $sUid, $sSid, $sRequest === 'star');
+      $tron = new JsTron($params);
+      return $tron->renderJson($this);
     }
     
     throw new rtkAjaxException('Badrequest');

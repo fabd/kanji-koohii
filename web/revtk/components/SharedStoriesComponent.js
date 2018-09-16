@@ -140,34 +140,32 @@
       var ids = Dom.getDataset(span.parentNode);
       
       // userid, ucs_id
-      var params = { uid: ids.uid, sid: ids.cid };
-
-      // use the class name (star/report/copy) as "request"
-      params.request = which;
+      var params = {
+        // use the class name (star/report/copy) as "request"
+        request:  which,
+        uid:      ids.uid,
+        sid:      ids.cid
+      };
 
       if (params.request)
       {
+        // NOTE! refactoring legacy AjaxRequest to the lib/front/vue/ api
+        var elClickedStory = this.getStoryParentDiv(span);
         var that = this;
-        var options = {
-          method:     'post',
-          parameters:  params,
-          success:     this.onAjaxResponse,
-          scope:       this,
-          argument:    { elClickedStory: this.getStoryParentDiv(span) }
-        };
-
-        this.ajaxRequest = new Core.Ui.AjaxRequest(this.oStudyPage.options.URL_SHAREDSTORIES, options);
-
-        // span.className = '';
-        // span.innerHTML = '...';
+        Koohii.API.ajaxSharedStory(params, { then: function(t) {
+          that.onAjaxResponse(t, elClickedStory);
+        }});
       }
 
       return;
     },
 
-    onAjaxResponse: function(o)
+    // refactoring! is now a KoohiiRequest handler! 
+    onAjaxResponse: function(tron, elClickedStory)
     {
-      var data = o.responseTRON.getProps();
+      var data = tron.getProps();
+
+// console.log('onAjaxResponse tron %o    el %o', tron, elClickedStory);
 
       if (data)
       {
@@ -179,19 +177,10 @@ if (data.__debug_log) {
 }
 
         // copy & edit story
-        if (data.text) 
+        if (data.storyText) 
         {
-          var frmEditStory = document.forms['EditStory'];
-          if (frmEditStory) 
-          {
-            frmEditStory.elements['chkPublic'].checked = false;
-            
-            // scroll to top of window
-            var dx = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
-            window.scrollTo(dx, 0);
-            
-            this.oStudyPage.editStoryComponent.editStory(data.text);
-          }
+          Koohii.Refs.vueEditStory.onCopySharedStory(data.storyText);
+
           return;
         }
 
@@ -233,7 +222,7 @@ if (data.__debug_log) {
             this.moveStoryToFavourites(this.getStoryParentDiv(div), storyId);
           }
           else if (data.vote === 0 && data.lastvote === 1) {
-            this.moveStoryBack(o.argument.elClickedStory, storyId);
+            this.moveStoryBack(elClickedStory, storyId);
           }
 
           span.innerHTML = '';

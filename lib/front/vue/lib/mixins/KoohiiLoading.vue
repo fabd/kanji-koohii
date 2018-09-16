@@ -99,7 +99,7 @@ export default {
 .kk-html-spinner {
   display:inline-block;
   width:40px; height:40px;
-  border:4px solid #5cba5b;
+  border:4px solid #c8e0ab;
   border-top:4px solid white;
   border-radius:50%;
 

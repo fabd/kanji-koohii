@@ -1,9 +1,16 @@
 <?php
+  use_helper('CJK');
 
   $userId = $sf_user->getUserId();
+  $ucsId  = $kanjiData->ucs_id;
 
-function get_flashcard_button($userId, $context, $ucsId)
-{
+  // prepare story component ( do it HERE because we use it in the vue placeholder + JS below)
+  $formatKeyword  = $custKeyword ?: $kanjiData->keyword;
+  $savedStory     = StoriesPeer::getStory($userId, $ucsId);
+  $savedStoryText = $savedStory ? $savedStory->text : '';
+  $formattedStory = StoriesPeer::getFormattedStory($savedStoryText, $formatKeyword, true);
+
+function get_flashcard_button($userId, $context, $ucsId) {
   $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
   $dialogUri  = $context->getController()->genUrl('flashcards/dialog');
   $params     = esc_specialchars(coreJson::encode(array('ucs' => intval($ucsId))));
@@ -52,13 +59,13 @@ EOD;
       <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($userId, $sf_context, $kanjiData->ucs_id); } ?>
     </div>
 
-    <div id="JsEditStoryInst" style="min-height:100px;">
-      
+    <div id="JsEditStoryInst" style="min-height:100px;">     
 
-TODO
-
-
-
+<!-- placeholder till Vue comp is mounted -->
+<?php
+  include_partial('EditStoryPlaceholder', [
+    'kanjiData' => $kanjiData, 'formattedStory' => $formattedStory, 'custKeyword' => $custKeyword]) ?>
+   
     </div>
 
   </div>
@@ -85,9 +92,9 @@ TODO
         Favourite(s)
       </div>
 <?php
+  // req. ucsId, userId
   use_helper('Links');
   $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $userId, 'starred');
-  $ucsId   = $kanjiData->ucs_id;
   foreach($stories as $o) {
 ?>
       <div class="sharedstory rtkframe">
@@ -135,14 +142,7 @@ TODO
 
 <?php
 
-  // keyword auto-bolded in user story view
-  $formatKeyword  = $custKeyword ?: $kanjiData->keyword;
-
-  // prepare story component
-  $savedStory     = StoriesPeer::getStory($userId, $ucsId);
-  $savedStoryText = $savedStory->text ?: '';
-  $formattedStory = StoriesPeer::getFormattedStory($savedStoryText, $formatKeyword, true);
-  
+    //FIXME
     // // Learned button for Study page only
     // if (!$request->hasParameter('reviewMode'))
     // {

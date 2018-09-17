@@ -22,7 +22,7 @@
             <cjk_lang_ja>{{ kanjiData.kanji }}</cjk_lang_ja>
           </div>
 
-          <div class="strokecount" title="Stroke count">[{{ kanjiData.strokecount }}]<br>{{ kanjiData.readings }}
+          <div class="strokecount" title="Stroke count">[{{ kanjiData.strokecount }}]<br/>
             <span style="font-size:120%"><cjk_lang_ja>{{ kanjiData.onyomi }}</cjk_lang_ja></span>
           </div>
         
@@ -97,6 +97,16 @@
     <!-- /#my-story -->
 
   </form>
+
+  <!-- FIXME untested -->
+  <template v-if="reviewMode">
+    <div class="uiBMenu">
+      <div class="uiBMenuItem">
+        <!-- display a big Close button on mobile dialog (enabled by CSS) -->
+        <a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>
+      </div>
+    </div>
+  </template>
 
   </div>
 

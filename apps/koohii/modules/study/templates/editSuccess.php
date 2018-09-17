@@ -10,6 +10,14 @@
   $savedStoryText = $savedStory ? $savedStory->text : '';
   $formattedStory = StoriesPeer::getFormattedStory($savedStoryText, $formatKeyword, true);
 
+  // IF ... on Study page, is in the red pile, is not yet "Added to learn list"
+  $isRestudyKanji   = ReviewsPeer::isFailedCard($userId, $ucsId);
+  $isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
+  $showLearnButton    = /*!$reviewMode &&*/ $isRestudyKanji && !$isRelearnedKanji;
+  $showLearnedMessage = /*!$reviewMode &&*/ $isRestudyKanji && $isRelearnedKanji;
+
+
+
 function get_flashcard_button($userId, $context, $ucsId) {
   $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
   $dialogUri  = $context->getController()->genUrl('flashcards/dialog');
@@ -152,12 +160,15 @@ EOD;
 
   $propsData = [
     'kanjiData'     => $kanjiData,
-    'reviewMode'    => false,
     'custKeyword'   => $custKeyword,
 
     'initStory_Edit'   => $savedStoryText,
     'initStory_View'   => $formattedStory,
-    'initStory_Public' => (bool) $savedStory->public
+    'initStory_Public' => (bool) ($savedStory && $savedStory->public),
+
+    // Study page only (not for flashcards "edit story" dialog)
+    'showLearnButton'    => $showLearnButton,
+    'showLearnedMessage' => $showLearnedMessage
   ];
 
   koohii_onload_slot();

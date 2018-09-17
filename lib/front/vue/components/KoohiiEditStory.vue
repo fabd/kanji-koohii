@@ -79,17 +79,27 @@
 
 
               </div>
-            </div>
 
-          </div>
+              <template v-if="!reviewMode">
+                <div v-if="showLearnButton" class="controls">
+                  <!-- handle via legacy code / page load -->
+                  <input type="submit" name="doLearned" value="Add to learned list" class="btn btn-success" />
+                </div>
+      
+                <div v-if="showLearnedMessage" class="msg-relearned">
+                  This kanji is ready for review in the <strong>learned</strong> list.
+                </div>
+              </template>
 
-        </div>
-        <!-- /right -->
+            </div><!-- /storyview -->
+
+          </div><!-- /storybox -->
+
+        </div><!-- /right -->
 
         <div class="clear"></div>
 
-      </div>
-      <!-- /rtkframe -->
+      </div><!-- /rtkframe -->
 
       <div class="bottom"></div>
 
@@ -144,8 +154,13 @@ export default {
     kanjiData: Object,
     // user edted keyword, or null
     custKeyword: String,
-    // true if instanced as a dialog within Flashcard Review page
-    reviewMode: Boolean,
+    
+    // true if instanced from the Flashcard Review page (the "Edit Story" dialog)
+    reviewMode:         { type: Boolean, default: false },
+
+    // Study page only, "Add to learned list" functionality
+    showLearnButton:    { type: Boolean, default: false },
+    showLearnedMessage: { type: Boolean, default: false },
 
     initStory_Edit:   String,
     initStory_View:   String,
@@ -402,7 +417,7 @@ export default {
   background: linear-gradient(to bottom,  #fff 0%,#f8f8f8 100%);
 }
 
-#my-story .msg-relearned { color:#61932B; font-size:11px; padding:10px 5px 0; }
+#my-story .msg-relearned { color:#61932B; padding:10px 5px 0; }
 
 .rtkframe { clear:both; position:relative; background:white; padding:15px; }
 .rtkframe .left        { float:left; width:68px; text-align:center; }

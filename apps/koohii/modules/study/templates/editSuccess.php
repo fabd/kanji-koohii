@@ -2,21 +2,30 @@
   use_helper('CJK');
 
   $userId = $sf_user->getUserId();
-  $ucsId  = $kanjiData->ucs_id;
 
-  // prepare story component ( do it HERE because we use it in the vue placeholder + JS below)
-  $formatKeyword  = $custKeyword ?: $kanjiData->keyword;
-  $savedStory     = StoriesPeer::getStory($userId, $ucsId);
-  $savedStoryText = $savedStory ? $savedStory->text : '';
-  $formattedStory = StoriesPeer::getFormattedStory($savedStoryText, $formatKeyword, true);
+  if ($kanjiData) {
+    $ucsId  = $kanjiData->ucs_id;
 
-  // IF ... on Study page, is in the red pile, is not yet "Added to learn list"
-  $isRestudyKanji   = ReviewsPeer::isFailedCard($userId, $ucsId);
-  $isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
-  $showLearnButton    = /*!$reviewMode &&*/ $isRestudyKanji && !$isRelearnedKanji;
-  $showLearnedMessage = /*!$reviewMode &&*/ $isRestudyKanji && $isRelearnedKanji;
+    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $formatKeyword = $custKeyword ?? $kanjiData->keyword;
 
+    $sf_response->setTitle( $kanjiData->kanji . ' "' . $formatKeyword . '" - ' . _CJ('Kanji Koohii') );
 
+    // props shared by the Vue component and the placeholder template
+    $storedStory   = StoriesPeer::getStory($userId, $ucsId);
+    $postStoryEdit = ($storedStory ? $storedStory->text : '');
+    $initStoryData = [
+      'postStoryEdit'   => $postStoryEdit,
+      'postStoryPublic' => (bool) ($storedStory && $storedStory->public),
+      'postStoryView'   => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true)
+    ];
+
+    // IF ... on Study page, is in the red pile, is not yet "Added to learn list"
+    $isRestudyKanji   = ReviewsPeer::isFailedCard($userId, $ucsId);
+    $isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
+    $showLearnButton    = /*!$reviewMode &&*/ $isRestudyKanji && !$isRelearnedKanji;
+    $showLearnedMessage = /*!$reviewMode &&*/ $isRestudyKanji && $isRelearnedKanji;
+  }
 
 function get_flashcard_button($userId, $context, $ucsId) {
   $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
@@ -58,7 +67,7 @@ EOD;
 
   <p> To search for characters outside of the selected index, type in a character or a unicode value.</p>
 
-<?php else: ?>     
+<?php else: ?>
 
   <div id="EditStoryComponent">
     
@@ -72,7 +81,7 @@ EOD;
 <!-- placeholder till Vue comp is mounted -->
 <?php
   include_partial('EditStoryPlaceholder', [
-    'kanjiData' => $kanjiData, 'formattedStory' => $formattedStory, 'custKeyword' => $custKeyword]) ?>
+    'kanjiData' => $kanjiData, 'formattedStory' => $initStoryData['postStoryView'], 'custKeyword' => $custKeyword]) ?>
    
     </div>
 
@@ -162,18 +171,21 @@ EOD;
     'kanjiData'     => $kanjiData,
     'custKeyword'   => $custKeyword,
 
-    'initStory_Edit'   => $savedStoryText,
-    'initStory_View'   => $formattedStory,
-    'initStory_Public' => (bool) ($savedStory && $savedStory->public),
+    // $initStoryData
+    // 'postStoryEdit'   => 
+    // 'postStoryView'   =>
+    // 'postStoryPublic' =>
 
     // Study page only (not for flashcards "edit story" dialog)
     'showLearnButton'    => $showLearnButton,
     'showLearnedMessage' => $showLearnedMessage
   ];
 
+  $propsData = array_merge($propsData, $initStoryData);
+
   koohii_onload_slot();
 ?>
 
-  Koohii.Refs.vueEditStory = mountEditStoryComponent('#JsEditStoryInst', <?= json_encode($propsData) ?>);
+  Koohii.Refs.vueEditStory = mountEditStoryComponent('#JsEditStoryInst', <?= json_encode($propsData) ?>, /* replace! */ true);
 
 <?php end_slot() ?>

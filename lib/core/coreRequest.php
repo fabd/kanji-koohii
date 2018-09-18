@@ -1,9 +1,14 @@
 <?php
 /**
- * Extends sfWebRequest with the old symfony error handling that seems to have
- * been refactored into the sfForms.
+ * Extends sfWebRequest with utilities.
  *
- * Methods:
+ * Misc:
+ *
+ *   getContentJson()
+ *
+ * 
+ * The old symfony error handling that seems to have been refactored into the sfForms:
+ * 
  *   getError($name)
  *   getErrors()
  *   hasError($name)

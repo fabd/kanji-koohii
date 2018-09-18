@@ -4,11 +4,6 @@
    
   <form name="EditStory" method="post" action="/study/kanji/1">
 
-    <input type="hidden" name="ucs_code" v-model="kanjiData.ucs_id">
-
-    <!-- whether it is Study page, or the dialog in Flashcard Review mode -->
-    <input v-if="isReviewMode" type="hidden" name="reviewMode" value="1" />
-  
     <div id="my-story" lang="ja">
 
       <div class="padding rtkframe" ref="maskArea">
@@ -46,11 +41,11 @@
                 <span v-html="koohiiformGetErrors"></span>
               </div>
 
-              <textarea name="txtStory" id="frmStory" v-model="frmStoryEdit"></textarea>
+              <textarea name="txtStory" id="frmStory" v-model="postStoryEdit"></textarea>
 
               <div class="controls valign">
                 <div style="float:left;">
-                  <input type="checkbox" name="chkPublic" id="storyedit_public" v-model="frmStoryPublic">
+                  <input type="checkbox" name="chkPublic" id="storyedit_public" v-model="postStoryPublic">
                   <label for="storyedit_public">Share this story</label>
                 </div>
                 <div style="float:right;">
@@ -65,8 +60,8 @@
 
               <div id="sv-textarea" class="bookstyle" title="Click to edit your story" v-on:click="onEditStory">
                 
-                <template v-if="formattedStory">
-                  <div v-html="formattedStory"></div>
+                <template v-if="postStoryView.length">
+                  <div v-html="postStoryView"></div>
                 </template>
 
                 <template v-else>
@@ -107,16 +102,6 @@
     <!-- /#my-story -->
 
   </form>
-
-  <!-- FIXME untested -->
-  <template v-if="reviewMode">
-    <div class="uiBMenu">
-      <div class="uiBMenuItem">
-        <!-- display a big Close button on mobile dialog (enabled by CSS) -->
-        <a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>
-      </div>
-    </div>
-  </template>
 
   </div>
 
@@ -162,17 +147,16 @@ export default {
     showLearnButton:    { type: Boolean, default: false },
     showLearnedMessage: { type: Boolean, default: false },
 
-    initStory_Edit:   String,
-    initStory_View:   String,
-    initStory_Public: Boolean
+    // ajax state
+    postStoryView:      { type: String, default: '' },
+    postStoryEdit:      { type: String, default: '' },
+    postStoryPublic:    { type: Boolean, default: false }
   },
 
   data() {
     return {
       // Edit Keyword dialog instance
       oEditKeyword: null,
-
-      formattedStory: '',
 
       isFavoriteStory: false,
 
@@ -182,11 +166,7 @@ export default {
       vmStoryPublished: null,
 
       // keep a copy to cancel changes
-      uneditedStory: '',
-
-      // model
-      frmStoryEdit: '',
-      frmStoryPublic: false,
+      uneditedStory: ''
     }
   },
 
@@ -220,9 +200,9 @@ export default {
 
       KoohiiAPI.postUserStory(
         { 
-          ucsId: this.kanjiData.ucs_id,
-          txtStory: this.frmStoryEdit,
-          isPublic: this.frmStoryPublic,
+          ucsId:      this.kanjiData.ucs_id,
+          txtStory:   this.postStoryEdit,
+          isPublic:   this.postStoryPublic,
           reviewMode: this.reviewMode
         },
         { 
@@ -241,7 +221,7 @@ export default {
 
       if (tron.hasErrors()) return
 
-      this.formattedStory = props.formattedStory
+      this.postStoryView = props.postStoryView
       this.isEditing = false
 
       // FIXME -- temporary code for user feedback (should use Vue based SharedStories list)
@@ -252,6 +232,9 @@ export default {
         this.vmStoryPublished = null
       }
 
+      //
+      // update/add/remove a shared story dynamically
+      // 
       // delete story from page if already shared
       let $elSharedStory = Dom('#'+props.sharedStoryId)
       if ($elSharedStory.el()) {
@@ -259,14 +242,14 @@ export default {
         Dom(el).remove()
       }
 
-      // visual feedback : add the story in "new & updated"
       if (props.isStoryShared) {
+        // add the story in "new & updated"
         const elMount = document.createElement('div')
         insertAfter(elMount, '#sharedstories-new .title')
 
         const vmProps = {
-          profileLink: props.profileLink,
-          story:  this.formattedStory.replace(/<br\/>/g, ' '), // remove the line breaks
+          profileLink: props.sharedStoryAuthor,
+          story:  this.postStoryView.replace(/<br\/>/g, ' '), // remove the line breaks
           divId:  props.sharedStoryId
         }
         this.vmStoryPublished = VueInstance(KoohiiSharedStory, elMount, vmProps)
@@ -299,7 +282,7 @@ export default {
 
     doCancel()
     {
-      this.frmStoryEdit = this.uneditedStory
+      this.postStoryEdit = this.uneditedStory
       this.isEditing = false
     },
 
@@ -310,12 +293,12 @@ export default {
      */  
     editStory(sCopyStory)
     {
-      this.uneditedStory = this.frmStoryEdit
+      this.uneditedStory = this.postStoryEdit
 
       // edit a new story, cancel will restore the previous one
       if (sCopyStory) {
-        this.frmStoryEdit = sCopyStory
-        this.frmStoryPublic = false      // default to private after copying a story
+        this.postStoryEdit = sCopyStory
+        this.postStoryPublic = false      // default to private after copying a story
       }
       
       this.isEditing = true
@@ -381,17 +364,16 @@ export default {
       this.oEditKeyword.destroy()
       this.oEditKeyword = null
     }
-  },
-
-  created()
-  {
-    console.log('KoohiiEditStory::created()')
-
-    this.formattedStory = this.initStory_View
-
-    this.frmStoryEdit   = this.initStory_Edit
-    this.frmStoryPublic = this.initStory_Public
   }
+
+  // created()
+  // {
+  //   console.log('KoohiiEditStory::created()')
+
+  //   this.postStoryView   = this.postStoryView
+  //   this.postStoryEdit   = this.postStoryEdit
+  //   this.postStoryPublic = this.postStoryPublic
+  // }
 
 }
 </script>

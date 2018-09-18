@@ -10,7 +10,7 @@ class studyActions extends sfActions
   public function executeIndex($request)
   {
   }
-  
+
   /**
    * Study Page Search
    * 
@@ -93,10 +93,6 @@ class studyActions extends sfActions
     {
       sfProjectConfiguration::getActive()->loadHelpers('CJK');
 
-      $this->custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
-
-      $this->getResponse()->setTitle(
-        $this->kanjiData->kanji . ' "' . ($this->custKeyword ?: $this->kanjiData->keyword) . '" - ' . _CJ('Kanji Koohii!'));
 
       // add request parameters for SharedStoriesListComponent view
       $request->getParameterHolder()->add(array('ucsId' => $ucsId, 'keyword' => $this->kanjiData->keyword));
@@ -123,7 +119,6 @@ class studyActions extends sfActions
     {
       // search gave no results
       $this->kanjiData = false;
-      $this->custKeyword = null;
     }
   }
 
@@ -423,10 +418,12 @@ class studyActions extends sfActions
    * EditStoryDialog ajax handler.
    * 
    * Request parameters:
+   * 
    *   ucs_code     int
    *   reviewMode   boolean    True if used from the Review page EditStory window.
-   *   txtStory     string
-   *   chkPublic    boolean
+   *   
+   *   postStoryEdit      string
+   *   postStoryPublic    boolean
    * 
    * See study/edit action (parameters) and EditStoryDialog.js
    *
@@ -434,80 +431,110 @@ class studyActions extends sfActions
    */
   public function executeEditstory($request)
   {
-    $json = $request->getContentJson();
+    // FIXME - temporary compat. with AjaxDialog (YUI2 Connect) in Flashcard Review page
+    if ($request->hasParameter('ucs_code'))  {
+      // pretend we received application/json in POST body
+      $json = (object) [
+        'ucs_code'   => $request->getParameter('ucs_code'),
+        'reviewMode' => true
+      ];
+    }
+    else {
+      $json = $request->getContentJson();
+    }
+
     $tron = new JsTron();
 
     //
     $userId     = $this->getUser()->getUserId();
-    $savedStory = '';
-
-    // request parameters
     $ucsId      = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs_code);
-    $txtStory   = trim($json->txtStory);
-    $chkPublic  = (bool) $json->chkPublic;
     $reviewMode = (bool) $json->reviewMode;
 
-    // disallow markup
-    if ($txtStory !== strip_tags($txtStory)) {
-      $tron->setError('HTML markup (tags) formatting not allowed in stories.');
-      return $tron->renderJson($this);
-    }
-// $this->forward404();
-
-    // validate story length with helpful message
-    mb_internal_encoding('utf-8');
-    $count = mb_strlen($txtStory);
-    if ($count > rtkStory::MAXIMUM_STORY_LENGTH) {
-      $n = $count - rtkStory::MAXIMUM_STORY_LENGTH;
-      $tron->setError(sprintf('Story is too long (512 characters maximum, %d over the limit).', $n));
-      return $tron->renderJson($this);
-    }
-    
-    // validate kanji links within story
-    if (true !== ($errorMsg = rtkStory::validateKanjiLinks($txtStory))) {
-      $tron->setError($errorMsg);
-      return $tron->renderJson($this);
-    }
-
-    // see cache invalidation below
+    //
     $storedStory = StoriesPeer::getStory($userId, $ucsId);
     $storyCurrentlyShared = $storedStory && (bool)$storedStory->public;
 
-    // delete story if empty text
-    if (empty($txtStory))
+
+    if ($request->getMethod() === sfRequest::GET)
     {
-      StoriesPeer::deleteStory($userId, $ucsId);
-      $savedStory = '';
+      // STATE (for the Vue instancing in flashcard page "Edit Story" dialog)
+      $tron->add([
+        'postStoryEdit'   => ($storedStory ? $storedStory->text : ''),
+        'postStoryPublic' => (bool) ($storedStory && $storedStory->public)
+      ]);
+
+      // Flashcard Review page feayure -- get "favorite" story, if user's edit story is empty
+      if ($reviewMode && $postStoryEdit === '')
+      {
+        if (false !== ($favStory = StoriesPeer::getFavouriteStory($userId, $ucsId)))
+        {
+          $postStoryEdit = $favStory->text; // story to format
+          $tron->set('isFavoriteStory', true);
+        }
+      }
     }
     else
-    // update story
     {
-      $savedStory = rtkStory::substituteKanjiLinks($txtStory);
+      // STATE
+      $postStoryEdit   = trim($json->postStoryEdit);
+      $postStoryPublic = (bool) $json->postStoryPublic;
 
-      if (true !== StoriesPeer::updateStory($userId, $ucsId, ['text' => $savedStory, 'public' => (int) $chkPublic]))
-      {
-        $tron->setError("Woops, the story couldn't be saved. Try again in a few moments.");
+      // disallow markup
+      if ($postStoryEdit !== strip_tags($postStoryEdit)) {
+        $tron->setError('HTML markup (tags) formatting not allowed in stories.');
         return $tron->renderJson($this);
       }
-    }
-    
-    // invalidate cache -- approx 7% of stories are public,
-    //  so skipping cache invalidation is worthwhile if possible
-    // error_log(sprintf("public %d > %d", $storyCurrentlyShared, $chkPublic));
-    if ($chkPublic || $storyCurrentlyShared) {
-      error_log(sprintf("invalidating the cache"));
-      StoriesSharedPeer::invalidateStoriesCache($ucsId);
-    }
-
-    // ONLY for flashcard reviews -- get favorite story, if user's story is empty
-    $tron->set('isFavoriteStory', false);
-    if ($reviewMode && $savedStory === '')
-    {
-      if (false !== ($favStory = StoriesPeer::getFavouriteStory($userId, $ucsId)))
-      {
-        $savedStory = $favStory->text; // story to format
-        $tron->set('isFavoriteStory', true);
+  // $this->forward404();
+      
+      // validate kanji links within story
+      if (true !== ($errorMsg = rtkStory::validateKanjiLinks($postStoryEdit))) {
+        $tron->setError($errorMsg);
+        return $tron->renderJson($this);
       }
+
+      // delete story if empty text
+      if (empty($postStoryEdit))
+      {
+        StoriesPeer::deleteStory($userId, $ucsId);
+        $postStoryEdit = '';
+      }
+      else
+      // update story
+      {
+        // validate story length BEFORE substitutions (to match "x chars left" feedback on the client side)
+        mb_internal_encoding('utf-8');
+        $count = mb_strlen($postStoryEdit);
+        if ($count > rtkStory::MAXIMUM_STORY_LENGTH) {
+          $n = $count - rtkStory::MAXIMUM_STORY_LENGTH;
+          $tron->setError(sprintf('Story is too long (512 characters maximum, %d over the limit).', $n));
+          return $tron->renderJson($this);
+        }
+
+        // NOTE! it's assumed kanji substitution makes the story SMALLER (eg. "{1000}" => "{類}")
+        $postStoryEdit = rtkStory::substituteKanjiLinks($postStoryEdit);
+
+        if (true !== StoriesPeer::updateStory($userId, $ucsId, ['text' => $postStoryEdit, 'public' => (int) $postStoryPublic]))
+        {
+          $tron->setError("Woops, the story couldn't be saved. Try again in a few moments.");
+          return $tron->renderJson($this);
+        }
+      }
+      
+      // invalidate cache -- approx 7% of stories are public,
+      //  so skipping cache invalidation is worthwhile if possible
+      // error_log(sprintf("public %d > %d", $storyCurrentlyShared, $postStoryPublic));
+      if ($postStoryPublic || $storyCurrentlyShared) {
+//error_log(sprintf("invalidating the cache"));
+        StoriesSharedPeer::invalidateStoriesCache($ucsId);
+      }
+
+      // these are used for visual feedback, adding or removing the story from Shared Stories list
+      $isStoryShared = $postStoryEdit !== '' && $postStoryPublic;
+      $tron->set('isStoryShared', $isStoryShared);
+    
+      $tron->set('sharedStoryId', "story-${userId}-${ucsId}");
+      sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
+      $tron->set('sharedStoryAuthor', link_to_member($this->getUser()->getUserName()));
     }
 
     // keyword to auto-format
@@ -515,23 +542,35 @@ class studyActions extends sfActions
     $custKeyword   = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
     $formatKeyword = $custKeyword ?? $kanjiData->keyword;
 
-    // response
-     
-    $isStoryShared = $chkPublic && $savedStory;
-    $tron->set('isStoryShared', $isStoryShared);
-    
-    // these are used for visual feedback, adding the new/updated story to the page
-    $tron->set('sharedStoryId', "story-${userId}-${ucsId}");
-    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
-    $tron->set('profileLink', link_to_member($this->getUser()->getUserName()));
+    // initial load (from Flashcard Review's edit story dialog)
+    $tron->add([
+      'kanjiData'    => $kanjiData,
+      'custKeyword'  => $custKeyword
+    ]);
 
-    // ...
-    $tron->set('formattedStory', StoriesPeer::getFormattedStory($savedStory, $formatKeyword, true));
-
+    // POST state
+    $tron->add([
+      'postStoryView' => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true)
+    ]);
 
 sleep(1);
 
     return $tron->renderJson($this);
+  }
+
+  // returns some Vue props for the Edit Story component on initial load
+  // {object} $storedStory     can be false!
+  public static function getInitStoryState($storedStory, $displayKeyword)
+  {
+    // $storedStory can be false
+    $storyText = $storedStory ? $storedStory->text : '';
+    $isShared  = (bool) ($storedStory && $storedStory->public);
+
+    return [
+      'postStoryEdit'   => $storyText,
+      'postStoryView'   => StoriesPeer::getFormattedStory($storyText, $displayKeyword, true),
+      'postStoryPublic' => $isShared
+    ];
   }
 
   /**

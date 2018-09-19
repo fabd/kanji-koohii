@@ -14,7 +14,7 @@
  *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
  * 
  */
-/*global YAHOO, window, alert, console, document, Core, App, Koohii */
+/*global YAHOO, window, alert, console, document, Core, App, Koohii, VueInstance */
 
 (function(){
 
@@ -113,7 +113,7 @@
       var vueProps = {
         items:       props.items,
         known_kanji: Koohii.UX.reviewMode.fc_known_kanji   // ^
-      }
+      };
       var elMount  = this.dialog.getBody().querySelector('div'); // replace the loading div
       this.vueDictList = VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
     },

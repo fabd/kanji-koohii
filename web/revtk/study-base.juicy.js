@@ -7,7 +7,7 @@
  *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
  *   
  */
-/*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii*/
+/*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii, VueInstance */
 
 /* =require from "%WEB%" */
 /* !require "/revtk/bundles/yui-base.juicy.js" déjà inclus */

@@ -82,7 +82,7 @@ export default {
   /* the mask is appended asa child, the parent element is position:relative, this covers the area */
   position: absolute;
   z-index: 2000;
-  background-color: hsla(0,0%,100%,.9);
+  background-color: hsla(0,1%,100%,.9);  /* FIXME 0% bug with yuicompressor > 1% */
   margin: 0;
   top: 0; right: 0; bottom: 0; left: 0;
   transition: opacity .3s;

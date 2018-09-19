@@ -558,7 +558,7 @@ class studyActions extends sfActions
       'postStoryView' => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true)
     ]);
 
-sleep(1);
+// sleep(1);
 
     return $tron->renderJson($this);
   }

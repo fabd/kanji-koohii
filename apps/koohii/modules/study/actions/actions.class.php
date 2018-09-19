@@ -415,12 +415,13 @@ class studyActions extends sfActions
    */
 
   /**
-   * EditStoryDialog ajax handler.
+   * EditStory Vue ajax handler.
    * 
    * Request parameters:
    * 
-   *   ucs_code     int
-   *   reviewMode   boolean    True if used from the Review page EditStory window.
+   *   ucs_code           number
+   *   
+   *   reviewMode         boolean    True if used from the Review page EditStory window.
    *   
    *   postStoryEdit      string
    *   postStoryPublic    boolean
@@ -454,24 +455,37 @@ class studyActions extends sfActions
     $storedStory = StoriesPeer::getStory($userId, $ucsId);
     $storyCurrentlyShared = $storedStory && (bool)$storedStory->public;
 
+    // for the AjaxDialog (legacy code)
+    if ($reviewMode) {
+      $tron->setStatus(JsTron::STATUS_PROGRESS);
+      $tron->add( ['dialogTitle' => 'Edit Story'] );
+    }
 
     if ($request->getMethod() === sfRequest::GET)
     {
-      // STATE (for the Vue instancing in flashcard page "Edit Story" dialog)
+      $postStoryEdit = ($storedStory ? $storedStory->text : '');
+
+      // STATE (load state for the "Edit Story" Vue comp in flashcard page)
       $tron->add([
-        'postStoryEdit'   => ($storedStory ? $storedStory->text : ''),
+        'postStoryEdit'   => $postStoryEdit,
         'postStoryPublic' => (bool) ($storedStory && $storedStory->public)
       ]);
 
       // Flashcard Review page feayure -- get "favorite" story, if user's edit story is empty
-      if ($reviewMode && $postStoryEdit === '')
+      if (!$storedStory && $reviewMode)
       {
         if (false !== ($favStory = StoriesPeer::getFavouriteStory($userId, $ucsId)))
         {
-          $postStoryEdit = $favStory->text; // story to format
+          // the "favorite" story to format
+          $postStoryEdit = $favStory->text;
+
+          // the user's own story is empty, if editing
+          $tron->set('postStoryEdit', '');
           $tron->set('isFavoriteStory', true);
+
         }
       }
+
     }
     else
     {
@@ -528,13 +542,15 @@ class studyActions extends sfActions
         StoriesSharedPeer::invalidateStoriesCache($ucsId);
       }
 
-      // these are used for visual feedback, adding or removing the story from Shared Stories list
-      $isStoryShared = $postStoryEdit !== '' && $postStoryPublic;
-      $tron->set('isStoryShared', $isStoryShared);
-    
-      $tron->set('sharedStoryId', "story-${userId}-${ucsId}");
-      sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
-      $tron->set('sharedStoryAuthor', link_to_member($this->getUser()->getUserName()));
+      if (!$reviewMode) {
+        // these are used for visual feedback, adding or removing the story from Shared Stories list
+        $isStoryShared = $postStoryEdit !== '' && $postStoryPublic;
+        $tron->set('isStoryShared', $isStoryShared);
+      
+        $tron->set('sharedStoryId', "story-${userId}-${ucsId}");
+        sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
+        $tron->set('sharedStoryAuthor', link_to_member($this->getUser()->getUserName()));
+      }
     }
 
     // keyword to auto-format
@@ -556,21 +572,6 @@ class studyActions extends sfActions
 sleep(1);
 
     return $tron->renderJson($this);
-  }
-
-  // returns some Vue props for the Edit Story component on initial load
-  // {object} $storedStory     can be false!
-  public static function getInitStoryState($storedStory, $displayKeyword)
-  {
-    // $storedStory can be false
-    $storyText = $storedStory ? $storedStory->text : '';
-    $isShared  = (bool) ($storedStory && $storedStory->public);
-
-    return [
-      'postStoryEdit'   => $storyText,
-      'postStoryView'   => StoriesPeer::getFormattedStory($storyText, $displayKeyword, true),
-      'postStoryPublic' => $isShared
-    ];
   }
 
   /**

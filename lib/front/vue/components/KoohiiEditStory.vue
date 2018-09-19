@@ -61,21 +61,22 @@
               <div id="sv-textarea" class="bookstyle" title="Click to edit your story" v-on:click="onEditStory">
                 
                 <template v-if="postStoryView.length">
+
                   <div v-html="postStoryView"></div>
+
+                  <div v-if="isFavoriteStory" class="favstory">
+                    <i class="fa fa-star"></i>You starred this story
+                  </div>
+
                 </template>
 
                 <template v-else>
                   <div  class="empty">[ click here to enter your story ]</div>              
                 </template>
 
-                <div v-if="isFavoriteStory" class="favstory">
-                  <div class="ico">&nbsp;</div>Starred story (click to edit)
-                </div>
-
-
               </div>
 
-              <template v-if="!reviewMode">
+              <template v-if="!isReviewMode">
                 <div v-if="showLearnButton" class="controls">
                   <!-- handle via legacy code / page load -->
                   <input type="submit" name="doLearned" value="Add to learned list" class="btn btn-success" />
@@ -141,7 +142,9 @@ export default {
     custKeyword: String,
     
     // true if instanced from the Flashcard Review page (the "Edit Story" dialog)
-    reviewMode:         { type: Boolean, default: false },
+    isReviewMode:       { type: Boolean, default: false },
+    // show a starred story in reviewmode when user's story is empty
+    isFavoriteStory:    { type: Boolean, default: false },
 
     // Study page only, "Add to learned list" functionality
     showLearnButton:    { type: Boolean, default: false },
@@ -157,8 +160,6 @@ export default {
     return {
       // Edit Keyword dialog instance
       oEditKeyword: null,
-
-      isFavoriteStory: false,
 
       isEditing: false,
 
@@ -179,11 +180,6 @@ export default {
     editKeywordUrl()
     {
       return '/study/editkeyword/id/' + this.kanjiData.ucs_id
-    },
-
-    isReviewMode()
-    {
-      return this.reviewMode === true
     }
   },
 
@@ -203,7 +199,7 @@ export default {
           ucsId:      this.kanjiData.ucs_id,
           txtStory:   this.postStoryEdit,
           isPublic:   this.postStoryPublic,
-          reviewMode: this.reviewMode
+          reviewMode: this.isReviewMode
         },
         { 
           then: this.onSaveStoryResponse.bind(this)
@@ -220,6 +216,9 @@ export default {
       this.koohiiformHandleResponse(tron)
 
       if (tron.hasErrors()) return
+
+      // keep it simple for now, after a POST forget about the "starred story" thing
+      this.isFavoriteStory = false
 
       this.postStoryView = props.postStoryView
       this.isEditing = false
@@ -242,7 +241,7 @@ export default {
         Dom(el).remove()
       }
 
-      if (props.isStoryShared) {
+      if (!this.isReviewMode && props.isStoryShared) {
         // add the story in "new & updated"
         const elMount = document.createElement('div')
         insertAfter(elMount, '#sharedstories-new .title')
@@ -421,8 +420,8 @@ export default {
 .rtkframe .bookstyle .empty { color:#888; }
 
  /* favorited story sign */
-.rtkframe .favstory { display:inline-block; margin:1em 0 0; line-height:18px; padding:5px 0; color:#666; }
-.rtkframe .favstory .ico { width:22px; height:18px; display:inline-block; background:url(/images/1.0/ico/study-story-actions.gif) no-repeat 0 0; }
+.rtkframe .favstory { margin:1em 0 0; color:#666; font-style:italic; }
+.rtkframe .favstory i { margin-right:0.5em; color:#666; }
 
 #storyview .controls   { padding-right:16px; margin:12px 0 0; text-align:right; }
 

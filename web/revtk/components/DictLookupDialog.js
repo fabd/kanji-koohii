@@ -25,6 +25,9 @@
 
   App.Ui.DictLookupDialog.prototype =
   {
+    // instance of Koohii.UX.KoohiiDictList, if created
+    vueDictList: null,
+
     /**
      * 
      * 
@@ -63,10 +66,14 @@
       }
 
       // FIXME  here ideally we should $destroy the Vue instance
-      
+      if (this.vueDictList) {
+        this.vueDictList.$destroy();
+        this.vueDictList = null;
+      }
 
       // this is a bit hacky, we are using the ancestor AjaxPanel class underlying AjaxDialog, should use AjaxDialog API
-      this.dialog.getBody().innerHTML = Core.Ui.AjaxDialog.DIALOG_LOADING_HTML;
+      this.dialog.setBodyLoading(200);
+
       this.ucsId = ucsId;
       this.dialog.getAjaxPanel().get({ucs: ucsId}, this.requestUri);
     },
@@ -108,9 +115,7 @@
         known_kanji: Koohii.UX.reviewMode.fc_known_kanji   // ^
       }
       var elMount  = this.dialog.getBody().querySelector('div'); // replace the loading div
-      console.log('caca %o', elMount)
-      var instance = VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
-      console.log('caca2')
+      this.vueDictList = VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
     },
     
     onDialogDestroy: function()

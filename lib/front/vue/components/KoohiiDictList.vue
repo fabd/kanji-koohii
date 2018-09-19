@@ -148,7 +148,7 @@ export default {
   },
 
   beforeDestroy() {
-    // console.log('KoohiiDictList::beforeDestroy()');
+    console.log('KoohiiDictList::beforeDestroy()');
   }
 
 }

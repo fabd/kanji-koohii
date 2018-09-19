@@ -119,14 +119,15 @@
           Core.log('Dict onAjaxResponse(%o)', o);
           that.dictPanel = true;
 
-          var elMount = elPanel.querySelector('div'); // replace the loading div
-
           var props = o.responseJSON.props;
 
-          Koohii.UX.KoohiiDictList.mount({
+          var vueProps = {
             items:       props.items,
             known_kanji: props.known_kanji 
-          }, elMount);
+          };
+
+          var elMount = elPanel.querySelector('div'); // replace the loading div
+          VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
         };
 
         // request known kanji, as it is otherwise not provided in the Study pages

@@ -97,18 +97,20 @@
 
       var props = tron.getProps();
 
-      var mountPoint = this.dialog.getBody().querySelector('div'); // replace the loading div
-
       // ^ grab "known kanji" from the FLashcard Review page, since the state is preserved
       // during the entire review session, it's more efficient this way. The user's known
       // kanji could realistically be 2000 to 3000 utf8 characters. So even though they
       // are also cached in php session, it's better to avoid returning several KBs of data
       // with each dictionary lookup request
       //
-      Koohii.UX.KoohiiDictList.mount({
+      var vueProps = {
         items:       props.items,
         known_kanji: Koohii.UX.reviewMode.fc_known_kanji   // ^
-      }, mountPoint);
+      }
+      var elMount  = this.dialog.getBody().querySelector('div'); // replace the loading div
+      console.log('caca %o', elMount)
+      var instance = VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
+      console.log('caca2')
     },
     
     onDialogDestroy: function()

@@ -446,9 +446,15 @@ export default {
 
 #storyview .bookstyle { line-height:1.5em; }
 
+@media (min-width: 600px) {
+  .rtkframe .bookstyle,
+  .rtkframe textarea { font-size:16px; }
+}
+
+
+
 /* Story popup (flashcard review page) kanji shows on mouseover */
 
-#my-story .onhover { font-size:40pt; background:url(/images/1.0/hidden-kanji.gif) no-repeat 50% 50%; }
 #my-story .onhover span { visibility:hidden; color:#fff; }
 #my-story .onhover:hover { background:none; }
 #my-story .onhover:hover span { visibility:visible; color:#000; background:#fff; }

@@ -169,9 +169,6 @@
   /* show background between vertica stories */
   .sharedstory { margin-bottom:0.5em; }
 
-  .rtkframe .bookstyle,
-  .rtkframe #storyedit textarea { font-size:16px; }
-
   /* big kanji to the left on desktop */
   #my-stories .rtkframe { padding-left:6.25em; }
   .mystories-kanji { margin-left:-85px; width:80px; font-size:3.5em; }

@@ -1,6 +1,9 @@
 /**
- * Study pages.
+ * Study pages
  * 
+ *   Note! REFACTORING / WEBPACK BUILD
+ *   - extracted css "study-bundle.css" is included at bottom, to match inclusion of "study-bundle.js" in the page
+ *  
  * Juicer build:
  *  php lib/juicer/JuicerCLI.php -v -w web -c apps/koohii/config/juicer.config.php -i web/revtk/study-base.juicy.css
  *   
@@ -285,3 +288,12 @@ table.failed-kanji td { background-color:#fff; border-top:1px solid #eee; }
   #study-restudy,
   #study-learned { border-radius:4px; }
 }
+
+
+/* ---------------------------- */
+/* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
+/* ---------------------------- */
+
+/* =require from "%WEB%" */
+/* =require "/build/pack/study-bundle.css" */
+

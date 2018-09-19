@@ -1,6 +1,7 @@
 indexSuccess:
   metas:
-    title: 'Review Status'
+    title: 'Spaced Repetition - Kanji Koohii'
+  stylesheets: [ '/revtk/study-base.juicy.css' ]
 
 reviewSuccess:
   metas:

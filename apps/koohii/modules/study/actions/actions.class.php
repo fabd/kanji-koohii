@@ -70,7 +70,7 @@ class studyActions extends sfActions
     }
     else
     {
-      $ucsId = $this->parseUcsIdParameter($request);
+      $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($request->getParameter('ucs_code', 0));
 
       // "Add to learned list"
       if ($request->hasParameter('doLearned'))
@@ -121,17 +121,6 @@ class studyActions extends sfActions
       $this->kanjiData = false;
     }
   }
-
-  // Handle ucs_id parameter from Study page POST requests (persists the current kanji)
-  protected function parseUcsIdParameter($request)
-  {
-    $ucsId = $request->getParameter('ucs_code', false);
-
-    $this->forward404Unless(BaseValidators::validateInteger($ucsId) && intval($ucsId));
-
-    return $ucsId;
-  }
-
 
   /**
    * Clear learned list, then redirect to kanji

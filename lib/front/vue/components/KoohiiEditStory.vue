@@ -4,6 +4,9 @@
    
   <form name="EditStory" method="post" action="/study/kanji/1">
 
+    <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
+    <input type="hidden" name="ucs_code" v-model="kanjiData.ucs_id">
+
     <div id="my-story" lang="ja">
 
       <div class="padding rtkframe" ref="maskArea">

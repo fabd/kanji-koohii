@@ -96,6 +96,9 @@
         return;
       }
 
+      // cleanup
+      this.onDialogDestroy();
+
       // clear the old html while loading
       this.dialog.setBodyLoading(LOADING_WIDTH);
 
@@ -122,10 +125,9 @@
     onDialogHide: function()
     {
       Core.log('EditStoryDialog::hide()');
-      if (this.editStory.isEdit())
-      {
-        this.editStory.doCancel();
-      }
+
+      // fabd: removed "cancel edit mode"... what if user edited, then closed by mistake, 
+      //   not really necessary to undo edit mode when the Edit Story dialog is hidden.
 
       // keep the dialog in the page
       return false;
@@ -155,7 +157,7 @@
     
     onDialogDestroy: function()
     {
-// console.log('ondialogdestroy()')
+// console.log('onDialogDestroy()')
       if (this.editStory)
       {
         this.editStory.$destroy();

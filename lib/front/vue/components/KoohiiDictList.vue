@@ -123,10 +123,10 @@ export default {
   },
 
   created() {
-    // Core.log('KoohiiDictList::created(%o)', this.items);
+    // console.log('KoohiiDictList::created(%o)', this.items);
 
     // if (this.known_kanji !== '') {
-    //   Core.log(' known_kanji : ' + this.known_kanji)
+    //   console.log(' known_kanji : ' + this.known_kanji)
     // }
     const KNOWN_KANJI = this.known_kanji + HIRAGANA + KATAKANA + PUNCTUATION
 
@@ -148,7 +148,7 @@ export default {
   },
 
   beforeDestroy() {
-    // Core.log('KoohiiDictList::beforeDestroy()');
+    console.log('KoohiiDictList::beforeDestroy()');
   }
 
 }

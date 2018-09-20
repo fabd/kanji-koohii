@@ -10,7 +10,7 @@ class studyActions extends sfActions
   public function executeIndex($request)
   {
   }
-  
+
   /**
    * Study Page Search
    * 
@@ -70,7 +70,7 @@ class studyActions extends sfActions
     }
     else
     {
-      $ucsId = $this->parseUcsIdParameter($request);
+      $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($request->getParameter('ucs_code', 0));
 
       // "Add to learned list"
       if ($request->hasParameter('doLearned'))
@@ -92,12 +92,7 @@ class studyActions extends sfActions
     if ($ucsId && ($this->kanjiData = KanjisPeer::getKanjiByUCS($ucsId)))
     {
       sfProjectConfiguration::getActive()->loadHelpers('CJK');
-      $this->kanjiData->readings = format_readings($this->kanjiData->onyomi);
 
-      $this->custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
-
-      $this->getResponse()->setTitle(
-        $this->kanjiData->kanji . ' "' . ($this->custKeyword ?: $this->kanjiData->keyword) . '" - ' . _CJ('Kanji Koohii!'));
 
       // add request parameters for SharedStoriesListComponent view
       $request->getParameterHolder()->add(array('ucsId' => $ucsId, 'keyword' => $this->kanjiData->keyword));
@@ -124,20 +119,8 @@ class studyActions extends sfActions
     {
       // search gave no results
       $this->kanjiData = false;
-      $this->custKeyword = null;
     }
   }
-
-  // Handle ucs_id parameter from Study page POST requests (persists the current kanji)
-  protected function parseUcsIdParameter($request)
-  {
-    $ucsId = $request->getParameter('ucs_code', false);
-
-    $this->forward404Unless(BaseValidators::validateInteger($ucsId) && intval($ucsId));
-
-    return $ucsId;
-  }
-
 
   /**
    * Clear learned list, then redirect to kanji
@@ -421,11 +404,16 @@ class studyActions extends sfActions
    */
 
   /**
-   * EditStoryDialog ajax handler for the Review pages.
+   * EditStory Vue ajax handler.
    * 
    * Request parameters:
-   *   ucs_code     UCS-2 code.
-   *   reviewMode   True if used from the Review page EditStory window.
+   * 
+   *   ucs_code           number
+   *   
+   *   reviewMode         boolean    True if used from the Review page EditStory window.
+   *   
+   *   postStoryEdit      string
+   *   postStoryPublic    boolean
    * 
    * See study/edit action (parameters) and EditStoryDialog.js
    *
@@ -433,25 +421,146 @@ class studyActions extends sfActions
    */
   public function executeEditstory($request)
   {
-    $ucsId = $request->getParameter('ucs_code', false);
-    $this->forward404Unless(BaseValidators::validateInteger($ucsId) && intval($ucsId));
-
-    $reviewMode = $request->hasParameter('reviewMode');
-
-    $kanjiData = KanjisPeer::getKanjiByUCS($ucsId);
-    sfProjectConfiguration::getActive()->loadHelpers('CJK');
-    $kanjiData->readings = format_readings($kanjiData->onyomi);
+    // FIXME - temporary compat. with AjaxDialog (YUI2 Connect) in Flashcard Review page
+    if ($request->hasParameter('ucs_code'))  {
+      // pretend we received application/json in POST body
+      $json = (object) [
+        'ucs_code'   => $request->getParameter('ucs_code'),
+        'reviewMode' => true
+      ];
+    }
+    else {
+      $json = $request->getContentJson();
+    }
 
     $tron = new JsTron();
-    $tron->add(array(
-      'dialogTitle'   => 'Edit Story' // for '.$kanjiData->kanji.' (#'.$kanjiData->framenum.')'
-    ));
-    $tron->setStatus(JsTron::STATUS_PROGRESS);
-//sleep( 3);
 
-    $custKeyword = CustkeywordsPeer::getCustomKeyword($this->getUser()->getUserId(), $ucsId);
+    //
+    $userId     = $this->getUser()->getUserId();
+    $ucsId      = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs_code);
+    $reviewMode = (bool) $json->reviewMode;
 
-    return $tron->renderComponent($this, 'study', 'EditStory', array('kanjiData' => $kanjiData, 'reviewMode' => $reviewMode, 'custKeyword' => $custKeyword));
+    //
+    $storedStory = StoriesPeer::getStory($userId, $ucsId);
+    $storyCurrentlyShared = $storedStory && (bool)$storedStory->public;
+
+    // for the AjaxDialog (legacy code)
+    if ($reviewMode) {
+      $tron->setStatus(JsTron::STATUS_PROGRESS);
+      $tron->add( ['dialogTitle' => 'Edit Story'] );
+    }
+
+    if ($request->getMethod() === sfRequest::GET)
+    {
+      $postStoryEdit = ($storedStory ? $storedStory->text : '');
+
+      // STATE (load state for the "Edit Story" Vue comp in flashcard page)
+      $tron->add([
+        'postStoryEdit'   => $postStoryEdit,
+        'postStoryPublic' => (bool) ($storedStory && $storedStory->public)
+      ]);
+
+      // Flashcard Review page feayure -- get "favorite" story, if user's edit story is empty
+      if (!$storedStory && $reviewMode)
+      {
+        if (false !== ($favStory = StoriesPeer::getFavouriteStory($userId, $ucsId)))
+        {
+          // the "favorite" story to format
+          $postStoryEdit = $favStory->text;
+
+          // the user's own story is empty, if editing
+          $tron->set('postStoryEdit', '');
+          $tron->set('isFavoriteStory', true);
+
+        }
+      }
+
+    }
+    else
+    {
+      // STATE
+      $postStoryEdit   = trim($json->postStoryEdit);
+      $postStoryPublic = (bool) $json->postStoryPublic;
+
+      // disallow markup
+      if ($postStoryEdit !== strip_tags($postStoryEdit)) {
+        $tron->setError('HTML markup (tags) formatting not allowed in stories.');
+        return $tron->renderJson($this);
+      }
+  // $this->forward404();
+      
+      // validate kanji links within story
+      if (true !== ($errorMsg = rtkStory::validateKanjiLinks($postStoryEdit))) {
+        $tron->setError($errorMsg);
+        return $tron->renderJson($this);
+      }
+
+      // delete story if empty text
+      if (empty($postStoryEdit))
+      {
+        StoriesPeer::deleteStory($userId, $ucsId);
+        $postStoryEdit = '';
+      }
+      else
+      // update story
+      {
+        // validate story length BEFORE substitutions (to match "x chars left" feedback on the client side)
+        mb_internal_encoding('utf-8');
+        $count = mb_strlen($postStoryEdit);
+        if ($count > rtkStory::MAXIMUM_STORY_LENGTH) {
+          $n = $count - rtkStory::MAXIMUM_STORY_LENGTH;
+          $tron->setError(sprintf('Story is too long (512 characters maximum, %d over the limit).', $n));
+          return $tron->renderJson($this);
+        }
+
+        // NOTE! it's assumed kanji substitution makes the story SMALLER (eg. "{1000}" => "{類}")
+        $postStoryEdit = rtkStory::substituteKanjiLinks($postStoryEdit);
+
+        if (true !== StoriesPeer::updateStory($userId, $ucsId, ['text' => $postStoryEdit, 'public' => (int) $postStoryPublic]))
+        {
+          $tron->setError("Woops, the story couldn't be saved. Try again in a few moments.");
+          return $tron->renderJson($this);
+        }
+      }
+      
+      // invalidate cache -- approx 7% of stories are public,
+      //  so skipping cache invalidation is worthwhile if possible
+      // error_log(sprintf("public %d > %d", $storyCurrentlyShared, $postStoryPublic));
+      if ($postStoryPublic || $storyCurrentlyShared) {
+//error_log(sprintf("invalidating the cache"));
+        StoriesSharedPeer::invalidateStoriesCache($ucsId);
+      }
+
+      if (!$reviewMode) {
+        // these are used for visual feedback, adding or removing the story from Shared Stories list
+        $isStoryShared = $postStoryEdit !== '' && $postStoryPublic;
+        $tron->set('isStoryShared', $isStoryShared);
+      
+        $tron->set('sharedStoryId', "story-${userId}-${ucsId}");
+        sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
+        $tron->set('sharedStoryAuthor', link_to_member($this->getUser()->getUserName()));
+      }
+    }
+
+    // keyword to auto-format
+    $kanjiData     = KanjisPeer::getKanjiByUCS($ucsId);
+    $custKeyword   = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $formatKeyword = $custKeyword ?? $kanjiData->keyword;
+
+    // initial load (from Flashcard Review's edit story dialog)
+    $tron->add([
+      'kanjiData'    => $kanjiData,
+      'custKeyword'  => $custKeyword
+    ]);
+
+    // POST state
+    $tron->add([
+      'postStoryView' => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true)
+    ]);
+
+// sleep(1);
+
+    return $tron->renderJson($this);
   }
 
   /**
@@ -566,40 +675,34 @@ class studyActions extends sfActions
    */
   public function executeAjax($request)
   {
-    if ($request->getMethod()===sfRequest::GET)
+    $json = $request->getContentJson();
+
+    // request parameters
+    $sRequest   = $json->request;
+    $sUid       = BaseValidators::sanitizeInteger($json->uid);
+    $sSid       = BaseValidators::sanitizeInteger($json->sid);
+
+    // $this->forward404Unless(preg_match('/^(star|report|copy)$/', $sRequest));
+
+    if ($sRequest === 'copy')
     {
-      // obsolete code
-    }
-    else
-    {
-      $sRequest = $request->getParameter('request', '');
-      $sUid = $request->getParameter('uid');
-      $sSid = $request->getParameter('sid');
-      
-      if (!preg_match('/^(star|report|copy)$/', $sRequest)
-        || !BaseValidators::validateInteger($sUid)
-        || !BaseValidators::validateInteger($sSid))
+      // get unformatted story with original tags for copy story feature
+      $oStory = StoriesPeer::getStory($sUid, $sSid);
+      if ($oStory)
       {
-        throw new rtkAjaxException('Badrequest');
-      }
-  
-      if ($sRequest==='copy')
-      {
-        // get unformatted story with original tags for copy story feature
-        $oStory = StoriesPeer::getStory($sUid, $sSid);
-        if ($oStory)
-        {
-          StoriesPeer::useOldStoriesFix();
-          $tron = new JsTron(array('text' => rtxIndexOldStoriesFix::fixOldStoriesKanjiLinks($oStory->text)));
-          return $tron->renderJson($this);
-        }
-      }
-      elseif ($sRequest === 'star' || $sRequest === 'report')
-      {
-        $params = (array) StoryVotesPeer::voteStory($this->getUser()->getUserId(), $sUid, $sSid, $sRequest === 'star');
-        $tron = new JsTron($params);
+        StoriesPeer::useOldStoriesFix();
+        $tron = new JsTron([
+          'storyText' => rtxIndexOldStoriesFix::fixOldStoriesKanjiLinks($oStory->text)
+        ]);
         return $tron->renderJson($this);
       }
+    }
+    elseif ($sRequest === 'star' || $sRequest === 'report')
+    {
+      // [ uid, sid, vote, lastvote, stars, kicks ]
+      $params = (array) StoryVotesPeer::voteStory($this->getUser()->getUserId(), $sUid, $sSid, $sRequest === 'star');
+      $tron = new JsTron($params);
+      return $tron->renderJson($this);
     }
     
     throw new rtkAjaxException('Badrequest');
@@ -621,11 +724,7 @@ class studyActions extends sfActions
    */
   public function executeDict($request)
   {
-    $ucsId = intval($request->getParameter('ucs'));
-
-    if (!CJK::isCJKUnifiedUCS($ucsId)) {
-      throw new rtkAjaxException('Bad request.');
-    }
+    $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($request->getParameter('ucs'));
 
     // use a TRON response because of AjaxDialog used in Flashcard Review page
     $tron = new JsTron();

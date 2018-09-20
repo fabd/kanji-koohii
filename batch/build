@@ -125,7 +125,12 @@ failMessage() {
   exit
 }
 
-ack-grep --ignore-dir web/vendor --ignore-dir web/build/pack -g -i '(?<!.juiced)(?<!.min)\.js' | ack-grep -x '^\s*console\.log\('
+#  --ignore-dir
+#
+#    lib/front/vue    Ignore because console.* calls are removed by UglifyJsPlugin (drop_console) in the Webpack build.
+#
+#
+ack-grep --ignore-dir web/vendor --ignore-dir web/build/pack --ignore-dir lib/front/vue -g -i '(?<!.juiced)(?<!.min)\.js' | ack-grep -x '^\s*console\.log\('
 if [ $? -eq 0 ] ; then failMessage "Uncommented console.log() call." ; fi
 
 #ack-grep -g -i 'lib/front/vue/.*(\.vue|\.js)'| ack-grep -x '^\s*Core\.log\('

@@ -14,7 +14,7 @@
  *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
  * 
  */
-/*global YAHOO, window, alert, console, document, Core, App, Koohii */
+/*global YAHOO, window, alert, console, document, Core, App, Koohii, VueInstance */
 
 (function(){
 
@@ -25,6 +25,9 @@
 
   App.Ui.DictLookupDialog.prototype =
   {
+    // instance of Koohii.UX.KoohiiDictList, if created
+    vueDictList: null,
+
     /**
      * 
      * 
@@ -63,10 +66,14 @@
       }
 
       // FIXME  here ideally we should $destroy the Vue instance
-      
+      if (this.vueDictList) {
+        this.vueDictList.$destroy();
+        this.vueDictList = null;
+      }
 
       // this is a bit hacky, we are using the ancestor AjaxPanel class underlying AjaxDialog, should use AjaxDialog API
-      this.dialog.getBody().innerHTML = Core.Ui.AjaxDialog.DIALOG_LOADING_HTML;
+      this.dialog.setBodyLoading(200);
+
       this.ucsId = ucsId;
       this.dialog.getAjaxPanel().get({ucs: ucsId}, this.requestUri);
     },
@@ -97,18 +104,18 @@
 
       var props = tron.getProps();
 
-      var mountPoint = this.dialog.getBody().querySelector('div'); // replace the loading div
-
       // ^ grab "known kanji" from the FLashcard Review page, since the state is preserved
       // during the entire review session, it's more efficient this way. The user's known
       // kanji could realistically be 2000 to 3000 utf8 characters. So even though they
       // are also cached in php session, it's better to avoid returning several KBs of data
       // with each dictionary lookup request
       //
-      Koohii.UX.KoohiiDictList.mount({
+      var vueProps = {
         items:       props.items,
         known_kanji: Koohii.UX.reviewMode.fc_known_kanji   // ^
-      }, mountPoint);
+      };
+      var elMount  = this.dialog.getBody().querySelector('div'); // replace the loading div
+      this.vueDictList = VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
     },
     
     onDialogDestroy: function()

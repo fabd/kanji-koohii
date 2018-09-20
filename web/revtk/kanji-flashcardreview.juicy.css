@@ -1,6 +1,10 @@
 /**
  * Kanji Flashcard Review
  *
+ *   Note! REFACTORING / WEBPACK BUILD
+ *   - extracted css "review-bundle.css" is included at bottom, to match inclusion of "review-bundle.js" in the page
+ *   
+ *
  * VUE REFACTORING
  *
  *   This bundle remains until Edit Story dialog, Edit Keyword, etc. become
@@ -16,7 +20,6 @@
  *   
  */
 
-/* =require "/revtk/components/EditStoryComponent.css" */
 /* =require "/revtk/components/EditKeywordDialog.css" */
 /* =require "/revtk/components/EditFlashcardDialog.css" */
 

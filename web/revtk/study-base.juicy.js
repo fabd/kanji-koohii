@@ -7,7 +7,7 @@
  *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
  *   
  */
-/*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii*/
+/*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii, VueInstance */
 
 /* =require from "%WEB%" */
 /* !require "/revtk/bundles/yui-base.juicy.js" déjà inclus */
@@ -17,7 +17,6 @@
 
 /* =require from "%WEB%" */
 /* !require "/revtk/study/keywords.js" */
-/* =require "/revtk/components/EditStoryComponent.js" */
 /* =require "/revtk/components/EditKeywordDialog.js" */
 /* =require "/revtk/components/EditFlashcardDialog.js" */
 /* =require "/revtk/components/SharedStoriesComponent.js" */
@@ -34,7 +33,6 @@
      *
      * Options:
      *   URL_SEARCH             
-     *   URL_SHAREDSTORIES
      */
     initialize:function(options)
     {
@@ -74,10 +72,6 @@
         this.elSearch.focus();
       }
 
-      if ((el = Dom.get('EditStoryComponent')))
-      {
-        this.editStoryComponent = new App.Ui.EditStoryComponent(el);
-      }
 
       if ((el = Dom.get('DictStudy')))
       {
@@ -125,14 +119,15 @@
           Core.log('Dict onAjaxResponse(%o)', o);
           that.dictPanel = true;
 
-          var elMount = elPanel.querySelector('div'); // replace the loading div
-
           var props = o.responseJSON.props;
 
-          Koohii.UX.KoohiiDictList.mount({
+          var vueProps = {
             items:       props.items,
             known_kanji: props.known_kanji 
-          }, elMount);
+          };
+
+          var elMount = elPanel.querySelector('div'); // replace the loading div
+          VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
         };
 
         // request known kanji, as it is otherwise not provided in the Study pages

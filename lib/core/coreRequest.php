@@ -1,9 +1,14 @@
 <?php
 /**
- * Extends sfWebRequest with the old symfony error handling that seems to have
- * been refactored into the sfForms.
+ * Extends sfWebRequest with utilities.
  *
- * Methods:
+ * Misc:
+ *
+ *   getContentJson()
+ *
+ * 
+ * The old symfony error handling that seems to have been refactored into the sfForms:
+ * 
  *   getError($name)
  *   getErrors()
  *   hasError($name)
@@ -18,6 +23,28 @@ class coreRequest extends sfWebRequest
 {
   protected
     $errors  = array();
+
+  /**
+   * Extends getContent() and returns an object with decoded JSON.
+   *
+   * Since we fully expect JSON, throw errors otherwise. 
+   * 
+   * @return object
+   */
+  public function getContentJson()
+  {
+    if ($this->getContentType() !== 'application/json') {
+      throw new sfException(sprintf('Content-type is not expected "application/json".'));
+    }
+
+    $data = json_decode($this->getContent(), false);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+      throw new sfException("json_decode() error: '%s'", json_last_error_msg());
+    }
+
+    return $data;
+  }
 
   /**
    * Retrieves an error message.

@@ -11,20 +11,19 @@
  * 
  * @jslint  jslint web/revtk/components/EditStoryDialog.js
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/*global YAHOO, window, alert, console, document, Core, App, Koohii, VueInstance */
 
 (function(){
 
   App.Ui.EditStoryDialog = Core.make();
 
-  var Y = YAHOO,
-      Dom = Y.util.Dom;
-
   var isMobile = Core.Ui.Mobile.isMobile();
+
+  var LOADING_WIDTH = 500;
 
   App.Ui.EditStoryDialog.prototype =
   {
-    // App.Ui.EditStoryComponent created by onDialogInit()
+    // the Vue based EditStory component
     editStory: null,
 
     /**
@@ -44,10 +43,10 @@
         skin:        isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
         mobile:      isMobile,
         close:       !isMobile,
-        width:       500,
+        width:       LOADING_WIDTH,
         scope:       this,
         events:      {
-          onDialogInit:    this.onDialogInit,
+          onDialogResponse: this.onDialogResponse,
           onDialogDestroy: this.onDialogDestroy,
           onDialogHide:    this.onDialogHide
         }
@@ -97,10 +96,11 @@
         return;
       }
 
-      var sLoadingHTML = '<div style="min-width:200px" class="body JsAjaxDlgLoading"></div>';
+      // cleanup
+      this.onDialogDestroy();
 
       // clear the old html while loading
-      this.dialog.getBody().innerHTML = sLoadingHTML;
+      this.dialog.setBodyLoading(LOADING_WIDTH);
 
       if (isMobile) {
         this.addCloseButton();
@@ -125,26 +125,42 @@
     onDialogHide: function()
     {
       Core.log('EditStoryDialog::hide()');
-      if (this.editStory.isEdit())
-      {
-        this.editStory.doCancel();
-      }
+
+      // fabd: removed "cancel edit mode"... what if user edited, then closed by mistake, 
+      //   not really necessary to undo edit mode when the Edit Story dialog is hidden.
 
       // keep the dialog in the page
       return false;
     },
     
-    onDialogInit: function()
+    onDialogResponse: function(tron)
     {
-      var elBody = this.dialog.getBody();
-      this.editStory = new App.Ui.EditStoryComponent(elBody);
+// console.log('ondialogresponse tron %o', tron);
+
+      var data = tron.getProps();
+
+      var vueProps = {
+        'kanjiData':       data.kanjiData,
+        'custKeyword':     data.custKeyword,
+
+        'isReviewMode':    true,
+        'isFavoriteStory': data.isFavoriteStory,
+
+        'postStoryEdit':   data.postStoryEdit,
+        'postStoryView':   data.postStoryView,
+        'postStoryPublic': data.postStoryPublic
+      };
+
+      var elMount = this.dialog.getBody().querySelector('div'); // replace the AjaxDialog's loading div
+      this.editStory = Koohii.Refs.vueEditStory = VueInstance(Koohii.UX.KoohiiEditStory, elMount, vueProps, true);
     },
     
     onDialogDestroy: function()
     {
+// console.log('onDialogDestroy()')
       if (this.editStory)
       {
-        this.editStory.destroy();
+        this.editStory.$destroy();
         this.editStory = null;
       }
     },
@@ -153,24 +169,6 @@
     {
       return this.dialog.isVisible();
     }
-    
-    /* Pas besoin de destroy durant ou à la fin d'une review.
-    destroy: function()
-    {
-      this.hide();
-      
-      if (this.editStory)
-      {
-        this.editStory.destroy();
-        this.editStory = null;
-      }
-
-      if (this.ajaxPanel)
-      {
-        this.ajaxPanel.destroy();
-        this.ajaxPanel = null;
-      }
-    }*/
 
   };
 

@@ -1,8 +1,34 @@
-<?php $oRTK = rtkIndex::inst() ?>
-<?php 
-function get_flashcard_button($user, $context, $ucsId)
-{
-  $has_flashcard = intval(ReviewsPeer::hasFlashcard($user->getUserId(), $ucsId));
+<?php
+  use_helper('CJK');
+
+  $userId = $sf_user->getUserId();
+
+  if ($kanjiData) {
+    $ucsId  = $kanjiData->ucs_id;
+
+    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $formatKeyword = $custKeyword ?? $kanjiData->keyword;
+
+    $sf_response->setTitle( $kanjiData->kanji . ' "' . $formatKeyword . '" - ' . _CJ('Kanji Koohii') );
+
+    // props shared by the Vue component and the placeholder template
+    $storedStory   = StoriesPeer::getStory($userId, $ucsId);
+    $postStoryEdit = ($storedStory ? $storedStory->text : '');
+    $initStoryData = [
+      'postStoryEdit'   => $postStoryEdit,
+      'postStoryPublic' => (bool) ($storedStory && $storedStory->public),
+      'postStoryView'   => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true)
+    ];
+
+    // IF ... on Study page, is in the red pile, is not yet "Added to learn list"
+    $isRestudyKanji   = ReviewsPeer::isFailedCard($userId, $ucsId);
+    $isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
+    $showLearnButton    = /*!$reviewMode &&*/ $isRestudyKanji && !$isRelearnedKanji;
+    $showLearnedMessage = /*!$reviewMode &&*/ $isRestudyKanji && $isRelearnedKanji;
+  }
+
+function get_flashcard_button($userId, $context, $ucsId) {
+  $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
   $dialogUri  = $context->getController()->genUrl('flashcards/dialog');
   $params     = esc_specialchars(coreJson::encode(array('ucs' => intval($ucsId))));
 //<div id="EditFlashcard" class="f$bFlashcard">
@@ -33,22 +59,32 @@ EOD;
     <div class="clear"></div>
   </div>
   
+  <?php $oRTK = rtkIndex::inst() ?>
+
   <p> Sorry, there are no results for "<strong><?php echo esc_specialchars($sf_params->get('id')) ?></strong>".</p>
 
   <p> Valid frame numbers for <strong><?php echo $oRTK->getSequenceName() ?></strong> are #1 to #<?php echo $oRTK->getNumCharacters() ?>.</p>
 
   <p> To search for characters outside of the selected index, type in a character or a unicode value.</p>
 
-<?php else: ?>     
+<?php else: ?>
 
   <div id="EditStoryComponent">
     
     <div style="position:relative;">
       <h2><?php echo $title; ?></h2>
-      <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($sf_user, $sf_context, $kanjiData->ucs_id); } ?>
+      <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($userId, $sf_context, $kanjiData->ucs_id); } ?>
     </div>
-  
-    <?php include_component('study', 'EditStory', array('kanjiData' => $kanjiData, 'reviewMode' => false, 'custKeyword' => $custKeyword)) ?>
+
+    <div id="JsEditStoryInst" style="min-height:100px;">     
+
+<!-- placeholder till Vue comp is mounted -->
+<?php
+  include_partial('EditStoryPlaceholder', [
+    'kanjiData' => $kanjiData, 'formattedStory' => $initStoryData['postStoryView'], 'custKeyword' => $custKeyword]) ?>
+   
+    </div>
+
   </div>
 
   <?php if (!CJ_HANZI): ?>
@@ -73,10 +109,9 @@ EOD;
         Favourite(s)
       </div>
 <?php
+  // req. ucsId, userId
   use_helper('Links');
-  $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $sf_user->getUserId(), 'starred');
-  $userId  = $sf_user->getUserId();
-  $ucsId   = $kanjiData->ucs_id;
+  $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $userId, 'starred');
   foreach($stories as $o) {
 ?>
       <div class="sharedstory rtkframe">
@@ -122,3 +157,35 @@ EOD;
 
 </div><!-- /row -->
 
+<?php
+
+    //FIXME
+    // // Learned button for Study page only
+    // if (!$request->hasParameter('reviewMode'))
+    // {
+    //   $this->isRestudyKanji = ReviewsPeer::isFailedCard($userId, $ucsId);
+    //   $this->isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
+    // }
+
+  $propsData = [
+    'kanjiData'     => $kanjiData,
+    'custKeyword'   => $custKeyword,
+
+    // $initStoryData
+    // 'postStoryEdit'   => 
+    // 'postStoryView'   =>
+    // 'postStoryPublic' =>
+
+    // Study page only (not for flashcards "edit story" dialog)
+    'showLearnButton'    => $showLearnButton,
+    'showLearnedMessage' => $showLearnedMessage
+  ];
+
+  $propsData = array_merge($propsData, $initStoryData);
+
+  koohii_onload_slot();
+?>
+
+  Koohii.Refs.vueEditStory = VueInstance(Koohii.UX.KoohiiEditStory, '#JsEditStoryInst', <?= json_encode($propsData) ?>, /* replace! */ true);
+
+<?php end_slot() ?>

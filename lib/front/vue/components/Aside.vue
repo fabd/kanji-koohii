@@ -27,10 +27,7 @@ export default {
   data() {
     return {
       // default options for Aside
-      show:     false,
-
-      // options for nav component
-      navOptions:  null
+      show:     false
     }
   },
 

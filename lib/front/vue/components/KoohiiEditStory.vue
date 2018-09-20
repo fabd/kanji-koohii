@@ -46,12 +46,14 @@
 
               <textarea name="txtStory" id="frmStory" v-model="postStoryEdit"></textarea>
 
+              <!-- FIXME  refactor to flex... -->
               <div class="controls valign">
                 <div style="float:left;">
                   <input type="checkbox" name="chkPublic" id="storyedit_public" v-model="postStoryPublic">
                   <label for="storyedit_public">Share this story</label>
                 </div>
                 <div style="float:right;">
+                  <koohii-chars-left :text="postStoryEdit" :max-length="512" :warning-limit="20" />
                   <input v-on:click.prevent="onSubmit" type="button" value="Save changes" title="Save/Update story">
                   <input v-on:click="onCancel" type="button" value="Cancel" name="cancel" title="Cancel changes">
                 </div>
@@ -115,20 +117,23 @@
 import Dom, { insertAfter } from 'lib/koohii/dom.js'
 
 import { KoohiiAPI, TRON } from 'lib/KoohiiAPI.js'
+
+//comps
+import KoohiiCharsLeft     from 'components/KoohiiCharsLeft.vue'
+import cjk_lang_ja         from 'components/cjk_lang_ja.vue'
+import KoohiiSharedStory   from 'components/KoohiiSharedStory.vue'   // instantiated after publishing a story
+
+//mixins
 import KoohiiForm          from 'lib/mixins/KoohiiForm.js'
 import KoohiiLoading       from 'lib/mixins/KoohiiLoading.js'
-
-import cjk_lang_ja from 'components/cjk_lang_ja.vue'
-
-// instantiated after publishing a story
-import KoohiiSharedStory from 'components/KoohiiSharedStory.vue'
 
 
 export default {
   name: 'KoohiiEditStory',
 
   components: {
-    cjk_lang_ja
+    cjk_lang_ja,
+    KoohiiCharsLeft
   },
 
   mixins: [
@@ -402,6 +407,8 @@ export default {
 }
 
 #my-story .msg-relearned { color:#61932B; padding:10px 5px 0; }
+
+#my-story .kk-charsleft { margin:0 0.5em 0 0; }
 
 .rtkframe { clear:both; position:relative; background:white; padding:15px; }
 .rtkframe .left        { float:left; width:68px; text-align:center; }

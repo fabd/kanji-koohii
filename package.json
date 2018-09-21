@@ -5,7 +5,7 @@
   "author": "Fabrice Denis <fabrice.denis@gmail.com>",
   "private": true,
   "scripts": {
-    "dev":  "cross-env NODE_ENV=development webpack --hide-modules",
+    "dev": "cross-env NODE_ENV=development webpack --hide-modules",
     "prod": "cross-env NODE_ENV=production  webpack --hide-modules --progress"
   },
   "dependencies": {
@@ -18,7 +18,9 @@
     "babel-preset-es2015": "^6.0.0",
     "cross-env": "1.0.x",
     "css-loader": "^0.28.11",
+    "cssnano": "^4.1.0",
     "extract-text-webpack-plugin": "3.0.2",
+    "postcss-cli": "^6.0.0",
     "style-loader": "^0.13.2",
     "uglifyjs-webpack-plugin": "^1.3.0",
     "vue-loader": "^13.3.0",

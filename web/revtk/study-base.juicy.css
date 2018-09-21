@@ -184,7 +184,7 @@
   #study-learned { border-radius:4px; }
 
   /* cleanup : move styles from EditStoryComponent */
-  .rtkframe ( border:1px solid #e8e5c9; )
+  .rtkframe { border:1px solid #e8e5c9; }
 }
 
 

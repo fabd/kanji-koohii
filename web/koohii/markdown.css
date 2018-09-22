@@ -41,21 +41,21 @@
 
  /* images */
 .markdown img { box-sizing:content-box; padding:3px; border:1px solid #C9C7B5; display:block; margin:0 auto; max-width:100%; height:auto; }
-.markdown .img-block { border:1px solid %CSS_BG_1S%; margin:0 0 1.5em; }
+.markdown .img-block { border:1px solid $(clr-bg-1s); margin:0 0 1.5em; }
 
  /* tables */
-.markdown table { width:100%; margin:0.5em 0 1em 0; border-left:1px solid %CSS_BG_1M%; border-collapse:collapse; }
-.markdown th { background-color:%CSS_BG_1%; border-top-width:0; color:#4f4e45; }
+.markdown table { width:100%; margin:0.5em 0 1em 0; border-left:1px solid $(clr-bg-1m); border-collapse:collapse; }
+.markdown th { background-color:$(clr-bg-1); border-top-width:0; color:#4f4e45; }
 .markdown th,
 .markdown td { border-top:1px solid #E8E5CA; border-right:1px solid #E8E5CA; padding:5px 10px; text-align:left; }
-.markdown td { background:%CSS_BG_NAV%; }
+.markdown td { background:$(clr-bg-nav); }
 .markdown td a:link, 
 .markdown td a:visited, 
 .markdown td a:active { font-weight:normal; }
 .markdown th a { font-weight:bold; }
 
  /* code : applies to `this` */
-.markdown code { background:%CSS_BG_NAV%; padding: 0.3em 0.8em; }
+.markdown code { background:$(clr-bg-nav); padding: 0.3em 0.8em; }
  /* code : applies to ```code blocks``` */
-.markdown pre { background:%CSS_BG_NAV%; padding:1em 1em; border-left:4px solid %CSS_BG_1%; }
+.markdown pre { background:$(clr-bg-nav); padding:1em 1em; border-left:4px solid $(clr-bg-1); }
 .markdown pre code { background:none; }

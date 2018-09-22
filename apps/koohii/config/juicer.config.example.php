@@ -38,12 +38,6 @@
  *   output structure should look like. This help ensure that provided assets don't
  *   collide.
  *
- * 
- *   Variables
- *
- *   Juicer also has a very crude variable replacement. Notice a few css colors are
- *   declared below and are referenced %LIKE_THIS% in the `.juicy.css` files.
- *
  *
  *   How is Juicer used?
  *
@@ -110,35 +104,6 @@ return array
 
   // Include source for legacy front end code still living in the web/ folder
   'WEB'      => './web',
-
-  //
-  // Stylesheet color constants
-  //
-  'CSS_BG_BODY'   =>    '#f4f0e5',
-
-  // shaded background 1
-  'CSS_BG_1'      =>    '#e7e1d3',
-
-  // top nav background color
-  'CSS_BG_NAV'    =>    '#ede8de',
-
-  // subdued background 1 (lighter)
-  'CSS_BG_1M'     =>    '#ede8de',
-
-  // subdued background 1 : border
-  'CSS_BG_1S'     =>    '#d4cdba',
-
-  // green backgrounds & text
-  'CSS_BG_GL'     =>    '#D7EBB4',
-  'CSS_BG_GD'     =>    '#475636',
- 
-
-  // widgets: table row (slightly brighter than CSS_BG_1)
-  'CSS_TBL_BG'    =>    '#f8f6ef',
-
-  // text colors for due/undue cards
-  'CSS_SRS_DUE'   =>    '#f7a247',
-  'CSS_SRS_UNDUE' =>    '#72c569',
 
 
   'MAPPINGS' => array

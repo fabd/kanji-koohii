@@ -65,7 +65,7 @@ body   { padding-top:46px; }
 /* ---------------------------- */
 
 #k-nav_d { margin:0; padding:0; list-style:none; }
-#k-nav_d .k-nav_ft { width:100%; background-color:%CSS_BG_NAV%; height:5px; border-bottom:2px solid #d9d6bc; font-size:1px; }
+#k-nav_d .k-nav_ft { width:100%; background-color:$(clr-bg-nav); height:5px; border-bottom:2px solid #d9d6bc; font-size:1px; }
 
 /* layout*/
 #k-nav_d .k-nav_brand { float:left; }
@@ -77,7 +77,7 @@ body   { padding-top:46px; }
 /* highlighted tab */
 #k-nav_d .signed-in { background:#11364b; } /* comes first */
 #k-nav_d .active,
-#k-nav_d .active a:hover { background-color:%CSS_BG_NAV%; }
+#k-nav_d .active a:hover { background-color:$(clr-bg-nav); }
 #k-nav_d .active a, #k-nav_d .k-nav_dropdown a { color:#42413d; }
 
 
@@ -104,12 +104,12 @@ body   { padding-top:46px; }
   visibility:hidden;
   position:absolute; left:0; z-index:99;
   padding:0; margin:0;
-  line-height:32px; background:%CSS_BG_NAV%;
+  line-height:32px; background:$(clr-bg-nav);
   box-shadow:0 2px 2px rgba(0,0,0,0.2);
   border-left:1px solid #d5d4c4;
   border-right:1px solid #d5d4c4;left:-1px;
 }
-#k-nav_d .k-nav_dropdown li { float:none; white-space:nowrap; border:none; border-top:1px solid %CSS_BG_1S%; }
+#k-nav_d .k-nav_dropdown li { float:none; white-space:nowrap; border:none; border-top:1px solid $(clr-bg-1s); }
 #k-nav_d .k-nav_dropdown li:first-child { border-top:none; }
 #k-nav_d .k-nav_dropdown a { padding:15px 35px; }
 #k-nav_d .k-nav_dropdown a:hover { background:#c7ecac; color:#42413d; }

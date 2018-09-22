@@ -17,6 +17,8 @@
 /* =require "/bootstrap-build/css/bootstrap.css" */
 
 
+/* =require from "%WEB%" */
+/* =require "/revtk/theme.config.css" */
 
 
 /* ---------------------------- */
@@ -65,7 +67,7 @@
 
   /* make this similar to the input */
 .form-control-static {
-  border:1px solid %CSS_BG_1S%; border-radius: 4px;
+  border:1px solid $(clr-bg-1s); border-radius: 4px;
   display: block; font-size: 14px; height: 34px; line-height: 1.42857; padding: 6px 12px;
   width: 100%;
 }
@@ -85,11 +87,11 @@
 /* BOOTSTRAP theme (TODO : incorporer dans le build sass truc) */
 /* ---------------------------- */
 
-body { background:%CSS_BG_BODY%; color:#42413d; }
+body { background:$(clr-bg-body); color:#42413d; }
 
 /* when footer gradient is used */
 body.with-footer { background:#f0ddd4; }
-body.with-footer #main { background:%CSS_BG_BODY%; }
+body.with-footer #main { background:$(clr-bg-body); }
 
 /* typography */
 blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
@@ -100,9 +102,9 @@ blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
 .btn-link    { text-decoration:underline; }
 
   /* default non-colored, subdued */
-.btn-ghost   { color:#6f6961; background-color:inherit; border-color:%CSS_BG_1S%; }
+.btn-ghost   { color:#6f6961; background-color:inherit; border-color:$(clr-bg-1s); }
 
-.btn-default { background-color:%CSS_BG_1%; color:#444; border-color:%CSS_BG_1S%;  }
+.btn-default { background-color:$(clr-bg-1); color:#444; border-color:$(clr-bg-1s);  }
 
 
   /* cf. BootstrapHelper :: _bs_button_with_icon()  .fa .far .fas */
@@ -262,8 +264,8 @@ h3 { font-size:18px; font-weight:normal; margin:0 0 0.5em; }
 .border-box { -moz-box-sizing:border-box; box-sizing:border-box; }
 
 /* SRS color coding used for text */
-.clr-srs-due   { color:%CSS_SRS_DUE%; }
-.clr-srs-undue { color:%CSS_SRS_UNDUE%; }
+.clr-srs-due   { color:$(clr-srs-due); }
+.clr-srs-undue { color:$(clr-srs-undue); }
 .clr-srs-fail  { color:#f1311a; }
 .clr-srs-new   { color:#1c90d4; }
 
@@ -313,9 +315,9 @@ a.admin-edit { font-size:80%; letter-spacing:normal; color:#408040; text-decorat
 .css3-ssh { box-shadow:0 0 5px rgba(0,0,0,0.3); -moz-box-shadow:0 0 5px rgba(0,0,0,0.3); -webkit-box-shadow:0 0 5px rgba(0,0,0,0.3); }
 
 /* content boxes */
-.padded-box       { padding:14px 16px; background-color:%CSS_BG_1%; }
+.padded-box       { padding:14px 16px; background-color:$(clr-bg-1); }
  /* inset box is rounded */
-.padded-box-inset { padding:14px 16px; background-color:%CSS_BG_1%; border-radius:3px; }
+.padded-box-inset { padding:14px 16px; background-color:$(clr-bg-1); border-radius:3px; }
 
 
 /* ---------------------------- */
@@ -375,7 +377,7 @@ table.shaded td { padding:5px 10px; background:#f2efd7; }
 form .valign input, form .valign span { vertical-align:middle; }
 /*form .valign input.checkbox { margin-right:4px; } */
 
-/*form.block { background:%CSS_BG_1M%; margin:0 0 2em; }*/
+/*form.block { background:$(clr-bg-1m); margin:0 0 2em; }*/
 
 /* OBSOLETE
 form.block fieldset { border:0; padding:0; margin:0; width:100%; }
@@ -428,11 +430,11 @@ table.sortable td.k { font:20px "Ms Gothic",sans-serif; color:#000; }
 table.sortable td.f, .sortable tr.hover td.f { color:#C82222; font-weight:bold; }
 
 /* 'blocky' tables */
-table.blocky { width:100%; margin:0.5em 0 1em 0; border-left:1px solid %CSS_BG_1M%; border-collapse:collapse; }
-table.blocky th { background-color:%CSS_BG_1%; border-top-width:0; color:#4f4e45; }
+table.blocky { width:100%; margin:0.5em 0 1em 0; border-left:1px solid $(clr-bg-1m); border-collapse:collapse; }
+table.blocky th { background-color:$(clr-bg-1); border-top-width:0; color:#4f4e45; }
 table.blocky th,
 table.blocky td { border-top:1px solid #E8E5CA; border-right:1px solid #E8E5CA; padding:5px 10px; text-align:left; }
-table.blocky td { background:%CSS_BG_NAV%; }
+table.blocky td { background:$(clr-bg-nav); }
 table.blocky td a:link, 
 table.blocky td a:visited, 
 table.blocky td a:active { font-weight:normal; }
@@ -457,7 +459,7 @@ section, div.section { margin-bottom:20px; }
 div.col-box { position:relative; }
 div.col-box-bis { margin-top:10px; }
 
-.box-side { border-radius:3px; background-color:%CSS_BG_1%; padding:15px 10px; }
+.box-side { border-radius:3px; background-color:$(clr-bg-1); padding:15px 10px; }
 
 /* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
 .kkSymfonyCache { border:1px solid #f00; }
@@ -510,7 +512,7 @@ div.col-box-bis { margin-top:10px; }
 
 #footer { text-align:center; padding:0 0 5em; font-size:17px; }
 #footer p  {  line-height:1.2em; margin:0 0 0.8em; }
-#footer .transition { width:100%; height:29px; background:%CSS_BG_BODY% url('../koohii/landing/bubbles_gdt.png') repeat-x 0 0; }
+#footer .transition { width:100%; height:29px; background:$(clr-bg-body) url('../koohii/landing/bubbles_gdt.png') repeat-x 0 0; }
 #footer section { padding-top:24px; }
 #footer { color:#8b1566; }
 #footer a { color:#e400b1; text-decoration:none; }
@@ -555,7 +557,7 @@ div.col-box-bis { margin-top:10px; }
 /*#sitenews .content ul { margin:1em 0 1em 2em; }*/
 
  /* titles */
-#sitenews h2 { font-size:18px; margin:0 0 1em; padding:0.2em 0 0.5em; border-bottom:1px solid %CSS_BG_1S%; }
+#sitenews h2 { font-size:18px; margin:0 0 1em; padding:0.2em 0 0.5em; border-bottom:1px solid $(clr-bg-1s); }
 
 #sitenews h2 a { color:#fa3d60; text-decoration:none; font-weight:bold;  }
 #sitenews .newsdate {
@@ -567,7 +569,7 @@ div.col-box-bis { margin-top:10px; }
 #sitenews .hd a { font-weight:bold; color:#10348F; text-decoration:none; }
 #sitenews .hd { padding:5px 0; margin-bottom:5px; border:0; font-size:17px; }
 #sitenews .bd {
-  margin:0 0 25px; padding:0 0 2em; /*border-bottom:1px solid %CSS_BG_1%;*/
+  margin:0 0 25px; padding:0 0 2em; /*border-bottom:1px solid $(clr-bg-1);*/
   font-size:14px; line-height:1.5em;
   color:#3c3c3c; clear:both; text-align:justify; 
 }
@@ -594,8 +596,8 @@ div.col-box-bis { margin-top:10px; }
 /* monthly archives */
 #news-by-month ul { list-style:none; margin:0; padding:0; }
 #news-by-month li { }
-#news-by-month a { padding:5px 10px; display:block; text-decoration:none; border-bottom:1px dotted %CSS_BG_1S%; }
-#news-by-month a:hover { background-color:%CSS_BG_1%; }
+#news-by-month a { padding:5px 10px; display:block; text-decoration:none; border-bottom:1px dotted $(clr-bg-1s); }
+#news-by-month a:hover { background-color:$(clr-bg-1); }
 #news-by-month span { color:#454545; }
   
   /* bootstrap xs */
@@ -672,7 +674,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 #whatisrtk_box .book { float:left; margin:0 1em 1.5em 0; }
 /*#whatisrtk_box .break { clear:both; }*/
 
-.stacks_legend { margin:0 0 1.5em 0; padding:1.5em; background-color:%CSS_BG_NAV%; }
+.stacks_legend { margin:0 0 1.5em 0; padding:1.5em; background-color:$(clr-bg-nav); }
 .stacks_legend dl dt { float:left; width:43px; height:48px; clear:left; margin-bottom:1em; }
 .stacks_legend dl dd { margin:0 0 1em 60px; }
 .stacks_legend dt.failed   { background:url(../images/1.0/doc/stackfailed.gif) no-repeat 0 0; }
@@ -732,7 +734,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 
 #sight-reading form { margin:0 0 2em; }
 #sight-reading textarea { width:100%; margin:0 0 0.5em; font-size:16px; }
-#sight-reading .output { font-size:30px; line-height:1.5em; background:%CSS_BG_1%; padding:0.5em; border-radius:3px; }
+#sight-reading .output { font-size:30px; line-height:1.5em; background:$(clr-bg-1); padding:0.5em; border-radius:3px; }
 #sight-reading .output .cj-k { font-family:sans-serif; }
 #sight-reading .output a { font-style:normal; font-weight:normal; color:blue; text-decoration:none; }
 #sight-reading .output a:hover { background:#fff; color:#000; }
@@ -775,7 +777,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
  * ---------------------------- */
 
   /* TODO move me */
-.p-notice { margin:0 0 1em; color:#cc2d7a; /*background:%CSS_BG_GL%; padding:0.5em 1em;*/ }
+.p-notice { margin:0 0 1em; color:#cc2d7a; /*background:$(clr-bg-gl); padding:0.5em 1em;*/ }
 .p-notice i { display:inline-block; padding:0 0.5em 0 0; }
 
 
@@ -790,9 +792,9 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
  * Manage & Account Layout
  * ---------------------------- */
 
-.manage-view { /*border:1px solid %CSS_BG_1S%; border-radius:3px;*/ }
+.manage-view { /*border:1px solid $(clr-bg-1s); border-radius:3px;*/ }
 .manage-view h3 {
-/*  padding:8px 10px; margin:0; font-size:13px; font-weight:bold; background-color:%CSS_BG_1%; border-bottom:1px solid %CSS_BG_1M%;*/
+/*  padding:8px 10px; margin:0; font-size:13px; font-weight:bold; background-color:$(clr-bg-1); border-bottom:1px solid $(clr-bg-1m);*/
 }
 
 

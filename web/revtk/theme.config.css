@@ -1,0 +1,52 @@
+/**
+ * Theme configuraton.
+ *
+ * In the future, maybe we can support a dark/light theme.
+ *
+ *
+ * WORKS IN LEGACY CSS & VUE FILES (WEBPACK BUILD)
+ *
+ *   The Sass-like variables work in the Vue files because the extracted css
+ *   from the Webpack bundles, is included in the corresponding .juicy.css bundles
+ *   from the legacy build. Juicer then sees the variables and substitutes them.
+ *
+ *   For example, study pages Webpack bundle (Vue), extracted css goes to:
+ *   
+ *       /web/build/pack/study-bundle.css
+ *
+ *   The corresponding legacy bundle includes the extracted css (at end of file):
+ *     
+ *       /web/revtk/study-base.juicy.css
+ *
+ * 
+ *   Therefore when Juicer parses the .juicy.css file, the variables in the .vue
+ *   files are also parsed correctly.
+ *
+ * 
+ * SYNTAX
+ *
+ *   (See Juicer.php for more details.)
+ *   
+ *   Assignments MUST start with '$' on column 0:
+ *
+ *     $big-text:   2.5em;
+ *
+ *   Substitution syntax MUST use parens:
+ *
+ *     body { font-size: $(big-text); }
+ *
+ */
+
+$clr-bg-body: #f4f0e5;
+$clr-bg-1:    #e7e1d3;     /* shaded background 1 */
+$clr-bg-nav:  #ede8de;     /* top nav background color */
+  
+$clr-bg-1m:   #ede8de;     /* subdued background 1 (lighter) */
+$clr-bg-1s:   #d4cdba;     /* subdued background 1 : border */
+  
+$clr-bg-gl:   #D7EBB4;     /* green backgrounds & text */
+$clr-bg-gd:   #475636;
+$clr-tbl-bg:  #f8f6ef;     /* widgets: table row (slightly brighter than CSS_BG_1) */
+
+$clr-srs-due:   #f7a247;   /* text color for due/undue cards */
+$clr-srs-undue: #72c569;

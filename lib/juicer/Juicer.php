@@ -38,10 +38,25 @@
  *   For command line usage, see JuicerCLI.php documentation. 
  *
  *
- * UPDATES
+ * SUPPORT FOR SASS-LIKE VARIABLES
+ *
+ *   A limited syntax is supported (for speed), in theory compatible with postcss-advanced-variables.
+ *   Valid characters: [_a-zA-Z0-9-]
+ *
+ *     $font-size:   1.25em;
+ *
+ *   We support only the parens substitution (fast & easy to match safely):
+ * 
+ *     body { font: $(font-size);
+ * 
+ *
+ * CHANGELOG
  *
  *   v1.1
  *   - Absolute URLs are ignored, warning issued in CLI (with -v).
+ *
+ *   2018.09
+ *   - Parse Sass-like variables in stylesheets, using postcss-advanced-variables's syntax
  * 
  * 
  * @author   Fabrice Denis
@@ -59,7 +74,10 @@ class Juicer
     $curFile        = '',
     $alreadyParsed  = array(),
     $translatedUrls = array(),
-    $cli            = null;
+    $cli            = null,
+    $isCss          = false,
+    $cssVars        = array();
+    
     
   const
     /**
@@ -129,17 +147,25 @@ class Juicer
       $this->throwException('The web path "%s" does not exist.', $this->webPath);
     }
 
+    // we'll assume the whole buffer is of infile's filetype
+    $this->isCss = $this->getFileExtension($infile) === 'css';
+
     $srcFile = realpath($infile);
 
     $buffer = $this->requireFile($srcFile, $this->webPath);
-    
+
+    // replace Sass-like vars with their values
+    if ($this->isCss && count($this->cssVars)) {
+      $buffer = $this->substituteCssVars($buffer);
+    }
+
     // strip code from resulting file
     if ($this->stripLogs !== false) {
       $buffer = $this->stripOutput($buffer, $this->stripLogs);
     }
     
     // css urls
-    if ($this->getFileExtension($infile) === 'css') {
+    if ($this->isCss) {
       $buffer = $this->translateUrlCleanup($buffer);
     }
     
@@ -199,8 +225,13 @@ class Juicer
       {
         $buffer = fgets($handle, 4096);
 
+        // parse Sass-like vars
+        if ($this->isCss && strncmp($buffer, '$', 1)===0) {
+          $this->parseCssVarAssignment($buffer, $requireFrom, $srcFile, $lineNr);
+          $buffer = '';
+        }
         // parse commands
-        if (strncmp($buffer, '/* =', 4)===0)
+        elseif (strncmp($buffer, '/* =', 4)===0)
         {
           $buffer = $this->parseCommand(substr($buffer, 4), $requireFrom, $srcFile, $lineNr);
         }
@@ -216,13 +247,10 @@ class Juicer
       $buffer = ob_get_clean();
 
       // now we can do css assets url remapping
-      if ($this->getFileExtension($srcFile) === 'css') {
+      if ($this->isCss) {
         // $buffer = $this->cleanComments($buffer);
         $buffer = $this->translateAssetsUrls($buffer, $srcFile, $from);
       }
-      
-      // replace constants
-      $buffer = $this->substituteConstants($buffer);
     }
     else
     {
@@ -256,6 +284,29 @@ class Juicer
     } 
   }
   
+  /**
+   * Attempt to match a Sass-like variable assignment.
+   * For speed, the assignment MUST begin exactly at column 0!
+   *
+   *   $var-name: value;  / * trailing comments allowed * /
+   *   
+   */
+  protected function parseCssVarAssignment($buffer, &$from, $srcFile, $lineNr)
+  {
+    if (preg_match('/^\$([_a-zA-Z0-9-]+):\s*(.*);/', $buffer, $m))
+    {
+      $varName = '$('.$m[1].')';
+      if (array_key_exists($varName, $this->cssVars)) {
+        $this->throwException('Duplicate css variable assignment: "%s" at line %d.', $varName, $lineNr);
+      }
+      $this->cssVars[$varName] = $m[2];
+    }
+    else
+    {
+      $this->throwException('Malformed css variable assignment? "%s" at line %d.', $buffer, $lineNr);
+    }
+  }
+
   protected function parseCommand($buffer, &$from, $srcFile, $lineNr)
   {
     if (preg_match('/^require from "([^"]+)"/', $buffer, $matches))
@@ -277,7 +328,6 @@ class Juicer
         }
       }
 
-      
       // set the current path for includes
       $from = $this->normalizeSlashes($fromValue);
 
@@ -491,24 +541,22 @@ class Juicer
   }
   
   /**
+   * For speed we support only `$(varname)` notation so we can do safe and easy string
+   * replacement instead of regexp. Juicer is a legacy build tool we use with vanilla
+   * css and no other syntaxes so should be ok.
    * 
    */
-  private function substituteConstants($buffer)
+  private function substituteCssVars($buffer)
   {
-    return preg_replace_callback(self::PREG_CONSTANT, array($this, 'substituteConstantCallback'), $buffer);
-  }
-  
-  private function substituteConstantCallback($matches)
-  {
-    $constName = $matches[1];
-    $constValue = $this->getConstant($constName, false);
-    
-    if (false === $constValue) {
-      $this->throwException('The constant "%s" is not defined (used by "%s").', $constName, $this->curFile);
+    if (!count($this->cssVars)) {
+      return $buffer;
     }
-    
-    // return the constant as is if not found
-    return $constValue;
+
+    // order should always be the same...
+    $keys = array_keys($this->cssVars);
+    $vals = array_values($this->cssVars);
+
+    return str_replace($keys, $vals, $buffer);
   }
   
   /**

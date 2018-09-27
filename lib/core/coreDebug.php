@@ -78,7 +78,7 @@ class DBG
       echo '"'.$expr.'"';
     }
     elseif (is_object($expr) || is_array($expr)) {
-      echo print_r($expr, true);
+      echo var_dump($expr);
     }
     else {
       echo $expr;

@@ -47,6 +47,39 @@ class coreRequest extends sfWebRequest
   }
 
   /**
+   * This helper makes a GET request with url parameters look like a json POST.
+   *
+   * NOTE!
+   *   "true", "false" and integer values are type cast!
+   *
+   * @return object
+   */
+  public function getParamsAsJson()
+  {
+    $params = $this->getParameterHolder()->getAll();
+
+    // remove symfony bits
+    unset($params['action'], $params['module']);
+
+    // very basic type casting
+    foreach ($params as &$val) {
+      if (ctype_digit($val)) {
+        $val = (int) $val;
+      }
+      elseif ($val === 'false') {
+        $val = false;
+      }
+      elseif ($val === 'true') {
+        $val = true;
+      }
+    }
+
+    $obj = (object) $params;
+
+    return $obj;
+  }
+
+  /**
    * Retrieves an error message.
    * 
    * @param string Key

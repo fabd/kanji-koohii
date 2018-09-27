@@ -1,61 +1,56 @@
 /**
- * DictLookupDialog
+ * DictLookupDialog  -- REFACTORING AT SOME POINT TO A VUE-BASED DIALOG
  *
- * Dictionary lookup for a given character.
- * 
- *  init() crèer le dialogue et l'affiche
- *  hide() 
  *  show()
  *  load()   load another result (avoids recreating dialog and maintains drag/drop position)
  *       
-
- * yuicompressor globals:
- *
- *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
- * 
  */
 /*global YAHOO, window, alert, console, document, Core, App, Koohii, VueInstance */
 
 (function(){
 
   App.Ui.DictLookupDialog = Core.make();
+  
+  var isMobile = Core.Ui.Mobile.isMobile();
 
   var Y = YAHOO,
       Dom = Y.util.Dom;
 
   App.Ui.DictLookupDialog.prototype =
   {
+    // unique id to find when we need to reload the dialog
+    ucsId: 0,
+
     // instance of Koohii.UX.KoohiiDictList, if created
-    vueDictList: null,
+    vueInst: null,
 
     /**
      * 
      * 
      */
-    init: function(url, ucsId)
+    init: function()
     {
-      // use unique id to find when we need to reload the dialog
-      this.ucsId = ucsId;
-
-      this.requestUri = url;
+      this.ucsId = 0;
 
       var dlgopts = {
-        requestUri:  this.requestUri,
-        requestData: { ucs: ucsId },
-        //invisMask:   true,
-        width:       300,
-        skin:        "rtk-skin-dlg",
-        context:     [document.body, "tl", "tl", null, [1, 1]],  // YUI2 container "context" option
+        skin:        isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+        mobile:      isMobile,
         scope:       this,
         events:      {
-          onDialogResponse: this.onDialogResponse,
           onDialogDestroy:  this.onDialogDestroy,
           onDialogHide:     this.onDialogHide
         }
       };
 
+      if (!isMobile) {
+         dlgopts.context = [document.body, "tl", "tl", null, [1, 1]];  // YUI2 container "context" option
+      }
+
       this.dialog = new Core.Ui.AjaxDialog(null, dlgopts);
       this.dialog.show();
+
+      // hack-ish (legacy code) -- we need a mount point
+      this.dialog.yPanel.setBody('<div class="JsMount" style="min-height:100px;background:red;"></div>');
     },
 
     load: function(ucsId)
@@ -65,17 +60,15 @@
         return;
       }
 
-      // FIXME  here ideally we should $destroy the Vue instance
-      if (this.vueDictList) {
-        this.vueDictList.$destroy();
-        this.vueDictList = null;
+      if (!this.vueInst) {
+        var elMount = this.dialog.getBody().querySelector('.JsMount');
+        this.vueInst = VueInstance(Koohii.UX.KoohiiDictList, elMount, {}, true);
       }
 
-      // this is a bit hacky, we are using the ancestor AjaxPanel class underlying AjaxDialog, should use AjaxDialog API
-      this.dialog.setBodyLoading(200);
+      this.vueInst.load(ucsId);
 
+      // note: this also prevents spamming load() while ajax is in progress
       this.ucsId = ucsId;
-      this.dialog.getAjaxPanel().get({ucs: ucsId}, this.requestUri);
     },
 
     show: function()
@@ -95,27 +88,6 @@
 
       // keep the dialog in the page
       return false;
-    },
-
-    // tron message, cf. core-json.js
-    onDialogResponse: function(tron)
-    {
-      Core.log('DictLookupDialog::onDialogResponse()');
-
-      var props = tron.getProps();
-
-      // ^ grab "known kanji" from the FLashcard Review page, since the state is preserved
-      // during the entire review session, it's more efficient this way. The user's known
-      // kanji could realistically be 2000 to 3000 utf8 characters. So even though they
-      // are also cached in php session, it's better to avoid returning several KBs of data
-      // with each dictionary lookup request
-      //
-      var vueProps = {
-        items:       props.items,
-        known_kanji: Koohii.UX.reviewMode.fc_known_kanji   // ^
-      };
-      var elMount  = this.dialog.getBody().querySelector('div'); // replace the loading div
-      this.vueDictList = VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
     },
     
     onDialogDestroy: function()

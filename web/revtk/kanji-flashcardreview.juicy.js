@@ -224,23 +224,19 @@
 
       if (sActionId === 'dict')
       {
-        if (this.dictDialog && this.dictDialog.isVisible())
-        {
+        if (this.dictDialog && this.dictDialog.isVisible()) {
           this.dictDialog.hide();
         }
-        else
-        {
+        else {
           oCardData = this.oReview.getFlashcardData();
+          var ucsId = oCardData.id;
 
-          if (!this.dictDialog)
-          {
-            this.dictDialog = new App.Ui.DictLookupDialog(this.getOption('dictlookup_url'), oCardData.id);
+          if (!this.dictDialog) {
+            this.dictDialog = new App.Ui.DictLookupDialog();
           }
-          else
-          {
-            this.dictDialog.load(oCardData.id);
-            this.dictDialog.show();
-          }
+
+          this.dictDialog.show();
+          this.dictDialog.load(ucsId);
         }
       }
 

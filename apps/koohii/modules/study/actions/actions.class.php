@@ -711,7 +711,7 @@ class studyActions extends sfActions
   /**
    * Ajax handler for Dictionary Lookup feature.
    * 
-   * Request parameters:
+   * JSON request:
    *
    *   ucs               UCS-2 code of the character to lookup.
    *   req_known_kanji   (OPTIONAL) Also return a string of known kanji
@@ -724,20 +724,23 @@ class studyActions extends sfActions
    */
   public function executeDict($request)
   {
-    $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($request->getParameter('ucs'));
+    $json = $request->getParamsAsJson();
+// DBG::printr($json);exit;
 
-    // use a TRON response because of AjaxDialog used in Flashcard Review page
     $tron = new JsTron();
+    
+    $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
+
+    // (legacy) add props for the "AjaxDialog" in Flashcard Review page
     $tron->setStatus(JsTron::STATUS_PROGRESS);
-    $tron->set('dialogTitle', 'Dictionary Lookup'); // for '.cjk_lang_ja($c_utf));
+    $tron->set('dialogTitle', 'Dictionary Lookup');
 
     $tron->set('items', $this->getDictListItems($ucsId));
 
-    // requires known kanji list?
-    if ($request->hasParameter('req_known_kanji')) {
+    if (true === $json->req_known_kanji) {
       $tron->set('known_kanji', $this->getUser()->getUserKnownKanji());
     }
-
+// sleep(1);
     return $tron->renderJson($this);
   }
 

@@ -87,19 +87,15 @@ EOD;
 
   </div>
 
-  <?php if (!CJ_HANZI): ?>
   <div id="DictStudy" class="col-box no-gutter-xs-sm">
     <div id="DictHead" class="JsToggle">
       <i class="fa fa-chevron-down" style="position:absolute;right:0;top:0;width:33px;height:33px;line-height:33px;"></i>
       Dictionary
     </div>
-    <div id="DictBody" style="display:none">
-      <div id="DictPanel" data-uri="<?php echo $sf_context->getController()->genUrl('study/dict') ?>" data-ucs="<?php echo $kanjiData->ucs_id ?>">
-        <div class="JsDictLoading">Loading...</p></div>
-      </div>
+    <div id="JsDictBody" data-ucs="<?= $kanjiData->ucs_id ?>" style="display:none">
+      <div class="JsMount"></div>
     </div>
   </div>
-  <?php endif ?>
 
 
   <div id="SharedStoriesComponent" class="col-box no-gutter-xs-sm">

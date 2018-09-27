@@ -113,14 +113,9 @@ class rtkUser extends sfBasicSecurityUser
     }
     
     $knownKanji = ReviewsPeer::getKnownKanji($this->getUserId());
-    $this->setUserKnownKanji($knownKanji);
+    $this->setAttribute(self::KNOWN_KANJI, $knownKanji);
 
     return $knownKanji;
-  }
-
-  public function setUserKnownKanji(string $kanjis)
-  {
-    $this->setAttribute(self::KNOWN_KANJI, $kanjis);
   }
 
   // [listener] atm the query is fast, so no add/delete/etc, just invalidate the cached data

@@ -107,42 +107,20 @@
     toggleDictionary: function(e, el)
     {
       var visible = !this.dictVisible,
-          elBody  = Dom.get("DictBody"),
-          elPanel = Dom.get("DictPanel"),
-          data    = Dom.getDataset(elPanel);
-
-      var that = this;
-
-      if (!this.dictPanel) {  
-
-        var onAjaxResponse = function(o) {
-          Core.log('Dict onAjaxResponse(%o)', o);
-          that.dictPanel = true;
-
-          var props = o.responseJSON.props;
-
-          var vueProps = {
-            items:       props.items,
-            known_kanji: props.known_kanji 
-          };
-
-          var elMount = elPanel.querySelector('div'); // replace the loading div
-          VueInstance(Koohii.UX.KoohiiDictList, elMount, vueProps, true);
-        };
-
-        // request known kanji, as it is otherwise not provided in the Study pages
-        var ajaxRequest = new Core.Ui.AjaxRequest(data.uri, {
-          parameters: {
-            "ucs": data.ucs,
-            "req_known_kanji": true
-          },
-          success:    onAjaxResponse,
-          scope:      this
-        });
-      }
+          elBody  = Dom.get("JsDictBody"),
+          data    = Dom.getDataset(elBody);
 
       Dom.toggle(elBody, visible);
       this.dictVisible = visible;
+
+      if (!this.dictPanel) {
+        // use inner div set in the php template
+        var elMount = elBody.querySelector('.JsMount');
+        var inst = VueInstance(Koohii.UX.KoohiiDictList, elMount, {}, true);
+        inst.load(data.ucs);
+
+        this.dictPanel = true;
+      }
     },
     
     onSearchBtn: function(e)

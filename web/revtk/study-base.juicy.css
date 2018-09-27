@@ -53,10 +53,6 @@
   background: linear-gradient(to bottom,  #e3ecb1 0%,#cfd67f 100%); /* W3C */
 }
 
-#DictPanel {  color:#111; }
-#DictPanel .is-loading { padding:1em 20px 0; color:#838279; }
-
-
 
 /* ------------------ */
 /* Shared Stories     */

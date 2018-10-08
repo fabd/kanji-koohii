@@ -11,7 +11,7 @@
     }"
     data-action="flip">
  
-    <component v-bind:is="currentView">
+    <component v-bind:is="currentView" ref="card">
       <!-- component changes when vm.currentView changes! -->
     </component>
 
@@ -67,6 +67,11 @@ export default {
     getState()
     {
       return this.fc_state;
+    },
+
+    getChild()
+    {
+      return this.$refs.card
     },
 
     display(bDisplay)

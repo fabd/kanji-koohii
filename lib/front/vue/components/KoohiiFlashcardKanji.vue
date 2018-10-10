@@ -1,6 +1,6 @@
 <template>
 
-<div class="fc-kanji">
+<div class="fc-kanji with-yomi">
 
   <template v-if="!reviewMode.freemode">
     <a id="uiFcMenu" href="#" title="Edit Flashcard" class="uiGUI uiFcAction"

@@ -58,11 +58,7 @@
     </div>
   </div>
 
-  <?php 
-    $rdMainClass = array();
-    if ($fc_yomi) { $rdMainClass[] = 'with-yomi'; }
-  ?>
-  <div id="rd-main" class="<?= implode(' ', $rdMainClass) ?>">
+  <div id="rd-main">
     <div id="uiFcReview">
 
       <div id="uiFcMain">

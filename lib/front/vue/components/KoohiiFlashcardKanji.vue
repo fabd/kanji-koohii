@@ -38,7 +38,7 @@
           <div class="vyg">{{ $item.gloss }}</div>
         </div>
 
-        <div v-if="!vocab.length" class="uiFcYomi uiFcYomi--empty">
+        <div v-if="!vocab.length" class="uiFcYomi uiFcYomi--empty" @click.stop="onVocabClick">
           <div>
             &nbsp;
           </div>
@@ -90,6 +90,7 @@ export default {
     onVocabClick() {
       console.log('onVocabClick')
 
+      App.KanjiReview.toggleDictDialog()
       
     },
 
@@ -106,9 +107,9 @@ export default {
   beforeMount() {
     console.log('KoohiiFlashcardKanji::beforeMount()')
 
-    this.vocab = [{
-      compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness'
-    }]
+    // this.vocab = [{
+    //   compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness'
+    // }]
 
     console.log(this.vocab)
   }

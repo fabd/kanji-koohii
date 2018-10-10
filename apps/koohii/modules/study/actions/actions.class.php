@@ -731,16 +731,12 @@ class studyActions extends sfActions
     
     $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
 
-    // (legacy) add props for the "AjaxDialog" in Flashcard Review page
-    $tron->setStatus(JsTron::STATUS_PROGRESS);
-    $tron->set('dialogTitle', 'Dictionary Lookup');
-
     $tron->set('items', $this->getDictListItems($ucsId));
 
     if (true === $json->req_known_kanji) {
       $tron->set('known_kanji', $this->getUser()->getUserKnownKanji());
     }
-// sleep(1);
+ sleep(1);
     return $tron->renderJson($this);
   }
 
@@ -755,5 +751,36 @@ class studyActions extends sfActions
     mb_regex_encoding('UTF-8');
 
     return $result;
+  }
+
+  /**
+   * User selected a vocab entry in DictList component (could be study or review page).
+   * 
+   * JSON request:
+   *
+   *   ucs               UCS-2 code of associated character
+   *   dictid            JMDICT entseq id
+   *
+   * Returns:
+   *
+   */
+  public function executeDictpick($request)
+  {
+    $json = $request->getContentJson();
+
+    $ucsId  = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
+    $dictId = BaseValidators::sanitizeInteger($json->dictid);
+
+    $userId = $this->getUser()->getUserId();
+
+    $tron = new JsTron();
+
+    if (true !== VocabPicksPeer::link($userId, $ucsId, $dictId)) {
+      $tron->setError('Oops, update failed.');
+      $tron->setStatus(JsTron::STATUS_FAILED);
+    }
+sleep(1);
+
+    return $tron->renderJson($this);
   }
 }

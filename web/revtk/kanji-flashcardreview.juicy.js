@@ -224,20 +224,8 @@
 
       if (sActionId === 'dict')
       {
-        if (this.dictDialog && this.dictDialog.isVisible()) {
-          this.dictDialog.hide();
-        }
-        else {
-          oCardData = this.oReview.getFlashcardData();
-          var ucsId = oCardData.id;
-
-          if (!this.dictDialog) {
-            this.dictDialog = new App.Ui.DictLookupDialog();
-          }
-
-          this.dictDialog.show();
-          this.dictDialog.load(ucsId);
-        }
+        this.toggleDictDialog();
+        return false;
       }
 
       switch (sActionId)
@@ -305,6 +293,24 @@
       }
 
       return false;
+    },
+
+    toggleDictDialog: function()
+    {
+      if (this.dictDialog && this.dictDialog.isVisible()) {
+        this.dictDialog.hide();
+      }
+      else {
+        var oCardData = this.oReview.getFlashcardData();
+        var ucsId = oCardData.id;
+
+        if (!this.dictDialog) {
+          this.dictDialog = new App.Ui.DictLookupDialog();
+        }
+
+        this.dictDialog.show();
+        this.dictDialog.load(ucsId);
+      }
     },
 
     /**

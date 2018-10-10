@@ -1,51 +1,53 @@
 <template>
-<div>
 
-  <div v-if="isLoading">
-    <div class="dict-panel" ref="maskArea">
+  <div class="dict-panel" ref="refLoadingMask">
+
+    <template v-if="isLoading">
+
       <div style="min-height:100px;"></div>
-    </div>
-  </div>
+    
+    </template>
+    <template v-else-if="items.length">
+  
+      <div class="dict-list">
+        <template v-for="$item in items">
 
-  <div v-if="!isLoading && items.length" class="dict-panel">
+        <div :class="[ 'dl_item', { 'dl_item--pick': $item.pick }]"  :key="$item.dictid" @click="onVocabPick($item)">
 
-    <div class="dict-list">
-      <template v-for="$item in items">
+          <div class="dl_t">
 
-      <div :class="[ 'dl_item', { 'dl_item--pick': $item.pick }]"  :key="$item.dictid" @click="onVocabPick($item)">
+            <div v-if="isFlashcardReview" class="dl_t_menu">
+              <i v-if="$item.pick === true" class="fa fa-star"></i>
+              <i v-else class="far fa-star"></i>
+            </div>
 
-        <div class="dl_t">
-
-          <div class="dl_t_menu">
-            <i v-if="$item.pick === true" class="fa fa-star"></i>
-            <i v-else class="far fa-star"></i>
+            <cjk_lang_ja className="c" :html="$item.compound"
+              :class="{ known: $item.known }"></cjk_lang_ja>
+            <cjk_lang_ja className="r" :html="$item.reading"></cjk_lang_ja>
+          </div>
+          <div class="dl_d">
+            {{ $item.glossary }}
           </div>
 
-          <cjk_lang_ja className="c" :html="$item.compound"
-            :class="{ known: $item.known }"></cjk_lang_ja>
-          <cjk_lang_ja className="r" :html="$item.reading"></cjk_lang_ja>
+          <div if="isMenu">
+            
+          </div>
+        
         </div>
-        <div class="dl_d">
-          {{ $item.glossary }}
-        </div>
-
-        <div if="isMenu">
-          
-        </div>
-      
+        
+        </template>
       </div>
       
-      </template>
-    </div>
+    </template>
+    <template v-else class="dict-list_info">
 
-  </div>
-
-  <div v-if="!isLoading && items.length === 0" class="dict-list_info">
+      <!-- items.length === 0 -->
       <p>There are no common words using this character.</p>
-    </div>
+
+    </template>
+ 
   </div>
 
-</div>
 </template>
 
 <script>
@@ -116,11 +118,20 @@ export default {
     return {
       isLoading: true,
 
+      // kanji which corresponds to the last retrieved example words (cf load())
+      ucsId: 0,
+
       // whether we have already requested them from server
       isSetKnownKanji: false,
 
       // a string containing all kanji known by the user
       knownKanji: ''
+    }
+  },
+
+  computed: {
+    isFlashcardReview() {
+      return (window.App && window.App.KanjiReview)
     }
   },
 
@@ -130,29 +141,49 @@ export default {
     {
       console.log('onVocabPick "%s"', item.compound)
 
-      this.items.forEach((o) => { o.pick = false })
-      
-      item.pick = true
 
       // update the flashcard view
       // App.KanjiReview.oReview.curCard.cardData.v_on ...   
-      if (App.KanjiReview) {
-        let vmFlashcard = App.KanjiReview.oReview.getFlashcard()
+      const AKR = App.KanjiReview
+      if (AKR) {
+        let vmFlashcard = AKR.oReview.getFlashcard()
         let vmKanjiCard = vmFlashcard.getChild()
         console.log('child = %o', vmKanjiCard)
+
+        this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
+        
+        KoohiiAPI.setVocabForCard({ ucs: this.ucsId, dictid: item.dictid }, {
+          then: (tron) => { this.onVocabPickResponse(tron, item, vmKanjiCard) }
+        })
+
+        // close dictionary
+        
+      }
+    },
+
+    // @param {object} item           One of this.items[] which was clicked
+    // @param {object} vmKanjiCard    KoohiiFlashcardKanji instance
+    onVocabPickResponse(tron, item, vmKanjiCard)
+    {
+      this.koohiiloadingHide()
+
+      // success:  show vocab onto the flashcard, and close the dictionary
+      if (tron.isSuccess())
+      {
+        // sets highlighted entry
+        this.items.forEach((o) => { o.pick = false })
+        item.pick = true
+
         vmKanjiCard.setVocab({
           compound: item.compound,
           reading:  item.reading,
           gloss:    item.glossary
         })
+
+        if (App.KanjiReview) {
+          App.KanjiReview.toggleDictDialog()
+        }
       }
-      /*
-        - ajouter ref="" dans kohiiflashcard
-
-          getCard
-       */
-
-
     },
 
     load(ucsId)
@@ -160,7 +191,7 @@ export default {
       this.isLoading = true
 
       function doLoad() {
-        this.koohiiloadingShow({ target: this.$refs.maskArea })
+        this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
 
         // getKnownKanji:
         // 
@@ -176,14 +207,18 @@ export default {
           getKnownKanji: false === this.isSetKnownKanji
         },
         {
-          then: this.onDictListResponse.bind(this)
-        });
+          then: (tron) => {
+            this.ucsId = ucsId
+            this.onDictListResponse(tron)
+          }
+        })
       }
+
 
       this.$nextTick(doLoad)
     },
 
-    onDictListResponse(tron)
+    onDictListResponse(tron, ucsId)
     {
       const props = tron.getProps()
 

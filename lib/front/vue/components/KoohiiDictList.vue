@@ -136,18 +136,20 @@ export default {
 
     isKanjiReview() {
       return !!this.KanjiReview
-    },
-
-    // the KoohiiFlashcardKanji Vue instance, or false if not available (eg. Study page)
-    vmKanjiCard() {
-      if (!this.isKanjiReview) { return false }
-      let vmFlashcard = this.KanjiReview.oReview.getFlashcard()
-      let vmKanjiCard = vmFlashcard.getChild()
-      return vmKanjiCard
     }
   },
 
   methods: {
+
+    // ! CAN NOT be computed because the dictionary is instanced *once*, while flashcard comp is recreated
+    // 
+    // @return {object} the KoohiiFlashcardKanji Vue instance, or false if not available (eg. Study page)
+    getKanjiCard() {
+      if (!this.isKanjiReview) { return false }
+      let vmFlashcard = this.KanjiReview.oReview.getFlashcard()
+      let inst = vmFlashcard.getChild()
+      return inst
+    },
 
     onVocabPick(item)
     {
@@ -184,7 +186,7 @@ export default {
 
       if (tron.isSuccess()) {
         item.pick = false
-        this.vmKanjiCard.removeVocab(item)
+        this.getKanjiCard().removeVocab(item)
         this.isKanjiReview && this.KanjiReview.toggleDictDialog();
       }
     },
@@ -201,7 +203,7 @@ export default {
         this.items.forEach((o) => { o.pick = false })
         item.pick = true
 
-        this.vmKanjiCard.setVocab({
+        this.getKanjiCard().setVocab({
           compound: item.compound,
           reading:  item.reading,
           gloss:    item.glossary

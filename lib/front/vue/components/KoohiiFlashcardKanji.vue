@@ -101,6 +101,11 @@ export default {
     setVocab(item) {
       console.log('setVocab(%o)', item)
       this.vocab = [item]
+    },
+
+    removeVocab(item) {
+      console.log('removeVocab(%o)', item)
+      this.vocab = []
     }
   },
 

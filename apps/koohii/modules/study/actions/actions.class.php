@@ -764,7 +764,7 @@ class studyActions extends sfActions
    * Returns:
    *
    */
-  public function executeDictpick($request)
+  public function executeVocabpick($request)
   {
     $json = $request->getContentJson();
 
@@ -777,6 +777,25 @@ class studyActions extends sfActions
 
     if (true !== VocabPicksPeer::link($userId, $ucsId, $dictId)) {
       $tron->setError('Oops, update failed.');
+      $tron->setStatus(JsTron::STATUS_FAILED);
+    }
+sleep(1);
+
+    return $tron->renderJson($this);
+  }
+
+  public function executeVocabdelete($request)
+  {
+    $json = $request->getContentJson();
+
+    $ucsId  = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
+
+    $userId = $this->getUser()->getUserId();
+
+    $tron = new JsTron();
+
+    if (true !== VocabPicksPeer::unlink($userId, $ucsId /*, $dictId*/)) {
+      $tron->setError('Oops, delete failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
 sleep(1);

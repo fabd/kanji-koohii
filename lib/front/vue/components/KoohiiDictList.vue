@@ -16,7 +16,7 @@
 
           <div class="dl_t">
 
-            <div v-if="isFlashcardReview" class="dl_t_menu">
+            <div v-if="isKanjiReview" class="dl_t_menu">
               <i v-if="$item.pick === true" class="fa fa-star"></i>
               <i v-else class="far fa-star"></i>
             </div>
@@ -130,8 +130,20 @@ export default {
   },
 
   computed: {
-    isFlashcardReview() {
+    KanjiReview() {
       return (window.App && window.App.KanjiReview)
+    },
+
+    isKanjiReview() {
+      return !!this.KanjiReview
+    },
+
+    // the KoohiiFlashcardKanji Vue instance, or false if not available (eg. Study page)
+    vmKanjiCard() {
+      if (!this.isKanjiReview) { return false }
+      let vmFlashcard = this.KanjiReview.oReview.getFlashcard()
+      let vmKanjiCard = vmFlashcard.getChild()
+      return vmKanjiCard
     }
   },
 
@@ -141,29 +153,44 @@ export default {
     {
       console.log('onVocabPick "%s"', item.compound)
 
+      if (!this.isKanjiReview) {
+        return
+      }
 
-      // update the flashcard view
-      // App.KanjiReview.oReview.curCard.cardData.v_on ...   
-      const AKR = App.KanjiReview
-      if (AKR) {
-        let vmFlashcard = AKR.oReview.getFlashcard()
-        let vmKanjiCard = vmFlashcard.getChild()
-        console.log('child = %o', vmKanjiCard)
-
+      // add
+      if (item.pick !== true)
+      {
+        // App.KanjiReview.oReview.curCard.cardData.v_on ...   
         this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
         
         KoohiiAPI.setVocabForCard({ ucs: this.ucsId, dictid: item.dictid }, {
-          then: (tron) => { this.onVocabPickResponse(tron, item, vmKanjiCard) }
+          then: (tron) => { this.onVocabPickResponse(tron, item) }
         })
+      }
+      // remove
+      else
+      {
+        this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
 
-        // close dictionary
-        
+        KoohiiAPI.deleteVocabForCard({ ucs: this.ucsId }, {
+          then: (tron) => { this.onVocabDeleteResponse(tron, item) }
+        })
+      }
+    },
+
+    onVocabDeleteResponse(tron, item)
+    {
+      this.koohiiloadingHide()
+
+      if (tron.isSuccess()) {
+        item.pick = false
+        this.vmKanjiCard.removeVocab(item)
+        this.isKanjiReview && this.KanjiReview.toggleDictDialog();
       }
     },
 
     // @param {object} item           One of this.items[] which was clicked
-    // @param {object} vmKanjiCard    KoohiiFlashcardKanji instance
-    onVocabPickResponse(tron, item, vmKanjiCard)
+    onVocabPickResponse(tron, item)
     {
       this.koohiiloadingHide()
 
@@ -174,15 +201,13 @@ export default {
         this.items.forEach((o) => { o.pick = false })
         item.pick = true
 
-        vmKanjiCard.setVocab({
+        this.vmKanjiCard.setVocab({
           compound: item.compound,
           reading:  item.reading,
           gloss:    item.glossary
         })
 
-        if (App.KanjiReview) {
-          App.KanjiReview.toggleDictDialog()
-        }
+        this.isKanjiReview && this.KanjiReview.toggleDictDialog();
       }
     },
 

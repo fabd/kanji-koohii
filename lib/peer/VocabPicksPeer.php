@@ -37,4 +37,16 @@ class VocabPicksPeer extends coreDatabaseTable
   {
     return self::getInstance()->delete('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
+
+  /**
+   * Returns user's vocab picks for given character.
+   *
+   * @return  array
+   */
+  public static function getUserPicks($userId, $ucsId)
+  {
+    $select = self::getInstance()->select('dictid')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
+    $items  = self::$db->fetchCol($select);
+    return $items ?: [];
+  }
 }

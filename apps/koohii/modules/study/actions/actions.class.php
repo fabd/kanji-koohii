@@ -719,6 +719,7 @@ class studyActions extends sfActions
    * Returns:
    *
    *   items             Array of vocab entries (compound, reading, etc)
+   *   picks             Array of user's selected vocab ([dictid, ...])
    *   known_kanji       (IF "req_known_kanji") String of known kanji 
    *
    */
@@ -726,12 +727,14 @@ class studyActions extends sfActions
   {
     $json = $request->getParamsAsJson();
 // DBG::printr($json);exit;
-
-    $tron = new JsTron();
     
     $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
 
+    $tron   = new JsTron();
+    $userId = $this->getUser()->getUserId();
+
     $tron->set('items', $this->getDictListItems($ucsId));
+    $tron->set('picks', VocabPicksPeer::getUserPicks($userId, $ucsId));
 
     if (true === $json->req_known_kanji) {
       $tron->set('known_kanji', $this->getUser()->getUserKnownKanji());

@@ -304,7 +304,10 @@ class rtkLabs
   }
 
   /**
-   * Creates SELECT for the Dictionary Lookup feature's uiSelectTable
+   * Creates SELECT for the Dictionary Lookup
+   *
+   * FIXME
+   *   Pre-generate and cache all this stuff for the RTK kanji 
    *
    * @param  int     $ucsId    UCS2 code
    *

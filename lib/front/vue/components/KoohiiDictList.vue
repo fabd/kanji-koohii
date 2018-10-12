@@ -260,9 +260,7 @@ export default {
 
       let items = this.setKnownItems(props.items, this.knownKanji)
 
-//test
-// if (items.length > 1) { items[1].pick = true }
-items.forEach((o) => { o.pick = false })
+      this.applyVocabPicks(items, props.picks)
 
       this.items = items
 
@@ -290,12 +288,18 @@ items.forEach((o) => { o.pick = false })
       return sortedItems
     },
 
-    sortSelectedItems(items)
+    // set selected state, where 'picks' is an array of dictid's 
+    applyVocabPicks(items, picks)
     {
-      let picks = items.filter(o => o.pick === true)
-      let other = items.filter(o => o.pick !== true)  // undefined
-      return picks.concat(other)
+      items.forEach((o) => { o.pick = picks.includes(o.dictid) })
     }
+
+    // sortSelectedItems(items)
+    // {
+    //   let picks = items.filter(o => o.pick === true)
+    //   let other = items.filter(o => o.pick !== true)  // undefined
+    //   return picks.concat(other)
+    // }
   },
 
   created() {

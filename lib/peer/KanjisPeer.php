@@ -127,36 +127,11 @@ class KanjisPeer extends coreDatabaseTable
 
     sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url', 'Links'));
 
-    // remove data not used by client
-    if (CJ_HANZI)
-    {
-      sfProjectConfiguration::getActive()->loadHelpers('Pinyin');
-
-      // hanzi reviews use Pinyin reading (onyomi)
-      $pinyin = explode(',', $cardData->onyomi);
-      $pinyin = array_slice($pinyin, 0, 2);
-      $tones  = array();
-      foreach ($pinyin as $tone)
-      {
-        array_push($tones, pinyin_ntod($tone));
-      }
-
-      $cardData->pinyin = content_tag('span', implode(', ', $tones), array('title' => implode(', ', $pinyin)));
-
-      //$cardData->pinyin = implode(', ', $tones);
-      unset($cardData->onyomi);
-
-      // not needed by client, reduce JSON response
-      unset($cardData->lessonnum);
-    }
-    else
-    {
-      // not needed by client, reduce JSON response
-      unset($cardData->onyomi);
-      unset($cardData->lessonnum);
-      unset($cardData->idx_olded);
-      unset($cardData->idx_newed);
-    }
+    // not needed by client, reduce JSON response
+    unset($cardData->onyomi);
+    unset($cardData->lessonnum);
+    unset($cardData->idx_olded);
+    unset($cardData->idx_newed);
 
     if (isset($options->yomi))
     {

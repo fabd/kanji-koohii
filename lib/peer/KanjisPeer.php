@@ -116,16 +116,17 @@ class KanjisPeer extends coreDatabaseTable
    */
   public static function getFlashcardData($ucsId, $options = null)
   {
-    if (false === ($cardData = self::getKanjiByUCS($ucsId)))
-    {
+    if (false === ($cardData = self::getKanjiByUCS($ucsId))) {
       return null;
     }
+
+    $userId = sfContext::getInstance()->getUser()->getUserId();
 
     // make sure id is a Number in returned JSON
     $cardData->id = (int)$cardData->ucs_id;
     unset($cardData->ucs_id);
 
-    sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url', 'Links'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
 
     // not needed by client, reduce JSON response
     unset($cardData->onyomi);
@@ -133,27 +134,30 @@ class KanjisPeer extends coreDatabaseTable
     unset($cardData->idx_olded);
     unset($cardData->idx_newed);
 
+    // API ONLY (Kanji Ryokucha) : return On/Kun example words
     if (isset($options->yomi)) {
       // v_on, v_kun
-      $highlight = isset($options->api_mode) ? array('[', ']') : array('<em>', '</em>');
-      rtkLabs::getSampleWords($cardData->id, $cardData, $highlight);
+      rtkLabs::getSampleWords($cardData->id, $cardData, isset($options->api_mode));
+    }
+
+    // retrieve user's vocab picks, plus highlighted readings
+    if (!isset($options->api_mode)) {
+      $cardData->vocab = rtkLabs::getFormattedVocabPicks($userId, $cardData->id);
     }
 
     // get custom keyword
-    $userid = sfContext::getInstance()->getUser()->getUserId();
-    $custom_keyword = CustkeywordsPeer::getCustomKeyword($userid, $ucsId);
+    $custom_keyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
     $keyword = null !== $custom_keyword ? $custom_keyword : $cardData->keyword;
   
     if (!isset($options->api_mode)) {
-      $cardData->keyword = link_to_keyword($keyword, $cardData->kanji, array('title' => 'Go to the Study page', 'target' => '_blank'));
+      $cardData->keyword = link_to_keyword($keyword, $cardData->kanji, ['title' => 'Go to the Study page', 'target' => '_blank']);
     }
     else {
       $cardData->keyword = $keyword;
     }
 
-    // tweaks for api mode response
-    if (isset($options->api_mode)) {
-      // api doesn't return the kanji as a character
+    // API ONLY (apps) : api doesn't return the kanji as a character
+    if (isset($option->api_mode)) { 
       unset($cardData->kanji);
     }
 

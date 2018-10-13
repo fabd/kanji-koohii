@@ -115,8 +115,9 @@ export default {
     // this.vocab = [{
     //   compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness'
     // }]
+    this.vocab = this.cardData.vocab || []
 
-    console.log(this.vocab)
+    // console.log('got %o', this.cardData)
   }
 
 }

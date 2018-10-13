@@ -548,7 +548,7 @@ class rtkLabs
    *                             highlighting kanji and its reading, or false
    *
    */
-  public static function getSampleWords($ucsId, $cardData, $highlight = false)
+  public static function getSampleWords($ucsId, $cardData, $api_mode = false)
   {
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
@@ -565,9 +565,7 @@ class rtkLabs
     $on  = false;
     $kun = false;
 
-    if ($highlight === false) {
-      $highlight = array('', '');
-    }
+    $highlight = self::getHighlightTags($api_mode);
 
     $u8kanji = utf8::fromUnicode($ucsId);
 
@@ -605,6 +603,43 @@ class rtkLabs
     
     $cardData->v_on  = $on;
     $cardData->v_kun = $kun;
+  }
+
+  public static function getHighlightTags($api_mode = false)
+  {
+    return $api_mode ? ['[', ']'] : ['<em>', '</em>'];
+  }
+
+  /**
+   * Return user's vocab to display on flashcard (with kanji reading highlighted).
+   * 
+   * @param   int     $ucsId      UCS-2 code
+   */
+  public static function getFormattedVocabPicks($userId, $ucsId)
+  {
+
+    $db = sfProjectConfiguration::getActive()->getDatabase();
+
+    $select = $db->select(['dictid', 'compound', 'reading', 'glossary'])
+      ->from(['vp' => VocabPicksPeer::getInstance()->getName()])
+      ->joinUsing(['jd' => self::TABLE_JDICT], 'dictid')
+      ->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
+      ->query();
+
+    $vocab = array();
+
+    while ($row = $db->fetchObject())
+    {
+      $reading  = self::getFormattedReading($row->dictid, $ucsId, self::getHighlightTags());
+
+      $vocab[] = [
+        'compound' => $row->compound,
+        'reading'  => $reading,
+        'gloss'    => $row->glossary
+      ];
+    }
+
+    return $vocab;
   }
 
   /**

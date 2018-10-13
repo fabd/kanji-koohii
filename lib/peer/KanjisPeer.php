@@ -103,15 +103,15 @@ class KanjisPeer extends coreDatabaseTable
   /**
    * Returns flashcard data for the flashcard reviews (both SRS and non-SRS).
    *
-   * This is a uiFlashcardReview callback, the data ($id) must be sanitized!
-   *
-   * @param  int     $ucsId     UCS-2 code value.
-   * @param  object  $options   Options for the flashcard format (optional)
+   * This is a uiFlashcardReview callback, $ucsId must be sanitized!
    *
    * Options:
-   *   yomi          (OPTIONAL) true to include example words with pronunciations
-   *   api_mode      (OPTIONAL) true to return data according to API /review/fetch
    * 
+   *   yomi          (API ONLY) true to include example words with pronunciations
+   *   api_mode      (API ONLY) true to return data according to API /review/fetch
+   *   
+   * @param  int     $ucsId     UCS-2 code value.
+   * @param  object  $options   Options for the flashcard format (optional)
    * @return mixed   Object with flashcard data, or null
    */
   public static function getFlashcardData($ucsId, $options = null)
@@ -133,8 +133,7 @@ class KanjisPeer extends coreDatabaseTable
     unset($cardData->idx_olded);
     unset($cardData->idx_newed);
 
-    if (isset($options->yomi))
-    {
+    if (isset($options->yomi)) {
       // v_on, v_kun
       $highlight = isset($options->api_mode) ? array('[', ']') : array('<em>', '</em>');
       rtkLabs::getSampleWords($cardData->id, $cardData, $highlight);

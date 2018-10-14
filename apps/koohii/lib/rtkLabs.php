@@ -569,6 +569,8 @@ class rtkLabs
 
     $u8kanji = utf8::fromUnicode($ucsId);
 
+// fab: BUG  this was bugged for a loooong time (iterating 2 resultsets)... but this code may be obsolete
+
     while ($row = $db->fetchObject())
     {
       if (false === $on && $row->type == self::TYPE_ON)
@@ -581,7 +583,6 @@ class rtkLabs
         // highlight kanji pronunciation in the full reading
         if ($highlight[0] !== '') {
           $reading  = self::getFormattedReading($row->dictid, $ucsId, $highlight);
-//$reading = $row->reading;
         }
         
         $on = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
@@ -594,7 +595,6 @@ class rtkLabs
         
         if ($highlight[0] !== '') {
           $reading  = self::getFormattedReading($row->dictid, $ucsId, $highlight);
-//$reading = $row->reading;
         }
         
         $kun = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
@@ -617,24 +617,25 @@ class rtkLabs
    */
   public static function getFormattedVocabPicks($userId, $ucsId)
   {
+    $ExampleWordArray = array();
+
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
     $select = $db->select(['dictid', 'compound', 'reading', 'glossary'])
       ->from(['vp' => VocabPicksPeer::getInstance()->getName()])
       ->joinUsing(['jd' => self::TABLE_JDICT], 'dictid')
-      ->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
-      ->query();
+      ->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
 
-    $ExampleWordArray = array();
+    $rows = $db->fetchAll($select);
 
-    while ($row = $db->fetchObject())
+    foreach ($rows as $row) 
     {
-      $reading  = self::getFormattedReading($row->dictid, $ucsId, self::getHighlightTags());
+      $reading  = self::getFormattedReading($row['dictid'], $ucsId, self::getHighlightTags(), $row['reading']);
 
       $ExampleWordArray[] = [
-        'compound' => $row->compound,
+        'compound' => $row['compound'],
         'reading'  => $reading,
-        'gloss'    => $row->glossary
+        'gloss'    => $row['glossary']
       ];
     }
 
@@ -647,12 +648,11 @@ class rtkLabs
    * 
    * @param   int     $dictId     JDICT.dictid
    * @param   int     $ucsId      UCS-2 code value of kanji to highlight
-   * @param   array   $format     Opening and closing tags to surround the
-   *                              highlighted kanji reading
+   * @param   array   $formatTags Opening and closing tags to surround kanji's reading
    *
-   * @return string  
+   * @return string   Formatted reading, or $fallback (no furigana)
    */
-  public static function getFormattedReading($dictId, $ucsId, $format)
+  public static function getFormattedReading($dictId, $ucsId, $formatTags, $fallback = '')
   {
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
@@ -667,11 +667,15 @@ class rtkLabs
 
     while ($row = $db->fetchObject())
     {
+      // entries with no furigana
+      if ($row->pron === '') { return $fallback; }
+
       // (fabd) no idea what this was for!
       // convert Onyomi to katakana
       //$pron = $row->type == self::TYPE_ON ? CJK::toKatakana($row->pron) : $row->pron;
 
-      $prons[(int)$row->position] = $row->kanji == $ucsId ? $format[0].$row->pron.$format[1] : $row->pron;
+      $prons[(int)$row->position] = $row->kanji == $ucsId ? $formatTags[0].$row->pron.$formatTags[1] : $row->pron;
+
       $proncount++;
     }
 

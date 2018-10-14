@@ -22,7 +22,7 @@ class UsersSettingsPeer extends coreDatabaseTable
   // array to map settings names to database fields
   public static $map = array(
     'OPT_NO_SHUFFLE'   => 'no_shuffle',
-    'OPT_READINGS'     => 'show_onkun',
+    // 'OPT_READINGS'     => 'show_onkun',   PHASING OUT
 
     'OPT_SRS_MAX_BOX'  => 'srs_max_box',
     'OPT_SRS_MULT'     => 'srs_mult',
@@ -31,7 +31,7 @@ class UsersSettingsPeer extends coreDatabaseTable
 
   private static $defaultSettings = array(
     'OPT_NO_SHUFFLE'   => 0,    // do not shuffle new cards (blue pile)
-    'OPT_READINGS'     => 0,    // do not show example words in flashcard reviews
+    // 'OPT_READINGS'     => 0,    // do not show example words in flashcard reviews
 
     'OPT_SRS_MAX_BOX'  => 7,    // num intervals (excludes Failed & New box)
     'OPT_SRS_MULT'     => 205,  // 205 means 2.05
@@ -92,7 +92,7 @@ class UsersSettingsPeer extends coreDatabaseTable
       // fab: not worth making more fancy code atm ...
       $settings = array(
         'OPT_NO_SHUFFLE'   => $row['no_shuffle'],
-        'OPT_READINGS'     => $row['show_onkun'],
+        // 'OPT_READINGS'     => $row['show_onkun'],   PHASING OUT
 
         'OPT_SRS_MAX_BOX'  => $row['srs_max_box'],
         'OPT_SRS_MULT'     => $row['srs_mult'],
@@ -106,7 +106,7 @@ class UsersSettingsPeer extends coreDatabaseTable
 
     // normalize the settings
     $settings['OPT_NO_SHUFFLE']   = intval($settings['OPT_NO_SHUFFLE']);
-    $settings['OPT_READINGS']     = intval($settings['OPT_READINGS']);
+    // $settings['OPT_READINGS']     = intval($settings['OPT_READINGS']);   PHASING OUT
 
     $settings['OPT_SRS_MAX_BOX']  = intval($settings['OPT_SRS_MAX_BOX']);
     $settings['OPT_SRS_MULT']     = intval($settings['OPT_SRS_MULT']);

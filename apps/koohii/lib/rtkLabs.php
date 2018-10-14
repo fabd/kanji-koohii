@@ -617,7 +617,6 @@ class rtkLabs
    */
   public static function getFormattedVocabPicks($userId, $ucsId)
   {
-
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
     $select = $db->select(['dictid', 'compound', 'reading', 'glossary'])
@@ -626,20 +625,20 @@ class rtkLabs
       ->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
       ->query();
 
-    $vocab = array();
+    $ExampleWordArray = array();
 
     while ($row = $db->fetchObject())
     {
       $reading  = self::getFormattedReading($row->dictid, $ucsId, self::getHighlightTags());
 
-      $vocab[] = [
+      $ExampleWordArray[] = [
         'compound' => $row->compound,
         'reading'  => $reading,
         'gloss'    => $row->glossary
       ];
     }
 
-    return $vocab;
+    return $ExampleWordArray;
   }
 
   /**

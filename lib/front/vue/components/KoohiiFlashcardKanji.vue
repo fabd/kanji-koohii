@@ -95,17 +95,25 @@ export default {
     },
 
     /**
-     * [setVocab description]
-     * @param {object} item  vocab entry (compound, reading, gloss)
+     *
+     * @param {object} ExampleWord    { compound, reading, gloss }, cf. rtkLabs.php
      */
-    setVocab(item) {
+    setVocab(ExampleWord) {
+      const item = ExampleWord
+
       console.log('setVocab(%o)', item)
       this.vocab = [item]
+
+      // update the source card, so going backward with "Undo" is consistent with changes
+      // NOTE! still a reference to App.KanjiReview.oReview (FlashcardReview) 's cache of card data
+      // FIXME  ideally, we should use cardData.vocab directly (reactivity)
+      this.cardData.vocab = this.vocab
     },
 
     removeVocab(item) {
       console.log('removeVocab(%o)', item)
       this.vocab = []
+      this.cardData.vocab = this.vocab
     }
   },
 
@@ -115,11 +123,10 @@ export default {
     // this.vocab = [{
     //   compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness'
     // }]
+
+    // assign the card's ExampleWordArray
     this.vocab = this.cardData.vocab || []
-
-    // console.log('got %o', this.cardData)
   }
-
 }
 </script>
 

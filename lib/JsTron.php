@@ -24,7 +24,6 @@
  * Return a simple SUCCESS message:
  *
  *   $tron = new JsTron();
- *   $tron->setStatus(JsTron::STATUS_SUCCESS);
  *   return $tron->renderJson($this);
  *   
  *

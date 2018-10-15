@@ -153,7 +153,7 @@ export default {
 
     onVocabPick(item)
     {
-      console.log('onVocabPick "%s"', item.compound)
+      // console.log('onVocabPick "%s"', item.compound)
 
       if (!this.isKanjiReview) {
         return

@@ -739,7 +739,7 @@ class studyActions extends sfActions
     if (true === $json->req_known_kanji) {
       $tron->set('known_kanji', $this->getUser()->getUserKnownKanji());
     }
- sleep(1);
+// sleep(1);
     return $tron->renderJson($this);
   }
 
@@ -748,10 +748,6 @@ class studyActions extends sfActions
   {
     $select = rtkLabs::getSelectForDictStudy($ucsId);
     $result = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($select);
-
-    $kanji = utf8::fromUnicode(array($ucsId));
-
-    mb_regex_encoding('UTF-8');
 
     return $result;
   }
@@ -782,7 +778,7 @@ class studyActions extends sfActions
       $tron->setError('Oops, update failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
-sleep(1);
+// sleep(1);
 
     return $tron->renderJson($this);
   }
@@ -801,7 +797,7 @@ sleep(1);
       $tron->setError('Oops, delete failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
-sleep(1);
+// sleep(1);
 
     return $tron->renderJson($this);
   }

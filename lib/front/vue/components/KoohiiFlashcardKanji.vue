@@ -30,13 +30,17 @@
     <div class="uiFcHalf d-yomi"><!-- v-if="reviewMode.fc_yomi" -->
       <div class="d-yomi_pad">
 
-        <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
-          <div>
-            <cjk_lang_ja className="vyc">{{ $item.compound }}</cjk_lang_ja>
-            <cjk_lang_ja className="vyr" :html="$item.reading"></cjk_lang_ja>
+        <transition name="uiFcYomi-fadein">
+        <div v-if="vocab.length">
+          <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
+            <div>
+              <cjk_lang_ja className="vyc">{{ $item.compound }}</cjk_lang_ja>
+              <cjk_lang_ja className="vyr" :html="$item.reading"></cjk_lang_ja>
+            </div>
+            <div class="vyg">{{ $item.gloss }}</div>
           </div>
-          <div class="vyg">{{ $item.gloss }}</div>
         </div>
+        </transition>
 
         <div v-if="!vocab.length" class="uiFcYomi uiFcYomi--empty" @click.stop="onVocabClick">
           <div>
@@ -66,10 +70,7 @@ export default {
 
   data() {
     return {
-      /**
-       * compound , reading , gloss
-       * 
-       */
+      // array of {object} ExampleWord
       vocab: []
     }
   },
@@ -88,41 +89,39 @@ export default {
 
   methods: {
     onVocabClick() {
-      console.log('onVocabClick')
-
+      // console.log('onVocabClick()')
       App.KanjiReview.toggleDictDialog()
-      
     },
 
-    /**
-     *
-     * @param {object} ExampleWord    { compound, reading, gloss }, cf. rtkLabs.php
-     */
+    // @param {object} ExampleWord    { compound, reading, gloss }, cf. rtkLabs.php
     setVocab(ExampleWord) {
+      // console.log('setVocab(%o)', ExampleWord)
       const item = ExampleWord
 
-      console.log('setVocab(%o)', item)
-      this.vocab = [item]
-
-      // update the source card, so going backward with "Undo" is consistent with changes
-      // NOTE! still a reference to App.KanjiReview.oReview (FlashcardReview) 's cache of card data
-      // FIXME  ideally, we should use cardData.vocab directly (reactivity)
-      this.cardData.vocab = this.vocab
+      // do it this way so the "enter" transition plays again when changing an existing item
+      this.vocab = []      
+      this.$nextTick(() => {
+        this.vocab = [item]
+        this.updateSourceCard(this.vocab)
+      })
     },
 
     removeVocab(item) {
-      console.log('removeVocab(%o)', item)
+      // console.log('removeVocab(%o)', item)
       this.vocab = []
-      this.cardData.vocab = this.vocab
+      this.updateSourceCard(this.vocab)
+    },
+
+    // update the source, so going backward with "Undo" is consistent with any changes 
+    updateSourceCard(ExampleWordArray) {
+      this.cardData.vocab = ExampleWordArray
     }
   },
 
   beforeMount() {
-    console.log('KoohiiFlashcardKanji::beforeMount()')
+    // console.log('KoohiiFlashcardKanji::beforeMount()')
 
-    // this.vocab = [{
-    //   compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness'
-    // }]
+    // this.vocab = [{ compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness' }]
 
     // assign the card's ExampleWordArray
     this.vocab = this.cardData.vocab || []
@@ -199,11 +198,11 @@ export default {
   color:#888; padding:8px 0 0; 
 }
 
-.uiFcYomi {  }
+.uiFcYomi { /*for the hover state*/border-radius:12px; }
 .uiFcYomi:not(:first-of-type) { margin-top:10px; }
 .uiFcYomi:hover { background:#eee; }
 
-.uiFcYomi--empty { border:1px dashed #ddd;border-radius:4px; min-height:3em; }
+.uiFcYomi--empty { border:2px dashed #eee; border-radius:12px; min-height:3em; }
 .uiFcYomi--empty:hover { background:#eee; }
 
 /* LAYOUT */
@@ -287,5 +286,15 @@ export default {
 
   .d-yomi { font-size:20px; }
 }
+
+
+/* ================================================================================= 
+   ANIMATIONS
+   =================================================================================  */
+
+/* word selected from dictionary, appearing onto the card */
+/*.d-yomi_pad { overflow:hidden; }*/
+.uiFcYomi-fadein-enter { opacity:0; transform:translateY(20px); }
+.uiFcYomi-fadein-enter-active { transition:opacity 1s, transform 0.5s; }
 
 </style>

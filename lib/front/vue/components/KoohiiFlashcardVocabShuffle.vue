@@ -27,10 +27,10 @@ export default {
   },
 
   computed: {
-    reviewMode() {
-      // console.log('get reviewMode()')
-      return this.$parent.reviewMode;
-    },
+    // reviewMode() {
+    //   // console.log('get reviewMode()')
+    //   return this.$parent.reviewMode;
+    // },
 
     cardData() {
       // console.log('get cardData()')

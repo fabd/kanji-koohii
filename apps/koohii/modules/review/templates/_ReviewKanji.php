@@ -58,11 +58,7 @@
     </div>
   </div>
 
-  <?php 
-    $rdMainClass = array();
-    if ($fc_yomi) { $rdMainClass[] = 'with-yomi'; }
-  ?>
-  <div id="rd-main" class="<?= implode(' ', $rdMainClass) ?>">
+  <div id="rd-main">
     <div id="uiFcReview">
 
       <div id="uiFcMain">
@@ -145,13 +141,7 @@ var options =
   editstory_url:  "<?= url_for('study/editstory') ?>",
   dictlookup_url: "<?= url_for('study/dict') ?>",
 
-  yomi:           <?php var_export($fc_yomi) ?>,
-
-  fcr_options:
-  {
-    // flashcard format options
-    params:       {yomi: <?= intval($fc_yomi) ?>},
-
+  fcr_options: {
     //num_prefetch: 10,
     ajax_url:     "<?= $sf_data->get('ajax_url', ESC_JS_NO_ENTITIES) ?>",
     back_url:     "<?= url_for($exit_url, true) ?>",
@@ -163,7 +153,6 @@ var options =
 Koohii.UX.reviewMode = {
   freemode:       <?php var_export($freemode) ?>,
   fc_reverse:     <?php var_export($fc_reverse) ?>,
-  fc_yomi:        <?php var_export(!!$fc_yomi) ?>,
   fc_view:        'kanji',
 
   fc_known_kanji: <?php var_export($sf_user->getUserKnownKanji()) ?>,

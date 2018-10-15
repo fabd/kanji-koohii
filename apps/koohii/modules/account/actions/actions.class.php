@@ -372,7 +372,7 @@ class accountActions extends sfActions
     {
       $form_data = array(
         'opt_no_shuffle' => $user->getUserSetting('OPT_NO_SHUFFLE'),
-        'opt_readings'   => $user->getUserSetting('OPT_READINGS')
+        // 'opt_readings'   => $user->getUserSetting('OPT_READINGS')    PHASING OUT
       );
       $request->getParameterHolder()->add($form_data);
     }
@@ -380,7 +380,7 @@ class accountActions extends sfActions
     {
       $settings = array(
         'OPT_NO_SHUFFLE' => $request->getParameter('opt_no_shuffle', 0),
-        'OPT_READINGS'   => $request->getParameter('opt_readings', 0)
+        // 'OPT_READINGS'   => $request->getParameter('opt_readings', 0)     PHASING OUT
       );
 
       UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);

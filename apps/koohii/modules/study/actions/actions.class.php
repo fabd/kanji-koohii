@@ -719,6 +719,7 @@ class studyActions extends sfActions
    * Returns:
    *
    *   items             Array of vocab entries (compound, reading, etc)
+   *   picks             Array of user's selected vocab ([dictid, ...])
    *   known_kanji       (IF "req_known_kanji") String of known kanji 
    *
    */
@@ -726,16 +727,14 @@ class studyActions extends sfActions
   {
     $json = $request->getParamsAsJson();
 // DBG::printr($json);exit;
-
-    $tron = new JsTron();
     
     $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
 
-    // (legacy) add props for the "AjaxDialog" in Flashcard Review page
-    $tron->setStatus(JsTron::STATUS_PROGRESS);
-    $tron->set('dialogTitle', 'Dictionary Lookup');
+    $tron   = new JsTron();
+    $userId = $this->getUser()->getUserId();
 
     $tron->set('items', $this->getDictListItems($ucsId));
+    $tron->set('picks', VocabPicksPeer::getUserPicks($userId, $ucsId));
 
     if (true === $json->req_known_kanji) {
       $tron->set('known_kanji', $this->getUser()->getUserKnownKanji());
@@ -750,10 +749,56 @@ class studyActions extends sfActions
     $select = rtkLabs::getSelectForDictStudy($ucsId);
     $result = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($select);
 
-    $kanji = utf8::fromUnicode(array($ucsId));
-
-    mb_regex_encoding('UTF-8');
-
     return $result;
+  }
+
+  /**
+   * User selected a vocab entry in DictList component (could be study or review page).
+   * 
+   * JSON request:
+   *
+   *   ucs               UCS-2 code of associated character
+   *   dictid            JMDICT entseq id
+   *
+   * Returns:
+   *
+   */
+  public function executeVocabpick($request)
+  {
+    $json = $request->getContentJson();
+
+    $ucsId  = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
+    $dictId = BaseValidators::sanitizeInteger($json->dictid);
+
+    $userId = $this->getUser()->getUserId();
+
+    $tron = new JsTron();
+
+    if (true !== VocabPicksPeer::link($userId, $ucsId, $dictId)) {
+      $tron->setError('Oops, update failed.');
+      $tron->setStatus(JsTron::STATUS_FAILED);
+    }
+// sleep(1);
+
+    return $tron->renderJson($this);
+  }
+
+  public function executeVocabdelete($request)
+  {
+    $json = $request->getContentJson();
+
+    $ucsId  = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
+
+    $userId = $this->getUser()->getUserId();
+
+    $tron = new JsTron();
+
+    if (true !== VocabPicksPeer::unlink($userId, $ucsId /*, $dictId*/)) {
+      $tron->setError('Oops, delete failed.');
+      $tron->setStatus(JsTron::STATUS_FAILED);
+    }
+// sleep(1);
+
+    return $tron->renderJson($this);
   }
 }

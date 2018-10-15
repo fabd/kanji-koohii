@@ -103,83 +103,62 @@ class KanjisPeer extends coreDatabaseTable
   /**
    * Returns flashcard data for the flashcard reviews (both SRS and non-SRS).
    *
-   * This is a uiFlashcardReview callback, the data ($id) must be sanitized!
-   *
-   * @param  int     $ucsId     UCS-2 code value.
-   * @param  object  $options   Options for the flashcard format (optional)
+   * This is a uiFlashcardReview callback, $ucsId must be sanitized!
    *
    * Options:
-   *   yomi          (OPTIONAL) true to include example words with pronunciations
-   *   api_mode      (OPTIONAL) true to return data according to API /review/fetch
    * 
+   *   yomi          (API ONLY) true to include example words with pronunciations
+   *   api_mode      (API ONLY) true to return data according to API /review/fetch
+   *   
+   * @param  int     $ucsId     UCS-2 code value.
+   * @param  object  $options   Options for the flashcard format (optional)
    * @return mixed   Object with flashcard data, or null
    */
   public static function getFlashcardData($ucsId, $options = null)
   {
-    if (false === ($cardData = self::getKanjiByUCS($ucsId)))
-    {
+    if (false === ($cardData = self::getKanjiByUCS($ucsId))) {
       return null;
     }
+
+    $userId = sfContext::getInstance()->getUser()->getUserId();
 
     // make sure id is a Number in returned JSON
     $cardData->id = (int)$cardData->ucs_id;
     unset($cardData->ucs_id);
 
-    sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url', 'Links'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
 
-    // remove data not used by client
-    if (CJ_HANZI)
-    {
-      sfProjectConfiguration::getActive()->loadHelpers('Pinyin');
+    // not needed by client, reduce JSON response
+    unset($cardData->onyomi);
+    unset($cardData->lessonnum);
+    unset($cardData->idx_olded);
+    unset($cardData->idx_newed);
 
-      // hanzi reviews use Pinyin reading (onyomi)
-      $pinyin = explode(',', $cardData->onyomi);
-      $pinyin = array_slice($pinyin, 0, 2);
-      $tones  = array();
-      foreach ($pinyin as $tone)
-      {
-        array_push($tones, pinyin_ntod($tone));
-      }
-
-      $cardData->pinyin = content_tag('span', implode(', ', $tones), array('title' => implode(', ', $pinyin)));
-
-      //$cardData->pinyin = implode(', ', $tones);
-      unset($cardData->onyomi);
-
-      // not needed by client, reduce JSON response
-      unset($cardData->lessonnum);
-    }
-    else
-    {
-      // not needed by client, reduce JSON response
-      unset($cardData->onyomi);
-      unset($cardData->lessonnum);
-      unset($cardData->idx_olded);
-      unset($cardData->idx_newed);
-    }
-
-    if (isset($options->yomi))
-    {
+    // API ONLY (Kanji Ryokucha) : return On/Kun example words
+    if (isset($options->yomi)) {
       // v_on, v_kun
-      $highlight = isset($options->api_mode) ? array('[', ']') : array('<em>', '</em>');
-      rtkLabs::getSampleWords($cardData->id, $cardData, $highlight);
+      rtkLabs::getSampleWords($cardData->id, $cardData, isset($options->api_mode));
+    }
+
+    // retrieve user's vocab picks, plus highlighted readings
+    if (!isset($options->api_mode)) {
+      // ExampleWordArray
+      $cardData->vocab = rtkLabs::getFormattedVocabPicks($userId, $cardData->id);
     }
 
     // get custom keyword
-    $userid = sfContext::getInstance()->getUser()->getUserId();
-    $custom_keyword = CustkeywordsPeer::getCustomKeyword($userid, $ucsId);
+    $custom_keyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
     $keyword = null !== $custom_keyword ? $custom_keyword : $cardData->keyword;
   
     if (!isset($options->api_mode)) {
-      $cardData->keyword = link_to_keyword($keyword, $cardData->kanji, array('title' => 'Go to the Study page', 'target' => '_blank'));
+      $cardData->keyword = link_to_keyword($keyword, $cardData->kanji, ['title' => 'Go to the Study page', 'target' => '_blank']);
     }
     else {
       $cardData->keyword = $keyword;
     }
 
-    // tweaks for api mode response
-    if (isset($options->api_mode)) {
-      // api doesn't return the kanji as a character
+    // API ONLY (apps) : api doesn't return the kanji as a character
+    if (isset($option->api_mode)) { 
       unset($cardData->kanji);
     }
 

@@ -50,9 +50,6 @@
         _bs_input_checkbox('shuffle', array('label' => 'Shuffle cards'))
       );
       echo _bs_form_group(
-        _bs_input_checkbox('yomi', array('label' => 'Show Example Readings (On/Kun)'))
-      );
-      echo _bs_form_group(
         _bs_input_checkbox('reverse', array('label' => 'Kanji to Keyword (reverse mode)'))
       );
       echo _bs_form_group(
@@ -76,9 +73,6 @@
 <?php if ($knowncount > 0): ?>
       <?php echo form_tag('review/free', array('method' => 'get')) ?>       
 <?php 
-      echo _bs_form_group(
-        _bs_input_checkbox('yomi', array('label' => 'Show Example Readings (On/Kun)'))
-      );
       echo _bs_form_group(
         _bs_input_checkbox('reverse', array('label' => 'Kanji to Keyword (reverse mode)'))
       );

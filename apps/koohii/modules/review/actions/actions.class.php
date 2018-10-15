@@ -71,14 +71,11 @@ class reviewActions extends sfActions
    * Free Review Mode (Labs page):
    *
    *   from, to     Range of Heisig numbers (1-xxxx)
-   *   
    *   lesson       Lesson Id (sets from, to)
-   *
    *   known        N cards to review from known kanji.
    *
    * Options:
    * 
-   *   yomi         Include example words (optional)
    *   shuffle      Shuffle cards (with from, to)
    *   reverse      Kanki to Keyword
    *
@@ -111,8 +108,6 @@ class reviewActions extends sfActions
 
     // kanji > keyword
     $options['fc_reverse'] = $request->getParameter('reverse') ? true : false;
-
-    $options['fc_yomi']    = $request->getParameter('yomi') ? true : false;
     
     // flag to indentify free review mode
     $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0;
@@ -121,11 +116,6 @@ class reviewActions extends sfActions
 
     if (false === $options['freemode'])
     {
-      // SRS mode uses account setting option, but allow query string override (helps debugging)
-      if (!$request->hasParameter('yomi')) {
-        $options['fc_yomi'] = $this->getUser()->getUserSetting('OPT_READINGS');
-      }
-
       // SRS review
       $reviewBox  = $request->getParameter('box', 'all');
       $reviewType = $request->getParameter('type', 'expired');
@@ -149,8 +139,6 @@ class reviewActions extends sfActions
     {
       $oFRS = new rtkFreeReviewSession(true);
 
-      $options['fc_yomi']    = $request->getParameter('yomi') ? true : false;
-
       if ($request->hasParameter('known'))
       {
         // free review :: known cards
@@ -163,7 +151,7 @@ class reviewActions extends sfActions
 //DBG::printr($options['items']);exit;
 
         // repeat button URL disable because the randomized card set can change
-        $options['fc_rept'] = ''; //$this->getController()->genUrl('review/free?known='.$reviewKnown.'&yomi='.$options['fc_yomi'], true);
+        $options['fc_rept'] = '';
       }
       else
       {
@@ -180,7 +168,6 @@ class reviewActions extends sfActions
           implode('&',array(
           'review/free?from='.$reviewFrom,
           'to='.$reviewTo,
-          'yomi='.intval($options['fc_yomi']),
           'shuffle='.intval($reviewShuffle),
           'reverse='.intval($options['fc_reverse'])
           )), true

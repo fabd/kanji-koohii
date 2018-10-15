@@ -18,10 +18,15 @@ p.info { margin:0.5em 0 1em 1.3em; }
     RTK order provides additional cues that can make the first review easier, but can also help build more associations
     for memorizing.</p>
 
+<?php /*
+    ===>  We'll keep the user setting in the database for some time... until we're sure we don't need it anymore.  <===
+
     <label><?php echo checkbox_tag('opt_readings', '1', 0) ?> Show example On / Kun readings on the SRS flashcards.</label>
     <p class="info">An example On and Kun reading will be shown for the kanji during SRS reviews. Example words are selected
     based on their frequency of use as documented in JMDICT (roughly 16000 entries in JMDICT). For common kanji where there
     are several suitable On and/or Kun readings, the example words will be picked at random.</p>
+
+    */ ?>
 
     <p>
       <?php echo submit_tag('Save changes', array('class' => 'btn btn-success')) ?>

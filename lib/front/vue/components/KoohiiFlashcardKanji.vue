@@ -1,6 +1,6 @@
 <template>
 
-<div class="fc-kanji">
+<div class="fc-kanji with-yomi">
 
   <template v-if="!reviewMode.freemode">
     <a id="uiFcMenu" href="#" title="Edit Flashcard" class="uiGUI uiFcAction"
@@ -27,23 +27,25 @@
       </div>
     </div>
     
-    <div class="uiFcHalf d-yomi" v-if="reviewMode.fc_yomi">
+    <div class="uiFcHalf d-yomi"><!-- v-if="reviewMode.fc_yomi" -->
       <div class="d-yomi_pad">
 
-        <div class="y_o" v-if="cardData.v_on">
-          <div>
-            <cjk_lang_ja className="vyc">{{ cardData.v_on.compound }}</cjk_lang_ja>
-            <cjk_lang_ja className="vyr" :html="cardData.v_on.reading"></cjk_lang_ja>
+        <transition name="uiFcYomi-fadein">
+        <div v-if="vocab.length">
+          <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
+            <div>
+              <cjk_lang_ja className="vyc">{{ $item.compound }}</cjk_lang_ja>
+              <cjk_lang_ja className="vyr" :html="$item.reading"></cjk_lang_ja>
+            </div>
+            <div class="vyg">{{ $item.gloss }}</div>
           </div>
-          <div class="vyg">{{ cardData.v_on.gloss }}</div>
         </div>
-        
-        <div class="y_k" v-if="cardData.v_kun">
+        </transition>
+
+        <div v-if="!vocab.length" class="uiFcYomi uiFcYomi--empty" @click.stop="onVocabClick">
           <div>
-            <cjk_lang_ja className="vyc">{{ cardData.v_kun.compound }}</cjk_lang_ja>
-            <cjk_lang_ja className="vyr" :html="cardData.v_kun.reading"></cjk_lang_ja>
+            &nbsp;
           </div>
-          <div class="vyg">{{ cardData.v_kun.gloss }}</div>
         </div>
 
       </div>
@@ -68,6 +70,8 @@ export default {
 
   data() {
     return {
+      // array of {object} ExampleWord
+      vocab: []
     }
   },
 
@@ -84,7 +88,43 @@ export default {
   },
 
   methods: {
-    //     
+    onVocabClick() {
+      // console.log('onVocabClick()')
+      App.KanjiReview.toggleDictDialog()
+    },
+
+    // @param {object} ExampleWord    { compound, reading, gloss }, cf. rtkLabs.php
+    setVocab(ExampleWord) {
+      // console.log('setVocab(%o)', ExampleWord)
+      const item = ExampleWord
+
+      // do it this way so the "enter" transition plays again when changing an existing item
+      this.vocab = []      
+      this.$nextTick(() => {
+        this.vocab = [item]
+        this.updateSourceCard(this.vocab)
+      })
+    },
+
+    removeVocab(item) {
+      // console.log('removeVocab(%o)', item)
+      this.vocab = []
+      this.updateSourceCard(this.vocab)
+    },
+
+    // update the source, so going backward with "Undo" is consistent with any changes 
+    updateSourceCard(ExampleWordArray) {
+      this.cardData.vocab = ExampleWordArray
+    }
+  },
+
+  beforeMount() {
+    // console.log('KoohiiFlashcardKanji::beforeMount()')
+
+    // this.vocab = [{ compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness' }]
+
+    // assign the card's ExampleWordArray
+    this.vocab = this.cardData.vocab || []
   }
 }
 </script>
@@ -140,18 +180,12 @@ export default {
 
 /* Onyomi */
 
-.d-yomi {
-  font-size:20px;
-  /* FIX #81 (don't overlap buttons below) */
-  overflow-y:auto;
-}
+.d-yomi { font-size:20px; /* FIX #81 (don't overlap buttons below) */overflow-y:auto; }
 
   /* highlight the split reading */
 .d-yomi .vyr em { padding-bottom:2px; border-bottom:2px solid #f00; font-style:normal; }
 
 .d-yomi_pad    { padding:8px; }
-
-.d-yomi .y_o   { margin:0 0 20px }
 
 .d-yomi .cj-k  { line-height:1em; }
 .d-yomi .vyc   { font-size:1.5em; padding:5px 3px; display:inline-block; /*background:#eee; border-radius:3px;*/ }
@@ -163,6 +197,13 @@ export default {
   font-family:sans-serif;
   color:#888; padding:8px 0 0; 
 }
+
+.uiFcYomi { /*for the hover state*/border-radius:12px; }
+.uiFcYomi:not(:first-of-type) { margin-top:10px; }
+.uiFcYomi:hover { background:#eee; }
+
+.uiFcYomi--empty { border:2px dashed #eee; border-radius:12px; min-height:3em; }
+.uiFcYomi--empty:hover { background:#eee; }
 
 /* LAYOUT */
 
@@ -245,5 +286,15 @@ export default {
 
   .d-yomi { font-size:20px; }
 }
+
+
+/* ================================================================================= 
+   ANIMATIONS
+   =================================================================================  */
+
+/* word selected from dictionary, appearing onto the card */
+/*.d-yomi_pad { overflow:hidden; }*/
+.uiFcYomi-fadein-enter { opacity:0; transform:translateY(20px); }
+.uiFcYomi-fadein-enter-active { transition:opacity 1s, transform 0.5s; }
 
 </style>

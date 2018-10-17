@@ -1,5 +1,5 @@
 <template>
-
+<div>
   <div class="dict-panel" ref="refLoadingMask">
 
     <template v-if="isLoading">
@@ -47,6 +47,14 @@
     </template>
  
   </div>
+
+  <!-- (legacy code) "Close" button for mobile portait will be handled by KoohiiDialog if/when we implement that -->
+  <div v-if="isMobile" class="uiBMenu">
+    <div class="uiBMenuItem">
+      <a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>
+    </div>
+  </div>
+</div>
 
 </template>
 
@@ -136,6 +144,11 @@ export default {
 
     isKanjiReview() {
       return !!this.KanjiReview
+    },
+
+    isMobile() {
+      // (legacy code) cf. lib/front/corejs/ui/mobile.js
+      return (window.innerWidth <= 720)
     }
   },
 

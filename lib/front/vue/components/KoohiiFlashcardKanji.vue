@@ -1,6 +1,8 @@
 <template>
 
-<div class="fc-kanji with-yomi">
+<div :class="{
+  'fc-kanji':  true,
+  'with-yomi': hasVocab() }">
 
   <template v-if="!reviewMode.freemode">
     <a id="uiFcMenu" href="#" title="Edit Flashcard" class="uiGUI uiFcAction"
@@ -27,11 +29,11 @@
       </div>
     </div>
     
-    <div class="uiFcHalf d-yomi"><!-- v-if="reviewMode.fc_yomi" -->
+    <div v-if="hasVocab()" class="uiFcHalf d-yomi"><!-- v-if="reviewMode.fc_yomi" -->
       <div class="d-yomi_pad">
 
-        <transition name="uiFcYomi-fadein">
-        <div v-if="vocab.length">
+        <transition name="uiFcYomi-fadein" appear>
+        <div>
           <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
             <div>
               <cjk_lang_ja className="vyc">{{ $item.compound }}</cjk_lang_ja>
@@ -41,12 +43,6 @@
           </div>
         </div>
         </transition>
-
-        <div v-if="!vocab.length" class="uiFcYomi uiFcYomi--empty" @click.stop="onVocabClick">
-          <div>
-            &nbsp;
-          </div>
-        </div>
 
       </div>
     </div>
@@ -91,6 +87,10 @@ export default {
     onVocabClick() {
       // console.log('onVocabClick()')
       App.KanjiReview.toggleDictDialog()
+    },
+
+    hasVocab() {
+      return (this.vocab.length > 0)
     },
 
     // @param {object} ExampleWord    { compound, reading, gloss }, cf. rtkLabs.php

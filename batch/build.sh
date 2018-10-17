@@ -126,6 +126,8 @@ function show_help()
   echo '  --css       Build only stylesheets'
   echo '  --js        Build only javascripts'
   echo ''
+  echo '  --version   Update config/versioning.inc.php'
+  echo ''
   exit
 }
 
@@ -258,6 +260,16 @@ function do_check_for_console_log()
   #exit
 }
 
+function do_build_versioning()
+{
+  # update version file for revisioning css & js assets
+  P_VERSION_OLD=config/.versioning.inc.php
+  P_VERSION_NEW=config/versioning.inc.php
+  printf "\n${TEXT_BOLD} Rebuild  $P_VERSION_NEW ... ${TEXT_RESET}\n\n"
+  mv $P_VERSION_NEW $P_VERSION_OLD
+  php batch/build_app.php -w web -o $P_VERSION_NEW
+}
+
 if [ $# -eq 0 ]; then
   show_help
 fi
@@ -276,21 +288,18 @@ elif [ "$1" = '--js' ]; then
 
   do_build_js
 
-elif [ "$1" = '--all' ]; then
+elif [ "$1" = '--version' ]; then
 
+  do_build_versioning
+
+elif [ "$1" = '--all' ]; then
   # --all
 
   do_lint_js_files
   do_build_css
   do_build_js
 
-  # build version file for revisioning css & js assets
-  P_VERSION_OLD=config/.versioning.inc.php
-  P_VERSION_NEW=config/versioning.inc.php
-  printf "\n${TEXT_BOLD} Rebuild  $P_VERSION_NEW ... ${TEXT_RESET}\n\n"
-  mv $P_VERSION_NEW $P_VERSION_OLD
-  php batch/build_app.php -w web -o $P_VERSION_NEW
-
+  do_build_versioning
 
   successMessage " PRODUCTION build complete.\n\n"
 

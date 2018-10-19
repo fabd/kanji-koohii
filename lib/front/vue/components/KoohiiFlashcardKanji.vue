@@ -36,7 +36,7 @@
         <div>
           <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
             <div>
-              <cjk_lang_ja className="vyc">{{ $item.compound }}</cjk_lang_ja>
+              <cjk_lang_ja className="vyc" :html="formatCompound($item.compound)"></cjk_lang_ja>
               <cjk_lang_ja className="vyr" :html="$item.reading"></cjk_lang_ja>
             </div>
             <div class="vyg">{{ $item.gloss }}</div>
@@ -115,6 +115,21 @@ export default {
     // update the source, so going backward with "Undo" is consistent with any changes 
     updateSourceCard(ExampleWordArray) {
       this.cardData.vocab = ExampleWordArray
+    },
+
+    // format compound depending on card side
+    formatCompound(str)
+    {
+      const isFront = this.$parent.getState() === 0
+      const kanji   = this.cardData.kanji
+
+      console.log('formatCompound %s %s %o', str, kanji, isFront)
+
+      if (isFront) {
+        str = str.replace(kanji, '<span class="cloze"><u>'+kanji+'</u></span>')
+      }
+
+      return str
     }
   },
 
@@ -150,13 +165,13 @@ export default {
 .uiFcState-0 .fc-kanji .d-kanji     { visibility:hidden; color:#fff; }
 .uiFcState-0 .fc-kanji .d-strokec   { visibility:hidden; }
 .uiFcState-0 .fc-kanji .d-framenr   { visibility:hidden; }
-.uiFcState-0 .fc-kanji .d-yomi      { display:none; } /* vocab */
+.uiFcState-0 .fc-kanji .d-yomi      { /*display:block;*/ }
 
 .uiFcState-1 .fc-kanji .d-keyword   { color:#a0a0a0 }
 .uiFcState-1 .fc-kanji .d-kanji     { visibility:visible; color:#000; }
 .uiFcState-1 .fc-kanji .d-strokec   { visibility:visible; }
 .uiFcState-1 .fc-kanji .d-framenr   { visibility:visible; }
-.uiFcState-1 .fc-kanji .d-yomi      { display:block; } /* vocab */
+/*.uiFcState-1 .fc-kanji .d-yomi      { display:block; } */
 
 /* states :: kanji to keyword (explicitly override the defaults above) */
 .uiFcState-0.is-reverse .fc-kanji .d-keyword { visibility:hidden; }
@@ -182,8 +197,8 @@ export default {
 
 .d-yomi { font-size:20px; /* FIX #81 (don't overlap buttons below) */overflow-y:auto; }
 
-  /* highlight the split reading */
-.d-yomi .vyr em { padding-bottom:2px; border-bottom:2px solid #f00; font-style:normal; }
+  /* kanji reading highlight */
+.d-yomi .vyr em { padding-bottom:2px; /*border-bottom:2px solid #f00;*/ color:#ff4e4e; font-style:normal; }
 
 .d-yomi_pad    { padding:8px; }
 
@@ -197,6 +212,13 @@ export default {
   font-family:sans-serif;
   color:#888; padding:8px 0 0; 
 }
+
+  /* cloze deletion <span.cloze><u>(kanji)</u></span> */
+.d-yomi .cloze { color:#f6a6a2; text-decoration:none; }
+.d-yomi .cloze u { display:none; }
+.d-yomi .cloze::before { content: '...'; }
+.uiFcState-1 .d-yomi .cloze::before { content:none; }
+.uiFcState-1 .d-yomi .cloze u { display:inline; color:#000; }
 
 .uiFcYomi { /*for the hover state*/border-radius:12px; }
 .uiFcYomi:not(:first-of-type) { margin-top:10px; }

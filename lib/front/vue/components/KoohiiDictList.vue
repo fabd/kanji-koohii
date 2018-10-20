@@ -216,12 +216,12 @@ export default {
         this.items.forEach((o) => { o.pick = false })
         item.pick = true
 
-        const ExampleWord = {
+        const DictEntry = {
           compound: item.compound,
           reading:  item.reading,
           gloss:    item.glossary
         }
-        this.getKanjiCard().setVocab(ExampleWord)
+        this.getKanjiCard().setVocab(DictEntry)
 
         this.isKanjiReview && this.KanjiReview.toggleDictDialog();
       }

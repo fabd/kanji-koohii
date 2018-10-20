@@ -66,7 +66,7 @@ export default {
 
   data() {
     return {
-      // array of {object} ExampleWord
+      // array of {object} DictEntry
       vocab: []
     }
   },
@@ -93,10 +93,10 @@ export default {
       return (this.vocab.length > 0)
     },
 
-    // @param {object} ExampleWord    { compound, reading, gloss }, cf. rtkLabs.php
-    setVocab(ExampleWord) {
-      // console.log('setVocab(%o)', ExampleWord)
-      const item = ExampleWord
+    // @param {object} DictEntry    { compound, reading, gloss }, cf. rtkLabs.php
+    setVocab(DictEntry) {
+      // console.log('setVocab(%o)', DictEntry)
+      const item = DictEntry
 
       // do it this way so the "enter" transition plays again when changing an existing item
       this.vocab = []      
@@ -113,8 +113,8 @@ export default {
     },
 
     // update the source, so going backward with "Undo" is consistent with any changes 
-    updateSourceCard(ExampleWordArray) {
-      this.cardData.vocab = ExampleWordArray
+    updateSourceCard(DictEntryArray) {
+      this.cardData.vocab = DictEntryArray
     },
 
     // format compound depending on card side
@@ -138,7 +138,7 @@ export default {
 
     // this.vocab = [{ compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness' }]
 
-    // assign the card's ExampleWordArray
+    // assign the card's DictEntryArray
     this.vocab = this.cardData.vocab || []
   }
 }

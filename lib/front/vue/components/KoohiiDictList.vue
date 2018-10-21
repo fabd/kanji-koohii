@@ -12,7 +12,7 @@
       <div class="dict-list">
         <template v-for="$item in items">
 
-        <div :class="[ 'dl_item', { 'dl_item--pick': $item.pick }]"  :key="$item.dictid" @click="onVocabPick($item)">
+        <div :class="[ 'dl_item', { 'dl_item--pick': $item.pick }]"  :key="$item.id" @click="onVocabPick($item)">
 
           <div class="dl_t">
 
@@ -21,12 +21,12 @@
               <i v-else class="far fa-star"></i>
             </div>
 
-            <cjk_lang_ja className="c" :html="$item.compound"
+            <cjk_lang_ja className="c vocab_c" :html="$item.c"
               :class="{ known: $item.known }"></cjk_lang_ja>
-            <cjk_lang_ja className="r" :html="$item.reading"></cjk_lang_ja>
+            <cjk_lang_ja className="r vocab_r" :html="$item.fr"></cjk_lang_ja>
           </div>
           <div class="dl_d">
-            {{ $item.glossary }}
+            {{ $item.g }}
           </div>
 
           <div if="isMenu">
@@ -73,7 +73,8 @@ import { KoohiiAPI, TRON } from 'lib/KoohiiAPI.js'
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
 //mixins
-import KoohiiLoading       from 'lib/mixins/KoohiiLoading.js'
+import KoohiiFormat    from 'lib/mixins/KoohiiFormat.js'
+import KoohiiLoading   from 'lib/mixins/KoohiiLoading.js'
 
 
 // our simple regexp matching needs this so that vocab with okurigana is considered known
@@ -102,21 +103,20 @@ export default {
   },
 
   mixins: [
+    KoohiiFormat,
     KoohiiLoading
   ],
 
   props: {
     /**
+     * Array of dict entries as obtained from dict lookup cache.
      * 
-     *   compound:   "描写"
-     *   dictid:     "value", "1490140"
-     *   glossary:   "depiction; description; portrayal"
-     *   pri:        "192"
-     *   reading:    "びょうしゃ"
+     *   DictEntry
      *
-     *   pick:       {boolean}    user selected this item
+     *     (...see data/scripts/dict/dict_gen_cache.php ...)
      *
-     *   known       {boolean}    contains only known kanji
+     *     pick:       {boolean}    user selected this item
+     *     known       {boolean}    contains only known kanji
      *
      */
     items: { type: Array, default: function() { return [] } }
@@ -178,7 +178,7 @@ export default {
         // App.KanjiReview.oReview.curCard.cardData.v_on ...   
         this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
         
-        KoohiiAPI.setVocabForCard({ ucs: this.ucsId, dictid: item.dictid }, {
+        KoohiiAPI.setVocabForCard({ ucs: this.ucsId, dictid: item.id }, {
           then: (tron) => { this.onVocabPickResponse(tron, item) }
         })
       }
@@ -216,12 +216,12 @@ export default {
         this.items.forEach((o) => { o.pick = false })
         item.pick = true
 
-        const DictEntry = {
-          compound: item.compound,
-          reading:  item.reading,
-          gloss:    item.glossary
+        const VocabPick = {
+          compound: item.c,
+          reading:  item.r,
+          gloss:    item.g
         }
-        this.getKanjiCard().setVocab(DictEntry)
+        this.getKanjiCard().setVocab(VocabPick)
 
         this.isKanjiReview && this.KanjiReview.toggleDictDialog();
       }
@@ -250,7 +250,7 @@ export default {
         {
           then: (tron) => {
             this.ucsId = ucsId
-            this.onDictListResponse(tron)
+            this.onDictLoadResponse(tron)
           }
         })
       }
@@ -259,11 +259,11 @@ export default {
       this.$nextTick(doLoad)
     },
 
-    onDictListResponse(tron, ucsId)
+    onDictLoadResponse(tron, ucsId)
     {
       const props = tron.getProps()
 
-      // console.log('onDictListResponse(%o)', props)
+      // console.log('onDictLoadResponse(%o)', props)
 // return
       this.koohiiloadingHide()
 
@@ -274,6 +274,7 @@ export default {
 
       let items = this.setKnownItems(props.items, this.knownKanji)
 
+      this.formatDictEntryArray(items)
       this.applyVocabPicks(items, props.picks)
 
       this.items = items
@@ -300,6 +301,14 @@ export default {
       let sortedItems = knownItems.concat(unkownItems)
 
       return sortedItems
+    },
+
+    formatDictEntryArray(items)
+    {
+      // assign a "formatted reading" for display, keep DictEntry's reading
+      items.forEach((o) => {
+        o.fr = this.koohiiformatReading(o.r)
+      })
     },
 
     // set selected state, where 'picks' is an array of dictid's 
@@ -338,14 +347,15 @@ export default {
 
 .dict-list .dl_item { background:#fff; border-bottom:1px solid #eee; position:relative; }
 .dict-list .dl_item:hover { background:#eee; }
+.dict-list .dl_item:hover .vocab_c { background:#fff; }
 
 .dict-list .dl_item--pick { }
 
 .dict-list .dl_item .cj-k  { line-height:1em; }
 
-.dict-list .dl_t    { padding:12px 15px; font-weight:normal; }
-.dict-list .dl_t .c { display:inline-block; font-size:22px; padding:5px 8px 3px; background:#e7e6e2; color:#000; }
-.dict-list .dl_t .r { font-size:16px; padding:0; display:inline-block; margin:0 0 0 1em; color:#888; }
+.dict-list .dl_t    { padding:12px 15px; font-weight:normal; font-size:26px; }
+.dict-list .dl_t .c { font-size:1em; padding:5px 8px 3px; }
+.dict-list .dl_t .r { font-size:0.8em; padding:0; display:inline-block; margin:0 0 0 1em; color:#543; }
 
 .dict-list .dl_t_menu { position:absolute; right:10px; top:15px; font-size:20px; color:#ccc; }
 .dict-list .dl_item:hover .dl_t_menu { color:#888; }
@@ -356,9 +366,6 @@ export default {
 
   /* "known" word (contains known kanji) */
 .dict-list .dl_t .known { background:#e6f2cd; color:#206717; }
-
-  /* underline kanji reading */
-.dict-list .dl_t u  { color:#f00; text-decoration:none; }
 
 .dict-list .dl_d { padding:0 20px 1em; font:14px/1.3em Arial, sans-serif; color:#444; }
 
@@ -372,5 +379,15 @@ export default {
   .yui-panel .dict-panel { width:400px; } 
 
 }
+
+/* ===================================================== */
+/* Visual formatting shared by DictList & FlashcardKanji */
+/* ===================================================== */
+
+  /* box-ing the compound for separation */
+.vocab_c { display:inline-block; padding:3px 8px; border-radius:8px; background:#efeeed; color:#210; }
+
+  /* the <em> surrounding tags originate in KoohiiFormat mixin, used by DictEntry.r and VocabPick.reading */
+.vocab_r em { border-bottom:2px solid #ff4e4e; /*color:#ff4e4e;*/ font-style:normal; }
 
 </style>

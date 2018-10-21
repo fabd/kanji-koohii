@@ -142,7 +142,7 @@ class KanjisPeer extends coreDatabaseTable
 
     // retrieve user's vocab picks, plus highlighted readings
     if (!isset($options->api_mode)) {
-      // ExampleWordArray
+      // VocabPickArray
       $cardData->vocab = rtkLabs::getFormattedVocabPicks($userId, $cardData->id);
     }
 

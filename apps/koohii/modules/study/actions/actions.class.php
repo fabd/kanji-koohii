@@ -743,13 +743,21 @@ class studyActions extends sfActions
     return $tron->renderJson($this);
   }
 
-  // get Dictionary entries for given character
+  // get Dictionary entries for given character, use cached data if possible
   private function getDictListItems($ucsId)
   {
-    $select = rtkLabs::getSelectForDictStudy($ucsId);
-    $result = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($select);
+    $data = array();
 
-    return $result;
+    $DictEntryArray = CacheDictLookupPeer::getDictListForUCS($ucsId);
+
+    // use the slower method if no cached results (ie. not a RTK kanji)
+    if (false === $DictEntryArray) {
+      // error_log("Not Dict Cache for UCS {$ucsId}");
+      $select = rtkLabs::getSelectForDictStudy($ucsId);
+      $DictEntryArray = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($select);
+    }
+
+    return $DictEntryArray;
   }
 
   /**

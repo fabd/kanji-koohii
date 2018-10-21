@@ -304,10 +304,10 @@ class rtkLabs
   }
 
   /**
-   * Creates SELECT for the Dictionary Lookup
+   * Returns SELECT to get a DictEntryArray from the jdict tables where
+   * the Dictionary cache is not generated (ie. non-RTK kanji).
    *
-   * FIXME
-   *   Pre-generate and cache all this stuff for the RTK kanji 
+   * So this is slower, but provides results for non-RTK kanji.
    *
    * @param  int     $ucsId    UCS2 code
    *
@@ -315,9 +315,10 @@ class rtkLabs
    */
   public static function getSelectForDictStudy($ucsId)
   {
+    // columns returned as per DictEntry (cf. data/scripts/dict/dict_gen_cache.php)
     $db = sfProjectConfiguration::getActive()->getDatabase();
     $select = 
-      $db->select(array('jdict.dictid', 'compound', 'reading', 'glossary', 'jdict.pri'))
+      $db->select(['id' => 'jdict.dictid', 'c' => 'compound', 'r' => 'reading', 'g' => 'glossary', 'pri' => 'jdict.pri'])
          ->from(self::TABLE_JDICT)
          ->joinUsing(self::TABLE_DICTSPLIT, 'dictid')
          ->where('kanji = ?', $ucsId)
@@ -582,7 +583,7 @@ class rtkLabs
 
         // highlight kanji pronunciation in the full reading
         if ($highlight[0] !== '') {
-          $reading  = self::getFormattedReading($row->dictid, $ucsId, $highlight);
+          $reading  = self::getFormattedReading($db, $row->dictid, $ucsId, $highlight);
         }
         
         $on = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
@@ -594,7 +595,7 @@ class rtkLabs
         $compound = $row->compound; //mb_ereg_replace($u8kanji, $highlight[0].$u8kanji.$highlight[1], $row->compound);
         
         if ($highlight[0] !== '') {
-          $reading  = self::getFormattedReading($row->dictid, $ucsId, $highlight);
+          $reading  = self::getFormattedReading($db, $row->dictid, $ucsId, $highlight);
         }
         
         $kun = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
@@ -607,17 +608,19 @@ class rtkLabs
 
   public static function getHighlightTags($api_mode = false)
   {
-    return $api_mode ? ['[', ']'] : ['<em>', '</em>'];
+    return $api_mode ? ['[', ']'] : ['(', ')'];
   }
 
   /**
    * Return user's vocab to display on flashcard (with kanji reading highlighted).
+   *
+   * TODO   Could use cache_dict_lookup to retrieve the vocab, is it faster though?
    * 
    * @param   int     $ucsId      UCS-2 code
    */
   public static function getFormattedVocabPicks($userId, $ucsId)
   {
-    $ExampleWordArray = array();
+    $VocabPickArray = array();
 
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
@@ -630,16 +633,16 @@ class rtkLabs
 
     foreach ($rows as $row) 
     {
-      $reading  = self::getFormattedReading($row['dictid'], $ucsId, self::getHighlightTags(), $row['reading']);
+      $reading  = self::getFormattedReading($db, $row['dictid'], $ucsId, self::getHighlightTags(), $row['reading']);
 
-      $ExampleWordArray[] = [
+      $VocabPickArray[] = [
         'compound' => $row['compound'],
         'reading'  => $reading,
         'gloss'    => $row['glossary']
       ];
     }
 
-    return $ExampleWordArray;
+    return $VocabPickArray;
   }
 
   /**
@@ -652,10 +655,8 @@ class rtkLabs
    *
    * @return string   Formatted reading, or $fallback (no furigana)
    */
-  public static function getFormattedReading($dictId, $ucsId, $formatTags, $fallback = '')
+  public static function getFormattedReading($db, $dictId, $ucsId, $formatTags, $fallback = '')
   {
-    $db = sfProjectConfiguration::getActive()->getDatabase();
-
     $select = $db->select(array('kanji,type,position,pron'))
                  ->from(self::TABLE_DICTSPLIT)
                  ->joinUsing(self::TABLE_DICTPRONS, 'pronid')

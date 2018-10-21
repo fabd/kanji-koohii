@@ -36,8 +36,8 @@
         <div>
           <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
             <div>
-              <cjk_lang_ja className="vyc" :html="formatCompound($item.compound)"></cjk_lang_ja>
-              <cjk_lang_ja className="vyr" :html="$item.reading"></cjk_lang_ja>
+              <cjk_lang_ja className="vyc vocab_c" :html="formatCompound($item.compound)"></cjk_lang_ja>
+              <cjk_lang_ja className="vyr vocab_r" :html="koohiiformatReading($item.reading)"></cjk_lang_ja>
             </div>
             <div class="vyg">{{ $item.gloss }}</div>
           </div>
@@ -56,6 +56,9 @@
 <script>
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
+//mixins
+import KoohiiFormat    from 'lib/mixins/KoohiiFormat.js'
+
 export default {
 
   name: 'KoohiiFlashcardKanji',
@@ -64,9 +67,20 @@ export default {
     cjk_lang_ja
   },
 
+  mixins: [
+    KoohiiFormat
+  ],
+
   data() {
     return {
-      // array of {object} ExampleWord
+      /**
+       * Array of VocabPick   (a subset of DictEntry's structure, as used on the flashcard)
+       *
+       *   compound    "欠如"
+       *   reading     "けつ(じょ)"
+       *   gloss
+       * 
+       */
       vocab: []
     }
   },
@@ -93,28 +107,32 @@ export default {
       return (this.vocab.length > 0)
     },
 
-    // @param {object} ExampleWord    { compound, reading, gloss }, cf. rtkLabs.php
-    setVocab(ExampleWord) {
-      // console.log('setVocab(%o)', ExampleWord)
-      const item = ExampleWord
+    // @param {object} DictEntry    { compound, reading, gloss }, cf. rtkLabs.php
+    setVocab(DictEntry) {
+      // console.log('setVocab(%o)', DictEntry)
+      const item = DictEntry
 
       // do it this way so the "enter" transition plays again when changing an existing item
-      this.vocab = []      
+      this.clearVocab()
       this.$nextTick(() => {
-        this.vocab = [item]
+        this.vocab.push(item)
         this.updateSourceCard(this.vocab)
       })
     },
 
     removeVocab(item) {
       // console.log('removeVocab(%o)', item)
-      this.vocab = []
+      this.clearVocab()
       this.updateSourceCard(this.vocab)
     },
 
+    clearVocab() {
+      this.vocab.splice(0)
+    },
+
     // update the source, so going backward with "Undo" is consistent with any changes 
-    updateSourceCard(ExampleWordArray) {
-      this.cardData.vocab = ExampleWordArray
+    updateSourceCard(DictEntryArray) {
+      this.cardData.vocab = DictEntryArray
     },
 
     // format compound depending on card side
@@ -136,10 +154,12 @@ export default {
   beforeMount() {
     // console.log('KoohiiFlashcardKanji::beforeMount()')
 
-    // this.vocab = [{ compound: '欠点', reading: '<em>けっ</em>てん', gloss: 'faults; defect; weakness' }]
+    let VocabPickArray = this.cardData.vocab || []
+    
+    // VocabPickArray.forEach((o) => { o.r =  })   
 
-    // assign the card's ExampleWordArray
-    this.vocab = this.cardData.vocab || []
+    // assign the card's DictEntryArray
+    this.vocab = VocabPickArray
   }
 }
 </script>
@@ -198,13 +218,13 @@ export default {
 .d-yomi { font-size:20px; /* FIX #81 (don't overlap buttons below) */overflow-y:auto; }
 
   /* kanji reading highlight */
-.d-yomi .vyr em { padding-bottom:2px; /*border-bottom:2px solid #f00;*/ color:#ff4e4e; font-style:normal; }
+.d-yomi .cj-em em {  }
 
 .d-yomi_pad    { padding:8px; }
 
 .d-yomi .cj-k  { line-height:1em; }
-.d-yomi .vyc   { font-size:1.5em; padding:5px 3px; display:inline-block; /*background:#eee; border-radius:3px;*/ }
-.d-yomi .vyr   { font-size:1.2em; padding:7px 3px; display:inline-block; margin:0 0 0 1em; }
+.d-yomi .vyc   { font-size:1.5em; display:inline-block; } /* also DictList.vue .vocab_c */
+.d-yomi .vyr   { font-size:22px; padding:7px 3px; display:inline-block; margin:0 0 0 1em; }
 
 .d-yomi .vyg   { 
   font-size:0.85em; line-height:1.1em;
@@ -214,7 +234,7 @@ export default {
 }
 
   /* cloze deletion <span.cloze><u>(kanji)</u></span> */
-.d-yomi .cloze { color:#f6a6a2; text-decoration:none; }
+.d-yomi .cloze { color:#e21107; text-decoration:none; }
 .d-yomi .cloze u { display:none; }
 .d-yomi .cloze::before { content: '...'; }
 .uiFcState-1 .d-yomi .cloze::before { content:none; }
@@ -222,10 +242,8 @@ export default {
 
 .uiFcYomi { /*for the hover state*/border-radius:12px; }
 .uiFcYomi:not(:first-of-type) { margin-top:10px; }
-.uiFcYomi:hover { background:#eee; }
+.uiFcYomi:hover { background:#efeeed; border-radius:8px; }
 
-.uiFcYomi--empty { border:2px dashed #eee; border-radius:12px; min-height:3em; }
-.uiFcYomi--empty:hover { background:#eee; }
 
 /* LAYOUT */
 

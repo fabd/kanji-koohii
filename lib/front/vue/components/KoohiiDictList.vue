@@ -314,7 +314,7 @@ export default {
     // set selected state, where 'picks' is an array of dictid's 
     applyVocabPicks(items, picks)
     {
-      items.forEach((o) => { o.pick = picks.includes(o.dictid) })
+      items.forEach((o) => { o.pick = picks.includes(o.id) })
     }
 
     // sortSelectedItems(items)

@@ -166,7 +166,7 @@ export default {
 
     onVocabPick(item)
     {
-      // console.log('onVocabPick "%s"', item.compound)
+      // console.log('onVocabPick "%s"', item.c)
 
       if (!this.isKanjiReview) {
         return
@@ -282,6 +282,7 @@ export default {
       this.isLoading = false
     },
 
+    // {DictEntry}  items
     setKnownItems(items, knownKanji)
     {
       // if (this.known_kanji !== '') {
@@ -292,7 +293,7 @@ export default {
       // a basic string search could be faster - it's a very small list though
       const regexp = new RegExp('^['+KNOWN_KANJI+']+$')
       items.forEach(item => {
-        item.known = regexp.test(item.compound)
+        item.known = regexp.test(item.c)
       })
 
       // sort known vocab first
@@ -365,7 +366,8 @@ export default {
 .dict-list .dl_item--pick:hover .dl_t_menu { color:#e2b437; }
 
   /* "known" word (contains known kanji) */
-.dict-list .dl_t .known { background:#e6f2cd; color:#206717; }
+.dict-list .dl_t .known,
+.dict-list .dl_item:hover .known { background:#e6f2cd; color:#206717; }
 
 .dict-list .dl_d { padding:0 20px 1em; font:14px/1.3em Arial, sans-serif; color:#444; }
 

@@ -2,7 +2,7 @@
 
 <div :class="{
   'fc-kanji':  true,
-  'with-yomi': hasVocab() }">
+  'with-yomi': hasVocab }">
 
   <template v-if="!reviewMode.freemode">
     <a id="uiFcMenu" href="#" title="Edit Flashcard" class="uiGUI uiFcAction"
@@ -20,32 +20,48 @@
   <!-- inner content -->
   <div class="uiFcInner">
 
-    <div class="uiFcHalf d-kanji">
-      <!-- do this for now, until we position everything dynamically --> 
-      <div class="tb">
-        <div class="td">
-          <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
-        </div>
-      </div>
-    </div>
-    
-    <div v-if="hasVocab()" class="uiFcHalf d-yomi"><!-- v-if="reviewMode.fc_yomi" -->
-      <div class="d-yomi_pad">
+    <template v-if="!hasVocab">
 
-        <transition name="uiFcYomi-fadein" appear>
-        <div>
-          <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
-            <div>
-              <cjk_lang_ja className="vyc vocab_c" :html="formatCompound($item.compound)"></cjk_lang_ja>
-              <cjk_lang_ja className="vyr vocab_r" :html="koohiiformatReading($item.reading)"></cjk_lang_ja>
-            </div>
-            <div class="vyg">{{ $item.gloss }}</div>
+      <div class="uiFcHalf d-kanji">
+        <!-- do this for now, until we position everything dynamically --> 
+        <div class="tb">
+          <div class="td">
+            <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
           </div>
         </div>
-        </transition>
-
       </div>
-    </div>
+    
+    </template>
+    <template v-if="hasVocab">
+
+      <!-- k-note :: force Vue to refresh -- fixes a flex reflow issue (#149) -->
+      <div class="uiFcHalf d-kanji" k-note="fix-reflow">
+        <div class="tb">
+          <div class="td">
+            <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
+          </div>
+        </div>
+      </div>
+
+      <div class="uiFcHalf d-yomi">
+        <div class="d-yomi_pad">
+
+          <transition name="uiFcYomi-fadein" appear>
+          <div>
+            <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
+              <div>
+                <cjk_lang_ja className="vyc vocab_c" :html="formatCompound($item.compound)"></cjk_lang_ja>
+                <cjk_lang_ja className="vyr vocab_r" :html="koohiiformatReading($item.reading)"></cjk_lang_ja>
+              </div>
+              <div class="vyg">{{ $item.gloss }}</div>
+            </div>
+          </div>
+          </transition>
+
+        </div>
+      </div>
+
+    </template>
 
   </div>
 
@@ -94,17 +110,18 @@ export default {
     cardData() {
       // console.log('get cardData()')
       return this.$parent.cardData;
+    },
+
+    hasVocab() {
+      return (this.vocab.length > 0)
     }
+
   },
 
   methods: {
     onVocabClick() {
       // console.log('onVocabClick()')
       App.KanjiReview.toggleDictDialog()
-    },
-
-    hasVocab() {
-      return (this.vocab.length > 0)
     },
 
     // @param {object} DictEntry    { compound, reading, gloss }, cf. rtkLabs.php

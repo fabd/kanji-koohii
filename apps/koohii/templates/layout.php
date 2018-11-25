@@ -22,6 +22,7 @@
     $sf_response->addStylesheet('/koohii/home.juicy.css', 'first');
   }
 ?>
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="rss">
 <?php include_stylesheets() ?>
   <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
 

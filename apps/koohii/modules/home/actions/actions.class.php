@@ -220,4 +220,27 @@ class homeActions extends sfActions
     $tron = new JsTron();
     return $tron->renderComponent($this, 'home', 'MembersList');
   }
+
+  /**
+   * Rss Feed
+   *
+   * - cache a component because I don't think a cached action remembers the content type
+   * - feed cache time is in /config/cache.yml
+   *   (technically could be infinite, since we invalidate when add/update a blog post)
+   *
+   * The feed cache is invalidated in news/actions/
+   *
+   *   ManageSfCache::clearCacheWildcard('home', '_RssFeed');
+   * 
+   */
+  public function executeRssfeed($request)
+  {
+    $response = $this->getResponse();
+    $response->setContentType('application/rss+xml; charset=UTF-8');
+
+    // sf_cache_key doesn't matter, there is only one feed
+    $responseXML = $this->getComponent('home', 'RssFeed', ['sf_cache_key' => 1]);
+
+    return $this->renderText($responseXML);
+  }
 }

@@ -69,6 +69,10 @@ review_summary:
   url:          /review/summary
   param:        { module: review, action: summary }
 
+rss:
+  url:          /rss
+  param:        { module: home, action: rssfeed }
+
 sightreading:
   url:          /sightreading
   param:        { module: misc, action: reading }

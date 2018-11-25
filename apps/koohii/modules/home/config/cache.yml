@@ -1,0 +1,3 @@
+_RssFeed:
+  enabled:     true
+  lifetime:    3600     # in seconds

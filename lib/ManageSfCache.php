@@ -15,6 +15,18 @@ class ManageSfCache
   const APP_NAME = 'koohii';
 
   /**
+   * Clear several cache parts at once using wildcard cache key (sf 1.1).
+   *
+   * Remember: for partials and components, action is "_PartialName".
+   * 
+   */
+  public static function clearCacheWildcard($module, $action)
+  {
+    $cacheManager = sfContext::getInstance()->getViewCacheManager();
+    $cacheManager->remove("@sf_cache_partial?module={$module}&action={$action}&sf_cache_key=*");
+  }
+
+  /**
    * Return the root path used by symfony for all cached templates of action or _partial
    * 
    */

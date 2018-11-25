@@ -114,11 +114,9 @@ class newsActions extends sfActions
         if (!$request->hasErrors())
         {
           // invalidate cached templates
-          $path = ManageSfCache::getRealPathForCache('news/_recent');
-          ManageSfCache::recursiveDeleteFromPath($path);
-
-          $path = ManageSfCache::getRealPathForCache('news/index');
-          ManageSfCache::recursiveDeleteFromPath($path);
+          ManageSfCache::clearCacheWildcard('home', '_RssFeed');
+          ManageSfCache::clearCacheWildcard('news', '_recent');
+          ManageSfCache::clearCacheWildcard('news', 'index');
         }
       }
     }

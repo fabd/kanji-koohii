@@ -6,6 +6,7 @@
 .*
 !.gitignore
 !.babelrc
+!/web/.htaccess_default
 
 # generated / logs
 *.log

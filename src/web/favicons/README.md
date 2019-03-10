@@ -8,15 +8,14 @@ For more info, see http://realfavicongenerator.net
 
 ## First time setup
 
-Install the Node.js [Favicon Generator](https://realfavicongenerator.net/favicon/node_cli)
-```shell
-npm install cli-real-favicon
-```
+From the *webserver* container, install the Node.js [Favicon Generator](https://realfavicongenerator.net/favicon/node_cli)
 
-Make an alias (optional).
-```shell
-alias real-favicon=./node_modules/.bin/real-favicon
-```
+    $ npm install cli-real-favicon
+
+The following **alias** should be available (cf. docker/php-apache/bash/.bash_aliases):
+
+    alias real-favicon=./node_modules/.bin/real-favicon
+
 
 ## Re-generating icons
 

@@ -25,6 +25,7 @@ error_log*
 # generated / realfavicon output
 /batch/favicon/faviconData.json
 /web/favicons
+!/web/favicons/README.md
 
 # generated / build of front end assets
 /web/build

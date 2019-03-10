@@ -2,13 +2,6 @@
 /**
  * Configuration file used by Juicer (a build tool for css/js).
  *
- * 
- * Setup
- *
- *   Copy to `juicer.config.php` (same folder)
- *   
- *   Edit the paths to point to local repositories
- *
  *   
  * What is Juicer?
  * 
@@ -21,15 +14,15 @@
  *   In a nutshell, Juicer allows to split up js and css into small, maintainable files,
  *   then create “meta-files” that include the smaller files in a logical order.
  *
- *   Juicer handles basic dependencies like that through a simple include syntax. See
- *   for example :
- * 
- *     web/revtk/bundles/flashcardreview-1.0.juicy.js
+ *   Juicer handles basic dependencies like that through a custom include syntax.
+ *   See for example:
+ *   
+ *     web/revtk/main.juicy.css
  *
  *
  *   Asset Packaging
  *   
- *   Juicer also has a "provide" directive similar to SprocketS. This informs Juicer
+ *   Juicer also has a "provide" directive similar to Sprockets. This informs Juicer
  *   that there are assets that can be deployed with the js / css file. When Juicer
  *   finds a provide directive, it looks for files (typically images) in subfolders
  *   and copies them automatically to an output folder.
@@ -39,7 +32,7 @@
  *   collide.
  *
  *
- *   How is Juicer used?
+ *   Development Vs Production modes
  *
  *   1. In development, a "hot reload" feature is provided with a simple mod_rewrite
  *      trick. See .htaccess and web/version/cache.php. A .juicy.css|js request

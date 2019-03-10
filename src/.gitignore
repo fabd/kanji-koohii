@@ -48,5 +48,4 @@ error_log*
 /batch/deploy
 /web/backend
 /apps/koohii/config/app.yml
-/apps/koohii/config/juicer.config.php
 /apps/koohii/config/settings.yml

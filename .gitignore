@@ -1,61 +1,7 @@
 #
-# NOTE! Don't add files that are generated in specific
-# subdirectories here. Add them in the ".gitignore" file
-# in that subdirectory instead.
-#
-# NOTE! Please try something like 'git add -n .' to test
-# that your changes to a .gitignore file have the desired
-# effect (-n will not really add files, just test).
+# NOTE - the main .gitignore is at the root of the symfony
+#        project in /src
 #
 
-# don't automatically add these
-.*
-!.gitignore
-!.babelrc
-
-# temporary/work-in-progress, and personal files
+# not public / work-in-progress and personal files
 __*
-
-# misc logs
-*.log
-error_log*
-
-# output from Juicer (frontend build tool) 
-*.juiced.js
-*.juiced.css
-*.min.js
-*.min.css
-
-# tools
-/batch/deploy
-/batch/tools/closure
-/batch/tools/yuicompressor
-
-# generated files
-/cache
-/config/_*
-/config/versioning*
-
-# npm install
-/node_modules
-
-# build files (Juicer, webpack, ...)
-/web/build
-
-# realfavicon output
-/batch/favicon/faviconData.json
-/web/favicons
-
-# admin/misc
-/web/*.php
-!/web/index.php
-!/web/index_dev.php
-!/web/index_test.php
-/web/robots*
-
-# private
-/apps/backend
-/web/backend
-/apps/koohii/config/app.yml
-/apps/koohii/config/juicer.config.php
-/apps/koohii/config/settings.yml

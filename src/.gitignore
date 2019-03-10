@@ -1,0 +1,51 @@
+#
+# gitignore for all files relative to symfony project root
+#
+
+# don't automatically add these
+.*
+!.gitignore
+!.babelrc
+
+# generated / logs
+*.log
+error_log*
+
+# generated / misc files
+/cache
+/config/versioning*
+
+# generated / output from Juicer (frontend build tool) 
+*.juiced.js
+*.juiced.css
+*.min.js
+*.min.css
+
+# generated / realfavicon output
+/batch/favicon/faviconData.json
+/web/favicons
+
+# generated / build of front end assets
+/web/build
+
+# tools
+/batch/tools/closure
+/batch/tools/yuicompressor
+
+# npm install
+/node_modules
+
+# admin/misc
+/web/*.php
+!/web/index.php
+!/web/index_dev.php
+!/web/index_test.php
+/web/robots*
+
+# private
+/apps/backend
+/batch/deploy
+/web/backend
+/apps/koohii/config/app.yml
+/apps/koohii/config/juicer.config.php
+/apps/koohii/config/settings.yml

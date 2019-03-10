@@ -31,10 +31,10 @@
 test:
   .dummy:
     db_connection:
-      database:        'kanjikoohii'
-      host:            'localhost'
-      username:        'root'
-      password:        '**********'
+      host:            'db' # the docker-compose service
+      database:        'db_koohii'
+      username:        'koohii'
+      password:        'koohii'
       set_names_utf8:  true
 
 dev:
@@ -42,10 +42,10 @@ dev:
   .dummy:
     # Connection info for koohiiConfiguration::getDatabase()
     db_connection:
-      database:        'kanjikoohii'
-      host:            'localhost'
-      username:        'root'
-      password:        '**********'
+      host:            'db' # the docker-compose service
+      database:        'db_koohii'
+      username:        'koohii'
+      password:        'koohii'
       set_names_utf8:  true
 
 # default values
@@ -60,7 +60,7 @@ all:
   server_timezone:   0
 
   # The full URL for the application
-  website_url:       'http://koohii.local'
+  website_url:       'http://localhost'
   # The full URL for the Community forum (appears in navigation, comment out to hide the nav link)
   forum_url:         'http://mybb.local'
 

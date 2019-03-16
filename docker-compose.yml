@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+  webserver:
+
+    build:
+      context: ./docker/php-apache
+      dockerfile: Dockerfile
+
+    image: kk_webserver_img
+
+    container_name: kk_webserver
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./src:/var/www/html
+
+      # use a custom prompt + aliases, preserve bash history
+      - ./docker/php-apache/bash/.bash_history:/root/.bash_history
+      - ./docker/php-apache/bash/.bash_aliases:/root/.bash_aliases
+
+    depends_on:
+      - db
+  
+  db:
+    build:
+      context: ./docker/db
+    
+    image: kk_mysql_img
+
+    container_name: kk_mysql
+    
+    ports:
+      - "3306:3306"
+
+    environment:
+      MYSQL_DATABASE:      db_koohii
+      MYSQL_USER:          koohii
+      MYSQL_PASSWORD:      koohii
+      MYSQL_ROOT_PASSWORD: root
+    
+    volumes:
+      - ./mysql56:/var/lib/mysql
+
+      # use a custom prompt + aliases, preserve bash history
+      - ./docker/db/bash/.bash_history:/root/.bash_history
+      - ./docker/db/bash/.bashrc:/root/.bashrc
+      
+      # sources to initialize development database
+      - ./docker/db/initdb.d:/docker-entrypoint-initdb.d

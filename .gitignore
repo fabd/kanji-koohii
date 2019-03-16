@@ -5,3 +5,10 @@
 
 # not public / work-in-progress and personal files
 __*
+
+# docker / private files
+docker/db/bash/.bash_history
+docker/php-apache/bash/.bash_history
+
+# docker / database persistence
+mysql56/

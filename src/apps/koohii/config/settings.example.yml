@@ -12,20 +12,18 @@
 #                          For legacy reasons (remember, code base is 10 years old), it was
 #                          too complex to refactor to Symfony with escaping on by default.
 #                          
-#                          And besides, the basics are not complicated. However we have to
-#                          assume that you KNOW what you are doing. ie. Be aware of code
-#                          injection and the like. Anything that comes from database fields,
-#                          or user input, directly or indirectly, MUST be escaped with
-#                          helpers such as escape_once().
+#                          Be aware of code injection and the like. Anything that comes from
+#                          database fields, or user input, directly or indirectly, MUST be
+#                          escaped explicitly.
 #                          
-#                          DONT use php for escaping, use Symfony helpers wherever possible:
+#                          DON'T use php for escaping, use Symfony helpers wherever possible:
 #                          
 #                            escape_once()
 #                          
 #                          Standard escaping helpers are available in all templates via the
 #                          default "Tag" helper. See
 #                          
-#                          ./lib/vendor/symfony/lib/helper/TagHelper.php
+#                            ./lib/vendor/symfony/lib/helper/TagHelper.php
 #                          
 #                          http://www.symfony-project.org/api/1_4/TagHelper
 #
@@ -41,8 +39,7 @@
 #                     
 #                     
 #   use_database      We do not use Symfony "PDO" (Doctrine?) for legacy reasons. Koohii
-#                     uses a barebones API modelled after ZendDB. This api could realistically
-#                     be refactored to the real Zend DB if necessary. This ZendDb-like API allows
+#                     uses a barebones API modelled after ZendDB. This ZendDb-like API allows
 #                     programmatically building queries, and takes care of escaping everything.
 #    
 # 
@@ -96,7 +93,7 @@ all:
 
   .settings:
     # Optional features
-    use_database:           false     # Not using sf's PDO (yet?)
+    use_database:           false     # Not using symfony's PDO
     compressed:             false     # Enable PHP response compression
     #check_lock:             true     # Enable the application lock system
 

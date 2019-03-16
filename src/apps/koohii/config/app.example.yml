@@ -67,5 +67,5 @@ all:
   # name of cookie for user session
   cookie_name:     'RevTK'
 
-  # enable this to skip live site specifics like affiliate banner
+  # skip live site specifics like affiliate banner, required if using the public repo
   fork:             true

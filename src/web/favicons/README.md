@@ -32,8 +32,6 @@ real-favicon inject batch/favicon/faviconData.json web/favicons batch/favicon/in
 
 This creates `web/favicons/inject-favicons.html`. We ignore this file since it is part of generated files folder excluded by .gitignore.
 
-**Double check** that `/weB/favicons/manifest.json` points to the correct `/favicons/` path.
-
 
 ## Structure
 

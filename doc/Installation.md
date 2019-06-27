@@ -150,6 +150,10 @@ The local database is initialized from a SQL file located in `.docker/db/initdb.
 
 The database state itself is maintained through a volume. The first time you run the *db*  service, a `mysql56` folder will appear in the root directory on your host. If you delete this folder, any changes like new user accounts, stories and flashcards will be lost.
 
+### Sample Database
+
+See [Database.md](./Database.md) in doc/  folder.
+
 ### MySQL Workbench
 
 You can use [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) on your host to run queries through a GUI. Use `localhost` and port `3306`.

@@ -19,17 +19,3 @@ Snippet that generated `koohii_dev_update.sql` (2019-03-11):
     src/data/schemas/incremental/rtk_0016_vocabpicks.sql \
     src/data/schemas/incremental/rtk_0017_dict_results_cache.sql \
     > docker/db/initdb.d/koohii_dev_update.sql
-
-
-
-## Rebuild dev database
-
-To reset the database:
-
-    $ sudo rm -rf mysql56
-
-Then rebuild the MySQL container:
-
-    $ docker-compose down
-    $ docker-compose build
-    $ docker-compose up -d

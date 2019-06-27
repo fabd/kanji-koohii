@@ -150,7 +150,7 @@ The local database is initialized from a SQL file located in `.docker/db/initdb.
 
 The database state itself is maintained through a volume. The first time you run the *db*  service, a `mysql56` folder will appear in the root directory on your host. If you delete this folder, any changes like new user accounts, stories and flashcards will be lost.
 
-### Sample Database
+### About the sample database
 
 See [Database.md](./Database.md) in doc/  folder.
 
@@ -169,16 +169,24 @@ Then run **mysql** CLI:
 
     mysql -u koohii -pkoohii -h localhost -D db_koohii --default-character-set=utf8
 
-You can also create and use **aliases** from `.docker/db/root/.bashrc`:
+You can also use an **alias** from `.docker/db/root/.bashrc`:
 
     dc exec db bash
     [mysql] root /etc/mysql $ koohii-db
-    mysql> show tables;
-    +---------------------+
-    | Tables_in_db_koohii |
-    +---------------------+
-    | active_guests       |
-    | ...
+    mysql> ...
+
+
+### Rebuild / reset the sample database
+
+Source files are in `docker/db/initdb.d/`.
+
+Should you need to reset the database:
+
+    $ sudo rm -rf mysql56
+
+Then rebuild the MySQL container:
+
+    $ dc down ; dc build ; dc up -d
 
 
 ## Optional

@@ -1,24 +1,6 @@
-# Kanji Koohii / sample database
+# About the Sample Database
 
-## Build/rebuild the sample database
-
-The sample database is automatically created by the MySQL container.
-
-Source files are in `docker/db/initdb.d/`.
-
-Should you need To reset the database:
-
-    $ sudo rm -rf mysql56
-
-Then rebuild the MySQL container:
-
-    $ docker-compose down
-    $ docker-compose build
-    $ docker-compose up -d
-
-## Database overview
-
-### Users
+## Users
 All users in the sample database have a dummy password and email. All accounts have a `test` password (sha encrypted). Users are included for integrity between tables. They are real user names, but only the public data (shared stories, and profile info) is included.
 
 Additional users can be created on the command line (php container):
@@ -26,10 +8,10 @@ Additional users can be created on the command line (php container):
 $ php batch/maintenance/createUser.php -u aaaaaa -p aaaaaa --location 'Localhost'
 ```
 
-### Stories
+## Stories
 To get a meaningful testing environment, shared stories are included for 2200 RTK kanji (6th edition). Each Study page includes 3 "top voted" stories, and 2 random unvoted stories. There are no private stories in the database, and the shared stories is actually only 7% of the total storage so performance in local development is completely different than production!
 
-### JMDICT related data
+## Dictionary (JMDICT related data)
 The sample database also includes data parsed from JMDICT. You can experiment with queries if you like but keep in mind the data was designed purely for Kanji Koohii features, and tables are structured only with Kanji Koohii queries in mind. There are much more complete database versions of JMDICT out there.
 
 In any case, see

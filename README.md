@@ -2,8 +2,7 @@
 
 **Kanji Koohii** is a web application designed to help Japanese language learners remember the kanji. http://kanji.koohii.com
 <br>
-[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-<br>
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/doc/github/README - mobile.png"><br>
   <em>The mobile view</em>
@@ -20,24 +19,16 @@
 Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
 
 ## Contributing
-Let's talk on [on Gitter](https://gitter.im/kanji-koohii/development)! It'll save you time getting into the codebase. If you'd like to help on existing issues have a look at [Milestones](https://github.com/fabd/kanji-koohii/milestones). I use milestones to group issues in categories such as [UX Improvements](https://github.com/fabd/kanji-koohii/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22UX+Misc.+Improvements%22), [Front End Performance](https://github.com/fabd/kanji-koohii/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Front+End+Performance%22), etc.
+Realistically speaking, nobody wants to work on a very old codebase. That said, should you want to contribute some bug fixes, or some improvements here and there, help is welcome. 
+
+[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<br>
 
 #### Project History
 Keep in mind I started the website all the way back in the [August 2005](https://kanji.koohii.com/news/2005/8). The website was pretty much one-php-script-per-page for the first year. It was known then as "Reviewing the Kanji". A year or so later, I created a very barebones MVC inspired by Symfony 1. Thankfully because I followed the same API and conventions than Symfony a few years later I was able to refactor to the actual Symfony 1 package.
 
-#### Documentation
-The [documentation](https://kanji-koohii.github.io/kanji-koohii-docs/) is manually updated and intended to work as a cheatsheet for common MVC & custom APIs. It has been very helpful for me over the years for that purpose. For more fine-grained documentation refer to the phpdoc comments. For Koohii classes I tend to keep a summary of the methods at the top of the file.
-
-#### Requirements
-Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell (ie. Linux, OS X or a VM on Windows).
-
-- **Php 7.0+** with xml, mbstring, curl.
-- **OPTIONAL**: JRE (Java Runtime Env.) for Closure compiler and yuicompressor (.jar).
-
-#### Development setup
-
-* [First Time Setup](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-First-Time-Setup) for setting up the repository and database
-* [Build](https://github.com/fabd/kanji-koohii/wiki/Open-Source:-Build) for basic info about dev/test environments
+#### Installation
+Installation is fairly simple with Docker CE. The MySQL container includes a sample database with a selection of the "top" voted kanji stories. See [Installation](doc/Installation.md) and [Database](doc/Database.md) guides.
 
 
 ## Project Roadmap
@@ -46,9 +37,6 @@ Development requires a typical LAMP setup (Apache/MySQL/Php) with a shell (ie. L
 * **Vocabulary features** : "favorite" example words in Study pages, create a vocab deck and review with SRS
 * **Improve Study pages** : better moderation & voting system, stroke order animations, better search
 * **Improve the API** for third party clients like [Kanji Ryokucha](http://forum.koohii.com/thread-12829.html)
-
-
-For more details see [Open Source](https://github.com/fabd/kanji-koohii/wiki/Open-Source) on the wiki.
 
 
 ## LICENSE

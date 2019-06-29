@@ -26,15 +26,15 @@ Build the containers:
 
 *Note right after the containers are up, MySQL may take a minute to setup the local database (check with `docker-compose logs -f`). A new folder `mysql56/` will be created in the root directory, which maintains the state of the database.*
 
-Start bash from the *webserver* container:
+Start bash from the `web` container:
 
-    docker-compose exec webserver bash
+    docker-compose exec web bash
 
 You should see a colored prompt: `[php] root /var/www/html $`.
 
 *Note: the path `/var/www/html` corresponds to the Symfony root folder found in `src/`.*
 
-From the webserver bash, init some directories:
+From the `web` container, init some directories:
 
     mkdir -p cache log ; chmod 777 cache log
     mkdir -p web/build ; chmod 777 web web/build
@@ -78,7 +78,7 @@ Sign in with user `guest` pw `test` (or create an account, no emails are sent in
 
 Please note Kanji Koohii started 12+ years ago! The project is based on Symfony 1.4-ish (with some tweaks here and there).
 
-**Docker Setup**: we use two simple containers: `webserver` for Php 7.0 & Apache, `db` for MysQL 5.6. For convenience, both containers maintain bash history and custom aliases through a Docker volume (see `docker-compose.yml`).
+**Docker Setup**: we use two simple containers: `web` for Php 7.0 & Apache, `db` for MysQL 5.6. For convenience, both containers maintain bash history and custom aliases through a Docker volume (see `docker-compose.yml`).
 
 **The legacy build** compiles object-oriented Javascript, along with YUI2 library. See `src/batch/build.sh`. You don't need to build in development because the legacy css/js has "hot reload" through a rewrite rule in the .htaccess file. You can just edit the old css/js files and refresh the page (with 'Disable cache' in your Chrome Console). The build script is only for deployment (bundling & minifying of the older assets).
 
@@ -103,7 +103,7 @@ All users in the test database have a 'test' password.
 * `admin` displays a log of SQL queries at the bottom of the page
 * `guest` is a regular user account
 
-You can create additional users from the command line. From the *webserver* type:
+You can create additional users from the command line. From the `web` type:
 
     $ php batch/maintenance/createUser.php
     
@@ -136,7 +136,7 @@ You can use a virtual host name instead of `localhost`, for example (`/etc/hosts
 
 To access with: http://koohii.local
 
-Make sure it matches the `ServerName` in `.docker/php-apache/koohii.vhosts.conf`, then rebuild the *webserver* container (`dc down ; dc build ; dc up -d`).
+Make sure it matches the `ServerName` in `.docker/php-apache/koohii.vhosts.conf`, then rebuild the `web` container (`dc down ; dc build ; dc up -d`).
 
 
 
@@ -160,7 +160,7 @@ You can use [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) on you
 
 ### Using MySQL from the command line
 
-To use mysql CLI, start bash from the *db* container:
+To use mysql CLI, start bash from the `db` container:
 
     dc exec db bash
     [mysql] root /etc/mysql $ 
@@ -227,14 +227,14 @@ You can also check the logs:
 
 [Documentation for Symfony 1.x](https://symfony.com/legacy/doc).
 
-Most `yml` configuration changes are picked up automatically. In some cases such as adding a new php class, the config needs to be rebuilt. From the `webserver` bash (`dc exec webserver bash`):
+Most `yml` configuration changes are picked up automatically. In some cases such as adding a new php class, the config needs to be rebuilt. From the `web` bash (`dc exec web bash`):
 
     sf cache:clear --type=config
 
 
 ### Checking for errors
 
-From the webserver container:
+From the `web` container:
 
     tail -f /var/log/apache2/error.log
 

@@ -8,7 +8,7 @@ For more info, see http://realfavicongenerator.net
 
 ## First time setup
 
-From the *webserver* container, install the Node.js [Favicon Generator](https://realfavicongenerator.net/favicon/node_cli)
+From the *web* container, install the Node.js [Favicon Generator](https://realfavicongenerator.net/favicon/node_cli)
 
     $ npm install cli-real-favicon
 

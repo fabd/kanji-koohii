@@ -1,7 +1,7 @@
 version: '3'
 services:
 
-  webserver:
+  web:
 
     build:
       context: ./docker/php-apache

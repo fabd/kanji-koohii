@@ -58,9 +58,8 @@
 #
 #  SETUP
 #
-#    $ npm install cssnano --save-dev
+#    $ npm install jshint --save-dev
 #    $ npm install postcss --save-dev
-#    $ npm install precss  --save-dev
 #
 #
 #  TODO
@@ -69,6 +68,10 @@
 #    the versioning.inc.php ?
 #
 
+# node modules
+JSHINT='./node_modules/.bin/jshint'
+POSTCSS='./node_modules/.bin/postcss'
+UGLIFYJS='./node_modules/.bin/uglifyjs'
 
 # replace web/ with web/build/ for production css/js
 PATH_WEB=web/
@@ -96,8 +99,6 @@ stylesheets=(
 
 # Juicer strips some debug code (not "console.log" which is checked for further below)
 JUICEROPTS='-v --strip ''Core.log,Core.warn,Core.halt,Core.assert'' --webroot web --config apps/koohii/config/juicer.config.php'
-
-POSTCSS='./node_modules/.bin/postcss'
 
 
 # colored output  eg.  echo "${red}red text ${green}green text${reset}"
@@ -159,7 +160,7 @@ function do_lint_js_files()
 
     printf "\n   $FILE_TO_LINT ... "
 
-    jshint --config=$JSHINT_OPTS "${FILE_TO_LINT}"
+    $JSHINT --config=$JSHINT_OPTS "${FILE_TO_LINT}"
 
     # Break if file does not lint
     RETVAL=$?
@@ -225,14 +226,8 @@ function do_build_js()
       failMessage "Juicer failed."
     fi
 
-    # TODO: lint css files (jslint chokes on YUI's minified styles)
-
-    # Minify
-    #java $YUIOPTS ${f[1]} -o ${f[2]}
-
-    # Closure is slow...
     printf "\n${TEXT_BOLD} Minifying  ${TEXT_RESET}${P_MINIFIED}  ...\n\n"
-    java -jar batch/tools/closure/closure-compiler.jar --js $P_JUICED --js_output_file $P_MINIFIED --warning_level QUIET
+    $UGLIFYJS $P_JUICED -o $P_MINIFIED --compress
 
     if (( $? )) ; then
       failMessage "Closure Compiler minification failed."

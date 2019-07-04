@@ -1,12 +1,24 @@
 # About the Sample Database
 
 ## Users
-All users in the sample database have a dummy password and email. All accounts have a `test` password (sha encrypted). Users are included for integrity between tables. They are real user names, but only the public data (shared stories, and profile info) is included.
+All users in the sample database have a `test` password (sha encrypted) and a dummy email. 
+
+Users are included for integrity between tables. They are real Kanji Koohii user names, but only the public data (shared stories, and profile info) is included.
 
 Additional users can be created on the command line (php container):
+
 ```bash
 $ php batch/maintenance/createUser.php -u aaaaaa -p aaaaaa --location 'Localhost'
 ```
+
+You can create additional users from the command line. From the `web` type:
+
+    $ php batch/maintenance/createUser.php
+
+### Admin
+
+The `admin` user displays a log of SQL queries at the bottom of the page.
+
 
 ## Stories
 To get a meaningful testing environment, shared stories are included for 2200 RTK kanji (6th edition). Each Study page includes 3 "top voted" stories, and 2 random unvoted stories. There are no private stories in the database, and the shared stories is actually only 7% of the total storage so performance in local development is completely different than production!

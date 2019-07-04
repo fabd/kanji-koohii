@@ -5,7 +5,8 @@
 ](#webserver)
 4. [Working with the MySQL container](#database)
 5. [Troubleshooting](#troubleshooting)
-6. [Useful Tips & Aliases](#tips)
+6. [Useful Aliases](#tips)
+7. [F.A.Q.](#faq)
 
 
 # Installation <a name="install"></a>
@@ -96,18 +97,6 @@ The global layout is in `apps/koohii/templates/layout.php`.
 
 # Working with the Php-Apache container <a name="webserver"></a>
 
-## User accounts
-
-All users in the test database have a 'test' password.
-
-* `admin` displays a log of SQL queries at the bottom of the page
-* `guest` is a regular user account
-
-You can create additional users from the command line. From the `web` type:
-
-    $ php batch/maintenance/createUser.php
-    
-
 ## Development & test builds
 
 Development build is the default environment accessed via `index.php` or `index_dev.php`:
@@ -185,82 +174,7 @@ Then rebuild the MySQL container:
     $ dc down ; dc build ; dc up -d
 
 
-## Optional
-
-
-
-## F.A.Q.
-
-
-### Docker
-
-Suggested aliases:
-
-    alias dc='docker-compose'
-    alias dk='docker'
-
-Make sure both containers are running, and don't show "exit 0":
-
-    $ dc ps
-
-    Name                 Command             State              Ports       
-    --------------------------------------------------------------------------------
-    kk_mysql       docker-entrypoint.sh mysqld   Up      0.0.0.0:3306->3306/tcp     
-    kk_webserver   apache2ctl -D FOREGROUND      Up      443/tcp, 0.0.0.0:80->80/tcp
-
-
-If one container exited (eg. Apache complaining that httpd is already running), try:
-
-    dc down
-    dc up -d
-
-You can also check the logs:
-
-    dc logs -f
-
-
-### Developing with Symfony 1.x
-
-[Documentation for Symfony 1.x](https://symfony.com/legacy/doc).
-
-Most `yml` configuration changes are picked up automatically. In some cases such as adding a new php class, the config needs to be rebuilt. From the `web` bash (`dc exec web bash`):
-
-    sf cache:clear --type=config
-
-
-### Checking for errors
-
-From the `web` container:
-
-    tail -f /var/log/apache2/error.log
-
-Or use the bash alias (see .docker/php-apache/root/.bash_aliases):
-
-    phperrlog
-
-
-### Generate favicons (optional)
-
-Should you want to build/rebuild them, follow instructions in [src/web/favicons/README.md](src/web/favicons/README.md).
-
-
-# Troubleshooting <a name="troubleshooting"></a>
-
-## Juicer parse errors
-When `*.juicy.(css|js)` files don't load properly, view source in browser and click the file. Somewhere the file will be truncated, and an error message would appear:
-
-    Error HTTP 500: ***EXCEPTION*** Could not create folder /home/.../web/build/yui2
-
-Make sure these folders are writable:
-
-    chmod 777 web web/build
-
-If there is no error message, but the css/js doesn't output completely, then run Juicer from the command line to see what is happening, eg:
-
-    php lib/juicer/JuicerCLI.php -v --webroot web --config apps/koohii/config/juicer.config.php --infile web/revtk/main.juicy.css
-
-
-# Useful Tips & Aliases
+# Useful Aliases <a name="tips"></a>
 
 ## Alias to search the codebase with **grep**
 
@@ -322,3 +236,71 @@ Select *Project > Edit Project* and add after "path":
         "*.utf8"
     ]
 
+# F.A.Q.  <a name="faq"></a>
+
+## Docker
+
+Suggested aliases:
+
+    alias dc='docker-compose'
+    alias dk='docker'
+
+Make sure both containers are running, and don't show "exit 0":
+
+    $ dc ps
+
+    Name                 Command             State              Ports       
+    --------------------------------------------------------------------------------
+    kk_mysql       docker-entrypoint.sh mysqld   Up      0.0.0.0:3306->3306/tcp     
+    kk_webserver   apache2ctl -D FOREGROUND      Up      443/tcp, 0.0.0.0:80->80/tcp
+
+
+If one container exited (eg. Apache complaining that httpd is already running), try:
+
+    dc down && dc up -d
+
+You can also check the logs:
+
+    dc logs -f
+
+
+## Developing with Symfony 1.x
+
+[Documentation for Symfony 1.x](https://symfony.com/legacy/doc).
+
+Most `yml` configuration changes are picked up automatically. In some cases such as adding a new php class, the config needs to be rebuilt. From the `web` bash (`dc exec web bash`):
+
+    sf cache:clear --type=config
+
+
+## Checking for errors
+
+From the `web` container:
+
+    tail -f /var/log/apache2/error.log
+
+Or use the bash alias (see .docker/php-apache/root/.bash_aliases):
+
+    phperrlog
+
+
+## Generate favicons (optional)
+
+Should you want to build/rebuild them, follow instructions in [src/web/favicons/README.md](src/web/favicons/README.md).
+
+
+## Juicer parse errors
+
+**Juicer** is a legacy CSS/JS bundler which was developed for Kanji Koohii. Juicer can bundle lots of CSS/JS components together and substitute custom variables in the output.
+
+When `*.juicy.(css|js)` files don't load properly, view source in browser and click the file. Somewhere the file will be truncated, and an error message would appear:
+
+    Error HTTP 500: ***EXCEPTION*** Could not create folder /home/.../web/build/yui2
+
+Make sure these folders are writable:
+
+    chmod 777 web web/build
+
+If there is no error message, but the css/js doesn't output completely, then run Juicer from the command line to see what is happening, eg:
+
+    php lib/juicer/JuicerCLI.php -v --webroot web --config apps/koohii/config/juicer.config.php --infile web/revtk/main.juicy.css

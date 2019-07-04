@@ -1,6 +1,6 @@
 # Kanji Koohii
 
-**Kanji Koohii** is a web application designed to help Japanese language learners remember the kanji. http://kanji.koohii.com
+**Kanji Koohii** is a web application designed to help Japanese language learners remember the kanji. https://kanji.koohii.com
 <br>
 
 <p align="center">
@@ -36,7 +36,7 @@ Installation is fairly simple with Docker CE. The MySQL container includes a sam
 * **Refactoring** legacy php templating to Vuejs client-side components
 * **Vocabulary features** : "favorite" example words in Study pages, create a vocab deck and review with SRS
 * **Improve Study pages** : better moderation & voting system, stroke order animations, better search
-* **Improve the API** for third party clients like [Kanji Ryokucha](http://forum.koohii.com/thread-12829.html)
+* **Improve the API** for third party clients like [Kanji Ryokucha](https://twitter.com/kanji_ryokucha)
 
 
 ## LICENSE

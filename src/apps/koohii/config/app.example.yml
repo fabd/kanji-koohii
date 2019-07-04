@@ -32,7 +32,7 @@ test:
   .dummy:
     db_connection:
       host:            'db' # the docker-compose service
-      database:        'db_koohii'
+      database:        'db_github'
       username:        'koohii'
       password:        'koohii'
       set_names_utf8:  true
@@ -43,7 +43,7 @@ dev:
     # Connection info for koohiiConfiguration::getDatabase()
     db_connection:
       host:            'db' # the docker-compose service
-      database:        'db_koohii'
+      database:        'db_github'
       username:        'koohii'
       password:        'koohii'
       set_names_utf8:  true

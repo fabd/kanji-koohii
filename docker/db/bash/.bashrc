@@ -32,7 +32,8 @@ alias l='ls -lha'
 # KOOHII DEV
 ###############
 
-alias koohii-db='mysql -u koohii -pkoohii -h localhost -D db_koohii --default-character-set=utf8 --local-infile=1'
+alias dbroot='mysql -u root -proot --default-character-set=utf8'
+
 
 cd /etc/mysql
 

@@ -167,13 +167,9 @@ To use mysql CLI, start bash from the `db` container:
 
 Then run **mysql** CLI:
 
-    mysql -u koohii -pkoohii -h localhost -D db_koohii --default-character-set=utf8
+    mysql -u koohii -pkoohii -h localhost -D db_github --default-character-set=utf8
 
-You can also use an **alias** from `.docker/db/root/.bashrc`:
-
-    dc exec db bash
-    [mysql] root /etc/mysql $ koohii-db
-    mysql> ...
+You can also add an alias in `.docker/db/root/.bashrc`.
 
 
 ### Rebuild / reset the sample database

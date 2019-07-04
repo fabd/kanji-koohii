@@ -36,7 +36,7 @@ services:
       - "3306:3306"
 
     environment:
-      MYSQL_DATABASE:      db_koohii
+      MYSQL_DATABASE:      db_github
       MYSQL_USER:          koohii
       MYSQL_PASSWORD:      koohii
       MYSQL_ROOT_PASSWORD: root

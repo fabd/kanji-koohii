@@ -34,8 +34,8 @@
 
       <p><kbd>SPACE</kbd> or <kbd>F</kbd> or <kbd>Numpad 0</kbd> to flip card.</p>
       <p><kbd>N</kbd> <kbd>H</kbd> <kbd>Y</kbd> <kbd>E</kbd> for <strong>N</strong>o, <strong>H</strong>ard, <strong>Y</strong>es, <strong>E</strong>asy.</p>
-      <p>... and <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> on the main keyboard.</p>
-      <p>... and <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> on the numeric keypad.</p>
+      <p>... and <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> on the main keyboard.</p>
+      <p>... and <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> on the numeric keypad.</p>
       <p><kbd>K</kbd> or <kbd>,</kbd> (numpad) to <strong>skip</strong> this card.</p>
       <p><kbd>S</kbd> to open/close the <strong>Edit Story</strong> window.</p>
       <p><kbd>D</kbd> to open/close the <strong>Dictionary</strong> window.</p>

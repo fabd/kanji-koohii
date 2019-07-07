@@ -47,10 +47,25 @@
 
       this.oReview.addShortcutKey('f', 'flip');
       this.oReview.addShortcutKey(' ', 'flip');
+      this.oReview.addShortcutKey(96, 'flip');
+
       this.oReview.addShortcutKey('n', 'no');
       this.oReview.addShortcutKey('h', 'hard');
       this.oReview.addShortcutKey('y', 'yes');
       this.oReview.addShortcutKey('e', 'easy');
+      
+      // added number keys to answer with just left hand
+      this.oReview.addShortcutKey('1', 'no');
+      this.oReview.addShortcutKey('2', 'hard');
+      this.oReview.addShortcutKey('3', 'yes');
+      this.oReview.addShortcutKey('4', 'easy');
+
+      // same for numpad keys
+      this.oReview.addShortcutKey(97, 'no');
+      this.oReview.addShortcutKey(98, 'hard');
+      this.oReview.addShortcutKey(99, 'yes');
+      this.oReview.addShortcutKey(100, 'easy');
+
       this.oReview.addShortcutKey('u', 'undo');
       this.oReview.addShortcutKey('s', 'story');
       this.oReview.addShortcutKey('d', 'dict');
@@ -61,16 +76,6 @@
       
       // Disabled because it's next to (F)lip Card
       //this.oReview.addShortcutKey('d', 'delete');
-
-      // added number keys to answer with just left hand
-      this.oReview.addShortcutKey('1', 'no');
-      this.oReview.addShortcutKey('2', 'yes');
-      this.oReview.addShortcutKey('3', 'easy');
-      // same for numpad keys
-      this.oReview.addShortcutKey(96, 'flip');
-      this.oReview.addShortcutKey(97, 'no');
-      this.oReview.addShortcutKey(98, 'yes');
-      this.oReview.addShortcutKey(99, 'easy');
 
       // flashcad container
       this.elFlashcard = Dom.down(document.body, 'uiFcCard', 'div');

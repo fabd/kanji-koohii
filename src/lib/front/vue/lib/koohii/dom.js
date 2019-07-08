@@ -68,8 +68,8 @@
  *
  */
 
-// import { isFunction, isNode, isObject, isString } from 'lib/koohii/lang.js'
-import Lang from 'lib/koohii/lang.js'
+// import { isFunction, isNode, isObject, isString } from '@lib/koohii/lang.js'
+import Lang from '@lib/koohii/lang.js'
 const
   isArray     = Lang.isArray,
   isDefined   = Lang.isDefined,

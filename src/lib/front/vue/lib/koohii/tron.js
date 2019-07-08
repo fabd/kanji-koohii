@@ -24,7 +24,7 @@
  *   
  */
 
-import Lang, { merge } from 'lib/koohii/lang.js'
+import Lang, { merge } from '@lib/koohii/lang.js'
 const isObject = Lang.isObject
 
 // keep in sync with constants in /lib/JsTRON.php

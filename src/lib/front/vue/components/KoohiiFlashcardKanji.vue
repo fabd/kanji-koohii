@@ -73,7 +73,7 @@
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
 //mixins
-import KoohiiFormat    from 'lib/mixins/KoohiiFormat.js'
+import KoohiiFormat    from '@lib/mixins/KoohiiFormat.js'
 
 export default {
 

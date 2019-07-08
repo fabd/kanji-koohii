@@ -67,14 +67,14 @@
  * 
  */
 
-import { KoohiiAPI, TRON } from 'lib/KoohiiAPI.js'
+import { KoohiiAPI, TRON } from '@lib/KoohiiAPI.js'
 
 // comps
 import cjk_lang_ja from './cjk_lang_ja.vue'
 
 //mixins
-import KoohiiFormat    from 'lib/mixins/KoohiiFormat.js'
-import KoohiiLoading   from 'lib/mixins/KoohiiLoading.js'
+import KoohiiFormat    from '@lib/mixins/KoohiiFormat.js'
+import KoohiiLoading   from '@lib/mixins/KoohiiLoading.js'
 
 
 // our simple regexp matching needs this so that vocab with okurigana is considered known

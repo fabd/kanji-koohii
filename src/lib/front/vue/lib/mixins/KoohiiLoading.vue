@@ -15,7 +15,7 @@
 
 <script>
 
-import { classList} from 'lib/koohii/dom.js'
+import { classList} from '@lib/koohii/dom.js'
 
 export default {
 

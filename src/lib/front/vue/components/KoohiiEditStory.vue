@@ -114,18 +114,18 @@
 </template>
 
 <script>
-import Dom, { insertAfter } from 'lib/koohii/dom.js'
+import Dom, { insertAfter } from '@lib/koohii/dom.js'
 
-import { KoohiiAPI, TRON } from 'lib/KoohiiAPI.js'
+import { KoohiiAPI, TRON } from '@lib/KoohiiAPI.js'
 
 //comps
-import KoohiiCharsLeft     from 'components/KoohiiCharsLeft.vue'
-import cjk_lang_ja         from 'components/cjk_lang_ja.vue'
-import KoohiiSharedStory   from 'components/KoohiiSharedStory.vue'   // instantiated after publishing a story
+import KoohiiCharsLeft     from '@components/KoohiiCharsLeft.vue'
+import cjk_lang_ja         from '@components/cjk_lang_ja.vue'
+import KoohiiSharedStory   from '@components/KoohiiSharedStory.vue'   // instantiated after publishing a story
 
 //mixins
-import KoohiiForm          from 'lib/mixins/KoohiiForm.js'
-import KoohiiLoading       from 'lib/mixins/KoohiiLoading.js'
+import KoohiiForm          from '@lib/mixins/KoohiiForm.js'
+import KoohiiLoading       from '@lib/mixins/KoohiiLoading.js'
 
 
 export default {

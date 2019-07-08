@@ -3,12 +3,12 @@
 // requires the root bundle!
 
 // Koohii
-import LeitnerChart    from 'components/LeitnerChart.vue'
-import KoohiiDictList  from 'components/KoohiiDictList.vue'
-import KoohiiEditStory from 'components/KoohiiEditStory.vue'
+import LeitnerChart    from '@components/LeitnerChart.vue'
+import KoohiiDictList  from '@components/KoohiiDictList.vue'
+import KoohiiEditStory from '@components/KoohiiEditStory.vue'
 
 // for legacy code upgrade path
-import { KoohiiAPI }   from 'lib/KoohiiAPI.js'
+import { KoohiiAPI }   from '@lib/KoohiiAPI.js'
 
 
 if (window.Koohii && window.Koohii.UX) {

@@ -10,20 +10,20 @@
 //   - import all the legacy code from kanji-flashcardreview.juicy.js
 //   - refactor all the Juicer =require directives to modern JS import's
 
-import { AjaxQueue }       from 'legacy/ajaxqueue.js'
+import { AjaxQueue }       from '@legacy/ajaxqueue.js'
 Core.Ui.AjaxQueue      = AjaxQueue
-import { Keyboard }        from 'legacy/keyboard.js'
+import { Keyboard }        from '@legacy/keyboard.js'
 Core.Ui.Keyboard       = Keyboard
-import { FlashcardReview } from 'legacy/FlashcardReview.js'
+import { FlashcardReview } from '@legacy/FlashcardReview.js'
 App.Ui.FlashcardReview = FlashcardReview
 
 // Koohii
-import KoohiiDictList  from 'components/KoohiiDictList.vue'
-import KoohiiEditStory from 'components/KoohiiEditStory.vue'
-import KoohiiFlashcard from 'components/KoohiiFlashcard.vue'
+import KoohiiDictList  from '@components/KoohiiDictList.vue'
+import KoohiiEditStory from '@components/KoohiiEditStory.vue'
+import KoohiiFlashcard from '@components/KoohiiFlashcard.vue'
 
 // for legacy code upgrade path
-import { KoohiiAPI }   from 'lib/KoohiiAPI.js'
+import { KoohiiAPI }   from '@lib/KoohiiAPI.js'
 
 
 if (window.Koohii && window.Koohii.UX) {

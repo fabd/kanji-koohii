@@ -11,7 +11,7 @@
  */
 
 
-import Lang from 'lib/koohii/lang.js'
+import Lang from '@lib/koohii/lang.js'
 const
   isNode      = Lang.isNode,
   isString    = Lang.isString

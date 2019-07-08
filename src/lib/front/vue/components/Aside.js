@@ -1,6 +1,6 @@
 import Component     from './Aside.vue'
 import KoohiiNavMenu from './KoohiiNavMenu.vue'
-import VueInstance   from 'lib/helpers/vue-instance.js'
+import VueInstance   from '@lib/helpers/vue-instance.js'
 
 let instance   = null
 let navMenu    = null

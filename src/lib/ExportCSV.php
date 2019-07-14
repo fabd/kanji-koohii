@@ -17,10 +17,6 @@ class ExportCSV
     LINE_TERMINATED_BY = "\r\n",
     FIELDS_TERMINATED_BY = ",";
 
-  /**
-   * 
-   * @return 
-   */
   public function __construct($db)
   {
     $this->db = $db;
@@ -94,54 +90,45 @@ class ExportCSV
    *                         must match the number of columns in the select
    * @param array  $options  Options (see above)
    */
-  public function export(coreDatabaseSelect $select, $columns, $options = array())
+  public function export(array $tabularData, $columns, $options = array())
   {
-    $this->options = array_merge(array(
+    $this->options = array_merge([
+      'col_escape'       => null,
       'output_callback'  => null,
       'column_heads'     => true,
       'row_callback'     => null
-    ), $options);
+    ], $options);
 
     // sanity check
     $row_callback = $this->options['row_callback'];
-    if (null !== $row_callback && !is_callable($row_callback))
-    {
+    if (null !== $row_callback && !is_callable($row_callback)) {
       throw new sfException(__METHOD__."() invalid callback");
     }
 
     ob_start($this->options['output_callback']);
 
-    $numColumns = count($columns);
-
-    if (true === $this->options['column_heads'])
-    {
+    if (true === $this->options['column_heads']) {
       echo implode(self::FIELDS_TERMINATED_BY, $columns) . self::LINE_TERMINATED_BY;
     }
 
-    // what columns to escape as strings
-    $escapeCol = isset($options['col_escape']) ? $options['col_escape'] : null;
+    $numCols   = count($columns);
+    $escapeCol = $options['col_escape'];
+// DBG::printr($tabularData);exit;
 
-    $select->query();
-
-    while ($row = $this->db->fetch(coreDatabase::FETCH_NUM))
-    {
+    foreach ($tabularData as $rowData) {
       $cells = array();
       
       // use callback if set
-      if (null !== $row_callback)
-      {
-        $row = call_user_func($row_callback, $row);
+      if (null !== $row_callback) {
+        $rowData = call_user_func($row_callback, $rowData);
       }
 
-      for ($i = 0; $i < $numColumns; $i++)
-      {
-        $t = $row[$i];
+      for ($i = 0; $i < $numCols; $i++) {
+        $t = $rowData[$i];
         
-        if ($escapeCol!==false && $escapeCol[$i])
-        {
-          // escape string values
+        // escape string values
+        if ($escapeCol !== null && $escapeCol[$i]) {
           $t = self::quoteString($t, true);
-          
         }
   
         $cells[] = $t;

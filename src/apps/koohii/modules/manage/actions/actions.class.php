@@ -399,28 +399,34 @@ class manageActions extends sfActions
   
   public function executeExportflashcards()
   {
+    $response = $this->getResponse();
+    $response->setContentType('text/plain; charset=utf-8');
+
     $throttler = new RequestThrottler($this->getUser(), 'export');
-    if (!$throttler->isValid())
-    {
+    if (!$throttler->isValid()) {
       return $this->renderPartial('misc/requestThrottleError');
     }
 
-    $csv = new ExportCSV(sfProjectConfiguration::getActive()->getDatabase());
-    $select = ReviewsPeer::getSelectForExport($this->getUser()->getUserId());
+    $db      = sfProjectConfiguration::getActive()->getDatabase();
+    $csv     = new ExportCSV($db);
+    $select  = ReviewsPeer::getSelectForExport($this->getUser()->getUserId());
 
-    $csvText = $csv->export($select,
+    $fetchMode   = $db->setFetchMode(coreDatabase::FETCH_NUM);
+    $tabularData = $db->fetchAll($select);
+    $db->setFetchMode($fetchMode);
+
+    $csvText = $csv->export(
+      $tabularData,
       // column names
-      array('FrameNumber', _CJ_U('kanji'), 'Keyword', 'LastReview', 'ExpireDate', 'LeitnerBox', 'FailCount', 'PassCount'),
+      ['FrameNumber', _CJ_U('kanji'), 'Keyword', 'LastReview', 'ExpireDate', 'LeitnerBox', 'FailCount', 'PassCount'],
       // options
-      array('col_escape' => array(0, 1, 1, 0, 0, 0, 0, 0), 'column_heads' => true)
+      ['col_escape' => array(0, 1, 1, 0, 0, 0, 0, 0), 'column_heads' => true]
     );
 
     $throttler->setTimeout();
 
     $this->getResponse()->setFileAttachmentHeaders('rtk_flashcards.csv');
-
     $this->setLayout(false);
-
     return $this->renderText($csvText);
-  }  
+  }
 }

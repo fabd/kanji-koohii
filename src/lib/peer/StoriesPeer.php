@@ -414,18 +414,20 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getSelectForExport($userId)
   {
-    $select = self::getInstance()->select(array(
-    // Order is important! See ExportCSV settings in action.
+    // Order of columns is important! cf. "My Stories" export action
+    $select = self::$db->select([
+      's.ucs_id',
       'framenr' => rtkIndex::getSqlCol(),
       'kanji',
       'keyword' => CustkeywordsPeer::coalesceExpr(),
       'public',
-      'last_edited' => 'stories.updated_on',
-      'story' => 'text'))
-      ->where('stories.userid = ?', $userId)
+      'last_edited' => 's.updated_on',
+      'story' => 'text'])
+      ->from('stories s')
+      ->where('s.userid = ?', $userId)
       ->order('framenr', 'ASC');
-    $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
+    KanjisPeer::joinLeftUsingUCS($select);
+    CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
 //DBG::out($select);exit;
     return $select;
   }

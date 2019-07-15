@@ -84,8 +84,8 @@ class ExportCSV
    *   row_callback          If not null is called on every row with the row data BEFORE it is escaped
    *                         and formatted for CSV. Function should return the row data. Do not change
    *                         the number of columns.
-   * 
-   * @param object $select   Select object
+   *
+   * @param array  $tabularData
    * @param array  $columns  Array of column names as displayed in CSV,
    *                         must match the number of columns in the select
    * @param array  $options  Options (see above)
@@ -117,7 +117,7 @@ class ExportCSV
 
     foreach ($tabularData as $rowData) {
       $cells = array();
-      
+
       // use callback if set
       if (null !== $row_callback) {
         $rowData = call_user_func($row_callback, $rowData);

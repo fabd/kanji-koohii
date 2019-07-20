@@ -111,11 +111,10 @@ class coreWebResponse extends sfWebResponse
     else
     {
       // in production, "build" files should be precompiled and minified with a script
-      if (($pos = strpos($url, '.build.')) !== false)
-      {
-        // replace the '.build' part with '.min' (eg: /css/main.build.css => /css/main.min.css)
-        //$len = strlen($url);
-        //$url = substr($url, 0, $pos) . substr($url, $pos + 6);
+      if (($pos = strpos($url, '.juicy.js')) !== false) {
+        $url = '/build' . str_replace('.juicy.', '.min.', $url);
+      }
+      elseif (($pos = strpos($url, '.build.css')) !== false) {
         $url = '/build' . str_replace('.build.', '.min.', $url);
       }
 

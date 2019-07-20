@@ -5,8 +5,10 @@
  * Javascript and stylesheet files use a different naming pattern with a version number,
  * which is redirected by the .htaccess file (mod_rewrite) to a php script.
  * The script returns js & css files compressed with expiry information in the headers.
- * 
- * @todo   Currently only works with use_stylesheet() and use_javascript() helpers (AssetHelper)
+ *
+ * July 2019
+ * - for the scss build, grab the scss compiled files in /build/ folder
+ * - for *.juicy.js files, maintain Juicer's "hot reload" via mod rewrite
  * 
  * @author  Fabrice Denis
  */
@@ -95,18 +97,26 @@ class coreWebResponse extends sfWebResponse
         return $url;
       }
 
-      // show the url that would be run by mod_rewrite
-      $url = '/version/cache.php?env=dev&app='.sfConfig::get('sf_app').'&path='.urlencode($url);
+      // legacy Juicer JS build, "hot reload" via mod_rewrite
+      if (($pos = strpos($url, '.juicy.js')) !== false)
+      {
+        $url = '/version/cache.php?env=dev&app='.sfConfig::get('sf_app').'&path='.urlencode($url);
+      }
+      // newer sass build, grab the sass output from the web/build folder
+      elseif (($pos = strpos($url, '.build.css')) !== false)
+      {
+        $url = '/build' . $url;
+      }
     }
     else
     {
-      // in production, "juicy" files should be precompiled and minified with a script
-      if (($pos = strpos($url, '.juicy.')) !== false)
+      // in production, "build" files should be precompiled and minified with a script
+      if (($pos = strpos($url, '.build.')) !== false)
       {
-        // replace the '.juicy' part with '.min' (eg: /css/main.juicy.css => /css/main.min.css)
+        // replace the '.build' part with '.min' (eg: /css/main.build.css => /css/main.min.css)
         //$len = strlen($url);
         //$url = substr($url, 0, $pos) . substr($url, $pos + 6);
-        $url = '/build' . str_replace('.juicy.', '.min.', $url);
+        $url = '/build' . str_replace('.build.', '.min.', $url);
       }
 
       // add version string

@@ -19,7 +19,7 @@
   // note: usd CDNs ?
 
   if ($landingPage) {
-    $sf_response->addStylesheet('/koohii/home.juicy.css', 'first');
+    $sf_response->addStylesheet('/koohii/home.build.css', 'first');
   }
 ?>
   <link rel="alternate" type="application/rss+xml" title="RSS" href="rss">

@@ -211,7 +211,7 @@
 .uiTabular th a.sortdesc { padding-right:12px; background:url(widgets/widgets-selecttable.gif) no-repeat 100% -72px; }
 /* tbody */
 .uiTabular td { padding:8px 10px; color:#666; font:13px/1.1em Arial, sans-serif; border-bottom:1px solid #E8E5CA; }
-.uiTabular tbody td { background-color:$(clr-tbl-bg); }
+.uiTabular tbody td { background-color:$--clr-tbl-bg; }
 .uiTabular tr.odd td { background-color:#fff; }
 /* uiTable hover */
 .uiTabular tbody tr.hover { background-color:#fff; }
@@ -271,15 +271,20 @@ table.uiTabular td.keyword { text-align:left; font:15px/1em Georgia, serif; whit
 /**
  * Side tabs navigation.
  */
-.side-menu { border:1px solid $(clr-bg-1s); border-radius:3px; margin-bottom:15px; }
+.side-menu { border:1px solid $--clr-bg-1s; border-radius:3px; margin-bottom:15px; }
 .side-menu h2 {
-  padding:8px 10px; margin:0; font-size:13px; font-weight:bold; color:#555; background-color:$(clr-bg-1); border-bottom:1px solid $(clr-bg-1m);
-}
-.side-menu ul { margin:0; list-style:none; padding:0; }
-.side-menu li { margin:0; border-bottom:1px solid $(clr-bg-1m); }
+  padding: 8px 10px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+  background-color: $--clr-bg-1;
+  border-bottom: 1px solid $--clr-bg-1m;
+}.side-menu ul { margin:0; list-style:none; padding:0; }
+.side-menu li { margin:0; border-bottom:1px solid $--clr-bg-1m; }
 .side-menu li:last-child { border-bottom:none; }
 .side-menu li a { display:block; padding:8px 10px; text-decoration:none; }
-.side-menu li a:hover { background-color:$(clr-bg-1); }
+.side-menu li a:hover { background-color:$--clr-bg-1; }
 .side-menu li.active { }
 .side-menu li.active a { border-left:3px solid #8C8; color:#222; font-weight:bold; }
 

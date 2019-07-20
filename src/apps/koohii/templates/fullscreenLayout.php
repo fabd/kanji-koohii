@@ -14,7 +14,7 @@
   $sf_response->clearStuffsRefactorMe();
 
   // ... and thus we add back in the default dependencies which are needed (Core, YUI)
-  $sf_response->addStylesheet('/revtk/main.juicy.css');
+  $sf_response->addStylesheet('/koohii/main.juicy.css');
   $sf_response->addJavascript('/revtk/bundles/yui-base.juicy.js');
 
   switch($pageId) {

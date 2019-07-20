@@ -22,9 +22,8 @@
 
 /* First we include the Core widgets (non app specific), and the styles can be overwritten as necessary. */
 
-/* =require from "%CORE%" */
-/* =require "/widgets/filterstd/filterstd.css" */
-/* =require "/widgets/pager/pager.css" */
+@import "_filterstd"; //.css
+@import "_pager"; //.css
 
 
 /* =require from "%REVTK%" */
@@ -62,7 +61,6 @@
   border-radius:5px;
   /* default colour */
   background:#6fa300;
-  background: -webkit-linear-gradient(top,  #6fa300 0%,#649300 100%);
   background: linear-gradient(to bottom,  #6fa300 0%,#649300 100%);
 }
 .uiIBtnDefault { color:#fff; font:bold 15px/34px Arial, sans-serif; height:34px; text-shadow:0 -1px rgba(0,0,0,0.5); }
@@ -70,15 +68,12 @@
 
 /* uiIBtn :: additional colours */
 .uiIBtnRed { background:#cb4b16;
-  background: -webkit-linear-gradient(top,  #cb4b16 0%,#b74314 100%);
   background: linear-gradient(to bottom,  #cb4b16 0%,#b74314 100%);
 }
 .uiIBtnGreen { background:#6fa300;
-  background: -webkit-linear-gradient(top,  #6fa300 0%,#649300 100%);
   background: linear-gradient(to bottom,  #6fa300 0%,#649300 100%);
 }
 .uiIBtnOrange { background:#e68f06;
-  background: -webkit-linear-gradient(top,  #e68f06 0%,#bb7404 100%);
   background: linear-gradient(to bottom,  #e68f06 0%,#bb7404 100%);
 }
 
@@ -100,7 +95,7 @@
  */
 .uiDataFilter,
 .uiDataFilter .corner-left, .uiDataFilter .corner-right,
-.uiDataFilter h4, .uiDataFilter a, .uiDataFilter a span { background:url(widgets/widgets-datafilter.gif) repeat-x 0 0; }
+.uiDataFilter h4, .uiDataFilter a, .uiDataFilter a span { background:url(/koohii/legacy/widgets-datafilter.gif) repeat-x 0 0; }
 .uiDataFilter, .uiDataFilter h4, .uiDataFilter span, .uiDataFilter a { font:14px/28px Arial, sans-serif; }
 .uiDataFilter { width:100%; margin:0 0 5px; }
 .uiDataFilter .corner-left  { float:left; width:16px; height:29px; background-position:0 -40px; }
@@ -198,7 +193,7 @@
 .uiTabular { border:1px solid #BDBCAA; border-top:1px solid #D9D8CE; width:100%; }
 /* thead */
 .uiTabular th { padding:0; font:13px Arial, sans-serif; color:#5C5B52; border-bottom:1px solid #A1A1A1; text-align:left;
-  background:#D9D6B7 url(widgets/widgets-selecttable.gif) repeat-x 0 0; }
+  background:#D9D6B7 url(/koohii/legacy/widgets-selecttable.gif) repeat-x 0 0; }
 .uiTabular th a,
 .uiTabular th span.hd { display:block; float:left; padding:6px 10px; text-align:left; text-decoration:none; } /* non-sortable */
 .uiTabular th a { color:#005CB1; }
@@ -206,9 +201,9 @@
 .uiTabular th a.active { color:#000; }
  /* sort icon */
 .uiTabular th a.sort { padding-right:12px; }
-.uiTabular th a.sort:hover { background:url(widgets/widgets-selecttable.gif) no-repeat 100% 50%;   }
-.uiTabular th a.sortasc { padding-right:12px; background:url(widgets/widgets-selecttable.gif) no-repeat 100% -37px; }
-.uiTabular th a.sortdesc { padding-right:12px; background:url(widgets/widgets-selecttable.gif) no-repeat 100% -72px; }
+.uiTabular th a.sort:hover { background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% 50%;   }
+.uiTabular th a.sortasc { padding-right:12px; background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% -37px; }
+.uiTabular th a.sortdesc { padding-right:12px; background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% -72px; }
 /* tbody */
 .uiTabular td { padding:8px 10px; color:#666; font:13px/1.1em Arial, sans-serif; border-bottom:1px solid #E8E5CA; }
 .uiTabular tbody td { background-color:$--clr-tbl-bg; }
@@ -263,7 +258,7 @@ table.uiTabular td.keyword { text-align:left; font:15px/1em Georgia, serif; whit
 .uiProgressBar { margin:0 1px; padding:1px 0; background:#A1A1A1; }
 .uiProgressBar div { position:relative; height:19px; margin:0 -1px; border-left:1px solid #A1A1A1; border-right:1px solid #A1A1A1; }
 .uiProgressBar span { position:absolute; left:0; top:0; text-indent:-5000px; font-size:1px; line-height:1px; display:block; width:100%; height:100%; }
-.uiProgressBar div, .uiProgressBar span { background:#5A5A5A url(widgets/gadgets-progressbar.gif) repeat-x 0 0; }
+.uiProgressBar div, .uiProgressBar span { background:#5A5A5A url(/koohii/legacy/gadgets-progressbar.gif) repeat-x 0 0; }
 .uiProgressBar span.g /*green*/ { background-color:#72A311; background-position:0 -32px; }
 .uiProgressBar span.r /*red*/   { background-color:#A32011; background-position:0 -64px; }
 

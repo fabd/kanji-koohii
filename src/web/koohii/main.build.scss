@@ -1,10 +1,6 @@
 /**
  * Main stylesheet.
  * 
- * Juicer build:
- *  php lib/juicer/JuicerCLI.php -v --webroot web --config apps/koohii/config/juicer.config.php --infile web/revtk/main.juicy.css
- * 
- *
  * Font sizes cheatsheet:
  *  16 px = 1em = default
  *  18 px = 1.25em
@@ -13,12 +9,10 @@
  * @author  Fabrice Denis
  */
 
-/* =require from "%VENDOR%" */
-/* =require "/bootstrap-build/css/bootstrap.css" */
+// *don't* use extension to inlude vendor css in the output
+@import "../vendor/bootstrap-build/css/bootstrap";
 
-
-/* =require from "%WEB%" */
-/* =require "/revtk/theme.config.css" */
+@import "./_theme.scss";
 
 
 /* ---------------------------- */
@@ -87,11 +81,11 @@
 /* BOOTSTRAP theme (TODO : incorporer dans le build sass truc) */
 /* ---------------------------- */
 
-body { background:$(clr-bg-body); color:#42413d; }
+body { background:$--clr-bg-body; color:#42413d; }
 
 /* when footer gradient is used */
 body.with-footer { background:#f0ddd4; }
-body.with-footer #main { background:$(clr-bg-body); }
+body.with-footer #main { background:$--clr-bg-body; }
 
 /* typography */
 blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
@@ -264,8 +258,8 @@ h3 { font-size:18px; font-weight:normal; margin:0 0 0.5em; }
 .border-box { -moz-box-sizing:border-box; box-sizing:border-box; }
 
 /* SRS color coding used for text */
-.clr-srs-due   { color:$(clr-srs-due); }
-.clr-srs-undue { color:$(clr-srs-undue); }
+.clr-srs-due   { color:$--clr-srs-due; }
+.clr-srs-undue { color:$--clr-srs-undue; }
 .clr-srs-fail  { color:#f1311a; }
 .clr-srs-new   { color:#1c90d4; }
 
@@ -324,11 +318,9 @@ a.admin-edit { font-size:80%; letter-spacing:normal; color:#408040; text-decorat
 /* UI */
 /* ---------------------------- */
 
-/* =require from "%REVTK%" */
-/* =require "/widgets.juicy.css" */
+@import "./legacy/_widgets.scss";
+@import "./_navbar.scss";
 
-/* =require from "%WEB%" */
-/* =require "/koohii/navbar.juicy.css" */
 
 /* disable selection for GUI items */
 .uiGUI { outline:none; -moz-user-select: none; -webkit-user-select: none; }
@@ -434,7 +426,7 @@ table.blocky { width:100%; margin:0.5em 0 1em 0; border-left:1px solid $(clr-bg-
 table.blocky th { background-color:$(clr-bg-1); border-top-width:0; color:#4f4e45; }
 table.blocky th,
 table.blocky td { border-top:1px solid #E8E5CA; border-right:1px solid #E8E5CA; padding:5px 10px; text-align:left; }
-table.blocky td { background:$(clr-bg-nav); }
+table.blocky td { background:$--clr-bg-nav; }
 table.blocky td a:link, 
 table.blocky td a:visited, 
 table.blocky td a:active { font-weight:normal; }
@@ -512,7 +504,7 @@ div.col-box-bis { margin-top:10px; }
 
 #footer { text-align:center; padding:0 0 5em; font-size:17px; }
 #footer p  {  line-height:1.2em; margin:0 0 0.8em; }
-#footer .transition { width:100%; height:29px; background:$(clr-bg-body) url('../koohii/landing/bubbles_gdt.png') repeat-x 0 0; }
+#footer .transition { width:100%; height:29px; background:$--clr-bg-body url('../koohii/landing/bubbles_gdt.png') repeat-x 0 0; }
 #footer section { padding-top:24px; }
 #footer { color:#8b1566; }
 #footer a { color:#e400b1; text-decoration:none; }
@@ -540,8 +532,7 @@ div.col-box-bis { margin-top:10px; }
 /* Markdown content */
 /* ---------------------------- */
 
-/* =require from "%WEB%" */
-/* =require "/koohii/markdown.css" */
+@import "./_markdown.scss";
 
 
 /* ---------------------------- */
@@ -570,7 +561,6 @@ div.col-box-bis { margin-top:10px; }
 #sitenews .hd { padding:5px 0; margin-bottom:5px; border:0; font-size:17px; }
 #sitenews .bd {
   margin:0 0 25px; padding:0 0 2em; /*border-bottom:1px solid $(clr-bg-1);*/
-  font-size:14px; line-height:1.5em;
   color:#3c3c3c; clear:both; text-align:justify; 
 }
 
@@ -674,7 +664,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 #whatisrtk_box .book { float:left; margin:0 1em 1.5em 0; }
 /*#whatisrtk_box .break { clear:both; }*/
 
-.stacks_legend { margin:0 0 1.5em 0; padding:1.5em; background-color:$(clr-bg-nav); }
+.stacks_legend { margin:0 0 1.5em 0; padding:1.5em; background-color:$--clr-bg-nav; }
 .stacks_legend dl dt { float:left; width:43px; height:48px; clear:left; margin-bottom:1em; }
 .stacks_legend dl dd { margin:0 0 1em 60px; }
 .stacks_legend dt.failed   { background:url(../images/1.0/doc/stackfailed.gif) no-repeat 0 0; }
@@ -702,8 +692,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 /* SRS Chart page */
 /* ---------------------------- */
 
-/* =require from "%WEB%" */
-/* =require "/revtk/review-home.juicy.css" */
+@import "./_review-home.scss";
 
 
 /* ---------------------------- */
@@ -777,7 +766,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
  * ---------------------------- */
 
   /* TODO move me */
-.p-notice { margin:0 0 1em; color:#cc2d7a; /*background:$(clr-bg-gl); padding:0.5em 1em;*/ }
+.p-notice { margin:0 0 1em; color:#cc2d7a; /*background:$--clr-bg-gl; padding:0.5em 1em;*/ }
 .p-notice i { display:inline-block; padding:0 0.5em 0 0; }
 
 
@@ -802,13 +791,10 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 /* AjaxDialog         */
 /* ------------------ */
 
-/* =require from "%YUI2%" */
-
 /* Sam Skin CSS (Core.Ui.AjaxDialog) */
-/* =require "/container/container.css" */
+@import "../vendor/yui2-build/container/container";
 
-/* =require from "%CORE%" */
-/* =require "/ui/assets/ajaxdialog.css" */
+@import "./legacy/ajaxdialog"; //.css
 
 
 /**
@@ -836,7 +822,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 /* close icon */
 .yui-panel .container-close {
   width:24px; height:24px; 
-  background:url(../images/ui/icons/yui-container-close.gif) no-repeat 50% 50%;
+  background:url(/images/ui/icons/yui-container-close.gif) no-repeat 50% 50%;
   top:6px; right:6px;
   outline:none; /* fix for the "focus first" feature of YUI Panel */
 }
@@ -905,6 +891,4 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 /* ---------------------------- */
 /* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
 /* ---------------------------- */
-
-/* =require from "%WEB%" */
-/* =require "/build/pack/root-bundle.css" */
+@import "../build/pack/root-bundle"; //.css

@@ -1,0 +1,20 @@
+/**
+ * Theme configuraton.
+ *
+ * In the future, maybe we can support a dark/light theme.
+ *
+ */
+
+$--clr-bg-body: #f4f0e5;
+$--clr-bg-1:    #e7e1d3;     /* shaded background 1 */
+$--clr-bg-nav:  #ede8de;     /* top nav background color */
+ 
+$--clr-bg-1m:   #ede8de;     /* subdued background 1 (lighter) */
+$--clr-bg-1s:   #d4cdba;     /* subdued background 1 : border */
+
+$--clr-bg-gl:   #D7EBB4;     /* green backgrounds & text */
+$--clr-bg-gd:   #475636;
+$--clr-tbl-bg:  #f8f6ef;     /* widgets: table row (slightly brighter than CSS_BG_1) */
+
+$--clr-srs-due:   #f7a247;   /* text color for due/undue cards */
+$--clr-srs-undue: #72c569;

@@ -20,13 +20,10 @@
  *   
  */
 
-/* =require "/revtk/components/EditKeywordDialog.css" */
-/* =require "/revtk/components/EditFlashcardDialog.css" */
-
+@import "./components/_EditKeywordDialog.scss";
+@import "./components/_EditFlashcardDialog.scss";
 
 /* ---------------------------- */
 /* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
 /* ---------------------------- */
-
-/* =require from "%WEB%" */
-/* =require "/build/pack/review-bundle.css" */
+@import "../build/pack/review-bundle"; //.css

@@ -20,8 +20,8 @@
   switch($pageId) {
     case 'review-review':
     case 'review-free':
-      $sf_response->addStylesheet('/revtk/kanji-flashcardreview.juicy.css');
-      $sf_response->addJavascript('/revtk/kanji-flashcardreview.juicy.js');
+      $sf_response->addStylesheet('/koohii/kanji-flashcardreview.build.css');
+      $sf_response->addJavascript('/koohii/kanji-flashcardreview.juicy.js');
       break;
     case 'labs-shuffle1':
     case 'labs-shuffle2':

@@ -6,7 +6,7 @@ indexSuccess:
 reviewSuccess:
   metas:
     title: 'Flashcard Review'
-  stylesheets: [ /revtk/kanji-flashcardreview.juicy.css ]
+  stylesheets: [ /koohii/kanji-flashcardreview.build.css ]
   javascripts: [ /revtk/kanji-flashcardreview.juicy.js ]
 
 summarySuccess:

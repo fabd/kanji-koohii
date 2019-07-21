@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --hide-modules",
-    "prod": "cross-env NODE_ENV=production  webpack --hide-modules --progress"
+    "prod": "cross-env NODE_ENV=production  webpack --hide-modules --progress",
+    "sass-watch": "sass --watch web/koohii/:web/build/koohii/"
   },
   "dependencies": {
     "vue": "^2.5.17",
@@ -23,6 +24,7 @@
     "jshint": "^2.10.2",
     "node-sass": "^4.12.0",
     "postcss-cli": "^6.0.0",
+    "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.13.2",
     "uglify-js": "^3.6.0",

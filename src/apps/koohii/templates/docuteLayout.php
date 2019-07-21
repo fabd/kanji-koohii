@@ -68,7 +68,7 @@ h4 { color:#42b983; }
 <div id="app"></div>
 
 <!-- load the docute client library -->
-<script src="https://unpkg.com/docute/dist/docute.js"></script>
+<script src="https://unpkg.com/docute@3.4.12/dist/docute.js"></script>
   
 <!-- bootstrap your docute app! -->
 <script>

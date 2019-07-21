@@ -54,6 +54,10 @@ Build the Vue bundles:
 
     npm run dev
 
+Compile the stylesheets:
+
+    sass --watch web/koohii/:web/build/koohii/
+
 You should see something like this (files are output to `src/web/build/pack/`):
 
     Version: webpack 3.12.0
@@ -81,9 +85,17 @@ Please note Kanji Koohii started 12+ years ago! The project is based on Symfony 
 
 **Docker Setup**: we use two simple containers: `web` for Php 7.0 & Apache, `db` for MysQL 5.6. For convenience, both containers maintain bash history and custom aliases through a Docker volume (see `docker-compose.yml`).
 
-**The legacy build** compiles object-oriented Javascript, along with YUI2 library. See `src/batch/build.sh`. You don't need to build in development because the legacy css/js has "hot reload" through a rewrite rule in the .htaccess file. You can just edit the old css/js files and refresh the page (with 'Disable cache' in your Chrome Console). The build script is only for deployment (bundling & minifying of the older assets).
+**The legacy build** compiles object-oriented Javascript, along with YUI2 library. See `src/batch/build.sh`.
 
-**The Vue build** was introduced in recent years. It uses Webpack, Babel & VueJS. Hence, new developments can use modern Javascript. Newer css/js (single file components), are located in `src/lib/front/vue/`. The Vue build does *not* feature hot reload: you must use `npm run dev` after editing Vue components & bundles.
+- The legacy JS files (`web/revtk/*.juicy.js`) have a "hot reload" through a mod_rewrite rule in the .htaccess file.
+- Make sure to 'Disable cache' in your Chrome Console.
+- The legacy stylesheets have been refactored to SCSS. Use `npm run sass-watch` in the web container when editing *.build.scss files.
+- The build.sh script is only required for deployment (bundling & minifying).
+
+**The Vue build** was introduced in recent years. It uses Webpack, Babel & VueJS. Hence, new developments can use modern Javascript. Newer css/js (single file components), are located in `src/lib/front/vue/`.
+
+- The Vue build does *not* feature hot reload: use `npm run dev` after editing Vue files (located at `lib/front/vue/`)
+- Note that the Vue build extracts CSS, those css 'bundles' (one matching each Vue bundle), are imported by the .build.scss files.
 
 
 ## The Symfony 1 Project Structure

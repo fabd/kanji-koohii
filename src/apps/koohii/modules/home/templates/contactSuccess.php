@@ -58,13 +58,10 @@ App.ready(function() {
     <div class="padded-box-inset mb-1" style="max-width:600px">
 
         <p class="mb-p50">
-          If you can no longer sign in:
+          <strong>If you are unable to sign in</strong>, contact:<br>
+          <br>
+          kanji &bull; koohii &#65312; gmail &bull; com
         </p>
-        <ul>
-          <li class="mb-p50">you can leave a message on the <?= link_to('Koohii Forum', sfConfig::get('app_forum_url')) ?>.</li>
-          <li class="mb-p50"><strong>for account/personal issues</strong>, you can PM <strong style="color:#484">ファブリス</strong> on the forum.</li>
-        </ul>
-    
     </div>
 
 <?php endif ?>

@@ -3,20 +3,25 @@
 # Build frontend files for test & production environments.
 #
 #
-#    PACKAGING
+#    JUICER (LEGACY JS BUILD)
+#    
+#    Juicer is a legacy build tool that has basic functionality similar to sass.
+#    Hot reload is provided via mod_rewrite.
+#    
+#    
+#    SASS BUILD
+#    
+#    Stylesheets used to go through Juicer tool. The *.juicy.css files have been
+#    refactored to SCSS  ==>  web/koohii/*.build.scss
+#    
+#    Use sass --watch from the web container, when editing legacys stylesheets
+#    (ie. not part of the Vue build):
+#    
+#      $ sass --watch web/koohii/:web/build/koohii/
+#      
+#    coreWebResponse.php picks up any *.build.css requests, and reroutes them to
+#    the sass build files in web/build/koohii/
 #
-#    Juicer is used to package assets, and concatenate css/js from many files (typically
-#    organized into smaller reusable units aka "components"). While doing so, Juicer creates
-#    a folder structure in web/build/
-#
-#    Juicer maps all the referenced assets in the stylesheets (ie. images), to the /web/build/
-#    folder, and copies all the provided assets there. This is signaled to Juicer with special
-#    directives such as =require and =provide (which are declared in normal css comments).
-#
-#    MINIFYING
-#
-#    Once files are "juiced" (*.juiced.css/js) they are compressed. Currently yuicompressor is
-#    used for css, closure is used for js. This could be changed to other tools (TODO).
 #
 #    VERSIONING
 #
@@ -33,12 +38,14 @@
 #    Finally, the .htaccess file has a rewrite rule which maps versioned assets to the
 #    build files.
 #
+#
 #    DEVELOPMENT VS TEST/PROD
 #
 #    In development, versioning is disabled. coreWebResponse generates asset urls that point
-#    directly to the *.juicy.(css|js) files, via a php script. This php script requests files
-#    through Juicer, and pipes the result back to the browser. Thus providing a form of
-#    "hot reload" for stylesheets.
+#    directly to the *.juicy.js or *.build.css (sass output).
+#    
+#    In production, coreWebResponse translates *.build.css  and *.juicy.js requests to the
+#    minified assets in /web/build/ *.min.(css|js)
 #
 #
 #  USAGE
@@ -58,8 +65,7 @@
 #
 #  SETUP
 #
-#    $ npm install jshint --save-dev
-#    $ npm install postcss --save-dev
+#    $ npm install --save-dev jshint postcss sass uglifyjs
 #
 #
 #  TODO
@@ -69,9 +75,10 @@
 #
 
 # node modules
-JSHINT='./node_modules/.bin/jshint'
-POSTCSS='./node_modules/.bin/postcss'
-UGLIFYJS='./node_modules/.bin/uglifyjs'
+CLI_JSHINT='./node_modules/.bin/jshint'
+CLI_POSTCSS='./node_modules/.bin/postcss'
+CLI_SASS='./node_modules/.bin/sass'
+CLI_UGLIFYJS='./node_modules/.bin/uglifyjs'
 
 # replace web/ with web/build/ for production css/js
 PATH_WEB=web/
@@ -86,14 +93,13 @@ javascripts=(
   'web/revtk/bundles/yui-base'
 )
 
-# Files to build    *.juicy.css > *.juiced.css > *.min.css
+# Files to build    web/koohii/*.build.scss > web/build/*.build.css > web/build/*.min.css
 stylesheets=(
   'web/koohii/home'
-  'web/revtk/main'
-  'web/revtk/manage'
-  'web/revtk/study-base'
-  'web/revtk/kanji-flashcardreview'
-  'web/revtk/review-home'
+  'web/koohii/main'
+  'web/koohii/manage'
+  'web/koohii/study-base'
+  'web/koohii/kanji-flashcardreview'
 )
 
 
@@ -160,7 +166,7 @@ function do_lint_js_files()
 
     printf "\n   $FILE_TO_LINT ... "
 
-    $JSHINT --config=$JSHINT_OPTS "${FILE_TO_LINT}"
+    $CLI_JSHINT --config=$JSHINT_OPTS "${FILE_TO_LINT}"
 
     # Break if file does not lint
     RETVAL=$?
@@ -180,25 +186,22 @@ function do_lint_js_files()
 function do_build_css()
 {
   for file in ${stylesheets[*]}; do
-    # Split
-    # f=(`echo $files | tr "," "\n"`)
 
-    P_JUICY=${file}.juicy.css
-    P_JUICED=${file/$PATH_WEB/$PATH_WEB_BUILD}.juiced.css
+    P_SASS=${file}.build.scss
+    P_SASSED=${file/$PATH_WEB/$PATH_WEB_BUILD}.build.css
     P_MINIFIED=${file/$PATH_WEB/$PATH_WEB_BUILD}.min.css
 
-    # Juice
-    php lib/juicer/JuicerCLI.php $JUICEROPTS -i $P_JUICY -o $P_JUICED
+    # SASS
+    printf "\n Sass.......  ${TEXT_RESET}${P_SASSED}\n"
+    $CLI_SASS $P_SASS:$P_SASSED
     if (( $? )) ; then
-      failMessage "Juicer failed."
+      failMessage "SASS error."
     fi
 
-    # TODO: lint css files (jslint chokes on YUI's minified styles)
-
     # Minify
-    printf "\n${TEXT_BOLD} Minifying  ${TEXT_RESET}${P_MINIFIED}  ...\n\n"
+    printf "${TEXT_BOLD} Minify.....  ${TEXT_RESET}${P_MINIFIED}\n"
     
-    $POSTCSS $P_JUICED -o $P_MINIFIED
+    $CLI_POSTCSS $P_SASSED -o $P_MINIFIED
     if (( $? )) ; then
       failMessage "postcss failed."
     fi
@@ -213,8 +216,6 @@ function do_build_js()
   do_check_for_console_log
 
   for file in ${javascripts[*]}; do
-    # Split
-    # f=(`echo $files | tr "," "\n"`)
 
     P_JUICY=${file}.juicy.js
     P_JUICED=${file/$PATH_WEB/$PATH_WEB_BUILD}.juiced.js
@@ -227,10 +228,10 @@ function do_build_js()
     fi
 
     printf "\n${TEXT_BOLD} Minifying  ${TEXT_RESET}${P_MINIFIED}  ...\n\n"
-    $UGLIFYJS $P_JUICED -o $P_MINIFIED --compress
+    $CLI_UGLIFYJS $P_JUICED -o $P_MINIFIED --compress
 
     if (( $? )) ; then
-      failMessage "Closure Compiler minification failed."
+      failMessage "UglifyJS failed."
     fi
 
   done

@@ -290,9 +290,8 @@
 
       if (cardAnswer)
       {
-        // check if flashcard is flipped yet
-        if (this.oReview.getFlashcardState() > 0)
-        {
+        // "No" answer doesn't require flipping the card first (issue #163)
+        if (sActionId === 'no' || this.oReview.getFlashcardState() > 0) {
           this.answerCard(cardAnswer);
         }
       }

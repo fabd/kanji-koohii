@@ -18,6 +18,5 @@ all:
   metas:
     title: 'Manage Flashcards'
   
-  stylesheets: [ '/koohii/manage.build.css' ]
   javascripts: [ '/revtk/manage.juicy.js' ]
 

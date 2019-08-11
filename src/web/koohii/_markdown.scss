@@ -45,12 +45,10 @@
   { margin:0 0 calc(var(--vunit) / 2); }
 
 .markdown ul
-  { margin:0 0 calc(var(--vunit) * 1.5); }
+  { margin:0 0 calc(var(--vunit) * 1.5); padding-left:2em; }
 
  /* lists */
 .markdown ul li { list-style:disc; }
-
-.markdown ul { padding-left:2em; }
 
  /* images */
 .markdown img { box-sizing:content-box; padding:3px; border:1px solid #C9C7B5; display:block; margin:0 auto; max-width:100%; height:auto; }

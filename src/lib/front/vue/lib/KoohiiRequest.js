@@ -66,7 +66,7 @@ export default {
         const t = TRON(res.data)
 
         // see the response in console (convenience)
-        console.log("KoohiiRequest / props received: %o", t.getProps())
+        // console.log("KoohiiRequest / props received: %o", t.getProps())
 
         // help debug
         if (t.hasErrors()) { console.warn("KoohiiRequest / errors: \n" + t.getErrors().join("\n")); }

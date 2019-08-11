@@ -200,7 +200,7 @@
 .study-search_btn { 
   display:block; min-width:42px; height:34px;
   text-align:center; color:#6b6762; font-size:20px; line-height:34px;
-  background-color:#322F2C; display:block; 
+  background-color:#322F2C;
 }
 .study-search_btn:hover { background:$--clr-bg-gl; }
 /*.study-search_btn.is-prev {  }*/
@@ -274,10 +274,3 @@ table.failed-kanji td { background-color:#fff; border-top:1px solid #eee; }
   #study-restudy,
   #study-learned { border-radius:4px; }
 }
-
-
-/* ---------------------------- */
-/* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
-/* ---------------------------- */
-@import "../build/pack/study-bundle"; //.css
-

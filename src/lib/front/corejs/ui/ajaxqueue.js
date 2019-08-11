@@ -47,15 +47,24 @@
  * 
  * @author   Fabrice Denis
  */
+/*global YAHOO, window, alert, console, document, Core, App */
 
-const AjaxQueue = Core.make();
+(function(){
+
+  /**
+   * Constructor.
+   * 
+   * @param {String} url      Request url, if it contains a query string, don't set options.parameters
+   * @param {Object} options  Constructor options
+   */
+  Core.Ui.AjaxQueue = Core.make();
   
   // internal shorthands
-const Y = YAHOO,
+  var Y = YAHOO,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
-  AjaxQueue.prototype =
+  Core.Ui.AjaxQueue.prototype =
   {
     blobs:          [],
     curblob:        null,
@@ -281,4 +290,5 @@ const Y = YAHOO,
     }
   };
 
-export { AjaxQueue }
+}());
+

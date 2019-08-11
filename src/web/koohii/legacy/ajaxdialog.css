@@ -34,7 +34,7 @@
   border:none; margin:0; /* YUI wtf */
   }
 
-.yui-skin-sam .yui-panel-container:focus { outline:none; }
+.yui-skin-sam .yui-panel-container:focus { outline:none; }
 
 /**
  * Class applied to the document body when using the "invisMask" option.
@@ -49,7 +49,5 @@
 /* Dégradation progressive, screw IE */
 .yui-skin-sam .yui-panel {
   box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
 }
 

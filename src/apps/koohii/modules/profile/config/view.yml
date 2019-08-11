@@ -3,5 +3,3 @@ all:
     title: 'Profile'
     robots: 'noindex, nofollow'
 
-  stylesheets: [ '/koohii/study-base.build.css' ]
-  javascripts: [ '/revtk/study-base.juicy.js' ]

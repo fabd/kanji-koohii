@@ -1,6 +1,10 @@
 // bundle used on the Study pages
-// 
+
 // requires the root bundle!
+
+// dependency for `css-loader` which includes our legacy stylesheets in the webpack build!
+import '@web/koohii/study-base.build.scss';
+import '@web/koohii/manage.build.scss';
 
 // Koohii
 import LeitnerChart    from '@components/LeitnerChart.vue'
@@ -9,7 +13,6 @@ import KoohiiEditStory from '@components/KoohiiEditStory.vue'
 
 // for legacy code upgrade path
 import { KoohiiAPI }   from '@lib/KoohiiAPI.js'
-
 
 if (window.Koohii && window.Koohii.UX) {
 
@@ -28,4 +31,4 @@ else {
   console.warn('Koohii.UX not defined.')
 }
 
-
+// console.log('study bundle', );

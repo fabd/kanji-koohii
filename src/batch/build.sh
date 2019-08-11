@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Build frontend files for test & production environments.
+# Lint & Minify LEGACY assets (old YUI2 based Javascript) for production.
 #
 #
 #    JUICER (LEGACY JS BUILD)
@@ -8,20 +8,6 @@
 #    Juicer is a legacy build tool that has basic functionality similar to sass.
 #    Hot reload is provided via mod_rewrite.
 #    
-#    
-#    SASS BUILD
-#    
-#    Stylesheets used to go through Juicer tool. The *.juicy.css files have been
-#    refactored to SCSS  ==>  web/koohii/*.build.scss
-#    
-#    Use sass --watch from the web container, when editing legacys stylesheets
-#    (ie. not part of the Vue build):
-#    
-#      $ sass --watch web/koohii/:web/build/koohii/
-#      
-#    coreWebResponse.php picks up any *.build.css requests, and reroutes them to
-#    the sass build files in web/build/koohii/
-#
 #
 #    VERSIONING
 #
@@ -42,12 +28,17 @@
 #    DEVELOPMENT VS TEST/PROD
 #
 #    In development, versioning is disabled. coreWebResponse generates asset urls that point
-#    directly to the *.juicy.js or *.build.css (sass output).
+#    directly to the *.juicy.js
 #    
-#    In production, coreWebResponse translates *.build.css  and *.juicy.js requests to the
-#    minified assets in /web/build/ *.min.(css|js)
+#    In production, coreWebResponse translates /web/revtk/*.juicy.js requests to the
+#    minified assets in /web/build/revtk/*.min.js
 #
 #
+#  NPM
+#  
+#    $ npm install jshint uglifyjs
+#
+
 #  USAGE
 #
 #    Production build (run from the root folder)!
@@ -65,7 +56,7 @@
 #
 #  SETUP
 #
-#    $ npm install --save-dev jshint postcss sass uglifyjs
+#    $ npm install --save-dev jshint uglifyjs
 #
 #
 #  TODO
@@ -76,32 +67,27 @@
 
 # node modules
 CLI_JSHINT='./node_modules/.bin/jshint'
-CLI_POSTCSS='./node_modules/.bin/postcss'
-CLI_SASS='./node_modules/.bin/sass'
 CLI_UGLIFYJS='./node_modules/.bin/uglifyjs'
 
 # replace web/ with web/build/ for production css/js
 PATH_WEB=web/
 PATH_WEB_BUILD=web/build/
 
-# Files to build    *.juicy.js > *.juiced.js > *.min.js
+# Legacy scripts, referenced via symfony's view.yml configs
 javascripts=(
+  'web/revtk/legacy-bundle'
+  'web/revtk/kanji-flashcardreview'
   'web/revtk/labs-alpha-flashcardreview'
   'web/revtk/manage'
   'web/revtk/study-base'
-  'web/revtk/kanji-flashcardreview'
-  'web/revtk/bundles/yui-base'
 )
 
-# Files to build    web/koohii/*.build.scss > web/build/*.build.css > web/build/*.min.css
-stylesheets=(
-  'web/koohii/home'
-  'web/koohii/main'
-  'web/koohii/manage'
-  'web/koohii/study-base'
-  'web/koohii/kanji-flashcardreview'
-)
-
+# Legacy stylesheets
+  # 'web/koohii/home'                   -- now included in landing-bundle
+  # 'web/koohii/main'                   -- ... ........ .. root-bundle
+  # 'web/koohii/manage'                 -- ... ........ .. study-bundle
+  # 'web/koohii/study-base'             -- ... ........ .. study-bundle
+  # 'web/koohii/kanji-flashcardreview'  -- ... ........ .. review-bundle
 
 # Juicer strips some debug code (not "console.log" which is checked for further below)
 JUICEROPTS='-v --strip ''Core.log,Core.warn,Core.halt,Core.assert'' --webroot web --config apps/koohii/config/juicer.config.php'
@@ -125,12 +111,11 @@ successMessage() {
 function show_help()
 {
   echo ''
-  echo 'Lint & minify all CSS and JS (note: legacy build! Vue is built with Webpack)'
+  echo 'Lint & minify *** LEGACY *** javascript bundles'
   echo ''
   echo 'Build options:'
-  echo '  --all       Production build (lint,css,js)'
+  echo '  --all       Production build (lint,js)'
   echo ''
-  echo '  --css       Build only stylesheets'
   echo '  --js        Build only javascripts'
   echo ''
   echo '  --version   Update config/versioning.inc.php'
@@ -144,7 +129,6 @@ function do_lint_js_files()
 
   LINT_FILES=`find web/revtk -name '*.js'`
   LINT_FILES="$LINT_FILES `find lib/front/corejs -name '*.js'`"
-  LINT_FILES="$LINT_FILES `find lib/front/revtk -name '*.js'`"
 
   # JsHint config file in json format, see http://jshint.com/docs/
   JSHINT_OPTS=batch/tools/jshint/jshint.conf.json
@@ -181,34 +165,6 @@ function do_lint_js_files()
 
   printf "\n\n"
   successMessage "   Linting complete.\n\n"
-}
-
-function do_build_css()
-{
-  for file in ${stylesheets[*]}; do
-
-    P_SASS=${file}.build.scss
-    P_SASSED=${file/$PATH_WEB/$PATH_WEB_BUILD}.build.css
-    P_MINIFIED=${file/$PATH_WEB/$PATH_WEB_BUILD}.min.css
-
-    # SASS
-    printf "\n Sass.......  ${TEXT_RESET}${P_SASSED}\n"
-    $CLI_SASS $P_SASS:$P_SASSED
-    if (( $? )) ; then
-      failMessage "SASS error."
-    fi
-
-    # Minify
-    printf "${TEXT_BOLD} Minify.....  ${TEXT_RESET}${P_MINIFIED}\n"
-    
-    $CLI_POSTCSS $P_SASSED -o $P_MINIFIED
-    if (( $? )) ; then
-      failMessage "postcss failed."
-    fi
-
-  done
-
-  successMessage "   CSS build complete.\n\n"
 }
 
 function do_build_js()
@@ -271,14 +227,19 @@ if [ $# -eq 0 ]; then
 fi
 
 
+if [ $1 = '--reset' ]; then
 
-if [ $1 = '--lint' ]; then
+  rm ${PATH_WEB_BUILD}./koohii/*.css
+  rm ${PATH_WEB_BUILD}./koohii/*.map
+  rm ${PATH_WEB_BUILD}./pack/*.css
+  rm ${PATH_WEB_BUILD}./pack/*.js
+  rm ${PATH_WEB_BUILD}./pack/*.map
+  rm ${PATH_WEB_BUILD}./revtk/*.js
+  rm ${PATH_WEB_BUILD}./revtk/bundles/*.js
+
+elif [ $1 = '--lint' ]; then
 
   do_lint_js_files
-
-elif [ "$1" = '--css' ]; then
-
-  do_build_css
 
 elif [ "$1" = '--js' ]; then
 
@@ -292,12 +253,11 @@ elif [ "$1" = '--all' ]; then
   # --all
 
   do_lint_js_files
-  do_build_css
   do_build_js
 
   do_build_versioning
 
-  successMessage " PRODUCTION build complete.\n\n"
+  successMessage " LEGACY production build complete.\n\n"
 
 else
 

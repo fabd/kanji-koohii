@@ -9,8 +9,7 @@
  */
 /*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii, VueInstance */
 
-/* =require from "%WEB%" */
-/* !require "/revtk/bundles/yui-base.juicy.js" déjà inclus */
+/* REQUIRES  legacy-bundle ! */
 
 /* =require from "%FRONT%" */
 /* =require "/scripts/autocomplete.js" */

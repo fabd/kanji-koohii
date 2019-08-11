@@ -11,9 +11,11 @@
 /* =require "/ui/eventdelegator.js" */
 /* =require "/ui/eventdispatcher.js" */
 /* =require "/ui/ajaxindicator.js" */
+/* =require "/ui/ajaxqueue.js" */
 /* =require "/ui/ajaxrequest.js" */
 /* =require "/ui/ajaxpanel.js" */
 /* =require "/ui/ajaxdialog.js" */
+/* =require "/ui/keyboard.js" */
 /* =require "/ui/mobile.js" */
 
 /* AjaxTable (+ rows-per-page FilterStd) */

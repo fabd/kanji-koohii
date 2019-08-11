@@ -1,21 +1,8 @@
-// bundle used on the Flashcard Review page mainly
-// 
-// requires the root bundle!
+/**
+ * FLASHCARD REVIEW bundle
+ */
 
-
-// LEGACY CODE ! (experiment)
-// 
-//   To be able to use new syntax and piece-meal upgrade old code:
-//    
-//   - import all the legacy code from kanji-flashcardreview.juicy.js
-//   - refactor all the Juicer =require directives to modern JS import's
-
-import { AjaxQueue }       from '@legacy/ajaxqueue.js'
-Core.Ui.AjaxQueue      = AjaxQueue
-import { Keyboard }        from '@legacy/keyboard.js'
-Core.Ui.Keyboard       = Keyboard
-import { FlashcardReview } from '@legacy/FlashcardReview.js'
-App.Ui.FlashcardReview = FlashcardReview
+import '@web/koohii/kanji-flashcardreview.build.scss';
 
 // Koohii
 import KoohiiDictList  from '@components/KoohiiDictList.vue'

@@ -5,6 +5,9 @@
  */
 /*global alert, console, document, window, App, Core, YAHOO */
 
+/* =require from "%WEB%" */
+/* =require "/revtk/components/FlashcardReview.js" */
+
 
 (function(){
 

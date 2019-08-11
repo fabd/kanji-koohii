@@ -50,26 +50,18 @@ Init node packages (ignore warnings about "fsevents" and "ajv"):
 
     npm install
 
-Build the Vue bundles:
+Run the webpack build (you can also use `npm run watch`):
 
     npm run dev
 
-Compile the stylesheets:
-
-    sass --watch web/koohii/:web/build/koohii/
-
 You should see something like this (files are output to `src/web/build/pack/`):
 
-    Version: webpack 3.12.0
-    Time: 10562ms
-                   Asset     Size  Chunks                    Chunk     Names
-    review-bundle.raw.js   159 kB       0  [emitted]             review-bundle
-     study-bundle.raw.js   116 kB       1  [emitted]             study-bundle
-      root-bundle.raw.js   389 kB       2  [emitted]  [big]      root-bundle
-         root-bundle.css  1.86 kB       2  [emitted]             root-bundle
-        study-bundle.css  6.67 kB       1  [emitted]             study-bundle
-       review-bundle.css    15 kB       0  [emitted]             review-bundle
-    
+                    Asset     Size          Chunks             Chunk Names
+    landing-bundle.raw.js  678 KiB  landing-bundle  [emitted]  landing-bundle
+    review-bundle.raw.js   580 KiB   review-bundle  [emitted]  review-bundle
+    root-bundle.raw.js     731 KiB     root-bundle  [emitted]  root-bundle
+    study-bundle.raw.js    497 KiB    study-bundle  [emitted]  study-bundle
+
 
 
 **Done!**
@@ -81,21 +73,23 @@ Sign in with user `guest` pw `test` (or create an account, no emails are sent in
 
 # About the project <a name="about"></a>
 
-Please note Kanji Koohii started 12+ years ago! The project is based on Symfony 1.4-ish (with some tweaks here and there).
+Please note Kanji Koohii first came online in the summer of 2005! The code base is still largely based on Symfony 1.4 (with some tweaks here and there).
 
 **Docker Setup**: we use two simple containers: `web` for Php 7.0 & Apache, `db` for MysQL 5.6. For convenience, both containers maintain bash history and custom aliases through a Docker volume (see `docker-compose.yml`).
 
-**The legacy build** compiles object-oriented Javascript, along with YUI2 library. See `src/batch/build.sh`.
+**The Webpack build**: newer developments can benefit from Webpack 4, babel, Vue, and modern Javascript.
 
-- The legacy JS files (`web/revtk/*.juicy.js`) have a "hot reload" through a mod_rewrite rule in the .htaccess file.
+- Currently Vue components are located in `src/lib/front/vue/`.
+- Use `npm run dev` or `npm run watch`, refresh the page after making a change
+- Legacy stylesheets were converted to SCSS file extension, and included in the Webpack bundles (root/study/review/etc).
+- Legacy stylesheets are located in `web/koohii/*.build.scss`
+
+**The legacy build**: long before the upgrade to Webpack 4, the scripts & stylesheets were built with a custom tool called Juicer. The legacy Javascript bundles were based on YUI2 framework. As it's very time consuming to refactor, there are still old scripts in use.
+
+- The legacy scripts are in `web/revtk/` folder, with a `*.juicy.js` naming pattern.
+- "Juicy" JS files have a "hot reload" through a mod_rewrite rule in the .htaccess file.
 - Make sure to 'Disable cache' in your Chrome Console.
-- The legacy stylesheets have been refactored to SCSS. Use `npm run sass-watch` in the web container when editing *.build.scss files.
-- The build.sh script is only required for deployment (bundling & minifying).
-
-**The Vue build** was introduced in recent years. It uses Webpack, Babel & VueJS. Hence, new developments can use modern Javascript. Newer css/js (single file components), are located in `src/lib/front/vue/`.
-
-- The Vue build does *not* feature hot reload: use `npm run dev` after editing Vue files (located at `lib/front/vue/`)
-- Note that the Vue build extracts CSS, those css 'bundles' (one matching each Vue bundle), are imported by the .build.scss files.
+- The `src/batch/build.sh` script is only required for test/staging/prod.
 
 
 ## The Symfony 1 Project Structure
@@ -113,21 +107,10 @@ The global layout is in `apps/koohii/templates/layout.php`.
 
 Development build is the default environment accessed via `index.php` or `index_dev.php`:
 
-* **The legacy build** has "hot reload" through custom tool "Juicer" (see `batch/build.sh` for more info). Since Juicer is run through a mod rewrite rule, simply check the "Disable cache" in Chrome Dev Tools, and refresh/reload the page. Any changes to `.juicy.(css|js)` files will be picked up!
 
-* **The VueJS & ES6 build** is not configured with hot reload. Even in development, changes to the Vue components and bundles have to be recompiled with `npm run dev`.
+## Webpack
 
-### Test environment
-
-The test environment is accessed via `index_test.php`.
-
-The test build is similar to production. It bypasses Juicer and requests minified css/js assets. It's useful to see the performance via browser dev tools "Network" tab: size of minified assets, number of requests, etc.
-
-Since *test* bypasses Juicer, there is no "hot loading" and we have to build legacy assets + Vue *production* assets. All test/production assets are compiled (and deployed from) `web/build/`:
-
-    $ batch/build
-    $ npm run build
-
+See `package.json`.
 
 ## Using virtual host name
 
@@ -139,10 +122,7 @@ To access with: http://koohii.local
 
 Make sure it matches the `ServerName` in `.docker/php-apache/koohii.vhosts.conf`, then rebuild the `web` container (`dc down ; dc build ; dc up -d`).
 
-
-
-Also make sure to update `website_url` setting
-located in `src/apps/koohii/config/app.yml`. This setting is used to generate links in a few places.
+Also make sure to update `website_url` setting located in `src/apps/koohii/config/app.yml`. This setting is used to generate links in a few places.
 
 
 # Working with the MySQL container <a name="database"></a>
@@ -269,7 +249,7 @@ Make sure both containers are running, and don't show "exit 0":
 
 If one container exited (eg. Apache complaining that httpd is already running), try:
 
-    dc down && dc up -d
+    dc stop && dc up -d
 
 You can also check the logs:
 

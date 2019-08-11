@@ -29,7 +29,6 @@ body {
 
 .clear { clear:both; overflow:hidden; height:0; }
 
-section { margin:0; }
 .m_top_x { margin-top:10px; }
 
 
@@ -107,7 +106,7 @@ section { margin:0; }
 /* Common :: typography */
 /* ---------------------------- */
 
-section { text-align:center; font-size:16px; padding:10px 0 40px; }
+section { text-align:center; font-size:16px; margin:0; padding:10px 0 40px; }
 section h2 { font-size:1.61em; line-height:1em; }
 section p  { font-size:1em; line-height:1.8em; margin-bottom:1.5em; }
 
@@ -222,9 +221,3 @@ section p  { font-size:1em; line-height:1.8em; margin-bottom:1.5em; }
   #its-free .col-r { text-align:left; }
   #its-free .learnmore { margin-left:80px; }
 }
-
-
-/* ---------------------------- */
-/* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
-/* ---------------------------- */
-@import "../build/pack/root-bundle"; //.css

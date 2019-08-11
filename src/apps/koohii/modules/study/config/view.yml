@@ -15,5 +15,4 @@ mystories:
     title: 'Study: My Stories List'
   
 all:
-  stylesheets: [ '/koohii/study-base.build.css' ]
   javascripts: [ '/revtk/study-base.juicy.js' ]

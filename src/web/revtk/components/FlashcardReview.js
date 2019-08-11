@@ -95,12 +95,15 @@
  *     Links that trigger an action (answer buttons), calls event "onAction" with "XXXX" as second argument
  *
  */
+/*global YAHOO, window, alert, console, document, Core, App, Koohii, VueInstance */
+(function() {
 
-const FlashcardReview = Core.make();
+  App.Ui.FlashcardReview = Core.make();
 
-  const Y = YAHOO,
+  var Y = YAHOO,
       Dom = Y.util.Dom,
-      Event = Y.util.Event;
+      Event = Y.util.Event,
+      FlashcardReview = App.Ui.FlashcardReview;
 
   FlashcardReview.prototype =
   {
@@ -740,4 +743,4 @@ const FlashcardReview = Core.make();
     
   };
 
-export { FlashcardReview }
+}());

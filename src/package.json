@@ -18,6 +18,7 @@
     "serve": "NODE_ENV=development webpack-dev-server --host 0.0.0.0 --config webpack.dev.js",
     "dev": "NODE_ENV=development webpack --config webpack.dev.js --hide-modules",
     "prod": "rm -rf node_modules/.cache/babel-loader && NODE_ENV=production webpack --config webpack.prod.js --hide-modules --progress",
+    "lint:css": "npx stylelint lib/front/vue/**/*.{vue} web/koohii/**/*.{css,scss}",
     "watch": "webpack --config webpack.dev.js --watch"
   },
   "dependencies": {

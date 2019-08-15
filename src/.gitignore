@@ -6,6 +6,7 @@
 .*
 !.gitignore
 !.babelrc
+!.prettierrc.js
 !.stylelintrc.yml
 !/web/.htaccess_default
 

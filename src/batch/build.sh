@@ -184,7 +184,7 @@ function do_build_js()
     fi
 
     printf "\n${TEXT_BOLD} Minifying  ${TEXT_RESET}${P_MINIFIED}  ...\n\n"
-    $CLI_UGLIFYJS $P_JUICED -o $P_MINIFIED --compress
+    $CLI_UGLIFYJS -c drop_console $P_JUICED -o $P_MINIFIED
 
     if (( $? )) ; then
       failMessage "UglifyJS failed."

@@ -24,7 +24,17 @@ module.exports = merge(baseConfig, {
   mode: "production",
 
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [
+      new TerserJSPlugin({
+        // https://github.com/terser-js/terser#minify-options
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          }
+        },
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
 
     // https://webpack.js.org/plugins/split-chunks-plugin/
     splitChunks: {

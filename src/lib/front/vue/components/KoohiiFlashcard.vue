@@ -1,17 +1,17 @@
 <template>
 
   <div
-    v-if="is_displayed"
-    v-bind:style="{ height: this.cardHeight + 'px' }"
+    v-if="isDisplayed"
+    :style="{ height: cardHeight + 'px' }"
     class="uiFcCard uiFcAction"
     :class="{
       'is-reverse': reviewMode.fc_reverse,
-      'uiFcState-0': fc_state === 0,
-      'uiFcState-1': fc_state === 1
+      'uiFcState-0': fcState === 0,
+      'uiFcState-1': fcState === 1
     }"
     data-action="flip">
  
-    <component v-bind:is="currentView" ref="card">
+    <component :is="currentView" ref="card">
       <!-- component changes when vm.currentView changes! -->
     </component>
 
@@ -33,6 +33,19 @@ export default {
     'vocabshuffle': KoohiiFlashcardVocabShuffle
   },
 
+  props: {
+    //
+    cardData: { type: Object, required: true },
+
+    // _ReviewKanji.php
+    reviewMode: { type: Object, required: true },
+
+    //
+    fcState: { type: Number, default: 0 },
+    //
+    isDisplayed: { type: Boolean, default: false }
+  },
+
   data() {
     return {
       currentView: KoohiiFlashcardKanji,
@@ -43,17 +56,21 @@ export default {
     }
   },
 
-  props: {
-    //
-    cardData: Object,
+  // life cycle events
 
-    // _ReviewKanji.php
-    reviewMode: Object,
+  beforeDestroy() {
+    // console.log('KoohiiFlashcard::beforeDestroy()');
+  },
 
-    //
-    fc_state: { type: Number, default: 0 },
-    //
-    is_displayed: { type: Boolean, default: false }
+  beforeMount() {
+    // console.log('KoohiiFlashcard::beforeMount(%o)', this.cardData);
+  },
+
+  created() {
+    // console.log('KoohiiFlashcard::created(%o)', this.cardData);
+
+    // handle flashcard layout & interactivity as a child component according to review mode
+    this.currentView = this.reviewMode.fc_view;
   },
 
   methods: {
@@ -61,12 +78,12 @@ export default {
     setState(iState)
     {
       // console.log('setState(%i)', iState);
-      this.fc_state = iState;
+      this.fcState = iState;
     },
 
     getState()
     {
-      return this.fc_state;
+      return this.fcState;
     },
 
     getChild()
@@ -104,25 +121,8 @@ export default {
         }
       }
 
-      this.is_displayed = bDisplay;
+      this.isDisplayed = bDisplay;
     }
-  },
-
-  // life cycle events
-
-  beforeDestroy() {
-    // console.log('KoohiiFlashcard::beforeDestroy()');
-  },
-
-  beforeMount() {
-    // console.log('KoohiiFlashcard::beforeMount(%o)', this.cardData);
-  },
-
-  created() {
-    // console.log('KoohiiFlashcard::created(%o)', this.cardData);
-
-    // handle flashcard layout & interactivity as a child component according to review mode
-    this.currentView = this.reviewMode.fc_view;
   }
 }
 </script>
@@ -177,8 +177,9 @@ export default {
   background: linear-gradient(to bottom,  #50abeb 0%,#489ad4 100%);
 }
 .uiFcOptBtn:hover,
-.uiFcOptBtn:focus { background:#007be3; color:#e6eefb; 
-  background: -webkit-linear-gradient(top,  #268BD2 0%,#227dbd 100%);
+.uiFcOptBtn:focus {
+  color:#e6eefb; 
+  background:#007be3;
   background: linear-gradient(to bottom,  #268BD2 0%,#227dbd 100%);
 }
 .uiFcOptBtn u { color:#eaf6ff; padding-right:1px; }
@@ -368,8 +369,8 @@ export default {
 
   /* card size */
 
-  width:100%; position:relative;
-  height:366px; background:#fff;
+  width:100%;
+  height:366px;
   box-shadow:0px 1px 5px 0px rgba(0,0,0,0.2); /* works in Firefox 25 */
 }
 

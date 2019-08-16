@@ -1,3 +1,5 @@
+/* global Koohii */
+
 // bundle used on the Study pages
 
 // requires the root bundle!
@@ -31,4 +33,4 @@ else {
   console.warn('Koohii.UX not defined.')
 }
 
-// console.log('study bundle', );
+console.log('study bundle', );

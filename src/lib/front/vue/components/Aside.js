@@ -35,12 +35,10 @@ export default {
   },
 
   toggle() {
-    if (!instance || !instance.show) {
+    if (!instance || !instance.show) {
       this.open();
-    }
-    else {
+    } else {
       this.close();
     }
-  }
-
-}
+  },
+};

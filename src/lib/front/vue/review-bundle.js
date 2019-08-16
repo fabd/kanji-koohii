@@ -1,6 +1,7 @@
 /**
  * FLASHCARD REVIEW bundle
  */
+/* global Koohii */
 
 import '@web/koohii/kanji-flashcardreview.build.scss';
 

@@ -1,7 +1,7 @@
 <template>
   <ul class="k-nav-menu">
     <template v-for="$tm in menu.items">
-      <koohii-nav-menu-item :sm="$tm" />
+      <koohii-nav-menu-item :key="$tm.id" :sm="$tm" />
     </template>
   </ul>
 </template>
@@ -39,6 +39,17 @@ export default {
     defaultOpened() {
       return this.menu.opened
     }
+  },
+
+  created() {
+    // console.log('KoohiiNavMenu::created()')
+  },
+
+  mounted() {
+    // console.log('KoohiiNavMenu::mounted()')
+
+    // Vue.nextTick(() => {    })
+
   },
 
   methods: {
@@ -87,17 +98,6 @@ export default {
 
       this.initted = true
     }
-  },
-
-  created() {
-    // console.log('KoohiiNavMenu::created()')
-  },
-
-  mounted() {
-    // console.log('KoohiiNavMenu::mounted()')
-
-    // Vue.nextTick(() => {    })
-
   }
 }
 </script>

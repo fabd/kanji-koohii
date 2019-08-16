@@ -5,11 +5,11 @@
   <form name="EditStory" method="post" action="/study/kanji/1">
 
     <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
-    <input type="hidden" name="ucs_code" v-model="kanjiData.ucs_id">
+    <input v-model="kanjiData.ucs_id" type="hidden" name="ucs_code">
 
     <div id="my-story" lang="ja">
 
-      <div class="padding rtkframe" ref="maskArea">
+      <div ref="maskArea" class="padding rtkframe">
 
         <!-- left -->
         <div class="left">
@@ -17,11 +17,11 @@
           <div class="framenum" title="Frame number">{{ kanjiData.framenum }}</div>
 
           <div :class="{ kanji: true, onhover: isReviewMode }">
-            <cjk_lang_ja>{{ kanjiData.kanji }}</cjk_lang_ja>
+            <cjk-lang-ja>{{ kanjiData.kanji }}</cjk-lang-ja>
           </div>
 
           <div class="strokecount" title="Stroke count">[{{ kanjiData.strokecount }}]<br/>
-            <span style="font-size:120%"><cjk_lang_ja>{{ kanjiData.onyomi }}</cjk_lang_ja></span>
+            <span style="font-size:120%"><cjk-lang-ja>{{ kanjiData.onyomi }}</cjk-lang-ja></span>
           </div>
         
         </div>
@@ -31,7 +31,7 @@
         <div class="right">
          
           <div class="keyword">
-            <span class="JSEditKeyword" v-on:click="onKeyword" title="Click to edit the keyword">{{ displayKeyword }}</span>
+            <span class="JSEditKeyword" title="Click to edit the keyword" @click="onKeyword">{{ displayKeyword }}</span>
           </div>
 
           <div id="storybox">
@@ -44,18 +44,18 @@
                 <span v-html="koohiiformGetErrors"></span>
               </div>
 
-              <textarea name="txtStory" id="frmStory" v-model="postStoryEdit"></textarea>
+              <textarea id="frmStory" v-model="postStoryEdit" name="txtStory"></textarea>
 
               <!-- FIXME  refactor to flex... -->
               <div class="controls valign">
                 <div style="float:left;">
-                  <input type="checkbox" name="chkPublic" id="storyedit_public" v-model="postStoryPublic">
+                  <input id="storyedit_public" v-model="postStoryPublic" type="checkbox" name="chkPublic">
                   <label for="storyedit_public">Share this story</label>
                 </div>
                 <div style="float:right;">
                   <koohii-chars-left :text="postStoryEdit" :max-length="512" :warning-limit="20" />
-                  <input v-on:click.prevent="onSubmit" type="button" value="Save changes" title="Save/Update story">
-                  <input v-on:click="onCancel" type="button" value="Cancel" name="cancel" title="Cancel changes">
+                  <input type="button" value="Save changes" title="Save/Update story" @click.prevent="onSubmit">
+                  <input type="button" value="Cancel" name="cancel" title="Cancel changes" @click="onCancel">
                 </div>
                 <div class="clear"></div>
               </div>
@@ -63,7 +63,7 @@
                     
             <div v-else id="storyview">
 
-              <div id="sv-textarea" class="bookstyle" title="Click to edit your story" v-on:click="onEditStory">
+              <div id="sv-textarea" class="bookstyle" title="Click to edit your story" @click="onEditStory">
                 
                 <template v-if="postStoryView.length">
 
@@ -116,11 +116,11 @@
 <script>
 import Dom, { insertAfter } from '@lib/koohii/dom.js'
 
-import { KoohiiAPI, TRON } from '@lib/KoohiiAPI.js'
+import { KoohiiAPI } from '@lib/KoohiiAPI.js'
 
 //comps
 import KoohiiCharsLeft     from '@components/KoohiiCharsLeft.vue'
-import cjk_lang_ja         from '@components/cjk_lang_ja.vue'
+import CjkLangJa         from '@components/CjkLangJa.vue'
 import KoohiiSharedStory   from '@components/KoohiiSharedStory.vue'   // instantiated after publishing a story
 
 //mixins
@@ -132,7 +132,7 @@ export default {
   name: 'KoohiiEditStory',
 
   components: {
-    cjk_lang_ja,
+    CjkLangJa,
     KoohiiCharsLeft
   },
 
@@ -145,9 +145,9 @@ export default {
     // See ./apps/koohii/modules/study/templates/editSuccess.php
 
     // framenum, kanji, ucs_id, keyword, onyomi, strokecount, ... (cf. kanjisPeer::getKanjiByUCS())
-    kanjiData: Object,
+    kanjiData: { type: Object, required: true },
     // user edted keyword, or null
-    custKeyword: String,
+    custKeyword: { type: String, default: null },
     
     // true if instanced from the Flashcard Review page (the "Edit Story" dialog)
     isReviewMode:       { type: Boolean, default: false },
@@ -188,6 +188,15 @@ export default {
     editKeywordUrl()
     {
       return '/study/editkeyword/id/' + this.kanjiData.ucs_id
+    }
+  },
+
+  beforeDestroy()
+  {
+    // (legacy code) free resources/events used by Edit Keyword dialog
+    if (this.oEditKeyword) {
+      this.oEditKeyword.destroy()
+      this.oEditKeyword = null
     }
   },
 
@@ -362,15 +371,6 @@ export default {
         element.setSelectionRange(length, length)
       }
     }
-  },
-
-  beforeDestroy()
-  {
-    // (legacy code) free resources/events used by Edit Keyword dialog
-    if (this.oEditKeyword) {
-      this.oEditKeyword.destroy()
-      this.oEditKeyword = null
-    }
   }
 
   // created()
@@ -444,7 +444,7 @@ export default {
     color: #8e8e8e;
   }
   .keyword {
-    font: 20px Georgia, Times New Roman;
+    font: 20px Georgia, Times New Roman, sans-serif;
     letter-spacing: 2px;
     text-align: right;
     .edition {

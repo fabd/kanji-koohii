@@ -21,11 +21,9 @@
  * 
  */
 
-import VueInstance   from '@lib/helpers/vue-instance.js'
-
 import KoohiiLoading from './KoohiiLoading.vue'
 
-import Dom, { classList, getStyle } from '@lib/koohii/dom.js'
+import { classList, getStyle } from '@lib/koohii/dom.js'
 
 import Lang, { merge } from '@lib/koohii/lang.js'
 const isNode = Lang.isNode

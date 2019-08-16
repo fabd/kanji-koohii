@@ -1,5 +1,5 @@
 <template>
-  <span class="cj-k" v-bind:class="className" lang="ja" xml:lang="ja">
+  <span class="cj-k" :class="className" lang="ja" xml:lang="ja">
     <span v-if="html" v-html="html"></span>
     <slot v-else></slot>
   </span>
@@ -20,21 +20,20 @@
 
   USAGE
 
-    <cjk_lang_ja className="css-class" html="<em>foo</em>"></cjk_lang_ja>
+    <cjk-lang-ja className="css-class" html="<em>foo</em>"></cjk-lang-ja>
 
     or
 
-    <cjk_lang_ja className="css-class">{{ content }}</cjk_lang_ja> 
+    <cjk-lang-ja className="css-class">{{ content }}</cjk-lang-ja> 
 
 */
-
 export default {
 
-  name: 'cjk_lang_ja',
+  name: 'CjkLangJa',
 
   props: {
-    className: String,
-    html: String
+    className: { type: String, default: '' },
+    html:      { type: String, default: '' },
   }
 
 }

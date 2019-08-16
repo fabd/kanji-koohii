@@ -25,8 +25,18 @@ module.exports = {
   rules: {
     // "prettier/prettier": "warn",
 
-    // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
+    // using `drop_console` for production build
+    "no-console": "off",
+
+    "no-unused-vars": "off",
+
+    "declaration-block-no-duplicate-properties": [
+      "on",
+      // ignore fallbacks for older browsers
+      { ignore: ["consecutive-duplicates"] },
+    ],
+
     "vue/max-attributes-per-line": "off",
+    "vue/no-v-html": "off",
   },
 };

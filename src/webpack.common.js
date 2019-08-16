@@ -1,3 +1,4 @@
+/* eslint-env node */
 "use strict";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -109,10 +110,7 @@ module.exports = {
     // new DashboardPlugin(),
     new StylelintBarePlugin({
       // cf. stylelint-webpack-plugin options
-      files: [
-        "lib/front/vue/**/*.vue",
-        "web/koohii/**/*.{css,scss}",
-      ],
+      files: ["lib/front/vue/**/*.vue", "web/koohii/**/*.{css,scss}"],
       lintDirtyModulesOnly: true,
     }),
     new VueLoaderPlugin(),

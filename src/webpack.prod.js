@@ -1,13 +1,14 @@
-'use strict'
+/* eslint-env node */
+"use strict";
 
-const isProduction = (process.env.NODE_ENV === 'production')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const baseConfig = require('./webpack.common.js')
+const isProduction = process.env.NODE_ENV === "production";
+const webpack = require("webpack");
+const merge = require("webpack-merge");
+const baseConfig = require("./webpack.common.js");
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserJSPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserJSPlugin = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 function recursiveIssuer(m) {
   if (m.issuer) {
@@ -20,19 +21,17 @@ function recursiveIssuer(m) {
 }
 
 module.exports = merge(baseConfig, {
-  mode: 'production',
+  mode: "production",
 
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
-    
+
     // https://webpack.js.org/plugins/split-chunks-plugin/
     splitChunks: {
-
       // make sure to see all expected chunks
       minSize: 1000,
 
       cacheGroups: {
-
         // Create a commons chunk, which includes all code shared between entry points.
         // commons: {
         //   name: 'commons',
@@ -44,29 +43,29 @@ module.exports = merge(baseConfig, {
         // Includes all code from node_modules in the whole application.
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors-bundle',
-          chunks: 'all'
+          name: "vendors-bundle",
+          chunks: "all",
         },
 
         rootStyles: {
-          name: 'root-bundle',
-          test: (m, c, entry = 'root-bundle') =>
-            m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-          chunks: 'all',
+          name: "root-bundle",
+          test: (m, c, entry = "root-bundle") =>
+            m.constructor.name === "CssModule" && recursiveIssuer(m) === entry,
+          chunks: "all",
           enforce: true,
         },
         studyStyles: {
-          name: 'study-bundle',
-          test: (m, c, entry = 'study-bundle') =>
-            m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-          chunks: 'all',
+          name: "study-bundle",
+          test: (m, c, entry = "study-bundle") =>
+            m.constructor.name === "CssModule" && recursiveIssuer(m) === entry,
+          chunks: "all",
           enforce: true,
         },
         reviewStyles: {
-          name: 'review-bundle',
-          test: (m, c, entry = 'review-bundle') =>
-            m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-          chunks: 'all',
+          name: "review-bundle",
+          test: (m, c, entry = "review-bundle") =>
+            m.constructor.name === "CssModule" && recursiveIssuer(m) === entry,
+          chunks: "all",
           enforce: true,
         },
       },
@@ -77,27 +76,20 @@ module.exports = merge(baseConfig, {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
 
       {
         test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
-      }
-    ]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+    ],
   },
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isProduction ? '[name].min.css' : '[name].raw.css',
-      chunkFilename: isProduction ? '[name].min.css' : '[name].raw.css',
+      filename: isProduction ? "[name].min.css" : "[name].raw.css",
+      chunkFilename: isProduction ? "[name].min.css" : "[name].raw.css",
     }),
-  ]
-})
+  ],
+});

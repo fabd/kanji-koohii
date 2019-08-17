@@ -3,48 +3,34 @@
  * Generate a data file with timestamps which is used by factory /lib/core/coreWebResponse
  * to add versioning of javascript and stylesheets on the client.
  * 
- * Notes:
- *
- *   EXCLUDES /web/sf/  DIRECTORY !  (symfony's own assets)
+ * Usage:
+ * 
+ *   php batch/build_app.php --webroot <path> --out <file.php>
  * 
  * Example:
  * 
  *   php batch/build_app.php -w web -o config/versioning.inc.php
- * 
- * Someday/Maybe:
- *
- * - If we match includeAssets to fully qualified filename, the patterns could
- *   also match directories, eg. include only files from "web/js/foo/*.js"
- *
- * Usage: php build_app.php --webroot <path> --out <file>
- *
- *  --webroot <path>  The web document root to crawl for resources (required)
- *  --out <file>      Output filename (required)
- *  -v                Verbose mode (optional)
- * 
  * 
  * @author   Fabrice Denis
  */
 
 require_once(realpath(dirname(__FILE__).'/..').'/lib/batch/Command_CLI.php');
 
-
 class BuildApp extends Command_CLI
 {
-  protected
-    $includeAssets   = array();
-  
-  const
-    /**
-     * Files for which we save versioning information.
-     * 
-     */
-    INCLUDE_ASSETS   = '*.css,*.js';
+  // list of resources for which we want versioning
+  // - use GLOB PATTERNS
+  // - MUST be descendants of the --webroot option
+  const INCLUDE_ASSETS = [
+    'web/build/revtk/*.min.js',
+    'web/build/pack/*.min.css',
+    'web/build/pack/*.min.js'
+  ];
   
   public function __construct()
   {
     parent::__construct(array(
-      'webroot|w=s'  => 'The web document root to crawl for resources (required)',
+      'webroot|w=s'  => 'The web document root (required)',
       'out|o=s'      => 'Output filename (required)',
       'list|l'       => 'List all versioned resources and exits'
     ));
@@ -54,21 +40,7 @@ class BuildApp extends Command_CLI
       $this->throwError('Required --webroot flag. Type --help for help.');      
     }
 
-    // set filters
-    $this->includeAssets = array();
-    $filters = explode(',', self::INCLUDE_ASSETS);
-    foreach ($filters as $filter)
-    {
-      // backslash characters in the filter that have a regexp meaning
-      $filter = preg_replace('|[\[\]\$\\\\.\+\-\^]|', '\\\$0', trim($filter));
-      // create a ready-to-use regexp pattern with the star meaning
-      $pattern = '|^' . str_replace('*', '.+', $filter) . '$|i';
-      
-      $this->includeAssets[] = $pattern;
-    }
-    //die(implode(' - ', $this->includeAssets));
-
-    $files = $this->crawl($this->webPath);
+    $files = $this->crawl(self::INCLUDE_ASSETS);
     if ($this->getFlag('list'))
     {
       echo implode("\n", $files);
@@ -93,51 +65,20 @@ class BuildApp extends Command_CLI
     $this->verbose('Success! (output file "%s").', $outfile);
   }
   
-  /**
-   * Crawl from the given root path and look through all sub directories,
-   * collect all resource files. 
-   * 
-   */
-  private function crawl($path)
+  private function crawl(array $includeAssets)
   {
-    $files = array();
+    $assets = [];
 
-    $path = realpath($path);
-
-    $handle = opendir($path);
-    while (false !== ($file = readdir($handle)))
-    {
-      if ($file=='.' || $file=='..')
-      {
-        continue;
-      }
-      
-      $fullname = $path . DIRECTORY_SEPARATOR . $file;
-  
-      if (is_dir($fullname))
-      {
-        // FIXME configurable? may never be needed
-        $sf_exclude_path = realpath($this->webPath).'/sf';
-        if ($sf_exclude_path === $fullname)
-        {
-          //echo "Excluding symfony web path /sf\n";
-          //exit;
-          continue;
-        }
-
-        $files = array_merge($files, $this->crawl($fullname));
-      }
-
-      if ($this->isIncludedAsset($file))
-      {
-        array_push($files, $this->fixUrlPathname($fullname));
-      }
+    foreach ($includeAssets as $pattern) {
+      $files = glob($pattern);
+      $assets = array_merge($assets, $files);
     }
-  
-    // tidy up: close the handler
-    closedir($handle);
-    
-    return $files;
+
+    $assets = array_map(function($path) {
+      return $this->normalizeForwardSlashes($path);
+    }, $assets);
+
+    return $assets;
   }
 
   /**
@@ -146,30 +87,9 @@ class BuildApp extends Command_CLI
    * @param  string $path  Fully qualified path name
    * @return string
    */
-  protected function fixUrlPathname($path)
+  protected function normalizeForwardSlashes($path)
   {
     return preg_replace('/[\/\\\]/', '/', $path);
-  }
-
-
-  /**
-   * Returns true if the file is a revved resource.
-   * 
-   * The filename must match one of the INCLUDE_ASSETS patterns.
-   * 
-   * @param  string $file   Filename
-   * @return boolean
-   */
-  private function isIncludedAsset($file)
-  {
-    foreach ($this->includeAssets as $pattern)
-    {
-      if (preg_match($pattern, $file) === 1) {
-        return true;
-      }
-    }
-    
-    return false;
   }
 
   /**
@@ -196,25 +116,27 @@ echo <<<EOD
  */
 EOD;
 
-    echo "\nreturn array(\n";
+    echo "\nreturn [\n";
 
-    // format basepath of document root to substract from the resource urls
-    $basePath = $this->fixUrlPathname(realpath($this->webPath));
+    // noralize basepath of web document root to be substracted from the resource urls
+    $basePath = $this->normalizeForwardSlashes(realpath($this->webPath));
 
     $assets = array();
 
     foreach ($files as $file)
     {
-      $timestamp = filemtime($file);
+      $realFile = realpath($file);
+
+      $timestamp = filemtime($realFile);
       
       // use as array key, the absolute url relative from the web root
       // (this should match the url passed to the stylesheet and javascript include helpers)
-      $resourcePath = '/' . $this->getRelativePathFrom($file, $basePath);
+      $resourcePath = '/' . $this->getRelativePathFrom($realFile, $basePath);
       
       $assets[] = "'$resourcePath' => $timestamp";
     }
     
-    echo implode(",\n", $assets) . "\n);";
+    echo implode(",\n", $assets) . "\n];";
     
     return ob_get_clean();
   }

@@ -10,8 +10,9 @@
   $pageId      = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
   $landingPage = $sf_request->getParameter('_landingPage');
   $withFooter  = $sf_request->getParameter('_homeFooter') ? 'with-footer ' : '';
+  $isDevelopment = CORE_ENVIRONMENT === 'dev';
 
-  $fnAddBundles = function(bool $css) use ($sf_response, $landingPage)
+  $fnAddBundles = function(bool $css) use ($sf_response, $landingPage, $isDevelopment)
   {
     $ext = $css ? '.css' : '.js';
     $method = $css ? 'addStylesheet' : 'addJavascript';
@@ -23,7 +24,7 @@
              ? ['landing-bundle']
              : ['root-bundle', 'study-bundle'];
 
-    if (!$css && CORE_ENVIRONMENT !== 'dev') {
+    if (!$css && !$isDevelopment) {
       array_unshift($bundles, 'vendors-bundle'); // test/prod has a vendors chunk
     }
 
@@ -33,7 +34,7 @@
   };
 
   // include Webpack bundles' extracted css
-  if (CORE_ENVIRONMENT !== 'dev') {
+  if (!$isDevelopment) {
     $fnAddBundles(true);//css
   }
 ?>
@@ -65,7 +66,7 @@
 </head>
 <body class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
 
-<?php /*AjaxDebug (app.js)*/ if (CORE_ENVIRONMENT === 'dev'): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
+<?php /*AjaxDebug (app.js)*/ if ($isDevelopment): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
 
 <!--[if lt IE 9]><div id="ie"><![endif]--> 
 
@@ -107,7 +108,7 @@ Koohii.Dom('#k-slide-nav-btn').on("click", function(){
 })
 </script>
 
-<?php if (CORE_ENVIRONMENT === 'dev'):  ?>
+<?php if ($isDevelopment):  ?>
 <script>
   // auto-collapse sf debug bar
   window.addEventListener("load", function(ev){

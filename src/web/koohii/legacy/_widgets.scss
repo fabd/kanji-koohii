@@ -62,8 +62,9 @@
   /* default colour */
   background:#6fa300;
   background: linear-gradient(to bottom,  #6fa300 0%,#649300 100%);
+
+  color:#fff; font:bold 15px/34px Arial, sans-serif; height:34px; text-shadow:0 -1px rgba(0,0,0,0.5);
 }
-.uiIBtnDefault { color:#fff; font:bold 15px/34px Arial, sans-serif; height:34px; text-shadow:0 -1px rgba(0,0,0,0.5); }
 .uiIBtnDefault:hover { box-shadow:0 1px 2px 1px rgba(0, 0, 0, 0.2); }
 
 /* uiIBtn :: additional colours */
@@ -107,7 +108,7 @@
 .uiDataFilter li a span { float:left; padding-right:10px; background-position:100% -120px; }
 
 .uiDataFilter li a:hover { color:#000; }
-.uiDataFilter li.active a { background-position:0 -80px;; color:#000; }
+.uiDataFilter li.active a { background-position:0 -80px; color:#000; }
 .uiDataFilter li.active a span { background-position:100% -80px; }
 
 
@@ -185,10 +186,10 @@
  */
 /* =provide "widgets" */
 
-.uiTable   { margin:0 0 0.5em; }
-
-/* crude solution for horizontal scrolling on small screens */
-.uiTable { overflow-y: auto; _overflow: auto; margin: 0 0 1em; border-right:1px dotted #bdbcaa; }
+.uiTable {
+  // crude solution for horizontal scrolling on small screens
+  overflow-y: auto; _overflow: auto; margin: 0 0 1em; border-right:1px dotted #bdbcaa;
+}
 
 .uiTabular { border:1px solid #BDBCAA; border-top:1px solid #D9D8CE; width:100%; }
 /* thead */
@@ -206,12 +207,15 @@
 .uiTabular th a.sortdesc { padding-right:12px; background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% -72px; }
 /* tbody */
 .uiTabular td { padding:8px 10px; color:#666; font:13px/1.1em Arial, sans-serif; border-bottom:1px solid #E8E5CA; }
-.uiTabular tbody td { background-color:$--clr-tbl-bg; }
+.uiTabular tbody td {
+  background-color:$--clr-tbl-bg;
+  // default alignments and colors
+  color:#5C5B52; text-align:left;
+}
 .uiTabular tr.odd td { background-color:#fff; }
 /* uiTable hover */
 .uiTabular tbody tr.hover { background-color:#fff; }
-/* default alignments and colors */
-.uiTabular tbody td { color:#5C5B52; text-align:left; }
+
 .uiTabular tbody var { color:#000; font-size:13px; }
 /* errors */
 .uiTabular tbody td.error { background-color:#FBCFCF; }
@@ -223,11 +227,11 @@ table.uiTabular td.bold { font-weight:bold; }
 table.uiTabular td.center { text-align:center; }
 table.uiTabular td.right { text-align:right; }
 table.uiTabular td.editlink { text-align:center; }
-table.uiTabular td.editlink a { color:#21C635; }
+table.uiTabular td.editlinnkk a { color:#21C635; }
 table.uiTabular td.red { color:#C82222; } /* failed reviews */
 table.uiTabular td.compound { color:#000; padding-top:0; padding-bottom:0; }
 table.uiTabular td.nowrap { white-space:nowrap; }
-table.uiTabular td.kanji   { text-align:center; font-size:24px; line-height:1em; color:#000; padding-top:4px; paddinb-bottom:4px; }
+table.uiTabular td.kanji   { text-align:center; font-size:24px; line-height:1em; color:#000; padding-top:4px; padding-bottom:4px; }
 table.uiTabular td.keyword { text-align:left; font:15px/1em Georgia, serif; white-space:nowrap; }
 
 

@@ -30,13 +30,16 @@
  */
 /*global YAHOO, window, alert, console, document, Core, App */
 
-const Keyboard = Core.make();
+
+(function (){
+  
+  Core.Ui.Keyboard = Core.make();
   
   var Y = YAHOO,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
-  Keyboard.prototype =
+  Core.Ui.Keyboard.prototype =
   {
     keys: null,
     
@@ -88,7 +91,7 @@ const Keyboard = Core.make();
     evKeydown: function(ev)
     {
       var isCtrl, iKeyCode;
-      //console.log('Keyboard::evKeydown(%o)', ev.keyCode);
+      //Core.log('Keyboard::evKeydown(%o)', ev.keyCode);
 
     //  var iKeyCode = window.event ? event.keyCode : ev.keyCode;
     //  var sKeyChar = String.fromCharCode(iKeyCode).toLowerCase();
@@ -125,4 +128,5 @@ const Keyboard = Core.make();
     }
   };
 
-export { Keyboard }
+}());
+

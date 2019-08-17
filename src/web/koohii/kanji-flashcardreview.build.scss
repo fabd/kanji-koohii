@@ -1,29 +1,13 @@
 /**
  * Kanji Flashcard Review
  *
- *   Note! REFACTORING / WEBPACK BUILD
- *   - extracted css "review-bundle.css" is included at bottom, to match inclusion of "review-bundle.js" in the page
- *   
- *
  * VUE REFACTORING
  *
- *   This bundle remains until Edit Story dialog, Edit Keyword, etc. become
- *   Vue components.
- *
- *   All the styles moved to KoohiiFlashcard.vue component. Ideally they need
- *   to go into a "flashcard review page" parent component. But for now the
- *   point is that these will be part of a webpack bundle for the Flashcard
- *   Review page.
- *
- *   In retrospect I moved these styles too early since the following make
- *   this bundle still necessary...
- *   
+ *   This legacy bundle remains until Edit Story dialog, Edit Keyword, etc.
+ *   become Vue components.
  */
 
 @import "./components/_EditKeywordDialog.scss";
 @import "./components/_EditFlashcardDialog.scss";
 
-/* ---------------------------- */
-/* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
-/* ---------------------------- */
-@import "../build/pack/review-bundle"; //.css
+body { padding-top:0; }

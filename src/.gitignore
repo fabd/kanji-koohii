@@ -6,6 +6,9 @@
 .*
 !.gitignore
 !.babelrc
+!.eslintrc.js
+!.prettierrc.js
+!.stylelintrc.yml
 !/web/.htaccess_default
 
 # generated / logs

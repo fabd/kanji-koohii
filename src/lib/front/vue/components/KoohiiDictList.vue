@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="dict-panel" ref="refLoadingMask">
+  <div ref="refLoadingMask" class="dict-panel">
 
     <template v-if="isLoading">
 
@@ -12,7 +12,7 @@
       <div class="dict-list">
         <template v-for="$item in items">
 
-        <div :class="[ 'dl_item', { 'dl_item--pick': $item.pick }]"  :key="$item.id" @click="onVocabPick($item)">
+        <div :key="$item.id"  :class="[ 'dl_item', { 'dl_item--pick': $item.pick }]" @click="onVocabPick($item)">
 
           <div class="dl_t">
 
@@ -21,9 +21,9 @@
               <i v-else class="far fa-star"></i>
             </div>
 
-            <cjk_lang_ja className="c vocab_c" :html="$item.c"
-              :class="{ known: $item.known }"></cjk_lang_ja>
-            <cjk_lang_ja className="r vocab_r" :html="$item.fr"></cjk_lang_ja>
+            <cjk-lang-ja class-name="c vocab_c" :html="$item.c"
+              :class="{ known: $item.known }"></cjk-lang-ja>
+            <cjk-lang-ja class-name="r vocab_r" :html="$item.fr"></cjk-lang-ja>
           </div>
           <div class="dl_d">
             {{ $item.g }}
@@ -70,7 +70,7 @@
 import { KoohiiAPI, TRON } from '@lib/KoohiiAPI.js'
 
 // comps
-import cjk_lang_ja from './cjk_lang_ja.vue'
+import CjkLangJa from './CjkLangJa.vue'
 
 //mixins
 import KoohiiFormat    from '@lib/mixins/KoohiiFormat.js'
@@ -99,7 +99,7 @@ export default {
   name: 'KoohiiDictList',
 
   components: {
-    cjk_lang_ja
+    CjkLangJa
   },
 
   mixins: [
@@ -150,6 +150,16 @@ export default {
       // (legacy code) cf. lib/front/corejs/ui/mobile.js
       return (window.innerWidth <= 720)
     }
+  },
+
+  created() {
+    console.log('KoohiiDictList::created(%o)', this.items);
+
+    this.isLoading = true
+  },
+
+  beforeDestroy() {
+    console.log('KoohiiDictList::beforeDestroy()');
   },
 
   methods: {
@@ -259,7 +269,7 @@ export default {
       this.$nextTick(doLoad)
     },
 
-    onDictLoadResponse(tron, ucsId)
+    onDictLoadResponse(tron)
     {
       const props = tron.getProps()
 
@@ -324,16 +334,6 @@ export default {
     //   let other = items.filter(o => o.pick !== true)  // undefined
     //   return picks.concat(other)
     // }
-  },
-
-  created() {
-    console.log('KoohiiDictList::created(%o)', this.items);
-
-    this.isLoading = true
-  },
-
-  beforeDestroy() {
-    console.log('KoohiiDictList::beforeDestroy()');
   }
 
 }

@@ -4,8 +4,6 @@
  * @author  Fabrice Denis
  */
 
-@import "./components/_EditKeywordDialog.scss";
-
 /**
  * Manage Flashcards
  */
@@ -40,7 +38,7 @@
 }
 
 /* Character Selection list on the confirmation views with "lifelike" flashcards. */
-#mng-cards { backround:#f3f1dc; padding:4px 4px; margin:0 0 1em; }
+#mng-cards { padding:4px 4px; margin:0 0 1em; }
 #mng-cards .scroll { padding:10px 0 0; height:auto !important; height:411px; max-height:411px; overflow-x:none; overflow-y:scroll; }
 #mng-cards .fc { 
   width:114px; padding:12px 0 15px; margin:0 7px 9px; float:left;

@@ -13,16 +13,16 @@ export default {
 
   name: 'KoohiiCharsLeft',
 
-  data() {
-    return {
-      
-    }
-  },
-
   props: {
     text:         { type: String, required: true },
     maxLength:    { type: Number, required: true },
     warningLimit: { type: Number, default: 0 }   // 0 means "no warning"
+  },
+
+  data() {
+    return {
+      
+    }
   },
 
   computed: {

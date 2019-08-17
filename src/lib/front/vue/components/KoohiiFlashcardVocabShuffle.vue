@@ -2,8 +2,8 @@
 
   <div class="fc-vshuffle"> 
 
-    <cjk_lang_ja className="ta-c dispword" :html="cardData.dispword"></cjk_lang_ja>
-    <cjk_lang_ja className="ta-c reading">{{ cardData.reading }}</cjk_lang_ja>
+    <cjk-lang-ja class-name="ta-c dispword" :html="cardData.dispword"></cjk-lang-ja>
+    <cjk-lang-ja class-name="ta-c reading">{{ cardData.reading }}</cjk-lang-ja>
     <div class="ta-c glossary">{{ cardData.glossary }}</div>
 
   </div>
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import cjk_lang_ja from './cjk_lang_ja.vue'
+import CjkLangJa from './CjkLangJa.vue'
 
 export default {
 
   name: 'KoohiiFlashcardVocabShuffle',
 
   components: {
-    cjk_lang_ja
+    CjkLangJa
   },
 
   data() {

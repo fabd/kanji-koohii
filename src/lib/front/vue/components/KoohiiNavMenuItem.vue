@@ -7,10 +7,10 @@
     <div v-once class="k-nav-menu-item__label" @click="onMenuItemClick($event, sm.id)">
       <i v-if="sm.icon" :class="['fa', sm.icon]"></i><span v-html="sm.label"/>
     </div>
-    <div class="k-fx-collapse__wrap" ref="contentWrap">
+    <div ref="contentWrap" class="k-fx-collapse__wrap">
       <div ref="content">
       <ul v-if="sm.children.length" class="k-nav-menu" >
-        <koohii-nav-menu-item v-for="$item in sm.children" :sm="$item" :key="$item.id" />
+        <koohii-nav-menu-item v-for="$item in sm.children" :key="$item.id" :sm="$item" />
       </ul>
       </div>
     </div>
@@ -43,6 +43,30 @@ export default {
         parent = parent.$parent;
       }
       return parent;
+    }
+  },
+
+  created() {
+    // console.log('KoohiiNavMenuItem::created()')
+
+    //this.rootMenu.menuItems[this.sm.id] = this;
+    if (!this.sm.children) {
+      this.sm.children = []
+    }
+
+    // set initial open state
+    this.opened = (this.rootMenu.defaultOpened === this.sm.id)
+
+    // console.log('created menu item %s opened %o', this.sm.id, this.opened);
+  },
+
+  mounted() {
+    // top level items
+    if (this.rootMenu === this.$parent) {
+      this.rootMenu.menuItems[this.sm.id] = {
+        oMenuItem: this,
+        elHead:    this.$refs.contentWrap
+      }
     }
   },
 
@@ -112,30 +136,6 @@ export default {
       // handle menu item (no children)
       // ...
       // (event passing through)
-    }
-  },
-
-  created() {
-    // console.log('KoohiiNavMenuItem::created()')
-
-    //this.rootMenu.menuItems[this.sm.id] = this;
-    if (!this.sm.children) {
-      this.sm.children = []
-    }
-
-    // set initial open state
-    this.opened = (this.rootMenu.defaultOpened === this.sm.id)
-
-    // console.log('created menu item %s opened %o', this.sm.id, this.opened);
-  },
-
-  mounted() {
-    // top level items
-    if (this.rootMenu === this.$parent) {
-      this.rootMenu.menuItems[this.sm.id] = {
-        oMenuItem: this,
-        elHead:    this.$refs.contentWrap
-      }
     }
   }
 

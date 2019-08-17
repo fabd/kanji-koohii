@@ -12,7 +12,7 @@
   <div class="d-keyword" v-html="cardData.keyword"></div>
 
   <div class="d-strokec" title="Stroke count">
-    <cjk_lang_ja html="&#30011;&#25968;" className="kanji"></cjk_lang_ja><span>{{ cardData.strokecount }}</span>
+    <cjk-lang-ja html="&#30011;&#25968;" class-name="kanji"></cjk-lang-ja><span>{{ cardData.strokecount }}</span>
   </div>
 
   <div class="d-framenr" v-html="cardData.framenum"></div>
@@ -26,7 +26,7 @@
         <!-- do this for now, until we position everything dynamically --> 
         <div class="tb">
           <div class="td">
-            <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
+            <cjk-lang-ja :html="cardData.kanji"></cjk-lang-ja>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="uiFcHalf d-kanji" k-note="fix-reflow">
         <div class="tb">
           <div class="td">
-            <cjk_lang_ja :html="cardData.kanji"></cjk_lang_ja>
+            <cjk-lang-ja :html="cardData.kanji"></cjk-lang-ja>
           </div>
         </div>
       </div>
@@ -48,10 +48,10 @@
 
           <transition name="uiFcYomi-fadein" appear>
           <div>
-            <div v-for="$item in vocab" class="uiFcYomi" :key="$item.dictid" @click.stop="onVocabClick">
+            <div v-for="$item in vocab" :key="$item.dictid" class="uiFcYomi" @click.stop="onVocabClick">
               <div>
-                <cjk_lang_ja className="vyc vocab_c" :html="formatCompound($item.compound)"></cjk_lang_ja>
-                <cjk_lang_ja className="vyr vocab_r" :html="koohiiformatReading($item.reading)"></cjk_lang_ja>
+                <cjk-lang-ja class-name="vyc vocab_c" :html="formatCompound($item.compound)"></cjk-lang-ja>
+                <cjk-lang-ja class-name="vyr vocab_r" :html="koohiiformatReading($item.reading)"></cjk-lang-ja>
               </div>
               <div class="vyg">{{ $item.gloss }}</div>
             </div>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import cjk_lang_ja from './cjk_lang_ja.vue'
+import CjkLangJa from './CjkLangJa.vue'
 
 //mixins
 import KoohiiFormat    from '@lib/mixins/KoohiiFormat.js'
@@ -80,7 +80,7 @@ export default {
   name: 'KoohiiFlashcardKanji',
 
   components: {
-    cjk_lang_ja
+    CjkLangJa
   },
 
   mixins: [
@@ -116,6 +116,17 @@ export default {
       return (this.vocab.length > 0)
     }
 
+  },
+
+  beforeMount() {
+    // console.log('KoohiiFlashcardKanji::beforeMount()')
+
+    let VocabPickArray = this.cardData.vocab || []
+    
+    // VocabPickArray.forEach((o) => { o.r =  })   
+
+    // assign the card's DictEntryArray
+    this.vocab = VocabPickArray
   },
 
   methods: {
@@ -166,17 +177,6 @@ export default {
 
       return str
     }
-  },
-
-  beforeMount() {
-    // console.log('KoohiiFlashcardKanji::beforeMount()')
-
-    let VocabPickArray = this.cardData.vocab || []
-    
-    // VocabPickArray.forEach((o) => { o.r =  })   
-
-    // assign the card's DictEntryArray
-    this.vocab = VocabPickArray
   }
 }
 </script>
@@ -191,11 +191,16 @@ export default {
 .fc-kanji .d-kanji { text-align:center; font-size:150px; line-height:1em; }
 .fc-kanji .d-kanji .cj-k { display:block; /* v align */padding:0 0 0.2em; }
 
-.fc-kanji .d-strokec { position:absolute; left:8px; bottom:6px; font:12px Georgia, Times New Roman; color:#a0a0a0; }
+.fc-kanji .d-strokec {
+  position:absolute; left:8px; bottom:6px;
+  font:12px Georgia, Times New Roman, sans-serif; color:#a0a0a0;
+}
 .fc-kanji .d-strokec .kanji { font-size:20pt; }
 
-.fc-kanji .d-framenr { font:12px Georgia, Times New Roman; position:absolute; bottom:7px; right:8px; color:#a0a0a0; }
-
+.fc-kanji .d-framenr {
+  font:12px Georgia, Times New Roman, sans-serif;
+  position:absolute; bottom:7px; right:8px; color:#a0a0a0;
+}
 
 /* states :: default review mode */
 .uiFcState-0 .fc-kanji .d-keyword   { color:#000; }

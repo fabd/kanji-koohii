@@ -2,15 +2,6 @@
 /**
  * Extend the response object with versioning of javascript and stylesheet files.
  * 
- * Javascript and stylesheet files use a different naming pattern with a version number,
- * which is redirected by the .htaccess file (mod_rewrite) to a php script.
- * The script returns js & css files compressed with expiry information in the headers.
- *
- * July 2019
- * - for the scss build, grab the scss compiled files in /build/ folder
- * - for *.juicy.js files, maintain Juicer's "hot reload" via mod rewrite
- * 
- * @author  Fabrice Denis
  */
 
 class coreWebResponse extends sfWebResponse
@@ -83,9 +74,6 @@ class coreWebResponse extends sfWebResponse
 
     if (sfConfig::get('sf_environment') === 'dev')
     {
-      // do not use minified javascript/css in development environment
-      $url = str_replace('.min.', '.', $url);
-
       if (defined('CORE_NOCACHE'))
       {
         // create versioned url like in production but use current timestamp
@@ -97,25 +85,20 @@ class coreWebResponse extends sfWebResponse
         return $url;
       }
 
-      // legacy Juicer JS build, "hot reload" via mod_rewrite
-      if (($pos = strpos($url, '.juicy.js')) !== false)
-      {
+      // legacy bundles are "hot loaded" with Juicer via via mod_rewrite
+      if (($pos = strpos($url, '.juicy.js')) !== false) {
         $url = '/version/cache.php?env=dev&app='.sfConfig::get('sf_app').'&path='.urlencode($url);
       }
-      // newer sass build, grab the sass output from the web/build folder
-      elseif (($pos = strpos($url, '.build.css')) !== false)
-      {
-        $url = '/build' . $url;
-      }
+      // webpack-dev-server
+      // elseif ( strpos($url, '/build/pack') !== false) {
+      //   $url = 'http://127.0.0.1:8080'.$url;
+      // }
     }
     else
     {
-      // in production, "build" files should be precompiled and minified with a script
+      // legacy bundles compiled with batch/build script
       if (($pos = strpos($url, '.juicy.js')) !== false) {
         $url = '/build' . str_replace('.juicy.', '.min.', $url);
-      }
-      elseif (($pos = strpos($url, '.build.css')) !== false) {
-        $url = '/build' . str_replace('.build.', '.min.', $url);
       }
 
       // add version string

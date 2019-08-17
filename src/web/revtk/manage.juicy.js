@@ -5,8 +5,9 @@
  */
 /*global window, alert, console, document, window, App, Core, YAHOO */
 
+/* REQUIRES  legacy-bundle ! */
+
 /* =require from "%WEB%" */
-/* !require "/revtk/bundles/yui-base.juicy.js" déjà inclus */
 /* =require "/revtk/components/EditKeywordDialog.js" */
 
 /* =require from "%CORE%" */

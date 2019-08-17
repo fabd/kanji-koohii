@@ -12,12 +12,9 @@ default:
     #language:     en
     #robots:       NE PAS INCLURE ROBOTS SINON CA REMPLACE LE STAGING (cf. layout)
 
-  # Note: the extracted styles from .vue templates is included in the main css !
-  stylesheets:    ['/koohii/main.build.css']
-
-  # yui-base is a bundle from legacy YUI 2 based code, it needs to be phased out eventually
-  # so we can use only the vue bundle.
-  javascripts:    ['/revtk/bundles/yui-base.juicy.js']
+  # any global styles/scripts would go here (removed since webpack 4 build)
+  #javascripts:
+  #  - '/foo/bar/baz.js'
 
   has_layout:     true
   layout:         layout

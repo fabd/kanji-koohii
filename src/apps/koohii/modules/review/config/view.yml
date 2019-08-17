@@ -1,12 +1,10 @@
 indexSuccess:
   metas:
     title: 'Spaced Repetition - Kanji Koohii'
-  stylesheets: [ '/koohii/study-base.build.css' ]
 
 reviewSuccess:
   metas:
     title: 'Flashcard Review'
-  stylesheets: [ /koohii/kanji-flashcardreview.build.css ]
   javascripts: [ /revtk/kanji-flashcardreview.juicy.js ]
 
 summarySuccess:

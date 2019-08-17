@@ -1,18 +1,18 @@
 <template>
 <div>
   <transition name="slideleft" @enter="slideEnter">
-    <div class="aside" v-show="show">
+    <div v-show="show" class="aside">
  
       <div class="aside_close" @click="show = false">
         <i class="aside_close_icon fa fa-bars"></i>
       </div>
        
-      <div class="aside_nav_content" ref="navContent"></div>
+      <div ref="navContent" class="aside_nav_content"></div>
 
     </div>
   </transition>
   <transition name="mask" @before-enter="maskBeforeEnter" @after-leave="maskAfterLeave">
-    <div class="aside-backdrop" v-if="show" @touchmove.stop.prevent @click="show = false"></div>
+    <div v-if="show" class="aside-backdrop" @touchmove.stop.prevent @click="show = false"></div>
   </transition>
 </div>
 
@@ -32,13 +32,16 @@ export default {
   },
 
   watch: {
-    show(value) {
-      // console.log('wtach show %o', this.show)
-      if (value) {
+    // show(value) {
+    //   console.log('wtach show %o', this.show)
+    // } 
+  },
 
+  // life cycle
+  // created() { core.log('Aside created()') },
+  mounted() {
+    // console.log('Aside mounted()')
 
-      }
-    } 
   },
 
   methods: {
@@ -46,8 +49,7 @@ export default {
       // console.log('slideEnter()')
     },
 
-
-    maskBeforeEnter(el) {
+    maskBeforeEnter() {
       // console.log("maskBeforeEnter()")
       const $body = Dom(document.body)
       const scrollBarWidth = getScrollBarWidth()
@@ -69,13 +71,6 @@ export default {
         'overflow':      this.bodyOverflow
       })
     }
-  },
-
-  // life cycle
-  // created() { core.log('Aside created()') },
-  mounted() {
-    // console.log('Aside mounted()')
-
   }
 }
 </script>

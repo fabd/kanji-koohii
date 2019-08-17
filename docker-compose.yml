@@ -11,8 +11,11 @@ services:
 
     container_name: kk_webserver
 
+    # 8080, 8888 : webpack-dev-server, webpack-bundle-analyzer
     ports:
       - "80:80"
+      - "8080:8080"
+      - "8888:8888"
 
     volumes:
       - ./src:/var/www/html

@@ -89,8 +89,8 @@ const inDocument = (el) => documentElement.contains(el)
 
 // string constants
 const PARENT_NODE = 'parentNode'
-const NODE_TYPE = 'nodeType'
-const TAG_NAME = 'tagName'
+// const NODE_TYPE = 'nodeType'
+// const TAG_NAME = 'tagName'
 
 //
 let Events = []

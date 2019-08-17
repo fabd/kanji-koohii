@@ -201,11 +201,11 @@ blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
 @media (min-width: 992px) {
 .col-d-2 { flex:0 0 16.666667%; }
 .col-d-3 { flex:0 0 25%; }
-.col-d-4 { flex:0 0 33.333333%; }
+.col-d-4 { flex:0 0 33.333333%; }
 .col-d-5 { flex:0 0 41.666667%; }
 .col-d-6 { flex:0 0 50%; }
 .col-d-7 { flex:0 0 58.333333%; }
-.col-d-8 { flex:0 0 66.666667%; }
+.col-d-8 { flex:0 0 66.666667%; }
 .col-d-9 { flex:0 0 75%; }
 .col-d-10 { flex:0 0 83.333333%; }
 .col-d-11 { flex:0 0 91.666667%; }
@@ -325,7 +325,6 @@ a.admin-edit { font-size:80%; letter-spacing:normal; color:#408040; text-decorat
 /* disable selection for GUI items */
 .uiGUI { outline:none; -moz-user-select: none; -webkit-user-select: none; }
 
-/* */
 /*.action_top-right { position:absolute; right:0; top:0; }*/
 
 
@@ -502,11 +501,10 @@ div.col-box-bis { margin-top:10px; }
 
 .with-footer #main  { padding-bottom:5em; }
 
-#footer { text-align:center; padding:0 0 5em; font-size:17px; }
+#footer { text-align:center; padding:0 0 5em; font-size:17px; color:#8b1566; }
 #footer p  {  line-height:1.2em; margin:0 0 0.8em; }
 #footer .transition { width:100%; height:29px; background:$--clr-bg-body url(/koohii/landing/bubbles_gdt.png) repeat-x 0 0; }
 #footer section { padding-top:24px; }
-#footer { color:#8b1566; }
 #footer a { color:#e400b1; text-decoration:none; }
 
 /* links */
@@ -736,7 +734,7 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 .fullkanjilist .stats { float:right; width:260px; margin:0 0 1em 1em; }
 
 /* ---------------------------- */
-/* */
+/* ... */
 /* ---------------------------- */
 
 /*#home-qs { border-bottom:1px solid #e7e1d3; }*/
@@ -884,9 +882,3 @@ table.lessons td { color:#888678; font:12px Arial, sans-serif; width:67px; heigh
 .cj-k { font-family:"Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝", serif; }
 .cj-s { font-family:"Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC", sans-serif; }
 .cj-t { font-family:"TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC", serif; }
-
-
-/* ---------------------------- */
-/* Extracted CSS from .vue templates (cf. webpack.config.js => ExtractTextPlugin ) */
-/* ---------------------------- */
-@import "../build/pack/root-bundle"; //.css

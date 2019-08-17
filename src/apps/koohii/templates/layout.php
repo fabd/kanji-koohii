@@ -11,15 +11,30 @@
   $landingPage = $sf_request->getParameter('_landingPage');
   $withFooter  = $sf_request->getParameter('_homeFooter') ? 'with-footer ' : '';
 
-  if ($landingPage) {
-    // remove the global  view.yml  styles/scripts
-    $sf_response->clearStuffsRefactorMe();
-  }
+  $fnAddBundles = function(bool $css) use ($sf_response, $landingPage)
+  {
+    $ext = $css ? '.css' : '.js';
+    $method = $css ? 'addStylesheet' : 'addJavascript';
+    static $build = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
+    static $bundles;
+    define('WEBPACK_ROOT', '/build/pack/');
 
-  // note: usd CDNs ?
+    $bundles = $landingPage
+             ? ['landing-bundle']
+             : ['root-bundle', 'study-bundle'];
 
-  if ($landingPage) {
-    $sf_response->addStylesheet('/koohii/home.build.css', 'first');
+    if (!$css && CORE_ENVIRONMENT !== 'dev') {
+      array_unshift($bundles, 'vendors-bundle'); // test/prod has a vendors chunk
+    }
+
+    foreach ($bundles as $name) {
+      $sf_response->$method(implode([WEBPACK_ROOT,$name,$build,$ext]), 'first');
+    }
+  };
+
+  // include Webpack bundles' extracted css
+  if (CORE_ENVIRONMENT !== 'dev') {
+    $fnAddBundles(true);//css
   }
 ?>
   <link rel="alternate" type="application/rss+xml" title="RSS" href="rss">
@@ -68,11 +83,11 @@
 <?php } ?>
 
 <?php
-  $ext = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
-  $sf_response->addJavascript("/build/pack/root-bundle$ext.js", "first"); //add before legacy code so it kicks in sooner
-
+  // javascript bundles
+  $fnAddBundles(false);
   if (!$landingPage) {
-    $sf_response->addJavascript("/build/pack/study-bundle$ext.js", "first");
+    // the legacy "vendors" (yui2) bundle, AFTER webpack bundles, BEFORE other old bundles
+    $sf_response->addJavascript('/revtk/legacy-bundle.juicy.js', 'first');
   }
 
   include_javascripts();

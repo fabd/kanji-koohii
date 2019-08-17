@@ -9,27 +9,15 @@
   // temporary (fix dirty js inclusions from labs mode later)
   $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
 
-/*
-  // don't know how to remove individual css/js so we reset it (FIXME)
-  $sf_response->clearStuffsRefactorMe();
+  define('WEBPACK_ROOT', '/build/pack/');
+  $build = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
 
-  // ... and thus we add back in the default dependencies which are needed (Core, YUI)
-  $sf_response->addStylesheet('/koohii/main.juicy.css');
-  $sf_response->addJavascript('/revtk/bundles/yui-base.juicy.js');
-
-  switch($pageId) {
-    case 'review-review':
-    case 'review-free':
-      $sf_response->addStylesheet('/koohii/kanji-flashcardreview.build.css');
-      $sf_response->addJavascript('/koohii/kanji-flashcardreview.juicy.js');
-      break;
-    case 'labs-shuffle1':
-    case 'labs-shuffle2':
-    default:
-      throw new sfException("Invalid page id $pageId (fullscreenLayout)");
+  // include Webpack bundles' extracted css
+  if (CORE_ENVIRONMENT !== 'dev') {
+    $sf_response->addStylesheet(implode([WEBPACK_ROOT,'root-bundle',$build,'.css']));
+    $sf_response->addStylesheet(implode([WEBPACK_ROOT,'review-bundle',$build,'.css']));
   }
 
-*/
 ?>
 <?php include_stylesheets() ?>
   <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
@@ -69,10 +57,13 @@ body { padding-top:0;  }
 <!--[if lt IE 9]></div><![endif]-->
 
 <?php
-  $ext = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
-  $sf_response->addJavascript("/build/pack/root-bundle$ext.js", "first"); //add before legacy code so it kicks in sooner
-
-  $sf_response->addJavascript("/build/pack/review-bundle$ext.js");
+  // all 'first' so the bundles in view.yml files come last
+  if (CORE_ENVIRONMENT !== 'dev') {
+    $sf_response->addJavascript(implode([WEBPACK_ROOT,'vendors-bundle',$build,'.js']), 'first');  
+  }
+  $sf_response->addJavascript(implode([WEBPACK_ROOT,'root-bundle',$build,'.js']), 'first');
+  $sf_response->addJavascript(implode([WEBPACK_ROOT,'review-bundle',$build,'.js']), 'first');
+  $sf_response->addJavascript('/revtk/legacy-bundle.juicy.js', 'first');
 
   include_javascripts();
   if (has_slot('inline_javascript')) {

@@ -13,7 +13,7 @@
       <div class="sharedstory_meta flex">
         <div class="lastmodified col-m-1 flex-a-c"><i class="far fa-clock"></i> NEW</div>
 
-        <div class="actions col-m ta-r JsAction" :id="divId">
+        <div :id="divId" class="actions col-m ta-r JsAction">
           &nbsp;
         </div>
       </div>

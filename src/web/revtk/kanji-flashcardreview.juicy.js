@@ -13,6 +13,8 @@
 
 /* =require from "%WEB%" */
 
+/* =require "/revtk/components/FlashcardReview.js" */
+
 /* =require "/revtk/components/EditStoryDialog.js" */
 /* =require "/revtk/components/EditKeywordDialog.js" */
 /* =require "/revtk/components/EditFlashcardDialog.js" */

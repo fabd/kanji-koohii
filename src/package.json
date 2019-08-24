@@ -35,6 +35,7 @@
     "css-loader": "^3.1.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-compat": "^3.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^4.1.0",

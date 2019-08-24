@@ -24,19 +24,8 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    // "prettier/prettier": "warn",
-
-    // using `drop_console` for production build
-    "no-console": "off",
-
+    "no-console": "off", // using `drop_console` for production build
     "no-unused-vars": "off",
-
-    "declaration-block-no-duplicate-properties": [
-      "on",
-      // ignore fallbacks for older browsers
-      { ignore: ["consecutive-duplicates"] },
-    ],
-
     "vue/max-attributes-per-line": "off",
     "vue/no-v-html": "off",
   },

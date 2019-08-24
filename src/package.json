@@ -67,5 +67,9 @@
     "iOS >= 10.3",
     "Firefox >= 54",
     "Edge >= 15"
+  ],
+  "comments": [
+    "browserslist : target browsers with full ES2015 support",
+    "uglifyjs & jshint : only used for building legacy js (batch/build.sh)"
   ]
 }

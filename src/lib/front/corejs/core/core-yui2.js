@@ -60,7 +60,7 @@
      */
     down: function(rootEl, classname, tagname)
     {
-      Core.assert(!!rootEl, 'Dom::down() rootEl is invalid.');
+      console.assert(!!rootEl, 'Dom::down() rootEl is invalid.');
       var el = Dom.getElementsByClassName(classname, tagname || "*", Dom.get(rootEl))[0];
       return el;
     },
@@ -97,7 +97,7 @@
         var attrib = el.attributes[i];
         if (attrib.specified === true && attrib.name.indexOf("data-") === 0)
         {
-          //Core.log(attrib.name + " = " + attrib.value);
+          //console.log(attrib.name + " = " + attrib.value);
           dataset[attrib.name.slice(5)] = attrib.value;
         }
       }
@@ -135,7 +135,7 @@
      */
     setClass: function(el, className, state)
     {
-      Core.assert(!!el, 'Dom::setStyles() el is invalid.');
+      console.assert(!!el, 'Dom::setStyles() el is invalid.');
       Dom[state ? 'addClass' : 'removeClass'](el, className);
     },
 
@@ -147,7 +147,7 @@
      */
     setStyles: function(el, styles)
     {
-      Core.assert(!!el, 'Dom::setStyles() el is invalid.');
+      console.assert(!!el, 'Dom::setStyles() el is invalid.');
       for (var s in styles) {
         Dom.setStyle(el, s, styles[s]);
       }
@@ -161,7 +161,7 @@
      */
     toggle: function(el, display)
     {
-      Core.assert(!!el, 'Dom::toggle() el is invalid.');
+      console.assert(!!el, 'Dom::toggle() el is invalid.');
       Dom.get(el).style.display = display ? "" : "none";
     }
   });

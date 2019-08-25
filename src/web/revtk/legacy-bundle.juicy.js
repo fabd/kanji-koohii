@@ -64,7 +64,7 @@
   {
     init: function(options)
     {
-      Core.log('CustomTooltip::init()');
+      console.log('CustomTooltip::init()');
 
       // set defaults
       this.options = Y.lang.merge({
@@ -86,15 +86,15 @@
 
     destroy: function()
     {
-      Core.log('CustomTooltip::destroy()');
+      console.log('CustomTooltip::destroy()');
       this.overlay.destroy();
       this.overlay = null;
     },
 
     show: function()
     {
-      Core.log('CustomTooltip::show()');
-      Core.assert(!!this.overlay);
+      console.log('CustomTooltip::show()');
+      console.assert(!!this.overlay);
       
       // compute width and center horizontally
       //Dom.setStyles(div, { display:"block", visibility:"hidden", position:"absolute" });
@@ -109,8 +109,8 @@
 
     hide: function()
     {
-      Core.log('CustomTooltip::hide()');
-      Core.assert(!!this.overlay);
+      console.log('CustomTooltip::hide()');
+      console.assert(!!this.overlay);
       this.overlay.hide();
     },
 

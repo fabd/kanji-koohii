@@ -85,7 +85,7 @@ Core.Widgets = {};
               dlgOptions = { srcUrl: null },
               ajaxDialog;
       
-      Core.log("openAjaxDialog options: ",o);
+      console.log("openAjaxDialog options: ",o);
       
       dlgOptions.requestUri = o.srcHref ? Dom.getAttribute(o.srcHref, "href") : o.srcUrl;
       dlgOptions.timeout = o.timeout ? o.timeout : null; // use default timeout if not specified in options

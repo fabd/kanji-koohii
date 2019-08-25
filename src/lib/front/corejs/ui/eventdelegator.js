@@ -106,7 +106,7 @@
 
       this.elRoot = Dom.get(elRoot);
       
-      Core.assert(!!this.elRoot, "EventDelegator::init() elRoot is not valid");     
+      console.assert(!!this.elRoot, "EventDelegator::init() elRoot is not valid");     
       
       if (Y.lang.isString(types)) {
         types = [types];
@@ -181,7 +181,7 @@
       
       // a warning to help development
       if (!Dom.get(name)) {
-        Core.warn("Warning: EventDelegator()::onId('%s') id is not present in document", name);
+        console.warn("Warning: EventDelegator()::onId('%s') id is not present in document", name);
       }
       
       this._on(PREFIX_ID + name, callback, scope);
@@ -228,7 +228,7 @@
       var i;
       for (i = args.length - 1; i >= 0; i--) {
         if (typeof(args[i]) === "undefined") {
-          Core.warn("EventDelegator: WARNING: one of the supplied arguments is undefined.");
+          console.warn("EventDelegator: WARNING: one of the supplied arguments is undefined.");
         }
       }
     },

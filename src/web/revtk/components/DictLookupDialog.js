@@ -73,7 +73,7 @@
 
     show: function()
     {
-      Core.log('DictLookupDialog::show()');
+      console.log('DictLookupDialog::show()');
       this.dialog.show();
     },
     
@@ -84,7 +84,7 @@
 
     onDialogHide: function()
     {
-      Core.log('DictLookupDialog::hide()');
+      console.log('DictLookupDialog::hide()');
 
       // keep the dialog in the page
       return false;

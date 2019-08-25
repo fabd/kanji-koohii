@@ -64,7 +64,7 @@
       for (i = 0; i < inputs.length; i++)
       {
         var input = inputs[i].parentNode.getElementsByTagName("input")[0];
-        Core.assert(!!input, "getPostData() invalid markup?");
+        console.assert(!!input, "getPostData() invalid markup?");
         data[input.name] = input.value;
       }
 

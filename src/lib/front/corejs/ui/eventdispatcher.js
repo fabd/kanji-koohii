@@ -109,7 +109,7 @@
       args.shift();
       callables = this.listeners[name] ? this.listeners[name] : [];
 
-      Core.assert(args.length !== 1 || !Y.lang.isArray(args[0]), "EventDispatcher::notify()  using obsolete signature?");
+      console.assert(args.length !== 1 || !Y.lang.isArray(args[0]), "EventDispatcher::notify()  using obsolete signature?");
   
       if (!callables.length) {
         return null;

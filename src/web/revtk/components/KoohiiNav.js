@@ -27,7 +27,7 @@
 
     init: function()
     {
-      Core.log('KoohiiNav::init()');
+      console.log('KoohiiNav::init()');
 
       // desktop nav
       var eventDel = new Core.Ui.EventDelegator(document.body, ['click', 'touchend', 'mouseover', 'mouseout']);
@@ -44,7 +44,7 @@
       // toplevel LI which contains a dropdown
       var toplevel = el;
 
-      // Core.log('evtype on %o ' + ev.type, el);
+      // console.log('evtype on %o ' + ev.type, el);
   
       if (ev.type === 'touchend')
       {
@@ -61,12 +61,12 @@
         // the clicked element in the dropdown descendants
         var elTarget = Y.util.Event.getTarget(ev); // A tag
         var elTargetLI = Dom.getAncestorByTagName(elTarget, 'li');
-// Core.log('el1 '+elTarget.tagName+' el2 '+elTargetLI.tagName);
+// console.log('el1 '+elTarget.tagName+' el2 '+elTargetLI.tagName);
         if (elTargetLI === toplevel)
         {
           if (this.dropdown)
           {
-            // Core.log('LAUNCH LI ... ' + elTarget.href);
+            // console.log('LAUNCH LI ... ' + elTarget.href);
             window.location.href = elTarget.href;
             return false;
           }
@@ -75,12 +75,12 @@
             this.dropdown = elDropdown;
             this.toggleDropdown(true);
             // prevent default ... (below)
-            // Core.log('should STOP EVENTS HERE');
+            // console.log('should STOP EVENTS HERE');
           }
         }
         else
         {
-          // Core.log('LAUNCH DROP ... ' + elTarget.href);
+          // console.log('LAUNCH DROP ... ' + elTarget.href);
           window.location.href = elTarget.href;
           // prevent default ... (below)
         }
@@ -98,7 +98,7 @@
       if (this.elTouched && this.elTouched === toplevel)
       {
         // ignore tous les events pour le même dropdown qui a recu un touch event !
-        // Core.log('On ignore cet event car touch!');
+        // console.log('On ignore cet event car touch!');
         //ev.preventDefault();
         return false;
       }

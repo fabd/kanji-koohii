@@ -146,7 +146,7 @@
      */
     init: function(container, options)
     {
-      Core.log('AjaxPanel.init() options %o ',options);
+      console.log('AjaxPanel.init() options %o ',options);
 
       options = !!options ? options : {};
   
@@ -162,7 +162,7 @@
       this.contentLoaded = this.options.initContent === true ? true : false;
       
       this.container = Dom.get(container);
-      Core.assert(this.container, "AjaxPanel::init()  container not found");
+      console.assert(this.container, "AjaxPanel::init()  container not found");
   
       this.evtCache = new Core.Ui.EventCache();
   
@@ -213,7 +213,7 @@
      */
     initContent: function(t)
     {
-      //Core.log('AjaxPanel.initContent()');
+      //console.log('AjaxPanel.initContent()');
 
       // Attach an event to FORMs that will dispatch a "onSubmit" event.
       var elForm = (this.serializeForm = this.getForm());
@@ -246,7 +246,7 @@
     {
       var html = tron.getHtml();
 
-      Core.log('AjaxPanel.replaceContent(html %s)', html ? 'YES':'NO');
+      console.log('AjaxPanel.replaceContent(html %s)', html ? 'YES':'NO');
       
       if (html)
       {  
@@ -293,7 +293,7 @@
       {
         // return the first form that matches the class name
         var form = Dom.getElementsByClassName(this.options.form, 'form', this.container)[0];
-        Core.assert(form, "AjaxPanel::getForm() form not found (by class name)");
+        console.assert(form, "AjaxPanel::getForm() form not found (by class name)");
 
         return form;
       }
@@ -309,7 +309,7 @@
     {
       var form, skipSubmit = false;
       
-      Core.log('AjaxPanel.submitFormEvent(%o) Form %o', e, Event.getTarget(e));
+      console.log('AjaxPanel.submitFormEvent(%o) Form %o', e, Event.getTarget(e));
 
       // if listener exists, and it returns false, do not auto-submit
       if (this.eventDispatcher.hasListeners('onSubmitForm'))
@@ -374,7 +374,7 @@
     send: function(oData)
     {
       var form = this.getForm();
-      Core.assert(form, "AjaxPanel::send()  requires valid form");
+      console.assert(form, "AjaxPanel::send()  requires valid form");
       var method = form.getAttribute('method') || 'post';
       this.prepareConnect(oData, method);
     },
@@ -402,15 +402,15 @@
       }
       
       url = sUrl || (form ? form.action : false);
-      Core.assert(url, "AjaxPanel::prepareConnect() No url argument and no FORM specified.");
+      console.assert(url, "AjaxPanel::prepareConnect() No url argument and no FORM specified.");
 
       // dont send multiple requests at the same time
       if (this.ajaxRequest && this.ajaxRequest.isCallInProgress()) {
-        Core.warn('Previous AjaxRequest still in progress (or bug?)');
+        console.warn('Previous AjaxRequest still in progress (or bug?)');
         return;
       }
   
-    //  Core.log('AjaxPanel.prepareConnect(%o, %s) FORM %o', oData, sMethod, form);
+    //  console.log('AjaxPanel.prepareConnect(%o, %s) FORM %o', oData, sMethod, form);
 
       connectObj.url = url;
       connectObj.method = sMethod;
@@ -437,9 +437,9 @@
         this.connection = oConnect;
       }
   
-      Core.assert(this.connection, "AjaxPanel::connect() No connection object.");
+      console.assert(this.connection, "AjaxPanel::connect() No connection object.");
   
-      //Core.log("connect ",this.options,oConnect);
+      //console.log("connect ",this.options,oConnect);
       var options = {
         method:       this.connection.method,
         form:         this.connection.form,
@@ -469,7 +469,7 @@
      */
     ajaxOnStart: function(eventType, args)
     {
-      //Core.log('AjaxPanel.ajaxOnStart(%o)', args);
+      //console.log('AjaxPanel.ajaxOnStart(%o)', args);
 
       // layer
       if (this.options.bUseLayer)
@@ -507,7 +507,7 @@
      */
     ajaxOnComplete: function(eventType, args)
     {
-      //Core.log('AjaxPanel.ajaxOnComplete(%o)', args);
+      //console.log('AjaxPanel.ajaxOnComplete(%o)', args);
       //var response = args[0];
       
       // hide loading indicator
@@ -525,11 +525,11 @@
      */
     ajaxOnSuccess: function(o)
     {
-      Core.log('AjaxPanel.ajaxOnSuccess(%o)', o);
+      console.log('AjaxPanel.ajaxOnSuccess(%o)', o);
 
       var html, tron = o.responseTRON;
 
-      Core.assert("AjaxPanel::ajaxOnSuccess()  Require TRON response.");
+      console.assert("AjaxPanel::ajaxOnSuccess()  Require TRON response.");
 
       // handle TRON response
       this.eventDispatcher.notify('onResponse', tron);
@@ -548,7 +548,7 @@
      */
     ajaxOnFailure: function(o)
     {
-      Core.log('AjaxPanel.ajaxOnFailure(%o)', o);
+      console.log('AjaxPanel.ajaxOnFailure(%o)', o);
     
       // transaction aborted (timeout)
       if (o.status === -1)
@@ -585,7 +585,7 @@
       var elRetryLink = elMessage.getElementsByTagName('a')[0];
       
       var retry = function(oEvent) {
-        Core.log('AjaxPanel.ajaxRetryEvent()');
+        console.log('AjaxPanel.ajaxRetryEvent()');
         this.ajaxErrorIndicator.destroy();
         this.connect();
       };

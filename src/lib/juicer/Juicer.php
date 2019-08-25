@@ -980,17 +980,3 @@ $pattern = '@/\*[^!](?:.|[\r\n])*?\*/@';
     return sprintf('%.3f', $time_diff);
   }
 }
-
-/* TESTS (uncomment to test) */
-/*
-$s = <<< EOD
-Core.log(false);
- Core.log();
-  Core.log('lolcats');
-  Core.log('lolcats')
-  //Core.log('commented');
-return;
-EOD;
-echo "\nBUFFER ----------------------------\n".$s;
-echo "\n\nRESULT\n".Juicer::stripOutput($s, array('Core.log'));exit;
-*/

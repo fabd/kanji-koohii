@@ -74,7 +74,7 @@
     // - we add the html for the Close button, it gets replaced by the ajax content
     addCloseButton: function()
     {
-      Core.log("addCloseButton()");
+      console.log("addCloseButton()");
 
       var el = document.createElement('div');
 
@@ -113,7 +113,7 @@
 
     show: function()
     {
-      Core.log('EditStoryDialog::show()');
+      console.log('EditStoryDialog::show()');
       this.dialog.show();
     },
     
@@ -124,7 +124,7 @@
 
     onDialogHide: function()
     {
-      Core.log('EditStoryDialog::hide()');
+      console.log('EditStoryDialog::hide()');
 
       // fabd: removed "cancel edit mode"... what if user edited, then closed by mistake, 
       //   not really necessary to undo edit mode when the Edit Story dialog is hidden.

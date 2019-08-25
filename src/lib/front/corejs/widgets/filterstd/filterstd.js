@@ -87,14 +87,14 @@
     {
       var tabId = '';
 
-      Core.log('FilterStd::onClick()');
+      console.log('FilterStd::onClick()');
 
       if (/uiFilterStd-(\S+)/.test(el.className))
       {
         tabId = RegExp.$1;
       }
 
-      Core.assert(tabId !== '', "FilterStd tabId is invalid.");
+      console.assert(tabId !== '', "FilterStd tabId is invalid.");
 
       if (el === this.currentTab)
       {

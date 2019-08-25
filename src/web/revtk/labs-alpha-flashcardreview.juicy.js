@@ -56,7 +56,7 @@
     
     onBeginReview: function()
     {
-      //Core.log('labsReview.onBeginReview()');
+      //console.log('labsReview.onBeginReview()');
     },
 
     /**
@@ -66,13 +66,13 @@
      */
     onEndReview: function()
     {
-      //Core.log('labsReview.onEndReview()');
+      //console.log('labsReview.onEndReview()');
       window.location.href = this.options.back_url;
     },
 
     onFlashcardCreate: function()
     {
-      Core.log('labsReview.onFlashcardCreate()');
+      console.log('labsReview.onFlashcardCreate()');
 
       // Show panels when first card is loaded
       if (this.oReview.getPosition() === 0)
@@ -111,7 +111,7 @@
     {
       var cardAnswer = false;
 
-      Core.log('App.LabsReview.onAction(%o)', arguments);
+      console.log('App.LabsReview.onAction(%o)', arguments);
 
       // flashcard is loading or something..
       if (!this.oReview.getFlashcard())
@@ -148,7 +148,7 @@
 
     updateStatsPanel: function()
     {
-    //  Core.log('labsReview.updateStatsPanel()');
+    //  console.log('labsReview.updateStatsPanel()');
       var items = this.oReview.getItems(),
       num_items = items.length,
       position  = this.oReview.getPosition();

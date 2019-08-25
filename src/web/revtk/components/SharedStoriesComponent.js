@@ -173,7 +173,7 @@
 if (data.__debug_log) { 
   var dbg_div = document.getElementById("__debug_log");
   if (dbg_div) { dbg_div.innerHTML = data.__debug_log; }
-  Core.log(data.__debug_log);
+  // console.log(data.__debug_log);
 }
 
         // copy & edit story
@@ -282,7 +282,7 @@ if (data.__debug_log) {
 
       if (elMoveTo)
       {
-        Core.log('moveStoryBack(): move story back to %o', elMoveTo);
+        console.log('moveStoryBack(): move story back to %o', elMoveTo);
 
         // if no page refresh or stories paging happened, the div we created can be used
         // to move the story back in the list where it was

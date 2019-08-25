@@ -64,7 +64,7 @@ App.ready(function()
     {
       var i;
 
-      Core.log('onContentInit()');
+      console.log('onContentInit()');
 
       var el = this.elSelectionTable = Dom.down(this.viewDiv, 'selection-table');
       if (el)
@@ -116,7 +116,7 @@ App.ready(function()
       {
         var tr, td, nextRow, nextEl;
 
-        Core.log('EditKeywordComponent callback');
+        console.log('EditKeywordComponent callback');
         
         // get the custkeyword td
         tr = Dom.getAncestorByTagName(el, "tr");
@@ -129,7 +129,7 @@ App.ready(function()
 
         if (next)
         {
-          Core.log('Edit next keyword...');
+          console.log('Edit next keyword...');
           nextRow = Dom.getNextSibling(tr);
           if (nextRow)
           {

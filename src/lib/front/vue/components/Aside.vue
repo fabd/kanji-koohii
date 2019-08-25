@@ -38,7 +38,7 @@ export default {
   },
 
   // life cycle
-  // created() { core.log('Aside created()') },
+  // created() { console.log('Aside created()') },
   mounted() {
     // console.log('Aside mounted()')
 

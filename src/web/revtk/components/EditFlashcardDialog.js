@@ -43,7 +43,7 @@
      */
     init: function(uri, params, context, options)
     {
-      Core.log("EditFlashcardDialog(%s)", uri);
+      console.log("EditFlashcardDialog(%s)", uri);
 
       var mobile = Core.Ui.Mobile.isMobile();
 
@@ -114,7 +114,7 @@
 
     onHide: function()
     {
-      Core.log('EditFlashcardDialog::onHide()');
+      console.log('EditFlashcardDialog::onHide()');
      
       // clumsy page reload uri received from last response TRON "reload" property
       if (this.reload)

@@ -27,7 +27,7 @@
      */
     init: function(url, options, callback)
     {
-      Core.log("EditKeywordComponent(%s, %o)", url, options);
+      console.log("EditKeywordComponent(%s, %o)", url, options);
 
       this.options = options;
       this.callback = callback;

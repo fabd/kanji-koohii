@@ -21,7 +21,7 @@
  * 
  *   successHandler: function(t) {
  *     if (t.isSuccess()) {
- *       Core.log("Success!");
+ *       console.log("Success!");
  *     }
  *     else if (t.getResponse().responseJSON === null) {
  *       console.log("JSON data could not be parsed");
@@ -136,7 +136,7 @@
           callback = {},
           postdata;
     
-      Core.log('AjaxRequest.init()',options);
+      console.log('AjaxRequest.init()',options);
       
       // set defaults
       options = Y.lang.merge({
@@ -164,7 +164,7 @@
       // this should only be used internally from now (AjaxPanel)
       if (options.events) {
         if (options.events.onSuccess || options.events.onFailure) {
-          Core.warn("AjaxRequest() WARNING: options.events is deprecated! (for internal use)");
+          console.warn("AjaxRequest() WARNING: options.events is deprecated! (for internal use)");
         }
         callback.events = options.events;
       }
@@ -179,14 +179,14 @@
       }
       
       callback.timeout = Y.lang.isNumber(options.timeout) ? options.timeout : DEFAULT_TIMEOUT; 
-      //Core.log("Setting callback.timeout to %o", callback.timeout);
+      //console.log("Setting callback.timeout to %o", callback.timeout);
       
       // serialize form data?
       if (options.form) {
 
         var formObject = Dom.get(options.form);
         
-        Core.assert(formObject.nodeName && formObject.nodeName.toLowerCase()==='form', "AjaxRequest::init() form is not a FORM element");
+        console.assert(formObject.nodeName && formObject.nodeName.toLowerCase()==='form', "AjaxRequest::init() form is not a FORM element");
 
         Y.util.Connect.setForm(formObject);
       }
@@ -206,7 +206,7 @@
       // convert request parameters to url encoded string (damn you, YUI)
       if (params)
       {
-        Core.assert(Y.lang.isString(params) || Y.lang.isObject(params), "AjaxRequest() invalid typeof options.parameters");
+        console.assert(Y.lang.isString(params) || Y.lang.isObject(params), "AjaxRequest() invalid typeof options.parameters");
 
         if (Y.lang.isString(params))
         {
@@ -238,7 +238,7 @@
         if (options.method === 'GET')
         {
           // should not query string in url AND and options.parameters at the same time 
-          Core.assert(requestUri.indexOf("?") < 0, "AjaxRequest::init() Request url already contains parameters");
+          console.assert(requestUri.indexOf("?") < 0, "AjaxRequest::init() Request url already contains parameters");
 
           requestUri = requestUri + "?" + query;
         }
@@ -316,7 +316,7 @@
           } 
           catch (e)
           {
-            Core.warn('Core.Ui.AjaxRequest::handleSuccess()  Could not parse JSON.');
+            console.warn('Core.Ui.AjaxRequest::handleSuccess()  Could not parse JSON.');
             o.responseJSON = null;
             
             return;

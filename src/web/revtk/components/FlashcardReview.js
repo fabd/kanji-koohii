@@ -241,7 +241,7 @@
     {
       var data   = Dom.getDataset(el),
           action = data.action;
-      Core.assert(!!data.action, 'onActionEvent() bad "action" attribute, element %o', el);
+      console.assert(!!data.action, 'onActionEvent() bad "action" attribute, element %o', el);
 
       return (false !== this.notify('onAction', action, ev));
     },
@@ -536,10 +536,9 @@
         if (oJson.get && oJson.get.length > 0)
         {
           // assertion
-          if (argument !== this.cacheNext)
-          {
-            Core.halt("onAjaxSuccess(): this.cacheNext inconsistency");
-          }
+          console.assert(
+            (argument === this.cacheNext),
+            "onAjaxSuccess(): this.cacheNext inconsistency");
 
           // add cards to cache
           this.cacheEnd = this.cacheNext + oJson.get.length - 1;
@@ -668,7 +667,7 @@
     {
       if (!this.eventDispatcher.hasListeners('onAction'))
       {
-        Core.warn('FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener');
+        console.warn('FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener');
       }
 
       this.oKeyboard.addListener(sKey, Core.bind(this.shortcutKeyListener, this, sActionId));

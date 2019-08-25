@@ -90,62 +90,6 @@ var Core =
   },
 
   /**
-   * Throws an error message if the condition is not truthy.
-   *
-   * @see   http://eriwen.com/javascript/js-stack-trace/
-   * @see   http://www.joehewitt.com/software/firebug/docs.php
-   *
-   * @param {Boolean} condition   Should always be passed as a boolean expression.
-   * @param {String} message      Sprintf style message, and following optional arguments.
-   */
-  assert: function(condition, message)
-  {
-    if (condition) {
-      return;
-    }
-    var args = Array.prototype.slice.call(arguments);
-    args.shift();
-    args[0] = "ASSERTION FAILED: " + args[0];
-    if (typeof(console) !== "undefined" && typeof(console.error) === 'function') {
-      console.error.apply(console, args);
-    }
-    else {
-      Core.log.apply(Core.log, args);
-    }
-  },
-
-  /**
-   * Log a warning message (maps to Firebug console.warn() if present).
-   * 
-   * Use this to report potential problems which should not show in production.
-   * 
-   * @param {String}  Message, followed by optional arguments (sprintf style)
-   */
-  warn: function()
-  {
-    if (typeof(console) !== "undefined" && typeof(console.warn) === 'function') {
-      console.warn.apply(console, arguments);
-    } else {
-      Core.log.apply(Core.log, arguments);
-    }
-  },
-
-  /**
-   * Throws an error message (maps to Firebug console.error() if present).
-   * 
-   * @param {String}  Message, followed by optional arguments (sprintf style)
-   */
-  halt: function(message)
-  {
-    // throw exception doesn't work in Firefox?
-
-    if (typeof(console) !== "undefined" && typeof (console.error) === 'function') {
-      console.error.apply(console, arguments);
-    }
-    alert(message);
-  },
-
-  /**
    * Set the document onload event.
    *
    */
@@ -157,7 +101,6 @@ var Core =
 };
 
 /* =require "/core/toolkit.js" */
-/* =require "/core/console.js" */
 
 // shortcut to test & learn YUI in Firebug's console
 var Y = YAHOO;

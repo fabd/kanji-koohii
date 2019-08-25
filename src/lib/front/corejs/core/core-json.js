@@ -59,7 +59,7 @@ if (!Core.Helper) {
 
     if (errors.length)
     {
-      Core.warn(errors.join('\n'));
+      console.warn(errors.join('\n'));
     }
   };
 
@@ -91,7 +91,7 @@ if (!Core.Helper) {
         try {
           oJson = Y.lang.JSON.parse(json);
         } catch (e) {
-          Core.halt('Core.Helper.TRON()  Could not parse JSON (%o)', json);
+          console.error('Core.Helper.TRON()  Could not parse JSON (%o)', json);
         }
       }
       // should be a native object
@@ -102,9 +102,9 @@ if (!Core.Helper) {
       }
 
       // validate TRON message
-      Core.assert(Y.lang.isNumber(oJson.status), "TRON status is not a number");
-      Core.assert(Y.lang.isObject(oJson.props),  "TRON props is not an object");
-      Core.assert(Y.lang.isArray(oJson.errors),  "TRON errors is not an array");
+      console.assert(Y.lang.isNumber(oJson.status), "TRON status is not a number");
+      console.assert(Y.lang.isObject(oJson.props),  "TRON props is not an object");
+      console.assert(Y.lang.isArray(oJson.errors),  "TRON errors is not an array");
 
       this.oJson = oJson;
     },

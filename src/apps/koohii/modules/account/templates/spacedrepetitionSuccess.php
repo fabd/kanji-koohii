@@ -167,7 +167,7 @@ App.ready(function(){
     },
 
     created() {
-      //Core.log('created() %o', this.srs_max_box);
+      //console.log('created() %o', this.srs_max_box);
 
       this.srs_max_box  = Koohii.SRS.settings[0];
       this.srs_mult     = Koohii.SRS.settings[1];

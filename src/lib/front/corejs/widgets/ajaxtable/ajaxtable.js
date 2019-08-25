@@ -94,7 +94,7 @@
 
       if (this.ajaxInProgress)
       {
-        Core.log('AjaxTable::onRefreshTable() ajax in progress, ignoring clicks');
+        console.log('AjaxTable::onRefreshTable() ajax in progress, ignoring clicks');
         return false;
       }
 
@@ -139,7 +139,7 @@
      */
     onResponse: function(t)
     {
-      Core.log('AjaxTable::onResponse(%o)', t);
+      console.log('AjaxTable::onResponse(%o)', t);
 
       if (t === null) {
         return;

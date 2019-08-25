@@ -112,7 +112,7 @@
     
     onBeginReview: function()
     {
-      //Core.log('App.KanjiReview.onBeginReview()');
+      //console.log('App.KanjiReview.onBeginReview()');
     },
 
     /**
@@ -122,7 +122,7 @@
      */
     onEndReview: function()
     {
-      Core.log('App.KanjiReview.onEndReview()');
+      console.log('App.KanjiReview.onEndReview()');
       
       this.updateStatsPanel();
 
@@ -138,7 +138,7 @@
 
     onFlashcardCreate: function()
     {
-      //Core.log('App.KanjiReview.onFlashcardCreate()');
+      //console.log('App.KanjiReview.onFlashcardCreate()');
 
       // Show panels when first card is loaded
       if (this.oReview.getPosition() === 0)
@@ -164,7 +164,7 @@
 
     onFlashcardUndo: function(oAnswer)
     {
-    //  Core.log('onFlashcardUndo(%o)', oAnswer);
+    //  console.log('onFlashcardUndo(%o)', oAnswer);
       
       // correct the Yes / No totals
       this.updateAnswerStats(oAnswer, true);
@@ -172,7 +172,7 @@
       
     onFlashcardState: function(iState)
     {
-      // Core.log('onFlashcardState(%d)', iState);
+      // console.log('onFlashcardState(%d)', iState);
       Dom.toggle('uiFcButtons0', iState === 0);
       Dom.toggle('uiFcButtons1', iState !== 0);
     },
@@ -181,7 +181,7 @@
     {
       var oCardData, cardAnswer = false;
 
-      Core.log('App.KanjiReview.onAction(%o)', arguments);
+      console.log('App.KanjiReview.onAction(%o)', arguments);
 
       // help dialog
       if (sActionId === 'help')
@@ -392,7 +392,7 @@
       if (!this.oEditFlashcard)
       {
         var params = Y.lang.merge(Y.lang.JSON.parse(data.param), { ucs: oCardData.id });
-        //Core.log("zomg %o", params);return false;
+        //console.log("zomg %o", params);return false;
         
         this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, params, [el, "tr", "br"], {
           events: {
@@ -412,7 +412,7 @@
 
     updateStatsPanel: function()
     {
-    //  Core.log('App.KanjiReview.updateStatsPanel()');
+    //  console.log('App.KanjiReview.updateStatsPanel()');
       var items = this.oReview.getItems(),
       num_items = items.length,
       position  = this.oReview.getPosition();

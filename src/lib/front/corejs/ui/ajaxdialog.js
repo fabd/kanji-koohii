@@ -255,7 +255,7 @@
       
       options = !!options ? options : {};
       
-      Core.log('AjaxDialog.init() Options: %o',options);
+      console.log('AjaxDialog.init() Options: %o',options);
   
       // set defaults
       this.options = Y.lang.merge({
@@ -288,7 +288,7 @@
 
       if (options.useMarkup)
       {
-        Core.assert(Y.lang.isString(srcMarkup), "AjaxDialog.init() srcMarkup must be string id");
+        console.assert(Y.lang.isString(srcMarkup), "AjaxDialog.init() srcMarkup must be string id");
 
         // we have to clone the markup of YUI uses it as is
         var elSrcMarkup = Dom.get(srcMarkup);
@@ -328,7 +328,7 @@
       // set loading style for ajax dialogs, now otherwise positioning issues
       if (options.requestUri)
       {
-        Core.assert(!!options.width, "AjaxDialog.init()   Ajax dialog should set width!");
+        console.assert(!!options.width, "AjaxDialog.init()   Ajax dialog should set width!");
         this.setBodyLoading(options.width);
       }
 
@@ -453,7 +453,7 @@
      */
     onHideEvent: function()
     {
-      Core.log('AjaxDialog::onHideEvent()');
+      console.log('AjaxDialog::onHideEvent()');
       // destroy the dialog, unless the listener returns false 
       if (false !== this.eventDispatcher.notify('onDialogHide'))
       {
@@ -481,7 +481,7 @@
      */
     getBody: function()
     {
-      Core.assert(this.yPanel.body !== null, "getBody()  YUI Panel body not available");
+      console.assert(this.yPanel.body !== null, "getBody()  YUI Panel body not available");
       return this.yPanel.body;
     },
 
@@ -522,7 +522,7 @@
 
     onPanelResponse: function(tron)
     {
-      //Core.log("onPanelResponse(%o)", tron);
+      //console.log("onPanelResponse(%o)", tron);
       
       this.eventDispatcher.notify('onDialogResponse', tron);
 
@@ -532,7 +532,7 @@
     
     onPanelInit: function(tron)
     {
-      //Core.log('AjaxDialog::onPanelInit()');
+      //console.log('AjaxDialog::onPanelInit()');
 
       // handle dialog progress status
       if (this.handleTRONStatus(tron)) {
@@ -601,7 +601,7 @@
      */
     onPanelSubmit: function(e)
     {
-      Core.log('AjaxDialog::onPanelSubmit()');
+      console.log('AjaxDialog::onPanelSubmit()');
       
       // if the listener returns true, proceed with default ajax submission,
       // otherwise AjaxPanel will cancel the form submit event!
@@ -623,7 +623,7 @@
         case Core.Helper.TRON.STATUS_PROGRESS: dialogStatus = AjaxDialog.STATUS_PROGRESS; break;
         case Core.Helper.TRON.STATUS_SUCCESS:  dialogStatus = AjaxDialog.STATUS_SUCCESS; break;
         default:
-          Core.warn('AjaxDialog::handleTRONStatus() invalid status');
+          console.warn('AjaxDialog::handleTRONStatus() invalid status');
           break;
       }
       return this.handleDialogStatus(dialogStatus, tron);
@@ -640,7 +640,7 @@
      */
     handleDialogStatus: function(dialogStatus, tron)
     {
-      Core.log('AjaxDialog.handleDialogStatus(%o)', dialogStatus);
+      console.log('AjaxDialog.handleDialogStatus(%o)', dialogStatus);
 
       if (dialogStatus === AjaxDialog.STATUS_SUCCESS)
       {
@@ -678,7 +678,7 @@
 
     destroy: function()
     {
-      Core.log('AjaxDialog::destroy()');
+      console.log('AjaxDialog::destroy()');
 
       // don't run twice
       if (this.destroyed) {

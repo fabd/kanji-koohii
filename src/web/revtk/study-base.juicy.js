@@ -155,7 +155,7 @@
 
       if (!this.oEditFlashcard)
       {
-        Core.log("gotcha %o", data);
+        console.log("gotcha %o", data);
         this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, Y.lang.JSON.parse(data.param), [this.elEditFlashcard, "tr", "br"], {
           events: {
             "onMenuResponse": onMenuResponse,

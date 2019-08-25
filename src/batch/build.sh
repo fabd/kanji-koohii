@@ -89,10 +89,6 @@ javascripts=(
   # 'web/koohii/study-base'             -- ... ........ .. study-bundle
   # 'web/koohii/kanji-flashcardreview'  -- ... ........ .. review-bundle
 
-# Juicer strips some debug code (not "console.log" which is checked for further below)
-JUICEROPTS='-v --strip ''Core.log,Core.warn,Core.halt,Core.assert'' --webroot web --config apps/koohii/config/juicer.config.php'
-
-
 # colored output  eg.  echo "${red}red text ${green}green text${reset}"
 TEXT_BOLD=`tput bold`
 TEXT_FAIL=`tput bold ; tput setaf 1`
@@ -169,7 +165,9 @@ function do_lint_js_files()
 
 function do_build_js()
 {
-  do_check_for_console_log
+  JUICEROPTS='-v --webroot web --config apps/koohii/config/juicer.config.php'
+
+  # do_check_for_console_log
 
   for file in ${javascripts[*]}; do
 
@@ -199,7 +197,7 @@ function do_check_for_console_log()
 {
   #  --ignore-dir
   #
-  #    lib/front/vue    Ignore because console.* calls are removed by UglifyJsPlugin (drop_console) in the Webpack build.
+  #    lib/front/vue    Ignore because console.* calls are removed by UglifyJs (drop_console) in the Webpack build.
   #
   #
     # Detect uncommented console.log() calls and stops if any is found.

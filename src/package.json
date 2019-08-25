@@ -67,7 +67,10 @@
     "Safari >= 10.1",
     "iOS >= 10.3",
     "Firefox >= 54",
-    "Edge >= 15"
+    "Edge >= 15",
+    "Samsung >= 5",
+    "Opera >= 38",
+    "ie >= 11"
   ],
   "comments": [
     "browserslist : target browsers with full ES2015 support",

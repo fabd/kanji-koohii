@@ -40,7 +40,7 @@ class coreRequest extends sfWebRequest
     $data = json_decode($this->getContent(), false);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
-      throw new sfException("json_decode() error: '%s'", json_last_error_msg());
+      throw new sfException(sprintf("json_decode() error: '%s'", json_last_error_msg()));
     }
 
     return $data;

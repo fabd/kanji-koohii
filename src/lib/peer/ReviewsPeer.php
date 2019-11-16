@@ -15,6 +15,7 @@
  *  getCountRtK3()
  *  getLeitnerBoxCounts()
  *  getReviewedFlashcardCount()
+ *  getMaximumSequenceNumber()
  *  getHeisigProgressCount()
  *  getTotalReviews()
  *  getMostRecentReviewTimeStamp()
@@ -325,6 +326,24 @@ class ReviewsPeer extends coreDatabaseTable
 
     $select = self::getInstance()->select()->where($condition);
     return self::_getFlashcardCount($userId, $select);
+  }
+
+  /**
+   * Returns the maximum RTK sequence number a user has added. 
+   * 
+   * @return int RTK sequence number
+   */
+  public static function getMaximumSequenceNumber($userId) {
+    // get the flashcard count in the RTK1 range
+    $select = self::getInstance()->select()->where(rtkIndex::getSqlCol().' <= ?', rtkIndex::inst()->getNumCharactersVol1());
+    $select = KanjisPeer::joinLeftUsingUCS($select);
+    
+    // get maximum Rtk sequence number
+    $select->columns(array('max' => 'MAX('.rtkIndex::getSqlCol().')'))->query();
+    $result = self::$db->fetchObject();
+    $maxRtkSeqNr = (int) $result->max;
+
+    return $maxRtkSeqNr;
   }
 
   /**

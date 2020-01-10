@@ -1,5 +1,5 @@
 <?php
-  $this->latestKanji = ReviewsPeer::getMaximumSequenceNumber($sf_user->getUserId());
+  $this->latestKanji = ReviewsPeer::getHeisigProgressCount($sf_user->getUserId());
 ?>
 <div class="row">
 

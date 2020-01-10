@@ -329,24 +329,6 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
-   * Returns the maximum RTK sequence number a user has added. 
-   * 
-   * @return int RTK sequence number
-   */
-  public static function getMaximumSequenceNumber($userId) {
-    // get the flashcard count in the RTK1 range
-    $select = self::getInstance()->select()->where(rtkIndex::getSqlCol().' <= ?', rtkIndex::inst()->getNumCharactersVol1());
-    $select = KanjisPeer::joinLeftUsingUCS($select);
-    
-    // get maximum Rtk sequence number
-    $select->columns(array('max' => 'MAX('.rtkIndex::getSqlCol().')'))->query();
-    $result = self::$db->fetchObject();
-    $maxRtkSeqNr = (int) $result->max;
-
-    return $maxRtkSeqNr;
-  }
-
-  /**
    * Returns the number of kanji flashcards in RTK1 (only!) Heisig order.
    *
    * If there is any gap in the *RTK1* frame number range, it returns false.

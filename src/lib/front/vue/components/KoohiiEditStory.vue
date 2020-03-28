@@ -40,8 +40,8 @@
 
             <div v-if="isEditing" id="storyedit">
               
-              <div v-if="koohiiformGetErrors" class="formerrormessage">
-                <span v-html="koohiiformGetErrors"></span>
+              <div v-if="formHasErrors()" class="formerrormessage">
+                <span v-html="formGetErrors()"></span>
               </div>
 
               <textarea id="frmStory" v-model="postStoryEdit" name="txtStory"></textarea>
@@ -114,19 +114,15 @@
 </template>
 
 <script>
-import Dom, { insertAfter } from '@lib/koohii/dom.js'
+import $$, { insertAfter } from "@lib/koohii/dom.js";
 
 import { KoohiiAPI } from '@lib/KoohiiAPI.js'
 
-//comps
+// comps
 import KoohiiCharsLeft     from '@components/KoohiiCharsLeft.vue'
 import CjkLangJa         from '@components/CjkLangJa.vue'
 import KoohiiSharedStory   from '@components/KoohiiSharedStory.vue'   // instantiated after publishing a story
-
-//mixins
-import KoohiiForm          from '@lib/mixins/KoohiiForm.js'
-import KoohiiLoading       from '@lib/mixins/KoohiiLoading.js'
-
+import KoohiiLoading from "@components/KoohiiLoading/index.js";
 
 export default {
   name: 'KoohiiEditStory',
@@ -135,11 +131,6 @@ export default {
     CjkLangJa,
     KoohiiCharsLeft
   },
-
-  mixins: [
-    KoohiiForm,
-    KoohiiLoading
-  ],
 
   props: {
     // See ./apps/koohii/modules/study/templates/editSuccess.php
@@ -166,7 +157,7 @@ export default {
 
   data() {
     return {
-      // Edit Keyword dialog instance
+      /** @type {{ show(); destroy(); } | null} Edit Keyword dialog instance */
       oEditKeyword: null,
 
       isEditing: false,
@@ -175,16 +166,21 @@ export default {
       vmStoryPublished: null,
 
       // keep a copy to cancel changes
-      uneditedStory: ''
+      uneditedStory: '',
+
+      /** @type {string[]} */
+      formErrors: [],
     }
   },
 
   computed: {
+    /** @returns {string} */
     displayKeyword()
     {
       return this.custKeyword || this.kanjiData.keyword
     },
 
+    /** @returns {string} */
     editKeywordUrl()
     {
       return '/study/editkeyword/id/' + this.kanjiData.ucs_id
@@ -201,6 +197,23 @@ export default {
   },
 
   methods: {
+    formGetErrors() {
+      const errors = this.formErrors;
+      return errors.length
+        ? `<span>${errors.join("</span><span>")}</span>`
+        : "";
+    },
+
+    formHasErrors() {
+      return this.formErrors.length > 0;
+    },
+
+    /**
+     * @param {any} tron   TronInst (todo)
+     */
+    formHandleResponse(tron) {
+      this.formErrors = tron.getErrors();
+    },
 
     onEditStory()
     {
@@ -209,7 +222,9 @@ export default {
 
     onSubmit()
     {
-      this.koohiiloadingShow({ target: this.$refs.maskArea })
+      KoohiiLoading.show({
+        target: /** @type {HTMLElement} */ (this.$refs.maskArea),
+      });
 
       KoohiiAPI.postUserStory(
         { 
@@ -228,9 +243,9 @@ export default {
     {
       const props = tron.getProps()
 
-      this.koohiiloadingHide()
+      KoohiiLoading.hide();
 
-      this.koohiiformHandleResponse(tron)
+      this.formHandleResponse(tron);
 
       if (tron.hasErrors()) return
 
@@ -252,10 +267,10 @@ export default {
       // update/add/remove a shared story dynamically
       // 
       // delete story from page if already shared
-      let $elSharedStory = Dom('#'+props.sharedStoryId)
+      let $elSharedStory = $$("#" + props.sharedStoryId);
       if ($elSharedStory.el()) {
-        let el = $elSharedStory.closest('.rtkframe')
-        Dom(el).remove()
+        let el = $elSharedStory.closest(".rtkframe");
+        $$(el).remove();
       }
 
       if (!this.isReviewMode && props.isStoryShared) {
@@ -283,7 +298,7 @@ export default {
       this.editStory(storyText)
 
       this.$nextTick(function() {
-        // Dom('#main_container')[0].scrollIntoView(true)
+        // $$('#main_container')[0].scrollIntoView(true)
 
         // scroll to top of window
         let dx = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
@@ -305,7 +320,7 @@ export default {
     /**
      * Edit Story or Edit a copy of another user's story.
      * 
-     * @param {Object} sCopyStory   The "copy" story feature will set this to the copied story text.
+     * @param {string} sCopyStory   The "copy" story feature will set this to the copied story text.
      */  
     editStory(sCopyStory)
     {
@@ -322,7 +337,7 @@ export default {
       // note:AFTER toggling isEditing,order is important!
       this.$nextTick(function() {
        
-        const elTextArea = Dom('#frmStory')[0];
+        const elTextArea = $$('#frmStory')[0];
         // DOM is now updated
         this.setCaretToEnd(elTextArea)
       })
@@ -341,7 +356,7 @@ export default {
         el.innerHTML = keyword;
         
         // invalidate cached dialog
-        this.oEditKeyword.destroy()
+        this.oEditKeyword && this.oEditKeyword.destroy();
         this.oEditKeyword = null
       }
 

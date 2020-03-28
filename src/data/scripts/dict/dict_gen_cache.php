@@ -1,13 +1,19 @@
 <?php
 /**
- * Generate cache for the Dictionary lookup results.
+ * Pre-populate dictionary search results for the DictLookupDialog
+ * used in the kanji flashcard review modes.
+ * 
+ * Currently the main value is to be able to highlight the current
+ * kanji in the dictionary results, without needing to do additional
+ * queries to dictprons/dictsplit.
+ * 
  *
  * USAGE
  *
  *   - Create the table (cf. data/schemas/incremental/rtk_0017_...)
  *
  *   - Populate table
- *     $ php data/scripts/dict_gen_cache.php -g -limit 5000
+ *     $ php data/scripts/dict/dict_gen_cache.php -g --limit 5000
  *
  *
  * DATA STRUCTURES

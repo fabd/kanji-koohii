@@ -71,10 +71,10 @@ import { KoohiiAPI, TRON } from '@lib/KoohiiAPI.js'
 
 // comps
 import CjkLangJa from './CjkLangJa.vue'
+import KoohiiLoading from '@components/KoohiiLoading/index.js';
 
 //mixins
 import KoohiiFormat    from '@lib/mixins/KoohiiFormat.js'
-import KoohiiLoading   from '@lib/mixins/KoohiiLoading.js'
 
 
 // our simple regexp matching needs this so that vocab with okurigana is considered known
@@ -104,7 +104,6 @@ export default {
 
   mixins: [
     KoohiiFormat,
-    KoohiiLoading
   ],
 
   props: {
@@ -186,7 +185,7 @@ export default {
       if (item.pick !== true)
       {
         // App.KanjiReview.oReview.curCard.cardData.v_on ...   
-        this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
+        KoohiiLoading.show({ target: /** @type {HTMLElement} */ (this.$refs.refLoadingMask) })
         
         KoohiiAPI.setVocabForCard({ ucs: this.ucsId, dictid: item.id }, {
           then: (tron) => { this.onVocabPickResponse(tron, item) }
@@ -195,7 +194,7 @@ export default {
       // remove
       else
       {
-        this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
+        KoohiiLoading.show({ target: /** @type {HTMLElement} */ (this.$refs.refLoadingMask) })
 
         KoohiiAPI.deleteVocabForCard({ ucs: this.ucsId }, {
           then: (tron) => { this.onVocabDeleteResponse(tron, item) }
@@ -205,7 +204,7 @@ export default {
 
     onVocabDeleteResponse(tron, item)
     {
-      this.koohiiloadingHide()
+      KoohiiLoading.hide()
 
       if (tron.isSuccess()) {
         item.pick = false
@@ -217,7 +216,7 @@ export default {
     // @param {object} item           One of this.items[] which was clicked
     onVocabPickResponse(tron, item)
     {
-      this.koohiiloadingHide()
+      KoohiiLoading.hide()
 
       // success:  show vocab onto the flashcard, and close the dictionary
       if (tron.isSuccess())
@@ -242,7 +241,7 @@ export default {
       this.isLoading = true
 
       function doLoad() {
-        this.koohiiloadingShow({ target: this.$refs.refLoadingMask })
+        KoohiiLoading.show({ target: /** @type {HTMLElement} */ (this.$refs.refLoadingMask) })
 
         // getKnownKanji:
         // 
@@ -275,7 +274,7 @@ export default {
 
       // console.log('onDictLoadResponse(%o)', props)
 // return
-      this.koohiiloadingHide()
+      KoohiiLoading.hide()
 
       if (props.known_kanji) {
         this.knownKanji = props.known_kanji

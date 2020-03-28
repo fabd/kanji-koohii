@@ -1,0 +1,61 @@
+{
+  //////////////////////////////////////////////////////////////////////////////
+  // This file is for Visual Studio Code
+  //
+  //   - list the files belonging to the project,
+  //   - the files to be excluded from the project
+  //   - compiler options (see below)
+  //
+  //   https://code.visualstudio.com/docs/languages/jsconfig
+  //   https://code.visualstudio.com/docs/nodejs/working-with-Javascript
+  //
+  //////////////////////////////////////////////////////////////////////////////
+  "compilerOptions": {
+    // Specifies which default library (lib.d.ts) to use
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "sourceMap": true,
+    // relax some settings here otherwise the implicit type checking
+    //  in plain .js & .vue files throws too many red squiggly lines
+    "noImplicitAny": false,
+    //
+    "noImplicitReturns": true,
+    // Enable type checking on JavaScript files
+    "checkJs": true,
+    // Base directory to resolve non-relative module names
+    "baseUrl": ".",
+    // Specify path mapping to be computed relative to baseUrl option
+    "paths": {
+      // "@/*": [
+      //   "src/*"
+      // ],
+      "@components/*": [
+        "./lib/front/vue/components/*"
+      ],
+      "@lib/*": [
+        "./lib/front/vue/lib/*"
+      ],
+      "@ts/*": [
+        "./lib/front/types/*"
+      ]
+    },
+  },
+  //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  "include": [
+    "lib/front/vue/**/*.ts",
+    "lib/front/vue/**/*.vue",
+    "web/revtk/**/*.js",
+    // typescript declarations used with JSDoc support
+    "lib/front/types/**/*.d.ts",
+  ],
+  //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "web/build"
+  ]
+}

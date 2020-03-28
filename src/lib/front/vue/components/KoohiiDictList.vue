@@ -66,16 +66,21 @@
  * a list of vocabulary for the user.
  * 
  */
-
 import { KoohiiAPI, TRON } from '@lib/KoohiiAPI.js'
+
+// typedefs
+/** @typedef {import("@ts/types").KanjiReview} IKanjiReview */
+/** @typedef {import("@ts/types").DictListEntry} IDictListEntry */
+/** @typedef {import("@ts/types").DictId} TDictId */
+// api
+/** @typedef {import("@ts/types").KoohiiApi__GetDictListForUCSResponse} */
 
 // comps
 import CjkLangJa from './CjkLangJa.vue'
 import KoohiiLoading from '@components/KoohiiLoading/index.js';
 
-//mixins
-import KoohiiFormat    from '@lib/mixins/KoohiiFormat.js'
-
+// utils
+import { kkFormatReading } from '@lib/koohii/format';
 
 // our simple regexp matching needs this so that vocab with okurigana is considered known
 const HIRAGANA = 'ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔゕゖ ゙ ゚゛゜ゝゞゟ'
@@ -94,17 +99,12 @@ const PRI_GAI1  = 2
 const PRI_GAI2  = 1
 */
 
-
 export default {
   name: 'KoohiiDictList',
 
   components: {
     CjkLangJa
   },
-
-  mixins: [
-    KoohiiFormat,
-  ],
 
   props: {
     /**
@@ -118,7 +118,10 @@ export default {
      *     known       {boolean}    contains only known kanji
      *
      */
-    items: { type: Array, default: function() { return [] } }
+    items: {
+      /** @type {{ new (): IDictListEntry[] }} */
+      type: Array, default: function() { return [] }
+    }
   },
 
   data() {
@@ -137,14 +140,17 @@ export default {
   },
 
   computed: {
+    /** @returns {IKanjiReview} */
     KanjiReview() {
       return (window.App && window.App.KanjiReview)
     },
 
+    /** @returns {boolean} */
     isKanjiReview() {
       return !!this.KanjiReview
     },
 
+    /** @returns {boolean} */
     isMobile() {
       // (legacy code) cf. lib/front/corejs/ui/mobile.js
       return (window.innerWidth <= 720)
@@ -173,6 +179,7 @@ export default {
       return inst
     },
 
+    /** @param {IDictListEntry} item */
     onVocabPick(item)
     {
       // console.log('onVocabPick "%s"', item.c)
@@ -187,60 +194,69 @@ export default {
         // App.KanjiReview.oReview.curCard.cardData.v_on ...   
         KoohiiLoading.show({ target: /** @type {HTMLElement} */ (this.$refs.refLoadingMask) })
         
-        KoohiiAPI.setVocabForCard({ ucs: this.ucsId, dictid: item.id }, {
-          then: (tron) => { this.onVocabPickResponse(tron, item) }
-        })
+        KoohiiAPI.setVocabForCard(
+          { ucs: this.ucsId, dictid: item.id },
+          {
+            then: (tron) => {
+              KoohiiLoading.hide();
+              // success:  show vocab onto the flashcard, and close the dictionary
+              tron.isSuccess() && this.onVocabPickResponse(item);
+            }
+          }
+        )
       }
       // remove
       else
       {
         KoohiiLoading.show({ target: /** @type {HTMLElement} */ (this.$refs.refLoadingMask) })
 
-        KoohiiAPI.deleteVocabForCard({ ucs: this.ucsId }, {
-          then: (tron) => { this.onVocabDeleteResponse(tron, item) }
-        })
+        KoohiiAPI.deleteVocabForCard(
+          { ucs: this.ucsId },
+          {
+            then: (tron) => {
+              KoohiiLoading.hide();
+              tron.isSuccess() && this.onVocabDeleteResponse(item);
+            }
+          }
+        )
       }
     },
 
-    onVocabDeleteResponse(tron, item)
+    /** 
+     * @param {IDictListEntry} item
+     */
+    onVocabDeleteResponse(item)
     {
-      KoohiiLoading.hide()
-
-      if (tron.isSuccess()) {
-        item.pick = false
-        this.getKanjiCard().removeVocab(item)
-        this.isKanjiReview && this.KanjiReview.toggleDictDialog();
-      }
+      item.pick = false
+      this.getKanjiCard().removeVocab(item)
+      this.isKanjiReview && this.KanjiReview.toggleDictDialog();
     },
 
-    // @param {object} item           One of this.items[] which was clicked
-    onVocabPickResponse(tron, item)
+    /** 
+     * @param {IDictListEntry} item   One of this.items[] which was clicked
+     */
+    onVocabPickResponse(item)
     {
-      KoohiiLoading.hide()
+      // sets highlighted entry
+      this.items.forEach((o) => { o.pick = false })
+      item.pick = true
 
-      // success:  show vocab onto the flashcard, and close the dictionary
-      if (tron.isSuccess())
-      {
-        // sets highlighted entry
-        this.items.forEach((o) => { o.pick = false })
-        item.pick = true
-
-        const VocabPick = {
-          compound: item.c,
-          reading:  item.r,
-          gloss:    item.g
-        }
-        this.getKanjiCard().setVocab(VocabPick)
-
-        this.isKanjiReview && this.KanjiReview.toggleDictDialog();
+      const VocabPick = {
+        compound: item.c,
+        reading:  item.r,
+        gloss:    item.g
       }
+      this.getKanjiCard().setVocab(VocabPick)
+
+      this.isKanjiReview && this.KanjiReview.toggleDictDialog();
     },
 
+    /** @param {number} ucsId */
     load(ucsId)
     {
       this.isLoading = true
 
-      function doLoad() {
+      const doLoad = () => {
         KoohiiLoading.show({ target: /** @type {HTMLElement} */ (this.$refs.refLoadingMask) })
 
         // getKnownKanji:
@@ -252,27 +268,30 @@ export default {
         //   even though they are also cached in php session, it's better to avoid returning
         //   several KBs of data with each dictionary lookup request
 
-        KoohiiAPI.getDictListForUCS({
-          ucsId: ucsId,
-          getKnownKanji: false === this.isSetKnownKanji
-        },
-        {
-          then: (tron) => {
-            this.ucsId = ucsId
-            this.onDictLoadResponse(tron)
+        KoohiiAPI.getDictListForUCS(
+          {
+            ucsId: ucsId,
+            getKnownKanji: false === this.isSetKnownKanji
+          },
+          {
+            then: (tron) => {
+              this.ucsId = ucsId
+              this.onDictLoadResponse(tron.getProps());
+            }
           }
-        })
+        )
       }
 
 
       this.$nextTick(doLoad)
     },
 
-    onDictLoadResponse(tron)
+    /** 
+    * @param {KoohiiApi__GetDictListForUCSResponse} props
+    */
+    onDictLoadResponse(props)
     {
-      const props = tron.getProps()
-
-      // console.log('onDictLoadResponse(%o)', props)
+      console.log('onDictLoadResponse(%o)', props)
 // return
       KoohiiLoading.hide()
 
@@ -291,7 +310,10 @@ export default {
       this.isLoading = false
     },
 
-    // {DictEntry}  items
+    /** 
+     * @param {IDictListEntry[]} items
+     * @param {string} knownKanji
+     */
     setKnownItems(items, knownKanji)
     {
       // if (this.known_kanji !== '') {
@@ -313,15 +335,24 @@ export default {
       return sortedItems
     },
 
+    /** 
+     * @param {IDictListEntry[]} items
+     */
     formatDictEntryArray(items)
     {
       // assign a "formatted reading" for display, keep DictEntry's reading
       items.forEach((o) => {
-        o.fr = this.koohiiformatReading(o.r)
+        
+        o.fr = kkFormatReading(o.r);
+        // console.log('fuuuu ', o, o.fr);
       })
     },
 
     // set selected state, where 'picks' is an array of dictid's 
+    /** 
+     * @param {IDictListEntry[]} items
+     * @param {TDictId[]} picks
+     */
     applyVocabPicks(items, picks)
     {
       items.forEach((o) => { o.pick = picks.includes(o.id) })

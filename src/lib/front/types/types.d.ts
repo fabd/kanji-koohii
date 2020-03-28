@@ -31,3 +31,11 @@ export interface DictListEntry {
   fr?: string; // formatted reading
   pick?: boolean; // selected state
 }
+
+export interface KoohiiApi__GetDictListForUCSResponse {
+  items: DictListEntry[];
+  /* array of user's selected vocab ([dictid, ...]) */
+  picks: DictId[];
+  /* (IF "req_known_kanji") String of known kanji */
+  known_kanji?: string;
+}

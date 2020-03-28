@@ -1,13 +1,13 @@
 /**
  * Study page - includes (Still using old prototype-based javascript)
- * 
+ *
  * yuicompressor globals:
  *
  *   Vue       vue-bundle, VueJs
  *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
- *   
+ *
  */
-/*global YAHOO, window, alert, console, document, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii, VueInstance */
+/* globals YAHOO, Core, App, $, $$, Event, actb, kwlist, kklist, Vue, Koohii, VueInstance */
 
 /* REQUIRES  legacy-bundle ! */
 
@@ -28,10 +28,12 @@
 
   App.StudyPage =
   {
+    /** @type {{ URL_SEARCH: string }?} */
+    options: null,
+
     /**
-     *
-     * Options:
-     *   URL_SEARCH             
+     * 
+     * @param {{ URL_SEARCH: string }} options 
      */
     initialize:function(options)
     {
@@ -39,7 +41,7 @@
 
       // otpions & php constants
       this.options = options;
-      
+
       // references
       this.elSearch = Dom.get('txtSearch');
       

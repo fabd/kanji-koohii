@@ -179,7 +179,10 @@
 
     onAction: function(sActionId, oEvent)
     {
-      var oCardData, cardAnswer = false;
+      var oCardData;
+
+      /** @type {number | 'h' | false} */
+      var cardAnswer = false;
 
       console.log('App.KanjiReview.onAction(%o)', arguments);
 

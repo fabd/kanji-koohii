@@ -1,37 +1,44 @@
-import Component     from './Aside.vue'
-import KoohiiNavMenu from './KoohiiNavMenu.vue'
-import VueInstance   from '@lib/helpers/vue-instance.js'
+import Component from "./Aside.vue";
+import KoohiiNavMenu from "./KoohiiNavMenu.vue";
+import VueInstance from "@lib/helpers/vue-instance";
+import Vue from "vue";
 
-let instance   = null
-let navMenu    = null
+let instance = null;
+let navMenu = null;
 
 export default {
-  
   // options.navOptionsmenu (cf. apps/koohii/templates/layout.php)
   open(options) {
     // console.log("Aside open()")
 
     if (!instance) {
       // merged with defaults in the component
-      let data = { width: 280 }
+      let data = { width: 280 };
       // render off-document and append afterwards
-      instance = VueInstance(Component, document.body, data, /* do NOT replace mount point */ false)
+      instance = VueInstance(
+        Component,
+        document.body,
+        data,
+        /* do NOT replace mount point */ false
+      );
 
       // render nav
-      navMenu = VueInstance(KoohiiNavMenu, instance.$refs.navContent, { menu: options.navOptionsMenu })
+      navMenu = VueInstance(KoohiiNavMenu, instance.$refs.navContent, {
+        menu: options.navOptionsMenu,
+      });
     }
 
-    instance.show = true
+    instance.show = true;
 
     Vue.nextTick(() => {
-      navMenu.initCollapsedItems()
-    })
+      navMenu.initCollapsedItems();
+    });
   },
 
   close() {
     // console.log("Aside close()")
 
-    instance.show = false
+    instance.show = false;
   },
 
   toggle() {

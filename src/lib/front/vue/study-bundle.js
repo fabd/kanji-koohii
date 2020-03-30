@@ -1,36 +1,29 @@
-/* global Koohii */
-
 // bundle used on the Study pages
-
 // requires the root bundle!
 
 // dependency for `css-loader` which includes our legacy stylesheets in the webpack build!
-import '@web/koohii/study-base.build.scss';
-import '@web/koohii/manage.build.scss';
+import "@web/koohii/study-base.build.scss";
+import "@web/koohii/manage.build.scss";
 
-// Koohii
-import LeitnerChart    from '@components/LeitnerChart.vue'
-import KoohiiDictList  from '@components/KoohiiDictList.vue'
-import KoohiiEditStory from '@components/KoohiiEditStory.vue'
+import LeitnerChart from "@components/LeitnerChart.vue";
+import KoohiiDictList from "@components/KoohiiDictList.vue";
+import KoohiiEditStory from "@components/KoohiiEditStory.vue";
 
-// for legacy code upgrade path
-import { KoohiiAPI }   from '@lib/KoohiiAPI.js'
+// declare some globals to be available for legacy Javascript (non-Vue build)
+import { KoohiiAPI } from "@lib/KoohiiAPI";
+import { merge } from "@lib/koohii/lang";
 
-if (window.Koohii && window.Koohii.UX) {
-
-  // we're not using Babel polyfill for Object.assign()
-  let UX = window.Koohii.UX
-
-  UX.LeitnerChart    = LeitnerChart
-  UX.KoohiiDictList  = KoohiiDictList
-  UX.KoohiiEditStory = KoohiiEditStory
-
+if (window.Koohii) {
   // for legacy code upgrade path
-  Koohii.API = KoohiiAPI
+  window.Koohii.API = KoohiiAPI;
 
-}
-else {
-  console.warn('Koohii.UX not defined.')
+  merge(window.Koohii.UX, {
+    LeitnerChart,
+    KoohiiDictList,
+    KoohiiEditStory,
+  });
+} else {
+  console.warn("Koohii global not defined.");
 }
 
-console.log('study bundle', );
+console.log("study bundle");

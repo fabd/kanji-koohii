@@ -5,10 +5,9 @@
   </span>
 </template>
 
-<style>
-</style>
+<style></style>
 
-<script>
+<script lang="ts">
 /* 
   Refactored cjk_lang_ja() php helper.
 
@@ -27,14 +26,14 @@
     <cjk-lang-ja className="css-class">{{ content }}</cjk-lang-ja> 
 
 */
-export default {
+import Vue from "vue";
 
-  name: 'CjkLangJa',
+export default Vue.extend({
+  name: "CjkLangJa",
 
   props: {
-    className: { type: String, default: '' },
-    html:      { type: String, default: '' },
-  }
-
-}
+    className: { type: String, default: "" },
+    html: { type: String, default: "" },
+  },
+});
 </script>

@@ -19,30 +19,27 @@
 </template>
 
 <script>
-import Dom from '../lib/koohii/dom.js'
-import {getScrollBarWidth} from '../lib/koohii/utils.js'
+// import Vue from "vue";
+import $$ from '@lib/koohii/dom'
+import { getScrollBarWidth } from '@lib/koohii/utils'
 
 export default {
 
   data() {
     return {
-      // default options for Aside
-      show:     false
+      /** @type {boolean} */
+      show: false,
+
+      /** @type {string} */
+      bodyOverflow: '',
+
+      /** @type {string} */
+      bodyPaddingRight: '',
     }
   },
 
-  watch: {
-    // show(value) {
-    //   console.log('wtach show %o', this.show)
-    // } 
-  },
-
-  // life cycle
   // created() { console.log('Aside created()') },
-  mounted() {
-    // console.log('Aside mounted()')
-
-  },
+  // mounted() { console.log('Aside mounted()') },
 
   methods: {
     slideEnter() {
@@ -51,7 +48,7 @@ export default {
 
     maskBeforeEnter() {
       // console.log("maskBeforeEnter()")
-      const $body = Dom(document.body)
+      const $body = $$(document.body)
       const scrollBarWidth = getScrollBarWidth()
 
       this.bodyOverflow = $body.css('overflow')
@@ -66,7 +63,7 @@ export default {
     maskAfterLeave() {
       // console.log("maskAfterLeave()")
 
-      Dom(document.body).css({
+      $$(document.body).css({
         'padding-right': this.bodyPaddingRight,
         'overflow':      this.bodyOverflow
       })

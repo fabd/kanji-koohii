@@ -23,8 +23,8 @@
 
 import Vue from "vue";
 import Component from "./KoohiiLoading.vue";
-import { classList, getStyle } from "@lib/koohii/dom.js";
-import Lang, { merge } from "@lib/koohii/lang.js";
+import { classList, getStyle } from "@lib/koohii/dom";
+import Lang, { merge } from "@lib/koohii/lang";
 
 /*
 interface KoohiiLoadingInstance extends Vue {

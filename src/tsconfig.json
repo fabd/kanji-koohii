@@ -1,0 +1,83 @@
+{
+  //////////////////////////////////////////////////////////////////////////////
+  // This file is for Visual Studio Code
+  //
+  //   - list the files belonging to the project,
+  //   - the files to be excluded from the project
+  //   - compiler options (see below)
+  //
+  //   https://code.visualstudio.com/docs/languages/jsconfig
+  //   https://vuejs.org/v2/guide/typescript.html#Recommended-Configuration
+  //
+  //////////////////////////////////////////////////////////////////////////////
+  "compilerOptions": {
+    // this aligns with Vue's browser support
+    "target": "es5",
+    // make the code tree-shakeable by producing ESM (EcmaScript Modules)
+    "module": "es2015",
+    "moduleResolution": "node",
+    "outDir": "./built/",
+    "sourceMap": true,
+    // this enables stricter inference for data properties on `this`
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    // Enable type checking on JavaScript files
+    "allowJs": true,
+    // Base directory to resolve non-relative module names
+    "baseUrl": ".",
+    // Specify path mapping to be computed relative to baseUrl option
+    "paths": {
+      // "@/*": [
+      //   "src/*"
+      // ],
+      "@components/*": [
+        "./lib/front/vue/components/*"
+      ],
+      "@lib/*": [
+        "./lib/front/vue/lib/*"
+      ],
+      "@ts/*": [
+        "lib/front/vue/types/*"
+      ]
+    },
+    // /////////////////////////////////////////////////////////////////
+    // things added by @vue/cli-plugin-typescript
+    // /////////////////////////////////////////////////////////////////
+    "experimentalDecorators": false, // DONT use vue-class-component
+    "jsx": "preserve",
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      // "webpack-env"
+    ],
+    "lib": [
+      "dom",
+      // "es5",
+      // "es2015",
+      "dom.iterable",
+      "esnext",
+    ]
+  },
+  // /////////////////////////////////////////////////////////////////
+  // /////////////////////////////////////////////////////////////////
+  "include": [
+    // "./**/*"
+    "lib/front/vue/**/*.js",
+    "lib/front/vue/**/*.ts",
+    "lib/front/vue/**/*.vue",
+    "lib/front/vue/**/*.d.ts",
+    "web/revtk/**/*.js",
+  ],
+  // /////////////////////////////////////////////////////////////////
+  // exclude folders for IntelliSense performance, exclude build files
+  // /////////////////////////////////////////////////////////////////
+  "exclude": [
+    "**/__*",
+    "node_modules",
+    "**/node_modules/*",
+    "web/build"
+  ]
+}

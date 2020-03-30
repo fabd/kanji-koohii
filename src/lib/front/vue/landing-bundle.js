@@ -1,41 +1,47 @@
 /**
  * LANDING PAGE bundle, includes
- * 
+ *
  *   - Vue runtime
  *   - the LANDING PAGE stylesheet
  *   - Mobile navigation
- * 
+ *
  */
 
 // Vue : bundle "standalone" build with the components
-import Vue from 'vue'
+import Vue from "vue";
 
 // includes the main legacy stylesheet in the webpack build
-import '@web/koohii/home.build.scss';
+import "@web/koohii/home.build.scss";
 
-// turn off annoying messages 
-Vue.config.productionTip = false
+// turn off annoying messages
+Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
 // include site-wide mobile navigation in the root bundle (for the landing page)
-import KoohiiAside     from '@components/Aside.js'
+import KoohiiAside from "@components/Aside.js";
 
-// make available to the Vue instance used in the web app's pages (non-SPA)
-window.Vue = Vue
+// export utilities for legacy code
+import Dom from "@lib/koohii/dom";
+import Lang from "@lib/koohii/lang";
+import VueInstance from "@lib/helpers/vue-instance";
 
-// export our DOM library for inline Javascript code
-import KOOHII from '@lib/koohii/koohii.js'
-let K = window.Koohii = KOOHII
+/** @type {import("@lib/koohii/globals").KoohiiGlobals} */
+const koohiiGlobals = {
+  Dom: Dom,
+  Refs: {},
+  Util: {
+    Lang: Lang,
+  },
+  UX: {},
+};
+
+window.Vue = Vue;
+window.VueInstance = VueInstance;
+window.Koohii = koohiiGlobals;
 
 // namespace for our front-end assets
-K.UX = {
-  KoohiiAside
-}
-
-// Refs are instances of components
-K.Refs = { }
-
-import VueInstance from '@lib/helpers/vue-instance.js'
-window.VueInstance = VueInstance
+window.Koohii.UX = {
+  KoohiiAside,
+};
 
 // console.log('landing page bundle', );

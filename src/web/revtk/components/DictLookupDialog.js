@@ -5,7 +5,7 @@
  *  load()   load another result (avoids recreating dialog and maintains drag/drop position)
  *       
  */
-/*global YAHOO, window, alert, console, document, Core, App, Koohii, VueInstance */
+/* globals YAHOO, Core, App, Koohii, VueInstance */
 
 (function(){
 

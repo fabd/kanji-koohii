@@ -1,9 +1,6 @@
 <template>
-
   <transition name="newstory-fadein" appear>
-
     <div class="sharedstory rtkframe" lang="ja">
-
       <div class="sharedstory_author" v-html="profileLink"></div>
 
       <div class="bookstyle">
@@ -11,20 +8,19 @@
       </div>
 
       <div class="sharedstory_meta flex">
-        <div class="lastmodified col-m-1 flex-a-c"><i class="far fa-clock"></i> NEW</div>
+        <div class="lastmodified col-m-1 flex-a-c"
+          ><i class="far fa-clock"></i> NEW</div
+        >
 
         <div :id="divId" class="actions col-m ta-r JsAction">
           &nbsp;
         </div>
       </div>
-
     </div>
-
   </transition>
-
 </template>
 
-<script>
+<script lang="ts">
 /**
  * Placeholder component, until maybe/someday we refactor Shared Stories list & items to Vue.
  *
@@ -40,20 +36,26 @@
  *          * "enter" animation
  *          * maybe a "unpublish" buttoN?
  */
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
   props: {
     profileLink: { type: String, required: true },
-    story:  { type: String, required: true },
+    story: { type: String, required: true },
 
     // a unique id per user+story that's output by _SharedStores.php, lets us find the div easily
-    divId:  { type: String, required: true }
-  }
-}
+    divId: { type: String, required: true },
+  },
+});
 </script>
 
 <style>
 /* fade in the published story for visual feedback */
-.newstory-fadein-enter { opacity:0; transform:translateX(20px); }
-.newstory-fadein-enter-active { transition:opacity 2s, transform 1s; }
+.newstory-fadein-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.newstory-fadein-enter-active {
+  transition: opacity 2s, transform 1s;
+}
 </style>

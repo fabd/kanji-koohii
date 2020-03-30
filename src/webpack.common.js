@@ -46,6 +46,16 @@ module.exports = {
       },
 
       {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          // allows TypeScript to process the code extracted from a single file component
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
+
+      {
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
@@ -116,7 +126,7 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: [".js", ".vue", ".json"],
+    extensions: [".js", ".ts", ".vue", ".json"],
 
     alias: {
       // Soon we may use the "runtime" (needs to fix Leitner chart component)

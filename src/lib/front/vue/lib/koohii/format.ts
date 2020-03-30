@@ -1,14 +1,4 @@
 /**
- * Misc. formatting functions.
- *
- * METHODS
- *
- *   kkFormatReading()
- *
- *
- */
-
-/**
  * Format the highlighted kanji reading from a DictEntry / VocabPick
  * 
  *   Surrounds the kanji reading with <em> tag.
@@ -17,6 +7,6 @@
  * @param {string} kana   compound's reading
  * @return {string}
  */
-export function kkFormatReading(kana) {
+export function kkFormatReading(kana: string): string {
   return kana.replace("(", "<em>").replace(")", "</em>");
 }

@@ -136,6 +136,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import Vue from "vue";
 import $$, { insertAfter } from "@lib/koohii/dom";
 import {

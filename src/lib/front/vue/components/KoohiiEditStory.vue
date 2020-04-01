@@ -257,7 +257,7 @@ export default Vue.extend({
             KoohiiLoading.hide();
             this.formHandleResponse(tron);
             if (!tron.hasErrors()) {
-              this.onSaveStoryResponse.bind(this, tron.getProps());
+              this.onSaveStoryResponse(tron.getProps());
             }
           },
         }

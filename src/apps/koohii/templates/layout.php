@@ -10,21 +10,20 @@
   $pageId      = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
   $landingPage = $sf_request->getParameter('_landingPage');
   $withFooter  = $sf_request->getParameter('_homeFooter') ? 'with-footer ' : '';
-  $isDevelopment = CORE_ENVIRONMENT === 'dev';
 
-  $fnAddBundles = function(bool $css) use ($sf_response, $landingPage, $isDevelopment)
+  $fnAddBundles = function(bool $css) use ($sf_response, $landingPage)
   {
     $ext = $css ? '.css' : '.js';
     $method = $css ? 'addStylesheet' : 'addJavascript';
-    static $build = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
+    static $build = (KK_DEVELOPMENT) ? '.raw' : '.min';
     static $bundles;
-    define('WEBPACK_ROOT', '/build/pack/');
 
     $bundles = $landingPage
              ? ['landing-bundle']
              : ['root-bundle', 'study-bundle'];
+    $bundles = $landingPage ? ['landing-bundle'] : ['study-bundle'];
 
-    if (!$css && !$isDevelopment) {
+    if (1 || !$css && !KK_DEVELOPMENT) {
       array_unshift($bundles, 'vendors-bundle'); // test/prod has a vendors chunk
     }
 
@@ -34,7 +33,7 @@
   };
 
   // include Webpack bundles' extracted css
-  if (!$isDevelopment) {
+  if (1 || !KK_DEVELOPMENT) {
     $fnAddBundles(true);//css
   }
 ?>
@@ -62,11 +61,11 @@
 <?php include_slot('inline_styles') ?>
   </style>
 <?php endif ?>
-<?php if (CORE_ENVIRONMENT === 'prod') { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
+<?php if (!KK_DEVELOPMENT) { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
 </head>
 <body class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
   <div id="body-navbar-holder"></div>
-<?php /*AjaxDebug (app.js)*/ if ($isDevelopment): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
+<?php /*AjaxDebug (app.js)*/ if (KK_DEVELOPMENT): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
 
 <!--[if lt IE 9]><div id="ie"><![endif]--> 
 
@@ -108,7 +107,7 @@ Koohii.Dom('#k-slide-nav-btn').on("click", function(){
 })
 </script>
 
-<?php if ($isDevelopment):  ?>
+<?php if (KK_DEVELOPMENT):  ?>
 <script>
   // auto-collapse sf debug bar
   window.addEventListener("load", function(ev){

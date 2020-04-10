@@ -26,7 +26,7 @@ function nav_item($nav_id, $text, $internal_uri, $options = array(), $dropdown =
   if (false !== $dropdown) {
     $li_class[] = 'JsHasDropdown';
 
-    $script = (CORE_ENVIRONMENT === 'prod') ? '' : sfContext::getInstance()->getRequest()->getScriptName();
+    $script = KK_ENV_PROD ? '' : sfContext::getInstance()->getRequest()->getScriptName();
     $dropdown = str_replace('@', $script, $dropdown);
   }
 

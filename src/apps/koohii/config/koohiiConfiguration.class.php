@@ -16,6 +16,11 @@ class koohiiConfiguration extends sfApplicationConfiguration
       // FIXME .. refactor to sf
       define('CORE_ENVIRONMENT', $this->getEnvironment());
 
+      // build
+      define('KK_WEBPACK_ROOT', '/build/pack/');
+      define('KK_ENV_DEV', CORE_ENVIRONMENT === 'dev');
+      define('KK_ENV_PROD', CORE_ENVIRONMENT === 'prod');
+
       // FIXME obsolete, clean up
       define('CJ_MODE', 'rtk');
       define('CJ_HANZI', false);

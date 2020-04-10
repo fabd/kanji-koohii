@@ -9,15 +9,10 @@
   // temporary (fix dirty js inclusions from labs mode later)
   $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
 
-  define('WEBPACK_ROOT', '/build/pack/');
-  $build = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
+  $build = KK_ENV_DEV ? '.raw' : '.min';
 
-  // include Webpack bundles' extracted css
-  if (CORE_ENVIRONMENT !== 'dev') {
-    $sf_response->addStylesheet(implode([WEBPACK_ROOT,'root-bundle',$build,'.css']));
-    $sf_response->addStylesheet(implode([WEBPACK_ROOT,'review-bundle',$build,'.css']));
-  }
-
+  // include Webpack bundles extracted css
+  $sf_response->addStylesheet(implode([KK_WEBPACK_ROOT,'review-bundle',$build,'.css']));
 ?>
 <?php include_stylesheets() ?>
   <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
@@ -48,7 +43,7 @@ body { padding-top:0;  }
 </head>
 <body class="uiFcLayout yui-skin-sam">
 
-<?php /*AjaxDebug (app.js)*/ if (CORE_ENVIRONMENT === 'dev'): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
+<?php /*AjaxDebug (app.js)*/ if (KK_ENV_DEV): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
 
 <!--[if lt IE 9]><div id="ie"><![endif]-->
 
@@ -58,11 +53,8 @@ body { padding-top:0;  }
 
 <?php
   // all 'first' so the bundles in view.yml files come last
-  if (CORE_ENVIRONMENT !== 'dev') {
-    $sf_response->addJavascript(implode([WEBPACK_ROOT,'vendors-bundle',$build,'.js']), 'first');  
-  }
-  $sf_response->addJavascript(implode([WEBPACK_ROOT,'root-bundle',$build,'.js']), 'first');
-  $sf_response->addJavascript(implode([WEBPACK_ROOT,'review-bundle',$build,'.js']), 'first');
+  $sf_response->addJavascript(implode([KK_WEBPACK_ROOT,'vendors-bundle',$build,'.js']), 'first');  
+  $sf_response->addJavascript(implode([KK_WEBPACK_ROOT,'review-bundle',$build,'.js']), 'first');
   $sf_response->addJavascript('/revtk/legacy-bundle.juicy.js', 'first');
 
   include_javascripts();

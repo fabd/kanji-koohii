@@ -82,7 +82,7 @@ class accountActions extends sfActions
 
       // development
       /*
-      if (CORE_ENVIRONMENT==='dev')
+      if (KK_ENV_DEV)
       {
         $request->getParameterHolder()->add(array(
           'username' => '...' . rand(1,1000),
@@ -179,7 +179,7 @@ class accountActions extends sfActions
         UsersPeer::createUser($userinfo);
 
         // send email confirmation
-        if (CORE_ENVIRONMENT !== 'dev')
+        if (!KK_ENV_DEV)
         {
           $mailer = new rtkMail();
           $mailer->sendNewAccountConfirmation($userinfo['email'], $userinfo['username'], $raw_password);
@@ -338,7 +338,7 @@ class accountActions extends sfActions
         
         try
         {
-          if (CORE_ENVIRONMENT !== 'dev')
+          if (!KK_ENV_DEV)
           {
             // send email confirmation
             $mailer = new rtkMail();

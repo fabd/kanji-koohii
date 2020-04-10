@@ -22,6 +22,11 @@ function recursiveIssuer(m) {
 module.exports = merge(baseConfig, {
   mode: "production",
 
+  performance: {
+    maxAssetSize: 200000,
+    maxEntrypointSize: 400000,
+  },
+
   optimization: {
     minimizer: [
       new TerserJSPlugin({
@@ -56,13 +61,6 @@ module.exports = merge(baseConfig, {
           chunks: "all",
         },
 
-        rootStyles: {
-          name: "root-bundle",
-          test: (m, c, entry = "root-bundle") =>
-            m.constructor.name === "CssModule" && recursiveIssuer(m) === entry,
-          chunks: "all",
-          enforce: true,
-        },
         studyStyles: {
           name: "study-bundle",
           test: (m, c, entry = "study-bundle") =>

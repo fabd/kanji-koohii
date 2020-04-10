@@ -15,27 +15,23 @@
   {
     $ext = $css ? '.css' : '.js';
     $method = $css ? 'addStylesheet' : 'addJavascript';
-    static $build = (KK_DEVELOPMENT) ? '.raw' : '.min';
+    static $build = KK_ENV_DEV ? '.raw' : '.min';
     static $bundles;
 
-    $bundles = $landingPage
-             ? ['landing-bundle']
-             : ['root-bundle', 'study-bundle'];
     $bundles = $landingPage ? ['landing-bundle'] : ['study-bundle'];
 
-    if (1 || !$css && !KK_DEVELOPMENT) {
-      array_unshift($bundles, 'vendors-bundle'); // test/prod has a vendors chunk
+    // only js for vendors bundle (no extracted css)
+    if (!$css) {
+      $sf_response->$method(implode([KK_WEBPACK_ROOT,'vendors-bundle',$build,$ext]), 'first');
     }
 
     foreach ($bundles as $name) {
-      $sf_response->$method(implode([WEBPACK_ROOT,$name,$build,$ext]), 'first');
+      $sf_response->$method(implode([KK_WEBPACK_ROOT,$name,$build,$ext]), 'first');
     }
   };
 
-  // include Webpack bundles' extracted css
-  if (1 || !KK_DEVELOPMENT) {
-    $fnAddBundles(true);//css
-  }
+  // include Webpack bundles extracted css
+  $fnAddBundles(true);
 ?>
   <link rel="alternate" type="application/rss+xml" title="RSS" href="rss">
 <?php include_stylesheets() ?>
@@ -61,11 +57,11 @@
 <?php include_slot('inline_styles') ?>
   </style>
 <?php endif ?>
-<?php if (!KK_DEVELOPMENT) { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
+<?php if (KK_ENV_PROD) { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
 </head>
 <body class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
   <div id="body-navbar-holder"></div>
-<?php /*AjaxDebug (app.js)*/ if (KK_DEVELOPMENT): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
+<?php /*AjaxDebug (app.js)*/ if (KK_ENV_DEV): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
 
 <!--[if lt IE 9]><div id="ie"><![endif]--> 
 
@@ -85,6 +81,7 @@
 <?php
   // javascript bundles
   $fnAddBundles(false);
+
   if (!$landingPage) {
     // the legacy "vendors" (yui2) bundle, AFTER webpack bundles, BEFORE other old bundles
     $sf_response->addJavascript('/revtk/legacy-bundle.juicy.js', 'first');
@@ -107,7 +104,7 @@ Koohii.Dom('#k-slide-nav-btn').on("click", function(){
 })
 </script>
 
-<?php if (KK_DEVELOPMENT):  ?>
+<?php if (KK_ENV_DEV):  ?>
 <script>
   // auto-collapse sf debug bar
   window.addEventListener("load", function(ev){

@@ -136,7 +136,7 @@
 </template>
 
 <script lang="ts">
-// @ts-nocheck
+// @ts-nocheck (need to fix "read-only props" shenanigans)
 import Vue from "vue";
 import $$, { insertAfter } from "@lib/koohii/dom";
 import {
@@ -152,8 +152,6 @@ import KoohiiCharsLeft from "@components/KoohiiCharsLeft.vue";
 import CjkLangJa from "@components/CjkLangJa.vue";
 import KoohiiSharedStory from "@components/KoohiiSharedStory.vue";
 import KoohiiLoading from "@components/KoohiiLoading/index.js";
-
-// types
 
 export default Vue.extend({
   name: "KoohiiEditStory",

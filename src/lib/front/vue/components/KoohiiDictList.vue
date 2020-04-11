@@ -359,6 +359,7 @@ export default Vue.extend({
 }
 .dict-list .dl_item:hover {
   background: #eee;
+  cursor: pointer;
 }
 .dict-list .dl_item:hover .vocab_c {
   background: #fff;

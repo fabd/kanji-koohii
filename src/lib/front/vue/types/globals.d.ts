@@ -13,12 +13,11 @@
  *
  */
 
-import Vue from "vue";
-import VueInstanceFn from "@lib/helpers/vue-instance";
+import Vue, { VueConstructor } from "vue";
 import { KoohiiAPI } from "@lib/KoohiiAPI";
 import Lang from "@lib/koohii/lang";
 import Dom from "@lib/koohii/dom";
-import VueInstance from "@lib/helpers/vue-instance";
+import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
 
 declare global {
   export interface KoohiiGlobals {
@@ -33,13 +32,13 @@ declare global {
       Lang: typeof Lang;
     };
     // references to Vue components that can be instanced later
-    UX: { [componentName: string]: Vue };
+    UX: { [componentName: string]: any };
   }
 
   interface Window {
     Koohii: KoohiiGlobals;
-    Vue: Vue;
-    VueInstance: typeof VueInstanceFn;
+    Vue: VueConstructor<Vue>;
+    VueInstance: VueInstanceFn;
 
     // legacy js namespace
     App: {

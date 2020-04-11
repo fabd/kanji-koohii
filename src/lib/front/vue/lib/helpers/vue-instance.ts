@@ -13,11 +13,7 @@
 import Lang from "@lib/koohii/lang";
 import Vue from "vue";
 import { VueConstructor } from "vue/types/umd";
-import { PropOptions, PropsDefinition } from "vue/types/options";
-
-// somehow needs to do this here due to import/bundle shenanigans
-Vue.config.productionTip = false;
-Vue.config.devtools = false;
+// import { PropOptions, PropsDefinition } from "vue/types/options";
 
 export interface VueInstanceFn {
   (

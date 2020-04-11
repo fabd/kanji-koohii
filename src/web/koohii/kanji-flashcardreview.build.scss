@@ -1,13 +1,9 @@
-/**
- * Kanji Flashcard Review
- *
- * VUE REFACTORING
- *
- *   This legacy bundle remains until Edit Story dialog, Edit Keyword, etc.
- *   become Vue components.
- */
+// legacy stylesheets imported by webpack in the review bundle
+// for legacy comppnents not using Vue.
 
 @import "./components/_EditKeywordDialog.scss";
 @import "./components/_EditFlashcardDialog.scss";
 
-body { padding-top:0; }
+body {
+  padding-top: 0;
+}

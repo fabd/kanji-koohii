@@ -5,8 +5,6 @@
   </span>
 </template>
 
-<style></style>
-
 <script lang="ts">
 /* 
   Refactored cjk_lang_ja() php helper.
@@ -37,3 +35,5 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style></style>

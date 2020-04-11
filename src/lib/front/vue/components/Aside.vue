@@ -18,28 +18,25 @@
 
 </template>
 
-<script>
-// import Vue from "vue";
+<script lang="ts">
+import Vue from "vue";
 import $$ from '@lib/koohii/dom'
 import { getScrollBarWidth } from '@lib/koohii/utils'
 
-export default {
+export default Vue.extend({
 
   data() {
     return {
-      /** @type {boolean} */
       show: false,
-
-      /** @type {string} */
       bodyOverflow: '',
-
-      /** @type {string} */
       bodyPaddingRight: '',
     }
   },
 
   // created() { console.log('Aside created()') },
-  // mounted() { console.log('Aside mounted()') },
+  mounted() {
+    console.log('Aside mounted()')
+  },
 
   methods: {
     slideEnter() {
@@ -69,7 +66,7 @@ export default {
       })
     }
   }
-}
+});
 </script>
 
 <style>

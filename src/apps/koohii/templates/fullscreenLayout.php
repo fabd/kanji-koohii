@@ -58,10 +58,12 @@ body { padding-top:0;  }
   $sf_response->addJavascript('/revtk/legacy-bundle.juicy.js', 'first');
 
   include_javascripts();
-  if (has_slot('inline_javascript')) {
-    echo "<script>\n" . get_slot('inline_javascript') . "</script>\n";
-  }
-?>
 
+  echo
+    "<script>\n" .
+    koohii_base_url() .
+    get_slot('inline_javascript') .
+    "</script>\n";
+?>
 </body>
 </html>

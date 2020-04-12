@@ -96,6 +96,13 @@ export interface KoohiiAPIInterface {
   ) => void;
 }
 
+// base url to account for dev/test envs, no trailing slash
+const apiBaseUrl = () => {
+  return window.App.KK_BASE_URL.replace(/\/$/, '');
+}
+
+const apiUrlForPath = (path: string) => apiBaseUrl() + path;
+
 export const KoohiiAPI: KoohiiAPIInterface = {
   postUserStory({ ucsId, txtStory, isPublic, reviewMode }, handlers) {
     let data = {
@@ -106,7 +113,7 @@ export const KoohiiAPI: KoohiiAPIInterface = {
     };
 
     KoohiiRequest.request<KoohiiApiPostUserStoryResponse>(
-      "/study/editstory",
+      apiUrlForPath("/study/editstory"),
       { method: "post", data: data },
       handlers
     );
@@ -131,7 +138,7 @@ export const KoohiiAPI: KoohiiAPIInterface = {
   getDictListForUCS({ ucsId, getKnownKanji }, handlers) {
     let data = { ucs: ucsId, req_known_kanji: getKnownKanji };
     KoohiiRequest.request(
-      "/study/dict",
+      apiUrlForPath("/study/dict"),
       { method: "get", params: data },
       handlers
     );
@@ -142,7 +149,7 @@ export const KoohiiAPI: KoohiiAPIInterface = {
   setVocabForCard({ ucs, dictid }, handlers) {
     let data = { ucs: ucs, dictid: dictid };
     KoohiiRequest.request(
-      "/study/vocabpick",
+      apiUrlForPath("/study/vocabpick"),
       { method: "post", data: data },
       handlers
     );
@@ -151,7 +158,7 @@ export const KoohiiAPI: KoohiiAPIInterface = {
   deleteVocabForCard({ ucs }, handlers) {
     let data = { ucs };
     KoohiiRequest.request(
-      "/study/vocabdelete",
+      apiUrlForPath("/study/vocabdelete"),
       { method: "post", data: data },
       handlers
     );

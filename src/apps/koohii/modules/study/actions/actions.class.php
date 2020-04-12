@@ -107,10 +107,13 @@ class studyActions extends sfActions
       if (false === rtkIndex::isExtendedIndex($this->kanjiData->framenum))
       {
         // sometimes we disable cache fin development
-        if (null !== $this->getContext()->getViewCacheManager()) {
+        if (null !== ($cacheManager = $this->getContext()->getViewCacheManager())) {
           // set cache to THIRTY days because we invalidate it whenever needed
-          $this->getContext()->getViewCacheManager()->addCache(
-            'study', '_SharedStories', array('withLayout' => false, 'lifeTime' => 60*60*24*30)
+          $cacheManager->addCache(
+            'study', '_SharedStories', [
+              'withLayout' => false,
+              'lifeTime' => 60*60*24*30
+            ]
           );
         }
       }
@@ -460,9 +463,9 @@ class studyActions extends sfActions
       
       // invalidate cache -- approx 7% of stories are public,
       //  so skipping cache invalidation is worthwhile if possible
-      // error_log(sprintf("public %d > %d", $storyCurrentlyShared, $postStoryPublic));
+// error_log(sprintf("public %d > %d", $storyCurrentlyShared, $postStoryPublic));
       if ($postStoryPublic || $storyCurrentlyShared) {
-//error_log(sprintf("invalidating the cache"));
+// error_log(sprintf("invalidating the cache"));
         StoriesSharedPeer::invalidateStoriesCache($ucsId);
       }
 

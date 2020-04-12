@@ -89,12 +89,14 @@
 
   include_javascripts();
 
-  if(has_slot('inline_javascript')) {
-    echo "<script>\n" . get_slot('inline_javascript') . "</script>\n";
-  }
+  echo
+    "<script>\n" .
+    koohii_base_url() .
+    get_slot('inline_javascript') .
+    "</script>\n";
 ?>
 
-<script type="text/javascript">
+<script>
 var koohii_nav_data = <?php echo json_encode(get_slot('koohii.nav.data'), /*JSON_PRETTY_PRINT |*/ JSON_UNESCAPED_SLASHES) ?>;
 
 Koohii.Dom('#k-slide-nav-btn').on("click", function(){

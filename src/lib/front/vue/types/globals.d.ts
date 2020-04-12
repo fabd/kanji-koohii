@@ -40,8 +40,11 @@ declare global {
     Vue: VueConstructor<Vue>;
     VueInstance: VueInstanceFn;
 
-    // legacy js namespace
+    // set from php & legacy javascript
     App: {
+      // base URL for API requests (cf. layout.php & koohii_base_url() helper)
+      KK_BASE_URL: string;
+
       Ui?: {
         // these are set by legacy js components in `web/revtk/components/`
         // when included in the legacy bundles `web/revtk/*.juicy.js`

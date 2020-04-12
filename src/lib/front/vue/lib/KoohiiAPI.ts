@@ -1,8 +1,6 @@
 /**
  * Collect all the API calls in one place, decouples ux code from KoohiiRequest
  *
- * import { KoohiiAPI, TRON } from '../lib/KoohiiAPI.js'
- *
  */
 
 import KoohiiRequest, { KoohiiRequestHandlers } from "@lib/KoohiiRequest";
@@ -33,15 +31,6 @@ export interface KanjiData {
   strokecount: number;
 }
 
-/**
- *   formattedStory   string
- *
- *   isFavoriteStory  boolean
- *   isStoryShared    boolean     ... story is currently shared
- *
- *   sharedStoryId    string      ... unique id for the "shared story" added to the page
- *   profileLink      string      ... author link in the "shared story" template
- */
 export interface KoohiiApiPostUserStoryResponse {
   //
   postStoryView: string; // story formatted for display (non-edit mode)
@@ -49,17 +38,19 @@ export interface KoohiiApiPostUserStoryResponse {
   // GET
   postStoryEdit?: string;
   postStoryPublic?: boolean;
-  isFavoriteStory?: boolean; // if true, postStoryView is a "starred" story
+  // // if true, postStoryView is a "starred" story
+  isFavoriteStory?: boolean;
 
   // POST
   // for visual feedback, adding or removing the story from Shared Stories list
+  //
+  // story is currently shared
   isStoryShared: boolean;
-  sharedStoryId: string; // `story-${userId}-${ucsId}`
+  // unique id for the "shared story" added to the page `story-${userId}-${ucsId}`
+  sharedStoryId: string;
+  // author link in the "shared story" template
   sharedStoryAuthor: string; // html link
 }
-
-// export interface KoohiiApiSetVocabForCardResponse {}
-
 
 export interface KoohiiApiGetDictListForUCSResponse {
   //
@@ -106,11 +97,6 @@ export interface KoohiiAPIInterface {
 }
 
 export const KoohiiAPI: KoohiiAPIInterface = {
-  /**
-   *
-   * @param {object} storyInfo   { number, string, boolean, boolean }
-   * @param {object} handlers    then & error handlers (cf. KoohiiRequest)
-   */
   postUserStory({ ucsId, txtStory, isPublic, reviewMode }, handlers) {
     let data = {
       ucs_code: ucsId,

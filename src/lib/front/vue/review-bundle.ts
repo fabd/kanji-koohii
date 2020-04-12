@@ -1,11 +1,5 @@
 /**
- * LANDING PAGE BUNDLE
- *
- *   Includes:
- *   - root-bundle: Vue, mobile navigation, globals
- *   - the landing page stylesheet
- *   - components instanced externally by Flashcard Review page
- *
+ * Fullscreen Flashcard Review BUNDLE.
  */
 
 // import legacy stylesheets

@@ -22,14 +22,6 @@ import * as TRON from "@lib/koohii/tron";
 
 const DEFAULT_TIMEOUT = 5000;
 
-// interface UserInfo {
-//   username: string
-//   userid: number
-// }
-// let msg = { status: 1, props: { foo: 'bar' }, errors: [] }
-// let t = TRON.Inst<UserInfo>(msg)
-// t.getProps().userid
-
 interface KoohiiRequestConfig {
   method?: Method;
   params?: any;

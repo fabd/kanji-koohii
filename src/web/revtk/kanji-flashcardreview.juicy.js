@@ -9,7 +9,7 @@
  * @author   Fabrice Denis
  * @package  RevTK
  */
-/*global alert, console, document, window, App, Core, YAHOO */
+/* globals App, Core, YAHOO */
 
 /* =require from "%WEB%" */
 

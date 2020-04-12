@@ -100,7 +100,7 @@
  *
  * @author   Fabrice Denis
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/*global YAHOO, Core, App */
 
 (function() {
  

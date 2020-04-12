@@ -28,7 +28,7 @@
  *   addListener('s', Core.bind(this.save, this, 'save'));
  * 
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/*global YAHOO, Core, App */
 
 
 (function (){

@@ -20,7 +20,7 @@
  * 
  * @author Fabrice Denis
  */
-/*global YAHOO, alert, console, document, window, Core */
+/*global YAHOO, Core */
 
 /*! Copyright (c) 2010, Yahoo! Inc. All rights reserved. */
 

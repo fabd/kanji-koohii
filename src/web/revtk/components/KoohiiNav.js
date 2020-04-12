@@ -4,7 +4,7 @@
  * Lint:
  *   jshint --config=batch/tools/jshint/jshint.conf.json web/revtk/components/KoohiiNav.js
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/*global YAHOO, Core, App */
 
 (function(){
 

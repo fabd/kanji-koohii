@@ -11,7 +11,7 @@
  * 
  * @jslint  jslint web/revtk/components/EditStoryDialog.js
  */
-/*global YAHOO, window, alert, console, document, Core, App, Koohii, VueInstance */
+/* globals YAHOO, Core, App, Koohii, VueInstance */
 
 (function(){
 

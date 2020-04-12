@@ -24,7 +24,7 @@
  *                   clicked item's data-uri attribute.
  *
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/* globals YAHOO, Core, App */
 
 (function(){
 

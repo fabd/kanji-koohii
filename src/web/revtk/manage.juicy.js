@@ -3,7 +3,7 @@
  * 
  * @author  Fabrice Denis
  */
-/*global window, alert, console, document, window, App, Core, YAHOO */
+/* globals App, Core, YAHOO */
 
 /* REQUIRES  legacy-bundle ! */
 

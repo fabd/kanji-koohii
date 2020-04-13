@@ -1,4 +1,21 @@
 <?php
+/** 
+ * 
+ * Actions:
+ *   executeIndex()
+ *   executeClear()
+ *   executeFailedlist()
+ *   executeFailedlisttable
+ *   executeSharedStoriesList()
+ *   executeMystories()
+ *   executeMyStoriesTable()
+ *   executeEditstory()
+ *   executeEditkeyword()
+ *   executeAjax()
+ *   executeDict()
+ *   executeVocabpick()
+ *   executeVocabdelete()
+ */
 class studyActions extends sfActions
 {
 

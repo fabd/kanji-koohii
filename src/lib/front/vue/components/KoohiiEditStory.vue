@@ -1,377 +1,404 @@
 <template>
-
   <div style="min-height:100px;background:#ccc;">
-   
-  <form name="EditStory" method="post" action="/study/kanji/1">
+    <form name="EditStory" method="post" action="/study/kanji/1">
+      <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
+      <input v-model="kanjiData.ucs_id" type="hidden" name="ucs_code" />
 
-    <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
-    <input v-model="kanjiData.ucs_id" type="hidden" name="ucs_code">
+      <div id="my-story" lang="ja">
+        <div ref="maskArea" class="padding rtkframe">
+          <!-- left -->
+          <div class="left">
+            <div class="framenum" title="Frame number">{{
+              kanjiData.framenum
+            }}</div>
 
-    <div id="my-story" lang="ja">
-
-      <div ref="maskArea" class="padding rtkframe">
-
-        <!-- left -->
-        <div class="left">
-          
-          <div class="framenum" title="Frame number">{{ kanjiData.framenum }}</div>
-
-          <div :class="{ kanji: true, onhover: isReviewMode }">
-            <cjk-lang-ja>{{ kanjiData.kanji }}</cjk-lang-ja>
-          </div>
-
-          <div class="strokecount" title="Stroke count">[{{ kanjiData.strokecount }}]<br/>
-            <span style="font-size:120%"><cjk-lang-ja>{{ kanjiData.onyomi }}</cjk-lang-ja></span>
-          </div>
-        
-        </div>
-        <!-- /left -->
-
-        <!-- right -->
-        <div class="right">
-         
-          <div class="keyword">
-            <span class="JSEditKeyword" title="Click to edit the keyword" @click="onKeyword">{{ displayKeyword }}</span>
-          </div>
-
-          <div id="storybox">
-
-            <!-- view / edit story -->
-
-            <div v-if="isEditing" id="storyedit">
-              
-              <div v-if="koohiiformGetErrors" class="formerrormessage">
-                <span v-html="koohiiformGetErrors"></span>
-              </div>
-
-              <textarea id="frmStory" v-model="postStoryEdit" name="txtStory"></textarea>
-
-              <!-- FIXME  refactor to flex... -->
-              <div class="controls valign">
-                <div style="float:left;">
-                  <input id="storyedit_public" v-model="postStoryPublic" type="checkbox" name="chkPublic">
-                  <label for="storyedit_public">Share this story</label>
-                </div>
-                <div style="float:right;">
-                  <koohii-chars-left :text="postStoryEdit" :max-length="512" :warning-limit="20" />
-                  <input type="button" value="Save changes" title="Save/Update story" @click.prevent="onSubmit">
-                  <input type="button" value="Cancel" name="cancel" title="Cancel changes" @click="onCancel">
-                </div>
-                <div class="clear"></div>
-              </div>
+            <div :class="{ kanji: true, onhover: isReviewMode }">
+              <cjk-lang-ja>{{ kanjiData.kanji }}</cjk-lang-ja>
             </div>
-                    
-            <div v-else id="storyview">
 
-              <div id="sv-textarea" class="bookstyle" title="Click to edit your story" @click="onEditStory">
-                
-                <template v-if="postStoryView.length">
+            <div class="strokecount" title="Stroke count"
+              >[{{ kanjiData.strokecount }}]<br />
+              <span style="font-size:120%"
+                ><cjk-lang-ja>{{ kanjiData.onyomi }}</cjk-lang-ja></span
+              >
+            </div>
+          </div>
+          <!-- /left -->
 
-                  <div v-html="postStoryView"></div>
+          <!-- right -->
+          <div class="right">
+            <div class="keyword">
+              <span
+                class="JSEditKeyword"
+                title="Click to edit the keyword"
+                @click="onKeyword"
+                >{{ displayKeyword }}</span
+              >
+            </div>
 
-                  <div v-if="isFavoriteStory" class="favstory">
-                    <i class="fa fa-star"></i>You starred this story
+            <div id="storybox">
+              <!-- view / edit story -->
+
+              <div v-if="isEditing" id="storyedit">
+                <div v-if="formHasErrors()" class="formerrormessage">
+                  <span v-html="formGetErrors()"></span>
+                </div>
+
+                <textarea
+                  id="frmStory"
+                  v-model="postStoryEdit"
+                  name="txtStory"
+                ></textarea>
+
+                <!-- FIXME  refactor to flex... -->
+                <div class="controls valign">
+                  <div style="float:left;">
+                    <input
+                      id="storyedit_public"
+                      v-model="postStoryPublic"
+                      type="checkbox"
+                      name="chkPublic"
+                    />
+                    <label for="storyedit_public">Share this story</label>
+                  </div>
+                  <div style="float:right;">
+                    <koohii-chars-left
+                      :text="postStoryEdit"
+                      :max-length="512"
+                      :warning-limit="20"
+                    />
+                    <input
+                      type="button"
+                      value="Save changes"
+                      title="Save/Update story"
+                      @click.prevent="onSubmit"
+                    />
+                    <input
+                      type="button"
+                      value="Cancel"
+                      name="cancel"
+                      title="Cancel changes"
+                      @click="onCancel"
+                    />
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </div>
+
+              <div v-else id="storyview">
+                <div
+                  id="sv-textarea"
+                  class="bookstyle"
+                  title="Click to edit your story"
+                  @click="onEditStory"
+                >
+                  <template v-if="postStoryView.length">
+                    <div v-html="postStoryView"></div>
+
+                    <div v-if="isFavoriteStory" class="favstory">
+                      <i class="fa fa-star"></i>You starred this story
+                    </div>
+                  </template>
+
+                  <template v-else>
+                    <div class="empty">[ click here to enter your story ]</div>
+                  </template>
+                </div>
+
+                <template v-if="!isReviewMode">
+                  <div v-if="showLearnButton" class="controls">
+                    <!-- handle via legacy code / page load -->
+                    <input
+                      type="submit"
+                      name="doLearned"
+                      value="Add to learned list"
+                      class="btn btn-success"
+                    />
                   </div>
 
-                </template>
+                  <div v-if="showLearnedMessage" class="msg-relearned">
+                    This kanji is ready for review in the
+                    <strong>learned</strong> list.
+                  </div>
+                </template> </div
+              ><!-- /storyview --> </div
+            ><!-- /storybox --> </div
+          ><!-- /right -->
 
-                <template v-else>
-                  <div  class="empty">[ click here to enter your story ]</div>              
-                </template>
+          <div class="clear"></div> </div
+        ><!-- /rtkframe -->
 
-              </div>
-
-              <template v-if="!isReviewMode">
-                <div v-if="showLearnButton" class="controls">
-                  <!-- handle via legacy code / page load -->
-                  <input type="submit" name="doLearned" value="Add to learned list" class="btn btn-success" />
-                </div>
-      
-                <div v-if="showLearnedMessage" class="msg-relearned">
-                  This kanji is ready for review in the <strong>learned</strong> list.
-                </div>
-              </template>
-
-            </div><!-- /storyview -->
-
-          </div><!-- /storybox -->
-
-        </div><!-- /right -->
-
-        <div class="clear"></div>
-
-      </div><!-- /rtkframe -->
-
-      <div class="bottom"></div>
-
-    </div>
-    <!-- /#my-story -->
-
-  </form>
-
+        <div class="bottom"></div>
+      </div>
+      <!-- /#my-story -->
+    </form>
   </div>
-
 </template>
 
-<script>
-import Dom, { insertAfter } from '@lib/koohii/dom.js'
+<script lang="ts">
+// @ts-nocheck (need to fix "read-only props" shenanigans)
+import Vue from "vue";
+import $$, { insertAfter } from "@lib/koohii/dom";
+import {
+  KanjiData,
+  KoohiiAPI,
+  KoohiiApiPostUserStoryResponse,
+  TRON,
+} from "@lib/KoohiiAPI";
+import VueInstance from "@lib/helpers/vue-instance";
 
-import { KoohiiAPI } from '@lib/KoohiiAPI.js'
+// comps
+import KoohiiCharsLeft from "@components/KoohiiCharsLeft.vue";
+import CjkLangJa from "@components/CjkLangJa.vue";
+import KoohiiSharedStory from "@components/KoohiiSharedStory.vue";
+import KoohiiLoading from "@components/KoohiiLoading/index.js";
 
-//comps
-import KoohiiCharsLeft     from '@components/KoohiiCharsLeft.vue'
-import CjkLangJa         from '@components/CjkLangJa.vue'
-import KoohiiSharedStory   from '@components/KoohiiSharedStory.vue'   // instantiated after publishing a story
-
-//mixins
-import KoohiiForm          from '@lib/mixins/KoohiiForm.js'
-import KoohiiLoading       from '@lib/mixins/KoohiiLoading.js'
-
-
-export default {
-  name: 'KoohiiEditStory',
+export default Vue.extend({
+  name: "KoohiiEditStory",
 
   components: {
     CjkLangJa,
-    KoohiiCharsLeft
+    KoohiiCharsLeft,
   },
-
-  mixins: [
-    KoohiiForm,
-    KoohiiLoading
-  ],
 
   props: {
     // See ./apps/koohii/modules/study/templates/editSuccess.php
 
-    // framenum, kanji, ucs_id, keyword, onyomi, strokecount, ... (cf. kanjisPeer::getKanjiByUCS())
-    kanjiData: { type: Object, required: true },
+    kanjiData: { type: Object as () => KanjiData, required: true },
+
     // user edted keyword, or null
-    custKeyword: { type: String, default: null },
-    
+    custKeyword: { type: String as () => string | null, default: null },
+
     // true if instanced from the Flashcard Review page (the "Edit Story" dialog)
-    isReviewMode:       { type: Boolean, default: false },
+    isReviewMode: { type: Boolean, default: false },
+
     // show a starred story in reviewmode when user's story is empty
-    isFavoriteStory:    { type: Boolean, default: false },
+    isFavoriteStory: { type: Boolean, default: false },
 
     // Study page only, "Add to learned list" functionality
-    showLearnButton:    { type: Boolean, default: false },
+    showLearnButton: { type: Boolean, default: false },
     showLearnedMessage: { type: Boolean, default: false },
 
     // ajax state
-    postStoryView:      { type: String, default: '' },
-    postStoryEdit:      { type: String, default: '' },
-    postStoryPublic:    { type: Boolean, default: false }
+    postStoryView: { type: String, default: "" },
+    postStoryEdit: { type: String, default: "" },
+    postStoryPublic: { type: Boolean, default: false },
   },
 
   data() {
     return {
       // Edit Keyword dialog instance
-      oEditKeyword: null,
+      oEditKeyword: null as EditKeywordDialogInstance | null,
 
       isEditing: false,
 
       // holds instance of a KoohiiSharedStory component (visual feedback for sharing a story)
-      vmStoryPublished: null,
+      vmStoryPublished: null as Vue | null,
 
       // keep a copy to cancel changes
-      uneditedStory: ''
-    }
+      uneditedStory: "",
+
+      formErrors: [] as string[],
+    };
   },
 
   computed: {
-    displayKeyword()
-    {
-      return this.custKeyword || this.kanjiData.keyword
+    displayKeyword(): string {
+      return this.custKeyword || this.kanjiData.keyword;
     },
 
-    editKeywordUrl()
-    {
-      return '/study/editkeyword/id/' + this.kanjiData.ucs_id
-    }
+    editKeywordUrl(): string {
+      return "/study/editkeyword/id/" + this.kanjiData.ucs_id;
+    },
   },
 
-  beforeDestroy()
-  {
+  beforeDestroy() {
     // (legacy code) free resources/events used by Edit Keyword dialog
     if (this.oEditKeyword) {
-      this.oEditKeyword.destroy()
-      this.oEditKeyword = null
+      this.oEditKeyword.destroy();
+      this.oEditKeyword = null;
     }
   },
 
   methods: {
-
-    onEditStory()
-    {
-      this.editStory()
+    formGetErrors(): string {
+      const errors = this.formErrors;
+      return errors.length
+        ? `<span>${errors.join("</span><span>")}</span>`
+        : "";
     },
 
-    onSubmit()
-    {
-      this.koohiiloadingShow({ target: this.$refs.maskArea })
+    formHasErrors() {
+      return this.formErrors.length > 0;
+    },
+
+    formHandleResponse(tron: TRON.TronInst) {
+      this.formErrors = tron.getErrors();
+    },
+
+    onEditStory() {
+      this.editStory();
+    },
+
+    onSubmit() {
+      KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
       KoohiiAPI.postUserStory(
-        { 
-          ucsId:      this.kanjiData.ucs_id,
-          txtStory:   this.postStoryEdit,
-          isPublic:   this.postStoryPublic,
-          reviewMode: this.isReviewMode
+        {
+          ucsId: this.kanjiData.ucs_id,
+          txtStory: this.postStoryEdit,
+          isPublic: this.postStoryPublic,
+          reviewMode: this.isReviewMode,
         },
-        { 
-          then: this.onSaveStoryResponse.bind(this)
+        {
+          then: (tron) => {
+            KoohiiLoading.hide();
+            this.formHandleResponse(tron);
+            if (!tron.hasErrors()) {
+              this.onSaveStoryResponse(tron.getProps());
+            }
+          },
         }
-      )
+      );
     },
 
-    onSaveStoryResponse(tron)
-    {
-      const props = tron.getProps()
-
-      this.koohiiloadingHide()
-
-      this.koohiiformHandleResponse(tron)
-
-      if (tron.hasErrors()) return
-
+    onSaveStoryResponse(props: KoohiiApiPostUserStoryResponse) {
       // keep it simple for now, after a POST forget about the "starred story" thing
-      this.isFavoriteStory = false
+      this.isFavoriteStory = false;
 
-      this.postStoryView = props.postStoryView
-      this.isEditing = false
+      this.postStoryView = props.postStoryView;
+      this.isEditing = false;
 
       // FIXME -- temporary code for user feedback (should use Vue based SharedStories list)
 
       // destroy previous instance if created
       if (this.vmStoryPublished) {
-        this.vmStoryPublished.$destroy()
-        this.vmStoryPublished = null
+        this.vmStoryPublished.$destroy();
+        this.vmStoryPublished = null;
       }
 
       //
       // update/add/remove a shared story dynamically
-      // 
+      //
       // delete story from page if already shared
-      let $elSharedStory = Dom('#'+props.sharedStoryId)
+      let $elSharedStory = $$("#" + props.sharedStoryId);
       if ($elSharedStory.el()) {
-        let el = $elSharedStory.closest('.rtkframe')
-        Dom(el).remove()
+        let el = $elSharedStory.closest(".rtkframe")!;
+        $$(el).remove();
       }
 
       if (!this.isReviewMode && props.isStoryShared) {
         // add the story in "new & updated"
-        const elMount = document.createElement('div')
-        insertAfter(elMount, '#sharedstories-new .title')
+        const elMount = document.createElement("div");
+        insertAfter(elMount, "#sharedstories-new .title");
 
-        const vmProps = {
+        let propsData = {
           profileLink: props.sharedStoryAuthor,
-          story:  this.postStoryView.replace(/<br\/>/g, ' '), // remove the line breaks
-          divId:  props.sharedStoryId
-        }
-        this.vmStoryPublished = VueInstance(KoohiiSharedStory, elMount, vmProps)
+          story: this.postStoryView.replace(/<br\/>/g, " "), // remove the line breaks
+          divId: props.sharedStoryId,
+        };
+
+        this.vmStoryPublished = VueInstance(
+          KoohiiSharedStory,
+          elMount,
+          propsData
+        );
       }
     },
 
     // currently called by SharedStoriesComponent.js ajax handler (after user clicked a "copy" button)
-    onCopySharedStory(storyText)
-    {
+    onCopySharedStory(storyText: string) {
       if (this.isEditing) {
-        window.alert('Can not copy a story since you are currently editing a story.')
-        return
+        window.alert(
+          "Can not copy a story since you are currently editing a story."
+        );
+        return;
       }
 
-      this.editStory(storyText)
+      this.editStory(storyText);
 
       this.$nextTick(function() {
-        // Dom('#main_container')[0].scrollIntoView(true)
+        // $$('#main_container')[0].scrollIntoView(true)
 
         // scroll to top of window
-        let dx = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
-        window.scrollTo(dx, 0)
-      })
+        let dx =
+          window.pageXOffset ||
+          document.documentElement.scrollLeft ||
+          document.body.scrollLeft ||
+          0;
+        window.scrollTo(dx, 0);
+      });
     },
 
-    onCancel()
-    {
-      this.doCancel()
+    onCancel() {
+      this.doCancel();
     },
 
-    doCancel()
-    {
-      this.postStoryEdit = this.uneditedStory
-      this.isEditing = false
+    doCancel() {
+      this.postStoryEdit = this.uneditedStory;
+      this.isEditing = false;
     },
 
     /**
      * Edit Story or Edit a copy of another user's story.
-     * 
-     * @param {Object} sCopyStory   The "copy" story feature will set this to the copied story text.
-     */  
-    editStory(sCopyStory)
-    {
-      this.uneditedStory = this.postStoryEdit
+     *
+     * @param {string} sCopyStory   The "copy" story feature will set this to the copied story text.
+     */
+    editStory(sCopyStory?: string) {
+      this.uneditedStory = this.postStoryEdit;
 
       // edit a new story, cancel will restore the previous one
       if (sCopyStory) {
-        this.postStoryEdit = sCopyStory
-        this.postStoryPublic = false      // default to private after copying a story
+        this.postStoryEdit = sCopyStory;
+        this.postStoryPublic = false; // default to private after copying a story
       }
-      
-      this.isEditing = true
+
+      this.isEditing = true;
 
       // note:AFTER toggling isEditing,order is important!
       this.$nextTick(function() {
-       
-        const elTextArea = Dom('#frmStory')[0];
+        const elTextArea = $$<HTMLTextAreaElement>("#frmStory")[0];
         // DOM is now updated
-        this.setCaretToEnd(elTextArea)
-      })
-
+        this.setCaretToEnd(elTextArea);
+      });
     },
 
     // (legacy code) instance Edit Keyword dialog, not yet refactored to Vue
-    onKeyword(event)
-    {
-      const el = event.target
+    onKeyword(event: Event) {
+      const el = event.target as HTMLElement;
       // console.log('onKeyword() %o', el)
 
       // callback with the modified keyword
-      const callback = (keyword) => {
+      const callback = (keyword: string) => {
         // console.log('onKeyword callback()')
         el.innerHTML = keyword;
-        
+
         // invalidate cached dialog
-        this.oEditKeyword.destroy()
-        this.oEditKeyword = null
-      }
+        this.oEditKeyword && this.oEditKeyword.destroy();
+        this.oEditKeyword = null;
+      };
 
       if (!this.oEditKeyword) {
-        const url     = this.editKeywordUrl
-        const options = { context: ["my-story", "tr", "tr", null, [-6, 6]] }
-        this.oEditKeyword = new App.Ui.EditKeywordComponent(url, options, callback)
-      }
-      else {
-        this.oEditKeyword.show()
+        const url = this.editKeywordUrl;
+        const options = { context: ["my-story", "tr", "tr", null, [-6, 6]] };
+        this.oEditKeyword = new window.App.Ui!.EditKeywordComponent(
+          url,
+          options,
+          callback
+        );
+      } else {
+        this.oEditKeyword.show();
       }
 
-      return false
+      return false;
     },
 
-    // cross-browser (now obsolete?) move caret to end of input field
-    setCaretToEnd(element)
-    {
-      if (element.createTextRange) {
-        var range = element.createTextRange()
-        range.collapse(false)
-        range.select()
-      }
-      else if (element.setSelectionRange) {
-        element.focus()
-        var length = element.value.length
-        element.setSelectionRange(length, length)
-      }
-    }
-  }
+    setCaretToEnd(element: HTMLInputElement | HTMLTextAreaElement) {
+      element.focus();
+      let length = element.value.length;
+      element.setSelectionRange(length, length);
+    },
+  },
 
   // created()
   // {
@@ -381,8 +408,7 @@ export default {
   //   this.postStoryEdit   = this.postStoryEdit
   //   this.postStoryPublic = this.postStoryPublic
   // }
-
-}
+});
 </script>
 
 <style lang="scss">
@@ -392,7 +418,7 @@ export default {
 #my-story {
   position: relative;
   background: #fff;
-  border: 1px solid #E8E5C9;
+  border: 1px solid #e8e5c9;
   box-shadow: 0 1px 2px 0px rgba(170, 165, 130, 0.3);
   .rtkframe {
     border: none;
@@ -408,7 +434,7 @@ export default {
     background: linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
   }
   .msg-relearned {
-    color: #61932B;
+    color: #61932b;
     padding: 10px 5px 0;
   }
   .kk-charsleft {
@@ -423,7 +449,9 @@ export default {
   padding: 15px;
 
   .left {
-    float: left; width: 68px; text-align: center;
+    float: left;
+    width: 68px;
+    text-align: center;
   }
   .right {
     margin-left: 82px;
@@ -503,7 +531,9 @@ export default {
 .viewtoggle a {
   font-size: 80%;
   font-weight: normal;
-  &:active, &:visited, &:hover {
+  &:active,
+  &:visited,
+  &:hover {
     font-size: 80%;
     font-weight: normal;
   }
@@ -544,12 +574,12 @@ export default {
 
 @media (min-width: 600px) {
   .rtkframe {
-    .bookstyle, textarea {
+    .bookstyle,
+    textarea {
       font-size: 16px;
     }
   }
 }
-
 
 /* Story popup (flashcard review page) kanji shows on mouseover */
 #my-story .onhover {
@@ -568,7 +598,12 @@ export default {
   }
 
   /* Story edit form errors */
-  .formerrormessage { background:none; margin:0.5em 0; padding:0 5px; border:none; }
+  .formerrormessage {
+    background: none;
+    margin: 0.5em 0;
+    padding: 0 5px;
+    border: none;
+  }
 }
 
 /* DIALOG mode */
@@ -610,8 +645,8 @@ export default {
   }
 
   /* hint edit box by default for touch */
-  #JSEditStoryLoading { width:auto; }
+  #JSEditStoryLoading {
+    width: auto;
+  }
 }
-
 </style>
-

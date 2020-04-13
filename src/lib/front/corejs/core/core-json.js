@@ -26,7 +26,7 @@
  * @lint    jslint lib/front/corejs/core/core-json.js
  * @author  Fabrice Denis
  */
-/*global YAHOO, window, alert, console, document, Core */
+/*global YAHOO, Core */
 
 if (!Core.Helper) {
   Core.Helper = {};

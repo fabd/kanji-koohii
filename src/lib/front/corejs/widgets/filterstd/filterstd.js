@@ -13,7 +13,7 @@
  * 
  * @author   Fabrice Denis
  */
-/*global alert, console, document, window, App, Core, YAHOO */
+/*global App, Core, YAHOO */
 
 (function(){
 

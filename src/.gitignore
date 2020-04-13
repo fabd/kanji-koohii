@@ -33,10 +33,6 @@ error_log*
 # generated / build of front end assets
 /web/build
 
-# tools
-/batch/tools/closure
-/batch/tools/yuicompressor
-
 # npm install
 /node_modules
 

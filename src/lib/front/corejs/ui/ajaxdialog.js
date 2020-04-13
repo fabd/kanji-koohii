@@ -171,7 +171,7 @@
  * @author   Fabrice Denis
  * @version  2.0
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/*global YAHOO, Core, App */
 
 
 /* =require from "%YUI2%" */

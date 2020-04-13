@@ -3,7 +3,7 @@
  * 
  * @author  Fabrice Denis
  */
-/*global alert, console, document, window, App, Core, YAHOO */
+/* globals App, Core, YAHOO */
 
 /* =require from "%WEB%" */
 /* =require "/revtk/components/FlashcardReview.js" */

@@ -11,34 +11,33 @@
 </style>
 
 <script>
-import Dom from '../lib/koohii/dom.js'
-
-import KoohiiNavMenuItem from './KoohiiNavMenuItem.vue'
+import $$ from "@lib/koohii/dom";
+import KoohiiNavMenuItem from "./KoohiiNavMenuItem.vue";
 
 export default {
-  name: 'KoohiiNavMenu',
+  name: "KoohiiNavMenu",
 
   components: {
-    KoohiiNavMenuItem
+    KoohiiNavMenuItem,
   },
 
   props: {
-    menu: { type:Object, required:true }
+    menu: { type: Object, required: true },
   },
 
   data() {
-   return {
+    return {
       // references to top level KNavMenuItem's
       menuItems: {},
 
-      initted: false
-    }
+      initted: false,
+    };
   },
 
   computed: {
     defaultOpened() {
-      return this.menu.opened
-    }
+      return this.menu.opened;
+    },
   },
 
   created() {
@@ -47,57 +46,53 @@ export default {
 
   mounted() {
     // console.log('KoohiiNavMenu::mounted()')
-
     // Vue.nextTick(() => {    })
-
   },
 
   methods: {
     handleSelect(id, item) {
       if (!item.hasChildren) {
-        return
+        return;
       }
 
-      item.isOpened() ? item.close() : item.open()
+      item.isOpened() ? item.close() : item.open();
 
       // accordion
       for (let itemId in this.menuItems) {
         if (itemId !== id) {
-          let menuItem = this.menuItems[itemId].oMenuItem
+          let menuItem = this.menuItems[itemId].oMenuItem;
           // console.log('%s %o', itemId, menuItem.isOpened())
-          if (item.isOpened() && menuItem.isOpened()) menuItem.close()
+          if (item.isOpened() && menuItem.isOpened()) menuItem.close();
         }
       }
     },
 
     initCollapsedItems() {
       if (this.initted) {
-        return
+        return;
       }
 
       // compute height of the collapsed items for proper "expand" animation
       // console.log('initCollapsedItems()')
 
       for (let itemId in this.menuItems) {
-        let { oMenuItem, elHead } = this.menuItems[itemId]
+        let { oMenuItem, elHead } = this.menuItems[itemId];
 
         // store the height of the collapsed content on initial render
         if (oMenuItem.hasChildren) {
-
-          oMenuItem.contentHeight = elHead.scrollHeight
+          oMenuItem.contentHeight = elHead.scrollHeight;
           // console.log('mounted(%s) scroll height %d', oMenuItem.sm.label, oMenuItem.contentHeight)
 
           if (oMenuItem.opened) {
-            Dom(elHead).css('height', oMenuItem.contentHeight + 'px')
-          }
-          else {
-            Dom(elHead).css({ height: '0', display: 'none' })
+            $$(elHead).css("height", oMenuItem.contentHeight + "px");
+          } else {
+            $$(elHead).css({ height: "0", display: "none" });
           }
         }
       }
 
-      this.initted = true
-    }
-  }
-}
+      this.initted = true;
+    },
+  },
+};
 </script>

@@ -66,14 +66,14 @@
 #
 
 # node modules
-CLI_JSHINT='./node_modules/.bin/jshint'
+CLI_ESLINT='./node_modules/.bin/eslint'
 CLI_UGLIFYJS='./node_modules/.bin/uglifyjs'
 
 # replace web/ with web/build/ for production css/js
 PATH_WEB=web/
 PATH_WEB_BUILD=web/build/
 
-# Legacy scripts, referenced via symfony's view.yml configs
+# legacy javascript bundles (which includes legacy js from `lib/front/corejs/`)
 javascripts=(
   'web/revtk/legacy-bundle'
   'web/revtk/kanji-flashcardreview'
@@ -127,7 +127,7 @@ function do_lint_js_files()
   LINT_FILES="$LINT_FILES `find lib/front/corejs -name '*.js'`"
 
   # JsHint config file in json format, see http://jshint.com/docs/
-  JSHINT_OPTS=batch/tools/jshint/jshint.conf.json
+  ESLINT_CONFIG=batch/eslint-config-legacyjs.js
 
   #for FOO in `git diff HEAD --name-only | grep '.js$'`; do
 
@@ -146,7 +146,7 @@ function do_lint_js_files()
 
     printf "\n   $FILE_TO_LINT ... "
 
-    $CLI_JSHINT --config=$JSHINT_OPTS "${FILE_TO_LINT}"
+    $CLI_ESLINT --config $ESLINT_CONFIG "${FILE_TO_LINT}"
 
     # Break if file does not lint
     RETVAL=$?

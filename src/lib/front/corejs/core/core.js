@@ -16,7 +16,7 @@
  * @author  Fabrice Denis
  */
 /*jslint forin: true */
-/*global YAHOO, window, YAHOO, alert, console, document */
+/* globals YAHOO */
 
 /* =require from "%CORE%" */
 /* =require "/core/core-yui2.js" */

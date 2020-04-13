@@ -9,7 +9,7 @@
  * @author   Fabrice Denis
  * @package  RevTK
  */
-/*global alert, console, document, window, App, Core, YAHOO */
+/* globals App, Core, YAHOO */
 
 /* =require from "%WEB%" */
 
@@ -179,7 +179,10 @@
 
     onAction: function(sActionId, oEvent)
     {
-      var oCardData, cardAnswer = false;
+      var oCardData;
+
+      /** @type {number | 'h' | false} */
+      var cardAnswer = false;
 
       console.log('App.KanjiReview.onAction(%o)', arguments);
 

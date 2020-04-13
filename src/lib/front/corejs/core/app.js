@@ -17,7 +17,7 @@
  *
  * @author  Fabrice Denis
  */
-/*global YAHOO, alert, console, document, window, Core */
+/*global YAHOO, Core */
 
 /* =require "/core/core.js" */
 /* =require "/ui/ui.js" */

@@ -5,7 +5,7 @@
  *                 FIXME   très vague...
  * 
  */
-/*global window, Core, App, YAHOO, alert, console, document */
+/* globals Core, App, YAHOO */
 
 if (typeof(Core) === 'undefined') {
   throw new Error('Core or YUI is not declared');

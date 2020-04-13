@@ -18,10 +18,9 @@ module.exports = {
   },
 
   entry: {
-    "landing-bundle": "./lib/front/vue/landing-bundle.js",
-    "root-bundle": "./lib/front/vue/root-bundle.js",
-    "study-bundle": "./lib/front/vue/study-bundle.js",
-    "review-bundle": "./lib/front/vue/review-bundle.js",
+    "landing-bundle": "./lib/front/vue/landing-bundle.ts",
+    "study-bundle": "./lib/front/vue/study-bundle.ts",
+    "review-bundle": "./lib/front/vue/review-bundle.ts",
   },
 
   output: {
@@ -43,6 +42,16 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: "vue-loader",
+      },
+
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        exclude: /node_modules/,
+        options: {
+          // allows TypeScript to process the code extracted from a single file component
+          appendTsSuffixTo: [/\.vue$/],
+        },
       },
 
       {
@@ -116,7 +125,7 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: [".js", ".vue", ".json"],
+    extensions: [".js", ".ts", ".vue", ".json"],
 
     alias: {
       // Soon we may use the "runtime" (needs to fix Leitner chart component)

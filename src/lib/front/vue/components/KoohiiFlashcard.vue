@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import KoohiiFlashcardKanji        from './KoohiiFlashcardKanji.vue'
 import KoohiiFlashcardVocabShuffle from './KoohiiFlashcardVocabShuffle.vue'
 

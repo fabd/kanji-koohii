@@ -63,7 +63,7 @@ class SitenewsPeer extends coreDatabaseTable
    * 
    * Returns array of posts in DESCENDING order of creation date.
    * 
-s   * @return array<Object>  Array of posts, empty array if no matches
+   * @return array<Object>  Array of posts, empty array if no matches
    */
   public static function getPostsByDate($year, $month = 0, $day = 0)
   {

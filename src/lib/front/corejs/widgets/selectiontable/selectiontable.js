@@ -12,7 +12,7 @@
  * 
  * @author    Fabrice Denis
  */
-/*global alert, console, document, window, App, Core, YAHOO */
+/*global App, Core, YAHOO */
 
 /* =require from "%CORE%" */
 /* =require "/widgets/ajaxtable/ajaxtable.js" */

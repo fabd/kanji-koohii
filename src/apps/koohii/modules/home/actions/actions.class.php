@@ -50,7 +50,7 @@ class homeActions extends sfActions
       $this->getRequest()->setParameter('username', $username);
 
       // AUTO FILL FORM (DEVELOPMENT ONLY!)
-      if (0 && CORE_ENVIRONMENT === 'dev')
+      if (0 && KK_ENV_DEV)
       {
         $request->getParameterHolder()->add(array(
           'username'=>'guest',
@@ -171,7 +171,7 @@ class homeActions extends sfActions
         }
       }
 
-      if (CORE_ENVIRONMENT !== 'dev')
+      if (!KK_ENV_DEV)
       {
         try
         {

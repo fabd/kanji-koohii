@@ -34,6 +34,8 @@ alias l='ls -lha'
 
 alias dbroot='mysql -u root -proot --default-character-set=utf8'
 
+# MySQL CLI to the local database (cf. src/apps/koohii/config/app.yml)
+alias dbkoohii='mysql -u koohii -pkoohii --default-character-set=utf8 db_github'
 
 cd /etc/mysql
 

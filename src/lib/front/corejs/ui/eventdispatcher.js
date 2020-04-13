@@ -13,7 +13,7 @@
  * @author  Fabrice Denis
  * @version 2.0 (notify() now has return value, added scope to listeners)
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/*global YAHOO, Core, App */
 
 (function (){
 

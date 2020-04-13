@@ -6,7 +6,7 @@
  * @author    Fabrice Denis
  */
 /*jslint forin: true */
-/*global window, Core, App, YAHOO, alert, console, document */
+/*global Core, App, YAHOO */
 
 (function() {
 

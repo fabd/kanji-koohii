@@ -10,33 +10,28 @@
   $pageId      = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
   $landingPage = $sf_request->getParameter('_landingPage');
   $withFooter  = $sf_request->getParameter('_homeFooter') ? 'with-footer ' : '';
-  $isDevelopment = CORE_ENVIRONMENT === 'dev';
 
-  $fnAddBundles = function(bool $css) use ($sf_response, $landingPage, $isDevelopment)
+  $fnAddBundles = function(bool $css) use ($sf_response, $landingPage)
   {
     $ext = $css ? '.css' : '.js';
     $method = $css ? 'addStylesheet' : 'addJavascript';
-    static $build = (CORE_ENVIRONMENT === 'dev') ? '.raw' : '.min';
+    static $build = KK_ENV_DEV ? '.raw' : '.min';
     static $bundles;
-    define('WEBPACK_ROOT', '/build/pack/');
 
-    $bundles = $landingPage
-             ? ['landing-bundle']
-             : ['root-bundle', 'study-bundle'];
+    $bundles = $landingPage ? ['landing-bundle'] : ['study-bundle'];
 
-    if (!$css && !$isDevelopment) {
-      array_unshift($bundles, 'vendors-bundle'); // test/prod has a vendors chunk
+    // only js for vendors bundle (no extracted css)
+    if (!$css) {
+      $sf_response->$method(implode([KK_WEBPACK_ROOT,'vendors-bundle',$build,$ext]), 'first');
     }
 
     foreach ($bundles as $name) {
-      $sf_response->$method(implode([WEBPACK_ROOT,$name,$build,$ext]), 'first');
+      $sf_response->$method(implode([KK_WEBPACK_ROOT,$name,$build,$ext]), 'first');
     }
   };
 
-  // include Webpack bundles' extracted css
-  if (!$isDevelopment) {
-    $fnAddBundles(true);//css
-  }
+  // include Webpack bundles extracted css
+  $fnAddBundles(true);
 ?>
   <link rel="alternate" type="application/rss+xml" title="RSS" href="rss">
 <?php include_stylesheets() ?>
@@ -62,11 +57,11 @@
 <?php include_slot('inline_styles') ?>
   </style>
 <?php endif ?>
-<?php if (CORE_ENVIRONMENT === 'prod') { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
+<?php if (KK_ENV_PROD) { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
 </head>
 <body class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
-
-<?php /*AjaxDebug (app.js)*/ if ($isDevelopment): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
+  <div id="body-navbar-holder"></div>
+<?php /*AjaxDebug (app.js)*/ if (KK_ENV_DEV): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
 
 <!--[if lt IE 9]><div id="ie"><![endif]--> 
 
@@ -86,6 +81,7 @@
 <?php
   // javascript bundles
   $fnAddBundles(false);
+
   if (!$landingPage) {
     // the legacy "vendors" (yui2) bundle, AFTER webpack bundles, BEFORE other old bundles
     $sf_response->addJavascript('/revtk/legacy-bundle.juicy.js', 'first');
@@ -93,12 +89,14 @@
 
   include_javascripts();
 
-  if(has_slot('inline_javascript')) {
-    echo "<script>\n" . get_slot('inline_javascript') . "</script>\n";
-  }
+  echo
+    "<script>\n" .
+    koohii_base_url() .
+    get_slot('inline_javascript') .
+    "</script>\n";
 ?>
 
-<script type="text/javascript">
+<script>
 var koohii_nav_data = <?php echo json_encode(get_slot('koohii.nav.data'), /*JSON_PRETTY_PRINT |*/ JSON_UNESCAPED_SLASHES) ?>;
 
 Koohii.Dom('#k-slide-nav-btn').on("click", function(){
@@ -108,7 +106,7 @@ Koohii.Dom('#k-slide-nav-btn').on("click", function(){
 })
 </script>
 
-<?php if ($isDevelopment):  ?>
+<?php if (KK_ENV_DEV):  ?>
 <script>
   // auto-collapse sf debug bar
   window.addEventListener("load", function(ev){

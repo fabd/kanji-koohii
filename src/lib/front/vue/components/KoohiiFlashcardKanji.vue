@@ -51,7 +51,7 @@
             <div v-for="$item in vocab" :key="$item.dictid" class="uiFcYomi" @click.stop="onVocabClick">
               <div>
                 <cjk-lang-ja class-name="vyc vocab_c" :html="formatCompound($item.compound)"></cjk-lang-ja>
-                <cjk-lang-ja class-name="vyr vocab_r" :html="koohiiformatReading($item.reading)"></cjk-lang-ja>
+                <cjk-lang-ja class-name="vyr vocab_r" :html="formatReading($item.reading)"></cjk-lang-ja>
               </div>
               <div class="vyg">{{ $item.gloss }}</div>
             </div>
@@ -72,8 +72,8 @@
 <script>
 import CjkLangJa from './CjkLangJa.vue'
 
-//mixins
-import KoohiiFormat    from '@lib/mixins/KoohiiFormat.js'
+// utils
+import { kkFormatReading } from '@lib/koohii/format';
 
 export default {
 
@@ -82,10 +82,6 @@ export default {
   components: {
     CjkLangJa
   },
-
-  mixins: [
-    KoohiiFormat
-  ],
 
   data() {
     return {
@@ -176,6 +172,14 @@ export default {
       }
 
       return str
+    },
+
+    /**
+     * @param {string} kana
+     * @returns string
+     */
+    formatReading(kana) {
+      return kkFormatReading(kana);
     }
   }
 }

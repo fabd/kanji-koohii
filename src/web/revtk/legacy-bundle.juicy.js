@@ -3,7 +3,7 @@
  * 
  * @author  Fabrice Denis
  */
-/*global YAHOO, window, alert, console, document, Core, App */
+/* globals YAHOO, Core, App */
 
 /* =require from "%CORE%" */
 /* =require "/core/app.js" */

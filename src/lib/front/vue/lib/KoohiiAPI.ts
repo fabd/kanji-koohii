@@ -61,6 +61,18 @@ export interface KoohiiApiGetDictListForUCSResponse {
   known_kanji?: string;
 }
 
+export interface KoohiiApiSharedStoryResponse {
+  // action 'copy'
+  storyText?: string;
+  // action 'vote' 'report'
+  uid: number; // userId
+  sid: number; // ucsId
+  vote: number;
+  lastvote: number;
+  stars: number;
+  kicks: number;
+}
+
 export interface KoohiiAPIInterface {
   postUserStory: (
     params: {
@@ -70,6 +82,15 @@ export interface KoohiiAPIInterface {
       reviewMode: boolean;
     },
     handlers: KoohiiRequestHandlers<KoohiiApiPostUserStoryResponse>
+  ) => void;
+
+  ajaxSharedStory: (
+    params: {
+      request: "star" | "report" | "copy";
+      uid: number;
+      sid: number;
+    },
+    handlers: KoohiiRequestHandlers<KoohiiApiSharedStoryResponse>
   ) => void;
 
   getDictListForUCS: (
@@ -98,8 +119,8 @@ export interface KoohiiAPIInterface {
 
 // base url to account for dev/test envs, no trailing slash
 const apiBaseUrl = () => {
-  return window.App.KK_BASE_URL.replace(/\/$/, '');
-}
+  return window.App.KK_BASE_URL.replace(/\/$/, "");
+};
 
 const apiUrlForPath = (path: string) => apiBaseUrl() + path;
 
@@ -119,18 +140,19 @@ export const KoohiiAPI: KoohiiAPIInterface = {
     );
   },
 
-  //
-  //  Shared Stories   star / report / copy
-  //
-  /*
-  ajaxSharedStory(data, handlers) {
+  // Shared Stories action : star / report / copy
+  ajaxSharedStory({ request, uid, sid }, handlers) {
+    let data = {
+      request,
+      uid,
+      sid,
+    };
     KoohiiRequest.request(
-      "/study/ajax",
+      apiUrlForPath("/study/ajax"),
       { method: "post", data: data },
       handlers
     );
   },
-  */
 
   //  DictList component
 

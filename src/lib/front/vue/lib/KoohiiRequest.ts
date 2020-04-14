@@ -22,11 +22,10 @@ import * as TRON from "@lib/koohii/tron";
 
 const DEFAULT_TIMEOUT = 5000;
 
-interface KoohiiRequestConfig {
-  method?: Method;
-  params?: any;
-  data?: any;
-}
+type KoohiiRequestConfig = Pick<
+  AxiosRequestConfig,
+  "method" | "params" | "data"
+>;
 
 export interface KoohiiRequestHandlers<T> {
   then: (t: TRON.TronInst<T>) => void;

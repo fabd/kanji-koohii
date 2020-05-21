@@ -32,7 +32,7 @@ export function init() {
   };
 
   // make available to the Vue instance used in the web app's pages (non-SPA)
-  window.Vue = Vue;
+  window.Vue = Vue as any; // fix wtf with "VueConstructor<Vue> & typeof Vue" errors
   window.VueInstance = VueInstance;
   window.Koohii = koohiiGlobals;
 

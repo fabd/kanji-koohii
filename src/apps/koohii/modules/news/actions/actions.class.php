@@ -114,9 +114,11 @@ class newsActions extends sfActions
         if (!$request->hasErrors())
         {
           // invalidate cached templates
-          ManageSfCache::clearCacheWildcard('home', '_RssFeed');
-          ManageSfCache::clearCacheWildcard('news', '_recent');
-          ManageSfCache::clearCacheWildcard('news', 'index');
+          if (null !== ($cacheManager = $this->getContext()->getViewCacheManager())) {
+            ManageSfCache::clearCacheWildcard('home', '_RssFeed');
+            ManageSfCache::clearCacheWildcard('news', '_recent');
+            ManageSfCache::clearCacheWildcard('news', 'index');
+          }
         }
       }
     }

@@ -46,7 +46,7 @@ phperrlog() { tail -f /var/log/apache2/error.log ; }
 # NPM
 ###############
 
-alias sass='./node_modules/.bin/sass'
+alias sass='./node_modules/.bin/node-sass'
 
 
 ###############

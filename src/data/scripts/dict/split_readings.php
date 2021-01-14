@@ -114,7 +114,7 @@
 
 
     $kanji = array_shift($elems);
-    $pron  = array();
+    $pron  = [];
     while (count($elems)) {
       $elem = array_shift($elems);
       if ($elem[0] > 'Z') break;
@@ -129,7 +129,7 @@
       if ($is_onyomi) {
         $elem = utf8::fromUnicode(CJK::toHiraganaUCS($ua_yomi));
       }
-      $pron[] = array($elem, $is_onyomi);
+      $pron[] = [$elem, $is_onyomi];
       
       $elem = array_shift($elems);
     }
@@ -160,41 +160,41 @@
 
 
   // Pretend those are kanjis that have readings, so entries can be splitted in jmdict
-  $kanjis['０']=array(array('ゼロ',0));
-  $kanjis['１']=array(array('いち',0));
-  $kanjis['２']=array(array('に',0));
-  $kanjis['３']=array(array('さん',0));
-  $kanjis['４']=array(array('よん',0), array('し',0));
-  $kanjis['５']=array(array('ご',0));
-  $kanjis['６']=array(array('ろく',0));
-  $kanjis['７']=array(array('しち',0), array('なな',0));
-  $kanjis['８']=array(array('はち',0));
-  $kanjis['９']=array(array('きゅう',0));
+  $kanjis['０']=[['ゼロ',0]];
+  $kanjis['１']=[['いち',0]];
+  $kanjis['２']=[['に',0]];
+  $kanjis['３']=[['さん',0]];
+  $kanjis['４']=[['よん',0], ['し',0]];
+  $kanjis['５']=[['ご',0]];
+  $kanjis['６']=[['ろく',0]];
+  $kanjis['７']=[['しち',0], ['なな',0]];
+  $kanjis['８']=[['はち',0]];
+  $kanjis['９']=[['きゅう',0]];
 
-  $kanjis['Ａ']=array(array('エー',0), array('ええ',0));
-  $kanjis['Ｂ']=array(array('ビー',0), array('びい',0));
-  $kanjis['Ｃ']=array(array('シー',0), array('しい',0));  // FIXME parse in hiragana or katakana, but not both
-  $kanjis['Ｄ']=array(array('ディー',0));
-  $kanjis['Ｅ']=array(array('イー',0));
-  $kanjis['Ｆ']=array(array('エフ',0));
-  $kanjis['Ｇ']=array(array('ジー',0));
-  $kanjis['Ｈ']=array(array('エッチ',0));
-  $kanjis['Ｉ']=array(array('アイ',0));
-  $kanjis['Ｊ']=array(array('ジェー',0));
-  $kanjis['Ｋ']=array(array('ケー',0));     // could add more readings like for 'KGB'... but bleh.
-  $kanjis['Ｌ']=array(array('エル',0));
-  $kanjis['Ｍ']=array(array('エム',0));
-  $kanjis['Ｎ']=array(array('エヌ',0));
-  $kanjis['Ｏ']=array(array('オー',0));
-  $kanjis['Ｐ']=array(array('ピー',0));
-  $kanjis['Ｑ']=array(array('キュー',0));
-  $kanjis['Ｒ']=array(array('アール',0));
-  $kanjis['Ｓ']=array(array('エス',0));
-  $kanjis['Ｔ']=array(array('ティー',0));
-  $kanjis['Ｕ']=array(array('ユー',0));
-  $kanjis['Ｖ']=array(array('ブイ',0));
-  $kanjis['Ｗ']=array(array('ダブリュー',0));
-  $kanjis['Ｘ']=array(array('エックス',0));
+  $kanjis['Ａ']=[['エー',0], ['ええ',0]];
+  $kanjis['Ｂ']=[['ビー',0], ['びい',0]];
+  $kanjis['Ｃ']=[['シー',0], ['しい',0]];  // FIXME parse in hiragana or katakana, but not both
+  $kanjis['Ｄ']=[['ディー',0]];
+  $kanjis['Ｅ']=[['イー',0]];
+  $kanjis['Ｆ']=[['エフ',0]];
+  $kanjis['Ｇ']=[['ジー',0]];
+  $kanjis['Ｈ']=[['エッチ',0]];
+  $kanjis['Ｉ']=[['アイ',0]];
+  $kanjis['Ｊ']=[['ジェー',0]];
+  $kanjis['Ｋ']=[['ケー',0]];     // could add more readings like for 'KGB'... but bleh.
+  $kanjis['Ｌ']=[['エル',0]];
+  $kanjis['Ｍ']=[['エム',0]];
+  $kanjis['Ｎ']=[['エヌ',0]];
+  $kanjis['Ｏ']=[['オー',0]];
+  $kanjis['Ｐ']=[['ピー',0]];
+  $kanjis['Ｑ']=[['キュー',0]];
+  $kanjis['Ｒ']=[['アール',0]];
+  $kanjis['Ｓ']=[['エス',0]];
+  $kanjis['Ｔ']=[['ティー',0]];
+  $kanjis['Ｕ']=[['ユー',0]];
+  $kanjis['Ｖ']=[['ブイ',0]];
+  $kanjis['Ｗ']=[['ダブリュー',0]];
+  $kanjis['Ｘ']=[['エックス',0]];
   //$kanjis['Ｙ']=array(array('ワイ',0));
   //$kanjis['Ｚ']=array(array('',0));
 
@@ -204,47 +204,47 @@ function harden($kana,&$conv)
   return preg_replace(array_keys($conv), array_values($conv), $kana);
 }
 
-$kana_ka_to_ga = array(
+$kana_ka_to_ga = [
 '/^か/' => 'が',
 '/^き/' => 'ぎ',
 '/^く/' => 'ぐ',
 '/^け/' => 'げ',
-'/^こ/' => 'ご');
+'/^こ/' => 'ご'];
 
-$kana_ha_to_ba = array(
+$kana_ha_to_ba = [
 '/^は/' => 'ば',
 '/^ひ/' => 'び',
 '/^ふ/' => 'ぶ',
 '/^へ/' => 'べ',
-'/^ほ/' => 'ぼ');
+'/^ほ/' => 'ぼ'];
 
-$kana_ha_to_pa = array(
+$kana_ha_to_pa = [
 '/^は/' => 'ぱ',
 '/^ひ/' => 'ぴ',
 '/^ふ/' => 'ぷ',
 '/^へ/' => 'ぺ',
-'/^ほ/' => 'ぽ');
+'/^ほ/' => 'ぽ'];
 
-$kana_ta_to_da = array(
+$kana_ta_to_da = [
 '/^た/' => 'だ',
 '/^ち/' => 'ぢ',
 '/^つ/' => 'づ',
 '/^て/' => 'で',
-'/^と/' => 'ど');
+'/^と/' => 'ど'];
 
 
-$kana_sa_to_za = array(
+$kana_sa_to_za = [
 '/^さ/' => 'ざ',
 '/^し/' => 'じ',
 '/^す/' => 'ず',
 '/^せ/' => 'ぜ',
-'/^そ/' => 'ぞ');
+'/^そ/' => 'ぞ'];
 
-$kana_tsu_to_little_tsu = array(
-'/つ$/' => 'っ');
+$kana_tsu_to_little_tsu = [
+'/つ$/' => 'っ'];
 
-$kana_ku_to_little_tsu = array(
-'/く$/' => 'っ');
+$kana_ku_to_little_tsu = [
+'/く$/' => 'っ'];
 
 
 
@@ -289,7 +289,7 @@ fdebug("splitkanjipron($word , $pron , $lastkanji)...\n");
     return false;
   }
 
-  $temp = array($u_k);
+  $temp = [$u_k];
   $k = utf8::fromUnicode($temp);
   $word = utf8::fromUnicode($ua_word);
   
@@ -351,8 +351,8 @@ fdebug("  separate_kanji_pron_try($word , $pron <<< $k)...\n");
 
   $readings = $kanjis[$k];
   
-  $among = array();
-  $aorig = array(); // the original reading, not hardened
+  $among = [];
+  $aorig = []; // the original reading, not hardened
   foreach ($readings as $yomi) {
     $R = $yomi[0];
     
@@ -490,8 +490,8 @@ function parse_jmdict()
         // new glossary entry
         $eEntSeq = $matches[1];
         $eCurReb = NULL;  //current reading(reb) from r_ele
-        $eKebs = array();  //associative array of possible compounds for entry
-        $eRestr = array();   //compounds(k_ele) to which current reading(r_ele) is restricted, if empty reading applies to all compounds (kebs)
+        $eKebs = [];  //associative array of possible compounds for entry
+        $eRestr = [];   //compounds(k_ele) to which current reading(r_ele) is restricted, if empty reading applies to all compounds (kebs)
         $eNumReb = 0;
         $eNumKeb = 0;
       }
@@ -502,12 +502,12 @@ function parse_jmdict()
     elseif (preg_match('/<keb>([^<]+)/',$buffer,$matches))
     {
       // each compound will have array of associated readings
-      $eKebs[$matches[1]] = array();
+      $eKebs[$matches[1]] = [];
       $eNumKeb++;
     }
     elseif (!strncmp('<r_ele',$buffer,6))
     {
-      $eRestr = array();
+      $eRestr = [];
       $eNumReb++;
     }
     elseif (preg_match('/<reb>([^<]+)/',$buffer,$matches))
@@ -565,7 +565,7 @@ function parse_jmdict()
         }
         
         $rebs = $eKebs[$k_ele];
-        $splitdone = array();
+        $splitdone = [];
         foreach ($rebs as $r_ele)
         {
           // unique compound > reading association

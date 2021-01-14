@@ -145,7 +145,7 @@ class MyCommand extends Command_CLI
   private function getDictResultsForUCS($db, $ucsId)
   {
      
-    $o = array();
+    $o = [];
 
     // this is a local one-off script, keep it simple for now
     $q = "SELECT jd.dictid, jd.compound, jd.reading, jd.glossary, jd.pri"
@@ -156,7 +156,7 @@ class MyCommand extends Command_CLI
        . " ORDER BY jd.pri DESC"
        . " LIMIT ".DICTENTRYARRAY_LIMIT;
 
-    $DictResultsArray = array();
+    $DictResultsArray = [];
 
     $dictitems = $db->fetchAll($q);
 

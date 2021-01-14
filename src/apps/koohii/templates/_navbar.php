@@ -10,9 +10,9 @@ function nav_active($nav_id) {
   return (strpos($nav_id, $_page_id) === 0);
 }
 
-function nav_item($nav_id, $text, $internal_uri, $options = array(), $dropdown = false)
+function nav_item($nav_id, $text, $internal_uri, $options = [], $dropdown = false)
 {
-  $li_class = array();
+  $li_class = [];
 
   if (array_key_exists('_class', $options)) {
     $li_class[] = $options['_class'];
@@ -49,7 +49,7 @@ function nav_item($nav_id, $text, $internal_uri, $options = array(), $dropdown =
       <a class="k-nav_btn k-nav_m_btn_main JsNavToggle" id="k-slide-nav-btn">
         <i class="nav-h fa fa-bars"></i>
       </a>
-      <?php echo link_to('&nbsp;', '@homepage', array('class' => 'k-nav_brand')) ?>
+      <?php echo link_to('&nbsp;', '@homepage', ['class' => 'k-nav_brand']) ?>
     </div>
   </nav>
 
@@ -58,7 +58,7 @@ function nav_item($nav_id, $text, $internal_uri, $options = array(), $dropdown =
     <div class="container">
 <?php
 
-    echo link_to('&nbsp;', '@homepage', array('class' => 'k-nav_brand'));
+    echo link_to('&nbsp;', '@homepage', ['class' => 'k-nav_brand']);
 
 if (!$sf_user->isAuthenticated()) {
   // echo nav_item('about-learnmore', 'Learn More', 'about/learnmore');
@@ -67,7 +67,7 @@ if (!$sf_user->isAuthenticated()) {
       
   echo "<ul class=\"k-nav_right\">\n";
 
-  echo nav_item('-', 'Sign In', 'account/index', array('_class' => 'align-right signed-in'));
+  echo nav_item('-', 'Sign In', 'account/index', ['_class' => 'align-right signed-in']);
 
   echo "</ul>\n";
 
@@ -75,7 +75,7 @@ if (!$sf_user->isAuthenticated()) {
 
   echo "<ul>\n";
 
-  echo nav_item('study-index', 'Study', 'study/index', array(), <<<DOM
+  echo nav_item('study-index', 'Study', 'study/index', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/study">Browse</a></li>
   <li><a href="@/study/failedlist">Restudy List</a></li>
@@ -85,7 +85,7 @@ if (!$sf_user->isAuthenticated()) {
 DOM
   );
 
-  echo nav_item('review-index', 'Review', '@overview', array(), <<<DOM
+  echo nav_item('review-index', 'Review', '@overview', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/main">Spaced Repetition</a></li>
   <li><a href="@/review/custom">Kanji Review</a></li>
@@ -95,7 +95,7 @@ DOM
 DOM
   );
 
-  echo nav_item('manage-', 'Flashcards', '@manage', array(), <<<DOM
+  echo nav_item('manage-', 'Flashcards', '@manage', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/manage">Manage Flashcards</a></li>
   <li><a href="@/manage/flashcardlist">Flashcard List</a></li>
@@ -103,7 +103,7 @@ DOM
 DOM
   );
 
-  echo nav_item('more-index', '<i class="fa fa-bars"></i>', '@homepage', array(), <<<DOM
+  echo nav_item('more-index', '<i class="fa fa-bars"></i>', '@homepage', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/learnmore">Help</a></li>
   <li><a href="@/contact">Contact</a></li>
@@ -115,9 +115,9 @@ DOM
 
   echo "<ul class=\"k-nav_right\">\n";
 
-  echo nav_item('about-support', '<span class="fa fa-heart"></span>', 'about/support', array('_class' => 'donate'));
+  echo nav_item('about-support', '<span class="fa fa-heart"></span>', 'about/support', ['_class' => 'donate']);
 
-  echo nav_item('account-', $sf_user->getUsername(), 'account/index', array('_class' => 'align-right signed-in'), <<<DOM
+  echo nav_item('account-', $sf_user->getUsername(), 'account/index', ['_class' => 'align-right signed-in'], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/account">Account Settings</a></li>
   <li><a href="@/profile">Member Profile</a></li>
@@ -140,23 +140,23 @@ DOM
 // create the mobile menu data for the Aside component (cf. layout.php)
 
 function nav_m_t($label, $id, $icon, $children) {
-  return array(
+  return [
     'label'    => $label,
     'id'       => $id,
     'icon'     => $icon,
     'children' => $children
-  );
+  ];
 }
 
 function nav_m_i($label, $id, $url) {
   $label  = link_to($label, $url);
-  return array(
+  return [
     'label'    => $label,
     'id'       => $id
-  );
+  ];
 }
 
-$nav_items = array();
+$nav_items = [];
 
 if (!$sf_user->isAuthenticated()) {
 
@@ -165,47 +165,47 @@ if (!$sf_user->isAuthenticated()) {
 
 } else {
 
-  $nav_items[] = nav_m_t('Study', 'study', 'fa-book', array(
+  $nav_items[] = nav_m_t('Study', 'study', 'fa-book', [
     nav_m_i('Index',      's-i',  'study/index'),
     nav_m_i('Restudy',    's-r',  'study/failedlist' ),
     nav_m_i('My Stories', 's-ms', 'study/mystories' )
-  ));
+  ]);
     
-  $nav_items[] = nav_m_t('Review', 'review', 'fa-signal', array(
+  $nav_items[] = nav_m_t('Review', 'review', 'fa-signal', [
     nav_m_i('SRS',   'r-a', '@overview'),
     nav_m_i('Kanji', 'r-b', 'review/custom'),
     nav_m_i('Vocab', 'r-c', 'review/vocab')
-  ));
+  ]);
 
-  $nav_items[] = nav_m_t('Flashcards', 'flashcards', 'fa-copy', array(
+  $nav_items[] = nav_m_t('Flashcards', 'flashcards', 'fa-copy', [
     nav_m_i('Manage', 's-r', 'manage/addcustom'),
     nav_m_i('List',   's-i', 'manage/flashcardlist')
-  ));
+  ]);
 
-  $nav_items[] = nav_m_t('Account', 'account', 'fa-user', array(
+  $nav_items[] = nav_m_t('Account', 'account', 'fa-user', [
     nav_m_i('Settings',  'a-a',  'account/index'),
     nav_m_i('Profile',   'a-b',  'profile'),
     nav_m_i('Log out',   'a-c',  '@logout' )
-  ));
+  ]);
 
-  $nav_items[] = nav_m_t('More', 'more', 'fa-ellipsis-h', array(
+  $nav_items[] = nav_m_t('More', 'more', 'fa-ellipsis-h', [
     nav_m_i('Help',    'h-a',  '@learnmore'),
     nav_m_i('Contact', 'h-b',  '@contact'),
     nav_m_i('Donate',  'h-c',  'about/support' ),
     nav_m_i('Forum',   'h-d',  'http://forum.koohii.com' )
-  ));
+  ]);
 }
 
 // default opened
 $defaultOpen = 'study';
 
-$pageToMenu = array(
+$pageToMenu = [
   'review-' => 'review',
   'manage-' => 'flashcards',
   'account-' => 'account', 
    'profile-' => 'account',
   'about-' => 'more', 'home-' => 'more'
-);
+];
 
 foreach ($pageToMenu as $pageId => $open) {
   if (nav_active($pageId)) {
@@ -213,7 +213,7 @@ foreach ($pageToMenu as $pageId => $open) {
   }
 }
 
-slot('koohii.nav.data', (object) array(
+slot('koohii.nav.data', (object) [
   'opened' => $defaultOpen,
   'items'  => $nav_items
-));
+]);

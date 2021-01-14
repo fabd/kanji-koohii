@@ -72,7 +72,7 @@ class summaryAction extends sfAction
 
     // deleted cards
     $deletedCards = $request->getParameter('fc_deld', '');
-    $this->deletedCards = $deletedCards ? explode(',', $deletedCards) : array();
+    $this->deletedCards = $deletedCards ? explode(',', $deletedCards) : [];
   }
   
   /**
@@ -86,11 +86,11 @@ class summaryAction extends sfAction
    */
   protected function saveReviewSessionInfo(sfParameterHolder $params)
   {
-      $data = array(
+      $data = [
         'ts_start' => $params->get('ts_start'),
         'fc_pass'  => $params->get('fc_pass'),
         'fc_fail'  => $params->get('fc_fail')
-      );
+      ];
       ActiveMembersPeer::saveReviewSummaryInfo($this->getUser()->getUserId(), $data);
   }
 }

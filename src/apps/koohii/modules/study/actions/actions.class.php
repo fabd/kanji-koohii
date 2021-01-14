@@ -112,7 +112,7 @@ class studyActions extends sfActions
 
 
       // add request parameters for SharedStoriesListComponent view
-      $request->getParameterHolder()->add(array('ucsId' => $ucsId, 'keyword' => $this->kanjiData->keyword));
+      $request->getParameterHolder()->add(['ucsId' => $ucsId, 'keyword' => $this->kanjiData->keyword]);
 
       // replace search term with frame number in search box
       $request->setParameter('search', $this->kanjiData->framenum);
@@ -199,7 +199,7 @@ class studyActions extends sfActions
       // try to find an exact match, match before and after the RTK edition separator
       $coalesce = CustkeywordsPeer::coalesceExpr();
 
-      $select = KanjisPeer::getInstance()->select(array('kanjis.ucs_id'));
+      $select = KanjisPeer::getInstance()->select(['kanjis.ucs_id']);
       $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
       $select->where($coalesce . ' = ?', $s);
 
@@ -288,32 +288,32 @@ class studyActions extends sfActions
     $sortkey = $request->getParameter('sort', false);
     $this->forward404Unless(!$sortkey || preg_match('/^(seq_nr|keyword|lastedit|votes|reports|public)$/', $sortkey));
 
-    $this->sort_options = array(
-      array(
+    $this->sort_options = [
+      [
         'value'        => 'seq_nr',
         'text'         => 'Frame#'
-      ),
-      array(
+      ],
+      [
         'value'        => 'keyword',
         'text'         => 'Keyword'
-      ),
-      array(
+      ],
+      [
         'value'        => 'lastedit',
         'text'         => 'Last Edit'
-      ),
-      array(
+      ],
+      [
         'value'        => 'votes',
         'text'         => 'Votes'
-      ),
-      array(
+      ],
+      [
         'value'        => 'reports',
         'text'         => 'Reports'
-      ),
-      array(
+      ],
+      [
         'value'        => 'public',
         'text'         => 'Public'
-      )
-    );
+      ]
+    ];
 
     if (!$sortkey /*|| !isset($this->sort_options[$sortkey])*/)
     {
@@ -355,7 +355,7 @@ class studyActions extends sfActions
 
     $profile_page = !!$request->getParameter('profile_page', false);
 
-    return $tron->renderComponent($this, 'study', 'MyStoriesTable', array('stories_uid' => $stories_uid, 'profile_page' => $profile_page));
+    return $tron->renderComponent($this, 'study', 'MyStoriesTable', ['stories_uid' => $stories_uid, 'profile_page' => $profile_page]);
   }
 
   /**
@@ -545,12 +545,12 @@ class studyActions extends sfActions
     $custom_keyword = CustkeywordsPeer::getCustomKeyword($this->getUser()->getUserId(), $chardata->ucs_id);
 
     $tron = new JsTron();
-    $tron->add(array(
+    $tron->add([
       'dialogWidth'   => 387,
       'dialogTitle'   => 'Customize Keyword for '.$chardata->kanji,
       'orig_keyword'  => $chardata->keyword,
       'cust_keyword'  => $custom_keyword
-    ));
+    ]);
     $tron->setStatus(JsTron::STATUS_PROGRESS);
 
     if ($request->getMethod() !== sfRequest::POST)
@@ -608,11 +608,11 @@ class studyActions extends sfActions
       }
     }
 
-    return $tron->renderPartial($this, 'EditKeyword', array(
+    return $tron->renderPartial($this, 'EditKeyword', [
       'ucs_id'       => $chardata->ucs_id,
       'keyword'      => $custom_keyword !== null ? $custom_keyword : $chardata->keyword,
       'orig_keyword' => $chardata->keyword
-    ));
+    ]);
   }
 
   /**
@@ -701,7 +701,7 @@ class studyActions extends sfActions
   // get Dictionary entries for given character, use cached data if possible
   private function getDictListItems($ucsId)
   {
-    $data = array();
+    $data = [];
 
     $DictEntryArray = CacheDictLookupPeer::getDictListForUCS($ucsId);
 

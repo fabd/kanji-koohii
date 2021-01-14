@@ -11,8 +11,8 @@ class rtkImportKeywords
 {
   protected
     $request    = null,
-    $parsed     = array(),
-    $keywords   = array();
+    $parsed     = [],
+    $keywords   = [];
 
   const
     MAX_KEYWORD = 40;
@@ -36,7 +36,7 @@ class rtkImportKeywords
    */
   public function parse($selection)
   {
-    $parse = array();
+    $parse = [];
 
     // split on newlines
     $rows =  preg_split('/\s*[\r\n]+\s*/u', $selection);
@@ -53,7 +53,7 @@ class rtkImportKeywords
       // keyword, unquote and unescape
       $keyword = trim(ExportCSV::unquoteString($parts[2], true));
 
-      $parse[] = array($id, $keyword, $i + 1);
+      $parse[] = [$id, $keyword, $i + 1];
     }
 
     if (count($parse) <= 0)
@@ -74,7 +74,7 @@ class rtkImportKeywords
    */
   public function validate($data)
   {
-    $parse = array();
+    $parse = [];
 
     for ($i = 0, $n = count($data); $i < $n; $i++)
     {
@@ -97,14 +97,14 @@ class rtkImportKeywords
       $c_ext = rtkIndex::getIndexForUCS($ucsId);
 
       // use extended framenum key for sorting Heisig indexes before UCS codes
-      $parse[$c_ext] = array($ucsId, $keyword);
+      $parse[$c_ext] = [$ucsId, $keyword];
     }
 
     // sort on extended frame numbers so that Heisig indexes come before non-Heisig UCS codes
     ksort($parse);
 
     // prepare serializable array as ucs => keyword
-    $keywords = array();
+    $keywords = [];
     foreach ($parse as $index => $data)
     {
       $keywords[$data[0]] = $data[1];
@@ -177,20 +177,20 @@ class rtkImportKeywords
 
   public function getTableHead()
   {
-    $thead = array(
+    $thead = [
       '<th width="5%"><span class="hd">Index#</span></th>',
       '<th width="10%"><span class="hd">Kanji</span></th>',
       '<th width="85%"><span class="hd">Imported&nbsp;Keyword</span></th>'
-    );
+    ];
 
     return implode('', $thead);
   }
 
   public function getTableBody()
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('SimpleDate', 'CJK'));
+    sfProjectConfiguration::getActive()->loadHelpers(['SimpleDate', 'CJK']);
 
-    $rows = array();
+    $rows = [];
     foreach ($this->keywords as $ucs => $keyword)
     {
       // display Heisig index if possible
@@ -224,7 +224,7 @@ class rtkImportKeywords
    */
   public function __sleep()
   {
-    return array('keywords');
+    return ['keywords'];
   }
 
   public function __wakeup()

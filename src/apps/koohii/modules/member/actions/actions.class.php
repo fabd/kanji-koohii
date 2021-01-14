@@ -23,10 +23,10 @@ class memberActions extends sfActions
     $rtkLessons = rtkIndex::getLessons();
 
     //  lessons always show even if empty
-    $lessons = array();
+    $lessons = [];
     for ($i = 1, $from = 1; $i <= RTK_VOLUME_3_LESSON; $i++)
     {
-      $lessons[$i] = array(
+      $lessons[$i] = [
         'label'      => $i < RTK_VOLUME_3_LESSON ? '<span class="visible-md-lg">Lesson </span>'.$i : 'RTK Vol.3',
         'index'      => $i,
         'passValue'  => 0,
@@ -35,7 +35,7 @@ class memberActions extends sfActions
         'totalCards' => 0,
         'maxValue'   => $rtkLessons[$i],
         'from'       => $from              // for Review lesson link
-      );
+      ];
       $from += $rtkLessons[$i];
     }
    

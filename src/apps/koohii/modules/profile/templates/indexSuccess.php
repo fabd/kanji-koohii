@@ -35,7 +35,7 @@
   <p><strong><?php echo $num_stories->public ?></strong> stories have been shared by <?php echo escape_once($profile_user->username) ?>.
 
   <div id="ProfileStoriesComponent">
-    <?php include_component('study', 'MyStoriesTable', array('stories_uid' => $profile_uid, 'profile_page' => true)) ?>
+    <?php include_component('study', 'MyStoriesTable', ['stories_uid' => $profile_uid, 'profile_page' => true]) ?>
   </div>
 
   <?php koohii_onload_slot() ?>

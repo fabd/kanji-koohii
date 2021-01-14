@@ -76,8 +76,7 @@
  * 
  */
 
-return array
-(
+return [
   // ABSOLUTE paths must start with "/"
   // RELATIVE paths must start with "./" and are relative to SF_ROOT_DIR (Symfony root path)
 
@@ -99,8 +98,7 @@ return array
   'WEB'      => './web',
 
 
-  'MAPPINGS' => array
-  (
+  'MAPPINGS' => [
     // CoreJs dependencies
     './lib/front/corejs'  => 'build/corejs',
 
@@ -109,5 +107,5 @@ return array
 
     // Mapping YUI asset dependencies to the Web folder
     './web/vendor/yui2-build' => 'build/yui2'
-  )
-);
+  ]
+];

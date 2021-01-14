@@ -30,7 +30,7 @@
 function get_flashcard_button($userId, $context, $ucsId) {
   $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
   $dialogUri  = $context->getController()->genUrl('flashcards/dialog');
-  $params     = esc_specialchars(coreJson::encode(array('ucs' => intval($ucsId))));
+  $params     = esc_specialchars(coreJson::encode(['ucs' => intval($ucsId)]));
 //<div id="EditFlashcard" class="f$bFlashcard">
 //  <a href="#" title="Edit Flashcard" class="uiGUI JsEditFlashcard" data-uri="$dialogUri" data-param="$params">&nbsp;</a>
 //</div>
@@ -48,7 +48,7 @@ EOD;
 
 <div class="row">
 
-<?php include_partial('SideColumn', array('kanjiData' => $kanjiData, 'intro' => false )) ?>
+<?php include_partial('SideColumn', ['kanjiData' => $kanjiData, 'intro' => false ]) ?>
 
   <div class="col-md-9">
 
@@ -140,7 +140,7 @@ EOD;
 
     <?php
     // Caching of this partial is dynamically enabled in study/edit action. Use sf_cache_key for removals.
-    include_partial('SharedStories', array('sf_cache_key' => $kanjiData->ucs_id, 'kanjiData' => $kanjiData));
+    include_partial('SharedStories', ['sf_cache_key' => $kanjiData->ucs_id, 'kanjiData' => $kanjiData]);
     ?>
   </div>
 

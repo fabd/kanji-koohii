@@ -6,36 +6,36 @@ td input { vertical-align:middle; }
 <?php 
   // FIXME  Attention!! Must match sequences info in rtkIndex.php
   if (CJ_HANZI) {
-    $eds = array(
-      array(
+    $eds = [
+      [
         'short' => 'Traditional Hanzi',
         'long'  => 'Volume 1 (1500 characters) +<br/>Volume 2 (1535 characters).',
         'count' => '3035'
-      ),
-      array(
+      ],
+      [
         'short' => 'Simplified Hanzi',
         'long'  => 'Volume 1 (1500 characters) +<br/>Volume 2 (1518 characters).',
         'count' => '3018'
-      )
-    );
+      ]
+    ];
   }
   else {
-    $eds = array(
-      array(
+    $eds = [
+      [
         'short' => 'Old Edition',
         'long'  => 'Volume 1 : 5th edition or earlier.<br/>Volume 3 : 1st or 2nd edition.<br/>Newly Approved General-Use Kanji (3008-3030)',
         'count' => '3030'
-      ),
-      array(
+      ],
+      [
         'short' => 'New Edition',
         'long'  => 'Volume 1 : 6th edition.<br/>Volume 3 : 3rd edition.',
         'count' => '3000'
-      )
-    );
+      ]
+    ];
   }
 ?>
 
-<?php decorate_start('SideTabs', array('active' => 'sequence')) ?>
+<?php decorate_start('SideTabs', ['active' => 'sequence']) ?>
 
   <h2>Select <?php echo ucfirst(_CJ('kanji')) ?> Sequence</h2>
 

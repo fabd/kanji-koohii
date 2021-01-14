@@ -60,7 +60,7 @@
  * Additional options as per Symfony's link_to() helper: 'absolute', 'query_string', 'anchor', etc.
  *
  */
-function _bs_button($name, $internal_uri, array $options = array())
+function _bs_button($name, $internal_uri, array $options = [])
 {
   // TODO
 
@@ -74,7 +74,7 @@ function _bs_button($name, $internal_uri, array $options = array())
  *   icon    fontawesome icon id (eg. fa-file-o)
  * 
  */
-function _bs_button_with_icon($name, $internal_uri, array $options = array())
+function _bs_button_with_icon($name, $internal_uri, array $options = [])
 {
   $iconId = _get_option($options, 'icon');
   assert('$iconId !== null');
@@ -121,7 +121,7 @@ function _bs_form_group() {
   $hasErrorMsg = '';
 
   // pull the optional first argument : array $options
-  $options     = is_array($args[0]) ? array_shift($args) : array();
+  $options     = is_array($args[0]) ? array_shift($args) : [];
 
   $merge_class = 'form-group'; 
 
@@ -145,11 +145,11 @@ function _bs_form_group() {
   return $html;
 }
 
-function _bs_input($type, $name, $options = array()) {
-  $html = array();
+function _bs_input($type, $name, $options = []) {
+  $html = [];
 
   if (null !== ($label = _get_option($options, 'label'))) {
-    $html[] = "\n  ".label_for($name /* id */, $label, array('class' => 'control-label'));
+    $html[] = "\n  ".label_for($name /* id */, $label, ['class' => 'control-label']);
   }
 
   if (null !== ($optional = _get_option($options, 'optional'))) {
@@ -190,7 +190,7 @@ function _bs_input($type, $name, $options = array()) {
  *    <label><input ...><span>Label text</span>
  *  </div>
  */
-function _bs_input_checkbox($name, $options = array()) {
+function _bs_input_checkbox($name, $options = []) {
   // we want a wrapping label here
   if (null !== ($label = _get_option($options, 'label'))) {
     $html[] = "\n  <label>";
@@ -205,19 +205,19 @@ function _bs_input_checkbox($name, $options = array()) {
   return implode($html);
 }
 
-function _bs_input_email($name, $options = array()) {
+function _bs_input_email($name, $options = []) {
   return _bs_input('text', $name, $options);
 }
 
-function _bs_input_password($name, $options = array()) {
+function _bs_input_password($name, $options = []) {
   return _bs_input('password', $name, $options);
 }
 
-function _bs_input_text($name, $options = array()) {
+function _bs_input_text($name, $options = []) {
   return _bs_input('text', $name, $options);
 }
 
-function _bs_submit_tag($label, $options = array()) {
+function _bs_submit_tag($label, $options = []) {
   _bs_class_merge($options, 'btn btn-success');
   return submit_tag($label, $options);
 }

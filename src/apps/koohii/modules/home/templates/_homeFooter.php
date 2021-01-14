@@ -5,7 +5,7 @@
  *   https://twitter.com/intent/tweet?url={url}&amp;text={text}
  */
 function koohii_tweet_query() {
-  return http_build_query(array('url' => sfConfig::get('app_website_url'), 'text' => 'Kanji Koohii'));
+  return http_build_query(['url' => sfConfig::get('app_website_url'), 'text' => 'Kanji Koohii']);
 }
 
 use_helper('Widgets');

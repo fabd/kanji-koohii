@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'editkeywords')) ?>
+<?php decorate_start('SideTabs', ['active' => 'editkeywords']) ?>
           
           <h2>Edit <?php echo _CJ_U('kanji') ?> Keywords</h2>
 

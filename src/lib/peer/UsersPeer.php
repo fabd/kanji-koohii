@@ -29,7 +29,7 @@ class UsersPeer extends coreDatabaseTable
 
   protected
     $tableName = 'users',
-    $columns   = array();  // timestamp columns must be declared for insert/update/replace
+    $columns   = [];  // timestamp columns must be declared for insert/update/replace
 
   /**
    * Credential values as stored in `userlevel`.
@@ -59,10 +59,10 @@ class UsersPeer extends coreDatabaseTable
    */
   private static function getUserBy($criteria, $value)
   {
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
       '*',
       'ts_joindate' => 'UNIX_TIMESTAMP(joindate)',
-      'ts_lastlogin' => 'UNIX_TIMESTAMP(lastlogin)'));
+      'ts_lastlogin' => 'UNIX_TIMESTAMP(lastlogin)']);
 
     $select->where($criteria . ' = ?', $value)
            ->query();
@@ -134,7 +134,7 @@ class UsersPeer extends coreDatabaseTable
    */
   public static function setLastlogin($userid, $timestamp = null)
   {
-    return self::updateUser($userid, array('lastlogin' => $timestamp===null ? new coreDbExpr('NOW()') : $timestamp));
+    return self::updateUser($userid, ['lastlogin' => $timestamp===null ? new coreDbExpr('NOW()') : $timestamp]);
   }
 
   /**
@@ -170,13 +170,13 @@ class UsersPeer extends coreDatabaseTable
     $hashed_password = $user->getSaltyHashedPassword($userinfo['raw_password']);
 
 
-    $userdata = array(
+    $userdata = [
       'username'      => $userinfo['username'],
       'password'      => $hashed_password,
       'email'         => $userinfo['email'],
       'location'      => $userinfo['location'],
       'joindate'      => new coreDbExpr('NOW()')
-    );
+    ];
 
     // automatically set all new users to the last edition
     $userdata['opt_sequence'] = rtkIndex::getDefaultUserSequence();
@@ -210,18 +210,18 @@ class UsersPeer extends coreDatabaseTable
     $result = true;
     $deleteStmt = 'DELETE FROM %s WHERE userid = ?';
     $where = 'userid = ?';
-    $count = array();
+    $count = [];
 
     // This one can potentially delete 2000+ records at once
     $table = ReviewsPeer::getInstance()->getName();
     $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
-    $result = $result && $stmt->execute(array($userid));
+    $result = $result && $stmt->execute([$userid]);
     $count['flashcards'] = $stmt->rowCount(); 
 
     // This one also can potentially delete 2000+ rows at once
     $table = StoriesPeer::getInstance()->getName();
     $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
-    $result = $result && $stmt->execute(array($userid));
+    $result = $result && $stmt->execute([$userid]);
     $count['stories'] = $stmt->rowCount(); 
     
     // Don't delete this first... just in case
@@ -286,7 +286,7 @@ class UsersPeer extends coreDatabaseTable
     // SELECT COUNT(*) FROM users WHERE (regip = '127.0.0.1') AND (joindate > DATE_SUB(NOW(), INTERVAL 24 HOUR))
 
     $select = self::getInstance()
-      ->select(array('count' => 'COUNT(*)'))
+      ->select(['count' => 'COUNT(*)'])
       ->where('regip = ?', $regip)
       ->where('joindate > DATE_SUB(NOW(), INTERVAL ? HOUR)', (int)$since_hours);
 

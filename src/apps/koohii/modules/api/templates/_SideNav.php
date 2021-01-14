@@ -6,7 +6,7 @@ $_internal_uri = $_routing->getCurrentInternalUri();
 
 function output_sidenav_item($text, $internal_uri)
 {
-  $options = array(); //)get_slot('SideNavActive') === $id ? array('class' => 'active') : array();
+  $options = []; //)get_slot('SideNavActive') === $id ? array('class' => 'active') : array();
   $uri     = $internal_uri . '#' . strtr( ltrim($text, '/'), '/', '-');
   echo tag('li', $options, true) . link_to($text, $uri) . '</li>';
 }

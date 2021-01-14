@@ -4,50 +4,38 @@
  * 
  */
 
-return array
-(
-  'fields' => array
-  (
-    'name' => array
-    (
-      'required'       => array
-      (
+return [
+  'fields' => [
+    'name' => [
+      'required'       => [
         'msg'       => 'Please enter your name or a nickname.'
-      ),
-      'StringValidator'   => array
-      (
+      ],
+      'StringValidator'   => [
         'max'       => 100,
         'max_error'   => 'Name is too long (max 100 characters).'
-      ),
-    ),
-    'email' => array
-    (
-      'required'       => array
-      (
+      ],
+    ],
+    'email' => [
+      'required'       => [
         'msg'       => 'Please enter a valid email address so that I can reply to you.'
-      ),
-      'EmailValidator'   => array
-      (
+      ],
+      'EmailValidator'   => [
         'strict'     => true,
         'email_error'   => 'Email is not valid.'
-      ),
-      'StringValidator'   => array
-      (
+      ],
+      'StringValidator'   => [
         'max'       => 100,
         'max_error'   => 'Email is too long (max 100 characters).'
-      )
-    ),
-    'message' => array
-    (
-      'required'       => array
-      (
+      ]
+    ],
+    'message' => [
+      'required'       => [
         'msg'       => 'Please enter your message.'
-      ),
-      'CallbackValidator' => array
-      (
-        'callback'    => array('BaseValidators', 'validateNoHtmlTags'),
+      ],
+      'CallbackValidator' => [
+        'callback'    => ['BaseValidators', 'validateNoHtmlTags'],
         'invalid_error' => 'No html formatting'
-      )
-    ),
-  )
-);
+      ]
+    ],
+  ]
+];

@@ -13,7 +13,7 @@
 
     <?php echo form_errors() ?>
    
-    <?php echo form_tag('@forgot_password', array('class'=>'')) ?>
+    <?php echo form_tag('@forgot_password', ['class'=>'']) ?>
 
       <div class="form-group">
         <label for="email_address" class="">Email address</label>
@@ -21,7 +21,7 @@
       </div>
 
       <div class="form-group">
-        <?php echo submit_tag('Send password instructions', array('class' => 'btn btn-success')) ?>
+        <?php echo submit_tag('Send password instructions', ['class' => 'btn btn-success']) ?>
       </div>
 
     </form>

@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'addorder')) ?>
+<?php decorate_start('SideTabs', ['active' => 'addorder']) ?>
 
           <h2>Add <?php echo _CJ('Remembering the Kanji') ?> flashcards</h2>
 

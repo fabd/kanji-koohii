@@ -65,7 +65,7 @@
 
 <!--[if lt IE 9]><div id="ie"><![endif]--> 
 
-<?php include_partial('global/navbar', array('pageId' => $pageId, 'landingPage' => $landingPage)) ?>
+<?php include_partial('global/navbar', ['pageId' => $pageId, 'landingPage' => $landingPage]) ?>
 
 <?php if ($landingPage) {
   echo $sf_content;

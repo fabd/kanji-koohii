@@ -2,14 +2,14 @@
   use_helper('Bootstrap', 'Form', 'Validation', 'Widgets', 'Decorator');
 ?>
 
-<?php decorate_start('SideTabs', array('active' => 'editaccount')) ?>
+<?php decorate_start('SideTabs', ['active' => 'editaccount']) ?>
 
   <h2>Edit Account</h2>
 
 <?php
     // echo form_errors();
 
-    echo form_tag('account/edit', array('class'=>'block'));
+    echo form_tag('account/edit', ['class'=>'block']);
 
     echo _bs_form_group(
       '<label>Username</label>'
@@ -36,7 +36,7 @@
     echo _bs_form_group(
       ['validate' => 'timezone'],
       '<label for="form[timezone]">Timezone</label>'
-    . select_tag('timezone', options_for_select(rtkTimezones::$timezones, $sf_request->getParameter('timezone')), array('class' => 'form-control'))
+    . select_tag('timezone', options_for_select(rtkTimezones::$timezones, $sf_request->getParameter('timezone')), ['class' => 'form-control'])
     . '<span class="help-block">'
     . 'Due flashcards appear each day at midnight local time. Adjust the timezone'
     . ' to your local time, or move it forward/backward if you\'d like for due cards'

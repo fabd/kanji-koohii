@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-m-1 col-d-6 col-g">
-      <?php echo link_to('Start', 'study/edit', array('query_string' => "restudy", 'class' => 'btn btn-primary')) ?>
+      <?php echo link_to('Start', 'study/edit', ['query_string' => "restudy", 'class' => 'btn btn-primary']) ?>
     </div>
 
   </div>

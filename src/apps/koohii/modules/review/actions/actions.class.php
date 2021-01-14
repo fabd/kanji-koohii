@@ -165,12 +165,12 @@ class reviewActions extends sfActions
 
         // repeat button URL
         $options['fc_rept'] = $this->getController()->genUrl(
-          implode('&',array(
+          implode('&',[
           'review/free?from='.$reviewFrom,
           'to='.$reviewTo,
           'shuffle='.intval($reviewShuffle),
           'reverse='.intval($options['fc_reverse'])
-          )), true
+          ]), true
         );
       }
 
@@ -180,7 +180,7 @@ class reviewActions extends sfActions
     // route for Exit button and 'empty' review url
     $options['exit_url'] = $options['freemode'] ? 'review/custom' : '@overview';
 
-    $uiFR = new uiFlashcardReview(array(), true);
+    $uiFR = new uiFlashcardReview([], true);
     
     // these will become the review template partial options
     $this->reviewOptions = $options;
@@ -192,10 +192,10 @@ class reviewActions extends sfActions
    */
   public function executeAjaxsrs($request)
   {
-    $options = array(
-      'fn_get_flashcard' => array('KanjisPeer', 'getFlashcardData'),
-      'fn_put_flashcard' => array('ReviewsPeer', 'putFlashcardData')
-    );
+    $options = [
+      'fn_get_flashcard' => ['KanjisPeer', 'getFlashcardData'],
+      'fn_put_flashcard' => ['ReviewsPeer', 'putFlashcardData']
+    ];
 
     return $this->handleFlashcardRequest($request, $options);
   }
@@ -206,10 +206,10 @@ class reviewActions extends sfActions
    */
   public function executeAjaxfree($request)
   {
-    $options = array(
-      'fn_get_flashcard' => array('KanjisPeer', 'getFlashcardData'),
-      'fn_put_flashcard' => array('reviewActions', 'freeReviewUpdate')
-    );
+    $options = [
+      'fn_get_flashcard' => ['KanjisPeer', 'getFlashcardData'],
+      'fn_put_flashcard' => ['reviewActions', 'freeReviewUpdate']
+    ];
 
     return $this->handleFlashcardRequest($request, $options);
   }
@@ -281,6 +281,6 @@ class reviewActions extends sfActions
     $ts_start = $request->getParameter('ts_start', 0);
     $this->forward404Unless(BaseValidators::validateInteger($ts_start));
     $tron = new JsTron();
-    return $tron->renderComponent($this, 'review', 'summaryTable', array('ts_start' => $ts_start));
+    return $tron->renderComponent($this, 'review', 'summaryTable', ['ts_start' => $ts_start]);
   }
 }

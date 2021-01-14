@@ -14,7 +14,7 @@
 
     <!--?php echo rtkImportKeywords::MAX_KEYWORD ?> characters maximum. -->
     
-    <?php echo input_tag('keyword', $keyword, array('class' => 'txt-ckw JSDialogFocus', 'autocomplete' => 'off')) ?>
+    <?php echo input_tag('keyword', $keyword, ['class' => 'txt-ckw JSDialogFocus', 'autocomplete' => 'off']) ?>
 
     <div class="ft-right">
 <?php /*if ($sf_request->hasParameter('manage')): ?>    

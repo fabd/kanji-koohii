@@ -12,14 +12,14 @@
 <div class="signin" style="display:none"><div class="m"><strong><?= $sf_user->getUsername() ?></strong></div></div>
 
 <div class="uiFcOptions">
-  <?= link_to('<span>Exit</span>', $exit_url, array('absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review')) ?>
+  <?= link_to('<span>Exit</span>', $exit_url, ['absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review']) ?>
 
-  <?= link_to('<span><u>B</u>ack</span>', '', array('absolute' => 'true',
+  <?= link_to('<span><u>B</u>ack</span>', '', ['absolute' => 'true',
     'id'    => 'JsBtnBack',
     'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction', 
     'title' => 'Go back one flashcard',
     'style' => 'display:none',
-    'data-action' => 'back')) ?>
+    'data-action' => 'back']) ?>
   <div class="clear"></div>
 </div>
 
@@ -29,7 +29,7 @@
     <div id="uiFcProgressBar">
       <div class="uiFcStBox">
         <div class="uiFcPrBarMod">
-          <?= ui_progress_bar(array(array('value' => 0)), 100, array('id' => 'review-progress', 'borderColor' => '#5FA2D0')) ?>
+          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']) ?>
         </div>
         <h3>Reviewing: <em class="count">.</em> of <em class="count">.</em></h3>
       </div>
@@ -48,12 +48,12 @@
         
         <div id="uiFcButtons0" style="display:none">
           <h3>Press Spacebar to continue</h3>
-          <?= ui_ibtn('<u>F</u>lip Card', '', array('id' => 'uiFcBtnAF', 'class' => 'uiFcAction', 'data-action' => 'flip')) ?>
+          <?= ui_ibtn('<u>F</u>lip Card', '', ['id' => 'uiFcBtnAF', 'class' => 'uiFcAction', 'data-action' => 'flip']) ?>
         </div>
     
         <div id="uiFcButtons1" style="display:none">
           <h3>Press Spacebar to continue</h3>
-          <?= ui_ibtn('Continue', '', array('id' => 'uiFcBtnAC', 'class' => 'uiFcAction', 'data-action' => 'flip')) ?>
+          <?= ui_ibtn('Continue', '', ['id' => 'uiFcBtnAC', 'class' => 'uiFcAction', 'data-action' => 'flip']) ?>
         </div>
       
       </div><!-- uiFcButtons -->
@@ -65,9 +65,9 @@
   <div id="rd-side">
     <div id="uiFcStats" class="uiFcStats" style="display:none">
 
-       <?= ui_ibtn('Exit', $exit_url, array('class' => 'uiIBtnGreen')); ?>
+       <?= ui_ibtn('Exit', $exit_url, ['class' => 'uiIBtnGreen']); ?>
 
-       <?= ui_ibtn('Search on google.co.jp', '', array('id' => 'search-google-jp', 'class' => 'uiIBtnGreen', 'title' => 'Search this word on Google Japan', 'target' => '_blank')); ?>
+       <?= ui_ibtn('Search on google.co.jp', '', ['id' => 'search-google-jp', 'class' => 'uiIBtnGreen', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
 
     </div><!-- uiFcStats -->    
   </div>

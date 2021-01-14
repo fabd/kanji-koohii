@@ -43,10 +43,10 @@ class manageActions extends sfActions
         }
 
         $tron = new JsTron();
-        return $tron->renderPartial($this, 'AddOrderConfirm', array(
+        return $tron->renderPartial($this, 'AddOrderConfirm', [
           'newCards' => $newCards,
           'countNewCards' => count($newCards)
-        ));
+        ]);
       }
       else
       {
@@ -85,10 +85,10 @@ class manageActions extends sfActions
     }
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'AddOrderProcess', array(
+    return $tron->renderPartial($this, 'AddOrderProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ));
+    ]);
   }
 
   public function executeAddcustom($request)
@@ -127,11 +127,11 @@ class manageActions extends sfActions
         }
 
         $tron = new JsTron();
-        return $tron->renderPartial($this, 'AddCustomConfirm', array(
+        return $tron->renderPartial($this, 'AddCustomConfirm', [
           'newCards' => $newCards,
           'countNewCards' => $countNewCards,
           'countExistCards' => $countExistCards
-        ));
+        ]);
       }
       else
       {
@@ -167,10 +167,10 @@ class manageActions extends sfActions
     }
     
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'AddCustomProcess', array(
+    return $tron->renderPartial($this, 'AddCustomProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ));
+    ]);
   }
 
   public function executeEditkeywords($request)
@@ -223,10 +223,10 @@ class manageActions extends sfActions
     $cards = uiSelectionState::getSelection(self::REMOVE_FLASHCARDS)->getAll();
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'RemoveListConfirm', array(
+    return $tron->renderPartial($this, 'RemoveListConfirm', [
       'cards' => $cards,
       'count' => count($cards)
-    ));
+    ]);
   }
 
   public function executeRemoveListProcess($request)
@@ -247,10 +247,10 @@ class manageActions extends sfActions
     }
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'RemoveListProcess', array(
+    return $tron->renderPartial($this, 'RemoveListProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ));
+    ]);
   }
 
   public function executeRemovecustom($request)
@@ -280,10 +280,10 @@ class manageActions extends sfActions
         }
 
         $tron = new JsTron();
-        return $tron->renderPartial($this, 'RemoveCustomConfirm', array(
+        return $tron->renderPartial($this, 'RemoveCustomConfirm', [
           'cards' => $cards,
           'count' => count($cards)
-        ));
+        ]);
       }
       else
       {
@@ -319,10 +319,10 @@ class manageActions extends sfActions
     }
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'RemoveCustomProcess', array(
+    return $tron->renderPartial($this, 'RemoveCustomProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ));
+    ]);
   }
 
   public function executeImportKeywords($request)
@@ -341,7 +341,7 @@ class manageActions extends sfActions
           $this->getUser()->setAttribute('keywords', serialize($keywords));
 
           $tron = new JsTron();
-          return $tron->renderPartial($this, 'ImportKeywordsConfirm', array('keywords' => $keywords));
+          return $tron->renderPartial($this, 'ImportKeywordsConfirm', ['keywords' => $keywords]);
         }
       }
 
@@ -384,9 +384,9 @@ class manageActions extends sfActions
     */
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'ImportKeywordsProcess', array(
+    return $tron->renderPartial($this, 'ImportKeywordsProcess', [
       'importCount'  => $keywordList->getCount()
-    ));
+    ]);
   }
   
   /**
@@ -420,7 +420,7 @@ class manageActions extends sfActions
       // column names
       ['FrameNumber', _CJ_U('kanji'), 'Keyword', 'LastReview', 'ExpireDate', 'LeitnerBox', 'FailCount', 'PassCount'],
       // options
-      ['col_escape' => array(0, 1, 1, 0, 0, 0, 0, 0), 'column_heads' => true]
+      ['col_escape' => [0, 1, 1, 0, 0, 0, 0, 0], 'column_heads' => true]
     );
 
     $throttler->setTimeout();

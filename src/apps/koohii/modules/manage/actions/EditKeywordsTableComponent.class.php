@@ -9,30 +9,29 @@ class EditKeywordsTableComponent extends sfComponent
   public function execute($request)
   {
     $queryParams = $this->getUser()->getLocalPrefs()
-      ->syncRequestParams('manage.removelist', array(
+      ->syncRequestParams('manage.removelist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
         uiSelectTable::QUERY_SORTORDER   => 0
-      ));
+      ]);
     
     // pager
-    $this->pager = new uiSelectPager(array
-    (
+    $this->pager = new uiSelectPager([
       'select'       => ReviewsPeer::getSelectForEditKeywordsList($this->getUser()->getUserId()),
       'internal_uri' => 'manage/EditKeywordsTable',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
-    ));
+    ]);
     $this->pager->init();
     
     // data table
     $binding = new EditKeywordsTableBinding();
     $this->table = new uiSelectTable($binding, $this->pager->getSelect(), $request->getParameterHolder());
-    $this->table->configure(array(
+    $this->table->configure([
       'sortColumn' => $queryParams[uiSelectTable::QUERY_SORTCOLUMN],
       'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER]
-    ));
+    ]);
 
   }
 }
@@ -48,7 +47,7 @@ class EditKeywordsTableBinding implements uiSelectTableBinding
   
   public function getConfig()
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('Asset', 'SimpleDate', 'CJK'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Asset', 'SimpleDate', 'CJK']);
     
     // MUST BE VALID JSON! ! !
     return <<< EOD
@@ -107,11 +106,11 @@ EOD;
     // create edit keyword link
     $rowData['_custkeyword'] = esc_specialchars($rowData['custkeyword']); //'<span class="JSEditKeyword" data-url="'.$url.'">'.$rowData['custkeyword'].'</span>';
 
-    $rowData['_edit'] = image_tag('/images/ui/icons/pencil.png', array(
+    $rowData['_edit'] = image_tag('/images/ui/icons/pencil.png', [
       'size'     => '16x16',
       'class'    => 'edit-icon JSEditKeyword',
       'data-id'  => $rowData['ucs_id']
-    ));
+    ]);
     
     //$tsLastReview = (int)$rowData['ts_lastreview'];
     //$rowData['_lastreview'] = $tsLastReview ? simple_format_date($tsLastReview, rtkLocale::DATE_SHORT) : '-';

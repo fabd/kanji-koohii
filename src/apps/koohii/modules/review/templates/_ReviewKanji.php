@@ -12,17 +12,17 @@
 <div class="signin" style="display:none"><div class="m"><strong><?= $sf_user->getUsername() ?></strong></div></div>
 
 <div id="uiFcOptions" class="uiFcOptions">
-  <?= link_to('<span>Exit</span>', $exit_url, array('absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review')) ?>
+  <?= link_to('<span>Exit</span>', $exit_url, ['absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review']) ?>
   <a href="#" id="JsBtnHelp" class="uiFcOptBtn uiFcOptBtnHelp uiFcAction" data-action="help" title="Shows help dialog."><span>Help</span></a>
   <a href="#" class="uiFcOptBtn uiFcOptBtnStory uiFcAction" data-action="story" title="View/Edit story for this flashcard"><span><u>S</u>tory</span></a>
   <a href="#" id="JsBtnDict" class="uiFcOptBtn uiFcOptBtnDict uiFcAction" data-action="dict" title="Dictionary lookup"><span><u>D</u>ict</span></a>
   
-  <?= link_to('<span><u>U</u>ndo</span>', '', array('absolute' => 'true',
+  <?= link_to('<span><u>U</u>ndo</span>', '', ['absolute' => 'true',
     'id'    => 'JsBtnUndo',
     'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction', 
     'title' => 'Go back one flashcard',
     'style' => 'display:none',
-    'data-action' => 'undo')) ?>
+    'data-action' => 'undo']) ?>
 
   <div class="clear"></div>
 </div>
@@ -51,7 +51,7 @@
     <div id="uiFcProgressBar">
       <div class="uiFcStBox">
         <div class="uiFcPrBarMod">
-          <?= ui_progress_bar(array(array('value' => 0)), 100, array('id' => 'review-progress', 'borderColor' => '#5FA2D0')) ?>
+          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']) ?>
         </div>
         <h3>Reviewing: <em class="count">.</em> of <em class="count">.</em></h3>
       </div>
@@ -76,13 +76,13 @@
         <div id="uiFcButtons1"<?= $freemode ? '' : ' class="three-buttons"'; ?> style="display:none">
           <h3>Do you remember this <?= _CJ('kanji') ?>?</h3>
           <?php 
-echo ui_ibtn('<u>N</u>o', '', array('id' => 'uiFcBtnAN', 'class' => 'uiIBtnRed uiFcAction', 'data-action' => 'no', 'title' => 'Forgotten'));
+echo ui_ibtn('<u>N</u>o', '', ['id' => 'uiFcBtnAN', 'class' => 'uiIBtnRed uiFcAction', 'data-action' => 'no', 'title' => 'Forgotten']);
 if (!$freemode) {
-echo ui_ibtn('<u>H</u>ard', '', array('id' => 'uiFcBtnAH', 'class' => 'uiIBtnOrange uiFcAction', 'data-action' => 'hard', 'title' => 'Hard'));
+echo ui_ibtn('<u>H</u>ard', '', ['id' => 'uiFcBtnAH', 'class' => 'uiIBtnOrange uiFcAction', 'data-action' => 'hard', 'title' => 'Hard']);
 }
-echo ui_ibtn('<u>Y</u>es', '', array('id' => 'uiFcBtnAY', 'class' => 'uiFcAction', 'data-action' => 'yes', 'title' => 'Remembered with some effort'));
+echo ui_ibtn('<u>Y</u>es', '', ['id' => 'uiFcBtnAY', 'class' => 'uiFcAction', 'data-action' => 'yes', 'title' => 'Remembered with some effort']);
 if (!$freemode) {
-  echo ui_ibtn('<u>E</u>asy', '', array('id' => 'uiFcBtnAE', 'class' => 'uiFcAction', 'data-action' => 'easy', 'title' => 'Remembered easily'));
+  echo ui_ibtn('<u>E</u>asy', '', ['id' => 'uiFcBtnAE', 'class' => 'uiFcAction', 'data-action' => 'easy', 'title' => 'Remembered easily']);
 }
           ?>
           <div class="clear"></div>

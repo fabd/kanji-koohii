@@ -24,7 +24,7 @@ class labsActions extends sfActions
     $templateVars['exit_url'] = 'review/vocab';
     $this->templateVars       = $templateVars;
 
-    $uiFR = new uiFlashcardReview(array(), true);
+    $uiFR = new uiFlashcardReview([], true);
   }
 
   /**
@@ -39,7 +39,7 @@ class labsActions extends sfActions
     $templateVars['exit_url'] = 'review/vocab';
     $this->templateVars       = $templateVars;
 
-    $uiFR = new uiFlashcardReview(array(), true);
+    $uiFR = new uiFlashcardReview([], true);
   }
 
   /**
@@ -55,9 +55,9 @@ class labsActions extends sfActions
     if (!empty($oJson))
     {
       $flashcardReview = new uiFlashcardReview(
-        array(
-          'fn_get_flashcard' => array('rtkLabs', 'getVocabShuffleCardData')
-        )
+        [
+          'fn_get_flashcard' => ['rtkLabs', 'getVocabShuffleCardData']
+        ]
       );
 
       $this->getResponse()->setContentType('application/json');

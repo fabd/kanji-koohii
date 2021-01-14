@@ -6,7 +6,7 @@
 .profile-actions .uiIBtn { margin-right:1em; }
 <?php end_slot() ?>
 
-<?php decorate_start('SideTabs', array('active' => 'overview')) ?>
+<?php decorate_start('SideTabs', ['active' => 'overview']) ?>
 
   <h2>My Account</h2>
 

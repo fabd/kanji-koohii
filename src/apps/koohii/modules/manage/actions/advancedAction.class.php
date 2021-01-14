@@ -56,17 +56,17 @@ class advancedAction extends sfAction
       }
 
 
-      $cardData = array(
+      $cardData = [
         'leitnerbox'   => $leitnerbox,
         'expiredate'   => new coreDbExpr(sprintf('ADDDATE(NOW(), INTERVAL %d DAY)', $expiredays)),
         'lastreview'   => new coreDbExpr(UsersPeer::sqlLocalTime()),
         'totalreviews' => $failurecount + $successcount,
         'failurecount' => $failurecount,
         'successcount' => $successcount
-      );
+      ];
 
       if (!ReviewsPeer::hasFlashcard($userId, $ucsId)) {
-        $cards = ReviewsPeer::addSelection($userId, array($ucsId));
+        $cards = ReviewsPeer::addSelection($userId, [$ucsId]);
         if (count($cards) !== 1) {
           $request->setError('create', 'Error while creating flashcard.');
           return false;

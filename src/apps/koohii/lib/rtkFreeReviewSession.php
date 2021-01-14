@@ -45,14 +45,14 @@ class rtkFreeReviewSession
     
     if ($start)
     {
-      $this->cardstatus = array();
+      $this->cardstatus = [];
 
-      $this->user->setAttribute(self::SESS_CARD_ANSWERS, array());
+      $this->user->setAttribute(self::SESS_CARD_ANSWERS, []);
     }
     else
     {
       // restore flashcard update status from the session
-      $this->cardstatus = $this->user->getAttribute(self::SESS_CARD_ANSWERS, array());
+      $this->cardstatus = $this->user->getAttribute(self::SESS_CARD_ANSWERS, []);
     }
   }
 

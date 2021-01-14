@@ -1,5 +1,5 @@
 <?php use_helper('Form', 'Validation', 'Widgets') ?>
-<?php echo form_tag('manage/RemoveCustomProcess', array('class' => 'main-form')) ?>
+<?php echo form_tag('manage/RemoveCustomProcess', ['class' => 'main-form']) ?>
 
   <?php echo form_errors() ?>
 
@@ -13,7 +13,7 @@
   
   <div style="background:#E7F5CD;color:#000;padding:5px;margin:0 0 1em;">
 <?php
-  $kanjis = array();
+  $kanjis = [];
   foreach ($cards as $id)
   {
     $kanjis[] = rtkIndex::getCharForIndex($id);

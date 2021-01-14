@@ -7,62 +7,48 @@
  * 
  */
 
-return array
-(
-  'fields' => array
-  (
-    'ts_start' => array
-    (
-      'required'        => array
-      (
+return [
+  'fields' => [
+    'ts_start' => [
+      'required'        => [
         'msg'           => 'Error'
-      ),
-      'CallbackValidator' => array
-      (
-        'callback'        => array('BaseValidators', 'validateInteger'),
+      ],
+      'CallbackValidator' => [
+        'callback'        => ['BaseValidators', 'validateInteger'],
         'invalid_error'   => 'Validation failed'
-      )
-    ),
+      ]
+    ],
 
-    'fc_pass' => array
-    (
-      'required'        => array
-      (
+    'fc_pass' => [
+      'required'        => [
         'msg'           => 'Error'
-      ),
-      'CallbackValidator' => array
-      (
-        'callback'        => array('BaseValidators', 'validateInteger'),
+      ],
+      'CallbackValidator' => [
+        'callback'        => ['BaseValidators', 'validateInteger'],
         'invalid_error'   => 'Validation failed'
-      )
-    ),
+      ]
+    ],
 
-    'fc_fail' => array
-    (
-      'required'        => array
-      (
+    'fc_fail' => [
+      'required'        => [
         'msg'           => 'Error'
-      ),
-      'CallbackValidator' => array
-      (
-        'callback'        => array('BaseValidators', 'validateInteger'),
+      ],
+      'CallbackValidator' => [
+        'callback'        => ['BaseValidators', 'validateInteger'],
         'invalid_error'   => 'Validation failed'
-      )
-    ),
+      ]
+    ],
 
     // free mode review flag
-    'fc_free' => array
-    (
-      'required'        => array
-      (
+    'fc_free' => [
+      'required'        => [
         'msg'           => 'Error'
-      ),
-      'CallbackValidator' => array
-      (
-        'callback'        => array('BaseValidators', 'validateInteger'),
+      ],
+      'CallbackValidator' => [
+        'callback'        => ['BaseValidators', 'validateInteger'],
         'invalid_error'   => 'Validation failed'
-      )
-    )
+      ]
+    ]
 
-  )
-);
+  ]
+];

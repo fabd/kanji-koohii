@@ -54,7 +54,7 @@ class rtkApi
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
      
     //Set the content type to application/json
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']); 
      
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 

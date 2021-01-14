@@ -22,7 +22,7 @@
 class rtkFlashcardSelection
 {
   protected
-    $cardIds  = array(),
+    $cardIds  = [],
     $request  = null;
   
   /**
@@ -57,7 +57,7 @@ class rtkFlashcardSelection
    */
   public function setFromString($selString)
   {
-    $this->cardIds = array();
+    $this->cardIds = [];
 
     // split string on spaces, japanese space (0x3000) and comma
     $selparts = preg_split('/[,\s\x{3000}]+/u', $selString, -1, PREG_SPLIT_NO_EMPTY);
@@ -148,13 +148,13 @@ class rtkFlashcardSelection
    */
   public function addHeisigRange($userId, $selection)
   {
-    $this->cardIds = array();
+    $this->cardIds = [];
 
     // get user'flashcards as indexes, do filter because cards not in the index will have extended frame nr (UCS code)
     $userCards = ReviewsPeer::getFlashcardsByIndex($userId, 'rtk1+3');
     
     // create a map of existing flashcards
-    $inDeck = array();
+    $inDeck = [];
     foreach ($userCards as $framenum)
     {
       $inDeck[$framenum] = true;
@@ -229,7 +229,7 @@ class rtkFlashcardSelection
    */
   public function __sleep()
   {
-    return array('cardIds');
+    return ['cardIds'];
   }
 
   public function __wakeup()

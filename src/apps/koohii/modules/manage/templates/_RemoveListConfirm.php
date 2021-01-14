@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Validation', 'Widgets') ?>
 
-<?php echo form_tag('manage/removeListProcess', array('class' => 'main-form')) ?>
+<?php echo form_tag('manage/removeListProcess', ['class' => 'main-form']) ?>
 
   <?php if (!$count): ?>
 
@@ -10,7 +10,7 @@
 
   <p> <strong><?php echo $count ?></strong> card(s) will be deleted:</p>  
 
-  <?php include_partial('CharacterSelection', array('cards' => $cards)) ?>
+  <?php include_partial('CharacterSelection', ['cards' => $cards]) ?>
 
   <?php endif ?>
 

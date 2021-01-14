@@ -7,14 +7,14 @@
  * the "key" string is returned as is.
  */
 
-$GLOBALS['CJ_STRINGS'] = array(
+$GLOBALS['CJ_STRINGS'] = [
   'Japanese'               => 'Chinese',
   'kanji'                  => 'hanzi',
   'Onyomi'                 => 'Pinyin',
   'Remembering the Kanji'  => 'Remembering Hanzi',
   'Kanji Koohii!'          => 'Reviewing the Hanzi',   // website name
   'RTK'                    => 'RTH'
-);
+];
 
 /**
  * Placeholder class to make use of the autoload feature.

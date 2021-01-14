@@ -18,7 +18,7 @@
 
   <?php echo form_errors() ?>
   
-  <?php echo form_tag('manage/importKeywords', array('class' => 'main-form')) ?>
+  <?php echo form_tag('manage/importKeywords', ['class' => 'main-form']) ?>
 
   <?php echo textarea_tag('txtData', /*<<<EOT
 4  "quattre"
@@ -26,7 +26,7 @@
 三, trois
 30000 "champs de ""riz-o-lait"""
 EOT*/ ''
-, array('class' => 'form-control mb-1', 'rows' => 5)) ?>
+, ['class' => 'form-control mb-1', 'rows' => 5]) ?>
 
   <?php echo _bs_submit_tag('Import Keywords') ?><em class="note">Note: there will be a confirmation step.</em>
 

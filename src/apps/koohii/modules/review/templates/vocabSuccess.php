@@ -30,17 +30,17 @@
       <p>Session length: up to <?php echo rtkLabs::VOCABSHUFFLE_LENGTH ?> cards (depending on existing vocabulary matching the RTK index below).</p>
 
 <?php
-      echo form_tag('labs/shuffle1', array('method' => 'post'));
+      echo form_tag('labs/shuffle1', ['method' => 'post']);
       echo form_errors();
 ?>
       <div class="form-group">
         Use only kanji with RTK index up to
 <?php
-        echo input_tag('max_framenum', '20', array('style' => 'width:50px;margin:0 0.3em;', 'class' => 'form-control form-control-i'))
+        echo input_tag('max_framenum', '20', ['style' => 'width:50px;margin:0 0.3em;', 'class' => 'form-control form-control-i'])
 ?>
       </div>
 <?php
-      echo _bs_form_group(array('class' => 'mb-p33'),
+      echo _bs_form_group(['class' => 'mb-p33'],
         _bs_submit_tag('Start Review')
       );
 ?>
@@ -61,10 +61,10 @@
       <p>Session length: up to <?php echo rtkLabs::VOCABSHUFFLE_LENGTH ?> cards (depending on existing vocabulary matching your learned kanji).</p>
 
 <?php
-      echo form_tag('labs/shuffle2', array('method' => 'post'));
+      echo form_tag('labs/shuffle2', ['method' => 'post']);
       echo form_errors();
 
-      echo _bs_form_group(array('class' => 'mb-p33'),
+      echo _bs_form_group(['class' => 'mb-p33'],
         _bs_submit_tag('Start Review')
       );
 ?>

@@ -45,7 +45,7 @@ EOD;
   {
     $context = sfContext::getInstance();
 
-    sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url']);
     $j_text = htmlspecialchars(trim($j_text), ENT_QUOTES, sfConfig::get('sf_charset'));
 
     // get custom keywords ONLY for existing flashcards
@@ -60,7 +60,7 @@ EOD;
 
       $title = $info['keyword'] . ' (#' . $info['seq_nr'] . ')';
 
-      $html  = link_to($kanji, '@study_edit?id='.$kanji, array('data-text' => $title, 'class' => 'j JsTooltip'));
+      $html  = link_to($kanji, '@study_edit?id='.$kanji, ['data-text' => $title, 'class' => 'j JsTooltip']);
 
       $j_text = str_replace($kanji, $html, $j_text);
     }

@@ -11,21 +11,20 @@ class summaryTableComponent extends sfComponent
   public function execute($request)
   {
     $queryParams = $this->getUser()->getLocalPrefs()
-      ->syncRequestParams('reviewsummary', array(
+      ->syncRequestParams('reviewsummary', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
         uiSelectTable::QUERY_SORTORDER   => 0
-      ));
+      ]);
 
     // pager
-    $this->pager = new uiSelectPager(array
-    (
+    $this->pager = new uiSelectPager([
       'select'       => ReviewsPeer::getReviewSummaryListSelect($this->getUser()->getUserId(), $this->ts_start),
       'internal_uri' => '@review_summary',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
-    ));
+    ]);
     $this->pager->init();
     
     // data table

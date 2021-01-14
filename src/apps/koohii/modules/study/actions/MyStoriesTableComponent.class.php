@@ -23,19 +23,19 @@ class MyStoriesTableComponent extends sfComponent
     $action = $this->getController()->getActionStack()->getLastEntry()->getActionInstance();
 
     $queryParams = $this->getUser()->getLocalPrefs()
-      ->syncRequestParams('mystorieslist', array(
+      ->syncRequestParams('mystorieslist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 10
-      ));
+      ]);
 
     // order by
-    $order_by = array(
+    $order_by = [
       'seq_nr'   => 'seq_nr ASC',
       'keyword'  => 'keyword ASC',
       'lastedit' => 'updated_on DESC',
       'votes'    => 'stars DESC',
       'reports'  => 'kicks DESC',
       'public'   => 'public DESC'
-    );
+    ];
 
     $sortkey = $request->getParameter('sort', 'lastedit');
 
@@ -56,18 +56,17 @@ class MyStoriesTableComponent extends sfComponent
     }
 
     // pager
-    $this->pager = new uiSelectPager(array
-    (
+    $this->pager = new uiSelectPager([
       'select'       => $storiesSelect,
       'internal_uri' => 'study/mystories',
-      'query_params' => array(
+      'query_params' => [
         uiSelectTable::QUERY_SORTCOLUMN => $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'seq_nr'),
         uiSelectTable::QUERY_SORTORDER  => $request->getParameter(uiSelectTable::QUERY_SORTORDER, 1),
         uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE]
-      ),
+      ],
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
-    ));
+    ]);
     $this->pager->init();
 
     // get row data

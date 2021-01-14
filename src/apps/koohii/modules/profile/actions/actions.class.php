@@ -20,7 +20,7 @@ class profileActions extends sfActions
       {
         // if unauthenticated user checks his (bookmarked?) profile, go to login and back
         $url = $this->getController()->genUrl('profile/index', true);
-        $this->getUser()->redirectToLogin(array('referer' => $url));
+        $this->getUser()->redirectToLogin(['referer' => $url]);
       }
     }
 

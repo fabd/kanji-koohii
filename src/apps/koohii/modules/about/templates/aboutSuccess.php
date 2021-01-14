@@ -5,7 +5,7 @@
 <div class="row">
 
   <div class="col-md-2">
-    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', array('style' => 'display:block;margin:0 0 1em', 'size' => '140x140')) ?>
+    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', ['style' => 'display:block;margin:0 0 1em', 'size' => '140x140']) ?>
     <?php //echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block')) ?>
   </div>
 

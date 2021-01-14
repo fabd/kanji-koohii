@@ -4,16 +4,12 @@
  * 
  */
 
-return array
-(
-  'fields' => array
-  (
-    'txtSelection' => array
-    (
-      'required'        => array
-      (
+return [
+  'fields' => [
+    'txtSelection' => [
+      'required'        => [
         'msg'           => 'Selection text can not be left blank'
-      )
-    )
-  )
-);
+      ]
+    ]
+  ]
+];

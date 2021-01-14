@@ -145,7 +145,7 @@ class rtkLabs
    *   ichi1,news1,spec1/2, gai1  17642  (P)
    */
   public static 
-    $pricodes = array(
+    $pricodes = [
       'ichi1' => 0x80,
       'news1' => 0x40,
       'news2' => 0x20,
@@ -154,7 +154,7 @@ class rtkLabs
       'spec2' => 4,
       'gai1'  => 2,
       'gai2'  => 1
-    );
+    ];
 
   // jdict.pri: ichi1, news1, news2 entries for example words on flashcards
   const EDICT_PRI_FREEMODE = 0xCA;
@@ -164,7 +164,7 @@ class rtkLabs
 
   // jdict.pos (INT UNSIGNED 32bits)
   public static
-    $dictpos = array(
+    $dictpos = [
     // <pos>
     'adj'     => 0x00000001,  # adjective (keiyoushi)
     'adj-na'  => 0x00000002,  # adjectival nouns or quasi-adjectives (keiyodoshi)
@@ -193,11 +193,11 @@ class rtkLabs
     'pref'    => 0x02000000,  # prefix
     'prt'     => 0x04000000,  # particle
     'suf'     => 0x08000000   # suffix
-    );
+    ];
 
   // jdict.verb (INT UNSIGNED 32bits)  
   public static
-    $dictverb = array(
+    $dictverb = [
     // <pos>
     'v1'    => 0x00000001,  # Ichidan verb
     'v5'    => 0x00000002,  # Godan verb (not completely classified)
@@ -222,11 +222,11 @@ class rtkLabs
     'vs-s'  => 0x00100000,  # suru verb - special class
     'vt'    => 0x00200000,  # transitive verb
     'vz'    => 0x00400000   # zuru verb - (alternative form of -jiru verbs)
-    );
+    ];
 
   // jdict.field (INT UNSIGNED 32bits)
   public static
-    $dictfield = array(
+    $dictfield = [
     // <field>
     'Buddh'   => 0x00000001,  # Buddhist term
     'MA'      => 0x00000002,  # martial arts term
@@ -238,11 +238,11 @@ class rtkLabs
     'math'    => 0x00000080,  # mathematics
     'mil'     => 0x00000100,  # military
     'physics' => 0x00000200   # physics terminology
-    );
+    ];
 
   // jdict.misc (INT UNSIGNED 32bits)
   public static
-    $dictmisc = array(
+    $dictmisc = [
     // <misc>
     'X'        => 0x00000001,  # rude or X-rated term
     'abbr'     => 0x00000002,  # abbreviation
@@ -278,7 +278,7 @@ class rtkLabs
     'iK'       => 0x20000000,  # word containing irregular kanji usage
     'io'       => 0x40000000,  # irregular okurigana usage
     'oK'       => 0x80000000  # word containing out-dated kanji
-    );
+    ];
 
   /**
    * VocabShuffle settings
@@ -340,7 +340,7 @@ class rtkLabs
   {
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
-    $db->select(array('compound', 'reading', 'glossary'))->from(self::TABLE_JDICT)->where('dictid = ?', $dictId)->query();
+    $db->select(['compound', 'reading', 'glossary'])->from(self::TABLE_JDICT)->where('dictid = ?', $dictId)->query();
 
     return $db->fetchObject();
   }
@@ -359,14 +359,14 @@ class rtkLabs
 
     // TODO optimize by adding pri to dictlevels
     $select = $db->select('dl.dictid')
-      ->from(array('dl' => self::TABLE_DICTLEVELS))
+      ->from(['dl' => self::TABLE_DICTLEVELS])
       ->where('framenum <= ?', $max_framenum)
       ->where('dl.pri & ?', self::EDICT_PRI_SHUFFLE)
       ->order('rand()')
       ->limit(self::VOCABSHUFFLE_LENGTH)
       ->query();
 
-    $items = array();
+    $items = [];
 
     while ($row = $db->fetchObject()) {
       $items[] = $row->dictid;
@@ -396,9 +396,9 @@ class rtkLabs
       LIMIT 20
       */
     // query takes avg 0.21 sec for 22906 rows for 2042 kanji
-    $select = $db->select(array('dictid', 'ds.numkanji', 'ds.pri', 'c' => new coreDbExpr('COUNT(*)')))
-      ->from(array('ds' => 'dictsplit'))
-      ->join(array('fc' => 'reviews'), 'ds.kanji = fc.ucs_id AND fc.userid = '.$userId.' AND fc.leitnerbox >= '.self::VOCABSHUFFLE_MINBOX)
+    $select = $db->select(['dictid', 'ds.numkanji', 'ds.pri', 'c' => new coreDbExpr('COUNT(*)')])
+      ->from(['ds' => 'dictsplit'])
+      ->join(['fc' => 'reviews'], 'ds.kanji = fc.ucs_id AND fc.userid = '.$userId.' AND fc.leitnerbox >= '.self::VOCABSHUFFLE_MINBOX)
       ->group('dictid')
       ->having('c = numkanji AND pri & ?', self::EDICT_PRI_SHUFFLE)
       ->order('rand()')
@@ -407,7 +407,7 @@ class rtkLabs
 //echo $select;exit;
     
     // grab the id column
-    $items = array();
+    $items = [];
 
     $select->query();
     while ($row = $db->fetch()) {
@@ -497,7 +497,7 @@ class rtkLabs
    */
   public static function getKeywordizedCompound($compound)
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url']);
 
     $splitted = utf8::toUnicode($compound);
     
@@ -512,7 +512,7 @@ class rtkLabs
       if (false !== ($framenum = rtkIndex::getIndexForChar($c)))
       {
         $tooltip = CustkeywordsPeer::getCoalescedKeyword($userId, $ucsId) .' (#'.$framenum.')';
-        $url = link_to($c, '@study_edit?id='.$c, array('title' => $tooltip, 'target' => '_blank'));
+        $url = link_to($c, '@study_edit?id='.$c, ['title' => $tooltip, 'target' => '_blank']);
         $s = $s . $url;
       }
       else
@@ -555,9 +555,9 @@ class rtkLabs
 
     // obtain a limited set of randomized example words for given kanji
 
-    $select = $db->select(array('dictid', 'compound', 'reading', 'glossary', 'type'))
-                 ->from(array('jd' => self::TABLE_JDICT))
-                 ->joinUsing(array('ds' => self::TABLE_DICTSPLIT), 'dictid')
+    $select = $db->select(['dictid', 'compound', 'reading', 'glossary', 'type'])
+                 ->from(['jd' => self::TABLE_JDICT])
+                 ->joinUsing(['ds' => self::TABLE_DICTSPLIT], 'dictid')
                  ->where('kanji = ? AND ds.pri & '.self::EDICT_PRI_FREEMODE, $ucsId)
                  ->order('ds.pri DESC, rand()')
                  ->limit(10);
@@ -586,7 +586,7 @@ class rtkLabs
           $reading  = self::getFormattedReading($db, $row->dictid, $ucsId, $highlight);
         }
         
-        $on = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
+        $on = ['compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/];
       }
       elseif (false === $kun && $row->type == self::TYPE_KUN)
       {
@@ -598,7 +598,7 @@ class rtkLabs
           $reading  = self::getFormattedReading($db, $row->dictid, $ucsId, $highlight);
         }
         
-        $kun = array('compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/);
+        $kun = ['compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/*, 'type' => (int)$row->type*/];
       }
     }
     
@@ -620,7 +620,7 @@ class rtkLabs
    */
   public static function getFormattedVocabPicks($userId, $ucsId)
   {
-    $VocabPickArray = array();
+    $VocabPickArray = [];
 
     $db = sfProjectConfiguration::getActive()->getDatabase();
 
@@ -657,13 +657,13 @@ class rtkLabs
    */
   public static function getFormattedReading($db, $dictId, $ucsId, $formatTags, $fallback = '')
   {
-    $select = $db->select(array('kanji,type,position,pron'))
+    $select = $db->select(['kanji,type,position,pron'])
                  ->from(self::TABLE_DICTSPLIT)
                  ->joinUsing(self::TABLE_DICTPRONS, 'pronid')
                  ->where('dictid = ?', $dictId);
     $select->query();
 
-    $prons = array();
+    $prons = [];
     $proncount = 0;
 
     while ($row = $db->fetchObject())

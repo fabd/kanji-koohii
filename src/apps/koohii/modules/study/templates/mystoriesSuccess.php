@@ -13,7 +13,7 @@
 
 <div class="mb-1" style="position:relative;">
   <div style="position:absolute;right:0;top:0;">
-    <?php echo _bs_button_with_icon('Export to CSV', 'study/export', array('icon' => 'fa-file')) ?>
+    <?php echo _bs_button_with_icon('Export to CSV', 'study/export', ['icon' => 'fa-file']) ?>
   </div>
 
   <div id="app-vue" class="mb-1">
@@ -43,7 +43,7 @@
 <?php endif ?>
 
 <div id="MyStoriesComponent">
-  <?php include_component('study', 'MyStoriesTable', array('stories_uid' => $sf_user->getUserId(), 'profile_page' => false)) ?>
+  <?php include_component('study', 'MyStoriesTable', ['stories_uid' => $sf_user->getUserId(), 'profile_page' => false]) ?>
 </div>
 
 <?php koohii_onload_slot() ?>

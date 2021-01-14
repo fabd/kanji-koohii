@@ -16,11 +16,11 @@
     <div class="padded-box-inset mb-1" style="max-width:600px">
 
       <?php echo form_errors() ?>
-      <?php echo form_tag('home/contact', array('class'=>'block')) ?>
+      <?php echo form_tag('home/contact', ['class'=>'block']) ?>
 
       <div class="form-group">
         <label for="name">Name</label>
-        <?php echo input_tag('name', '', array('class' => 'form-control', 'id' => 'name', 'style' => 'max-width:300px')) ?>
+        <?php echo input_tag('name', '', ['class' => 'form-control', 'id' => 'name', 'style' => 'max-width:300px']) ?>
       </div>
 
       <div class="form-group">
@@ -30,11 +30,11 @@
 
       <div class="form-group">
         <label for="message">Message</label>
-        <?php echo textarea_tag('message', '', array('rows' => 8, 'class' => 'form-control')) ?>
+        <?php echo textarea_tag('message', '', ['rows' => 8, 'class' => 'form-control']) ?>
       </div>
 
       <div class="form-group">
-        <?php echo submit_tag('Send', array('class' => 'btn btn-lg btn-success')) ?>
+        <?php echo submit_tag('Send', ['class' => 'btn btn-lg btn-success']) ?>
       </div>
 
     </form>

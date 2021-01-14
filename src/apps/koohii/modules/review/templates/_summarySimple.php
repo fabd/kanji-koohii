@@ -36,7 +36,7 @@
   <?php foreach ($cards as $c): ?>
     <li class="card<?php echo $c->pass ? '':' fail' ?>">
       <div class="rbn"></div>
-      <div class="chr"><?php echo link_to(cjk_lang_ja($c->kanji), '@study_edit?id='.$c->framenum, array('target' => '_blank')) ?></div>
+      <div class="chr"><?php echo link_to(cjk_lang_ja($c->kanji), '@study_edit?id='.$c->framenum, ['target' => '_blank']) ?></div>
       <div class="inf">#<?php echo $c->framenum.'<em>'.$c->keyword ?></em></div>
     </li>
   <?php endforeach ?>

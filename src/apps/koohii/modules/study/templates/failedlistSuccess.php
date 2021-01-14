@@ -23,8 +23,8 @@
 <?php if ($restudyCount > 0): ?>
 
         <?php //echo _bs_button_with_icon('Review forgotten cards', '@review', array('query_string' => 'box=1', 'icon' => 'fa-play')) ?>
-        <?php echo _bs_button("<strong>$restudyCount</strong> failed cards (review)", '@review', array('query_string' => 'box=1',
-          'class' => 'btn btn-lg btn-srs btn-failed', 'icon' => 'fa-play')) ?>
+        <?php echo _bs_button("<strong>$restudyCount</strong> failed cards (review)", '@review', ['query_string' => 'box=1',
+          'class' => 'btn btn-lg btn-srs btn-failed', 'icon' => 'fa-play']) ?>
 <?php else: ?>
 
         <button type="button" class="btn btn-success" disabled="disabled">You have no failed kanji cards!</button>

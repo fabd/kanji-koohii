@@ -31,7 +31,7 @@ class rtkMail extends MailAbstract
     $this->addTo($userAddress, $userName);
     $this->setSubject('Your new password at '._CJ('Kanji Koohii!'));
     $this->setPriority(1);
-    $body = $this->renderTemplate('forgotPasswordConfirmation', array('username' => $userName, 'password' => $rawPassword));
+    $body = $this->renderTemplate('forgotPasswordConfirmation', ['username' => $userName, 'password' => $rawPassword]);
     $this->setBodyText($body);
     $this->send();
   }
@@ -48,7 +48,7 @@ class rtkMail extends MailAbstract
     $this->addTo($userAddress, $userName);
     $this->setSubject('Welcome to '._CJ('Kanji Koohii!'));
     $this->setPriority(1);
-    $body = $this->renderTemplate('newAccountConfirmation', array('username' => $userName));
+    $body = $this->renderTemplate('newAccountConfirmation', ['username' => $userName]);
     $this->setBodyText($body);
     $this->send();
   }
@@ -87,8 +87,8 @@ class rtkMail extends MailAbstract
     $this->addTo($userAddress, $userName);
     $this->setSubject('Account update at '._CJ('Kanji Koohii!'));
 
-    $body = $this->renderTemplate('updatedPasswordConfirmation', array(
-      'username' => $userName, 'password' => $rawPassword, 'email' => $userAddress));
+    $body = $this->renderTemplate('updatedPasswordConfirmation', [
+      'username' => $userName, 'password' => $rawPassword, 'email' => $userAddress]);
     $this->setBodyText($body);
     $this->send();
   }

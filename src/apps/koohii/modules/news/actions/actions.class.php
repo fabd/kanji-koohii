@@ -13,7 +13,7 @@ class newsActions extends sfActions
    */
   public function executeIndex($request)
   {
-    list($year, $month) = phpToolkit::array_splice_values($request->getParameterHolder()->getAll(), array('year', 'month'));
+    list($year, $month) = phpToolkit::array_splice_values($request->getParameterHolder()->getAll(), ['year', 'month']);
 
     if (!$year)
     {
@@ -21,7 +21,7 @@ class newsActions extends sfActions
     }
     else if ($month >= 1 && $month <= 12)
     {
-      $this->select = array($year, $month);
+      $this->select = [$year, $month];
     }
     else
     {
@@ -53,9 +53,9 @@ class newsActions extends sfActions
       // start a new post
       if ($postId === 0)
       {
-        $request->getParameterHolder()->add(array(
+        $request->getParameterHolder()->add([
           'post_date'  => date('Y-m-d')
-        ));
+        ]);
       }
       else
       {
@@ -63,11 +63,11 @@ class newsActions extends sfActions
       
         if (false !== ($data = SitenewsPeer::getRawPostById($postId)))
         {
-          $request->getParameterHolder()->add(array(
+          $request->getParameterHolder()->add([
             'post_title' => $data->subject,
             'post_body'  => $data->text,
             'post_date'  => $data->created_on
-          ));
+          ]);
         }
       }
     }
@@ -77,12 +77,12 @@ class newsActions extends sfActions
       $postBodyPreview = SitenewsPeer::formatPost($postBody);
 
       // cf. news/_list partial
-      $postPreview = (object)array(
+      $postPreview = (object)[
         'id'       => $postId,
         'date'     => strtotime($postDate), // unix time
         'subject'  => $postTitle,
         'text'     => $postBodyPreview
-      );
+      ];
 
       if ($isPreview)
       {
@@ -90,11 +90,11 @@ class newsActions extends sfActions
       else if ($isCommit)
       {
 
-        $postData = array(
+        $postData = [
           'created_on'   => $postDate != '' ? $postDate : new coreDbExpr('NOW()'),
           'subject'      => $postTitle,
           'text'         => $postBody
-        );
+        ];
         // DBG::printr($postData);exit;
 
         if ($isNewPost && SitenewsPeer::getInstance()->insert($postData))
@@ -139,7 +139,7 @@ class newsActions extends sfActions
     
     if (false !== $post = SitenewsPeer::getPostById($postId))
     {
-      $this->posts = array($post);
+      $this->posts = [$post];
     }
     else
     {

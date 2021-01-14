@@ -35,7 +35,7 @@ class koohiiConfiguration extends sfApplicationConfiguration
     }
 
     // events
-    $this->dispatcher->connect('flashcards.update', array('rtkUser', 'eventUpdateUserKnownKanji'));
+    $this->dispatcher->connect('flashcards.update', ['rtkUser', 'eventUpdateUserKnownKanji']);
   }
 
   /**

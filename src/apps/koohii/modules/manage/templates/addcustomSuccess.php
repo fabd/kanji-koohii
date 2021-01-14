@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'addcustom')) ?>
+<?php decorate_start('SideTabs', ['active' => 'addcustom']) ?>
           
   <h2>Add Custom Flashcard Selection</h2>
 

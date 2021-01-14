@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'importkeywords')) ?>
+<?php decorate_start('SideTabs', ['active' => 'importkeywords']) ?>
 
           <h2>Import Customized Keywords</h2>
 

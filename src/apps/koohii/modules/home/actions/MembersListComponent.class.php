@@ -4,21 +4,20 @@ class MembersListComponent extends sfComponent
   public function execute($request)
   {
     $queryParams = $this->getUser()->getLocalPrefs()
-      ->syncRequestParams('memberslist', array(
+      ->syncRequestParams('memberslist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 50,
         uiSelectTable::QUERY_SORTCOLUMN  => 'ts_lastreview',
         uiSelectTable::QUERY_SORTORDER   => 1
-      ));
+      ]);
 
     // pager
-    $this->pager = new uiSelectPager(array
-    (
+    $this->pager = new uiSelectPager([
       'select'       => ActiveMembersPeer::getSelectForActiveMembersList(),
       'internal_uri' => '@members_list',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
-    ));
+    ]);
     $this->pager->init();
     
     // data table

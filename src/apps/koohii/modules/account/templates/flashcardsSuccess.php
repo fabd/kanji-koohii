@@ -4,7 +4,7 @@ label { font-weight:bold; }
 p.info { margin:0.5em 0 1em 1.3em; }
 <?php end_slot() ?>
 
-<?php decorate_start('SideTabs', array('active' => 'flashcards')) ?>
+<?php decorate_start('SideTabs', ['active' => 'flashcards']) ?>
 
   <h2>Flashcard Settings</h2>
 
@@ -29,7 +29,7 @@ p.info { margin:0.5em 0 1em 1.3em; }
     */ ?>
 
     <p>
-      <?php echo submit_tag('Save changes', array('class' => 'btn btn-success')) ?>
+      <?php echo submit_tag('Save changes', ['class' => 'btn btn-success']) ?>
     </p>
 
   </form>

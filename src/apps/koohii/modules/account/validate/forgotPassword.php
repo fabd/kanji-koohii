@@ -4,21 +4,16 @@
  * 
  */
 
-return array
-(
-  'fields' => array
-  (
-    'email_address' => array
-    (
-      'required'         => array
-      (
+return [
+  'fields' => [
+    'email_address' => [
+      'required'         => [
         'msg'           => 'Email address is required.'
-      ),
-      'EmailValidator'  => array
-      (
+      ],
+      'EmailValidator'  => [
         'strict'        => true,
         'email_error'   => 'Email is not valid.'
-      )
+      ]
       
       /*
       'StringValidator'   => array
@@ -30,6 +25,6 @@ return array
         'max_error'   => 'Username is too long (max 25 characters).'
       )
       */
-    )
-  )
-);
+    ]
+  ]
+];

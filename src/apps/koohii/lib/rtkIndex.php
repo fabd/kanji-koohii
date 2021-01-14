@@ -101,19 +101,19 @@ class rtkIndex
    *          MUST match the sequence array index
    */
   // sqlId of sequence set for new users by default
-  static public $newuser_sequence = array('rth' => 1, 'rtk' => 1);
+  static public $newuser_sequence = ['rth' => 1, 'rtk' => 1];
 
   // keep in sync with /modules/account/templates/sequenceView !
-  static public $rtk_sequences = array(
-    0 => array('classId' => 'OldEdition', 'sqlId' => 0, 'sqlCol' => 'idx_olded'),
-    1 => array('classId' => 'NewEdition', 'sqlId' => 1, 'sqlCol' => 'idx_newed')
-  );
+  static public $rtk_sequences = [
+    0 => ['classId' => 'OldEdition', 'sqlId' => 0, 'sqlCol' => 'idx_olded'],
+    1 => ['classId' => 'NewEdition', 'sqlId' => 1, 'sqlCol' => 'idx_newed']
+  ];
 
   // keep in sync with /modules/account/templates/sequenceView !
-  static public $rth_sequences = array(
-    0 => array('classId' => 'Traditional', 'sqlId' => 0, 'sqlCol' => 'idx_trad'),
-    1 => array('classId' => 'Simplified',  'sqlId' => 1, 'sqlCol' => 'idx_simp')
-  );
+  static public $rth_sequences = [
+    0 => ['classId' => 'Traditional', 'sqlId' => 0, 'sqlCol' => 'idx_trad'],
+    1 => ['classId' => 'Simplified',  'sqlId' => 1, 'sqlCol' => 'idx_simp']
+  ];
 
   // Instantiation is used to load the correct class for the user's active sequence.
   protected static $instance = null;
@@ -254,7 +254,7 @@ class rtkIndex
     }
     else if (CJK::isCJKUnifiedUCS($id))
     {
-      return utf8::fromUnicode(array($id));
+      return utf8::fromUnicode([$id]);
     }
 
     return null;
@@ -333,11 +333,11 @@ class rtkIndex
    */
   public static function convertToUCS(array $ids)
   {
-    $ucsids = array();
+    $ucsids = [];
 
     if (!is_array($ids))
     {
-      $ids = array($ids);
+      $ids = [$ids];
     }
 
     for ($i = 0, $n = count($ids); $i < $n; $i++)
@@ -504,7 +504,7 @@ class rtkIndex
   {
     $inst = self::inst();
 
-    $o = (object)array('curlesson' => false, 'kanjitogo' => false);
+    $o = (object)['curlesson' => false, 'kanjitogo' => false];
 
     // determine active lesson if the user has added cards in order
     $user = sfContext::getInstance()->getUser();

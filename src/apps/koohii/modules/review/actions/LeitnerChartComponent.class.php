@@ -54,7 +54,7 @@ class LeitnerChartComponent extends sfComponent
   protected function makeChartData($carddata)
   {
     $data  = new stdClass();
-    $boxes = array();
+    $boxes = [];
 
     $numDisplayBoxes = max(5, $this->getUser()->getUserSetting('OPT_SRS_MAX_BOX') + 1);
 
@@ -80,12 +80,12 @@ class LeitnerChartComponent extends sfComponent
     $data->boxes = $boxes;
 
     /* links used in the chart (obsolete?  Jan 2017) */
-    sfProjectConfiguration::getActive()->loadHelpers(array('Url'));
-    $data->urls = array(
-      'restudy'  => url_for('study/failedlist', array('absolute' => true)),
-      'new'      => $this->getReviewUrl(array('type' => 'untested')),
-      'due'      => $this->getReviewUrl(array('type' => 'expired'))
-    );
+    sfProjectConfiguration::getActive()->loadHelpers(['Url']);
+    $data->urls = [
+      'restudy'  => url_for('study/failedlist', ['absolute' => true]),
+      'new'      => $this->getReviewUrl(['type' => 'untested']),
+      'due'      => $this->getReviewUrl(['type' => 'expired'])
+    ];
 
     return $data;
   }
@@ -99,7 +99,7 @@ class LeitnerChartComponent extends sfComponent
    */
   public function getReviewUrl($query_params)
   {
-    return url_for('@review', array('absolute' => true)).'?'.http_build_query($this->addFilterParam($query_params));
+    return url_for('@review', ['absolute' => true]).'?'.http_build_query($this->addFilterParam($query_params));
   }
   
   // Add the current view filter param ('all', 'rtk1', 'rtk3', ...)

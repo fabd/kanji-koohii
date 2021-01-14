@@ -47,7 +47,7 @@ class rtkStory
    */
   public static function substituteKanjiLinks($text)
   {
-    $text = preg_replace_callback('/{([0-9]+)}/', array('self', 'substituteKanjiLinkCallback'), $text);
+    $text = preg_replace_callback('/{([0-9]+)}/', ['self', 'substituteKanjiLinkCallback'], $text);
 
     return $text;
   }

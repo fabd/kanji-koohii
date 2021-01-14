@@ -29,15 +29,15 @@
 
     <div class="padded-box-inset labs-review-box">
 
-      <?php echo form_tag('review/free', array('method' => 'get')) ?>
+      <?php echo form_tag('review/free', ['method' => 'get']) ?>
       
       <h4>Review a range of kanji</h4>
 
       <div class="form-group">
         RTK Index
-        <?php echo input_tag('from', 1, array('style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i')) ?>
+        <?php echo input_tag('from', 1, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
         to
-        <?php echo input_tag('to', 10, array('style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i')) ?>
+        <?php echo input_tag('to', 10, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
       </div>
 
       <div class="form-group">
@@ -47,13 +47,13 @@
 
 <?php 
       echo _bs_form_group(
-        _bs_input_checkbox('shuffle', array('label' => 'Shuffle cards'))
+        _bs_input_checkbox('shuffle', ['label' => 'Shuffle cards'])
       );
       echo _bs_form_group(
-        _bs_input_checkbox('reverse', array('label' => 'Kanji to Keyword (reverse mode)'))
+        _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
       );
       echo _bs_form_group(
-        array('class' => 'mb-p33'),
+        ['class' => 'mb-p33'],
         _bs_submit_tag('Start Review')
       );
 ?>
@@ -71,20 +71,20 @@
       <p>You have <strong><?php echo $knowncount ?></strong> learned kanji (<strong class="clr-srs-due">due</strong> and <strong class="clr-srs-undue">scheduled</strong> cards).</p>
 
 <?php if ($knowncount > 0): ?>
-      <?php echo form_tag('review/free', array('method' => 'get')) ?>       
+      <?php echo form_tag('review/free', ['method' => 'get']) ?>       
 <?php 
       echo _bs_form_group(
-        _bs_input_checkbox('reverse', array('label' => 'Kanji to Keyword (reverse mode)'))
+        _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
       );
 ?>
       <div class="form-group">
         Review
-        <?php echo input_tag('known', $knowndefault, array('style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i')) ?>
+        <?php echo input_tag('known', $knowndefault, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
         of <?php echo $knowncount ?> learned kanji.
       </div>
 <?php
       echo _bs_form_group(
-        array('class' => 'mb-p33'),
+        ['class' => 'mb-p33'],
         _bs_submit_tag('Start Review')
       );
 ?>

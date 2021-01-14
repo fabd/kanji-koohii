@@ -1,5 +1,5 @@
 <?php use_helper('Form', 'Validation', 'Widgets') ?>
-<?php echo form_tag('manage/removeListProcess', array('class' => 'main-form')) ?>
+<?php echo form_tag('manage/removeListProcess', ['class' => 'main-form']) ?>
 
   <?php echo form_errors() ?>
 
@@ -14,7 +14,7 @@
   <div style="background:#E7F5CD;color:#000;padding:5px;margin:0 0 1em;font-size:24px;">
 <?php
   use_helper('CJK');
-  $kanjis = array();
+  $kanjis = [];
   foreach ($cards as $id)
   {
     $kanjis[] = rtkIndex::getCharForIndex($id);

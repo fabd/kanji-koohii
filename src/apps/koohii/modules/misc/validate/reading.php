@@ -4,21 +4,16 @@
  * 
  */
 
-return array
-(
-  'fields' => array
-  (
-    'jtextarea' => array
-    (
-      'required'       => array
-      (
+return [
+  'fields' => [
+    'jtextarea' => [
+      'required'       => [
         'msg'       => 'Please enter some japanese text.'
-      ),
-      'StringValidator'   => array
-      (
+      ],
+      'StringValidator'   => [
         'max'       => 20000,
         'max_error'   => 'Text is too long (max 20000 characters).'
-      )
-    )
-  )
-);
+      ]
+    ]
+  ]
+];

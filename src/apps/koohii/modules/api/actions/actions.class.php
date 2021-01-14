@@ -19,21 +19,21 @@ class apiActions extends sfActions
    * The list of standard error codes and messages for the API.
    * 
    */
-  static protected $apiErrorCodes = array(
+  static protected $apiErrorCodes = [
      '95' => 'Service temporarily unavailable',
      '96' => 'User is not authenticated.',
     '100' => 'Invalid API Key',
     '110' => 'Invalid or missing API method',
     '120' => 'Login failed / Invalid session'
-  );
+  ];
 
   /**
    * Currently hardcoded (no config) valid API keys.
    *
    */
-  static protected $validKeys = array(
+  static protected $validKeys = [
     'TESTING'
-  );
+  ];
 
   public function executeIndex($request)
   {
@@ -122,7 +122,7 @@ class apiActions extends sfActions
     }
 
     // create a function name
-    $callable = array($this, 'API_'.$method);
+    $callable = [$this, 'API_'.$method];
 
     if (!is_callable($callable)) {
       return false;
@@ -158,14 +158,14 @@ class apiActions extends sfActions
 
   protected function createResponseOk($rsp)
   {
-    $msg = array('stat' => 'ok');
+    $msg = ['stat' => 'ok'];
 
     if (rtkApi::API_DEBUG_SQL) {
       $log = sfProjectConfiguration::getActive()->getDatabase()->getDebugLog();
       //$log = "\n".implode("\n", $log);
-      $msg = array_merge($msg, array(
+      $msg = array_merge($msg, [
         'sql_debug' => sprintf('%d QUERIES. *** ', count($log)) . implode('###', $log)
-      ));
+      ]);
     }
 
     return (object)array_merge($msg, (array)$rsp);
@@ -203,21 +203,21 @@ class apiActions extends sfActions
 
   protected function API_accountInfo($request)
   {
-    $rsp = array();
+    $rsp = [];
 
     $userId = $this->getUser()->getUserId();
 
     $user = $this->getUser()->getUserDetails();
 
-    $rsp = array(
+    $rsp = [
       'username' => $user['username'],
       //'email'    => $user['email'],   dont return email
       'location' => $user['location'],
-      'srs_info' => array(
+      'srs_info' => [
         'flashcard_count' => ReviewsPeer::getFlashcardCount($userId),
         'total_reviews'   => ReviewsPeer::getTotalReviews($userId)
-      )
-    );
+      ]
+    ];
 
     return $this->createResponseOk($rsp);
   }
@@ -250,7 +250,7 @@ class apiActions extends sfActions
     if ($opt_yomi) $cardOpts->yomi = true;
     $cardOpts->api_mode = true;
 
-    $get_cards = array();
+    $get_cards = [];
     foreach ($items as $ucsId)
     {
       $ucsId = (int)$ucsId;
@@ -263,9 +263,9 @@ class apiActions extends sfActions
       $get_cards[] = $cardData;
     }
 
-    $rsp = array(
+    $rsp = [
       'card_data' => $get_cards
-    );
+    ];
 
     return $this->createResponseOk($rsp);
   }
@@ -287,7 +287,7 @@ class apiActions extends sfActions
     $rsp->card_count = 0;
 
     // make sure to reset SESS_CARD_UPDATED
-    $uiFR = new uiFlashcardReview(array(), true);
+    $uiFR = new uiFlashcardReview([], true);
 
     if ('free' === $mode)
     {
@@ -295,7 +295,7 @@ class apiActions extends sfActions
       $to      = $request->getParameter('to',   0);
       $shuffle = $request->getParameter('shuffle', 0) > 0;
 
-      $options = array();
+      $options = [];
 
       if (!BaseValidators::validateInteger($from) || !BaseValidators::validateInteger($to) ||
           $from > $to || $to > rtkIndex::inst()->getNumCharacters()) {
@@ -344,13 +344,13 @@ class apiActions extends sfActions
 
   protected function API_debugSync($request)
   {
-    $msg = array(
+    $msg = [
       "time" => 54812541,
-      "sync" => array(
-        array( "id" => 20108, "r" => 2 ),
-        array( "id" => 20845, "r" => 2 )
-      )
-    );
+      "sync" => [
+        [ "id" => 20108, "r" => 2 ],
+        [ "id" => 20845, "r" => 2 ]
+      ]
+    ];
 
     $result = rtkApi::curlJson(rtkApi::getApiBaseUrl(), $msg);
 
@@ -392,9 +392,9 @@ echo $result;exit;
 
 // VALIDER LE TIME
 
-    $uiFR = new uiFlashcardReview(array(
-      'fn_put_flashcard' => array('ReviewsPeer', 'putFlashcardData')
-    ));
+    $uiFR = new uiFlashcardReview([
+      'fn_put_flashcard' => ['ReviewsPeer', 'putFlashcardData']
+    ]);
 
     $putStatus  = new stdClass;
     $putSuccess = $uiFR->handlePutRequest($json->sync, $putStatus);
@@ -495,8 +495,8 @@ echo $result;exit;
     $user = $this->getUser();
     $userId = $user->getUserId();
       
-    $rsp->putLearned = array();
-    $rsp->putNotLearned = array();
+    $rsp->putLearned = [];
+    $rsp->putNotLearned = [];
 
     if (!empty($json->learned)) {
       if (LearnedKanjiPeer::addKanjis($userId, $json->learned)) {

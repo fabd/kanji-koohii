@@ -13,16 +13,16 @@
 
 <div class="col-md-3 mb-1">
 <?php 
-  include_partial('study/StudySearch', array('framenum' => $framenum));
+  include_partial('study/StudySearch', ['framenum' => $framenum]);
 
   //FIXME : optimizer avec une cache, on cache le learnedcount !!
   $learnedCount = LearnedKanjiPeer::getCount($sf_user->getUserId());
 
   if ($sf_user->hasAttribute(rtkUser::IS_RESTUDY_SESSION) || $learnedCount > 0) {
-    include_partial('study/LearnedPanel', array('learnedCount' => $learnedCount, 'kanji' => $cur_kanji));
+    include_partial('study/LearnedPanel', ['learnedCount' => $learnedCount, 'kanji' => $cur_kanji]);
   }
   else if ($restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId())) {
-    include_partial('RestudyList', array('restudy_count' => $restudyCount, 'kanji' => $cur_kanji));
+    include_partial('RestudyList', ['restudy_count' => $restudyCount, 'kanji' => $cur_kanji]);
   }
 
 ?>
@@ -38,7 +38,7 @@
 <?php koohii_onload_slot() ?>
 Core.ready(function(){
   App.StudyPage.actb_extracols = function(iRow) {
-    return '<span class="f">'+(iRow+1)+'</span><span <?php echo cjk_lang_attrs(array('k')) ?>>&#'+kklist.charCodeAt(iRow)+';</span>';
+    return '<span class="f">'+(iRow+1)+'</span><span <?php echo cjk_lang_attrs(['k']) ?>>&#'+kklist.charCodeAt(iRow)+';</span>';
   };
 
   App.StudyPage.initialize({

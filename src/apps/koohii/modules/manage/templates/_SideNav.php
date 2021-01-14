@@ -6,7 +6,7 @@ slot('ManageSideNav', $active);
  */
 function manageSideNav($id, $text, $internal_uri)
 {
-  $options = get_slot('ManageSideNav') === $id ? array('class' => 'active') : array();
+  $options = get_slot('ManageSideNav') === $id ? ['class' => 'active'] : [];
   return tag('li', $options, true) . link_to($text, $internal_uri) . '</li>';
 }
 ?>

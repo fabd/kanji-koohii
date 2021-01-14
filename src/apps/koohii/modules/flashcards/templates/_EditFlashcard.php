@@ -14,7 +14,7 @@
  * 
  * @return string
  */
-$menu = array();
+$menu = [];
 $bReviewMode = $sf_params->has('review');
 
 function flashcard_stats($cardData)
@@ -53,14 +53,14 @@ EOD;
  * @param mixed $extra   Additional options to be merged into the menu
  *                       element's attributes (optional)
  */
-function add_menu_item(& $menu, $label, $action, $extra = array())
+function add_menu_item(& $menu, $label, $action, $extra = [])
 {
   // delete confirm is red
   $classNames = 'uiGUI JsMenuItem ';
   $btnClass   = strpos($action, 'confirm-') === 0 ? 'uiIBtnRed' : 'uiIBtnGreen';
 
-  $attributes = array_merge(array('class' => $classNames.$btnClass, 'data-menuid' => $action), $extra);
-  $menu[] = array('label' => $label, 'attributes' => $attributes);
+  $attributes = array_merge(['class' => $classNames.$btnClass, 'data-menuid' => $action], $extra);
+  $menu[] = ['label' => $label, 'attributes' => $attributes];
 }
 
 function get_dialog_menu($menu)
@@ -124,7 +124,7 @@ function get_dialog_menu($menu)
       $countNewCards = ReviewsPeer::getCountUntested($sf_user->getUserId());
       if ($countNewCards)
       {
-        add_menu_item($menu, 'Review new cards ('.$countNewCards.')', 'page', array('data-uri' => $sf_context->getController()->genUrl('review/review?type=untested')));
+        add_menu_item($menu, 'Review new cards ('.$countNewCards.')', 'page', ['data-uri' => $sf_context->getController()->genUrl('review/review?type=untested')]);
       }
     }
 

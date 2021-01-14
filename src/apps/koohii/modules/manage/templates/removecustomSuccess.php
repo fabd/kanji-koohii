@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'removecustom')) ?>
+<?php decorate_start('SideTabs', ['active' => 'removecustom']) ?>
           
           <h2>Remove Custom Flashcard Selection</h2>
 

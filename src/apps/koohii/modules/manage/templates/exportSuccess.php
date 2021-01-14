@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'exportflashcards')) ?>
+<?php decorate_start('SideTabs', ['active' => 'exportflashcards']) ?>
           
           <h2>Export your kanji flashcards</h2>
           
@@ -8,6 +8,6 @@
              is exported as a CSV file, using UTF-8 encoding.
              
 
-          <p><?php echo ui_ibtn('Export flashcards', 'manage/exportflashcards', array('icon' => 'export')) ?></p>
+          <p><?php echo ui_ibtn('Export flashcards', 'manage/exportflashcards', ['icon' => 'export']) ?></p>
           
 <?php decorate_end() ?>

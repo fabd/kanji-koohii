@@ -167,13 +167,13 @@ class accountActions extends sfActions
           */
         }
 
-        $userinfo = array(
+        $userinfo = [
           'username'     => trim($request->getParameter('username')),
           'raw_password' => $raw_password,
           'email'        => $email,
           'location'     => trim($request->getParameter('location', '')),
           'regip'        => $regip
-        );
+        ];
 
         // username is available, create user
         UsersPeer::createUser($userinfo);
@@ -208,12 +208,12 @@ class accountActions extends sfActions
     {
       // fill in form with current account details
       $userdata = $this->getUser()->getUserDetails();
-      $formdata = array(
+      $formdata = [
         'username' => $userdata['username'],
         'location' => $userdata['location'],
         'email'    => $userdata['email'],
         'timezone' => $userdata['timezone']
-      );
+      ];
       $request->getParameterHolder()->add($formdata);
     }
     else
@@ -222,11 +222,11 @@ class accountActions extends sfActions
       
       if ($validator->validate($request->getParameterHolder()->getAll()))
       {
-        $updateInfo = array(
+        $updateInfo = [
           'email'    => trim($request->getParameter('email')),
           'location' => trim($request->getParameter('location', '')),
           'timezone' => (float) trim($request->getParameter('timezone'))
-        );
+        ];
 
         $userDetails = $user->getUserDetails();
 
@@ -370,18 +370,18 @@ class accountActions extends sfActions
 
     if ($request->getMethod() != sfRequest::POST)
     {
-      $form_data = array(
+      $form_data = [
         'opt_no_shuffle' => $user->getUserSetting('OPT_NO_SHUFFLE'),
         // 'opt_readings'   => $user->getUserSetting('OPT_READINGS')    PHASING OUT
-      );
+      ];
       $request->getParameterHolder()->add($form_data);
     }
     else
     {
-      $settings = array(
+      $settings = [
         'OPT_NO_SHUFFLE' => $request->getParameter('opt_no_shuffle', 0),
         // 'OPT_READINGS'   => $request->getParameter('opt_readings', 0)     PHASING OUT
-      );
+      ];
 
       UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);
       $user->cacheUserSettings($settings);
@@ -434,23 +434,23 @@ class accountActions extends sfActions
     if ($request->getMethod() != sfRequest::POST)
     {
       $curSeq = rtkIndex::getSequenceInfo();
-      $formdata = array('optSeq' => array($curSeq['classId']));
+      $formdata = ['optSeq' => [$curSeq['classId']]];
       $request->getParameterHolder()->add($formdata);
     }
     else
     {
-      $optSeq = $request->getParameter('optSeq', array())[0];
+      $optSeq = $request->getParameter('optSeq', [])[0];
 
       foreach (rtkIndex::getSequences() as $seq)
       {
         // only update if the parameter matches a known sequence
         if ($seq['classId'] === $optSeq)
         {
-          $userdata = array('opt_sequence' => $seq['sqlId']);
+          $userdata = ['opt_sequence' => $seq['sqlId']];
           
           if (UsersPeer::updateUser($this->getUser()->getUserId(), $userdata))
           {
-            $this->getUser()->setAttributes(array('usersequence' => $seq['sqlId']));
+            $this->getUser()->setAttributes(['usersequence' => $seq['sqlId']]);
             return;
           }
         }
@@ -487,7 +487,7 @@ class accountActions extends sfActions
 // DBG::printr($tokens);exit;
 
     // don't use the creator token here
-    $paInst = kkPatreon::getInstance(array('access_token' => $patron_access_token));
+    $paInst = kkPatreon::getInstance(['access_token' => $patron_access_token]);
     
     if ($paInst->fetch_user_and_link_account($this->getUser()->getUserId()))
     {

@@ -12,23 +12,23 @@
 // $restudy_cards = 299;
 
   if ($untested_cards > 0) {
-    echo _bs_button("<strong>$untested_cards</strong> new", '@review', array(
+    echo _bs_button("<strong>$untested_cards</strong> new", '@review', [
       'class' => 'btn btn-lg btn-srs btn-new',
-      'query_string' => $me->getQueryString(array('type' => 'untested'))
-    ));
+      'query_string' => $me->getQueryString(['type' => 'untested'])
+    ]);
   }
 
   if ($expired_total > 0) {
-    echo _bs_button("<strong>$expired_total</strong> due", '@review', array(
+    echo _bs_button("<strong>$expired_total</strong> due", '@review', [
       'class' => 'btn btn-lg btn-srs btn-due',
-      'query_string' => $me->getQueryString(array('type' => 'expired'))
-    ));
+      'query_string' => $me->getQueryString(['type' => 'expired'])
+    ]);
   }
 
   if ($restudy_cards > 0) {
-    echo _bs_button("<strong>$restudy_cards</strong> restudy", 'study/failedlist', array(
+    echo _bs_button("<strong>$restudy_cards</strong> restudy", 'study/failedlist', [
       'class' => 'btn btn-lg btn-srs btn-failed'
-    ));
+    ]);
   }
 ?>
     <div class="clear"></div>

@@ -13,7 +13,7 @@
 }
 <?php end_slot() ?>
 
-<?php decorate_start('SideTabs', array('active' => 'spacedrepetition')) ?>
+<?php decorate_start('SideTabs', ['active' => 'spacedrepetition']) ?>
 
   <h2>Spaced Repetition Settings</h2>
 
@@ -32,7 +32,7 @@
   </div>
 
     <p>
-      <?php echo submit_tag('Save changes', array('class' => 'btn btn-success')) ?>
+      <?php echo submit_tag('Save changes', ['class' => 'btn btn-success']) ?>
     </p>
 
   </form>

@@ -52,10 +52,10 @@ class homeActions extends sfActions
       // AUTO FILL FORM (DEVELOPMENT ONLY!)
       if (0 && KK_ENV_DEV)
       {
-        $request->getParameterHolder()->add(array(
+        $request->getParameterHolder()->add([
           'username'=>'guest',
           'password'=>'',
-          )
+          ]
         );
       }
     }

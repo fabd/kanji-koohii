@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Validation', 'Widgets') ?>
 
-<?php echo form_tag('manage/RemoveCustomProcess', array('class' => 'main-form')) ?>
+<?php echo form_tag('manage/RemoveCustomProcess', ['class' => 'main-form']) ?>
 
   <?php if (!$count): ?>
 
@@ -10,7 +10,7 @@
 
   <p> <strong><?php echo $count ?></strong> <?php echo _CJ('kanji') ?> flashcard(s) <strong>will be removed</strong>:</p>  
 
-  <?php include_partial('CharacterSelection', array('cards' => $cards)) ?>
+  <?php include_partial('CharacterSelection', ['cards' => $cards]) ?>
 
   <?php endif ?>
 

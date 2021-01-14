@@ -13,11 +13,11 @@
     </div>
 
     <div class="col-m-1 col-d-6 col-g">
-      <?php echo link_to('Clear', 'study/clear?goto='.$kanji, array('class' => 'btn btn-danger')) ?>
+      <?php echo link_to('Clear', 'study/clear?goto='.$kanji, ['class' => 'btn btn-danger']) ?>
     </div>
 <?php if ($learnedCount> 0): ?>
     <div class="col-m-1 col-d-6 col-g">
-      <?php echo link_to('Review', '@review', array('query_string' => 'type=relearned', 'class' => 'btn btn-success')) ?>
+      <?php echo link_to('Review', '@review', ['query_string' => 'type=relearned', 'class' => 'btn btn-success']) ?>
     </div>
 <?php endif ?>
 

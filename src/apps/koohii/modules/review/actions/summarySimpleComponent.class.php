@@ -17,19 +17,19 @@ class summarySimpleComponent extends sfComponent
     $oFRS = new rtkFreeReviewSession();
     $answers = $oFRS->getReviewedCards();
 
-    $this->cards = array();
+    $this->cards = [];
 
     if (count($answers))
     {
       $keywords = CustkeywordsPeer::getCustomKeywords($this->getUser()->getUserId());
 
       foreach ($answers as $ucsId => $iAnswer) {
-        $card = array(
+        $card = [
           'kanji'    => utf8::fromUnicode($ucsId),
           'framenum' => rtkIndex::getIndexForUCS($ucsId),
           'keyword'  => $keywords[$ucsId]['keyword'],
           'pass'     => $iAnswer !== uiFlashcardReview::UIFR_NO   /* Yes or Easy = pass */
-        );
+        ];
 
         $this->cards[] = (object) $card;
       }

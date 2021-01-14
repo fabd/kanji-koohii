@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Validation', 'Widgets') ?>
 
-<?php echo form_tag('manage/addOrderConfirm', array('class' => 'main-form')) ?>
+<?php echo form_tag('manage/addOrderConfirm', ['class' => 'main-form']) ?>
 
   <?php echo form_errors() ?>
   
@@ -14,7 +14,7 @@
 
 <?php 
   echo _bs_form_group(
-    _bs_input_text('txtSelection', array('class' => 'form-control-i', 'style' => 'width:80px;margin-right:1em;')),
+    _bs_input_text('txtSelection', ['class' => 'form-control-i', 'style' => 'width:80px;margin-right:1em;']),
     _bs_submit_tag('Add Cards')
   );
 ?>

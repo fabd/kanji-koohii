@@ -30,8 +30,8 @@
       <?php echo form_errors() ?>
 
       <?php echo form_tag('misc/reading') ?>
-        <?php echo textarea_tag('jtextarea', '', array('rows' => 6, 'class' => 'border-box')) ?>
-        <?php echo submit_tag('Show', array('class' => 'pure-button')) ?>
+        <?php echo textarea_tag('jtextarea', '', ['rows' => 6, 'class' => 'border-box']) ?>
+        <?php echo submit_tag('Show', ['class' => 'pure-button']) ?>
       </form>
 
       <div id="introduction" class="markdown">
@@ -60,7 +60,7 @@
     </div>
     
     <div id="results" style="display:<?php echo $display_kanji ? 'block' : 'none' ?>">
-      <p><?php echo link_to('^ Enter more japanese text.',''/*'@sightreading'*/, array('id'=>'toggle-form', 'class' => 'pure-button')) ?></p>
+      <p><?php echo link_to('^ Enter more japanese text.',''/*'@sightreading'*/, ['id'=>'toggle-form', 'class' => 'pure-button']) ?></p>
       <p>Point at the colored kanji with the mouse or click/tap to reveal the keyword.
          To study the character, <strong><em>click</em></strong> (or tap) the kanji, 
          and then click the "Study" link inside the tooltip.</p>

@@ -8,7 +8,7 @@
 <?php if ($posts): ?>
 
   <?php $sf_response->setTitle($posts[0]->subject); ?>
-  <?php include_partial('news/list', array('posts' => $posts)); ?>
+  <?php include_partial('news/list', ['posts' => $posts]); ?>
 
 <?php else: ?>
 
@@ -19,9 +19,9 @@
 <?php endif ?>
 
     <div id="sitenews_back">
-      <?php echo _bs_button('&laquo; Back', '@homepage', array('class' => 'btn btn-success')) ?>
+      <?php echo _bs_button('&laquo; Back', '@homepage', ['class' => 'btn btn-success']) ?>
       <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()): ?>
-        <?php echo '&nbsp;&nbsp;'.link_to('<i class="fa fa-edit"></i> Edit Post', "news/post?post_id=$post_id", array('class' => 'btn btn-ghost')) ?>
+        <?php echo '&nbsp;&nbsp;'.link_to('<i class="fa fa-edit"></i> Edit Post', "news/post?post_id=$post_id", ['class' => 'btn btn-ghost']) ?>
       <?php endif; ?>
 
     </div>

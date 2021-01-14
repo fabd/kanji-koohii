@@ -23,7 +23,7 @@ function form_errors()
     {
       $s .= '<strong>'.esc_specialchars($message).'</strong><br />'."\n";
     }
-    $s = content_tag('div', $s, array('class' => 'formerrormessage'));
+    $s = content_tag('div', $s, ['class' => 'formerrormessage']);
   }
   return $s;
 }

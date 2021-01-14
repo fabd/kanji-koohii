@@ -61,11 +61,11 @@
         'validate'  => 'question', 
         'class'     => 'form-section'
       ],
-      _bs_input_text('question', array(
+      _bs_input_text('question', [
         'label'     => 'What is the capital of J&nbsp;A&nbsp;P&nbsp;A&nbsp;N ?',
         'helptext'  => '(Help us stop spam!)',
         'autocomplete' => 'off'
-      ))
+      ])
     );
 ?>
     <p>If you are stuck you can <?php echo link_to('request an account', '@contact') ?></p>

@@ -4,27 +4,26 @@ class flashcardlistAction extends sfAction
   public function execute($request)
   {
     $queryParams = $this->getUser()->getLocalPrefs()
-      ->syncRequestParams('detailedflashcardlist', array(
+      ->syncRequestParams('detailedflashcardlist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
         uiSelectTable::QUERY_SORTORDER   => 0
-      ));
+      ]);
 
-    $this->pager = new uiSelectPager(array
-    (
+    $this->pager = new uiSelectPager([
       'select'       => ReviewsPeer::getSelectForDetailedList($this->getUser()->getUserId()),
       'internal_uri' => 'manage/flashcardlist',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
-    ));
+    ]);
     $this->pager->init();
     
     $this->table = new uiSelectTable(new FlashcardListBinding(), $this->pager->getSelect(), $request->getParameterHolder());
-    $this->table->configure(array(
+    $this->table->configure([
       'sortColumn' => $queryParams[uiSelectTable::QUERY_SORTCOLUMN],
       'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER]
-    ));
+    ]);
     
   }
 }
@@ -37,7 +36,7 @@ class FlashcardListBinding implements uiSelectTableBinding
 {
   public function getConfig()
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('CJK'));
+    sfProjectConfiguration::getActive()->loadHelpers(['CJK']);
   
     // MUST BE VALID JSON! ! !
     return <<< EOD

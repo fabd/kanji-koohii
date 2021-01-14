@@ -34,14 +34,14 @@ function ui_chart_vs(array $options)
   $captionLeft = isset($options['labelLeftMax']) && $options['valueRight']==0 ? $options['labelLeftMax'] : $options['labelLeft'];
   $captionRight= isset($options['labelRightMax']) && $options['valueLeft']==0 ? $options['labelRightMax'] : $options['labelRight'];
 
-  $options = array_merge($options, array(
+  $options = array_merge($options, [
     'pctLeft'     => $pctLeft,
     'pctRight'    => $pctRight,
     'bZeroLeft'   => $pctLeft==0,
     'bZeroRight'  => $pctRight==0,
     'captionLeft' => $captionLeft,
     'captionRight'=> $captionRight
-  ));
+  ]);
 
   $view = new coreView(sfContext::getInstance());
   $view->getParameterHolder()->add($options);
@@ -75,7 +75,7 @@ function ui_chart_vs(array $options)
  * 
  * @return string          HTML markup 
  */
-function ui_progress_bar(array $bars, $maxValue, $options = array())
+function ui_progress_bar(array $bars, $maxValue, $options = [])
 {
   if (!is_int($maxValue))
   {
@@ -83,7 +83,7 @@ function ui_progress_bar(array $bars, $maxValue, $options = array())
   }
   
   // border color for the bar, override border-color from the stylesheet
-  $innerDivOptions = array();
+  $innerDivOptions = [];
   if(isset($options['borderColor']))
   {
     // override background color on outer div
@@ -94,10 +94,10 @@ function ui_progress_bar(array $bars, $maxValue, $options = array())
   }
   
   // merge widget class name
-  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : array(), array('uiProgressBar'));
+  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : [], ['uiProgressBar']);
   
   // generate the bars as SPANs
-  $spans = array();
+  $spans = [];
   foreach($bars as $bar)
   {
     if (!ctype_digit((string)$bar['value']))
@@ -109,11 +109,11 @@ function ui_progress_bar(array $bars, $maxValue, $options = array())
     {
       $percent = $bar['value'] > 0 ? ceil($bar['value'] / $maxValue * 100) : 0; 
       $label = isset($bar['label']) ? $bar['label'] : "${bar['value']}/${maxValue}";
-      $spanOptions = array(
+      $spanOptions = [
         'class' => isset($bar['class']) ? $bar['class'] : "g",
         'title' => $label,
         'style' => "width:${percent}%;"
-      );
+      ];
       array_push($spans, content_tag('span', $label, $spanOptions));
     }
   }

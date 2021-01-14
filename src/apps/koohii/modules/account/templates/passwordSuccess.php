@@ -1,13 +1,13 @@
 <?php use_helper('Form', 'Validation', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'changepassword')) ?>
+<?php decorate_start('SideTabs', ['active' => 'changepassword']) ?>
 
   <h2>Change Password</h2>
 
 <?php
     // echo form_errors();
 
-    echo form_tag('account/password', array('class'=>'block'));
+    echo form_tag('account/password', ['class'=>'block']);
 
     echo _bs_form_group(
       ['validate' => 'oldpassword'],

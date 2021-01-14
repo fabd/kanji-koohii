@@ -19,7 +19,7 @@ class SharedStoriesListComponent extends sfComponent
     $keyword = trim($request->getParameter('keyword', ''));
 
 
-    $queryParams = $this->getUser()->getLocalPrefs()->syncRequestParams('sharedstorieslist', array(uiSelectPager::QUERY_ROWSPERPAGE => 20));
+    $queryParams = $this->getUser()->getLocalPrefs()->syncRequestParams('sharedstorieslist', [uiSelectPager::QUERY_ROWSPERPAGE => 20]);
 
     // validate against more attempts to pull stories with scripts that abuse the server
     $action = $this->getController()->getActionStack()->getLastEntry()->getActionInstance();
@@ -28,16 +28,15 @@ class SharedStoriesListComponent extends sfComponent
     // optimize the COUNT(*) by avoiding unnecessary JOINs
     $pagerSelect = $db->select('ss.sid')->from('stories_shared ss')->where('ss.ucs_id = ?', $ucsId);
 
-    $this->pager = new uiSelectPager(array
-    (
+    $this->pager = new uiSelectPager([
       'select'       => $pagerSelect,
       'internal_uri' => 'study/zzzzzz',
-      'query_params' => array(
+      'query_params' => [
         uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE]
-      ),
+      ],
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
-    ));
+    ]);
     $this->pager->init();
 
     // join decomposition
@@ -106,15 +105,15 @@ class SharedStoriesListComponent extends sfComponent
 
     // NOTE: must add `public` to select the table partition!
 
-    $select = $db->select(array(
+    $select = $db->select([
         'ss.userid', 'u.username', 'lastmodified' => 'DATE_FORMAT(ss.updated_on,\'%e-%c-%Y\')',
         's.text', 'ss.stars', 'kicks' => 'ss.reports'
-        ))
+        ])
       ->from('stories_shared ss')
       ->joinLeft('stories s', 'ss.sid = s.sid')
       ->joinLeft('users u', 'u.userid = ss.userid')
       ->where('ss.ucs_id = ?', $ucsId)
-      ->order(array('ss.stars DESC', 'ss.updated_on DESC'));
+      ->order(['ss.stars DESC', 'ss.updated_on DESC']);
 
     return $select;
   }

@@ -80,10 +80,10 @@
           # array('value' => $less['testedCards'], 'label' => $less['passValue'].' passed card(s)' , 'class' => 'g'),
           # array('value' => $less['failValue'], 'label' => $less['failValue'].' failed card(s)', 'class' => 'r')
           # Show just progress (reduce info overload, focus on progres)
-          echo ui_progress_bar(array(
-            array('value' => $less['totalCards'], 'label' => $less['totalCards'].' flashcard(s)' , 'class' => 'g')
+          echo ui_progress_bar([
+            ['value' => $less['totalCards'], 'label' => $less['totalCards'].' flashcard(s)' , 'class' => 'g']
             #array('value' => $less['failValue'], 'label' => $less['failValue'].' failed card(s)', 'class' => 'r'),
-          ), $less['maxValue']);
+          ], $less['maxValue']);
         }
         else {
           echo 'Not yet started';

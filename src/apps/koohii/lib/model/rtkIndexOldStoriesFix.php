@@ -36,7 +36,7 @@ class rtxIndexOldStoriesFix
     }
     else if (CJK::isCJKUnifiedUCS($id))
     {
-      return utf8::fromUnicode(array($id));
+      return utf8::fromUnicode([$id]);
     }
 
     return 'ERROR';
@@ -52,7 +52,7 @@ class rtxIndexOldStoriesFix
    */
   public static function fixOldStoriesKanjiLinks($text)
   {
-    return preg_replace_callback('/{([0-9]+)}/u', array('rtxIndexOldStoriesFix', 'substituteOldKanjiRef'), $text);
+    return preg_replace_callback('/{([0-9]+)}/u', ['rtxIndexOldStoriesFix', 'substituteOldKanjiRef'], $text);
   }
   
   public static function substituteOldKanjiRef($matches)

@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets', 'Decorator') ?>
 
-<?php decorate_start('SideTabs', array('active' => 'removelist')) ?>
+<?php decorate_start('SideTabs', ['active' => 'removelist']) ?>
           
           <h2>Remove Flashcards From List</h2>
 

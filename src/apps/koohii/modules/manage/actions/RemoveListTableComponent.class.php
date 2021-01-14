@@ -9,30 +9,29 @@ class RemoveListTableComponent extends sfComponent
   public function execute($request)
   {
     $queryParams = $this->getUser()->getLocalPrefs()
-      ->syncRequestParams('manage.removelist', array(
+      ->syncRequestParams('manage.removelist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
         uiSelectTable::QUERY_SORTORDER   => 0
-      ));
+      ]);
     
     // pager
-    $this->pager = new uiSelectPager(array
-    (
+    $this->pager = new uiSelectPager([
       'select'       => ReviewsPeer::getSelectForDetailedList($this->getUser()->getUserId()),
       'internal_uri' => 'manage/removeListTable',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
-    ));
+    ]);
     $this->pager->init();
     
     // data table
     $binding = new RemoveListTableBinding();
     $this->table = new uiSelectTable($binding, $this->pager->getSelect(), $request->getParameterHolder());
-    $this->table->configure(array(
+    $this->table->configure([
       'sortColumn' => $queryParams[uiSelectTable::QUERY_SORTCOLUMN],
       'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER]
-    ));
+    ]);
 
   }
 }
@@ -48,7 +47,7 @@ class RemoveListTableBinding implements uiSelectTableBinding
   
   public function getConfig()
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('SimpleDate', 'CJK'));
+    sfProjectConfiguration::getActive()->loadHelpers(['SimpleDate', 'CJK']);
     
     $this->_selection = uiSelectionState::getSelection(manageActions::REMOVE_FLASHCARDS);
     
@@ -130,7 +129,7 @@ EOD;
     $rowData['_checkbox'] = $this->_selection->getInputTag('rf', $id) . $this->_selection->getCheckboxTag('rf', $id);
     if ($this->_selection->getState($id))
     {
-      $row->addCssClass(array('selected'));
+      $row->addCssClass(['selected']);
     }
   }
   

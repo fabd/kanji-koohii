@@ -29,10 +29,10 @@
 
     <h2><?php echo $title ?></h2>
 
-    <?php include_partial('news/list', array('posts' => $posts)) ?>
+    <?php include_partial('news/list', ['posts' => $posts]) ?>
 
     <div id="sitenews_back">
-      <?php echo _bs_button('&laquo; Back', '@homepage', array('class' => 'btn btn-success')) ?>
+      <?php echo _bs_button('&laquo; Back', '@homepage', ['class' => 'btn btn-success']) ?>
     </div>
 
   </div>

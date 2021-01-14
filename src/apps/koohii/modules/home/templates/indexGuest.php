@@ -111,10 +111,10 @@ Kanji Koohii uses a friendly spaced repetition system: flashcard reviews are sch
 <?php endif ?>
   <div class="action row">
     <div class="col-md-6 col-l">
-      <?php echo _bs_button('Register', 'account/create', array('class' => 'btn btn-signup')) ?>
+      <?php echo _bs_button('Register', 'account/create', ['class' => 'btn btn-signup']) ?>
     </div>
     <div class="col-md-6 col-r">
-      <?php echo link_to('Learn more', '@learnmore', array('class' => 'learnmore')) ?>
+      <?php echo link_to('Learn more', '@learnmore', ['class' => 'learnmore']) ?>
     </div>
   </div>
 </section>

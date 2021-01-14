@@ -10,20 +10,20 @@
 <?php
     echo form_errors();
 
-    echo form_tag('home/login', array('class'=>''));
+    echo form_tag('home/login', ['class'=>'']);
 
     echo input_hidden_tag('referer', $sf_request->getParameter('referer'));
 
     echo _bs_form_group(
-      _bs_input_text('username', array('label' => 'Username', 'style' => 'max-width:300px'))
+      _bs_input_text('username', ['label' => 'Username', 'style' => 'max-width:300px'])
     );
 
     echo _bs_form_group(
-      _bs_input_password('password', array('label' => 'Password', 'style' => 'max-width:300px'))
+      _bs_input_password('password', ['label' => 'Password', 'style' => 'max-width:300px'])
     );
 
     echo _bs_form_group(
-      _bs_input_checkbox('rememberme', array('label' => 'Remember me'))
+      _bs_input_checkbox('rememberme', ['label' => 'Remember me'])
     );
 
     /*
@@ -33,7 +33,7 @@
     */
    
     echo _bs_form_group(
-      _bs_submit_tag('Sign In', array('class' => 'btn-lg'))
+      _bs_submit_tag('Sign In', ['class' => 'btn-lg'])
     );
 ?>
    

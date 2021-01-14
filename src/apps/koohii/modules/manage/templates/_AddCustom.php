@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Validation', 'Widgets') ?>
 
-<?php echo form_tag('manage/addCustomConfirm', array('class' => 'main-form')) ?>
+<?php echo form_tag('manage/addCustomConfirm', ['class' => 'main-form']) ?>
 
 <div class="markdown">
   <p> To add a custom selection of flashcards, enter one or more of the following:</p>
@@ -16,7 +16,7 @@
 
   <?php echo form_errors() ?>
   
-  <?php echo textarea_tag('txtSelection', '' /*'4 56 一　二三'*/, array('class' => 'form-control mb-1', 'rows' => 5)) ?>
+  <?php echo textarea_tag('txtSelection', '' /*'4 56 一　二三'*/, ['class' => 'form-control mb-1', 'rows' => 5]) ?>
 
   <?php echo _bs_submit_tag('Add Cards') ?><em class="note">Note: there will be a confirmation step.</em>
 

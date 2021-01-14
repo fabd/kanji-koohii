@@ -17,10 +17,10 @@
 
 <?php
     $go_back = $fc_free ? 'review/custom' : 'review/index';
-    echo _bs_button('Back', $go_back, array('class' => 'btn btn-primary'));
+    echo _bs_button('Back', $go_back, ['class' => 'btn btn-primary']);
 
     if ($fc_rept !== '') {
-      echo '&nbsp;&nbsp;'._bs_button('Repeat Review', $fc_rept, array('absolute' => true, 'class' => 'btn btn-success'));
+      echo '&nbsp;&nbsp;'._bs_button('Repeat Review', $fc_rept, ['absolute' => true, 'class' => 'btn btn-success']);
     }
 ?>
   </div>
@@ -29,12 +29,12 @@
 <?php if ($numTotal > 0): ?>
     <div class="padded-box-inset">
 
-      <?php echo ui_chart_vs(array(
+      <?php echo ui_chart_vs([
         'valueLeft' => $numRemembered,
         'labelLeft' => 'Remembered',
         'valueRight' => $numForgotten,
         'labelRight' => 'Forgotten'
-      )) ?>
+      ]) ?>
 
     </div>
 <?php endif ?>
@@ -54,7 +54,7 @@
 <?php if ($numTotal > 0): ?>
   <div id="summaryTable<?php echo $fc_free ? ' fcfree' : '' ?>">
     <?php if (!$fc_free) {
-      include_component('review', 'summaryTable', array('ts_start' => $ts_start));
+      include_component('review', 'summaryTable', ['ts_start' => $ts_start]);
     } else {
       include_component('review', 'summarySimple');
     } ?>

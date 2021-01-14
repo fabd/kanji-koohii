@@ -19,12 +19,12 @@
       if ($countFailed<=0) {
         echo 'No restudy '._CJ('kanji');
       } else {
-        echo '<strong>'.$countFailed.'</strong> '.link_to('study '._CJ('kanji'), 'study/failedlist', array(/*'query_string' => 'mode=failed',*/ 'class' => 'failed', 'title' => 'Restudy forgotten '._CJ('kanji')));
+        echo '<strong>'.$countFailed.'</strong> '.link_to('study '._CJ('kanji'), 'study/failedlist', [/*'query_string' => 'mode=failed',*/ 'class' => 'failed', 'title' => 'Restudy forgotten '._CJ('kanji')]);
       }
 ?>
     </div>
     <div class="bd">
-      <?php echo _bs_button('Study','study/index', array('class' => 'btn btn-lg btn-go' )) ?>
+      <?php echo _bs_button('Study','study/index', ['class' => 'btn btn-lg btn-go' ]) ?>
     </div>
     </div>
   </div>
@@ -36,12 +36,12 @@
       if ($countExpired<=0) {
         echo 'No expired '._CJ('kanji');
       } else {
-        echo '<strong>'.$countExpired.'</strong> '.link_to('expired '._CJ('kanji'), '@review', array('class' => 'expired', 'query_string' => 'type=expired&box=all', 'title' => 'Review expired '._CJ('kanji')));
+        echo '<strong>'.$countExpired.'</strong> '.link_to('expired '._CJ('kanji'), '@review', ['class' => 'expired', 'query_string' => 'type=expired&box=all', 'title' => 'Review expired '._CJ('kanji')]);
       }
 ?>
     </div>
     <div class="bd">
-      <?php echo _bs_button('Review','@overview', array('class' => 'btn btn-lg btn-go' )) ?>
+      <?php echo _bs_button('Review','@overview', ['class' => 'btn btn-lg btn-go' ]) ?>
     </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
 ?>
     </div>
     <div class="bd">
-      <?php echo _bs_button('Progress chart','@progress', array('class' => 'btn btn-lg btn-go' )) ?>
+      <?php echo _bs_button('Progress chart','@progress', ['class' => 'btn btn-lg btn-go' ]) ?>
     </div>
     </div>
   </div>

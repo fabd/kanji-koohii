@@ -6,7 +6,7 @@
  */
 function koohii_get_tweet_q($url, $text)
 {
-  $data = array('url' => $url, 'text' => $text);
+  $data = ['url' => $url, 'text' => $text];
   return http_build_query($data); //'', '&amp;
 }
 
@@ -23,8 +23,8 @@ $koohii_tweet_params = koohii_get_tweet_q(sfConfig::get('app_website_url'), 'Kan
       <a href="https://twitter.com/intent/tweet?<?php echo $koohii_tweet_params ?>" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i><span>Tweet</span></a>
     </div>
 
-    <?php echo link_to('<i class="fa fa-envelope-o"></i>&nbsp;Contact', '@contact', array('class' => '', 'style' =>
+    <?php echo link_to('<i class="fa fa-envelope-o"></i>&nbsp;Contact', '@contact', ['class' => '', 'style' =>
       'display:block;max-width:125px;text-align:center;padding:0.3em 0;margin:1em 0 0;font-size:15px;text-decoration:none;'
-      )) ?>
+      ]) ?>
   </div>
 </div>

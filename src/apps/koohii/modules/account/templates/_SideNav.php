@@ -4,7 +4,7 @@ slot('SideNavActive', $active);
 // Helper to set active class on the active list item.
 function output_sidenav_item($id, $text, $internal_uri)
 {
-  $options = get_slot('SideNavActive') === $id ? array('class' => 'active') : array();
+  $options = get_slot('SideNavActive') === $id ? ['class' => 'active'] : [];
   echo tag('li', $options, true) . link_to($text, $internal_uri) . '</li>';
 }
 ?>

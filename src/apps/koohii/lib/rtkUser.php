@@ -49,7 +49,7 @@ class rtkUser extends sfBasicSecurityUser
   /**
    * 
    */
-  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = [])
   {
     parent::initialize($dispatcher, $storage, $options);
 
@@ -181,7 +181,7 @@ class rtkUser extends sfBasicSecurityUser
    */
   public function setAttributes($attrs)
   {
-    $valid_attributes = array('userid', 'username', 'usertimezone', 'usersequence');
+    $valid_attributes = ['userid', 'username', 'usertimezone', 'usersequence'];
     if (!rtkValidators::validateArrayKeys($attrs, $valid_attributes))
     {
        throw new sfException('Invalid attribute passed to '.__METHOD__);
@@ -220,14 +220,14 @@ class rtkUser extends sfBasicSecurityUser
    */  
   public function signIn($user)
   {
-    $this->setAttributes(array(
+    $this->setAttributes([
       // user account settings
       'userid'        => $user['userid'],
       'username'      => $user['username'],
       'usertimezone'  => $user['timezone'],
       // user application settings
       'usersequence'  => $user['opt_sequence']
-    ));
+    ]);
 
     $this->clearCredentials();
     $this->addCredential(self::CREDENTIAL_MEMBER);
@@ -270,7 +270,7 @@ class rtkUser extends sfBasicSecurityUser
    */
   public function setRememberMeCookie($username, $saltyPassword)
   {
-    $value = base64_encode( serialize(array($username, $saltyPassword)) );
+    $value = base64_encode( serialize([$username, $saltyPassword]) );
     sfContext::getInstance()->getResponse()->setCookie(sfConfig::get('app_cookie_name'), $value, time()+self::COOKIE_EXPIRE, '/');
   }
 
@@ -294,7 +294,7 @@ class rtkUser extends sfBasicSecurityUser
   {
     $user_id = UsersPeer::getUserId($username);
 
-    $columns = array('raw_password' => $raw_password);
+    $columns = ['raw_password' => $raw_password];
 
     UsersPeer::updateUser($user_id, $columns);
   }
@@ -326,7 +326,7 @@ class rtkUser extends sfBasicSecurityUser
    * 
    * @param array $params  Options to pass to the login page
    */
-  public function redirectToLogin($options = array())
+  public function redirectToLogin($options = [])
   {
     if (isset($options['referer']))
     {

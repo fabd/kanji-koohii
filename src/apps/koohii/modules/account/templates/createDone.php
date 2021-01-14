@@ -17,7 +17,7 @@
 
     <div>
       <?php $sf_user->setAttribute('login_username', $username); // cf. redirectToLogin() ?>
-      <?php echo _bs_button('Sign in','@login', array('query_string' => 'username='.$username, 'class' => 'btn btn-success btn-lg')) ?>
+      <?php echo _bs_button('Sign in','@login', ['query_string' => 'username='.$username, 'class' => 'btn btn-success btn-lg']) ?>
     </div>
 
     <?php echo form_errors() ?>

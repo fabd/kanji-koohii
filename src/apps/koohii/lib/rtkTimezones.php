@@ -10,7 +10,7 @@
 
 class rtkTimezones
 {
-  static $timezones = array(
+  static $timezones = [
     '-12' => '-12',
     '-11' => '-11',
     '-10' => '-10',
@@ -48,5 +48,5 @@ class rtkTimezones
     '12' => '+12',
     '13' => '+13',
     '14' => '+14'
-  );
+  ];
 }

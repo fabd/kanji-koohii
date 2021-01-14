@@ -1,6 +1,6 @@
 <?php use_helper('Form', 'Widgets') ?>
 
-<?php echo form_tag('manage/importKeywordsProcess', array('class' => 'main-form')) ?>
+<?php echo form_tag('manage/importKeywordsProcess', ['class' => 'main-form']) ?>
 
   <p><strong><?php echo $keywords->getCount() ?></strong> custom keyword(s) ready to import.</p>
 

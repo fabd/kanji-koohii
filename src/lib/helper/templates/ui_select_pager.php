@@ -4,14 +4,14 @@
   // build rows per page widget
   if ($pager->getMaxPerPage())
   {
-    $links = array();
+    $links = [];
     foreach($pager->getMaxPerPageLinks() as $n) {
       $links[] = $pager->getMaxPerPageUrl($n);
     }
 
     $active = array_search($pager->getMaxPerPage(), $pager->getMaxPerPageLinks());
 
-    echo ui_filter_std('Rows:', $links, $active!==false ? array('active' => $active) : array());
+    echo ui_filter_std('Rows:', $links, $active!==false ? ['active' => $active] : []);
   }
 ?>
 

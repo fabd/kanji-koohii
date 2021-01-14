@@ -67,16 +67,16 @@ class Juicer
 {
   protected
     $options        = null,
-    $constants      = array(),
-    $mappings       = array(),
+    $constants      = [],
+    $mappings       = [],
     $isVerbose      = false,
     $webPath        = null,
     $curFile        = '',
-    $alreadyParsed  = array(),
-    $translatedUrls = array(),
+    $alreadyParsed  = [],
+    $translatedUrls = [],
     $cli            = null,
     $isCss          = false,
-    $cssVars        = array();
+    $cssVars        = [];
     
     
   const
@@ -106,15 +106,15 @@ class Juicer
    * @param $options
    * @param $constants
    */
-  public function __construct($options, $constants = array())
+  public function __construct($options, $constants = [])
   {
     $this->options        = $options;
     $this->constants      = $constants;
-    $this->mappings       = $this->getConstant('MAPPINGS', array());
+    $this->mappings       = $this->getConstant('MAPPINGS', []);
     $this->isVerbose      = $this->getOption('VERBOSE', false);
     $this->webPath        = realpath($this->removeTrailingSlash($this->getOption('WEB_PATH')));
-    $this->alreadyParsed  = array();
-    $this->translatedUrls = array();
+    $this->alreadyParsed  = [];
+    $this->translatedUrls = [];
     $this->cli            = $this->getOption('CLI', false);
 
     $this->stripLogs      = $this->getOption('STRIP', false);
@@ -122,7 +122,7 @@ class Juicer
       $this->verbose('Strip ON: remove all %s calls from output file.', $this->stripLogs);
     }
 
-    $this->ignoreAssets  = array();
+    $this->ignoreAssets  = [];
     $excludePatterns = explode(',', $this->getOption('WEB_EXCL'));
     foreach ($excludePatterns as $pattern)
     {
@@ -176,7 +176,7 @@ class Juicer
       {
         $total = count($this->translatedUrls);
         if ($total) {
-          $list = array();
+          $list = [];
           foreach ($this->translatedUrls as $src => $dst) {
             $list[] = ' <WEB_PATH>/' . $dst;
           }
@@ -577,7 +577,7 @@ class Juicer
     $this->preg_from = $from;
    
     // skips urls that have already been translated (those that start with a caret) 
-    $buffer = preg_replace_callback('|url\((?=[^#])\\s*["\']?([^)"\']+)["\']?\\s*\)|', array($this, 'translateUrlCallback'), $buffer);
+    $buffer = preg_replace_callback('|url\((?=[^#])\\s*["\']?([^)"\']+)["\']?\\s*\)|', [$this, 'translateUrlCallback'], $buffer);
     return $buffer;
   }
   
@@ -654,9 +654,9 @@ class Juicer
    */
   protected function unrealpath($path)
   {
-    $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+    $path = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path);
     $parts = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
-    $absolutes = array();
+    $absolutes = [];
     foreach ($parts as $part)
     {
       if ('.' == $part) {
@@ -857,7 +857,7 @@ $pattern = '@/\*[^!](?:.|[\r\n])*?\*/@';
    */
   protected function normalizeSlashes($path)
   {
-    return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+    return str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path);
   }
   
   /**

@@ -11,7 +11,7 @@ class ExportCSV
 {
   protected
     $db        = null,
-    $options   = array();
+    $options   = [];
     
   const
     LINE_TERMINATED_BY = "\r\n",
@@ -90,7 +90,7 @@ class ExportCSV
    *                         must match the number of columns in the select
    * @param array  $options  Options (see above)
    */
-  public function export(array $tabularData, $columns, $options = array())
+  public function export(array $tabularData, $columns, $options = [])
   {
     $this->options = array_merge([
       'col_escape'       => null,
@@ -116,7 +116,7 @@ class ExportCSV
 // DBG::printr($tabularData);exit;
 
     foreach ($tabularData as $rowData) {
-      $cells = array();
+      $cells = [];
 
       // use callback if set
       if (null !== $row_callback) {

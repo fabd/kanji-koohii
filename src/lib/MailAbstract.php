@@ -34,7 +34,7 @@ class MailAbstract
     $zend_inc_dir = sfConfig::get('sf_lib_dir').'/vendor';
     set_include_path($zend_inc_dir.PATH_SEPARATOR.get_include_path());
     require_once($zend_inc_dir.'/Zend/Loader.php');
-    spl_autoload_register(array('Zend_Loader', 'autoload'));
+    spl_autoload_register(['Zend_Loader', 'autoload']);
 
     $this->setTemplateDir(sfConfig::get('sf_app_template_dir').'/emails');
     $this->mailer = new Zend_Mail($this->charset);
@@ -97,7 +97,7 @@ class MailAbstract
    * @param object $templateFile
    * @param object $templateVars[optional]
    */
-  public function renderTemplate($templateName, $templateVars = array())
+  public function renderTemplate($templateName, $templateVars = [])
   {
     $templateFile = $this->templateDir.'/'.$templateName.'.php';
     
@@ -107,7 +107,7 @@ class MailAbstract
     }
 
     // load core and standard helpers
-    sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url']);
 
     extract($templateVars, EXTR_REFS);
     

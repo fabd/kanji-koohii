@@ -20,27 +20,27 @@
 class UsersSettingsPeer extends coreDatabaseTable
 {
   // array to map settings names to database fields
-  public static $map = array(
+  public static $map = [
     'OPT_NO_SHUFFLE'   => 'no_shuffle',
     // 'OPT_READINGS'     => 'show_onkun',   PHASING OUT
 
     'OPT_SRS_MAX_BOX'  => 'srs_max_box',
     'OPT_SRS_MULT'     => 'srs_mult',
     'OPT_SRS_HARD_BOX' => 'srs_hard_box'
-  );
+  ];
 
-  private static $defaultSettings = array(
+  private static $defaultSettings = [
     'OPT_NO_SHUFFLE'   => 0,    // do not shuffle new cards (blue pile)
     // 'OPT_READINGS'     => 0,    // do not show example words in flashcard reviews
 
     'OPT_SRS_MAX_BOX'  => 7,    // num intervals (excludes Failed & New box)
     'OPT_SRS_MULT'     => 205,  // 205 means 2.05
     'OPT_SRS_HARD_BOX' => 0     // zero means default behaviour
-  );
+  ];
 
   protected
     $tableName = 'users_settings',
-    $columns   = array('created_on', 'updated_on'); // timestamp columns must be declared for insert/update/replace
+    $columns   = ['created_on', 'updated_on']; // timestamp columns must be declared for insert/update/replace
 
   public static function getInstance()
   {
@@ -55,7 +55,7 @@ class UsersSettingsPeer extends coreDatabaseTable
    */
   private static function mapSettingsToCols($settings)
   {
-    $colData = array();
+    $colData = [];
 //DBG::printr($settings);
     foreach ($settings as $name => $value)
     {
@@ -90,14 +90,14 @@ class UsersSettingsPeer extends coreDatabaseTable
     if ($row = self::$db->fetch())
     {
       // fab: not worth making more fancy code atm ...
-      $settings = array(
+      $settings = [
         'OPT_NO_SHUFFLE'   => $row['no_shuffle'],
         // 'OPT_READINGS'     => $row['show_onkun'],   PHASING OUT
 
         'OPT_SRS_MAX_BOX'  => $row['srs_max_box'],
         'OPT_SRS_MULT'     => $row['srs_mult'],
         'OPT_SRS_HARD_BOX' => $row['srs_hard_box']
-      );
+      ];
     }
     else
     {

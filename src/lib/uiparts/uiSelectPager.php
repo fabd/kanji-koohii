@@ -51,13 +51,13 @@ class uiSelectPager
   protected
     $page            = 1,
     $maxPerPage      = 10,
-    $maxPerPageLinks = array(10, 20, 50),
+    $maxPerPageLinks = [10, 20, 50],
     $nbResults       = 0,
     $select          = null,
     $countQuery      = null,
     $db              = null,
     $internal_uri    = '',
-    $query_params    = array();
+    $query_params    = [];
 
   public function __construct(array $options)
   {
@@ -148,7 +148,7 @@ class uiSelectPager
     $s->reset(coreDatabaseSelect::LIMIT_COUNT);
     $s->reset(coreDatabaseSelect::LIMIT_OFFSET);
     $s->reset(coreDatabaseSelect::ORDER);
-    $s->columns(array('count' => 'COUNT(*)'));
+    $s->columns(['count' => 'COUNT(*)']);
     return $s;
   }
 
@@ -248,7 +248,7 @@ class uiSelectPager
     $num_pages = $this->getNumPages();
     $cur_page  = $this->getPage();
 
-    $pages = array();
+    $pages = [];
   
     if ($num_pages <= 1)
     {
@@ -306,10 +306,10 @@ class uiSelectPager
       $label = $page;
     }
 
-    $options = array(
-      'query_string' => http_build_query(array_merge($this->query_params, array(self::QUERY_PAGENUM => $page, self::QUERY_ROWSPERPAGE => $this->getMaxPerPage()))),
+    $options = [
+      'query_string' => http_build_query(array_merge($this->query_params, [self::QUERY_PAGENUM => $page, self::QUERY_ROWSPERPAGE => $this->getMaxPerPage()])),
       'class'        => 'JSPagerLink'
-    );
+    ];
     
     return link_to($label, $this->internal_uri, $options);
   }
@@ -333,10 +333,10 @@ class uiSelectPager
    */
   public function getMaxPerPageUrl($n)
   {
-    return array(
+    return [
       (string)$n,
       $this->internal_uri,
-      array('query_string' => http_build_query(array_merge($this->query_params, array(self::QUERY_ROWSPERPAGE => $n))))
-    );
+      ['query_string' => http_build_query(array_merge($this->query_params, [self::QUERY_ROWSPERPAGE => $n]))]
+    ];
   }
 }

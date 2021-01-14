@@ -9,7 +9,7 @@ class CustkeywordsPeer extends coreDatabaseTable
 {
   protected
     $tableName  = 'custkeywords',
-    $columns    = array('created_on', 'updated_on'); // timestamp columns must be declared for insert/update/replace
+    $columns    = ['created_on', 'updated_on']; // timestamp columns must be declared for insert/update/replace
 
   /**
    * This function must be copied in each peer class.
@@ -29,7 +29,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   public static function getCustomKeyword($userId, $ucsId)
   {
-    $select = self::getInstance()->select('keyword')->where('userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    $select = self::getInstance()->select('keyword')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
 //DBG::out($select);
     $keyword = self::$db->fetchOne($select);
     return (false !== $keyword) ? $keyword : null;
@@ -64,8 +64,8 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   public static function updateCustomKeyword($userId, $ucsId, $keyword)
   {
-    $data  = array('keyword' => $keyword);
-    return self::getInstance()->replace($data, array('userid' => $userId, 'ucs_id' => $ucsId));
+    $data  = ['keyword' => $keyword];
+    return self::getInstance()->replace($data, ['userid' => $userId, 'ucs_id' => $ucsId]);
   }
 
   /**
@@ -78,7 +78,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   public static function deleteCustomKeyword($userId, $ucsId)
   {
-    return self::getInstance()->delete('userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    return self::getInstance()->delete('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
 
   /**
@@ -116,7 +116,7 @@ class CustkeywordsPeer extends coreDatabaseTable
         // if user already has custom keyword, do an UPDATE...
         if (isset($colUcs[$ucsId]))
         {
-          if (!$updateStmt->execute(array($keyword, $ucsId)))
+          if (!$updateStmt->execute([$keyword, $ucsId]))
           {
             $request->setError('x', 'Update error on "'.$keyword.'"');
             return false;
@@ -124,7 +124,7 @@ class CustkeywordsPeer extends coreDatabaseTable
         }
         else
         {
-          if (!$insertStmt->execute(array($ucsId, $keyword)))
+          if (!$insertStmt->execute([$ucsId, $keyword]))
           {
             $request->setError('x', 'Database insert error on "'.$keyword.'"');
             return false;
@@ -190,7 +190,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   public static function getCustomKeywords($userid, $onlyFlashcards = false)
   {
-    $select = self::$db->select(array('kanjis.ucs_id', 'seq_nr' => rtkIndex::getSqlCol()));
+    $select = self::$db->select(['kanjis.ucs_id', 'seq_nr' => rtkIndex::getSqlCol()]);
 
     if (false === $onlyFlashcards) {
       // get all kanji keywords with custom keywords if defined
@@ -206,12 +206,12 @@ class CustkeywordsPeer extends coreDatabaseTable
     $select = self::addCustomKeywordJoin($select, $userid);   // add last to avoid "ambiguous" ucs_id column
 
     // FIXME for now use a hardcoded limit
-    $select->where('? < ?', array(rtkIndex::getSqlCol(), rtkIndex::RTK_UCS));
+    $select->where('? < ?', [rtkIndex::getSqlCol(), rtkIndex::RTK_UCS]);
 
     // NOTE  Implicitly the result is limited to kanjis in the indexes (sequences!)
     $select->query();
 
-    $keywords = array();
+    $keywords = [];
     while (false !== ($row = self::$db->fetch()))
     {
       $key = (string)$row['ucs_id'];
@@ -247,7 +247,7 @@ class CustkeywordsPeer extends coreDatabaseTable
     $custkeywords = self::getInstance()->getName();
 
     // add the custom keyword column to the query
-    $select->columns(array('keyword' => self::coalesceExpr()));
+    $select->columns(['keyword' => self::coalesceExpr()]);
 
     // use the userid from the joined table with USING clause
     //$select->joinLeftUsing($thisTableName, array('ucs_id', 'userid'));

@@ -10,7 +10,7 @@ class SitenewsPeer extends coreDatabaseTable
 {
   protected
     $tableName = 'sitenews',
-    $columns = array('created_on', 'updated_on'); // timestamp columns must be declared for insert/update/replace
+    $columns = ['created_on', 'updated_on']; // timestamp columns must be declared for insert/update/replace
 
   /**
    * This function must be copied in each peer class.
@@ -26,9 +26,9 @@ class SitenewsPeer extends coreDatabaseTable
    */
   private static function getPostCols()
   {
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
       'id', 'date' => 'UNIX_TIMESTAMP(created_on)' /* => 'DATE_FORMAT(created_on,\'%e %M %Y\')'*/, 'subject', 'text', 'ts_updated_on' => 'UNIX_TIMESTAMP(updated_on)'
-    ));
+    ]);
 
     return $select;
   }
@@ -52,7 +52,7 @@ class SitenewsPeer extends coreDatabaseTable
     
     if ($post = self::$db->fetchObject())
     {
-      $posts = self::formatPostsArray(array($post), $brief);
+      $posts = self::formatPostsArray([$post], $brief);
       return $posts[0];
     }
     return false;
@@ -113,11 +113,11 @@ class SitenewsPeer extends coreDatabaseTable
    */
   public static function getArchiveIndex()
   {
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
       'count' => 'COUNT(*)',
       'yyyymm'=> 'DATE_FORMAT(created_on, \'%Y%m\')',
       'year'  => 'EXTRACT(YEAR FROM created_on)',
-      'month' => 'EXTRACT(MONTH FROM created_on)'))
+      'month' => 'EXTRACT(MONTH FROM created_on)'])
       ->group('yyyymm')
       ->order('yyyymm DESC');
     $fetchMode = self::$db->setFetchMode(coreDatabase::FETCH_OBJ);
@@ -157,7 +157,7 @@ class SitenewsPeer extends coreDatabaseTable
       if ($brief)
       {
         $text = substr($text, 0, $pos);
-        $text .= link_to('Continued&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>', 'news/detail?id='.$msg_id, array('class' => 'readmore'));
+        $text .= link_to('Continued&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>', 'news/detail?id='.$msg_id, ['class' => 'readmore']);
       }
       else
       {
@@ -185,7 +185,7 @@ class SitenewsPeer extends coreDatabaseTable
    */
   public static function formatPostsArray(array $posts, $brief = false)
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url']);
 
     $curtime = time();
 

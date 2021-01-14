@@ -46,7 +46,7 @@ abstract class coreDatabase
    *
    * @see initialize()
    */
-  public function __construct($parameters = array())
+  public function __construct($parameters = [])
   {
     $this->initialize($parameters);
   }
@@ -57,7 +57,7 @@ abstract class coreDatabase
    * @param array An associative array of initialization parameters
    *
    */
-  public function initialize($parameters = array())
+  public function initialize($parameters = [])
   {
     $this->parameterHolder = new sfParameterHolder();
     $this->parameterHolder->add($parameters);
@@ -196,7 +196,7 @@ abstract class coreDatabase
    *
    * @return mixed  One object instance of the specified class, or false.
    */
-  abstract function fetchObject($class = 'stdClass', array $config = array());
+  abstract function fetchObject($class = 'stdClass', array $config = []);
 
   /**
    * Returns first column from first row of the result set (useful for "count(*)" querries)
@@ -246,7 +246,7 @@ abstract class coreDatabase
    * @return boolean TRUE on success, FALSE on error.
    * @throws sfException  If query fails.
    */
-  abstract function insert($table, $data = array());
+  abstract function insert($table, $data = []);
 
   /**
    * Retrieves the id generated for an AUTO_INCREMENT column by the previous
@@ -388,7 +388,7 @@ class coreDatabaseSelect
     $columns = $this->parts[self::COLUMNS];
     if (empty($columns))
     {
-      $columns = array('*');
+      $columns = ['*'];
     }
     $q = 'SELECT ' .  $this->db->aliases($columns);
 
@@ -449,11 +449,11 @@ class coreDatabaseSelect
   {
     if ($part===null)
     {
-      $this->parts = array();
-      $this->parts[self::COLUMNS] = array();
-      $this->parts[self::JOINS]   = array();
-      $this->parts[self::WHERE]   = array();
-      $this->parts[self::HAVING]  = array();
+      $this->parts = [];
+      $this->parts[self::COLUMNS] = [];
+      $this->parts[self::JOINS]   = [];
+      $this->parts[self::WHERE]   = [];
+      $this->parts[self::HAVING]  = [];
     }
     else
     {
@@ -470,7 +470,7 @@ class coreDatabaseSelect
         case self::JOINS:
         case self::WHERE:
         case self::HAVING:
-          $this->parts[$part] = array();
+          $this->parts[$part] = [];
           break;
         default:
           throw new Exception('coreDatabaseSelect::reset() Invalid argument.');
@@ -488,7 +488,7 @@ class coreDatabaseSelect
   {
     if (!is_array($cols))
     {
-      $cols = array($cols);
+      $cols = [$cols];
     }
     $this->parts[self::COLUMNS] = array_merge($this->parts[self::COLUMNS], $cols);
     return $this;

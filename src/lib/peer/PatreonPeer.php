@@ -14,7 +14,7 @@ class PatreonPeer extends coreDatabaseTable
 {
   protected
     $tableName = 'patreon',
-    $columns   = array();  // timestamp columns must be declared for insert/update/replace
+    $columns   = [];  // timestamp columns must be declared for insert/update/replace
 
   // this may be incorrect, no idea what a inactive patron looks like in the API output
   // we will assume for now that non zero amount is an active patron
@@ -45,7 +45,7 @@ class PatreonPeer extends coreDatabaseTable
     $data['is_active'] = (int) ($pa_amount_cents >= self::PLEDGE_AMOUNT_ACTIVE);
     $data['has_perks'] = (int) ($pa_amount_cents >= self::PLEDGE_AMOUNT_PERKS);
 
-    return self::getInstance()->replace($data, array('pa_id' => $data['pa_id']));
+    return self::getInstance()->replace($data, ['pa_id' => $data['pa_id']]);
   }
 
   /**
@@ -68,9 +68,9 @@ class PatreonPeer extends coreDatabaseTable
   {
     //$select = self::getInstance()->select('pa_full_name')->where('is_active = 1');
 
-    $select = self::$db->select(array('u.username', 'p.userid', 'p.pa_full_name'))
-      ->from(array('p' => self::getInstance()->getName()))
-      ->joinLeftUsing(array('u' => 'users'), 'userid')
+    $select = self::$db->select(['u.username', 'p.userid', 'p.pa_full_name'])
+      ->from(['p' => self::getInstance()->getName()])
+      ->joinLeftUsing(['u' => 'users'], 'userid')
       ->where('is_active = 1');
 
     return self::$db->fetchAll($select);

@@ -29,17 +29,17 @@
  * 
  * @return string  HTML representation
  */
-function ui_filter_std($label, $links, $options = array())
+function ui_filter_std($label, $links, $options = [])
 {
   // always set the widget class name in the main div tag
-  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : array(), array('uiFilterStd'));
+  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : [], ['uiFilterStd']);
 
   // add the JSFilterStd class to each link, and the 'active' class to the active item
   $active = isset($options['active']) ? (int)$options['active'] : false;
 
   for ($i = 0; $i < count($links); $i++)
   {
-    $linkOptions = isset($links[$i][2]) ? $links[$i][2] : array();
+    $linkOptions = isset($links[$i][2]) ? $links[$i][2] : [];
 
     $addClasses = 'JSFilterStd';
 
@@ -49,13 +49,13 @@ function ui_filter_std($label, $links, $options = array())
       unset($options['active']);
     }
 
-    $linkClasses = phpToolkit::merge_class_names(isset($linkOptions['class']) ? $linkOptions['class'] : array(), $addClasses);
+    $linkClasses = phpToolkit::merge_class_names(isset($linkOptions['class']) ? $linkOptions['class'] : [], $addClasses);
 
-    $links[$i][2] = array_merge($linkOptions, array('class' => $linkClasses));
+    $links[$i][2] = array_merge($linkOptions, ['class' => $linkClasses]);
   }
 
   $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(array('links' => $links, 'label' => $label, 'options' => $options));
+  $view->getParameterHolder()->add(['links' => $links, 'label' => $label, 'options' => $options]);
   $view->setTemplate(dirname(__FILE__).'/templates/ui_filter_std.php');
   return $view->render();
 }
@@ -91,7 +91,7 @@ function ui_select_pager($pager = false, $slot = 'widgets.ui.pager')
     slot($slot);
   
     $view = new coreView(sfContext::getInstance());
-    $view->getParameterHolder()->add(array('pager' => $pager));
+    $view->getParameterHolder()->add(['pager' => $pager]);
     $view->setTemplate(dirname(__FILE__).'/templates/ui_select_pager.php');
     echo $view->render();
   
@@ -122,7 +122,7 @@ function ui_select_table(uiSelectTable $table, uiSelectPager $pager = null)
   }
 
   $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(array('table' => $table));
+  $view->getParameterHolder()->add(['table' => $table]);
   $view->setTemplate(dirname(__FILE__).'/templates/ui_select_table.php');
   echo $view->render();
   
@@ -154,7 +154,7 @@ function ui_data_table($table)
   ob_start();
 
   $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(array('table' => $table));
+  $view->getParameterHolder()->add(['table' => $table]);
   $view->setTemplate(dirname(__FILE__).'/templates/ui_select_table.php');
   echo $view->render();
   
@@ -205,12 +205,12 @@ function ui_data_table($table)
  * 
  * @return string  Html code
  */
-function ui_tabs($tabs, $active = 0, $options = array())
+function ui_tabs($tabs, $active = 0, $options = [])
 {
   ob_start();
 
   // add the "ui-tabs" class name
-  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : array(), array('ui-tabs'));
+  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : [], ['ui-tabs']);
   echo tag('div', $options, true) . "\n<ul>\n";
 
   $tab_index = 0;
@@ -218,7 +218,7 @@ function ui_tabs($tabs, $active = 0, $options = array())
   {
     $name = '<span>'.$tab[0].'</span>';
     $internal_uri = isset($tab[1]) ? $tab[1] : '#';
-    $options = isset($tab[2]) ? $tab[2] : array();
+    $options = isset($tab[2]) ? $tab[2] : [];
 
     $class_active = (is_int($active) && $active===$tab_index) ? ' class="active"' : '';
     echo '<li'.$class_active.'>'.link_to($name, $internal_uri, $options).'</li>'."\n";
@@ -278,7 +278,7 @@ function ui_display($bDisplay)
  * @param  array   $options       See link_to()
  * @return string
  */
-function ui_ibtn($name, $internal_uri = '', $options = array())
+function ui_ibtn($name, $internal_uri = '', $options = [])
 {
   $button_type = 'uiIBtnDefault';
   
@@ -288,7 +288,7 @@ function ui_ibtn($name, $internal_uri = '', $options = array())
     unset($options['type']);
   }
 
-  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : array(), array('uiIBtn', $button_type));
+  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : [], ['uiIBtn', $button_type]);
 
   if (isset($options['icon']))
   {

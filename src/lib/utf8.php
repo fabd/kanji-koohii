@@ -44,7 +44,7 @@ class utf8
     $mUcs4  = 0;     // cached Unicode character
     $mBytes = 1;     // cached expected number of octets in the current sequence
   
-    $out = array();
+    $out = [];
   
     $len = strlen($str);
     for($i = 0; $i < $len; $i++) {
@@ -186,7 +186,7 @@ class utf8
   {
     if (!is_array($arr))
     {
-      $arr = array($arr);
+      $arr = [$arr];
     }
 
     $dest = '';

@@ -26,12 +26,12 @@ class ViewCacheLogPeer extends coreDatabaseTable
     $tableName = 'log_viewcache',
 
     // timestamp columns must be declared for insert/update/replace
-    $columns   = array(
+    $columns   = [
       'created_on'
-    );
+    ];
 
   private static
-    $viewIds = array();
+    $viewIds = [];
 
   public static function getInstance()
   {
@@ -73,10 +73,10 @@ class ViewCacheLogPeer extends coreDatabaseTable
     // if not flagged, then the cached template is being used
     $cacheHit = (int) !isset(self::$viewIds[$viewId]);
 
-    $data = array(
+    $data = [
       'cache_hit'    =>  $cacheHit,
       'resource_id'  =>  $resourceId
-    );
+    ];
 
     return self::getInstance()->insert($data);
   }
@@ -91,10 +91,10 @@ class ViewCacheLogPeer extends coreDatabaseTable
       return false;
     }
 
-    self::getInstance()->select(array(
+    self::getInstance()->select([
       'hit_count'   => 'SUM(cache_hit)',
       'total'       => 'COUNT(*)'
-    ))->query();
+    ])->query();
 
     $result = self::$db->fetchObject();
 
@@ -102,10 +102,10 @@ class ViewCacheLogPeer extends coreDatabaseTable
       return false;
     }
 
-    return array(
+    return [
       'hit_count'     => $result->hit_count,
       'miss_count'    => $result->total - $result->hit_count,
       'hit_percent'   => round( $result->hit_count / $result->total * 100 )
-    );
+    ];
   }
 }

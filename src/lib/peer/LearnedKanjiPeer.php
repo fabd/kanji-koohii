@@ -24,7 +24,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
 {
   protected
     $tableName = 'learnedkanji',
-    $columns   = array();  // timestamp columns must be declared for insert/update/replace
+    $columns   = [];  // timestamp columns must be declared for insert/update/replace
 
   /**
    * This function must be copied in each peer class.
@@ -53,13 +53,13 @@ class LearnedKanjiPeer extends coreDatabaseTable
     assert('(int)$ucsId > 0x3000');
 
     return self::$db->query('REPLACE INTO '.self::getInstance()->getName().' (userid, ucs_id) VALUES (?, ?)',
-      array($userId, $ucsId));
+      [$userId, $ucsId]);
   }
     
   public static function addKanjis($userId, array $ucsIds)
   {
     $placeholders = join(',', array_fill(0, count($ucsIds), '(?, ?)'));
-    $values = array();
+    $values = [];
     foreach ($ucsIds as $ucsId)
     {
       assert('(int)$ucsId > 0x3000');
@@ -79,7 +79,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
   {
     assert('(int)$ucsId > 0x3000');
 
-    return self::getInstance()->count('userid = ? AND ucs_id = ?', array($userId, $ucsId)) > 0;
+    return self::getInstance()->count('userid = ? AND ucs_id = ?', [$userId, $ucsId]) > 0;
   }
 
   /**
@@ -91,7 +91,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
   {
     assert('(int)$ucsId > 0x3000');
 
-    return self::getInstance()->delete('userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    return self::getInstance()->delete('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
   
   /**
@@ -106,7 +106,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
       assert('(int)$ucsId > 0x3000');
     }
       
-    $values = array($userId);
+    $values = [$userId];
     array_push($values, $ucsIds);
       
     return self::getInstance()->delete('userid = ? AND ucs_id in (?)', $values);

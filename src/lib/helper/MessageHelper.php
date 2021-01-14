@@ -23,8 +23,8 @@ function form_errors()
   if ($request->hasErrors())
   {
     $s = implode("<br/>\n", array_values($request->getErrors()));
-    $s = content_tag('p', $s, array('class' => 'ico ico-error'));
-    $s = content_tag('div', $s, array('class' => 'form-global-message'));
+    $s = content_tag('p', $s, ['class' => 'ico ico-error']);
+    $s = content_tag('div', $s, ['class' => 'form-global-message']);
   }
   return $s;
 }
@@ -44,7 +44,7 @@ function form_confirmations()
   {
     $s = implode("<br/>\n", array_values($request->getConfirmations()));
     $s = content_tag('p', $s);
-    $s = content_tag('div', $s, array('class' => 'messagebox msgbox-success'));
+    $s = content_tag('div', $s, ['class' => 'messagebox msgbox-success']);
     $s .= '<div class="clear"></div>';
   }
   return $s;

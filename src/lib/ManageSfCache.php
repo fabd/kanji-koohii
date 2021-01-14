@@ -56,7 +56,7 @@ class ManageSfCache
   //  echo "<br>$path --- level $level";
     if (is_dir($path) === true)
     {
-      $files = array_diff(scandir($path), array('.', '..'));
+      $files = array_diff(scandir($path), ['.', '..']);
 
       foreach ($files as $file)
       {
@@ -84,7 +84,7 @@ class ManageSfCache
     $real_path = ManageSfCache::getRealPathForCache($route);
 
     if (false === $real_path) {
-      return array('real_path' => '-INVALID PATH-', 'file_count' => -1, 'size_kb' => -1);
+      return ['real_path' => '-INVALID PATH-', 'file_count' => -1, 'size_kb' => -1];
     }
 
     $size = 0;
@@ -96,11 +96,11 @@ class ManageSfCache
 
     //echo sprintf('%d size, %d files', $size, iterator_count($iterator));
 
-    return array(
+    return [
       'real_path'   => $real_path,
       'file_count'  => iterator_count($iterator),
       'size_kb'     => (int) ($size / 1024),
-    );
+    ];
   }
 
   // returns string 'application/environment' (part of the cache folder path)
@@ -114,7 +114,7 @@ class ManageSfCache
   public static function getModuleActionFromRoute($route)
   {
     list($module, $action) = explode('/', $route);
-    return array($module, $action);
+    return [$module, $action];
   }
 
   // Format host name as used by Symfony in cache path name

@@ -116,13 +116,13 @@ class uiFlashcardReview
     // start a new review session, do some cleanup
     if ($start)
     {
-      $this->updated = array();
+      $this->updated = [];
       $this->cacheUpdateStatus();
     }
     else
     {
       // restore flashcard update status from the session
-      $this->updated = $this->user->getAttribute(self::SESS_CARD_UPDATED, array());
+      $this->updated = $this->user->getAttribute(self::SESS_CARD_UPDATED, []);
     }
 
     //testing
@@ -152,10 +152,10 @@ class uiFlashcardReview
     // get flashcard data
     if (isset($oJson->get) && is_array($oJson->get))
     {
-      $get_cards = array();
+      $get_cards = [];
 
       // flashcard options
-      $cardOpts = array();
+      $cardOpts = [];
       if (isset($oJson->opt))
       {
         $cardOpts = (object)$oJson->opt;
@@ -217,10 +217,10 @@ class uiFlashcardReview
    */
   public function handlePutRequest(array $items, $status = false)
   {
-    $putSuccess = array();
+    $putSuccess = [];
 
     if ($status) {
-      $status->ignored = array();
+      $status->ignored = [];
     }
 
     foreach ($items as $oPutData)

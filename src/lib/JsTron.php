@@ -64,7 +64,7 @@ class JsTron extends sfParameterHolder
 
   protected
     $status      = null,
-    $errors      = array(),
+    $errors      = [],
     $html        = '';
 
   /**
@@ -76,7 +76,7 @@ class JsTron extends sfParameterHolder
    *
    * @return void
    */
-  public function __construct($parameters = array())
+  public function __construct($parameters = [])
   {
     parent::__construct();
 
@@ -102,7 +102,7 @@ class JsTron extends sfParameterHolder
 
   public function setError($message)
   {
-    $this->errors = array($message);
+    $this->errors = [$message];
   }
 
   public function getErrors()

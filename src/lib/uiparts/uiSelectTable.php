@@ -49,7 +49,7 @@ class uiSelectTable
     // request parameter holder
     $request  = null,
     
-    $sortOrders = array(0 => 'ASC', 1 => 'DESC'),
+    $sortOrders = [0 => 'ASC', 1 => 'DESC'],
 
     // this will hold the configuration data returned by getConfig() as native php objects
     $columns = null,
@@ -58,8 +58,7 @@ class uiSelectTable
     $rowdata = null,
 
     // each one of those default settings can be overwritten in the config
-    $settings = array
-    (
+    $settings = [
       //
       'editable' => false,
       
@@ -80,7 +79,7 @@ class uiSelectTable
       
       // "module/action" part of ajax url for sorting & updates, @see ajaxFrontController
       'ajaxAction' => null
-    ),
+    ],
     
     // flag set to true when ready to render
     $processed = false;
@@ -194,7 +193,7 @@ class uiSelectTable
     }
 
     // validate data
-    $this->errorMessages = array();
+    $this->errorMessages = [];
 
     if ($this->request->get('saveChanges'))
     {
@@ -207,8 +206,8 @@ class uiSelectTable
     }
     else
     {
-      $this->badRows = array();
-      $this->newRows = array();
+      $this->badRows = [];
+      $this->newRows = [];
     }
 
     if (count($this->badRows) > 0)
@@ -236,7 +235,7 @@ class uiSelectTable
   private function deleteRows()
   {
     // verify row ids are valid
-    $rowids = $this->request->get(self::POSTDATA_DELETE_ROWIDS, array());
+    $rowids = $this->request->get(self::POSTDATA_DELETE_ROWIDS, []);
     if (!$this->verifyRowIds($rowids)) {
       die();
     }
@@ -278,7 +277,7 @@ class uiSelectTable
   private function getPostRowData()
   {
     // verify row ids are valid
-    $rowids = $this->request->get(self::POSTDATA_ROWIDS, array());
+    $rowids = $this->request->get(self::POSTDATA_ROWIDS, []);
     if (!$this->verifyRowIds($rowids)) {
       die();
     }
@@ -286,7 +285,7 @@ class uiSelectTable
     $num_rows = count($rowids);
 
     // collect columns of editable data
-    $postCols = array();
+    $postCols = [];
     if ($num_rows>0)
     {
       foreach ($this->columns as $colDef)
@@ -305,10 +304,10 @@ class uiSelectTable
       }
 
       // generate rows of data from columns of data
-      $postRows = array();
+      $postRows = [];
       for ($i = 0; $i < $num_rows; $i++)
       {
-        $row = array();
+        $row = [];
         foreach ($postCols as $bind => &$colData) {
           $row[$bind] = $colData[$i];
         }
@@ -337,8 +336,8 @@ class uiSelectTable
     }
     
     // save post data with unique row key, to post back invalid fields
-    $this->postRowData = array();
-    $this->newRows = array();
+    $this->postRowData = [];
+    $this->newRows = [];
     for ($i = 0; $i < $num_rows; $i++)
     {
       $rowData = $postRows[$i];
@@ -361,7 +360,7 @@ class uiSelectTable
    */
   private function validatePostRowData()
   {
-    $this->badRows = array();
+    $this->badRows = [];
 
     foreach ($this->postRowData as $row_id => &$rowData)
     {
@@ -590,7 +589,7 @@ EOD;
   private function getRowId($rowData)
   {
     $primaryKeys = (array) $this->settings['primaryKey'];
-    $primaryKeyIds = array();
+    $primaryKeyIds = [];
     foreach($primaryKeys as $column)
     {
       if (!array_key_exists($column, $rowData))
@@ -663,12 +662,12 @@ EOD;
     else
     {
       if ($bad_row) {
-        $oRow->addCssClass(array('validation-error'));
+        $oRow->addCssClass(['validation-error']);
       }
-      $options = array(
+      $options = [
         'id' => $this->getRowId($rowData),
         'class' => implode(',', $oRow->getCssClass())
-      );
+      ];
       $rowHtml = $rowHtml . tag('tr', $options, true);
     }
 
@@ -794,7 +793,7 @@ class uiSelectTableRow
      * @var
      */
     $rowData   = null,
-    $cssClass  = array();
+    $cssClass  = [];
   
   public function __construct()
   {

@@ -70,7 +70,7 @@ class mysqlMetadataTable
    */
   public function getColumnNames()
   {
-    $colnames = array();
+    $colnames = [];
     foreach ($this->getColumnsInfo() as $colInfo)
     {
       $colnames[] = $colInfo->Field;
@@ -147,8 +147,8 @@ class mysqlMetadataTable
    */
   public function parseColumnType($col_type)
   {
-    $matches = array();
-    $typeInfo = array();
+    $matches = [];
+    $typeInfo = [];
 
     if (preg_match('/^(\w+)\(([0-9,]+)\)/', $col_type, $matches))
     {
@@ -174,7 +174,7 @@ class mysqlMetadataTable
    */
   public function getPrimaryKeys()
   {
-    $primaryKeys = array();
+    $primaryKeys = [];
     foreach ($this->getColumnsInfo() as $colInfo)
     {
       if ($colInfo->Key=='PRI')
@@ -195,7 +195,7 @@ class mysqlMetadataTable
    */
   public function getPrimaryKeysFromArray(array $colData)
   {
-    $primaryKeyValues = array();
+    $primaryKeyValues = [];
     foreach ($this->getPrimaryKeys() as $keyName)
     {
       if (!array_key_exists($keyName, $colData))

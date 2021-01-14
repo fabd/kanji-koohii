@@ -11,8 +11,8 @@ class coreWebResponse extends sfWebResponse
   
   public function clearStuffsRefactorMe()
   {
-    $this->javascripts = array_combine($this->positions, array_fill(0, count($this->positions), array()));
-    $this->stylesheets = array_combine($this->positions, array_fill(0, count($this->positions), array()));
+    $this->javascripts = array_combine($this->positions, array_fill(0, count($this->positions), []));
+    $this->stylesheets = array_combine($this->positions, array_fill(0, count($this->positions), []));
   }
 
   /**
@@ -20,7 +20,7 @@ class coreWebResponse extends sfWebResponse
    * 
    * @see  sfWebResponse::addStylesheet()
    */
-  public function addStylesheet($file, $position = '', $options = array())
+  public function addStylesheet($file, $position = '', $options = [])
   {
     $file = $this->getVersionUrl($file);
     parent::addStylesheet($file, $position, $options);
@@ -31,7 +31,7 @@ class coreWebResponse extends sfWebResponse
    *
    * @see  sfWebResponse::addJavascript()
    */
-  public function addJavascript($file, $position = '', $options = array())
+  public function addJavascript($file, $position = '', $options = [])
   {
     $file = $this->getVersionUrl($file);
     parent::addJavascript($file, $position, $options);

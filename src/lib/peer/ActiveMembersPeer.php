@@ -20,15 +20,14 @@ class ActiveMembersPeer extends coreDatabaseTable
 
   protected
     $tableName = 'active_members',
-    $columns = array
-    (
+    $columns = [
       'userid',
       'fc_count',
       'last_review',
       'lastrs_start',
       'lastrs_pass',
       'lastrs_fail'
-    );
+    ];
 
   /**
    * This function must be copied in each peer class.
@@ -47,7 +46,7 @@ class ActiveMembersPeer extends coreDatabaseTable
   public static function getSelectForActiveMembersList()
   {
     return self::getInstance()
-      ->select(array(self::getInstance()->getName().'.userid', 'username', 'location', 'fc_count', 'ts_lastreview' => 'UNIX_TIMESTAMP(last_review)'))
+      ->select([self::getInstance()->getName().'.userid', 'username', 'location', 'fc_count', 'ts_lastreview' => 'UNIX_TIMESTAMP(last_review)'])
       ->joinUsing(UsersPeer::getInstance()->getName(), 'userid');
   }
   
@@ -75,10 +74,10 @@ class ActiveMembersPeer extends coreDatabaseTable
     $fc_count = ReviewsPeer::getFlashcardCount($userId);
     $lastreview_ts = ReviewsPeer::getMostRecentReviewTimeStamp($userId);
 
-    $data = array(
+    $data = [
       'fc_count'   => $fc_count,
       'last_review' => $lastreview_ts
-    );
+    ];
 
     return self::getInstance()->updateCols($userId, $data);
   }
@@ -92,9 +91,9 @@ class ActiveMembersPeer extends coreDatabaseTable
    */
   public static function updateFlashcardCount($userId)
   {
-    $data = array(
+    $data = [
       'fc_count' => ReviewsPeer::getFlashcardCount($userId)
-    );
+    ];
     return self::getInstance()->updateCols($userId, $data);
   }
 
@@ -114,11 +113,11 @@ class ActiveMembersPeer extends coreDatabaseTable
    */
   public static function saveReviewSummaryInfo($userId, $data)
   {
-    $data = array(
+    $data = [
       'lastrs_start' => $data['ts_start'],
       'lastrs_pass'  => $data['fc_pass'],
       'lastrs_fail'  => $data['fc_fail']
-    );
+    ];
     self::getInstance()->updateCols($userId, $data);
     return;
   }
@@ -132,10 +131,10 @@ class ActiveMembersPeer extends coreDatabaseTable
    */
   public static function getReviewSummaryInfo($userId)
   {
-    self::getInstance()->select(array(
+    self::getInstance()->select([
       'ts_start' => 'lastrs_start',
       'fc_pass'  => 'lastrs_pass',
-      'fc_fail'  => 'lastrs_fail'))
+      'fc_fail'  => 'lastrs_fail'])
       ->where('userid = ?', $userId)->query();
     $params = self::$db->fetch();
     

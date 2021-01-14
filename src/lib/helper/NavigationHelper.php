@@ -70,7 +70,7 @@ function set_secondary_nav($nav_id)
  */
 function nav_pri($nav_id)
 {
-  return strcasecmp($nav_id, sfConfig::get('layout.primarynav.current'))==0 ? array('class' => 'active') : array();
+  return strcasecmp($nav_id, sfConfig::get('layout.primarynav.current'))==0 ? ['class' => 'active'] : [];
 }
 
 /**
@@ -82,5 +82,5 @@ function nav_pri($nav_id)
  */
 function nav_sec($nav_id)
 {
-  return strcasecmp($nav_id, sfConfig::get('layout.secondarynav.current'))==0 ? array('class' => 'active') : array();
+  return strcasecmp($nav_id, sfConfig::get('layout.secondarynav.current'))==0 ? ['class' => 'active'] : [];
 }

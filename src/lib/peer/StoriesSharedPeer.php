@@ -26,7 +26,7 @@ class StoriesSharedPeer extends coreDatabaseTable
 {
   protected
     $tableName = 'stories_shared',
-    $columns   = array();  // timestamp columns must be declared for insert/update/replace
+    $columns   = [];  // timestamp columns must be declared for insert/update/replace
 
   /**
    * This function must be copied in each peer class.
@@ -85,18 +85,18 @@ class StoriesSharedPeer extends coreDatabaseTable
     else if (!$exists && $isPublic)
     {
       // FIXME for now, maintain votes if made public again
-      $count_votes   = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 1', array($userId, $ucsId));
-      $count_reports = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 2', array($userId, $ucsId));
+      $count_votes   = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 1', [$userId, $ucsId]);
+      $count_reports = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 2', [$userId, $ucsId]);
 
       // new public story (or one that was private for a time...)
-      $data = array(
+      $data = [
         'sid'         => $storyId,
         'ucs_id'      => $ucsId,
         'userid'      => $userId,
         'updated_on'  => new coreDbExpr('NOW()'),
         'stars'       => $count_votes,
         'reports'     => $count_reports
-      );
+      ];
 
       return $inst->insert($data);
     }

@@ -124,7 +124,7 @@ class CJK
   static public function getKanji($s)
   {
     $result = preg_match_all('/['.self::PREG_CJK_COMMON.']/u', $s, $matches);
-    return $result ? $matches[0] : array();
+    return $result ? $matches[0] : [];
   }
 
   /**

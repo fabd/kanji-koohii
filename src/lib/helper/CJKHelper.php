@@ -18,7 +18,7 @@
  * @param  string   $html   Content to wrap with the language tag, is not escaped!
  * @param  array    $classNames   Optional class names to add to the SPAN
  */
-function cjk_lang_ja($html, $classNames = array())
+function cjk_lang_ja($html, $classNames = [])
 {
   return '<span '.cjk_lang_attrs($classNames).'>'.$html.'</span>';
 }

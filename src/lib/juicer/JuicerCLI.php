@@ -43,14 +43,14 @@ class Juicer_CLI extends Command_CLI
 {
   public function __construct()
   {
-    parent::__construct(array(
+    parent::__construct([
       'config|c=s'   => 'Configuration file in php as an array of key => values',
       'webroot|w=s'  => 'Path to the document root of the web server (can be relative)',
       'infile|i=s'   => 'A javascript or stylesheet file to parse',
       'outfile|o=s'  => 'Output file name (defaults to *.juiced.js based on source file)',
       'strip|s-s'    => 'Strip method calls from output (eg. "console.log,console.warn")',
       'list|l'       => 'List all assets used in stylesheets and the remapped web folder'
-    ));
+    ]);
 
     // check parameters
     $webRoot = $this->getFlag('webroot');
@@ -69,7 +69,7 @@ class Juicer_CLI extends Command_CLI
     $webRoot = realpath($webRoot);
     
     // constants file
-    $constants = array();
+    $constants = [];
     $configFile = $this->getFlag('config');
     if (!file_exists($configFile))
     {
@@ -85,13 +85,13 @@ class Juicer_CLI extends Command_CLI
       sprintf('Parsing: "%s" ...', $infile)
     ));
 
-    $options = array(
+    $options = [
       'VERBOSE'    => $this->getFlag('verbose', false),
       'STRIP'      => $this->getFlag('strip', false),
       'WEB_PATH'   => $webRoot,
       'WEB_EXCL'   => '*.psd,*.txt,*.bak,*.css,*.js',
       'CLI'        => $this   // set if using Juicer from the command line
-    );
+    ];
     
     // determine output file name
     $outfile = $this->getFlag('outfile');

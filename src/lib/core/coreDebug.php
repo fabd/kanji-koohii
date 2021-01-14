@@ -102,10 +102,10 @@ class DBG
     {
       $user = sfContext::getInstance()->getUser();
     
-        $info = array(
+        $info = [
         'attributes'  => $user->getAttributeHolder()->getAll(),
         'credentials' => $user->listCredentials()
-      );
+      ];
     
       print_r($info);
     }

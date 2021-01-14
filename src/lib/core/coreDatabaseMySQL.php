@@ -104,7 +104,7 @@ class coreDatabaseMySQL extends coreDatabase
     return $result !== null ? $result : false;
   }
   
-  public function fetchObject($class = 'stdClass', array $params = array())
+  public function fetchObject($class = 'stdClass', array $params = [])
   {
     $obj = new $class($params);
     $row = $this->fetch(self::FETCH_ASSOC);
@@ -141,7 +141,7 @@ class coreDatabaseMySQL extends coreDatabase
   public function fetchAll($query, $bindParams = null)
   {
     $this->query($query, $bindParams);
-    $data = array();
+    $data = [];
     while ($row = $this->fetch())
     {
       $data[] = $row;
@@ -152,7 +152,7 @@ class coreDatabaseMySQL extends coreDatabase
   public function fetchCol($query, $bindParams = null)
   {
     $this->query($query, $bindParams);
-    $data = array();
+    $data = [];
     while ($row = $this->fetch(self::FETCH_NUM))
     {
       $data[] = $row[0];
@@ -160,7 +160,7 @@ class coreDatabaseMySQL extends coreDatabase
     return $data;
   }
 
-  public function insert($table, $data = array())
+  public function insert($table, $data = [])
   {
     $values = $this->chain($data);
     $q = "INSERT {$table} SET {$values}";
@@ -244,7 +244,7 @@ class coreDatabaseMySQL extends coreDatabase
    */
   public function chain(array $fields, $glue = ',')
   {
-    $a = array();
+    $a = [];
     foreach ($fields as $key => $value) {
       $a[] = $key . '=' . $this->quote($value);
     }
@@ -268,7 +268,7 @@ class coreDatabaseMySQL extends coreDatabase
     }
 
     // mutliple columns or expressions
-    $parts = array();
+    $parts = [];
     foreach ($columns as $aliasExpr => $fullExpr)
     {
       if (is_string($aliasExpr)) {
@@ -298,7 +298,7 @@ class coreDatabaseMySQL extends coreDatabase
     if (!is_array($bindParams))
     {
       // dont cast to (array) because of coreDbExpr
-      $bindParams = array($bindParams);
+      $bindParams = [$bindParams];
     }
 
     // replace each '?' with corresponding parameter
@@ -348,7 +348,7 @@ class coreDatabaseMySQL extends coreDatabase
     echo '<table cellspacing="1" style="border:1px solid #B3DCFF;border-collapse:collapse;">';
     echo '<tr class="head">';
     $numfields = mysqli_num_fields($this->result);
-    $colNames = array();
+    $colNames = [];
     while ($finfo = mysqli_fetch_field($this->result))
     {
       $colNames[] = $finfo->name;
@@ -368,7 +368,7 @@ class coreDatabaseMySQL extends coreDatabase
     if ( (is_array($resultset) && !array_key_exists('0', $resultset)) ||
        (is_object($resultset)) )
     {
-      $resultset = array($resultset);
+      $resultset = [$resultset];
     }
 
     // display table contents
@@ -448,18 +448,18 @@ class coreDatabaseStatementMySQL extends coreDatabaseStatement
     // if no params were given as an argument to execute(),
     // then default to empty array
     if ($params === null) {
-        $params = array();
+        $params = [];
     }
 
     // send $params as input parameters to the statement
     if ($params)
     {
       array_unshift($params, str_repeat('s', count($params)));
-      $stmtParams = array();
+      $stmtParams = [];
       foreach ($params as $k => &$value) {
         $stmtParams[$k] = &$value;
       }
-      call_user_func_array(array($this->_stmt, 'bind_param'), $stmtParams);
+      call_user_func_array([$this->_stmt, 'bind_param'], $stmtParams);
     }
 
     // execute the statement

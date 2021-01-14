@@ -28,7 +28,7 @@
  */
 
 // start buffering section of the view that will be surrounded by the decorator
-function decorate_start($name, $vars = array())
+function decorate_start($name, $vars = [])
 {
   sfConfig::set('view.decorator.name', $name);
   sfConfig::set('view.decorator.vars', $vars);
@@ -42,7 +42,7 @@ function decorate_end()
   $decorator_content = ob_get_clean();
 
   $template = sfConfig::get('view.decorator.name').'Decorator.php';
-  $vars = sfConfig::get('view.decorator.vars', array());
+  $vars = sfConfig::get('view.decorator.vars', []);
 
   // vars for the decorator
   extract($vars, EXTR_REFS);

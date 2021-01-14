@@ -22,7 +22,7 @@ class KanjisPeer extends coreDatabaseTable
 {
   protected
     $tableName = 'kanjis',
-    $columns   = array();  // timestamp columns must be declared for insert/update/replace
+    $columns   = [];  // timestamp columns must be declared for insert/update/replace
 
   /**
    * This function must be copied in each peer class.
@@ -175,7 +175,7 @@ class KanjisPeer extends coreDatabaseTable
   public static function isHeisigIndexed($ucsId)
   {
     $sequences = rtkIndex::getSequences();
-    $indexCols = array('index1' => $sequences[0]['sqlCol'], 'index2' => $sequences[1]['sqlCol']);
+    $indexCols = ['index1' => $sequences[0]['sqlCol'], 'index2' => $sequences[1]['sqlCol']];
     $select = self::getInstance()->select($indexCols)->where('ucs_id = ?', $ucsId)->query();
     if ($row = self::$db->fetch())
     {

@@ -22,7 +22,7 @@ class StoriesPeer extends coreDatabaseTable
 {
   protected
     $tableName = 'stories',
-    $columns = array('updated_on'); // timestamp columns must be declared for insert/update/replace
+    $columns = ['updated_on']; // timestamp columns must be declared for insert/update/replace
 
   /**
    * This function must be copied in each peer class.
@@ -51,7 +51,7 @@ class StoriesPeer extends coreDatabaseTable
     assert('(int)$ucsId >= 0x3000');
 
     $select = self::getInstance()->select()
-      ->where('userid = ? AND ucs_id = ?', array($userId, $ucsId))
+      ->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
       ->query();
     return self::$db->fetchObject();
   }
@@ -63,7 +63,7 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getStoryId($userId, $ucsId)
   {
-    $select = self::getInstance()->select('sid')->where('userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    $select = self::getInstance()->select('sid')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
     $sid = self::$db->fetchOne($select);
     return (false === $sid) ? false : (int)$sid;
   }
@@ -97,7 +97,7 @@ class StoriesPeer extends coreDatabaseTable
     assert('(int)$ucsId >= 0x3000');
 
     $storyId = self::$db->fetchOne(
-      self::$db->select('sid')->from('stories')->where('userid = ? AND ucs_id = ?', array($userId, $ucsId))
+      self::$db->select('sid')->from('stories')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
     );
 
     // either false (no row), or a positive auto increment number > 0 
@@ -105,7 +105,7 @@ class StoriesPeer extends coreDatabaseTable
 
     if (false === $storyId)
     {
-      $data = array_merge($data, array('userid' => $userId, 'ucs_id' => $ucsId));
+      $data = array_merge($data, ['userid' => $userId, 'ucs_id' => $ucsId]);
       self::getInstance()->insert($data);
       $storyId = self::$db->lastInsertId();
     }
@@ -159,7 +159,7 @@ class StoriesPeer extends coreDatabaseTable
   public static function getFormattedStory($story, $keyword, $bSubstituteLinks = true, $linebreaks = true)
   {
     // Links helper is used by getFormattedKanjiLink() call
-    sfProjectConfiguration::getActive()->loadHelpers(array('Tag', 'Url'));
+    sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url']);
 
     $s = $story;
 
@@ -200,7 +200,7 @@ class StoriesPeer extends coreDatabaseTable
     // line breaks
     if ($linebreaks)
     {
-      $s = str_replace(array("\r\n", "\n", "\r"), '<br/>', $s);
+      $s = str_replace(["\r\n", "\n", "\r"], '<br/>', $s);
     }
 
     // remove extra spaces
@@ -217,7 +217,7 @@ class StoriesPeer extends coreDatabaseTable
     if ($bSubstituteLinks)
     {
       // parse for {...} references, do not assume kanji as old stories use frame numbers
-      $s = preg_replace_callback('/{([^}]+)}/u', array('StoriesPeer', 'getFormattedKanjiLink'), $s);
+      $s = preg_replace_callback('/{([^}]+)}/u', ['StoriesPeer', 'getFormattedKanjiLink'], $s);
     }
     else
     {
@@ -294,10 +294,10 @@ class StoriesPeer extends coreDatabaseTable
 
     $select = self::$db->select();
 
-    $select->columns(array(
+    $select->columns([
         'u.username','lastmodified' => 'DATE_FORMAT(ss.updated_on,\'%e-%c-%Y\')',
         's.text', 'ss.stars', 'kicks' => 'ss.reports'
-      ));
+      ]);
 
     if ($type === 'starred')
     {
@@ -308,14 +308,14 @@ class StoriesPeer extends coreDatabaseTable
         ->joinLeft('stories s', 'sv.authorid = s.userid AND sv.ucs_id = s.ucs_id') /* TODO sid */
         ->joinLeft('stories_shared ss', 'ss.sid = s.sid')
         ->joinLeft('users u', 'u.userid = sv.authorid')
-        ->where('sv.userid = ? AND sv.ucs_id = ? AND sv.vote = 1', array($userId, $ucsId));
+        ->where('sv.userid = ? AND sv.ucs_id = ? AND sv.vote = 1', [$userId, $ucsId]);
         /* disable to avoid temporary ->order('ss.stars DESC');*/
     }
     elseif ($type === 'newest')
     {
       // newest stories
       $select
-        ->columns(array('authorid' => 'ss.userid'))
+        ->columns(['authorid' => 'ss.userid'])
         ->from('stories_shared ss')
         ->joinLeft('stories s', 'ss.sid = s.sid')
         ->joinLeft('users u', 'u.userid = ss.userid')
@@ -336,7 +336,7 @@ class StoriesPeer extends coreDatabaseTable
     $rows = self::$db->fetchAll($select);
     self::$db->setFetchMode($fetchMode);
 
-    $stories = array();
+    $stories = [];
 
     foreach ($rows as $row)
     {
@@ -364,7 +364,7 @@ class StoriesPeer extends coreDatabaseTable
     $num_stories->private = 0;
     $num_stories->public  = 0;
     
-    self::getInstance()->select(array('public', 'count' => 'COUNT(*)'))
+    self::getInstance()->select(['public', 'count' => 'COUNT(*)'])
       ->where('userid = ?', $userId)
       ->group('public')
       ->query();
@@ -392,10 +392,10 @@ class StoriesPeer extends coreDatabaseTable
   public static function getMyStoriesSelect($userId)
   {
     $select = self::$db->select()->columns(
-      array(
+      [
         'seq_nr' => rtkIndex::getSqlCol(), 'kanji', 'story' => 'text', 'public',
         'stars', 'kicks' => 'reports', 's.updated_on', 'ts_dispdate' => 'UNIX_TIMESTAMP(s.updated_on)'
-      ));
+      ]);
     $select->from('stories s')
            ->joinLeft('stories_shared ss', 'ss.sid = s.sid')
            ->joinLeft('kanjis', 'kanjis.ucs_id = s.ucs_id');

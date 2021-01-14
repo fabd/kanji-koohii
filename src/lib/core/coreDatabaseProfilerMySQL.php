@@ -13,7 +13,7 @@ class coreDatabaseProfiler
 
   public function __construct()
   {
-    $this->log = array();
+    $this->log = [];
   }
 
   public function getTotalNumQueries()

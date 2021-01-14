@@ -169,11 +169,11 @@ class StopForumSpam
   {
     $logtime = time();
 
-    $this->db->insert(self::SFS_ACTIVITYLOG, array(
+    $this->db->insert(self::SFS_ACTIVITYLOG, [
       'ip'        => $ip,
       'logtime'   => time(),
       'logdesc'   => $description
-    ));
+    ]);
   }
 
   // this now logs only registration attempts with a valid answer, but listed on StopForumSpam
@@ -181,13 +181,13 @@ class StopForumSpam
   {
     $logtime = time();
 
-    $this->db->insert(self::SFS_BLOCKEDIPS, array(
+    $this->db->insert(self::SFS_BLOCKEDIPS, [
       'ip'        => $ip,
       'username'  => $username,
       'email'     => $email,
       'bot_visit' => $bot_visit,
       'frequency' => $frequency
-    ));
+    ]);
   }
 
   public function getSelectForActivityLog()

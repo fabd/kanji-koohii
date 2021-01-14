@@ -176,12 +176,12 @@ class LeitnerSRS
     $sqlLocalTime      = UsersPeer::sqlLocalTime();
     $sqlExprExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', $sqlLocalTime, $card_interval);
     
-    $oUpdate = array(
+    $oUpdate = [
       'totalreviews'  => $curData->totalreviews + 1,
       'leitnerbox'    => $card_box,
       'lastreview'    => new coreDbExpr($sqlLocalTime),
       'expiredate'    => new coreDbExpr($sqlExprExpireDate)
-    );
+    ];
     
     if ($answer === uiFlashcardReview::UIFR_YES || $answer === uiFlashcardReview::UIFR_EASY) {
       $oUpdate['successcount'] = $curData->successcount + 1;

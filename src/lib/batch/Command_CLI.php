@@ -63,7 +63,7 @@ define('DEFAULT_ENV', 'dev');
 define('ZEND_LIB_DIR', SF_ROOT_DIR.'/lib/vendor');
 set_include_path(ZEND_LIB_DIR.PATH_SEPARATOR.get_include_path());
 require_once(ZEND_LIB_DIR.'/Zend/Loader.php');
-spl_autoload_register(array('Zend_Loader', 'autoload'));
+spl_autoload_register(['Zend_Loader', 'autoload']);
 
 // Console colour output
 require_once(SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php');
@@ -99,12 +99,12 @@ class Command_CLI
     $this->formatter = new ConsoleFormatter();
 
     // add the help option
-    $zend_getopt = array_merge($zend_getopt, array(
+    $zend_getopt = array_merge($zend_getopt, [
       'help|h'      => 'Show help',
       'verbose|v'   => 'Verbose mode (show more information)',
       'app-s'       => 'Sets CORE_APP (defaults to "'.DEFAULT_APP.'")',
       'env-s'       => 'Sets CORE_ENVIRONMENT (defaults to "'.DEFAULT_ENV.'")'
-    ));
+    ]);
 
     $this->opts = new Zend_Console_Getopt($zend_getopt);
 

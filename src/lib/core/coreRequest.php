@@ -22,7 +22,7 @@
 class coreRequest extends sfWebRequest
 {
   protected
-    $errors  = array();
+    $errors  = [];
 
   /**
    * Extends getContent() and returns an object with decoded JSON.

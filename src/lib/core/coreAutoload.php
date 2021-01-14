@@ -23,7 +23,7 @@ class coreAutoload
 
   static public function register()
   {
-    if (!spl_autoload_register(array(self::getInstance(), 'autoload')))
+    if (!spl_autoload_register([self::getInstance(), 'autoload']))
     {
       throw new Exception(sprintf('Unable to register %s::autoload as an autoloading method.', get_class(self::getInstance())));
     }
@@ -31,7 +31,7 @@ class coreAutoload
 
   static public function unregister()
   {
-    spl_autoload_unregister(array(self::getInstance(), 'autoload'));
+    spl_autoload_unregister([self::getInstance(), 'autoload']);
   }
 
   /**
@@ -46,7 +46,7 @@ class coreAutoload
    */
   public function autoload($class)
   {
-    $matches = array();
+    $matches = [];
 
     if (preg_match('/^(\\w+)Peer$/', $class, $matches))
     {
@@ -62,7 +62,7 @@ $dir = sfConfig::get('sf_lib_dir').'/peer';
 //        if (is_readable($dir.'/'.$fileName))
 //        {
 if (require_once($dir.'/'.$fileName)) {
-          call_user_func(array($class, 'getInstance'));
+          call_user_func([$class, 'getInstance']);
 
           return true;
 }

@@ -71,7 +71,7 @@ abstract class coreDatabaseTable
    */
   public static function _getInstance($childclass)
   {
-    static $instances = array();
+    static $instances = [];
     if (!isset($instances[$childclass]))
     {
       $instance = new $childclass($childclass);
@@ -176,7 +176,7 @@ abstract class coreDatabaseTable
    * 
    * @return boolean TRUE on success, FALSE on error.
    */
-  public function insert($data = array())
+  public function insert($data = [])
   {
     // creation timestamp
     if (in_array(self::CREATED_ON, $this->getColumns()) && !isset($data[self::CREATED_ON]))

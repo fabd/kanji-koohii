@@ -11,16 +11,16 @@ class uiSelectionState
     $user      = null;
 
   protected
-    $items     = array();
+    $items     = [];
 
   public function __construct()
   {
-    $this->items = array();
+    $this->items = [];
   }
 
   public function clear()
   {
-    $this->items = array();
+    $this->items = [];
   }
 
   /**
@@ -85,7 +85,7 @@ class uiSelectionState
    */
   public function getAll()
   {
-    $selected = array();
+    $selected = [];
     foreach ($this->items as $id => $state)
     {
       if ($state)
@@ -104,7 +104,7 @@ class uiSelectionState
    */
   public function __sleep()
   {
-    return array('items');
+    return ['items'];
   }
 
   /**

@@ -17,8 +17,8 @@
 class coreValidator
 {
   private
-    $fields     = array(),
-    $errors     = array();
+    $fields     = [],
+    $errors     = [];
 
   /**
    * Class constructor.
@@ -86,7 +86,7 @@ class coreValidator
    */
   public function validate($data)
   {
-    $this->errors = array();
+    $this->errors = [];
     
     foreach($this->fields as $field => $rules)
     {

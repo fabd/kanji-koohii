@@ -16,7 +16,7 @@
       {
         $name = $link[0];
         $internal_uri = $link[1];
-        $options = isset($link[2]) ? $link[2] : array();
+        $options = isset($link[2]) ? $link[2] : [];
         echo link_to($name, $internal_uri, $options);
       }
     ?></span>

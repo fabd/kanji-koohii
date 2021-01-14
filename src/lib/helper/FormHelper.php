@@ -51,7 +51,7 @@
  * @return string populated with <option> tags derived from the <i>$options</i> array variable
  * @see select_tag
  */
-function options_for_select($options = array(), $selected = '', $html_options = array())
+function options_for_select($options = [], $selected = '', $html_options = [])
 {
   $html_options = _parse_attributes($html_options);
 
@@ -64,22 +64,22 @@ function options_for_select($options = array(), $selected = '', $html_options = 
 
   if ($value = _get_option($html_options, 'include_custom'))
   {
-    $html .= content_tag('option', $value, array('value' => ''))."\n";
+    $html .= content_tag('option', $value, ['value' => ''])."\n";
   }
   else if (_get_option($html_options, 'include_blank'))
   {
-    $html .= content_tag('option', '', array('value' => ''))."\n";
+    $html .= content_tag('option', '', ['value' => ''])."\n";
   }
 
   foreach ($options as $key => $value)
   {
     if (is_array($value))
     {
-      $html .= content_tag('optgroup', options_for_select($value, $selected, $html_options), array('label' => $key))."\n";
+      $html .= content_tag('optgroup', options_for_select($value, $selected, $html_options), ['label' => $key])."\n";
     }
     else
     {
-      $option_options = array('value' => $key);
+      $option_options = ['value' => $key];
 
       if (
           (is_array($selected) && in_array(strval($key), $selected, true))
@@ -129,7 +129,7 @@ function options_for_select($options = array(), $selected = '', $html_options = 
  * @return string <select> tag optionally comprised of <option> tags.
  * @see options_for_select, content_tag
  */
-function select_tag($name, $option_tags = null, $options = array())
+function select_tag($name, $option_tags = null, $options = [])
 {
   $options = _convert_options($options);
   $id = $name;
@@ -142,7 +142,7 @@ function select_tag($name, $option_tags = null, $options = array())
     $option_tags = options_for_select($option_tags);
   }
 
-  return content_tag('select', $option_tags, array_merge(array('name' => $name/*, 'id' => get_id_from_name($id)*/), $options));
+  return content_tag('select', $option_tags, array_merge(['name' => $name/*, 'id' => get_id_from_name($id)*/], $options));
 }
 
 /**
@@ -152,7 +152,7 @@ function select_tag($name, $option_tags = null, $options = array())
  * @param mixed  Default value
  * @param array   Optional attributes
  */
-function input_tag($name, $value = null, $options = array())
+function input_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
@@ -161,7 +161,7 @@ function input_tag($name, $value = null, $options = array())
   // add css class
   $options = _parse_attributes($options);
 
-  $options = array_merge(array('type' => 'text', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value), $options);
+  $options = array_merge(['type' => 'text', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value], $options);
   _check_field_error($name, $options);
   return tag('input', _convert_options($options));
 }
@@ -173,13 +173,13 @@ function input_tag($name, $value = null, $options = array())
  * @param mixed  Value attribute
  * @param array   Optional attributes
  */
-function input_hidden_tag($name, $value = null, $options = array())
+function input_hidden_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
   $value = $_request->getParameter($name, $value);
 
-  $options = array_merge(array('type' => 'hidden', 'name' => $name, 'value' => $value), _parse_attributes($options));
+  $options = array_merge(['type' => 'hidden', 'name' => $name, 'value' => $value], _parse_attributes($options));
   return tag('input', _convert_options($options));
 }
 
@@ -190,7 +190,7 @@ function input_hidden_tag($name, $value = null, $options = array())
  * @param mixed  Value
  * @param array   Optional attributes
  */
-function input_password_tag($name, $value = null, $options = array())
+function input_password_tag($name, $value = null, $options = [])
 {
   $_request = sfContext::getInstance()->getRequest();
   $value = $_request->getParameter($name, $value);
@@ -198,7 +198,7 @@ function input_password_tag($name, $value = null, $options = array())
   // add css class
   $options = _parse_attributes($options);
 
-  $options = array_merge(array('type' => 'password', 'name' => $name, /*'id' => get_id_from_name($name),*/ 'value' => $value), $options);
+  $options = array_merge(['type' => 'password', 'name' => $name, /*'id' => get_id_from_name($name),*/ 'value' => $value], $options);
   _check_field_error($name, $options);
   return tag('input', _convert_options($options));
 }
@@ -210,7 +210,7 @@ function input_password_tag($name, $value = null, $options = array())
  * @param mixed  Default content
  * @param array   Optional attributes
  */
-function textarea_tag($name, $content = null, $options = array())
+function textarea_tag($name, $content = null, $options = [])
 {
   $_request = sfContext::getInstance()->getRequest();
 
@@ -220,7 +220,7 @@ function textarea_tag($name, $content = null, $options = array())
   // add css class
   $options = _parse_attributes($options);
 
-  $options = array_merge(array('name' => $name/*, 'id' => get_id_from_name($name)*/), $options);
+  $options = array_merge(['name' => $name/*, 'id' => get_id_from_name($name)*/], $options);
 
   _check_field_error($name, $options);
   
@@ -240,9 +240,9 @@ function textarea_tag($name, $content = null, $options = array())
  * @param boolean Default checked state
  * @param array    Optional attributes
  */
-function checkbox_tag($name, $value = '1', $checked = false, $options = array())
+function checkbox_tag($name, $value = '1', $checked = false, $options = [])
 {
-  $options = array_merge(array('type' => 'checkbox', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value), _parse_attributes($options));
+  $options = array_merge(['type' => 'checkbox', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value], _parse_attributes($options));
 
   // repopulate field
   $checked = _repopulate_input_cb($name, $value, $checked);
@@ -264,9 +264,9 @@ function checkbox_tag($name, $value = '1', $checked = false, $options = array())
  * @param boolean Default checked state
  * @param array    Optional attributes
  */
-function radiobutton_tag($name, $value = '1', $checked = false, $options = array())
+function radiobutton_tag($name, $value = '1', $checked = false, $options = [])
 {
-  $options = array_merge(array('type' => 'radio', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value), _parse_attributes($options));
+  $options = array_merge(['type' => 'radio', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value], _parse_attributes($options));
 
   // repopulate field
   $checked = _repopulate_input_cb($name, $value, $checked);
@@ -299,9 +299,9 @@ function radiobutton_tag($name, $value = '1', $checked = false, $options = array
  * @param  array  Additional HTML compliant <input> tag parameters
  * @return string XHTML compliant <input> tag with type="submit"
  */
-function submit_tag($value = 'Save changes', $options = array())
+function submit_tag($value = 'Save changes', $options = [])
 {
-  return tag('input', array_merge(array('type' => 'submit', 'name' => 'commit', 'value' => $value), _convert_options($options)));
+  return tag('input', array_merge(['type' => 'submit', 'name' => 'commit', 'value' => $value], _convert_options($options)));
 }
 
 /**
@@ -312,7 +312,7 @@ function submit_tag($value = 'Save changes', $options = array())
  * @param  array  additional HTML compliant <label> tag parameters
  * @return string <label> tag with <i>$label</i> for the specified <i>$id</i> parameter.
  */
-function label_for($id, $label, $options = array())
+function label_for($id, $label, $options = [])
 {
   $options = _parse_attributes($options);
 
@@ -321,7 +321,7 @@ function label_for($id, $label, $options = array())
     $label = $label->__toString();
   }
 
-  return content_tag('label', $label, array_merge(array('for' => get_id_from_name($id, null)), $options));
+  return content_tag('label', $label, array_merge(['for' => get_id_from_name($id, null)], $options));
 }
 
 /**

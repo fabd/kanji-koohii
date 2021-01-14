@@ -48,7 +48,7 @@ class ReviewsPeer extends coreDatabaseTable
 {
   protected
     $tableName = 'reviews',
-    $columns   = array();  // timestamp columns must be declared for insert/update/replace
+    $columns   = [];  // timestamp columns must be declared for insert/update/replace
 
   /**
    * This function must be copied in each peer class.
@@ -81,10 +81,10 @@ class ReviewsPeer extends coreDatabaseTable
     }
     else
     {
-      self::getInstance()->select(array(
+      self::getInstance()->select([
         '*',
         'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)'
-      ))->where('ucs_id = ? AND userid = ?', array($ucsId, $userId))->query();
+      ])->where('ucs_id = ? AND userid = ?', [$ucsId, $userId])->query();
       $cardData = self::$db->fetchObject();
       $context->set($key, $cardData);
     }
@@ -102,7 +102,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function hasFlashcard($userId, $ucsId)
   {
-    $count = self::getInstance()->count('userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    $count = self::getInstance()->count('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
     return (bool)$count;
   }
 
@@ -134,7 +134,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getFlashcardsByIndex($userId, $filter = '')
   {
-    $select = self::getInstance()->select(array('seq_nr' => rtkIndex::getSqlCol()));
+    $select = self::getInstance()->select(['seq_nr' => rtkIndex::getSqlCol()]);
     
     // join Kanjis table just once
     if ($filter === '')
@@ -166,7 +166,7 @@ class ReviewsPeer extends coreDatabaseTable
       $select = self::getInstance()->select();
     }
 
-    $select->columns(array('count' => 'COUNT(*)'));
+    $select->columns(['count' => 'COUNT(*)']);
     $select = self::filterByUserId($select, $userId);
 //DBG::printr($select->__toString());
     $select->query();
@@ -277,13 +277,13 @@ class ReviewsPeer extends coreDatabaseTable
   {
     $user = sfContext::getInstance()->getUser();
 
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
         'box'   => 'leitnerbox',
         'due'   => sprintf('(%s >= expiredate)', UsersPeer::sqlLocalTime()),
         'count' => 'COUNT(*)'
-      ))
+      ])
       ->where('totalreviews > 0')
-      ->group(array('leitnerbox', 'due ASC'));
+      ->group(['leitnerbox', 'due ASC']);
     
     $select = self::filterByUserId($select, $user->getUserId());
     $select = self::filterByRtk($select, $filter); // FIXME  we don't strictly need sequences JOIN here
@@ -342,7 +342,7 @@ class ReviewsPeer extends coreDatabaseTable
     $flashcardCount = self::_getFlashcardCount($userId, $select);
     
     // compare the count to the max in that range
-    $select->columns(array('max' => 'MAX('.rtkIndex::getSqlCol().')'))->query();
+    $select->columns(['max' => 'MAX('.rtkIndex::getSqlCol().')'])->query();
     $result = self::$db->fetchObject();
     $maxRtkSeqNr = (int) $result->max;
 
@@ -366,19 +366,19 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getProgressChartData($userId)
   {
-    $select = self::getInstance()->select(array('ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'leitnerbox', 'totalreviews', 'failurecount', 'successcount'));
+    $select = self::getInstance()->select(['ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'leitnerbox', 'totalreviews', 'failurecount', 'successcount']);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = self::filterByUserId($select, $userId);
     $select->query();
 
-    $lessons = array();
+    $lessons = [];
 
     while ($row = self::$db->fetchObject())
     {
       $lessNr = rtkIndex::getLessonForIndex((int)$row->seq_nr);
 
       if (!isset($lessons[$lessNr])) {
-        $lessons[$lessNr] = (object) array('lessonId' => $lessNr, 'total' => 0, 'pass' => 0, 'fail' => 0);
+        $lessons[$lessNr] = (object) ['lessonId' => $lessNr, 'total' => 0, 'pass' => 0, 'fail' => 0];
       }
 
       // ref
@@ -418,7 +418,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getTotalReviews($userId)
   {
-    $select = self::$db->select(array('count' => 'SUM(totalreviews)'))->from('reviews');
+    $select = self::$db->select(['count' => 'SUM(totalreviews)'])->from('reviews');
     self::filterByUserId($select, $userId)->query();
     $row = self::$db->fetchObject();
     return (int)$row->count;
@@ -451,11 +451,11 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getSelectForDetailedList($userId)
   {
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
       'kanjis.ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'failurecount', 'successcount', 'leitnerbox',
       'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)', 'kanji', 'onyomi', 'strokecount',
       'tsLastReview' => 'UNIX_TIMESTAMP(lastreview)'
-      ));
+      ]);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = self::filterByUserId($select, $userId);
     $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
@@ -469,15 +469,15 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getSelectForEditKeywordsList($userId)
   {
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
       'kanjis.ucs_id', 'kanji', 'seq_nr' => rtkIndex::getSqlCol(),
       'kanjis.keyword', 'custkeyword' => 'custkeywords.keyword',
       'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)'
-      ));
+      ]);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     
     // don't use addCustomKeywordJoin() here because we want BOTH original & custom keyword
-    $select->joinLeftUsing('custkeywords', array('ucs_id', 'userid'));
+    $select->joinLeftUsing('custkeywords', ['ucs_id', 'userid']);
     
     $select = self::filterByUserId($select, $userId);
 
@@ -492,10 +492,10 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getSelectForExport($userId)
   {
     // the order of columns must match the ExportCSV call in executeExportflashcards() ! 
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
       'seq_nr' => rtkIndex::getSqlCol(), 'kanji',
       'keyword' => CustkeywordsPeer::coalesceExpr(),
-      'lastreview', 'expiredate', 'leitnerbox', 'failurecount', 'successcount'));
+      'lastreview', 'expiredate', 'leitnerbox', 'failurecount', 'successcount']);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
     $select->order('seq_nr', 'ASC');
@@ -547,7 +547,7 @@ class ReviewsPeer extends coreDatabaseTable
 
         if ($user->getUserSetting('OPT_NO_SHUFFLE')) {
           // do not shuffle new cards, order by sequence number
-          $select->columns(array('seq_nr' => rtkIndex::getSqlCol()));
+          $select->columns(['seq_nr' => rtkIndex::getSqlCol()]);
           $select = KanjisPeer::joinLeftUsingUCS($select);
           $order_by = $order_by . ', ' . rtkIndex::getSqlCol() . ' ASC';
         }
@@ -634,9 +634,9 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getReviewSummaryListSelect($userId, $ts_start)
   {
-    $select = self::getInstance()->select(array(
+    $select = self::getInstance()->select([
       'seq_nr' => rtkIndex::getSqlCol(), 'failurecount', 'successcount', 'leitnerbox', 'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
-      'kanji', 'onyomi', 'strokecount'));
+      'kanji', 'onyomi', 'strokecount']);
     $select->where('UNIX_TIMESTAMP(lastreview) >= ?', $ts_start);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = self::filterByUserId($select, $userId);
@@ -666,7 +666,7 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getRestudyKanjiListSelect($userId)
   {
     $select = self::getInstance()
-      ->select(array('seq_nr' => rtkIndex::getSqlCol(), 'kanji', 'successcount', 'failurecount', 'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)'));
+      ->select(['seq_nr' => rtkIndex::getSqlCol(), 'kanji', 'successcount', 'failurecount', 'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)']);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
     $select->where('leitnerbox=1 AND totalreviews>0');
@@ -748,7 +748,7 @@ class ReviewsPeer extends coreDatabaseTable
           $select->where($idxCol.' <= ?', $curSeq->getNumCharactersVol1());
           break;
         case 'rtk3':
-          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', array($curSeq->getNumCharactersVol1(), $curSeq->getNumCharactersVol3()));
+          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', [$curSeq->getNumCharactersVol1(), $curSeq->getNumCharactersVol3()]);
           break;
         case 'rtk1+3':
           $select->where($idxCol.' <= ?', $curSeq->getNumCharacters());
@@ -808,16 +808,16 @@ class ReviewsPeer extends coreDatabaseTable
     elseif ($oData->r === uiFlashcardReview::UIFR_DELETE)
     {
       // delete the flashcard
-      $deleted = self::deleteFlashcards($userId, array($id));
+      $deleted = self::deleteFlashcards($userId, [$id]);
       $result = count($deleted) > 0;
       
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', array()));
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', []));
     }
     else
     {
       // get current review status
       $select = self::getInstance()
-        ->select(array('totalreviews','leitnerbox','failurecount','successcount','lastreview'))
+        ->select(['totalreviews','leitnerbox','failurecount','successcount','lastreview'])
         ->where('ucs_id = ?', $id);
       $select = self::filterByUserId($select, $userId);
       $select->query();
@@ -849,7 +849,7 @@ class ReviewsPeer extends coreDatabaseTable
 
   public static function updateFlashcard($userId, $ucsId, $cardData)
   {
-    return self::getInstance()->update($cardData, 'userid = ? AND ucs_id = ?', array($userId, $ucsId));
+    return self::getInstance()->update($cardData, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
 
   /**
@@ -892,7 +892,7 @@ class ReviewsPeer extends coreDatabaseTable
     {
       ActiveMembersPeer::updateFlashcardCount($userId);
 
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', array()));
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', []));
 
     }
     return $cards;
@@ -914,7 +914,7 @@ class ReviewsPeer extends coreDatabaseTable
     {
       ActiveMembersPeer::updateFlashcardCount($userId);
 
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', array()));
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', []));
     }
     return $cards;
   }
@@ -971,10 +971,10 @@ class ReviewsPeer extends coreDatabaseTable
 
     try
     {
-      $done = array();
+      $done = [];
       foreach ($cards as $id)
       {
-        if (!$stmt->execute(array($id)))
+        if (!$stmt->execute([$id]))
         {
           break;
         }
@@ -1020,10 +1020,10 @@ class ReviewsPeer extends coreDatabaseTable
 
     try
     {
-      $done = array();
+      $done = [];
       foreach ($cards as $id)
       {
-        if (!$stmt->execute(array($id)))
+        if (!$stmt->execute([$id]))
         {
           break;
         }

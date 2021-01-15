@@ -100,6 +100,11 @@ blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
 
   /* default non-colored, subdued */
 .btn-ghost   { color:#6f6961; background-color:inherit; border-color:$--clr-bg-1s; }
+.btn-ghost-danger {
+  background-color: transparent;
+  border-color: currentColor;
+  color: $--clr-danger-text;
+}
 
 .btn-default { background-color:$--clr-bg-1; color:#444; border-color:$--clr-bg-1s; }
 

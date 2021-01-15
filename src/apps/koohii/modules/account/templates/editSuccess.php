@@ -60,4 +60,6 @@
 ?>
   </form>
 
+<?php include_partial('DeleteAccountStepOne') ?>
+
 <?php decorate_end() ?>

@@ -1,4 +1,4 @@
-<section class="padded-box rounded text-smx mt-8">
+<section class="padded-box rounded text-smx mt-12">
 
   <h2 class="mb-3">Delete Account</h2>
 
@@ -11,7 +11,5 @@
   </ul>
 
   <?= link_to('Yes,  I want to delete my account ( step 1 of 2 )', 'account/delete', ['class' => 'btn btn-ghost-danger']); ?>
-
-  <p><strong>Account deletion is final</strong>. There will be no way to restore your account.</p>
 
 </section>

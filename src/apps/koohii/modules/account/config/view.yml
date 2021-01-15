@@ -2,6 +2,10 @@ createSuccess:
   metas:
     title: 'Create Account'
 
+deleteSuccess:
+  metas:
+    title: 'Delete Your Account'
+
 editSuccess:
   metas:
     title: 'Edit Account'

@@ -196,6 +196,11 @@ class accountActions extends sfActions
     }
   }
 
+  public function executeDelete($request)
+  {
+
+  }
+
   /**
    * Edit Account
    *

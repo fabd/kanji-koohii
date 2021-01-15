@@ -21,3 +21,11 @@ $--clr-srs-undue: #72c569;
 
 $--clr-danger-text: #d9534f;
 $--clr-danger-bg: #d9534f;
+
+
+// --------------------------------------------------------------------
+// Utilities
+// 
+//  This could move to a tailwind config in the new Laravel repo
+// --------------------------------------------------------------------
+.text-danger { color: #9f0e0b; }

@@ -216,7 +216,6 @@ p.small { line-height:1.2em; color:#666; }
 h1, h2, h3, h4, h5 { margin:0 0 1em; color:#7f7d85; }
 
  /*h3 { color:#fa3d60; }*/
- /*.padded-box-inset h3 { color:#7f7d75; }*/
 
 h1 { font-size:13px; font-family:Verdana, sans-serif; }
 h2 { font-weight:normal;  margin:0 0 0.5em; }
@@ -278,8 +277,6 @@ a.admin-edit { font-size:80%; letter-spacing:normal; color:#408040; text-decorat
 
 /* content boxes */
 .padded-box       { padding:14px 16px; background-color:$--clr-bg-1; }
- /* inset box is rounded */
-.padded-box-inset { padding:14px 16px; background-color:$--clr-bg-1; border-radius:3px; }
 
 
 /* ---------------------------- */

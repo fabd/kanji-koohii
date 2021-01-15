@@ -9,7 +9,7 @@
     
     <p style="color:#822"><strong>If you do not receive an email please check the SPAM folder!</strong></p>
 
-<div class="padded-box-inset mb-3">
+<div class="padded-box rounded mb-3">
 
     <?php echo form_errors() ?>
    

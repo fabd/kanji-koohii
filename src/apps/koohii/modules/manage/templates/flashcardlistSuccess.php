@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-md-6">
-      <div class="padded-box-inset" style="margin:0 0 1.5em;">
+      <div class="padded-box rounded" style="margin:0 0 1.5em;">
         <strong>Statistics</strong><br />
         <?php echo ReviewsPeer::getFlashcardCount($sf_user->getUserId()) ?> flashcards.<br />
       </div>

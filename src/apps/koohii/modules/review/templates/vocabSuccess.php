@@ -21,7 +21,7 @@
 <div class="row">
   <div class="col-md-6">
 
-    <div class="padded-box-inset labs-review-box">
+    <div class="padded-box rounded labs-review-box">
     
       <h4>Discover words based on RTK index</h4>
 
@@ -51,7 +51,7 @@
   </div><!-- /col -->       
   <div class="col-md-6">
 
-    <div class="padded-box-inset labs-review-box">
+    <div class="padded-box rounded labs-review-box">
       
       <h4>Discover words made only of learned kanji</h4>
 

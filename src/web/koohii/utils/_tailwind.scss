@@ -36,92 +36,40 @@ html {
 // --------------------------------------------------------------------
 // display
 // --------------------------------------------------------------------
+$displayItems:  block, inline-block, inline, flex, inline-flex, table, table-cell;
+@each $key in $displayItems {
+  .#{$key} {
+    display: $key;
+  }
+}
 .hidden {
   display: none;
-}
-.block {
-  display: block;
-}
-.inline-block {
-  display: inline-block;
-}
-.inline {
-  display: inline;
-}
-.flex {
-  display: flex;
-}
-.inline-flex {
-  display: inline-flex;
-}
-.grid {
-  display: grid;
-}
-.inline-grid {
-  display: inline-grid;
-}
-.table {
-  display: table;
-}
-.table-cell {
-  display: table-cell;
 }
 
 // --------------------------------------------------------------------
 // font-size
+//
+//   NOTE!  We also use `text-md` as alias of `text-base`
 // --------------------------------------------------------------------
-
-.text {
-  &-xs {
-    font-size: 1rem * 12 / 16;
-  }
-  &-sm {
-    font-size: 1rem * 14 / 16;
-  }
-  &-base,
-  &-md {
-    font-size: 1rem * 16 / 16;
-  }
-  &-lg {
-    font-size: 1rem * 18 / 16;
-  }
-  &-xl {
-    font-size: 1rem * 20 / 16;
-  }
-  &-2xl {
-    font-size: 1.5rem;
-  }
-  &-3xl {
-    font-size: 1.875rem;
-  }
-  &-4xl {
-    font-size: 2.25rem;
-  }
-  &-5xl {
-    font-size: 3rem;
-  }
-  &-6xl {
-    font-size: 4rem;
+$fontSizeItems: ('xs' 12/16, 'sm' 14/16, 'base' 1, 'md' 1, 'lg' 18/16, 'xl' 20/16, '2xl' 24/16, '3xl' 30/16);
+@each $item in $fontSizeItems {
+  $key: nth($item, 1);
+  $val: nth($item, 2);
+  .text-#{$key} {
+    font-size: 1rem * $val;
   }
 }
 
 // --------------------------------------------------------------------
 // font-weight
 // --------------------------------------------------------------------
-.font-light {
-  font-weight: 300;
-}
-.font-normal {
-  font-weight: 400;
-}
-.font-medium {
-  font-weight: 500;
-}
-.font-semibold {
-  font-weight: 600;
-}
-.font-bold {
-  font-weight: 700;
+$fontWeightItems: light 300, normal 400, medium 500, semibold 600, bold 700;
+@each $item in $fontWeightItems {
+  $key: nth($item, 1);
+  $val: nth($item, 2);
+  .font-#{$key} {
+    font-weight: $val;
+  }
 }
 
 // --------------------------------------------------------------------

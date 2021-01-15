@@ -55,9 +55,12 @@ $displayItems:  block, inline-block, inline, flex, inline-flex, table, table-cel
 // --------------------------------------------------------------------
 // font-size
 //
-//   NOTE!  We also use `text-md` as alias of `text-base`
+//   ADDITIONS
+//      text-md    ... alias for text-base
+//      text-smx   ... between sm and md
+//
 // --------------------------------------------------------------------
-$fontSizeItems: ('xs' 12/16, 'sm' 14/16, 'base' 1, 'md' 1, 'lg' 18/16, 'xl' 20/16, '2xl' 24/16, '3xl' 30/16);
+$fontSizeItems: ('xs' 12/16, 'sm' 14/16, 'smx' 15/16, 'base' 1, 'md' 1, 'lg' 18/16, 'xl' 20/16, '2xl' 24/16, '3xl' 30/16);
 @each $item in $fontSizeItems {
   $key: nth($item, 1);
   $val: nth($item, 2);

@@ -61,7 +61,7 @@ class RemoveListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Index",
           "width":     5,
-          "cssClass":  "center",
+          "cssClass":  "text-center",
           "colData":  "seq_nr"
         },
         {
@@ -81,33 +81,33 @@ class RemoveListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Pass",
           "width":     1,
-          "cssClass":  "bold center",
+          "cssClass":  "font-bold text-center",
           "colData":  "successcount"
         },
         {
           "caption":   "Fail",
           "width":     1,
-          "cssClass":  "center red",
+          "cssClass":  "text-center red",
           "colData":  "failurecount",
           "colDisplay": "_failurecount"
         },
         {
           "caption":   "Box",
           "width":     8,
-          "cssClass":  "bold center",
+          "cssClass":  "font-bold text-center",
           "colData":  "leitnerbox"
         },
         {
           "caption":   "Last&nbsp;Review",
           "width":     15,
-          "cssClass":  "center",
+          "cssClass":  "text-center",
           "colData":  "ts_lastreview",
           "colDisplay":  "_lastreview"
         },
         {
           "caption":   "<input type=\"checkbox\" name=\"chkAll\" value=\"all\" class=\"chkAll\" />",
           "width":     1,
-          "cssClass":  "center",
+          "cssClass":  "text-center",
           "colDisplay":  "_checkbox"
         }
       ]

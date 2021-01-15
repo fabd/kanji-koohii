@@ -48,7 +48,7 @@ class FlashcardListBinding implements uiSelectTableBinding
         {
           "caption":   "#",
           "width":     5,
-          "cssClass":  "center",
+          "cssClass":  "text-center",
           "colData":  "seq_nr"
         },
         {
@@ -68,38 +68,38 @@ class FlashcardListBinding implements uiSelectTableBinding
         {
           "caption":   "Onyomi",
           "width":     15,
-          "cssClass":  "nowrap",
+          "cssClass":  "whitespace-nowrap",
           "colData":  "onyomi"
         },
         {
           "caption":  "<span class=\"visible-xs-sm\">S</span><span class=\"visible-md-lg\">Strokecount</span>",
           "width":    15,
-          "cssClass": "center",
+          "cssClass": "text-center",
           "colData":  "strokecount"
         },
         
         {
           "caption":   "Pass",
           "width":     8,
-          "cssClass":  "bold center",
+          "cssClass":  "font-bold text-center",
           "colData":  "successcount"
         },
         {
           "caption":   "Fail",
           "width":     8,
-          "cssClass":  "center red",
+          "cssClass":  "text-center red",
           "colData":  "failurecount"
         },
         {
           "caption":   "Box",
           "width":     8,
-          "cssClass":  "bold center",
+          "cssClass":  "font-bold text-center",
           "colData":  "leitnerbox"
         },
         {
           "caption":   "Last&nbsp;Review",
           "width":     15,
-          "cssClass":  "center",
+          "cssClass":  "text-center",
           "colData":  "ts_lastreview",
           "colDisplay":"_lastreview"
         }

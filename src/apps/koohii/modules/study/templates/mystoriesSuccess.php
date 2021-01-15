@@ -5,7 +5,7 @@
 
 <h2>My Stories</h2>
 
-<div class="mystories-stats text-lg mb-8">
+<div class="mystories-stats text-xl mb-6">
   <strong><?php echo $num_stories->private ?></strong> private</li>, 
   <strong><?php echo $num_stories->public ?></strong> public</li>
   (<?php echo $num_stories->total ?> total)

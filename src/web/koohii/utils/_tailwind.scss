@@ -1,0 +1,205 @@
+// ====================================================================
+// TAILWIND UTILITIES
+//
+//   Just the essential classes for use in the legacy codebase, so we
+//   don't have to mess with postcss in the legacy build.
+// 
+//   These classes match the default Tailwind config, so later if we
+//   plug in the real Tailwind, there will be no issues.
+// 
+// ====================================================================
+
+// --------------------------------------------------------------------
+// FIXES
+//
+//   Undo Bootstrap styles setting html font-size to 10px.
+//   Legacy stylesheets almost never used rems so this shouldn't break anything.
+// --------------------------------------------------------------------
+html {
+  font-size: 16px; // make sure 1rem = 16px
+}
+
+// --------------------------------------------------------------------
+// RANDOM PATCHES
+//  
+//   Misc responsive classes used by legacy code
+// --------------------------------------------------------------------
+@media (min-width:992px) {
+  .md\:mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  .md\:mb-4 {
+    margin-bottom: 1rem;
+  }
+}
+
+// --------------------------------------------------------------------
+// display
+// --------------------------------------------------------------------
+.hidden {
+  display: none;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.inline {
+  display: inline;
+}
+.flex {
+  display: flex;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.grid {
+  display: grid;
+}
+.inline-grid {
+  display: inline-grid;
+}
+.table {
+  display: table;
+}
+.table-cell {
+  display: table-cell;
+}
+
+// --------------------------------------------------------------------
+// font-size
+// --------------------------------------------------------------------
+
+.text {
+  &-xs {
+    font-size: 1rem * 12 / 16;
+  }
+  &-sm {
+    font-size: 1rem * 14 / 16;
+  }
+  &-base,
+  &-md {
+    font-size: 1rem * 16 / 16;
+  }
+  &-lg {
+    font-size: 1rem * 18 / 16;
+  }
+  &-xl {
+    font-size: 1rem * 20 / 16;
+  }
+  &-2xl {
+    font-size: 1.5rem;
+  }
+  &-3xl {
+    font-size: 1.875rem;
+  }
+  &-4xl {
+    font-size: 2.25rem;
+  }
+  &-5xl {
+    font-size: 3rem;
+  }
+  &-6xl {
+    font-size: 4rem;
+  }
+}
+
+// --------------------------------------------------------------------
+// font-weight
+// --------------------------------------------------------------------
+.font-light {
+  font-weight: 300;
+}
+.font-normal {
+  font-weight: 400;
+}
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+// --------------------------------------------------------------------
+// line-height
+// --------------------------------------------------------------------
+.leading-none    { line-height: 1; }
+.leading-tight   { line-height: 1.25; }
+.leading-snug    { line-height: 1.375; }
+.leading-normal  { line-height: 1.5; }
+.leading-relaxed { line-height: 1.625; }
+.leading-loose   { line-height: 2; }
+.leading-3       { line-height: .75rem; }
+.leading-4       { line-height: 1rem; }
+.leading-5       { line-height: 1.25rem; }
+.leading-6       { line-height: 1.5rem; }
+.leading-7       { line-height: 1.75rem; }
+.leading-8       { line-height: 2rem; }
+.leading-9       { line-height: 2.25rem; }
+.leading-10      { line-height: 2.5rem; }
+
+// --------------------------------------------------------------------
+// margin
+// 
+//   - stop at 5rem (m-20), larger sizes typically not needed
+// --------------------------------------------------------------------
+@for $i from 0 through 20 {
+  .m-#{$i} { margin: 1rem * ($i / 4); }
+  .mx-#{$i} { margin-left: 1rem * ($i / 4); margin-right: 1rem * ($i / 4); }
+  .my-#{$i} { margin-top: 1rem * ($i / 4); margin-bottom: 1rem * ($i / 4); }
+  .mt-#{$i}{ margin-top: 1rem * ($i / 4); }
+  .mr-#{$i}{ margin-right: 1rem * ($i / 4); }
+  .mb-#{$i}{ margin-bottom: 1rem * ($i / 4); }
+  .ml-#{$i}{ margin-left: 1rem * ($i / 4); }
+}
+
+// --------------------------------------------------------------------
+// padding
+// 
+//   - stop at 5rem (p-20), larger sizes typically not needed
+// --------------------------------------------------------------------
+@for $i from 0 through 20 {
+  .p-#{$i} { padding: 1rem * ($i / 4); }
+  .px-#{$i} { padding-left: 1rem * ($i / 4); padding-right: 1rem * ($i / 4); }
+  .py-#{$i} { padding-top: 1rem * ($i / 4); padding-bottom: 1rem * ($i / 4); }
+  .pt-#{$i}{ padding-top: 1rem * ($i / 4); }
+  .pr-#{$i}{ padding-right: 1rem * ($i / 4); }
+  .pb-#{$i}{ padding-bottom: 1rem * ($i / 4); }
+  .pl-#{$i}{ padding-left: 1rem * ($i / 4); }
+}
+
+// --------------------------------------------------------------------
+// text-align
+// --------------------------------------------------------------------
+$textAlignItems: (left center right justify);
+@each $item in $textAlignItems {
+  .text-#{$item} {
+    text-align: #{$item};
+  }
+}
+
+// --------------------------------------------------------------------
+// text-tranform
+// --------------------------------------------------------------------
+.uppercase { text-transform: uppercase; }
+.lowercase  { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case  { text-transform: none; }
+
+// --------------------------------------------------------------------
+// white-space
+// --------------------------------------------------------------------
+.whitespace-normal { white-space: normal; }
+.whitespace-nowrap { white-space: nowrap; }
+
+// --------------------------------------------------------------------
+// 
+// --------------------------------------------------------------------
+
+// --------------------------------------------------------------------
+// 
+// --------------------------------------------------------------------

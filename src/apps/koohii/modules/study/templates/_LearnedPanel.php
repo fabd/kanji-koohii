@@ -4,7 +4,7 @@
   $ofTotal = $failedCount > 0 ? " of $failedCount" : '';
 ?>
 <div id="JsLearnedComponent">
-<div id="study-learned" class="study-action-comp no-gutter-xs-sm mb-d-1">
+<div id="study-learned" class="study-action-comp no-gutter-xs-sm md:mb-4">
 
   <div class="flex flex-g-s">
 

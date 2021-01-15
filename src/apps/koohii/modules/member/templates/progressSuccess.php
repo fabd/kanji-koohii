@@ -88,7 +88,7 @@
         else {
           echo 'Not yet started';
         }?></td>
-        <td class="center ws-nw"><?php echo $less['totalCards'].' / '.$less['maxValue'] ?></td>
+        <td class="center whitespace-nowrap"><?php echo $less['totalCards'].' / '.$less['maxValue'] ?></td>
         
       </tr>
      <?php endforeach; ?>

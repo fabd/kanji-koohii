@@ -9,7 +9,7 @@
 
   <div class="row">
 
-    <div class="col-md-3 mb-2">
+    <div class="col-md-3 mb-8">
       <div id="learn-more-menu" class="side-menu">
         <h2>Contents</h2>
         <ul>

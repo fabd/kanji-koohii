@@ -14,7 +14,7 @@
 
 <?= form_tag('account/create', ['id' => 'signup-form', 'autocomplete' => 'false']) ?>
 
-<div class="padded-box-inset mb-1" style="max-width:380px">
+<div class="padded-box-inset mb-3" style="max-width:380px">
 <?php
     // we use new 'validate' option to display error message below the input field
     // echo form_errors()
@@ -54,7 +54,7 @@
 ?>
 </div><!-- /padded-box -->
 
-<div class="padded-box-inset mb-1" style="max-width:380px">
+<div class="padded-box-inset mb-3" style="max-width:380px">
 <?php
     echo _bs_form_group(
       [
@@ -72,7 +72,7 @@
 
 </div><!-- /padded-box -->
 
-<div class="padded-box-inset mb-1" style="max-width:380px">
+<div class="padded-box-inset mb-3" style="max-width:380px">
 <?php
     echo _bs_form_group(
       _bs_submit_tag('Create Account', ['class' => 'btn-lg'])

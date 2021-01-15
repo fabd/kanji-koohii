@@ -13,11 +13,11 @@
         <i class="far fa-question-circle"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
       </div>
 
-      <p class="mb-p33">
+      <p class="mb-2">
         Your progress here will not be stored, but you can <strong>repeat</strong> those reviews as many times as you want.
       </p>
 
-      <p class="mb-p33">
+      <p class="mb-2">
         To save your results and schedule reviews, <?php echo link_to('add flashcards', '@manage') ?> and then use the SRS page.
       </p>
     </div>
@@ -53,7 +53,7 @@
         _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
       );
       echo _bs_form_group(
-        ['class' => 'mb-p33'],
+        ['class' => 'mb-2'],
         _bs_submit_tag('Start Review')
       );
 ?>
@@ -84,7 +84,7 @@
       </div>
 <?php
       echo _bs_form_group(
-        ['class' => 'mb-p33'],
+        ['class' => 'mb-2'],
         _bs_submit_tag('Start Review')
       );
 ?>

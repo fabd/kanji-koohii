@@ -4,7 +4,7 @@
   // $next_uri = 'study/edit?id='.$kanji->kanji;
  ?>
 
-<div id="study-restudy" class="study-action-comp no-gutter-xs-sm mb-d-1">
+<div id="study-restudy" class="study-action-comp no-gutter-xs-sm md:mb-4">
   <div class="flex flex-g-s">
 
     <div class="col-m col-d-12 col-g flex-a-c">

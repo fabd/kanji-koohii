@@ -5,7 +5,7 @@
 
 <h2>Vocab Shuffle</h2>
 
-<div class="row mb-1">
+<div class="row mb-3">
   <div class="col-md-12">
 
     <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
@@ -40,7 +40,7 @@
 ?>
       </div>
 <?php
-      echo _bs_form_group(['class' => 'mb-p33'],
+      echo _bs_form_group(['class' => 'mb-2'],
         _bs_submit_tag('Start Review')
       );
 ?>
@@ -64,7 +64,7 @@
       echo form_tag('labs/shuffle2', ['method' => 'post']);
       echo form_errors();
 
-      echo _bs_form_group(['class' => 'mb-p33'],
+      echo _bs_form_group(['class' => 'mb-2'],
         _bs_submit_tag('Start Review')
       );
 ?>

@@ -26,7 +26,7 @@
 三, trois
 30000 "champs de ""riz-o-lait"""
 EOT*/ ''
-, ['class' => 'form-control mb-1', 'rows' => 5]) ?>
+, ['class' => 'form-control mb-3', 'rows' => 5]) ?>
 
   <?php echo _bs_submit_tag('Import Keywords') ?><em class="note">Note: there will be a confirmation step.</em>
 

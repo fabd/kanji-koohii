@@ -42,7 +42,7 @@
 <script type="text/x-template" id="settings-srs-template">
   <div><!-- I'm just a root -->
 
-      <div class="form-group mb-2">
+      <div class="form-group mb-8">
         
         <label for="srs_max_box">Number of boxes</label>
         <span class="help-block">
@@ -55,7 +55,7 @@ How many boxes in total, <em>excluding</em> the leftmost box which contains New 
 
       </div>
 
-      <div class="form-group mb-2">
+      <div class="form-group mb-8">
 
         <label for="srs_mult">Review interval multiplier</label>
         <span class="help-block">
@@ -71,7 +71,7 @@ The first interval is always 3 days.
 
       </div>
 
-      <div class="form-group mb-2" :class="{'has-error': !isValidHardBox}">
+      <div class="form-group mb-8" :class="{'has-error': !isValidHardBox}">
 
         <label for="srs_hard_box">Maximum box for cards marked 'Hard'</label>
         <span class="help-block">

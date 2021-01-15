@@ -6,7 +6,7 @@
   <h2>Review Summary</h2>
 
 <div class="row">
-  <div class="col-md-6 mb-2">
+  <div class="col-md-6 mb-8">
     <h3><?php echo $title ?></h3>
 
     <p>Below is the list of flashcards from your last review session.

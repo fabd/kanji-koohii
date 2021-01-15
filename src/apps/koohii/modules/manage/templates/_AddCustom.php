@@ -16,7 +16,7 @@
 
   <?php echo form_errors() ?>
   
-  <?php echo textarea_tag('txtSelection', '' /*'4 56 一　二三'*/, ['class' => 'form-control mb-1', 'rows' => 5]) ?>
+  <?php echo textarea_tag('txtSelection', '' /*'4 56 一　二三'*/, ['class' => 'form-control mb-3', 'rows' => 5]) ?>
 
   <?php echo _bs_submit_tag('Add Cards') ?><em class="note">Note: there will be a confirmation step.</em>
 

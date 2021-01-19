@@ -11,6 +11,11 @@
 !.stylelintrc.yml
 !/web/.htaccess_default
 
+# php-cs-fixer
+!.php_cs
+/composer.phar
+/tools/php-cs-fixer.phar
+
 # generated / logs
 *.log
 error_log*

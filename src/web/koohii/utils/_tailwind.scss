@@ -35,9 +35,19 @@ html {
 
 // --------------------------------------------------------------------
 // border-radius
+//   We use only a few presets.
 // --------------------------------------------------------------------
 .rounded {
   border-radius: 0.25rem;
+}
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+.rounded-2xl {
+  border-radius: 1rem;
 }
 
 // --------------------------------------------------------------------

@@ -256,6 +256,7 @@ class accountActions extends sfActions
           {
             $this->getUser()->signOut();
 
+            $this->setVar('account_deleted_username', $userDetails['username']);
             return 'Done';
           }
           else

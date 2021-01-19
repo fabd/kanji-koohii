@@ -4,6 +4,9 @@ create:
 createDone:
   is_secure: false
 
+deleteDone:
+  is_secure: false
+
 forgotPassword:
   is_secure: false
 

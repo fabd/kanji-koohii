@@ -19,7 +19,7 @@
 
   echo _bs_form_group(
     ['validate' => 'confirm_text'],
-    _bs_input_text('confirm_text', ['label' => '<strong>To verify, type</strong> <span class="font-normal font-italic">delete my account</span> below:', 'class' => ''])
+    _bs_input_text('confirm_text', ['label' => '<strong>To verify, type</strong> <span class="font-normal italic">delete my account</span> below:', 'class' => ''])
   );
 
   echo _bs_form_group(

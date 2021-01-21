@@ -200,6 +200,7 @@ class UsersPeer extends coreDatabaseTable
    * Returns associative array with info on success:
    *   'stories'     =>  number of stories deleted
    *   'flashcards'  =>  number of flashcards deleted (ReviewsPeer)
+   *   'keywords'    =>  number of keywords deleted (CustkeywordsPeer)
    * 
    * @param  int   $userid 
    *
@@ -216,38 +217,43 @@ class UsersPeer extends coreDatabaseTable
     $table = ReviewsPeer::getInstance()->getName();
     $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
     $result = $result && $stmt->execute([$userid]);
-    $count['flashcards'] = $stmt->rowCount(); 
+    $count['flashcards'] = $stmt->rowCount();
 
     // This one also can potentially delete 2000+ rows at once
     $table = StoriesPeer::getInstance()->getName();
     $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
     $result = $result && $stmt->execute([$userid]);
-    $count['stories'] = $stmt->rowCount(); 
-    
-    // Don't delete this first... just in case
-    $table = UsersPeer::getInstance()->getName();
-    $result = $result && self::$db->delete($table, $where, $userid);
+    $count['stories'] = $stmt->rowCount();
 
+    // Custom Keywords
+    $table = CustkeywordsPeer::getInstance()->getName();
+    $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
+    $result = $result && $stmt->execute([$userid]);
+    $count['keywords'] = $stmt->rowCount();
+
+    // Other misc linked tables
     $table = ActiveMembersPeer::getInstance()->getName();
     $result = $result && self::$db->delete($table, $where, $userid);
-    
-    $table = LearnedKanjiPeer::getInstance()->getName();
+    $table = LearnedKanjiPeer::getinstance()->getname();
     $result = $result && self::$db->delete($table, $where, $userid);
-
-    // I prefer to delete for userid integrity
+    $table = StoriesSharedPeer::getInstance()->getName();
+    $result = $result && self::$db->delete($table, $where, $userid);
     $table = StoryVotesPeer::getInstance()->getName();
     $result = $result && self::$db->delete($table, $where, $userid);
-
-    // delete settings
     $table = UsersSettingsPeer::getInstance()->getName();
+    $result = $result && self::$db->delete($table, $where, $userid);
+
+    // Delete the user last in case some sql above breaks, user can still sign in
+    $table = UsersPeer::getInstance()->getName();
     $result = $result && self::$db->delete($table, $where, $userid);
 
     if (true !== $result)
     {
-      throw new sfException("An error occured while deleting user id $userid");
+      throw new sfException("An error occured while deleting user id {$userid}");
     }
 
     return ($result === false) ? false : $count;
+
   }
 
   /**

@@ -15,6 +15,9 @@ $sf_request->setParameter('_homeFooter', true);
 <?php if ($account_stats['flashcards'] > 0) { ?>
     <p><?php echo $account_stats['flashcards']; ?> flashcards deleted.</p>
 <?php } ?>
+<?php if ($account_stats['keywords'] > 0) { ?>
+    <p><?php echo $account_stats['keywords']; ?> custom keywords deleted.</p>
+<?php } ?>
   </div>
 
 <p class="text-md"><i class="fa fa-arrow-left mr-2"></i><?php echo link_to('Back to the homepage', '@homepage'); ?></p>

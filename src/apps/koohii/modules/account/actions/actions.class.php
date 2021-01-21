@@ -259,8 +259,10 @@ class accountActions extends sfActions
             $this->setVar('account_stats', $stats);
             $this->setVar('account_username', $userName);
 
+            $logDesc = "${stats['stories']} / ${stats['flashcards']} / ${stats['keywords']} stories/flashcards/keywords";
+
             $log = new UserDeleteLog();
-            $log->logUserDeletion($userId, $userName);
+            $log->logUserDeletion($userId, $userName, $logDesc);
 
             $this->getUser()->signOutAndClearCookie();
 

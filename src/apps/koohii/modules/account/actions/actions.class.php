@@ -203,6 +203,8 @@ class accountActions extends sfActions
   public function executeDelete($request)
   {
     $user = $this->getUser();
+    $userId = $user->getUserId();
+    $userName = $user->getUserName();
 
     if ($request->getMethod() != sfRequest::POST)
     {
@@ -252,11 +254,16 @@ class accountActions extends sfActions
           && $isValidPhrase
           && $isValidPassword
         ) {
-          if (1 /* UsersPeer::deleteUser($user->getUserId()) */ )
+          if (false !== ($stats = UsersPeer::deleteUser($userId)))
           {
-            $this->getUser()->signOut();
+            $this->setVar('account_stats', $stats);
+            $this->setVar('account_username', $userName);
 
-            $this->setVar('account_deleted_username', $userDetails['username']);
+            $log = new UserDeleteLog();
+            $log->logUserDeletion($userId, $userName);
+
+            $this->getUser()->signOutAndClearCookie();
+
             return 'Done';
           }
           else
@@ -267,7 +274,7 @@ class accountActions extends sfActions
         }
       }
     }
-}
+  }
 
   /**
    * Edit Account

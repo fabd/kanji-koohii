@@ -3,9 +3,9 @@
 ?>  
 <h2>Delete Your Account</h2>
 
-<p class="mb-2">Sorry to see you go! Thank you for checking out Kanji Koohii!</p>
+<p class="mb-6">Sorry to see you go! Thank you for checking out Kanji Koohii!</p>
 
-<p>What did you think of the website? <?= link_to('Your feedback', '@contact', ['target' => '_blank']) ?> may help improve the site.</p>
+<?php /* <p>What did you think of the website? <?= link_to('Your feedback', '@contact', ['target' => '_blank']) ?> may help improve the site.</p> */ ?>
 
 <div class="padded-box rounded mb-8 ux-maxWidth360">
 

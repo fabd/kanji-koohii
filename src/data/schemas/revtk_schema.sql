@@ -269,21 +269,6 @@ CREATE TABLE `stories_shared` (
 
 
 -- ----------------------------------------------------------------------------
--- storiesscores
--- ----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS storiesscores;
-
-CREATE TABLE `storiesscores` (
-  `ucs_id`       SMALLINT UNSIGNED NOT NULL,
-  `authorid`     MEDIUMINT(8) UNSIGNED NOT NULL,
-  `stars`        SMALLINT(5) UNSIGNED NOT NULL,
-  `kicks`        SMALLINT(5) UNSIGNED NOT NULL,
-  PRIMARY KEY  (`ucs_id`,`authorid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- ----------------------------------------------------------------------------
 -- storyvotes
 -- ----------------------------------------------------------------------------
 

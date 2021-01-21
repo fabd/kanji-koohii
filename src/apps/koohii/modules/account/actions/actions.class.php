@@ -406,8 +406,7 @@ class accountActions extends sfActions
         $this->username = $this->getUser()->getUserName();
   
         // log out user (sign out, clear cookie)
-        $this->getUser()->signOut();
-        $this->getUser()->clearRememberMeCookie();
+        $this->getUser()->signOutAndClearCookie();
         
         try
         {

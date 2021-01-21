@@ -100,11 +100,8 @@ class homeActions extends sfActions
    */
   public function executeLogout($request)
   {
-    $this->getUser()->signOut();
-    
-    // clear the rememberme cookie
-    $this->getUser()->clearRememberMeCookie();
-    
+    $this->getUser()->signOutAndClearCookie();
+
     return $this->redirect('@homepage');
   }
   

@@ -17,7 +17,7 @@ class UserDeleteLog
     $this->db = sfProjectConfiguration::getActive()->getDatabase();
   }
 
-  public function logUserDeletion(int $userid, string $username, string $description = '')
+  public function logUserDeletion(int $userid, string $username, int $joindate, string $description = '')
   {
     // trim the table while we're here
     $this->trim();
@@ -25,9 +25,9 @@ class UserDeleteLog
     $logtime = time();
 
     $this->db->insert(self::LOG_TABLE_NAME, [
-      // 'ip'        => $ip,
       'userid' => $userid,
       'username' => $username,
+      'joindate' => $joindate,
       'logtime' => $logtime,
       'logdesc' => $description,
     ]);

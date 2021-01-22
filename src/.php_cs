@@ -15,6 +15,9 @@ return PhpCsFixer\Config::create()
             'position_after_anonymous_constructs' => 'next',
             'position_after_control_structures' => 'next',
         ),
+
+        // *don't* prematurely remove else's when I'm just testing something
+        'no_useless_else' => null,
         
         // for ($i = 0;; ++$i)  ==>  for ($i = 0; ; ++$i) 
         'space_after_semicolon' => ['remove_in_empty_for_expressions' => false],

@@ -17,7 +17,10 @@ class UserDeleteLog
     $this->db = sfProjectConfiguration::getActive()->getDatabase();
   }
 
-  public function logUserDeletion(int $userid, string $username, int $joindate, string $description = '')
+  /**
+   * @param string $joindate from user.joindate DATETIME (server timezone)
+   */
+  public function logUserDeletion(int $userid, string $username, string $joindate, string $description = '')
   {
     // trim the table while we're here
     $this->trim();
@@ -25,23 +28,31 @@ class UserDeleteLog
     $logtime = time();
 
     $this->db->insert(self::LOG_TABLE_NAME, [
+      // 'created_on' :: DEFAULT CURRENT_TIMESTAMP
       'userid' => $userid,
       'username' => $username,
       'joindate' => $joindate,
-      'logtime' => $logtime,
       'logdesc' => $description,
     ]);
   }
 
-  public function getSelect()
+  public function getSelectForBackend()
   {
-    return $this->db->select()->from(self::LOG_TABLE_NAME);
+    return $this->db->select([
+      'created_on',
+      'ts_created_on' => 'UNIX_TIMESTAMP(`created_on`)',
+      'userid',
+      'username',
+      'joindate',
+      'ts_joindate' => 'UNIX_TIMESTAMP(`joindate`)',
+      'logdesc',
+    ])->from(self::LOG_TABLE_NAME)->order('created_on DESC');
   }
 
   // clean the log by deleting all entries older than N days.
   public function trim()
   {
     $mintime = time() - (self::LOG_PERSIST_DAYS * 24 * 60 * 60);
-    $this->db->delete(self::LOG_TABLE_NAME, 'logtime < ?', $mintime);
+    $this->db->delete(self::LOG_TABLE_NAME, 'created_on < ?', $mintime);
   }
 }

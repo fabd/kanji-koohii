@@ -262,7 +262,7 @@ class accountActions extends sfActions
             $logDesc = "${stats['stories']} stories, ${stats['flashcards']} flashcards, ${stats['keywords']} keywords";
 
             $log = new UserDeleteLog();
-            $log->logUserDeletion($userId, $userName, $userDetails['ts_joindate'], $logDesc);
+            $log->logUserDeletion($userId, $userName, $userDetails['joindate'], $logDesc);
 
             $this->getUser()->signOutAndClearCookie();
 

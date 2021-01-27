@@ -38,5 +38,5 @@
   ?>
   </form>
 
-  <?php DBG::request(); ?>
+  <?php //DBG::request(); ?>
 </div>

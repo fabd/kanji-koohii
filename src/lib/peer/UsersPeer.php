@@ -308,15 +308,17 @@ class UsersPeer extends coreDatabaseTable
    * 
    * @return String   MySQL ADDDATE() expression that evaluates to the user's localized time
    */
-  public static function sqlLocalTime()
+  public static function sqlLocalTime($time = 'NOW()')
   {
     $user = sfContext::getInstance()->getUser();
     $localTimezone = $user->getUserTimeZone();
     $timediff = $localTimezone - sfConfig::get('app_server_timezone');
     $hours = floor($timediff);
-    $minutes = ($hours != $timediff) ? '30' : '0';  // some timezones have half-hour precision, convert to minutes
 
-    $sqlDate = 'ADDDATE(NOW(), INTERVAL \''.$hours.':'.$minutes.'\' HOUR_MINUTE)';
+    // some timezones have half-hour precision, convert to minutes
+    $minutes = ($hours != $timediff) ? '30' : '0';
+
+    $sqlDate = sprintf('ADDDATE(%s, INTERVAL \'%d:%d\' HOUR_MINUTE)', $time, $hours, $minutes);
     return $sqlDate;
   }
 

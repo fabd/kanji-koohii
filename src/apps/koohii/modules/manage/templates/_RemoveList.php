@@ -15,7 +15,7 @@
     <?php include_component('manage', 'RemoveListTable') ?>
   </div>
 
-<div class="mt-1 mb-2">
+<div class="mt-3 mb-8">
 <?php echo form_tag('manage/removeListConfirm', ['class' => 'main-form']) ?>
 <?php
     echo _bs_submit_tag('Remove Cards') . '<em class="note">Note: there will be a confirmation step.</em>';

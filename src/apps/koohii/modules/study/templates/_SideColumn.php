@@ -11,7 +11,7 @@
   $cur_kanji = $kanjiData ? $kanjiData->kanji : '1';
 ?>
 
-<div class="col-md-3 mb-1">
+<div class="col-md-3 mb-3">
 <?php 
   include_partial('study/StudySearch', ['framenum' => $framenum]);
 
@@ -27,9 +27,9 @@
 
 ?>
 
-  <div class="visible-md-lg padded-box-inset mb-1">
+  <div class="visible-md-lg padded-box rounded mb-3">
     <h3>Links</h3>
-    <div class="mb-p50"><?php echo link_to('My stories','study/mystories') ?></div>
+    <div class="mb-2"><?php echo link_to('My stories','study/mystories') ?></div>
   </div>
   
 

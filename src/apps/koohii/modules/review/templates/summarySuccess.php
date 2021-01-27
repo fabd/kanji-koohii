@@ -6,7 +6,7 @@
   <h2>Review Summary</h2>
 
 <div class="row">
-  <div class="col-md-6 mb-2">
+  <div class="col-md-6 mb-8">
     <h3><?php echo $title ?></h3>
 
     <p>Below is the list of flashcards from your last review session.
@@ -27,7 +27,7 @@
   
   <div class="col-md-6">
 <?php if ($numTotal > 0): ?>
-    <div class="padded-box-inset">
+    <div class="padded-box rounded">
 
       <?php echo ui_chart_vs([
         'valueLeft' => $numRemembered,
@@ -40,7 +40,7 @@
 <?php endif ?>
 
 <?php if (count($deletedCards)): ?>
-    <div id="FcSummaryDeld" class="padded-box-inset">
+    <div id="FcSummaryDeld" class="padded-box rounded">
       <h3>Deleted flashcards <span>(<?php echo count($deletedCards) ?>)</span></h3>
       <p><?php echo cjk_lang_ja('&#'.implode(';&#', $deletedCards)) ?></p>
     </div>

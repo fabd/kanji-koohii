@@ -1,0 +1,51 @@
+// ====================================================================
+// UTILITIES
+//
+//   Colors
+//
+//   Layout
+//
+//   Misc
+//
+//   Shadows
+//
+//   Sizes / Spacings
+//
+//     ux-maxWidth300/600    ... limit content (usually also center with `mx-auto`)
+//
+//   Typography
+//
+//   Widgets
+//
+// ====================================================================
+
+/* @define utilities */
+
+// --------------------------------------------------------------------
+// Colors
+// --------------------------------------------------------------------
+
+// --------------------------------------------------------------------
+// Sizes / Spacings
+// --------------------------------------------------------------------
+
+// --------------------------------------------------------------------
+// MAX WIDTH
+//
+//   Abstraction of small/medium/wide alignment of vertically
+//   stacked elements like centered content (with mx-auto) or form
+//   fields.
+//
+//   Example:
+//
+//     <div class="ux-maxWidth300 mx-auto">
+//
+// --------------------------------------------------------------------
+$maxWidthItems: ('300' 300px, '360' 360px);
+@each $item in $maxWidthItems {
+  $key: nth($item, 1);
+  $val: nth($item, 2);
+  .ux-maxWidth#{$key} {
+    max-width: $val;
+  }
+}

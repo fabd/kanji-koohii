@@ -197,6 +197,88 @@ class accountActions extends sfActions
   }
 
   /**
+   * Delete Account
+   *
+   */
+  public function executeDelete($request)
+  {
+    $user = $this->getUser();
+    $userId = $user->getUserId();
+    $userName = $user->getUserName();
+
+    if ($request->getMethod() != sfRequest::POST)
+    {
+      $formdata = [
+        'email' => '',
+        'confirm_text' => '',
+        'password' => '',
+      ];
+
+      $request->getParameterHolder()->add($formdata);
+    }
+    else
+    {
+      $validator = new coreValidator($this->getActionName());
+
+      if ($validator->validate($request->getParameterHolder()->getAll()))
+      {
+        $inputs = [
+          'email' => trim($request->getParameter('email')),
+          'confirm_text' => trim($request->getParameter('confirm_text', '')),
+          'password' => trim($request->getParameter('password')),
+        ];
+
+        $userDetails = $user->getUserDetails();
+
+        // hmm this might be an issue with the legacy code
+
+        $isValidEmail = strtolower($inputs['email']) === strtolower($userDetails['email']);
+        $isValidPassword = $user->getSaltyHashedPassword($inputs['password']) === $userDetails['password'];
+        $isValidPhrase = $inputs['confirm_text'] === 'delete my account';
+
+        if (!$isValidEmail)
+        {
+          $request->setError('email', 'Email is incorrect. Make sure you type it correctly');
+        }
+        if (!$isValidPassword)
+        {
+          $request->setError('password', 'Password is incorrect. Did you type it correctly?');
+        }
+        if (!$isValidPhrase)
+        {
+          $request->setError('confirm_text', 'Please type exact phrase in lowercase letters');
+        }
+
+        if (
+          $isValidEmail
+          && $isValidPhrase
+          && $isValidPassword
+        ) {
+          if (false !== ($stats = UsersPeer::deleteUser($userId)))
+          {
+            $this->setVar('account_stats', $stats);
+            $this->setVar('account_username', $userName);
+
+            $logDesc = "${stats['stories']} stories, ${stats['flashcards']} flashcards, ${stats['keywords']} keywords";
+
+            $log = new UserDeleteLog();
+            $log->logUserDeletion($userId, $userName, $userDetails['joindate'], $logDesc);
+
+            $this->getUser()->signOutAndClearCookie();
+
+            return 'Done';
+          }
+          else
+          {
+            // code...
+            $request->setError('db', 'Oops, the delete operation failed. Please try again in a minute.');
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Edit Account
    *
    */
@@ -333,8 +415,7 @@ class accountActions extends sfActions
         $this->username = $this->getUser()->getUserName();
   
         // log out user (sign out, clear cookie)
-        $this->getUser()->signOut();
-        $this->getUser()->clearRememberMeCookie();
+        $this->getUser()->signOutAndClearCookie();
         
         try
         {

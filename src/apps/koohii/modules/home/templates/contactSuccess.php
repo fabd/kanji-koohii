@@ -13,7 +13,7 @@
 
     <p style="color:#484"><em><span class="required-legend">*</span> Please provide a valid email address, it will only be used to reply to your message.</em></p>
 
-    <div class="padded-box-inset mb-1" style="max-width:600px">
+    <div class="padded-box rounded mb-3" style="max-width:600px">
 
       <?php echo form_errors() ?>
       <?php echo form_tag('home/contact', ['class'=>'block']) ?>
@@ -55,9 +55,9 @@ App.ready(function() {
       The <strong>contact form</strong> is available to members only (please <?= link_to('sign in', '@login') ?>).
     </p>
 
-    <div class="padded-box-inset mb-1" style="max-width:600px">
+    <div class="padded-box rounded mb-3" style="max-width:600px">
 
-        <p class="mb-p50">
+        <p class="mb-2">
           <strong>If you are unable to sign in</strong>, contact:<br>
           <br>
           kanji &bull; koohii &#65312; gmail &bull; com

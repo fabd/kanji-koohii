@@ -10,7 +10,7 @@
 
 ## About Remembering the Kanji {#help-rtk}
 
-<div id="whatisrtk_box" class="padded-box-inset no-gutter-xs-sm mb-2" markdown="1">
+<div id="whatisrtk_box" class="padded-box rounded no-gutter-xs-sm mb-8" markdown="1">
 
   <div class="book">
     <img src="/images/3.0/help/rtk-book-cover.gif" width="137" height="205" class="css3-ssh" />

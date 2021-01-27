@@ -1,8 +1,8 @@
 
-<div id="browse" class="no-gutter-xs-sm mb-d-1">
+<div id="browse" class="no-gutter-xs-sm md:mb-4">
   <div class="flex flex-g-s">
 
-    <div class="study-search_input col-m col-d-12 col-g mb-d-p50">
+    <div class="study-search_input col-m col-d-12 col-g md:mb-2">
         <?php echo input_tag('search', '', [
           'class'       => 'form-control',
           'maxlength'   => 32,

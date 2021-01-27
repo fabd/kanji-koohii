@@ -70,6 +70,11 @@ RUN cd /root \
     && printf '"\e[A": history-search-backward\n"\e[B": history-search-forward' > /root/.inputrc \
     && printf '\n\n"\e[1;5D": backward-word\n"\e[1;5C": forward-word' >> /root/.inputrc
 
+# Setup a non-UTC timezone for checking the proper handling of dates & times in the app
+ENV TZ=Europe/Brussels
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
 EXPOSE 80
 EXPOSE 443
 EXPOSE 8080

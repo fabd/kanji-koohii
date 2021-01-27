@@ -14,6 +14,12 @@
 
 @import "./_theme.scss";
 
+// (2021/01) a subset of tailwind utilities for legacy templates
+@import "./utils/tailwind";
+
+// (2021/01) Sass based utilities
+@import "./utils/utilities";
+
 
 /* ---------------------------- */
 /* RESPONSIVE utilities */
@@ -97,6 +103,11 @@ blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
 
   /* default non-colored, subdued */
 .btn-ghost   { color:#6f6961; background-color:inherit; border-color:$--clr-bg-1s; }
+.btn-ghost-danger {
+  background-color: transparent;
+  border-color: currentColor;
+  color: $--clr-danger-text;
+}
 
 .btn-default { background-color:$--clr-bg-1; color:#444; border-color:$--clr-bg-1s; }
 
@@ -108,41 +119,6 @@ blockquote { font-size:inherit; border-left:none; color:#7f7d75; }
 .btn-go        { color:#fff; background-color:#5cb85c; border:none; border-bottom:3px solid #318a31; }
 .btn-go:active, .btn-go:hover { color:#fff; border-bottom-width:1px; margin-top:2px; }
 .btn-lg.btn-go { padding:12px 16px 10px; }
-
-
-/* ---------------------------- */
-/* "Atomic" style rules (will come more useful with Vue components) */
-/* ---------------------------- */
-
-/* spacing (use Bootstrap 4 conventions for potential refactor to v4) */
-.mt-p33 { margin-bottom:0.33em; }
-.mt-1   { margin-top:1em; }
-.mt-2   { margin-top:2em; }
-
-.mb-p33 { margin-bottom:0.33em; }
-.mb-p50 { margin-bottom:0.5em; }
-
-.mb-0   { margin-bottom:0; }
-.mb-1   { margin-bottom:1em; }
-.mb-2   { margin-bottom:2em; }
-
-/*.d-t    { display:table; width:100%; }*/
-/*.d-tc   { display:table-cell; }*/
-
- /* text */
-.txt-lg { font-size:1.4em; }
-
-.ta-r   { text-align:right; }
-.ws-nw  { white-space:nowrap; }
-
-.va-m   { vertical-align:middle; }
-
-/* spacing for desktop (bootstrap-md-lg) */
-@media (min-width:992px) {
-  .mb-d-1   { margin-bottom:1em; }
-  .mb-d-p50 { margin-bottom:0.5em; }
-}
-
 
 /**
  * Flex layout (minimal) (refactor later maybe with BS4)
@@ -248,7 +224,6 @@ p.small { line-height:1.2em; color:#666; }
 h1, h2, h3, h4, h5 { margin:0 0 1em; color:#7f7d85; }
 
  /*h3 { color:#fa3d60; }*/
- /*.padded-box-inset h3 { color:#7f7d75; }*/
 
 h1 { font-size:13px; font-family:Verdana, sans-serif; }
 h2 { font-weight:normal;  margin:0 0 0.5em; }
@@ -310,8 +285,6 @@ a.admin-edit { font-size:80%; letter-spacing:normal; color:#408040; text-decorat
 
 /* content boxes */
 .padded-box       { padding:14px 16px; background-color:$--clr-bg-1; }
- /* inset box is rounded */
-.padded-box-inset { padding:14px 16px; background-color:$--clr-bg-1; border-radius:3px; }
 
 
 /* ---------------------------- */
@@ -344,10 +317,6 @@ div.uiPagerDiv div.uiFilterStd a { padding:4px 5px 4px; }
 /* tables, base rules */
 table.layout { width:100%; border:none; margin:0 0 1em; }
 table.layout td { vertical-align:top; padding:0; }
-table td.ta-center { text-align:center; }
-table td.ta-right  { text-align:right; }
-table td.va-middle { vertical-align:middle; }
-table td.va-bottom { vertical-align:bottom; }
 
 table.shaded td { padding:5px 10px; background:#f2efd7; }
 

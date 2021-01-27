@@ -5,7 +5,7 @@
 
     <h2>Sign in</h2>
 
-  <div class="padded-box-inset mb-2" style="max-width:380px">
+  <div class="padded-box rounded mb-8" style="max-width:380px">
 
 <?php
     echo form_errors();

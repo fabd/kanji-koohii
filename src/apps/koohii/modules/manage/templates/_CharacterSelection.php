@@ -1,5 +1,5 @@
 <?php use_helper('CJK') ?>
-<div id="mng-cards" class="padded-box-inset">
+<div id="mng-cards" class="padded-box rounded">
  <div class="scroll">
   <?php foreach($cards as $ucsId): ?>
     <div class="fc">

@@ -247,16 +247,13 @@ class rtkUser extends sfBasicSecurityUser
     UsersPeer::setLastlogin($user['userid']);
   }
 
-  /**
-   * Sign Out the user, sets user as "Guest"
-   * 
-   * @return 
-   */
-  public function signOut()
+  public function signOutAndClearCookie()
   {
     $this->getAttributeHolder()->clear();
     $this->clearCredentials();
     $this->setAuthenticated(false);
+
+    $this->clearRememberMeCookie();
   }
 
   public function isAdministrator()

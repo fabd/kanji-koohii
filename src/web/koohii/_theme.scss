@@ -6,15 +6,35 @@
  */
 
 $--clr-bg-body: #f4f0e5;
-$--clr-bg-1:    #e7e1d3;     /* shaded background 1 */
-$--clr-bg-nav:  #ede8de;     /* top nav background color */
- 
-$--clr-bg-1m:   #ede8de;     /* subdued background 1 (lighter) */
-$--clr-bg-1s:   #d4cdba;     /* subdued background 1 : border */
+$--clr-bg-1: #e7e1d3; /* shaded background 1 */
+$--clr-bg-nav: #ede8de; /* top nav background color */
 
-$--clr-bg-gl:   #D7EBB4;     /* green backgrounds & text */
-$--clr-bg-gd:   #475636;
-$--clr-tbl-bg:  #f8f6ef;     /* widgets: table row (slightly brighter than CSS_BG_1) */
+$--clr-bg-1m: #ede8de; /* subdued background 1 (lighter) */
+$--clr-bg-1s: #d4cdba; /* subdued background 1 : border */
 
-$--clr-srs-due:   #f7a247;   /* text color for due/undue cards */
+$--clr-bg-gl: #d7ebb4; /* green backgrounds & text */
+$--clr-bg-gd: #4c7424;
+$--clr-tbl-bg: #f8f6ef; /* widgets: table row (slightly brighter than CSS_BG_1) */
+
+$--clr-srs-due: #f7a247; /* text color for due/undue cards */
 $--clr-srs-undue: #72c569;
+
+$--clr-danger-text: #9f0e0b;
+$--clr-danger-bg: #d9534f;
+
+// --------------------------------------------------------------------
+// These may go in Tailwind config later.
+// 
+//   UNDECIDED
+//   - put all colors in Tailwind, regardless of bg/fg
+//   - put color variables and utilities in Sass
+// --------------------------------------------------------------------
+.text-danger {
+  color: $--clr-danger-text;
+}
+.bg-confirm {
+  background-color: $--clr-bg-gl;
+}
+.text-confirm {
+  color: $--clr-bg-gd;
+}

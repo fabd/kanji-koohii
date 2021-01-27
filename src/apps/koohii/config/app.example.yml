@@ -56,8 +56,9 @@ all:
     # to   (email, name) for contact page form
     email_feedback_to: { email: 'feedback@koohii.local',  name: 'Fabrice' }
 
-  # Server timezone to adjust MySQL time to the local time of the user
-  server_timezone:   0
+  # MySQL server timezone to adjust date/times to the local time of the user
+  #   cf. setting in mysql Dockerfile !
+  server_timezone:   -6
 
   # The full URL for the application
   website_url:       'http://localhost'

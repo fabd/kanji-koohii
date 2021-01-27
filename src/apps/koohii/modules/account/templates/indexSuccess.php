@@ -12,7 +12,7 @@
 
   <h3>Statistics</h3>
 
-  <section class="mb-2">
+  <section class="mb-8">
   <table cellspacing="0" class="blocky">
     <tr><th style="width:130px;">Flashcard Count</hd><td><?php
     echo $flashcard_count.' ('.$reviewed_count.' reviewed)';
@@ -23,7 +23,7 @@
 
   <h3>Profile</h3>
 
-  <section class="mb-2">
+  <section class="mb-8">
   <table cellspacing="0" class="blocky">
     <tr><th style="width:130px;">Username</th>
         <td><b><?php echo esc_specialchars($user['username']) ?></b></td></tr>
@@ -47,7 +47,7 @@ if (null === sfConfig::get('app_fork')) {
 ?>
 
   <h3>Patreon</h3>
-  <div class="padded-box-inset">
+  <div class="padded-box rounded">
 <?php if (false !== $patron_info): ?>
   <p>Thank you for supporting Kanji Koohii, <strong><?php echo $patron_info['pa_full_name'] ?></strong>!</p>
 

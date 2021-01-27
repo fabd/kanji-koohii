@@ -19,14 +19,14 @@
   );
 ?>
 
-  <div class="padded-box-inset" style="color:#000;padding:5px 10px; font-size:11px;">
+  <div class="padded-box rounded" style="color:#000;padding:5px 10px; font-size:11px;">
     Note: adding flashcards here will always fill in the gaps if there are any
     missing cards.<br/>
     Use <?php echo link_to('Custom selection', 'manage/addcustom') ?> if you do not plan to add all <?php echo _CJ('RTK') ?> flashcards in order.
   </div>
 
 <?php if (!CJ_HANZI): ?>
-  <div class="padded-box-inset" style="margin:1em 0 0">
+  <div class="padded-box rounded" style="margin:1em 0 0">
     <p>
       23 new characters from the
       <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">RTK Supplement</a>

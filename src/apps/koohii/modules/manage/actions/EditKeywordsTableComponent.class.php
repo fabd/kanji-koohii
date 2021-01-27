@@ -59,7 +59,7 @@ class EditKeywordsTableBinding implements uiSelectTableBinding
         {
           "caption":   "Index",
           "width":     5,
-          "cssClass":  "center",
+          "cssClass":  "text-center",
           "colData":  "seq_nr"
         },
         {
@@ -86,7 +86,7 @@ class EditKeywordsTableBinding implements uiSelectTableBinding
         {
           "caption":   "Edit",
           "width":     5,
-          "cssClass":  "center edit-keyword",
+          "cssClass":  "text-center edit-keyword",
           "colDisplay":   "_edit"
         }
         

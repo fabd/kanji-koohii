@@ -41,7 +41,7 @@ Maintaining and developing new features takes a considerable amount of time. You
 
   <img class="support-logo" style="width:126px" src="https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png"><br>
 
-  <div class="padded-box no-gutter-xs-sm mb-2">
+  <div class="padded-box no-gutter-xs-sm mb-8">
     <p>Patreon is a great way to support this website on an ongoing basis.</p>
 
     <a class="btn btn-lg btn-patreon" href="https://www.patreon.com/kanjikoohii" target="_blank">
@@ -51,7 +51,7 @@ Maintaining and developing new features takes a considerable amount of time. You
 
   <img class="support-logo" style="width:126px" src="/images/3.0/support/paypal.png"><br>
 
-  <div id="support-paypal" class="padded-box no-gutter-xs-sm mb-2">
+  <div id="support-paypal" class="padded-box no-gutter-xs-sm mb-8">
     <p>PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).</p>
 
 <?php if (null === sfConfig::get('app_fork')) { include_partial('_paypalDonateButton'); } ?>
@@ -61,7 +61,7 @@ Maintaining and developing new features takes a considerable amount of time. You
 
   <h3>Current patrons</h3>
 
-  <p class="mb-p50"><strong>Thank you for supporting Kanji Koohii!</strong></p>
+  <p class="mb-2"><strong>Thank you for supporting Kanji Koohii!</strong></p>
 
   <?php $patrons = PatreonPeer::getPatronsList(); ?>
   <div class="padded-box no-gutter-xs-sm">
@@ -76,7 +76,7 @@ Maintaining and developing new features takes a considerable amount of time. You
     $display_name = !empty($pa['username']) ?
       link_to_member($pa['username'], $style) :
       escape_once($pa['pa_full_name']);
-    echo '<li><span class="ws-nw">'.$display_name.'</span></li>';
+    echo '<li><span class="whitespace-nowrap">'.$display_name.'</span></li>';
   }
 ?>
   </ul>

@@ -13,7 +13,6 @@ module.exports = {
       { ignore: ["consecutive-duplicates"] },
     ],
 
-    "scss/dollar-variable-pattern": "^--",
     "scss/selector-no-redundant-nesting-selector": true,
   },
 };

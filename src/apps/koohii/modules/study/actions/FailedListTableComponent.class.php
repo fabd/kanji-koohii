@@ -53,7 +53,7 @@ class FailedListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Framenum",
           "width":     5,
-          "cssClass":  "center",
+          "cssClass":  "text-center",
           "colData":  "seq_nr"
         },
         {
@@ -67,20 +67,20 @@ class FailedListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Pass",
           "width":     8,
-          "cssClass":  "bold center",
+          "cssClass":  "font-bold text-center",
           "colData":  "successcount"
         },
         {
           "caption":   "Fail",
           "width":     8,
-          "cssClass":  "center red",
+          "cssClass":  "text-center red",
           "colData":  "failurecount",
           "colDisplay": "_failurecount"
         },
         {
           "caption":   "Last&nbsp;Review",
           "width":     15,
-          "cssClass":  "center nowrap",
+          "cssClass":  "text-center whitespace-nowrap",
           "colData":  "ts_lastreview",
           "colDisplay":"_lastreview"
         }

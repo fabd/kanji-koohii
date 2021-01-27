@@ -206,11 +206,16 @@
 .uiTabular th a.sortasc { padding-right:12px; background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% -37px; }
 .uiTabular th a.sortdesc { padding-right:12px; background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% -72px; }
 /* tbody */
-.uiTabular td { padding:8px 10px; color:#666; font:13px/1.1em Arial, sans-serif; border-bottom:1px solid #E8E5CA; }
+.uiTabular td {
+  padding:8px 10px;
+  color:#666;
+  font-size:13px;
+  line-height:1.1em;
+  border-bottom:1px solid #E8E5CA;
+}
 .uiTabular tbody td {
   background-color:$--clr-tbl-bg;
-  // default alignments and colors
-  color:#5C5B52; text-align:left;
+  color:#5C5B52;
 }
 .uiTabular tr.odd td { background-color:#fff; }
 /* uiTable hover */
@@ -222,15 +227,10 @@
 
 
 /* CELL STYLES */
-table.uiTabular td.dark { color:#000; }
-table.uiTabular td.bold { font-weight:bold; }
-table.uiTabular td.center { text-align:center; }
-table.uiTabular td.right { text-align:right; }
 table.uiTabular td.editlink { text-align:center; }
 table.uiTabular td.editlinnkk a { color:#21C635; }
 table.uiTabular td.red { color:#C82222; } /* failed reviews */
 table.uiTabular td.compound { color:#000; padding-top:0; padding-bottom:0; }
-table.uiTabular td.nowrap { white-space:nowrap; }
 table.uiTabular td.kanji   { text-align:center; font-size:24px; line-height:1em; color:#000; padding-top:4px; padding-bottom:4px; }
 table.uiTabular td.keyword { text-align:left; font:15px/1em Georgia, serif; white-space:nowrap; }
 

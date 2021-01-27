@@ -4,7 +4,7 @@
 ?>
   
 
-<div id="home-qs" class="row mt-1 mb-2">
+<div id="home-qs" class="row mt-3 mb-8">
  
  <!-- temp fix for wide blog posts until redesign of home screen -->
  <div class="col-md-10 col-md-push-1">
@@ -13,7 +13,7 @@
 
 
   <div class="col-md-4">
-    <div class="box padded-box-inset mb-p50">
+    <div class="box padded-box rounded mb-2">
     <div class="hd">
 <?php 
       if ($countFailed<=0) {
@@ -30,7 +30,7 @@
   </div>
 
   <div class="col-md-4">
-    <div class="box padded-box-inset mb-p50">
+    <div class="box padded-box rounded mb-2">
     <div class="hd">
 <?php 
       if ($countExpired<=0) {
@@ -47,7 +47,7 @@
   </div>
   
   <div class="col-md-4">
-    <div class="box padded-box-inset mb-p50">
+    <div class="box padded-box rounded mb-2">
     <div class="hd">
 <?php 
       if ($progress->heisignum === false) {

@@ -4,12 +4,12 @@
 
   <h2>Spaced Repetition</h2>
 
-  <div id="srs-summary" class="txt-lg mb-p50">
+  <div id="srs-summary" class="text-lg mb-2">
     <span class="total"><strong><?php echo $flashcard_count ?></strong> flashcards</span>
     <span class="today"><strong><?php echo $todayCount ?></strong> reviews today</span>
   </div>
 
-  <div class="mb-2">
+  <div class="mb-8">
 
     <div id="view-pane-all" class="rtk-filter-pane" style="<?php ui_display($filter==='all') ?>">
       

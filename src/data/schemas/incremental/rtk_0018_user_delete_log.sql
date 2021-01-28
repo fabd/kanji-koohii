@@ -28,7 +28,7 @@ CREATE TABLE `log_user_delete` (
   `created_on`   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `userid`       MEDIUMINT(4) UNSIGNED NOT NULL,
   `username`     varchar(200) NOT NULL DEFAULT '',
-  `joindate`     TIMESTAMP NOT NULL DEFAULT '0',
+  `joindate`     TIMESTAMP NOT NULL DEFAULT '0000-00-00',
   `logdesc`      VARCHAR(200) NOT NULL DEFAULT '',
   KEY `created_on` (`created_on`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

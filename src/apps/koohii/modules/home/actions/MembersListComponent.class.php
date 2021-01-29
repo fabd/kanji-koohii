@@ -59,7 +59,7 @@ class MembersListBinding implements uiSelectTableBinding
         {
           "caption":   "Last review",
           "width":     25,
-          "cssClass": "text-center,
+          "cssClass": "text-center",
           "colData":  "ts_lastreview",
           "colDisplay":"_lastreview"
         },

@@ -925,7 +925,23 @@ div.col-box-bis {
 /* Markdown content */
 /* ---------------------------- */
 
+$--color-blog-heading: #fa3d60;
+
 @import "./_markdown.scss";
+
+/* Site news (posts using markdown) */
+#sitenews .markdown h2,
+#sitenews .markdown h3 {
+  color: #000;
+  font-weight: normal;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+#sitenews .markdown h2:not(:first-of-type),
+#sitenews .markdown h3:not(:first-of-type) {
+  margin-top: calc(var(--vunit) * 2);
+}
 
 /* ---------------------------- */
 /* Site news (old posts using raw html) */
@@ -949,13 +965,13 @@ div.col-box-bis {
 /* titles */
 #sitenews h2 {
   font-size: 18px;
-  margin: 0 0 1em;
+  margin: 0 0 1.25em;
   padding: 0.2em 0 0.5em;
-  border-bottom: 1px solid $--clr-bg-1s;
+  border-bottom: 1px solid $--color-blog-heading;
 }
 
 #sitenews h2 a {
-  color: #fa3d60;
+  color: $--color-blog-heading;
   text-decoration: none;
   font-weight: bold;
 }
@@ -965,8 +981,8 @@ div.col-box-bis {
   padding: 4px 5px;
   margin-top: -4px;
   border-radius: 3px;
-  color: #6c6c6c;
-  background: #e7e1d3;
+  color: #568249;
+  background: #dff7d3;
 }
 
 #sitenews .hd a {
@@ -985,7 +1001,6 @@ div.col-box-bis {
   padding: 0 0 2em; /*border-bottom:1px solid $--clr-bg-1;*/
   color: #3c3c3c;
   clear: both;
-  text-align: justify;
 }
 
 #sitenews blockquote,

@@ -14,14 +14,14 @@
  */
 
 import Vue, { VueConstructor } from "vue";
-import { KoohiiAPI } from "@lib/KoohiiAPI";
+import { KoohiiAPI } from "@lib/api/api";
 import Lang from "@lib/koohii/lang";
 import Dom from "@lib/koohii/dom";
 import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
 
 declare global {
   export interface KoohiiGlobals {
-    API?: typeof KoohiiAPI; //KoohiiAPIInterface
+    API?: KoohiiAPI;
     Dom: typeof Dom;
     // *instances* of components, shared between misc. legacy Javascripts
     Refs: {

@@ -363,7 +363,7 @@ class studyActions extends sfActions
    * 
    * Request parameters:
    * 
-   *   ucs_code           number
+   *   ucsCode            number
    *   
    *   reviewMode         boolean    True if used from the Review page EditStory window.
    *   
@@ -377,10 +377,10 @@ class studyActions extends sfActions
   public function executeEditstory($request)
   {
     // FIXME - temporary compat. with AjaxDialog (YUI2 Connect) in Flashcard Review page
-    if ($request->hasParameter('ucs_code'))  {
+    if ($request->hasParameter('ucsCode'))  {
       // pretend we received application/json in POST body
       $json = (object) [
-        'ucs_code'   => $request->getParameter('ucs_code'),
+        'ucsCode'   => $request->getParameter('ucsCode'),
         'reviewMode' => true
       ];
     }
@@ -392,7 +392,7 @@ class studyActions extends sfActions
 
     //
     $userId     = $this->getUser()->getUserId();
-    $ucsId      = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs_code);
+    $ucsId      = rtkValidators::sanitizeCJKUnifiedUCS($json->ucsCode);
     $reviewMode = (bool) $json->reviewMode;
 
     //
@@ -669,13 +669,13 @@ class studyActions extends sfActions
    * JSON request:
    *
    *   ucs               UCS-2 code of the character to lookup.
-   *   req_known_kanji   (OPTIONAL) Also return a string of known kanji
+   *   reqKnownKanji   (OPTIONAL) Also return a string of known kanji
    *
    * Returns:
    *
    *   items             Array of vocab entries (compound, reading, etc)
    *   picks             Array of user's selected vocab ([dictid, ...])
-   *   known_kanji       (IF "req_known_kanji") String of known kanji 
+   *   knownKanji       (IF "reqKnownKanji") String of known kanji 
    *
    */
   public function executeDict($request)
@@ -691,8 +691,8 @@ class studyActions extends sfActions
     $tron->set('items', $this->getDictListItems($ucsId));
     $tron->set('picks', VocabPicksPeer::getUserPicks($userId, $ucsId));
 
-    if (true === $json->req_known_kanji) {
-      $tron->set('known_kanji', $this->getUser()->getUserKnownKanji());
+    if (true === $json->reqKnownKanji) {
+      $tron->set('knownKanji', $this->getUser()->getUserKnownKanji());
     }
 // sleep(1);
     return $tron->renderJson($this);

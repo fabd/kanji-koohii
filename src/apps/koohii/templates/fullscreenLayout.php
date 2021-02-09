@@ -52,6 +52,8 @@ body { padding-top:0;  }
 <!--[if lt IE 9]></div><![endif]-->
 
 <?php
+  echo '<script>'.koohii_base_url()."</script>\n";
+
   // all 'first' so the bundles in view.yml files come last
   $sf_response->addJavascript(implode([KK_WEBPACK_ROOT,'vendors-bundle',$build,'.js']), 'first');  
   $sf_response->addJavascript(implode([KK_WEBPACK_ROOT,'review-bundle',$build,'.js']), 'first');
@@ -61,7 +63,6 @@ body { padding-top:0;  }
 
   echo
     "<script>\n" .
-    koohii_base_url() .
     get_slot('inline_javascript') .
     "</script>\n";
 ?>

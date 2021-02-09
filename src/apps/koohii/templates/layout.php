@@ -59,7 +59,8 @@
 <?php endif ?>
 <?php if (KK_ENV_PROD) { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
 </head>
-<body class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
+<body
+  class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
   <div id="body-navbar-holder"></div>
 <?php /*AjaxDebug (app.js)*/ if (KK_ENV_DEV): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
 
@@ -79,6 +80,8 @@
 <?php } ?>
 
 <?php
+  echo '<script>'.koohii_base_url()."</script>\n";
+
   // javascript bundles
   $fnAddBundles(false);
 
@@ -91,7 +94,6 @@
 
   echo
     "<script>\n" .
-    koohii_base_url() .
     get_slot('inline_javascript') .
     "</script>\n";
 ?>

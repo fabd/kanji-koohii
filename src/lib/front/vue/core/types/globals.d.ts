@@ -14,8 +14,8 @@
  */
 
 import Vue, { VueConstructor } from "vue";
-import { KoohiiAPI } from "@lib/api/api";
-import Lang from "@lib/koohii/lang";
+import { KoohiiAPI } from "@core/api";
+import Lang from "@core/lang";
 import Dom from "@lib/koohii/dom";
 import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
 

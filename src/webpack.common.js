@@ -134,6 +134,7 @@ module.exports = {
       vue: "vue/dist/vue.common.js",
 
       "@components": path.resolve(__dirname, "lib/front/vue/components"),
+      "@core": path.resolve(__dirname, "lib/front/vue/core"),
       "@legacy": path.resolve(__dirname, "lib/front/vue/legacy"),
       "@lib": path.resolve(__dirname, "lib/front/vue/lib"),
       "@web": path.resolve(__dirname, "web"),

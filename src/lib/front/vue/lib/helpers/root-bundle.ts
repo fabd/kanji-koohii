@@ -18,7 +18,7 @@ import KoohiiAside from "@components/Aside.js";
 
 // export utilities to the legacy front end
 import Dom from "@lib/koohii/dom";
-import Lang from "@lib/koohii/lang";
+import Lang from "@core/lang";
 import VueInstance from "@lib/helpers/vue-instance";
 
 export function init() {

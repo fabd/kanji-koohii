@@ -24,7 +24,7 @@
 import Vue from "vue";
 import Component from "./KoohiiLoading.vue";
 import { classList, getStyle } from "@lib/koohii/dom";
-import Lang, { merge } from "@lib/koohii/lang";
+import Lang from "@core/lang";
 
 /*
 interface KoohiiLoadingInstance extends Vue {
@@ -57,8 +57,6 @@ export default {
     let target = options.target;
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
-
-    options = merge({}, /*defaults,*/ options);
 
     const LoadingConstructor = Vue.extend(Component);
     const instance = new LoadingConstructor({

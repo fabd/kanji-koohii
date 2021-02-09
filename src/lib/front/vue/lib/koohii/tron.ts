@@ -1,16 +1,12 @@
 /**
- * A simple wrapper around JSON messages to standardize error handling in the ux
+ * TRON is a simple wrapper around JSON messages.
+ *
+ * The main idea is that the UX never needs to deal with HTTP response codes,
+ * or any server failure. From the point of view of the UX (ie. Vue components)
+ * the operation is either succesful or not, and the response is *always* in
+ * a standard format, even if the request or connection failed.
  *
  * Corresponds to backend lib/JsTron.php
- *
- *
- * Example:
- *
- *   import * as TRON from "@lib/koohii/tron"
- *
- *   interface UserVote { storyId: number, vote: boolean }
- *   let t = TRON.Inst<UserVote>(json)
- *   t.isSuccess() && console.log(t.getProps().storyId)
  *
  *
  * Methods:
@@ -28,12 +24,12 @@
  *
  */
 
-import Lang, { merge } from "./lang";
+import Lang from "@core/lang";
 
 // keep in sync with constants in /lib/JsTRON.php
 
 // TRON message was not found in given source
-export enum STATUS {
+export const enum STATUS {
   EMPTY = -1,
   // a form submission contains errors, or a blocker (do not close ajax dialog)
   FAILED = 0,
@@ -45,9 +41,9 @@ export enum STATUS {
 
 type Hash = { [key: string]: any };
 
-export interface TronMessage {
+export interface TronMessage<T = Hash> {
   status: STATUS;
-  props: Hash;
+  props: T;
   errors: string[];
 }
 
@@ -62,11 +58,15 @@ export interface TronInst<T = any> {
   setErrors(...errors: string[]): void;
 }
 
-export function Inst<T>(message: Partial<TronMessage>): TronInst<T> {
+export function Inst<T = any>(message: Partial<TronMessage>): TronInst<T> {
   console.assert(Lang.isObject(message), "TRON() : json is not an object");
 
-  let tronObj: TronMessage = { status: STATUS.EMPTY, props: {}, errors: [] };
-  merge(tronObj, message);
+  const emptyTronMsg: TronMessage = {
+    status: STATUS.EMPTY,
+    props: {},
+    errors: [],
+  };
+  const tronObj = { ...emptyTronMsg, ...message };
 
   const inst = {
     isEmpty: () => tronObj.status === STATUS.EMPTY,

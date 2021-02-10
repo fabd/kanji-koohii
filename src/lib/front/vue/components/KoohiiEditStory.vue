@@ -141,7 +141,6 @@ import Vue from "vue";
 import $$, { insertAfter } from "@lib/koohii/dom";
 import {
   KanjiData,
-  KoohiiAPI,
   KoohiiApiPostUserStoryResponse,
   TRON,
 } from "@lib/KoohiiAPI";
@@ -243,23 +242,20 @@ export default Vue.extend({
     onSubmit() {
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
-      KoohiiAPI.postUserStory(
-        {
-          ucsId: this.kanjiData.ucs_id,
-          txtStory: this.postStoryEdit,
-          isPublic: this.postStoryPublic,
-          reviewMode: this.isReviewMode,
-        },
-        {
-          then: (tron) => {
-            KoohiiLoading.hide();
-            this.formHandleResponse(tron);
-            if (!tron.hasErrors()) {
-              this.onSaveStoryResponse(tron.getProps());
-            }
-          },
-        }
-      );
+      this.$api.legacy
+        .postUserStory(
+          this.kanjiData.ucs_id,
+          this.postStoryEdit,
+          this.postStoryPublic,
+          this.isReviewMode
+        )
+        .then((tron) => {
+          KoohiiLoading.hide();
+          this.formHandleResponse(tron);
+          if (!tron.hasErrors()) {
+            this.onSaveStoryResponse(tron.getProps());
+          }
+        });
     },
 
     onSaveStoryResponse(props: KoohiiApiPostUserStoryResponse) {

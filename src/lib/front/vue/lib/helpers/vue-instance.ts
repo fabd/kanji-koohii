@@ -10,7 +10,7 @@
  *
  */
 
-import Lang from "@lib/koohii/lang";
+import Lang from "@core/lang";
 import Vue from "vue";
 import { VueConstructor } from "vue/types/umd";
 // import { PropOptions, PropsDefinition } from "vue/types/options";

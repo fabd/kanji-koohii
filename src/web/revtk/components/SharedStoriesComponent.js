@@ -152,9 +152,11 @@
         // NOTE! refactoring legacy AjaxRequest to the lib/front/vue/ api
         var elClickedStory = this.getStoryParentDiv(span);
         var that = this;
-        Koohii.API.ajaxSharedStory(params, { then: function(t) {
-          that.onAjaxResponse(t, elClickedStory);
-        }});
+        
+        Koohii.API.legacy.ajaxSharedStory(params)
+          .then((tron) => {
+            that.onAjaxResponse(tron, elClickedStory);
+          });
       }
 
       return;

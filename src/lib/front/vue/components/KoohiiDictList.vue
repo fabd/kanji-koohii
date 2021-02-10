@@ -63,13 +63,7 @@
  *
  */
 import Vue from "vue";
-
-import {
-  DictId,
-  DictListEntry,
-  KoohiiAPI,
-  KoohiiApiGetDictListForUCSResponse,
-} from "@lib/KoohiiAPI";
+import { DictId, DictListEntry, GetDictListForUCS } from "@core/api/models";
 
 // comps
 import CjkLangJa from "@components/CjkLangJa.vue";
@@ -185,16 +179,11 @@ export default Vue.extend({
           target: this.$refs.refLoadingMask as HTMLElement,
         });
 
-        KoohiiAPI.setVocabForCard(
-          { ucs: this.ucsId, dictid: item.id },
-          {
-            then: (tron) => {
-              KoohiiLoading.hide();
-              // success:  show vocab onto the flashcard, and close the dictionary
-              tron.isSuccess() && this.onVocabPickResponse(item);
-            },
-          }
-        );
+        this.$api.legacy.setVocabForCard(this.ucsId, item.id).then((tron) => {
+          KoohiiLoading.hide();
+          // success:  show vocab onto the flashcard, and close the dictionary
+          tron.isSuccess() && this.onVocabPickResponse(item);
+        });
       }
       // remove
       else {
@@ -202,15 +191,10 @@ export default Vue.extend({
           target: this.$refs.refLoadingMask as HTMLElement,
         });
 
-        KoohiiAPI.deleteVocabForCard(
-          { ucs: this.ucsId },
-          {
-            then: (tron) => {
-              KoohiiLoading.hide();
-              tron.isSuccess() && this.onVocabDeleteResponse(item);
-            },
-          }
-        );
+        this.$api.legacy.deleteVocabForCard(this.ucsId).then((tron) => {
+          KoohiiLoading.hide();
+          tron.isSuccess() && this.onVocabDeleteResponse(item);
+        });
       }
     },
 
@@ -257,30 +241,24 @@ export default Vue.extend({
         //   even though they are also cached in php session, it's better to avoid returning
         //   several KBs of data with each dictionary lookup request
 
-        KoohiiAPI.getDictListForUCS(
-          {
-            ucsId: ucsId,
-            getKnownKanji: false === this.isSetKnownKanji,
-          },
-          {
-            then: (tron) => {
-              this.ucsId = ucsId;
-              this.onDictLoadResponse(tron.getProps());
-            },
-          }
-        );
+        this.$api.legacy
+          .getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
+          .then((tron) => {
+            KoohiiLoading.hide();
+            tron.isSuccess() && this.onDictLoadResponse(ucsId, tron.getProps());
+          });
       };
 
       this.$nextTick(doLoad);
     },
 
-    onDictLoadResponse(props: KoohiiApiGetDictListForUCSResponse) {
+    onDictLoadResponse(ucsId: number, props: GetDictListForUCS) {
       console.log("onDictLoadResponse(%o)", props);
-      // return
-      KoohiiLoading.hide();
 
-      if (props.known_kanji) {
-        this.knownKanji = props.known_kanji;
+      this.ucsId = ucsId;
+
+      if (props.knownKanji) {
+        this.knownKanji = props.knownKanji;
         this.isSetKnownKanji = true;
       }
 
@@ -295,8 +273,8 @@ export default Vue.extend({
     },
 
     setKnownItems(items: DictListEntry[], knownKanji: string): DictListEntry[] {
-      // if (this.known_kanji !== '') {
-      //   console.log(' known_kanji : ' + this.known_kanji)
+      // if (this.knownKanji !== '') {
+      //   console.log(' knownKanji : ' + this.knownKanji)
       // }
       const KNOWN_KANJI = knownKanji + HIRAGANA + KATAKANA + PUNCTUATION;
 

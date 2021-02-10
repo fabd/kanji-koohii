@@ -239,5 +239,5 @@ function koohii_onload_slot() {
 }
 
 function koohii_base_url() {
-  return 'if (window.App) { App.KK_BASE_URL = "'.url_for('@homepage', true)."\"; }\n";
+  return 'window.KK_BASE_URL = "'.url_for('@homepage', true).'";';
 }

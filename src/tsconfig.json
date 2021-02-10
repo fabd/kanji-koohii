@@ -35,12 +35,12 @@
       "@components/*": [
         "./lib/front/vue/components/*"
       ],
+      "@core/*": [
+        "./lib/front/vue/core/*"
+      ],
       "@lib/*": [
         "./lib/front/vue/lib/*"
       ],
-      "@ts/*": [
-        "lib/front/vue/types/*"
-      ]
     },
     // /////////////////////////////////////////////////////////////////
     // things added by @vue/cli-plugin-typescript

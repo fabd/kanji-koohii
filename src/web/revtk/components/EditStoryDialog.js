@@ -39,7 +39,7 @@
 
       var dlgopts = {
         requestUri:  this.requestUri,
-        requestData: { ucs_code: ucsId, reviewMode: true },
+        requestData: { ucsCode: ucsId, reviewMode: true },
         skin:        isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
         mobile:      isMobile,
         close:       !isMobile,
@@ -108,7 +108,7 @@
 
       this.ucsId = ucsId;
       
-      this.dialog.getAjaxPanel().get({ucs_code: ucsId, reviewMode: true}, this.requestUri);
+      this.dialog.getAjaxPanel().get({ucsCode: ucsId, reviewMode: true}, this.requestUri);
     },
 
     show: function()

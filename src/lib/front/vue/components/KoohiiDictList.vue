@@ -244,20 +244,18 @@ export default Vue.extend({
         this.$api.legacy
           .getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
           .then((tron) => {
-            if (tron.isSuccess()) {
-              this.ucsId = ucsId;
-              this.onDictLoadResponse(tron.getProps());
-            }
+            KoohiiLoading.hide();
+            tron.isSuccess() && this.onDictLoadResponse(ucsId, tron.getProps());
           });
       };
 
       this.$nextTick(doLoad);
     },
 
-    onDictLoadResponse(props: GetDictListForUCS) {
+    onDictLoadResponse(ucsId: number, props: GetDictListForUCS) {
       console.log("onDictLoadResponse(%o)", props);
-      // return
-      KoohiiLoading.hide();
+
+      this.ucsId = ucsId;
 
       if (props.knownKanji) {
         this.knownKanji = props.knownKanji;

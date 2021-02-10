@@ -39,9 +39,9 @@ export const enum STATUS {
   PROGRESS = 2,
 }
 
-type Hash = { [key: string]: any };
+export type TronProps = Dictionary<any>;
 
-export interface TronMessage<T = Hash> {
+export interface TronMessage<T = TronProps> {
   status: STATUS;
   props: T;
   errors: string[];

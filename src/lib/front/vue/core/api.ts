@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import {
   GetDictListForUCS,
   PostUserStoryResponse,
@@ -15,6 +15,9 @@ export type KoohiiAPI = {
   legacy: LegacyApi;
 };
 
+type ApiRequestConfig = Pick<AxiosRequestConfig, "method" | "params" | "data">;
+
+// HttpClient() is a wrapper for axios, which never fails & always returns a TRON message
 abstract class HttpClient {
   protected readonly axiosInst: AxiosInstance;
 
@@ -23,52 +26,84 @@ abstract class HttpClient {
       baseURL: baseURL,
       timeout: API_DEFAULT_TIMEOUT,
     });
-
-    this._initResponseInterceptors();
   }
 
-  private _initResponseInterceptors = () => {
-    this.axiosInst.interceptors.response.use(
-      // Any status code that lie within the range of 2xx cause this function to trigger
-      this._responseThenInterceptor,
-      // Any status codes that falls outside the range of 2xx cause this function to trigger
-      this._responseCatchInterceptor
-    );
-  };
-
-  private _responseThenInterceptor(response: AxiosResponse) {
-    console.log("HttpClient then() interceptor %o", response);
-
-    return response;
+  // axios.get() proxy
+  public get<T = TRON.TronProps>(uri: string, params: any) {
+    const config: ApiRequestConfig = {
+      method: "get",
+      params,
+    };
+    return this.request<T>(uri, config);
   }
 
-  protected _responseCatchInterceptor(error: AxiosError) {
-    // console.warn("HttpClient catch() - %o", error);
+  // axios.post() proxy
+  public post<T = TRON.TronProps>(uri: string, data: any) {
+    const config: ApiRequestConfig = {
+      method: "post",
+      data,
+    };
+    return this.request<T>(uri, config);
+  }
 
-    let t = TRON.Inst<any>({ status: TRON.STATUS.FAILED });
+  // generic axios request() which handles the catch() and always resolves to a TRON message
+  protected request<T>(uri: string, config: ApiRequestConfig) {
+    let requestConfig: AxiosRequestConfig = {
+      method: config.method || "get",
+      url: uri,
+      params: config.params || null, // url parameters
+      data: config.data || null, // request body, only PUT/POST/DELETE/PATCH
+    };
 
-    // The server responded with a status code that falls out of the range of 2xx
-    if (error.response) {
-      // response { data, status, headers }
-      console.warn("HttpClient(response error): status code ", error.response.status);
-      t.setErrors(`Oops! Server responded with error ${error.response.status}`);
-    }
-    // The request was made but no response was received
-    //  `error.request` is an instance of XMLHttpRequest in the browser
-    else if (error.request) {
-      console.warn("HttpClient(request error): ", error);
-      t.setErrors(`Oops! The request timed out.`);
-    }
-    // Something happened in setting up the request that triggered an Error
-    else {
-      console.warn("HttpClient(unknown error): ", error.message);
-      t.setErrors("Request error");
-    }
+    return this.axiosInst
+      .request(requestConfig)
+      .then((res) => {
+        const t = TRON.Inst<T>(res.data);
 
-    return Promise.reject(error);
+        // helps debugging during development
+        if (t.getStatus() === TRON.STATUS.FAILED || t.hasErrors()) {
+          console.warn(
+            "HttpClient() TRON error(s): \n" + t.getErrors().join("\n")
+          );
+        }
+
+        return t;
+      })
+      .catch((error) => {
+        // we basically never want to fail, and always return a valid tron message
+
+        let t = TRON.Inst<T>({ status: TRON.STATUS.FAILED });
+
+        // The request was made and the server responded with a status code that falls out of the range of 2xx
+        if (error.response) {
+          console.warn(
+            "HttpClient(response error): status code ",
+            error.response.status
+          );
+          t.setErrors(
+            `Oops! Server responded with error ${error.response.status}`
+          );
+        }
+        // The request was made but no response was received -- `error.request` is an instance of XMLHttpRequest in the browser
+        else if (error.request) {
+          console.warn("HttpClient(request error): ", error);
+          t.setErrors(
+            `Oops! The request timed out, please try again in a moment.`
+          );
+        }
+
+        // Something happened in setting up the request that triggered an Error
+        else {
+          console.warn("HttpClient(unknown error): ", error.message);
+          t.setErrors("Request error");
+        }
+
+        return Promise.resolve(t);
+      });
   }
 }
 
+// a singleton class api for the legacy ajax endpoints, *always* resolves to TRON message
 export class LegacyApi extends HttpClient {
   private static instance?: LegacyApi;
 
@@ -90,48 +125,36 @@ export class LegacyApi extends HttpClient {
     isPublic: boolean,
     reviewMode: boolean
   ) {
-    return this.axiosInst
-      .post<TRON.TronMessage>("/study/editstory", {
-        ucsCode: ucsId,
-        reviewMode,
-        postStoryEdit: txtStory,
-        postStoryPublic: isPublic,
-      })
-      .then((res) => TRON.Inst<PostUserStoryResponse>(res.data));
+    return this.post<PostUserStoryResponse>("/study/editstory", {
+      ucsCode: ucsId,
+      reviewMode,
+      postStoryEdit: txtStory,
+      postStoryPublic: isPublic,
+    });
   }
 
   // Shared Stories action : star / report / copy
   ajaxSharedStory(params: PostVoteStoryRequest) {
-    return this.axiosInst
-      .post<TRON.TronMessage>("/study/ajax", params)
-      .then((res) => TRON.Inst<PostVoteStoryResponse>(res.data));
+    return this.post<PostVoteStoryResponse>("/study/ajax", params);
   }
 
   // get vocab entries for the Dictionary (example words for given kanji)
   getDictListForUCS(ucsId: number, getKnownKanji: boolean) {
-    return this.axiosInst
-      .get<TRON.TronMessage>("/study/dict", {
-        params: {
-          ucs: ucsId,
-          reqKnownKanji: getKnownKanji,
-        },
-      })
-      .then((res) => TRON.Inst<GetDictListForUCS>(res.data));
+    return this.get<GetDictListForUCS>("/study/dict", {
+      ucs: ucsId,
+      reqKnownKanji: getKnownKanji,
+    });
   }
 
   setVocabForCard(ucs: number, dictid: number) {
-    return this.axiosInst
-      .post<TRON.TronMessage>("/study/vocabpick", {
-        ucs: ucs,
-        dictid: dictid,
-      })
-      .then((res) => TRON.Inst(res.data));
+    return this.post("/study/vocabpick", {
+      ucs: ucs,
+      dictid: dictid,
+    });
   }
 
   deleteVocabForCard(ucs: number) {
-    return this.axiosInst
-      .post<TRON.TronMessage>("/study/vocabdelete", { ucs })
-      .then((res) => TRON.Inst(res.data));
+    return this.post("/study/vocabdelete", { ucs });
   }
 }
 

@@ -39,15 +39,15 @@ export const enum STATUS {
   PROGRESS = 2,
 }
 
-export type TronProps = Dictionary<any>;
+export type TronProps = Dictionary<unknown>;
 
-export interface TronMessage<T = TronProps> {
+export type TronMessage<T = TronProps> = {
   status: STATUS;
   props: T;
   errors: string[];
 }
 
-export interface TronInst<T = any> {
+export type TronInst<T = TronProps> = {
   isEmpty(): boolean;
   isSuccess(): boolean;
   isFailed(): boolean;
@@ -58,7 +58,7 @@ export interface TronInst<T = any> {
   setErrors(...errors: string[]): void;
 }
 
-export function Inst<T = any>(message: Partial<TronMessage>): TronInst<T> {
+export function Inst<T = TronProps>(message: Partial<TronMessage>): TronInst<T> {
   console.assert(Lang.isObject(message), "TRON() : json is not an object");
 
   const emptyTronMsg: TronMessage = {
@@ -66,7 +66,7 @@ export function Inst<T = any>(message: Partial<TronMessage>): TronInst<T> {
     props: {},
     errors: [],
   };
-  const tronObj = { ...emptyTronMsg, ...message };
+  const tronObj: TronMessage = { ...emptyTronMsg, ...message };
 
   const inst = {
     isEmpty: () => tronObj.status === STATUS.EMPTY,
@@ -76,7 +76,7 @@ export function Inst<T = any>(message: Partial<TronMessage>): TronInst<T> {
     getStatus: (): STATUS => {
       return tronObj.status;
     },
-    getProps: (): T => tronObj.props as T,
+    getProps: (): T => tronObj.props as unknown as T,
 
     getErrors: () => tronObj.errors,
     hasErrors: () => tronObj.errors.length > 0,

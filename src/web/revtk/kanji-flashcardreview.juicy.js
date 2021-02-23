@@ -351,7 +351,7 @@
     flashcardMenu: function()
     {
       var el        = Dom.get('uiFcMenu'),
-          data      = Dom.getDataset(el),
+          data      = el.dataset,
           oCardData = this.oReview.getFlashcardData();
 
       function onMenuHide()

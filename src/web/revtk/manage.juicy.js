@@ -36,7 +36,7 @@ App.ready(function()
       if (el)
       {
         this.ajaxTable = new Core.Widgets.AjaxTable(el);
-        this.editKeywordUri = Dom.getDataset(el).uri;
+        this.editKeywordUri = el.dataset.uri;
         bodyED.on("JSEditKeyword", this.onEditKeyword, this);
       }
     },
@@ -108,7 +108,7 @@ App.ready(function()
      */
     onEditKeyword: function(e, el)
     {
-      var data, options, that = this;
+      var options, that = this;
 
       // @param  {String}   keyword 
       // @param  {Boolean}  next (optional)
@@ -141,20 +141,20 @@ App.ready(function()
 
       // just show dialog if clicking the same keyword twice, otherwise load
 
-      data = Dom.getDataset(el);
-      if (!this.oEditKeyword || data.id !== this.editKeywordId)
+      var ucsId = el.dataset.id;
+      if (!this.oEditKeyword || ucsId !== this.editKeywordId)
       {
         var contextEl = Dom.getAncestorByTagName(el, 'td');
         
         options = { 
           context: [contextEl, "tr", "tr", null, [0, 0]],
-          params:  { id: data.id, manage: true } /* manage: use the "Save & Next" chain editing */
+          params:  { id: ucsId, manage: true } /* manage: use the "Save & Next" chain editing */
         };
 
         // FIXME ideally should call this.oEditKeyword.destroy() here if it is set
 
         this.oEditKeyword = new App.Ui.EditKeywordComponent(this.editKeywordUri, options, callback);
-        this.editKeywordId = data.id;
+        this.editKeywordId = ucsId;
       }
       else
       {

@@ -137,7 +137,7 @@
       }
 
       // eg. "story-14266-22679"
-      var ids = Dom.getDataset(span.parentNode);
+      var ids = span.parentNode.dataset;
       
       // userid, ucs_id
       var params = {

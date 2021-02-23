@@ -9,7 +9,6 @@
  *  
  *  YAHOO.util.Dom
  *    down()
- *    getDataset()                Get values from an element's HTML5 "data-" attributes
  *    query(root, query)          Proxy for root.querySelector()
  *    queryAll(root, query)       Proxy for root.querySelectorAll()
  *    setClass()                  Adds or removes a class name from a given element.
@@ -63,45 +62,6 @@
       console.assert(!!rootEl, 'Dom::down() rootEl is invalid.');
       var el = Dom.getElementsByClassName(classname, tagname || "*", Dom.get(rootEl))[0];
       return el;
-    },
-    
-    /**
-     * Returns an object with properties mapped to the element's data-* attributes.
-     * 
-     * The "data-*" attributes will validate with HTML 5 validator.
-     * 
-     * Example markup:
-     * <code>
-     *   &lt;li data-foo="bar" data-author="456"&gt;Beyond The Sea&lt;/li&gt;
-     * </code>
-     * 
-     * Example code:
-     * <code>
-     *   var length = Dom.getDataset(li);
-     *   // => {"foo": "bar", "author": "456" }
-     * </code>
-     *   
-     * @todo  Ideally this should return element.dataset if present (for speed), but unless we can
-     *        test it don't use it or it may break in future browser versions
-     * @link  http://dev.w3.org/html5/spec/elements.html#embedding-custom-non-visible-data-with-the-data-attributes
-     * @link  http://ejohn.org/blog/html-5-data-attributes/
-     *        
-     * @param  {HTMLElement} el     The element
-     * @return {Object}             Object with the data attributes as properties
-     */
-    getDataset: function(el)
-    {
-      var i, dataset = {};
-      for (i = 0; i < el.attributes.length; i++)
-      {
-        var attrib = el.attributes[i];
-        if (attrib.specified === true && attrib.name.indexOf("data-") === 0)
-        {
-          //console.log(attrib.name + " = " + attrib.value);
-          dataset[attrib.name.slice(5)] = attrib.value;
-        }
-      }
-      return dataset;
     },
 
     /**

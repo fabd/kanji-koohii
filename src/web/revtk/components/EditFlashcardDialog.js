@@ -144,7 +144,7 @@
 
     onMenuItem: function(ev, el)
     {
-      var data   = Dom.getDataset(el),
+      var data   = el.dataset,
           panel = this.dialog.getAjaxPanel();
 
       if (data.menuid === 'page')

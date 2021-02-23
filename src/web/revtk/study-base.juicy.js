@@ -109,7 +109,7 @@
     {
       var visible = !this.dictVisible,
           elBody  = Dom.get("JsDictBody"),
-          data    = Dom.getDataset(elBody);
+          ucsId   = elBody.dataset.ucs;
 
       Dom.toggle(elBody, visible);
       this.dictVisible = visible;
@@ -118,7 +118,7 @@
         // use inner div set in the php template
         var elMount = elBody.querySelector('.JsMount');
         var inst = VueInstance(Koohii.UX.KoohiiDictList, elMount, {}, true);
-        inst.load(data.ucs);
+        inst.load(ucsId);
 
         this.dictPanel = true;
       }
@@ -134,7 +134,7 @@
 
     onEditFlashcard: function(ev, el)
     {
-      var data = Dom.getDataset(el);
+      var data = el.dataset;
 
       function onMenuResponse(result)
       {
@@ -157,7 +157,6 @@
 
       if (!this.oEditFlashcard)
       {
-        console.log("gotcha %o", data);
         this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, Y.lang.JSON.parse(data.param), [this.elEditFlashcard, "tr", "br"], {
           events: {
             "onMenuResponse": onMenuResponse,

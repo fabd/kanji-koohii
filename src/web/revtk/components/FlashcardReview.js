@@ -239,7 +239,7 @@
      */
     onActionEvent: function(ev, el)
     {
-      var data   = Dom.getDataset(el),
+      var data   = el.dataset,
           action = data.action;
       console.assert(!!data.action, 'onActionEvent() bad "action" attribute, element %o', el);
 

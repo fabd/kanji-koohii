@@ -135,7 +135,7 @@
       {
         this.autohide = (ev.type !== 'click');
 
-        data = Dom.getDataset(el);
+        data = el.dataset;
 
         html = data.text + ' <a href="' + Dom.getAttribute(el, "href") + '">Study</a>';
 

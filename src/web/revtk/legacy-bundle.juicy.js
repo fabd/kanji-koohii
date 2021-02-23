@@ -67,9 +67,11 @@
       console.log('CustomTooltip::init()');
 
       // set defaults
-      this.options = Y.lang.merge({
-        "id": "CustomTooltip"
-      }, options);
+      this.options = {
+        ...{
+          "id": "CustomTooltip"
+        }, ...options
+      };
 
       // create container
       var div = document.createElement('div');

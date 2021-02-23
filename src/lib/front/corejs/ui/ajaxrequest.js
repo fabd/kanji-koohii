@@ -138,10 +138,12 @@
       console.log('AjaxRequest.init()',options);
       
       // set defaults
-      options = Y.lang.merge({
-        method:    'GET',
-        url:       url
-      }, options || {});
+      options = {
+        ...{
+          method: 'GET',
+          url: url
+        }, ...options
+      };
 
       options.method = options.method.toUpperCase();
 

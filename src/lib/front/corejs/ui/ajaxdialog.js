@@ -258,16 +258,18 @@
       console.log('AjaxDialog.init() Options: %o',options);
   
       // set defaults
-      this.options = Y.lang.merge({
-        autoclose: true,
-        close:     true,
-        modal:     true,
-        center:    true,
-        context:   null,
-        shadow:    true,
-        invisMask: false,
-        skin:      false
-      }, options);
+      this.options = {
+        ...{
+          autoclose: true,
+          close: true,
+          modal: true,
+          center: true,
+          context: null,
+          shadow: true,
+          invisMask: false,
+          skin: false
+        }, ...options
+      };
 
       // don't recenter dialog if using context
       if (this.options.context !== null) {

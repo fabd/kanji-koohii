@@ -98,7 +98,7 @@ if (!Core.Helper) {
       else
       {
         // use default properties for those not set in the TRON message
-        oJson = Y.lang.merge(oJson, json);
+        oJson = { ...oJson, ...json };
       }
 
       // validate TRON message

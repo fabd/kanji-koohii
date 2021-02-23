@@ -151,12 +151,14 @@
       options = !!options ? options : {};
   
       // set defaults
-      this.options = Y.lang.merge({
-        form:        true,
-        bUseLayer:   true,
-        bUseShading: false,
-        initContent: false
-      }, options);
+      this.options = {
+        ...{
+          form: true,
+          bUseLayer: true,
+          bUseShading: false,
+          initContent: false
+        }, ...options
+      };
   
       // make sure to call onContentDestroy() before the first content replace, if used initContent
       this.contentLoaded = this.options.initContent === true ? true : false;

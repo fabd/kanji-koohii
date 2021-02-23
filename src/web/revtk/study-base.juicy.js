@@ -157,7 +157,7 @@
 
       if (!this.oEditFlashcard)
       {
-        this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, Y.lang.JSON.parse(data.param), [this.elEditFlashcard, "tr", "br"], {
+        this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, JSON.parse(data.param), [this.elEditFlashcard, "tr", "br"], {
           events: {
             "onMenuResponse": onMenuResponse,
             "onMenuHide":     onMenuHide,

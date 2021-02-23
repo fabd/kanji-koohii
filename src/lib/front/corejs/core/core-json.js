@@ -89,7 +89,7 @@ if (!Core.Helper) {
       {
         // parse a JSON string
         try {
-          oJson = Y.lang.JSON.parse(json);
+          oJson = JSON.parse(json);
         } catch (e) {
           console.error('Core.Helper.TRON()  Could not parse JSON (%o)', json);
         }

@@ -394,7 +394,7 @@
 
       if (!this.oEditFlashcard)
       {
-        var params = Y.lang.merge(Y.lang.JSON.parse(data.param), { ucs: oCardData.id });
+        var params = Y.lang.merge(JSON.parse(data.param), { ucs: oCardData.id });
         //console.log("zomg %o", params);return false;
         
         this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, params, [el, "tr", "br"], {

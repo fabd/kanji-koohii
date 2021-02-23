@@ -100,7 +100,6 @@
 
 /* =require from "%YUI2%" */
 /* =require "/connection/connection-min.js" */
-/* =require "/json/json-min.js" */
 
 (function() {
 
@@ -200,7 +199,7 @@
       // encode JSON ?
       if (options.json && Y.lang.isObject(options.json))
       {
-        json = Y.lang.JSON.stringify(options.json);
+        json = JSON.stringify(options.json);
       }
 
       // convert request parameters to url encoded string (damn you, YUI)
@@ -312,7 +311,7 @@
         {
           try
           {
-            o.responseJSON = Y.lang.JSON.parse(o.responseText);
+            o.responseJSON = JSON.parse(o.responseText);
           } 
           catch (e)
           {

@@ -136,6 +136,8 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
   constructor(selector: DomJSSelector, context: Element) {
     let nodes: ArrayLike<EL>;
 
+    console.assert(!context || isNode(context), "DomJS(): invalid `context` argument");
+
     if (isString(selector)) {
       nodes = (context || window.document).querySelectorAll(selector);
     }

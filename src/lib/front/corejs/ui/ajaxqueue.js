@@ -189,7 +189,7 @@
      */
     onAjaxStart: function(eventType, args)
     {
-      Dom.setStyles(this.ajaxIndicator, {
+      $$(this.ajaxIndicator).css({
         position: 'absolute',
         zIndex:   1000,
         display:  'block'
@@ -204,7 +204,7 @@
      */
     onAjaxComplete: function(eventType, args)
     {
-      Dom.setStyles(this.ajaxIndicator, {
+      $$(this.ajaxIndicator).css({
         display:  'none'
       });
     },

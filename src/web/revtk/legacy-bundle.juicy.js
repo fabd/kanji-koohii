@@ -33,6 +33,7 @@
 (function(){
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -99,7 +100,7 @@
       console.assert(!!this.overlay);
       
       // compute width and center horizontally
-      //Dom.setStyles(div, { display:"block", visibility:"hidden", position:"absolute" });
+      //$$(div).css({ display:"block", visibility:"hidden", position:"absolute" });
       //Core.Ui.Helper.insertTop(div);
       
       var el      = this.overlay.body,

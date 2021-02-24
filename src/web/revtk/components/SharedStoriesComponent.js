@@ -264,7 +264,7 @@ if (data.__debug_log) {
       }
 
       // then move the Shared Story div to the favourites section
-      Dom.setStyles(elSharedStory, { opacity: 0.1});
+      $$(elSharedStory).css({ opacity: 0.1});
       var anim = new Y.util.Anim(elSharedStory, { opacity: { /*from:0.1,*/ to: 1.0 }}, /* duration */ 1);
       
       elFavourites.appendChild(elSharedStory);

@@ -83,20 +83,6 @@
     },
 
     /**
-     * Set multiple styles.
-     *
-     * @param {HTMLElement|String} el
-     * @param {Object} styles
-     */
-    setStyles: function(el, styles)
-    {
-      console.assert(!!el, 'Dom::setStyles() el is invalid.');
-      for (var s in styles) {
-        Dom.setStyle(el, s, styles[s]);
-      }
-    },
-
-    /**
      * Toggle display of element.
      * 
      * @param {HTMLElement|string} el    Element or string id.

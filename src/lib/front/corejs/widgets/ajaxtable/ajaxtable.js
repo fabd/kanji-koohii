@@ -126,7 +126,7 @@
       var opacityValue = bDisable ? '0.3' : '1' /* default */;
       if ((this.elPagerDiv = $$('.uiPagerDiv', this.container)[0]))
       {
-        Dom.setStyles(this.elPagerDiv, { opacity: opacityValue });
+        $$(this.elPagerDiv).css({ opacity: opacityValue });
       }
     },
 
@@ -156,7 +156,7 @@
         if (el)
         {
           el.innerHTML = sMsg; 
-          Dom.setStyles(el, { display: 'block' });
+          $$(el).css({ display: 'block' });
         }
         else
         {

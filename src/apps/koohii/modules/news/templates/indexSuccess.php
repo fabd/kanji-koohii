@@ -24,8 +24,13 @@
 ?>
 
 <div class="row">
-
   <div class="col-md-9">
+
+<?php
+  if (null === sfConfig::get('app_fork')) {
+    include_partial('news/_jpodBanner');
+  }
+?>
 
     <h2><?php echo $title ?></h2>
 

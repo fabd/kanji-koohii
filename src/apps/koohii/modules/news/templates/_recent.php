@@ -1,6 +1,11 @@
 <div class="row">
-
   <div class="col-md-10 col-md-push-1">
+
+<?php
+  if (null === sfConfig::get('app_fork')) {
+    include_partial('news/_jpodBanner');
+  }
+?>
 
 <h2>Blog</h2>
 

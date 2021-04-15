@@ -23,7 +23,7 @@
  * @package    symfony
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfForm.class.php 33598 2012-11-25 09:57:29Z fabien $
+ * @version    SVN: $Id$
  */
 class sfForm implements ArrayAccess, Iterator, Countable
 {
@@ -32,22 +32,27 @@ class sfForm implements ArrayAccess, Iterator, Countable
     $CSRFFieldName     = '_csrf_token',
     $toStringException = null;
 
-  protected
-    $widgetSchema    = null,
-    $validatorSchema = null,
-    $errorSchema     = null,
-    $formFieldSchema = null,
-    $formFields      = array(),
-    $isBound         = false,
-    $taintedValues   = array(),
-    $taintedFiles    = array(),
-    $values          = null,
-    $defaults        = array(),
-    $fieldNames      = array(),
-    $options         = array(),
-    $count           = 0,
-    $localCSRFSecret = null,
-    $embeddedForms   = array();
+  /** @var sfWidgetFormSchema|sfWidget[]|sfWidgetFormSchemaDecorator[] */
+  protected $widgetSchema    = null;
+  /** @var sfValidatorSchema|sfValidatorBase[] */
+  protected $validatorSchema = null;
+  /** @var sfValidatorErrorSchema|sfValidatorError[] */
+  protected $errorSchema     = null;
+  /** @var sfFormFieldSchema|null */
+  protected $formFieldSchema = null;
+  /** @var sfFormField[] */
+  protected $formFields      = array();
+  protected $isBound         = false;
+  protected $taintedValues   = array();
+  protected $taintedFiles    = array();
+  protected $values          = null;
+  protected $defaults        = array();
+  protected $fieldNames      = array();
+  protected $options         = array();
+  protected $count           = 0;
+  protected $localCSRFSecret = null;
+  /** @var sfForm[] */
+  protected $embeddedForms   = array();
 
   /**
    * Constructor.
@@ -58,7 +63,6 @@ class sfForm implements ArrayAccess, Iterator, Countable
    */
   public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
   {
-    $this->setDefaults($defaults);
     $this->options = $options;
     $this->localCSRFSecret = $CSRFSecret;
 
@@ -66,6 +70,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
     $this->widgetSchema    = new sfWidgetFormSchema();
     $this->errorSchema     = new sfValidatorErrorSchema($this->validatorSchema);
 
+    $this->setDefaults($defaults);
     $this->setup();
     $this->configure();
 
@@ -154,7 +159,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    * @param boolean $recursive False will prevent hidden fields from embedded forms from rendering
    *
    * @return string
-   * 
+   *
    * @see sfFormFieldSchema
    */
   public function renderHiddenFields($recursive = true)
@@ -296,7 +301,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    *
    * It returns false if the form is not bound.
    *
-   * @return Boolean true if the form has no errors, false otherwise
+   * @return Boolean true if the form has some errors, false otherwise
    */
   public function hasErrors()
   {
@@ -452,7 +457,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
   /**
    * Gets the list of embedded forms.
    *
-   * @return array An array of embedded forms
+   * @return sfForm[] An array of embedded forms
    */
   public function getEmbeddedForms()
   {
@@ -465,7 +470,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    * @param  string $name The name used to embed the form
    *
    * @return sfForm
-   * 
+   *
    * @throws InvalidArgumentException If there is no form embedded with the supplied name
    */
   public function getEmbeddedForm($name)
@@ -766,7 +771,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    * @param string $name    The option name
    * @param mixed  $default The default value (null by default)
    *
-   * @param mixed  The default value
+   * @return mixed
    */
   public function getOption($name, $default = null)
   {
@@ -795,7 +800,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    *
    * @param string $name The field name
    *
-   * @param mixed  The default value
+   * @return mixed The default value
    */
   public function getDefault($name)
   {
@@ -805,9 +810,9 @@ class sfForm implements ArrayAccess, Iterator, Countable
   /**
    * Returns true if the form has a default value for a form field.
    *
-   * @param string $name The field name
+   * @param string $name   The field name
    *
-   * @param Boolean true if the form has a default value for this field, false otherwise
+   * @return Boolean true if the form has a default value for this field, false otherwise
    */
   public function hasDefault($name)
   {
@@ -829,7 +834,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
 
     if ($this->isCSRFProtected())
     {
-      $this->setDefault(self::$CSRFFieldName, $this->getCSRFToken($this->localCSRFSecret ? $this->localCSRFSecret : self::$CSRFSecret));
+      $this->setDefault(self::$CSRFFieldName, $this->getCSRFToken($this->localCSRFSecret ?: self::$CSRFSecret));
     }
 
     $this->resetFormFields();
@@ -899,7 +904,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
   {
     if (null === $secret)
     {
-      $secret = $this->localCSRFSecret ? $this->localCSRFSecret : self::$CSRFSecret;
+      $secret = $this->localCSRFSecret ?: self::$CSRFSecret;
     }
 
     return md5($secret.session_id().get_class($this));
@@ -1040,7 +1045,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    *
    * @param  string $name  The offset of the value to get
    *
-   * @return sfFormField   A form field instance
+   * @return sfFormField|sfFormFieldSchema A form field instance
    */
   public function offsetGet($name)
   {
@@ -1342,6 +1347,8 @@ class sfForm implements ArrayAccess, Iterator, Countable
   /**
    * Checks that the $_POST values do not contain something that
    * looks like a file upload (coming from $_FILE).
+   *
+   * @param array $values
    */
   protected function checkTaintedValues($values)
   {

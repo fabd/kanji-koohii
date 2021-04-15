@@ -4,7 +4,7 @@
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
  * (c) 2004-2006 Sean Kerr <sean@code-box.org>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -21,7 +21,7 @@
  * @subpackage storage
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfSessionStorage.class.php 31471 2010-11-22 19:32:02Z fabien $
+ * @version    SVN: $Id$
  */
 class sfSessionStorage extends sfStorage
 {
@@ -43,9 +43,11 @@ class sfSessionStorage extends sfStorage
    *
    * The default values for all 'session_cookie_*' options are those returned by the session_get_cookie_params() function
    *
-   * @param array $options  An associative array of options
+   * @param array $options An associative array of options
    *
    * @see sfStorage
+   *
+   * @return void
    */
   public function initialize($options = null)
   {
@@ -61,6 +63,7 @@ class sfSessionStorage extends sfStorage
       'session_cookie_secure'   => $cookieDefaults['secure'],
       'session_cookie_httponly' => isset($cookieDefaults['httponly']) ? $cookieDefaults['httponly'] : false,
       'session_cache_limiter'   => null,
+      'gc_maxlifetime'          => 1800,
     ), $options);
 
     // initialize parent
@@ -86,6 +89,12 @@ class sfSessionStorage extends sfStorage
     if (null !== $this->options['session_cache_limiter'])
     {
       session_cache_limiter($this->options['session_cache_limiter']);
+    }
+
+    // force the max lifetime for session garbage collector to be greater than timeout
+    if (ini_get('session.gc_maxlifetime') < $this->options['gc_maxlifetime'])
+    {
+      ini_set('session.gc_maxlifetime', $this->options['gc_maxlifetime']);
     }
 
     if ($this->options['auto_start'] && !self::$sessionStarted)
@@ -157,7 +166,7 @@ class sfSessionStorage extends sfStorage
    *
    * @param  boolean $destroy Destroy session when regenerating?
    *
-   * @return boolean True if session regenerated, false if error
+   * @return bool|void
    *
    */
   public function regenerate($destroy = false)

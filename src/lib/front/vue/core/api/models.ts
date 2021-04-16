@@ -11,7 +11,7 @@
 
 export type DictId = number;
 
-export interface DictListEntry {
+export type DictListEntry = {
   id: DictId; // jdict.id
   c: string; // compound
   r: string; // reading
@@ -22,34 +22,34 @@ export interface DictListEntry {
   known?: boolean; // (client side) true if user knows all kanji in this compound
   fr?: string; // formatted reading
   pick?: boolean; // selected state
-}
+};
 
 // cf. KanjisPeer::getKanjiByUCS()
-export interface KanjiData {
+export type KanjiData = {
   framenum: number;
   kanji: string;
   ucs_id: number;
   keyword: string;
   onyomi: string;
   strokecount: number;
-}
+};
 
-export interface GetDictListForUCS {
+export type GetDictListForUCS = {
   //
   items: DictListEntry[];
   // array of user's selected vocab ([dictid, ...])
   picks: DictId[];
   // string of known kanji (if "reqKnownKanji" is true)
   knownKanji?: string;
-}
+};
 
-export interface PostVoteStoryRequest {
+export type PostVoteStoryRequest = {
   request: "star" | "report" | "copy";
   uid: number;
   sid: number;
-}
+};
 
-export interface PostVoteStoryResponse {
+export type PostVoteStoryResponse = {
   storyText?: string; // for copy
   uid: number; // userId -- for vote & report
   sid: number; // ucsId -- for vote & report
@@ -57,15 +57,15 @@ export interface PostVoteStoryResponse {
   lastvote: number;
   stars: number;
   kicks: number;
-}
+};
 
-export interface GetUserStoryResponse {
+export type GetUserStoryResponse = {
   postStoryEdit?: string;
   postStoryPublic?: boolean;
   isFavoriteStory?: boolean; // if true, postStoryView is a "starred" story
-}
+};
 
-export interface PostUserStoryResponse {
+export type PostUserStoryResponse = {
   // story formatted for display (non-edit mode)
   postStoryView: string;
   // story is currently shared
@@ -74,4 +74,4 @@ export interface PostUserStoryResponse {
   sharedStoryId: string;
   // author link in the "shared story" template
   sharedStoryAuthor: string; // html link
-}
+};

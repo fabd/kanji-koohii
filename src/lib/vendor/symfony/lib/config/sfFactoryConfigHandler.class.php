@@ -17,7 +17,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfFactoryConfigHandler.class.php 33299 2011-12-30 17:42:47Z fabien $
+ * @version    SVN: $Id$
  */
 class sfFactoryConfigHandler extends sfYamlConfigHandler
 {
@@ -107,6 +107,10 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
           {
             $defaultParameters[] = sprintf("'database' => \$this->getDatabaseManager()->getDatabase('%s'),", isset($parameters['database']) ? $parameters['database'] : 'default');
             unset($parameters['database']);
+          }
+
+          if (isset($config['user']['param']['timeout'])) {
+            $defaultParameters[] = sprintf("'gc_maxlifetime' => %d,", $config['user']['param']['timeout']);
           }
 
           $instances[] = sprintf("  \$class = sfConfig::get('sf_factory_storage', '%s');\n  \$this->factories['storage'] = new \$class(array_merge(array(\n%s\n), sfConfig::get('sf_factory_storage_parameters', %s)));", $class, implode("\n", $defaultParameters), var_export($parameters, true));

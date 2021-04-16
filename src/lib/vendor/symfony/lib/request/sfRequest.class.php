@@ -18,28 +18,39 @@
  * @subpackage request
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfRequest.class.php 28641 2010-03-21 10:20:44Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfRequest implements ArrayAccess
 {
   const GET    = 'GET';
   const POST   = 'POST';
   const PUT    = 'PUT';
+  const PATCH  = 'PATCH';
   const DELETE = 'DELETE';
   const HEAD   = 'HEAD';
+  const OPTIONS = 'OPTIONS';
 
-  protected
-    $dispatcher      = null,
-    $content         = null,
-    $method          = null,
-    $options         = array(),
-    $parameterHolder = null,
-    $attributeHolder = null;
+  /** @var sfEventDispatcher */
+  protected $dispatcher = null;
+  /** @var string|null */
+  protected $content = null;
+  /** @var string */
+  protected $method = null;
+  protected $options = array();
+  /** @var sfParameterHolder */
+  protected $parameterHolder = null;
+  /** @var sfParameterHolder */
+  protected $attributeHolder = null;
 
   /**
    * Class constructor.
    *
    * @see initialize()
+   *
+   * @param sfEventDispatcher $dispatcher
+   * @param array             $parameters
+   * @param array             $attributes
+   * @param array             $options
    */
   public function __construct(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
   {
@@ -58,7 +69,7 @@ abstract class sfRequest implements ArrayAccess
    * @param  array             $attributes  An associative array of initialization attributes
    * @param  array             $options     An associative array of options
    *
-   * @return bool true, if initialization completes successfully, otherwise false
+   * @return void
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this sfRequest
    */
@@ -79,6 +90,18 @@ abstract class sfRequest implements ArrayAccess
 
     $this->parameterHolder->add($parameters);
     $this->attributeHolder->add($attributes);
+  }
+
+  /**
+   * Return an option value or null if option does not exists
+   *
+   * @param string $name The option name.
+   *
+   * @return mixed The option value
+   */
+  public function getOption($name)
+  {
+    return isset($this->options[$name]) ? $this->options[$name] : null;
   }
 
   /**
@@ -135,7 +158,7 @@ abstract class sfRequest implements ArrayAccess
    */
   public function setMethod($method)
   {
-    if (!in_array(strtoupper($method), array(self::GET, self::POST, self::PUT, self::DELETE, self::HEAD)))
+    if (!in_array(strtoupper($method), array(self::GET, self::POST, self::PUT, self::PATCH, self::DELETE, self::HEAD, self::OPTIONS)))
     {
       throw new sfException(sprintf('Invalid request method: %s.', $method));
     }
@@ -148,7 +171,7 @@ abstract class sfRequest implements ArrayAccess
    *
    * @param  string $name The name of the request parameter
    *
-   * @return Boolean true if the request parameter exists, false otherwise
+   * @return bool true if the request parameter exists, false otherwise
    */
   public function offsetExists($name)
   {
@@ -248,9 +271,10 @@ abstract class sfRequest implements ArrayAccess
   /**
    * Retrieves a parameter for the current request.
    *
-   * @param string $name     Parameter name
-   * @param string $default  Parameter default value
+   * @param string $name    Parameter name
+   * @param string $default Parameter default value
    *
+   * @return mixed
    */
   public function getParameter($name, $default = null)
   {
@@ -284,16 +308,13 @@ abstract class sfRequest implements ArrayAccess
   /**
    * Returns the content of the current request.
    *
-   * @return string|Boolean The content or false if none is available
+   * @return string|false The content or false if none is available
    */
   public function getContent()
   {
-    if (null === $this->content)
+    if (null === $this->content && '' === trim($this->content = file_get_contents('php://input')))
     {
-      if (0 === strlen(trim($this->content = file_get_contents('php://input'))))
-      {
-        $this->content = false;
-      }
+      $this->content = false;
     }
 
     return $this->content;

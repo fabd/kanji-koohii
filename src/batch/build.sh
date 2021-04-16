@@ -212,11 +212,18 @@ function do_check_for_console_log()
 
 function do_build_versioning()
 {
+  # Double-check I did a `npm run prod` build, otherwise versioning file incomplete!
+  set -- web/build/pack/*.raw.css
+  [[ -e "$1" ]] && {
+    echo "  PLEASE RUN  npm run build  FIRST! (to include web/build/pack/ assets in versioning)"
+    exit
+  }
+
   # update version file for revisioning css & js assets
   P_VERSION_OLD=config/.versioning.inc.php
   P_VERSION_NEW=config/versioning.inc.php
   printf "\n${TEXT_BOLD} Rebuild  $P_VERSION_NEW ... ${TEXT_RESET}\n\n"
-  mv $P_VERSION_NEW $P_VERSION_OLD
+  [[ -e "$P_VERSION_NEW" ]] && mv $P_VERSION_NEW $P_VERSION_OLD
   php batch/build_app.php -w web -o $P_VERSION_NEW
 }
 

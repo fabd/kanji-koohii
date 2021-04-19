@@ -85,7 +85,7 @@
 
       // stats panel
       this.elStats = $$('#uiFcStats')[0];
-      this.elsCount = Dom.queryAll('#uiFcProgressBar', '.count'); //array
+      this.elsCount = $$('#uiFcProgressBar .count'); //array
       this.elProgressBar = $$('#review-progress span')[0];
 
       // answer stats

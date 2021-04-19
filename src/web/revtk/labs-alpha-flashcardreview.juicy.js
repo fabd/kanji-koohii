@@ -12,6 +12,7 @@
 (function(){
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom;
 
   App.LabsReview = 
@@ -40,8 +41,8 @@
 
       // stats panel
       this.elStats = Dom.get('uiFcStats');
-      this.elsCount = Dom.queryAll('#uiFcProgressBar', '.count'); //array
-      this.elProgressBar = Dom.query('#review-progress', 'span');
+      this.elsCount = $$('#uiFcProgressBar .count'); //array
+      this.elProgressBar = $$('#review-progress span')[0];
     },
     
     /**

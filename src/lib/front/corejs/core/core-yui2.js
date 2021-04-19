@@ -8,8 +8,6 @@
  *    Y.Array.each(array, fn [, context])
  *  
  *  YAHOO.util.Dom
- *    query(root, query)          Proxy for root.querySelector()
- *    queryAll(root, query)       Proxy for root.querySelectorAll()
  *    setClass()                  Adds or removes a class name from a given element.
  *    setStyles()
  *    toggle()
@@ -47,26 +45,6 @@
    */
   Y.lang.augmentObject(Dom,
   {
-    /**
-     * Proxy for element.querySelector().
-     *
-     * @param  {HTMLElement|string} root     Root element or selector (string)
-     * @param  {string} query                Selector(s)
-     * 
-     * @return {HTMLElement|null}
-     */
-    query: function(root, query)
-    {
-      root = Y.lang.isString(root) ? document.querySelector(root) : root;
-      return root.querySelector(query);
-    },
-
-    queryAll: function(root, query)
-    {
-      root = Y.lang.isString(root) ? document.querySelector(root) : root;
-      return root.querySelectorAll(query);
-    },
-
     /**
      * Adds or removes a class name from a given element.
      *

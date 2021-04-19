@@ -37,6 +37,7 @@
   Core.Widgets.AjaxTable = Core.make();
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -123,7 +124,7 @@
     setPagingToDisabledStyle: function(bDisable)
     {
       var opacityValue = bDisable ? '0.3' : '1' /* default */;
-      if ((this.elPagerDiv = Dom.down(this.container, 'uiPagerDiv')))
+      if ((this.elPagerDiv = $$('.uiPagerDiv', this.container)[0]))
       {
         Dom.setStyles(this.elPagerDiv, { opacity: opacityValue });
       }

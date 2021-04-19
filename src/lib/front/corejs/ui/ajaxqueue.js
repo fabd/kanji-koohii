@@ -61,6 +61,7 @@
   
   // internal shorthands
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -282,7 +283,7 @@
     {
       if (sErrorMessage)
       {
-        var el = Dom.down(this.elAjaxError, 'uiFcAjaxError_msg');
+        var el = $$('.uiFcAjaxError_msg', this.elAjaxError)[0];
         el.innerHTML = sErrorMessage;
       }
 

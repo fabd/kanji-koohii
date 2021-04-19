@@ -190,7 +190,7 @@
   /**
    * Constructor.
    * 
-   * @param {String} srcMarkup   Id of containing element if using srcMarkup, otherwise set null
+   * @param {String} srcMarkup   Selector for containing element if using srcMarkup, otherwise set null
    * @param {Object} options
    */
   Core.Ui.AjaxDialog = Core.make();
@@ -207,6 +207,7 @@
   // internal shorthands
   var 
     Y = YAHOO,
+    $$ = Koohii.Dom,
     Dom = Y.util.Dom,
     Event = Y.util.Event,
     AjaxPanel = Core.Ui.AjaxPanel,
@@ -290,11 +291,10 @@
 
       if (options.useMarkup)
       {
-        console.assert(Y.lang.isString(srcMarkup), "AjaxDialog.init() srcMarkup must be string id");
+        console.assert($$(srcMarkup)[0], "AjaxDialog.init() srcMarkup is not valid, element not found");
 
         // we have to clone the markup of YUI uses it as is
-        var elSrcMarkup = Dom.get(srcMarkup);
-        elYuiPanel = Dom.get(srcMarkup).cloneNode(true);
+        elYuiPanel = $$(srcMarkup)[0].cloneNode(true);
         elYuiPanel.setAttribute('id', null);
         Core.Ui.Helper.insertTop(elYuiPanel);
 
@@ -588,11 +588,8 @@
      */
     setElementFocus: function()
     {
-      var el = Dom.down(this.yPanel.body, "JSDialogFocus");
-      if (el)
-      {
-        el.focus();
-      }
+      var el = $$(".JSDialogFocus", this.yPanel.body)[0];
+      el && el.focus();
     },
 
     /**

@@ -9,6 +9,7 @@
   App.Ui.EditKeywordComponent = Core.make();
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event,
       EditKeywordComponent = App.Ui.EditKeywordComponent;
@@ -125,7 +126,7 @@
 
     getInput: function()
     {
-      return Dom.down(this.dialog.getBody(), "txt-ckw");
+      return $$(".txt-ckw", this.dialog.getBody())[0];
     }
   };
 

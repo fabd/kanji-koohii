@@ -8,7 +8,6 @@
  *    Y.Array.each(array, fn [, context])
  *  
  *  YAHOO.util.Dom
- *    down()
  *    query(root, query)          Proxy for root.querySelector()
  *    queryAll(root, query)       Proxy for root.querySelectorAll()
  *    setClass()                  Adds or removes a class name from a given element.
@@ -48,22 +47,6 @@
    */
   Y.lang.augmentObject(Dom,
   {
-    /**
-     * Returns first child element of given classname.
-     * 
-     * @param {HTMLElement|String}  rootEl   Root element (if string, pass an id) 
-     * @param {String} classname  Classname is required
-     * @param {String} tagname    Optional tag name, may speed up the find if lots of child elements
-     * 
-     * @return {HTMLElement}      Element or undefined
-     */
-    down: function(rootEl, classname, tagname)
-    {
-      console.assert(!!rootEl, 'Dom::down() rootEl is invalid.');
-      var el = Dom.getElementsByClassName(classname, tagname || "*", Dom.get(rootEl))[0];
-      return el;
-    },
-
     /**
      * Proxy for element.querySelector().
      *

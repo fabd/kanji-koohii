@@ -10,6 +10,7 @@
   App.Ui.SharedStoriesComponent = Core.make();
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event,
       SharedStoriesComponent = App.Ui.SharedStoriesComponent;
@@ -89,7 +90,7 @@
 
     getElMsg: function(el) {
       el = Dom.getAncestorByClassName(el, "JsAction");
-      el = Dom.down(el, "JsMsg");
+      el = $$(".JsMsg", el)[0];
       return el;
     },
 
@@ -184,9 +185,9 @@ if (data.__debug_log) {
           return;
         }
 
-        var storyId = 'story-'+data.uid+'-'+data.sid;
-        var div  = Dom.get(storyId);
-        var span = Dom.down(div, "JsMsg");
+        var storyId = `story-${data.uid}-${data.sid}`;
+        var actionsEl = $$('#' + storyId)[0];
+        var msgEl = $$(".JsMsg", actionsEl)[0];
         var s;
 
         if (data.vote >= 0)
@@ -194,8 +195,8 @@ if (data.__debug_log) {
           // sigh... NEED VUEJS  maintaining this code ... >_>
           var anchors = [];
 
-          anchors[0] = Dom.down(div, "JsStar").getElementsByTagName("span")[0];
-          anchors[1] = Dom.down(div, "JsReport").getElementsByTagName("span")[0];
+          anchors[0] = $$(".JsStar span", actionsEl)[0];
+          anchors[1] = $$(".JsReport span", actionsEl)[0];
 
           if (!data.vote && data.lastvote) {
             s = 'Vote cancelled';
@@ -208,29 +209,29 @@ if (data.__debug_log) {
           }
 
           // update counts
-          var stars = div.getAttribute('appv1') || '0';
-          var kicks = div.getAttribute('appv2') || '0';
+          var stars = actionsEl.getAttribute('appv1') || '0';
+          var kicks = actionsEl.getAttribute('appv2') || '0';
           stars = parseInt(stars, 10) + parseInt(data.stars, 10);
           kicks = parseInt(kicks, 10) + parseInt(data.kicks, 10);
-          div.setAttribute('appv1',stars);
-          div.setAttribute('appv2',kicks);
+          actionsEl.setAttribute('appv1',stars);
+          actionsEl.setAttribute('appv2',kicks);
           anchors[0].innerHTML = stars ? stars+'&nbsp;' : '&nbsp;';
           anchors[1].innerHTML = kicks ? kicks+'&nbsp;' : '&nbsp;';
 
           // move story to favourite(s)
           if (data.vote === 1) {
-            this.moveStoryToFavourites(this.getStoryParentDiv(div), storyId);
+            this.moveStoryToFavourites(this.getStoryParentDiv(actionsEl), storyId);
           }
           else if (data.vote === 0 && data.lastvote === 1) {
             this.moveStoryBack(elClickedStory, storyId);
           }
 
-          span.innerHTML = '';
+          msgEl.innerHTML = '';
 
         }
         else {
           s = 'No self vote!';
-          span.innerHTML = s;
+          msgEl.innerHTML = s;
         }
       }
     },
@@ -278,7 +279,7 @@ if (data.__debug_log) {
 
     moveStoryBack: function(elSharedStory, storyId)
     {
-      var elMoveTo = Dom.get(this.moveStoryId(storyId));
+      var elMoveTo = $$('#'+this.moveStoryId(storyId))[0];
 
       if (elMoveTo)
       {

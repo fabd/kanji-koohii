@@ -287,7 +287,7 @@
         el.innerHTML = sErrorMessage;
       }
 
-      Dom.toggle(this.elAjaxError, !!sErrorMessage);
+      $$(this.elAjaxError).toggle(!!sErrorMessage);
     }
   };
 

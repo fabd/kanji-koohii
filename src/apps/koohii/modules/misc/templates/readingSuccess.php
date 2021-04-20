@@ -99,10 +99,10 @@
         return true;
       }
 
-      Dom.toggle('introduction', false);
+      $$('#introduction').toggle(false);
 
       this.formVisible = !this.formVisible;
-      Dom.toggle('form', this.formVisible);
+      $$('#form').toggle(this.formVisible);
       
       return false;
     },

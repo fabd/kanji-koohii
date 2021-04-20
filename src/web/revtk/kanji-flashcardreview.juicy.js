@@ -148,7 +148,7 @@
       }
 
       // Show undo action if available
-      Dom.toggle('JsBtnUndo', this.oReview.getNumUndos() > 0);
+      $$('#JsBtnUndo').toggle(this.oReview.getNumUndos() > 0);
 
       this.updateStatsPanel();
     },
@@ -159,8 +159,8 @@
      */
     onFlashcardDestroy: function()
     {
-      Dom.toggle('uiFcButtons0', false);
-      Dom.toggle('uiFcButtons1', false);
+      $$('#uiFcButtons0').toggle(false);
+      $$('#uiFcButtons1').toggle(false);
     },
 
     onFlashcardUndo: function(oAnswer)
@@ -174,8 +174,8 @@
     onFlashcardState: function(iState)
     {
       // console.log('onFlashcardState(%d)', iState);
-      Dom.toggle('uiFcButtons0', iState === 0);
-      Dom.toggle('uiFcButtons1', iState !== 0);
+      $$('#uiFcButtons0').toggle(iState === 0);
+      $$('#uiFcButtons1').toggle(iState !== 0);
     },
 
     onAction: function(sActionId, oEvent)
@@ -473,7 +473,7 @@
         this.deletedCards.pop();
       }
 
-      Dom.toggle('uiFcStDeld', this.countDeleted > 0);
+      $$('#uiFcStDeld').toggle(this.countDeleted > 0);
 
       Dom.get('uiFcStDeld').getElementsByTagName('em')[0].innerHTML = this.countDeleted;
 

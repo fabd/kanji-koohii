@@ -23,6 +23,7 @@
 (function(){
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -111,7 +112,7 @@
           elBody  = Dom.get("JsDictBody"),
           ucsId   = elBody.dataset.ucs;
 
-      Dom.toggle(elBody, visible);
+      $$(elBody).toggle(visible);
       this.dictVisible = visible;
 
       if (!this.dictPanel) {

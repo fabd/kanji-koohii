@@ -30,36 +30,6 @@
 /* !require "/container/container-min.js" */
 
 /**
- * Augment YUI 2.8.x with useful method/helpers, some of which are patched from YUI 3.0.0 Beta1.
- * 
- */
-(function() {
-
-  var Y = YAHOO,
-      Dom = Y.util.Dom,
-      ArrayNative = Array.prototype;
-  
-  /**
-   * @name YAHOO.Dom
-   */
-  Y.lang.augmentObject(Dom,
-  {
-    /**
-     * Toggle display of element.
-     * 
-     * @param {HTMLElement|string} el    Element or string id.
-     * @param {Bool} display             True to display, false to hide    
-     */
-    toggle: function(el, display)
-    {
-      console.assert(!!el, 'Dom::toggle() el is invalid.');
-      Dom.get(el).style.display = display ? "" : "none";
-    }
-  });
-}());
-
-
-/**
  * Add useful helpers from YUI 3.0.0b1
  * 
  * YAHOO.Array 

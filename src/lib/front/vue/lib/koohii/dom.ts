@@ -72,6 +72,8 @@
  *
  *   remove(node)                      ... same as `node.parentNode.removeChild(node)`
  *
+ *   toggle(display)                   ... toggle element rendering via `display` property
+ *
  *
  * NAMED IMPORTS
  *
@@ -319,6 +321,18 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
   remove(): Node | null {
     const node = this[0] as Node;
     return (node.parentNode && node.parentNode.removeChild(node)) || null;
+  }
+
+  /**
+   * Toggle element visibility via `display` property.
+   *
+   * @param display   false to hide the element with `display: none`, true to revert
+   *                  to its default value
+   * @returns void
+   */
+  toggle(display: boolean): void {
+    const element = (this[0] as any) as HTMLElement;
+    element.style.display = display ? "" : "none";
   }
 
   /**

@@ -497,7 +497,7 @@
 
       for (i = 0; i < buttons.length; i++)
       {
-        Dom.setClass(buttons[i], 'uiFcBtnDisabled', bEnabled);
+        buttons[i].classList.toggle('uiFcBtnDisabled', bEnabled);
       }
     }
   };

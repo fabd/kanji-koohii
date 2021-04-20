@@ -73,7 +73,7 @@
         var div = Dom.get('sharedstories-new');
 
         this.hideStories = !this.hideStories;
-        Dom.setClass(div, 'JsHide', this.hideStories);
+        div.classList.toggle('JsHide', this.hideStories);
 
         return false;
       }

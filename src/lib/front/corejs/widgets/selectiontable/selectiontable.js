@@ -135,7 +135,7 @@
       // set value
       input.value = check ? "1" : "0";
       // set highlight
-      Dom.setClass(row, "selected", check);
+      row.classList.toggle("selected", check);
     }
   };
 

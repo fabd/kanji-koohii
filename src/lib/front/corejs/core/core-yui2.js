@@ -8,7 +8,6 @@
  *    Y.Array.each(array, fn [, context])
  *  
  *  YAHOO.util.Dom
- *    setClass()                  Adds or removes a class name from a given element.
  *    setStyles()
  *    toggle()
  * 
@@ -45,21 +44,6 @@
    */
   Y.lang.augmentObject(Dom,
   {
-    /**
-     * Adds or removes a class name from a given element.
-     *
-     * Simplifies switching a class name based on a boolean state.
-     *
-     * @param {HTMLElement|String}  el   The element to remove class from
-     * @param {String} className         The class name to add or remove from the class attribute
-     * @param {Boolean} state            True to add class name, false to remove class name
-     */
-    setClass: function(el, className, state)
-    {
-      console.assert(!!el, 'Dom::setStyles() el is invalid.');
-      Dom[state ? 'addClass' : 'removeClass'](el, className);
-    },
-
     /**
      * Toggle display of element.
      * 

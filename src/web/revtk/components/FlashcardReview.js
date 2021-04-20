@@ -670,13 +670,9 @@
         console.warn('FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener');
       }
 
-      this.oKeyboard.addListener(sKey, this.shortcutKeyListener.bind(this, sActionId));
-    },
-
-    shortcutKeyListener: function(oEvent, sActionId)
-    {
-      // console.log('FlashcardReview::shortcutKeyListener("%s")', sActionId);
-      this.notify('onAction', sActionId, oEvent);
+      this.oKeyboard.addListener(sKey, (event) => {
+        this.notify('onAction', sActionId, event);
+      });
     },
 
     /**

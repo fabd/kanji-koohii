@@ -422,10 +422,10 @@
           bUseShading:     false,
           timeout:         this.options.timeout,
           events: {
-            onContentInit:    Core.bind(this.onPanelInit, this),
-            onContentDestroy: Core.bind(this.onPanelDestroy, this),
-            onResponse:       Core.bind(this.onPanelResponse, this),
-            onSubmitForm:     Core.bind(this.onPanelSubmit, this)
+            onContentInit:    this.onPanelInit.bind(this),
+            onContentDestroy: this.onPanelDestroy.bind(this),
+            onResponse:       this.onPanelResponse.bind(this),
+            onSubmitForm:     this.onPanelSubmit.bind(this),
           }
         });
         

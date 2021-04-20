@@ -47,8 +47,8 @@
       
       // quick search autocomplete
       var actb1 = this.actb1 = new actb(this.elSearch, kwlist);
-      actb1.onChangeCallback = Core.bind(this.quicksearchOnChangeCallback, this);
-      actb1.onPressEnterCallback = Core.bind(this.quicksearchEnterCallback, this);
+      actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
+      actb1.onPressEnterCallback = this.quicksearchEnterCallback.bind(this);
 
       // function move to _SideColumnView.php for CJK lang attributes
       actb1.actb_extracolumns = this.actb_extracols; // _SideColumnView.php

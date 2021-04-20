@@ -9,7 +9,7 @@
  *   onSwitch(id)     Fires AFTER the tab is active, id is the identifier from the classname.
  *
  * Code:
- *   filt = new Core.Widgets.FilterStd('my-filter', { onSwitch: Core.bind(this.callback, this) });
+ *   filt = new Core.Widgets.FilterStd('my-filter', { onSwitch: this.callback.bind(this) });
  * 
  * @author   Fabrice Denis
  */

@@ -60,8 +60,8 @@
       this.container = Dom.get(container);
       this.oAjaxPanel = new Core.Ui.AjaxPanel(this.container, {
         events: {
-          onResponse:   Core.bind(this.onResponse, this),
-          onSubmitForm: Core.bind(this.onSubmitForm, this)
+          onResponse:   this.onResponse.bind(this),
+          onSubmitForm: this.onSubmitForm.bind(this),
         }
       });
 

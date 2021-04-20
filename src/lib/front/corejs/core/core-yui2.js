@@ -72,39 +72,6 @@
       Dom.get(el).style.display = display ? "" : "none";
     }
   });
-
-  if (!Y.bind)
-  {
-    /**
-     * Returns a function that will execute the supplied function in the
-     * supplied object's context, optionally adding any additional
-     * supplied parameters to the END of the arguments the function
-     * is executed with.
-     *
-     * In some cases it is preferable to have the additional arguments
-     * applied to the beginning of the function signature.  For instance,
-     * FireFox setTimeout/setInterval supplies a parameter that other
-     * browsers do not.
-     *   
-     * Note: YUI provides a later() function which wraps setTimeout/setInterval,
-     * providing context adjustment and parameter addition.  This can be 
-     * used instead of setTimeout/setInterval, avoiding the arguments
-     * collection issue when using bind() in FireFox.
-     *
-     * @param f {Function} the function to bind
-     * @param c the execution context
-     * @param args* 0..n arguments to append to the end of arguments collection
-     * 
-     * @return {function} the wrapped function
-     */
-    Y.bind = function(f, c) {
-      var a = ArrayNative.slice.call(arguments, 2);
-      return function () {
-        return f.apply(c || f, ArrayNative.slice.call(arguments, 0).concat(a));
-      };
-    };
-  }
-
 }());
 
 

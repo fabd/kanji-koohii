@@ -184,7 +184,7 @@
         elError:    'uiFcAjaxError', 
         elLoading:  'uiFcAjaxLoading',
         events:     {
-          onSuccess: Core.bind(this.onAjaxSuccess, this)
+          onSuccess: this.onAjaxSuccess.bind(this)
         }
       });
 
@@ -670,7 +670,7 @@
         console.warn('FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener');
       }
 
-      this.oKeyboard.addListener(sKey, Core.bind(this.shortcutKeyListener, this, sActionId));
+      this.oKeyboard.addListener(sKey, this.shortcutKeyListener.bind(this, sActionId));
     },
 
     shortcutKeyListener: function(oEvent, sActionId)

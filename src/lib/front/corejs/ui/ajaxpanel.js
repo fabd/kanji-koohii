@@ -95,7 +95,7 @@
  *   6. Goto 1.
  *
  * TODO
- * - Add "scope" parameter for the notifications (saves writing Core.bind(this.xyz, this) multiple times).
+ * - Add "scope" parameter for the notifications (saves writing this.xyz.bind(this) multiple times).
  *
  *
  * @author   Fabrice Denis
@@ -220,7 +220,7 @@
       // Attach an event to FORMs that will dispatch a "onSubmit" event.
       var elForm = (this.serializeForm = this.getForm());
       if (elForm) {
-        this.evtCache.addEvent(elForm, 'submit', Core.bind(this.submitFormEvent, this));
+        this.evtCache.addEvent(elForm, 'submit', this.submitFormEvent.bind(this));
       }
 
       // handle autoScroll option

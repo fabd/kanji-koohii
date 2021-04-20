@@ -53,9 +53,9 @@ App.ready(function()
           initContent: true,
           form:        'main-form',
           events: {
-            'onSubmitForm':     Core.bind(this.onSubmitForm, this),
-            'onContentInit':    Core.bind(this.onContentInit, this),
-            'onContentDestroy': Core.bind(this.onContentDestroy, this)
+            'onSubmitForm':     this.onSubmitForm.bind(this),
+            'onContentInit':    this.onContentInit.bind(this),
+            'onContentDestroy': this.onContentDestroy.bind(this)
           }
         });
       }

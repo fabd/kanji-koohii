@@ -77,7 +77,6 @@
  *
  *   getStyle()
  *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
- *   toggleClass()
  *   offsetTop()
  *
  */
@@ -102,30 +101,6 @@ type $Event = {
 };
 let $Events: $Event[] = [];
 
-/*
-export interface DomJSInterface<EL> {
-  el(i?: number): EL;
-
-  closest(selector: string): Element | null;
-
-  css(props: string, value: string): void;
-  css(props: string): string;
-  css(props: StringHash): void;
-
-  each(callback: { (element: EL, index: number): false | void }): void;
-
-  on(events: string | string[], callback: EventListener): void;
-
-  off(events: string | string[], callback?: EventListener): void;
-
-  once(event: string, fn: EventListener): void;
-
-  remove(): Node | null;
-
-  toArray(): EL[];
-}
-*/
-
 type DomJSSelector = string | Window | Node;
 
 class DomJS<EL extends Element> implements ArrayLike<EL> {
@@ -133,10 +108,13 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
   length: number;
   [n: number]: EL;
 
-  constructor(selector: DomJSSelector, context: Element) {
+  constructor(selector: DomJSSelector, context?: Element) {
     let nodes: ArrayLike<EL>;
 
-    console.assert(!context || isNode(context), "DomJS(): invalid `context` argument");
+    console.assert(
+      !context || isNode(context),
+      "DomJS(): invalid `context` argument"
+    );
 
     if (isString(selector)) {
       nodes = (context || window.document).querySelectorAll(selector);
@@ -189,7 +167,7 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
       return null;
     }
 
-    let matchesSelector = (el: Element) => el.matches(selector);
+    const matchesSelector = (el: Element) => el.matches(selector);
 
     while ((el = el.parentElement || (el.parentNode as Element))) {
       if (matchesSelector(el)) return el;
@@ -354,8 +332,8 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
 
 const factory = <EL extends Element>(
   selector: DomJSSelector,
-  context?: any
-) => {
+  context?: Element
+): DomJS<EL> => {
   return new DomJS<EL>(selector, context);
 };
 
@@ -382,31 +360,31 @@ export { factory as default };
  *
  */
 export const classList = {
-  _set(el: Node, names: StringOrStringArray, add: boolean) {
+  _set(el: Node, names: StringOrStringArray, add: boolean): void {
     console.assert(isNode(el), "classList.add/remove : invalid node");
     console.assert(
       isString(names) || isArray(names),
       "classList : class must be a String or Array"
     );
     if (!el) return;
-    let classes: string[] = isString(names)
+    const classes: string[] = isString(names)
       ? names.split(" ")
       : /* assumed Array */ names;
     // FIXME? IE10/11 does not support multiple classes for add/remove (loop?)
     (el as HTMLElement).classList[add ? "add" : "remove"](...classes);
   },
 
-  add(el: Node, names: StringOrStringArray) {
+  add(el: Node, names: StringOrStringArray): void {
     this._set(el, names, true);
   },
 
-  remove(el: Node, names: StringOrStringArray) {
+  remove(el: Node, names: StringOrStringArray): void {
     this._set(el, names, false);
   },
 
-  toggle(el: Node, name: string, force: boolean) {
+  toggle(el: Node, name: string, force?: boolean): void {
     // NOTE: doing it this way supports IE10/11 lack of support for "force"
-    if (arguments.length > 2) {
+    if (force !== undefined) {
       this._set(el, [name], !!force);
     } else {
       (el as HTMLElement).classList.toggle(name);
@@ -433,7 +411,7 @@ export function getNode(sel: Element | string): Element | null {
  *
  * @returns The appended child node
  */
-export function insertAfter(newNode: Element, refNode: Element | string) {
+export function insertAfter(newNode: Element, refNode: Element | string): Element {
   refNode = getNode(refNode)!;
   console.assert(
     isNode(newNode) && isNode(refNode),
@@ -451,7 +429,10 @@ export function insertAfter(newNode: Element, refNode: Element | string) {
  *
  *   styleName    MUST be camelCase form!
  */
-export function getStyle(element: HTMLElement, styleName: string) {
+export function getStyle(
+  element: HTMLElement,
+  styleName: string
+): string | null {
   console.assert(!!(element && styleName), "getStyle() : invalid arguments");
 
   // styleName = camelCase(styleName);
@@ -459,7 +440,7 @@ export function getStyle(element: HTMLElement, styleName: string) {
     styleName = "cssFloat";
   }
   try {
-    let computed = document.defaultView!.getComputedStyle(element, "");
+    const computed = document.defaultView!.getComputedStyle(element, "");
     return element.style.getPropertyValue(styleName) || computed
       ? computed.getPropertyValue(styleName)
       : null;
@@ -469,19 +450,9 @@ export function getStyle(element: HTMLElement, styleName: string) {
 }
 
 /**
- * Element.classList.toggle() using `force` parameter, compatible with IE10/11.
- * @param el html element
- * @param token a *single* class name (no spaces)
- * @param active true to add class, false to remove
- */
-export const toggleClass = (el: Element, token: string, active: boolean) => {
-  el.classList[active ? "add" : "remove"](token);
-};
-
-/**
  * Returns the element's top offset relative to the entire document.
  * @param el html element
  */
-export const offsetTop = (el: Element) => {
+export const offsetTop = (el: Element): number => {
   return window.pageYOffset + el.getBoundingClientRect().top;
 };

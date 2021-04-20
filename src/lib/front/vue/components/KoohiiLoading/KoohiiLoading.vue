@@ -13,19 +13,12 @@
 </template>
 
 <script>
-import { classList } from "@lib/koohii/dom";
-
-/** xtype {Vue} */
 export default {
-  data() {
-    return {
-      /** @type {boolean} */
-      target: null,
 
-      background: null,
-
-      visible: false,
-    };
+  props: {
+    target: { type: Element, required: true },
+    background: { type: String, default: '' },
+    visible: { type: Boolean, default: false },
   },
 
   methods: {
@@ -34,7 +27,7 @@ export default {
       const target = this.target;
 
       if (target) {
-        classList.remove(target, "kk-loading-target--relative");
+        target.classList.remove("kk-loading-target--relative");
       }
 
       // remove vue from page
@@ -50,10 +43,10 @@ export default {
 
     /*
      @after-leave="onAfterLeave"
-     
+
     onAfterLeave() {
       console.log('KoohiiLoading :: after-leave ()')
-      
+
       const target = this.target
       classList.remove(target, 'kk-loading-target--relative')
       if (this.$el && this.$el.parentNode) {

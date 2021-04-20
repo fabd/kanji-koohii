@@ -23,7 +23,7 @@
 
 import Vue from "vue";
 import Component from "./KoohiiLoading.vue";
-import { classList, getStyle } from "@lib/koohii/dom";
+import { getStyle } from "@lib/koohii/dom";
 import Lang from "@core/lang";
 
 /*
@@ -70,7 +70,7 @@ export default {
       instance.originalPosition !== "absolute" &&
       instance.originalPosition !== "fixed"
     ) {
-      classList.add(target, "kk-loading-target--relative");
+      target.classList.add("kk-loading-target--relative");
     }
 
     target.appendChild(instance.$el);

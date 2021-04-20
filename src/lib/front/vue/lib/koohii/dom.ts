@@ -353,59 +353,6 @@ const factory = <EL extends Element>(
 
 export { factory as default };
 
-/**
- * USAGE
- *
- *   add(el, 'foo')
- *   add(el, 'foo bar')
- *   add(el, ['foo', 'bar'])
- *
- *   remove(el, 'foo')
- *   remove(el, 'foo bar')
- *   remove(el, ['foo', 'bar'])
- *
- *   toggle(el, name)
- *   toggle(el, name, force)
- *
- *
- * COMPATIBILITY
- *
- *   - IE10/11 : does not support add/remove of multiple classes (only the 1st one)
- *
- */
-export const classList = {
-  _set(el: Node, names: StringOrStringArray, add: boolean): void {
-    console.assert(isNode(el), "classList.add/remove : invalid node");
-    console.assert(
-      isString(names) || isArray(names),
-      "classList : class must be a String or Array"
-    );
-    if (!el) return;
-    const classes: string[] = isString(names)
-      ? names.split(" ")
-      : /* assumed Array */ names;
-    // FIXME? IE10/11 does not support multiple classes for add/remove (loop?)
-    (el as HTMLElement).classList[add ? "add" : "remove"](...classes);
-  },
-
-  add(el: Node, names: StringOrStringArray): void {
-    this._set(el, names, true);
-  },
-
-  remove(el: Node, names: StringOrStringArray): void {
-    this._set(el, names, false);
-  },
-
-  toggle(el: Node, name: string, force?: boolean): void {
-    // NOTE: doing it this way supports IE10/11 lack of support for "force"
-    if (force !== undefined) {
-      this._set(el, [name], !!force);
-    } else {
-      (el as HTMLElement).classList.toggle(name);
-    }
-  },
-};
-
 // --------------------------------------------------------------------
 // misc DOM helpers
 // --------------------------------------------------------------------

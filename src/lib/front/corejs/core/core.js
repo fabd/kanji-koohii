@@ -72,13 +72,9 @@ var Core =
     YAHOO.lang.extend(subc, superc, overrides);
   },
 
-  /**
-   * Set the document onload event.
-   *
-   */
   ready: function(f)
   {
-    YAHOO.util.Event.onDOMReady(f);
+    window.addEventListener('DOMContentLoaded', f);
   }
   
 };

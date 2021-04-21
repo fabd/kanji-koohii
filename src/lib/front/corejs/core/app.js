@@ -138,6 +138,7 @@ App.Ui = {};
  */
 (function() {
   var Y = YAHOO,
+    $$ = Koohii.Dom,
     Dom = Y.util.Dom,
     Event = Y.util.Event;
 
@@ -146,6 +147,9 @@ App.Ui = {};
      * EventDelegator.
      */
     bodyED: null,
+
+    /** @type String  selector for input to focus after DOMContentLoaded */
+    focusOnLoadSel: '',
 
     /**
      * Constructor.
@@ -164,6 +168,20 @@ App.Ui = {};
         console.log("App.ready()");
         this.fnReady();
       }
+
+      // focus input on load (AFTER fnReady())
+      if (this.focusOnLoadSel) {
+        const elFocus = $$(this.focusOnLoadSel)[0];
+        elFocus && elFocus.focus();
+      }
+    },
+
+    /**
+     * Pass a selector for an element (typically an input field) to focus.
+     * @param {String} selector  selector to pick element to focus
+     */
+    focusOnLoad: function(selector) {
+      this.focusOnLoadSel = selector;
     },
 
     ready: function(fn) {

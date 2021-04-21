@@ -32,13 +32,7 @@
 
 
 <?php koohii_onload_slot() ?>
-App.ready(function() {
-  var elFocus = YAHOO.util.Dom.get('oldpassword');
-  if (elFocus)
-  {
-    elFocus.focus();
-  }
-});
+App.focusOnLoad('#oldpassword');
 <?php end_slot() ?>
 
 <?php decorate_end() ?>

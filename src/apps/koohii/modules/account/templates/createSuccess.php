@@ -86,15 +86,12 @@
 App.ready(function() {
   
   // focus the first input field, or if there is an error the first invalid field
-  var $$ = CoreJS;
-  var $el = $$('#signup-form .has-error');
-  if ($el) {
-    $el = $$('.form-control', $el[0]);
-  }
-  else {
-    $el = $$('#signup-form .form-control');
-  }
-  $el[0].focus();
+  const $$ = window.Koohii.Dom;
+  const errorDiv = $$('#signup-form .has-error')[0];
+    elFocus = errorDiv
+      ? $$('.form-control', errorDiv)[0]
+      : $$('#signup-form .form-control')[0];
+  App.focusOnLoad(elFocus);
 
 });
 <?php end_slot() ?>

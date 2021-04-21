@@ -18,8 +18,8 @@
 /*jslint forin: true */
 /* globals YAHOO */
 
-/* =require from "%CORE%" */
-/* =require "/core/core-yui2.js" */
+/* =require from "%YUI2%" */
+/* =require "/yahoo-dom-event/yahoo-dom-event.js" */
 
 var Core =
 {

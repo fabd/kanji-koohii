@@ -43,8 +43,6 @@ body { padding-top:0;  }
 </head>
 <body class="uiFcLayout yui-skin-sam">
 
-<?php /*AjaxDebug (app.js)*/ if (KK_ENV_DEV): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
-
 <!--[if lt IE 9]><div id="ie"><![endif]-->
 
 <?php echo $sf_content ?>

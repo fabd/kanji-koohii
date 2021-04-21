@@ -4,14 +4,9 @@
  * Core is the global namespace that acts as a wrapper around library specific code.
  * 
  * Core methods
- *   bind()           Create a closure to preserve execution context
  *   make()           OOP, returns constructor for a base class
  *   extend()         OOP, returns a constructor for an extended class
- *   assert()         Logs a message if condition failed.
- *   warn()           Log a warning message (maps to Firebug console.warn() if present)
- *   halt()           Throws an error message (maps to Firebug console.error() if present).
  *   ready()          Sets window onload code 
- *   log()            Log message to console (maps to Firebug console.log() if present)
  * 
  * @author  Fabrice Denis
  */
@@ -23,18 +18,6 @@
 
 var Core =
 {
-  /**
-   * Helper to bind function with arguments always appended to
-   * the END of the argument collection.
-   * 
-   * See toolkit.js 
-   */
-  bind: function(fn, context, args)
-  {
-    // $.proxy.apply($, arguments);
-    return YAHOO.bind.apply(YAHOO, arguments);
-  },
-  
   /**
    * A constructor function to create a new class.
    * 

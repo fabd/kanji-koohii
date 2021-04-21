@@ -109,6 +109,7 @@
   // internal shorthands
   var Y = YAHOO,
       Dom = Y.util.Dom,
+      TRON = Koohii.TRON,
       Event = Y.util.Event,
       AjaxPanel = Core.Ui.AjaxPanel;
     
@@ -210,10 +211,10 @@
     },
   
     /**
-     * @param {Object|Undefined}  t   Core.Helper.TRON instance if loaded html, undefined if called
+     * @param {TRON|undefined}  tron   TRON instance if loaded html, undefined if called
      *                                first time using initContent option!
      */
-    initContent: function(t)
+    initContent: function(tron)
     {
       //console.log('AjaxPanel.initContent()');
 
@@ -234,7 +235,7 @@
       }
 
       if (this.contentLoaded) {
-        this.eventDispatcher.notify('onContentInit', t);
+        this.eventDispatcher.notify('onContentInit', tron);
       }
     },
 
@@ -242,7 +243,7 @@
      * Replace html content, if provided. Only call destroy/init methods if
      * actual content replaced.
      *
-     * @param  {Object}  tron   Core.Helper.TRON instance.
+     * @param  {Object}  tron   TRON instance.
      */
     replaceContent: function(tron)
     {

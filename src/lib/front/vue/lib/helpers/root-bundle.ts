@@ -19,11 +19,13 @@ import KoohiiAside from "@components/Aside.js";
 // export utilities to the legacy front end
 import Dom from "@lib/koohii/dom";
 import Lang from "@core/lang";
+import { Inst as TronFactory } from "@lib/koohii/tron";
 import VueInstance from "@lib/helpers/vue-instance";
 
 export function init() {
   const koohiiGlobals: KoohiiGlobals = {
     Dom: Dom,
+    TRON: TronFactory,
     Refs: {},
     Util: {
       Lang: Lang,

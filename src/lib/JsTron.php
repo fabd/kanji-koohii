@@ -2,7 +2,7 @@
 /**
  * Wrapper for JSON communication, extends sfParameterHolder.
  * 
- * See Core.Helper.TRON (lib/front/corejs/core/core-json.js) for the front end side.
+ * See TRON (tron.ts) for the front end side.
  *
  * 
  * Methods:

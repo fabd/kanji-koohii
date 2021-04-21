@@ -17,20 +17,29 @@ import Vue, { VueConstructor } from "vue";
 import { KoohiiAPI } from "@core/api";
 import Lang from "@core/lang";
 import Dom from "@lib/koohii/dom";
+import { Inst as TronFactory } from "@lib/koohii/tron";
 import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
 
 declare global {
   export interface KoohiiGlobals {
     API?: KoohiiAPI;
+
+    // DomJS provides simple DOM utilities to the old frontend code
     Dom: typeof Dom;
+    
+    // JSON wrapper
+    TRON: typeof TronFactory;
+    
     // *instances* of components, shared between misc. legacy Javascripts
     Refs: {
       [componentName: string]: any;
     };
+    
     //
     Util: {
       Lang: typeof Lang;
     };
+    
     // references to Vue components that can be instanced later
     UX: { [componentName: string]: any };
   }

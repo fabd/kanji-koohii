@@ -70,7 +70,7 @@
  *     dialogTitle   (string)
  *
  *     
- *   If the response TRON status (Core.Helper.TRON.STATUS_xxx) is:
+ *   If the response TRON status is:
  *     STATUS_FAILED   -> fire "onDialogFailed" event -> close dialog -> END
  *     STATUS_SUCCESS  -> fire "onDialogSuccess" event -> close dialog -> END
  *     STATUS_PROGRESS -> fire "onDialogProgress" event
@@ -209,6 +209,7 @@
     Y = YAHOO,
     $$ = Koohii.Dom,
     Dom = Y.util.Dom,
+    TRON = Koohii.TRON,
     Event = Y.util.Event,
     AjaxPanel = Core.Ui.AjaxPanel,
     AjaxDialog = Core.Ui.AjaxDialog,
@@ -618,9 +619,9 @@
           dialogStatus;
       
       switch (status) {
-        case Core.Helper.TRON.STATUS_FAILED:   dialogStatus = AjaxDialog.STATUS_FAILED; break;
-        case Core.Helper.TRON.STATUS_PROGRESS: dialogStatus = AjaxDialog.STATUS_PROGRESS; break;
-        case Core.Helper.TRON.STATUS_SUCCESS:  dialogStatus = AjaxDialog.STATUS_SUCCESS; break;
+        case TRON.STATUS_FAILED:   dialogStatus = AjaxDialog.STATUS_FAILED; break;
+        case TRON.STATUS_PROGRESS: dialogStatus = AjaxDialog.STATUS_PROGRESS; break;
+        case TRON.STATUS_SUCCESS:  dialogStatus = AjaxDialog.STATUS_SUCCESS; break;
         default:
           console.warn('AjaxDialog::handleTRONStatus() invalid status');
           break;

@@ -82,7 +82,7 @@
  * AjaxRequest augments the YUI Connect response object:
  *
  *   responseJSON   => if the content-type is "application/json", contains the parsed JSON.
- *   responseTRON   => an instance of Core.Helper.TRON which augments the JSON response with
+ *   responseTRON   => an instance of TRON which augments the JSON response with
  *                     a standard structure, and helpers.
  * 
  * @see      http://developer.yahoo.com/yui/connection/
@@ -92,11 +92,6 @@
  * @author   Fabrice Denis
  */
 /*global YAHOO, Core, App */
-
-/* Dependencies */
-
-/* =require from "%CORE%" */
-/* =require "/core/core-json.js" */
 
 /* =require from "%YUI2%" */
 /* =require "/connection/connection-min.js" */
@@ -114,6 +109,7 @@
   // internal shorthands
   var Y = YAHOO,
       Dom = Y.util.Dom,
+      TRON = Koohii.TRON,
       AjaxRequest = Core.Ui.AjaxRequest,
 
       // constants
@@ -324,7 +320,7 @@
           }
         }
 
-        o.responseTRON = o.responseJSON ? new Core.Helper.TRON(o.responseJSON) : null;
+        o.responseTRON = o.responseJSON ? new TRON(o.responseJSON) : null;
 
         fn.apply(scope || window, [o]);
       }

@@ -136,7 +136,7 @@
      * Display an error message to the client based on the TRON status, without
      * replacing the content.
      *
-     * @param {Object} t    Core.Helper.TRON instance or null
+     * @param {Object} t    TRON instance or null
      */
     onResponse: function(t)
     {

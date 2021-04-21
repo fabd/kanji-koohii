@@ -112,14 +112,7 @@ App.Ui = {};
       return this.bodyED
         ? this.bodyED
         : (this.bodyED = new Core.Ui.EventDelegator(document.body, "click"));
-    },
-
-    /**
-     * Throws an alert box, disable in production!
-     */
-    alert: function(s) {
-      alert(s);
-    },
+    }
   });
 
   Core.ready(function() {

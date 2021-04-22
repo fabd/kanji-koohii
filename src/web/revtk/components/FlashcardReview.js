@@ -95,7 +95,7 @@
  *     Links that trigger an action (answer buttons), calls event "onAction" with "XXXX" as second argument
  *
  */
-/* globals YAHOO, Core, App, Koohii, VueInstance */
+/* globals YAHOO, Core, App, VueInstance */
 (function() {
 
   App.Ui.FlashcardReview = Core.make();

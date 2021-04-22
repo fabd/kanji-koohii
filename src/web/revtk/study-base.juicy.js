@@ -7,7 +7,7 @@
  *   Koohii    vue-bundle, Koohii.UX.(ComponentName)
  *
  */
-/* globals YAHOO, Core, App, $, $$, actb, kwlist, kklist, Vue, Koohii, VueInstance */
+/* globals YAHOO, Core, App, $, $$, actb, kwlist, kklist, Vue, VueInstance */
 
 /* REQUIRES  legacy-bundle ! */
 

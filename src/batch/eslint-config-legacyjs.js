@@ -4,6 +4,9 @@ module.exports = {
     es6: false,
   },
   extends: "eslint:recommended",
+  globals: {
+    "Koohii": "readonly",
+  },
   parserOptions: {
     ecmaVersion: 5,
   },

@@ -12,6 +12,7 @@
 (function(){
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom;
 
   App.LabsReview = 
@@ -40,8 +41,8 @@
 
       // stats panel
       this.elStats = Dom.get('uiFcStats');
-      this.elsCount = Dom.queryAll('#uiFcProgressBar', '.count'); //array
-      this.elProgressBar = Dom.query('#review-progress', 'span');
+      this.elsCount = $$('#uiFcProgressBar .count'); //array
+      this.elProgressBar = $$('#review-progress span')[0];
     },
     
     /**
@@ -81,7 +82,7 @@
       }
 
       // Show undo action if available
-      Dom.toggle('JsBtnBack', this.oReview.getPosition() > 0);
+      $$('#JsBtnBack').toggle(this.oReview.getPosition() > 0);
 
       this.updateStatsPanel();
 
@@ -97,14 +98,14 @@
      */
     onFlashcardDestroy: function()
     {
-      Dom.toggle('uiFcButtons0', false);
-      Dom.toggle('uiFcButtons1', false);
+      $$('#uiFcButtons0').toggle(false);
+      $$('#uiFcButtons1').toggle(false);
     },
 
     onFlashcardState: function(iState)
     {
-      Dom.toggle('uiFcButtons0', iState === 0);
-      Dom.toggle('uiFcButtons1', iState !== 0);
+      $$('#uiFcButtons0').toggle(iState === 0);
+      $$('#uiFcButtons1').toggle(iState !== 0);
     },
 
     onAction: function(sActionId, oEvent)
@@ -175,7 +176,7 @@
 
       for (i = 0; i < buttons.length; i++)
       {
-        Dom.setClass(buttons[i], 'uiFcBtnDisabled', bEnabled);
+        buttons[i].classList.toggle('uiFcBtnDisabled', bEnabled);
       }
     }
   };

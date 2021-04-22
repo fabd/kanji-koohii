@@ -65,10 +65,8 @@
 
 <?php koohii_onload_slot() ?>
 App.ready(function() { 
-  var el, table;
-  if (el = Dom.get('summaryTable')) {
-    table = new Core.Widgets.AjaxTable(el);
-  }
-}
-);
+  const $$ = Koohii.Dom,
+  elTable = $$('#summaryTable')[0];
+  elTable && new Core.Widgets.AjaxTable(elTable);
+});
 <?php end_slot() ?>

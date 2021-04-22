@@ -46,11 +46,5 @@
 
 
 <?php koohii_onload_slot() ?>
-App.ready(function() {
-  var elFocus = YAHOO.util.Dom.get('username');
-  if (elFocus)
-  {
-    elFocus.focus();
-  }
-});
+App.focusOnLoad('#username');
 <?php end_slot() ?>

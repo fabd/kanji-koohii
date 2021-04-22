@@ -184,7 +184,7 @@
         elError:    'uiFcAjaxError', 
         elLoading:  'uiFcAjaxLoading',
         events:     {
-          onSuccess: Core.bind(this.onAjaxSuccess, this)
+          onSuccess: this.onAjaxSuccess.bind(this)
         }
       });
 
@@ -239,7 +239,7 @@
      */
     onActionEvent: function(ev, el)
     {
-      var data   = Dom.getDataset(el),
+      var data   = el.dataset,
           action = data.action;
       console.assert(!!data.action, 'onActionEvent() bad "action" attribute, element %o', el);
 
@@ -670,13 +670,9 @@
         console.warn('FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener');
       }
 
-      this.oKeyboard.addListener(sKey, Core.bind(this.shortcutKeyListener, this, sActionId));
-    },
-
-    shortcutKeyListener: function(oEvent, sActionId)
-    {
-      // console.log('FlashcardReview::shortcutKeyListener("%s")', sActionId);
-      this.notify('onAction', sActionId, oEvent);
+      this.oKeyboard.addListener(sKey, (event) => {
+        this.notify('onAction', sActionId, event);
+      });
     },
 
     /**

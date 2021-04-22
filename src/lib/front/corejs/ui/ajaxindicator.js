@@ -20,6 +20,7 @@
   Core.Ui.AjaxIndicator = Core.make();
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       AjaxIndicator = Core.Ui.AjaxIndicator,
       // constants
@@ -52,7 +53,7 @@
         var pos = Dom.getXY(this.container);
   
         this.indicator = document.createElement('span');
-        Dom.setStyles(this.indicator, {
+        $$(this.indicator).css({
           padding:    '2px 10px',
           background: 'red',
           color:      '#fff',

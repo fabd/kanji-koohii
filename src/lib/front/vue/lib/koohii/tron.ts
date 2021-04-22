@@ -6,17 +6,26 @@
  * the operation is either succesful or not, and the response is *always* in
  * a standard format, even if the request or connection failed.
  *
- * Corresponds to backend lib/JsTron.php
+ * Features:
+ * - Supports embedded HTML within JSON response.
+ * - Status codes to return success/fail/progress states (useful for multi step dialogs).
+ * - Error messages for server exceptions that can be shown to the user.
  *
+ * Corresponds to backend lib/JsTron.php
  *
  * Methods:
  *
- *   TRON(json)         Factory function, sanitizes & always returns a valid TRON message
+ *   TRON(json)        Factory function, sanitizes & always returns a valid TRON message
+ *
+ *   isEmpty()         If true this means this instance is not created from a JSON response
+ *                     that uses the TRON format.
  *
  *   isSuccess()
  *   getStatus()
  *
  *   getProps()        @return {Object}
+ *
+ *   getHtml()         Returns embedded html, otherwise an empty string (falsy).
  *
  *   getErrors()       @return {Array}
  *   hasErrors()
@@ -44,8 +53,9 @@ export type TronProps = Dictionary<unknown>;
 export type TronMessage<T = TronProps> = {
   status: STATUS;
   props: T;
+  html: string;
   errors: string[];
-}
+};
 
 export type TronInst<T = TronProps> = {
   isEmpty(): boolean;
@@ -53,30 +63,36 @@ export type TronInst<T = TronProps> = {
   isFailed(): boolean;
   getStatus(): STATUS;
   getProps(): T;
+  getHtml(): string;
   getErrors(): string[];
   hasErrors(): boolean;
   setErrors(...errors: string[]): void;
-}
+};
 
-export function Inst<T = TronProps>(message: Partial<TronMessage>): TronInst<T> {
+function Inst<T = TronProps>(message: Partial<TronMessage>): TronInst<T> {
   console.assert(Lang.isObject(message), "TRON() : json is not an object");
 
   const emptyTronMsg: TronMessage = {
     status: STATUS.EMPTY,
     props: {},
+    html: "",
     errors: [],
   };
   const tronObj: TronMessage = { ...emptyTronMsg, ...message };
+
+  // validate TRON message
+  console.assert(Lang.isNumber(tronObj.status), "TRON status is not a number");
+  console.assert(Lang.isObject(tronObj.props), "TRON props is not an object");
+  console.assert(Lang.isArray(tronObj.errors), "TRON errors is not an array");
 
   const inst = {
     isEmpty: () => tronObj.status === STATUS.EMPTY,
     isSuccess: () => tronObj.status === STATUS.SUCCESS,
     isFailed: () => tronObj.status === STATUS.FAILED,
 
-    getStatus: (): STATUS => {
-      return tronObj.status;
-    },
-    getProps: (): T => tronObj.props as unknown as T,
+    getStatus: (): STATUS => tronObj.status,
+    getProps: (): T => (tronObj.props as unknown) as T,
+    getHtml: (): string => tronObj.html,
 
     getErrors: () => tronObj.errors,
     hasErrors: () => tronObj.errors.length > 0,
@@ -87,3 +103,10 @@ export function Inst<T = TronProps>(message: Partial<TronMessage>): TronInst<T> 
 
   return inst;
 }
+
+// constants used by old frontend code
+Inst.STATUS_FAILED = STATUS.FAILED;
+Inst.STATUS_PROGRESS = STATUS.PROGRESS;
+Inst.STATUS_SUCCESS = STATUS.SUCCESS;
+
+export { Inst };

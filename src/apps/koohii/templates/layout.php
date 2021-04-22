@@ -62,7 +62,6 @@
 <body
   class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
   <div id="body-navbar-holder"></div>
-<?php /*AjaxDebug (app.js)*/ if (KK_ENV_DEV): ?><div id="AppAjaxFilterDebug" style="display:none"></div><?php endif ?>
 
 <!--[if lt IE 9]><div id="ie"><![endif]--> 
 

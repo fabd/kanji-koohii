@@ -15,7 +15,7 @@
  *   
  * Examples:
  *   this.evtCache = new Core.Ui.EventCache();
- *   this.evtCache.addEvent(elem, 'click', Core.bind(this.clickEvent, this));
+ *   this.evtCache.addEvent(elem, 'click', this.clickEvent.bind(this));
  * 
  * @author   Fabrice Denis
  * @version  2.0

@@ -82,7 +82,7 @@
  * AjaxRequest augments the YUI Connect response object:
  *
  *   responseJSON   => if the content-type is "application/json", contains the parsed JSON.
- *   responseTRON   => an instance of Core.Helper.TRON which augments the JSON response with
+ *   responseTRON   => an instance of TRON which augments the JSON response with
  *                     a standard structure, and helpers.
  * 
  * @see      http://developer.yahoo.com/yui/connection/
@@ -93,14 +93,8 @@
  */
 /*global YAHOO, Core, App */
 
-/* Dependencies */
-
-/* =require from "%CORE%" */
-/* =require "/core/core-json.js" */
-
 /* =require from "%YUI2%" */
 /* =require "/connection/connection-min.js" */
-/* =require "/json/json-min.js" */
 
 (function() {
 
@@ -115,6 +109,7 @@
   // internal shorthands
   var Y = YAHOO,
       Dom = Y.util.Dom,
+      TRON = Koohii.TRON,
       AjaxRequest = Core.Ui.AjaxRequest,
 
       // constants
@@ -139,10 +134,12 @@
       console.log('AjaxRequest.init()',options);
       
       // set defaults
-      options = Y.lang.merge({
-        method:    'GET',
-        url:       url
-      }, options || {});
+      options = {
+        ...{
+          method: 'GET',
+          url: url
+        }, ...options
+      };
 
       options.method = options.method.toUpperCase();
 
@@ -200,7 +197,7 @@
       // encode JSON ?
       if (options.json && Y.lang.isObject(options.json))
       {
-        json = Y.lang.JSON.stringify(options.json);
+        json = JSON.stringify(options.json);
       }
 
       // convert request parameters to url encoded string (damn you, YUI)
@@ -312,7 +309,7 @@
         {
           try
           {
-            o.responseJSON = Y.lang.JSON.parse(o.responseText);
+            o.responseJSON = JSON.parse(o.responseText);
           } 
           catch (e)
           {
@@ -323,7 +320,7 @@
           }
         }
 
-        o.responseTRON = o.responseJSON ? new Core.Helper.TRON(o.responseJSON) : null;
+        o.responseTRON = o.responseJSON ? new TRON(o.responseJSON) : null;
 
         fn.apply(scope || window, [o]);
       }

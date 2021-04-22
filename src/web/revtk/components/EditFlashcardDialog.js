@@ -144,7 +144,7 @@
 
     onMenuItem: function(ev, el)
     {
-      var data   = Dom.getDataset(el),
+      var data   = el.dataset,
           panel = this.dialog.getAjaxPanel();
 
       if (data.menuid === 'page')
@@ -167,7 +167,7 @@
       }
 
       // post the base params and the menuid
-      var params = Y.lang.merge(this.params, {"menu": data.menuid});
+      var params = { ...this.params, ...{ "menu": data.menuid } };
       panel.post(params, this.dlgOpts.requestUri);
       return false;
     }

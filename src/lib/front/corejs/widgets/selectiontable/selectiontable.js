@@ -20,6 +20,7 @@
 (function() {
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -119,7 +120,7 @@
       // if clicked in a row, select it
       if ((row = Dom.getAncestorByTagName(el, "tr")))
       {
-        if ((check = Dom.down(row, 'checkbox')))
+        if ((check = $$('.checkbox', row)[0]))
         {
           check.click();
           Event.stopEvent(ev);
@@ -134,7 +135,7 @@
       // set value
       input.value = check ? "1" : "0";
       // set highlight
-      Dom.setClass(row, "selected", check);
+      row.classList.toggle("selected", check);
     }
   };
 

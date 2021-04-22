@@ -95,7 +95,7 @@
  *   6. Goto 1.
  *
  * TODO
- * - Add "scope" parameter for the notifications (saves writing Core.bind(this.xyz, this) multiple times).
+ * - Add "scope" parameter for the notifications (saves writing this.xyz.bind(this) multiple times).
  *
  *
  * @author   Fabrice Denis
@@ -109,6 +109,7 @@
   // internal shorthands
   var Y = YAHOO,
       Dom = Y.util.Dom,
+      TRON = Koohii.TRON,
       Event = Y.util.Event,
       AjaxPanel = Core.Ui.AjaxPanel;
     
@@ -151,12 +152,14 @@
       options = !!options ? options : {};
   
       // set defaults
-      this.options = Y.lang.merge({
-        form:        true,
-        bUseLayer:   true,
-        bUseShading: false,
-        initContent: false
-      }, options);
+      this.options = {
+        ...{
+          form: true,
+          bUseLayer: true,
+          bUseShading: false,
+          initContent: false
+        }, ...options
+      };
   
       // make sure to call onContentDestroy() before the first content replace, if used initContent
       this.contentLoaded = this.options.initContent === true ? true : false;
@@ -208,17 +211,17 @@
     },
   
     /**
-     * @param {Object|Undefined}  t   Core.Helper.TRON instance if loaded html, undefined if called
+     * @param {TRON|undefined}  tron   TRON instance if loaded html, undefined if called
      *                                first time using initContent option!
      */
-    initContent: function(t)
+    initContent: function(tron)
     {
       //console.log('AjaxPanel.initContent()');
 
       // Attach an event to FORMs that will dispatch a "onSubmit" event.
       var elForm = (this.serializeForm = this.getForm());
       if (elForm) {
-        this.evtCache.addEvent(elForm, 'submit', Core.bind(this.submitFormEvent, this));
+        this.evtCache.addEvent(elForm, 'submit', this.submitFormEvent.bind(this));
       }
 
       // handle autoScroll option
@@ -232,7 +235,7 @@
       }
 
       if (this.contentLoaded) {
-        this.eventDispatcher.notify('onContentInit', t);
+        this.eventDispatcher.notify('onContentInit', tron);
       }
     },
 
@@ -240,7 +243,7 @@
      * Replace html content, if provided. Only call destroy/init methods if
      * actual content replaced.
      *
-     * @param  {Object}  tron   Core.Helper.TRON instance.
+     * @param  {Object}  tron   TRON instance.
      */
     replaceContent: function(tron)
     {

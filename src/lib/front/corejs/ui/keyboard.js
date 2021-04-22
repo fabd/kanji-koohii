@@ -18,14 +18,8 @@
  *   destroy();
  * 
  * Usage:
- * 
- *   The listener callback receives the Prototype event object as argument.
- * 
- *   Use Prototype's bindAsEventListener to pass a closure to addListener(), and
- *   use the extra argument to identify the key, this is easier than checking the
- *   keycode from the event object.
  *   
- *   addListener('s', Core.bind(this.save, this, 'save'));
+ *   addListener('s', this.save.bind(this, 'save'));
  * 
  */
 /*global YAHOO, Core, App */
@@ -52,7 +46,7 @@
 
       this.oKeys = [];
       this.evtCache = new Core.Ui.EventCache();
-      this.evtCache.addEvent(document, 'keydown', Core.bind(this.evKeydown, this));
+      this.evtCache.addEvent(document, 'keydown', this.evKeydown.bind(this));
     },
     
     destroy: function()

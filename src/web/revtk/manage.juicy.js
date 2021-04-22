@@ -16,6 +16,7 @@
 App.ready(function()
 {
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom;
 
   App.ManageFlashcards =
@@ -25,7 +26,7 @@ App.ready(function()
       var that = this, 
           bodyED = App.getBodyED();
 
-      this.initView('manage-view');
+      this.initView('#manage-view .ajax');
         
       // Cancel/Reset buttons on ajax forms
       bodyED.on("JSManageCancel", function(e, el) { return that.load(el, {'cancel':true}); });
@@ -36,14 +37,14 @@ App.ready(function()
       if (el)
       {
         this.ajaxTable = new Core.Widgets.AjaxTable(el);
-        this.editKeywordUri = Dom.getDataset(el).uri;
+        this.editKeywordUri = el.dataset.uri;
         bodyED.on("JSEditKeyword", this.onEditKeyword, this);
       }
     },
 
     initView: function(viewId)
     {
-      this.viewDiv = Dom.down(viewId, 'ajax');
+      this.viewDiv = $$(viewId)[0];
       
       if (this.viewDiv)
       {
@@ -52,9 +53,9 @@ App.ready(function()
           initContent: true,
           form:        'main-form',
           events: {
-            'onSubmitForm':     Core.bind(this.onSubmitForm, this),
-            'onContentInit':    Core.bind(this.onContentInit, this),
-            'onContentDestroy': Core.bind(this.onContentDestroy, this)
+            'onSubmitForm':     this.onSubmitForm.bind(this),
+            'onContentInit':    this.onContentInit.bind(this),
+            'onContentDestroy': this.onContentDestroy.bind(this)
           }
         });
       }
@@ -66,15 +67,14 @@ App.ready(function()
 
       console.log('onContentInit()');
 
-      var el = this.elSelectionTable = Dom.down(this.viewDiv, 'selection-table');
+      var el = this.elSelectionTable = $$('.selection-table', this.viewDiv)[0];
       if (el)
       {
         // clear checkboxes in case of page refresh
-        var els = Dom.getElementsByClassName('checkbox', 'input', el);
-        for (i = 0; i < els.length; i++) {
-          els[i].checked = false;
-        }
-        
+        $$('.checkbox', el).each((el, i) => {
+          el.checked = false;
+        });
+
         this.selectionTable = new Core.Widgets.SelectionTable(el);
       }
     },
@@ -108,7 +108,7 @@ App.ready(function()
      */
     onEditKeyword: function(e, el)
     {
-      var data, options, that = this;
+      var options, that = this;
 
       // @param  {String}   keyword 
       // @param  {Boolean}  next (optional)
@@ -120,7 +120,7 @@ App.ready(function()
         
         // get the custkeyword td
         tr = Dom.getAncestorByTagName(el, "tr");
-        td = Dom.down(tr, "JSCkwTd");
+        td = $$(".JSCkwTd", tr)[0];
         td.innerHTML = keyword;
 
         // force reload
@@ -141,20 +141,20 @@ App.ready(function()
 
       // just show dialog if clicking the same keyword twice, otherwise load
 
-      data = Dom.getDataset(el);
-      if (!this.oEditKeyword || data.id !== this.editKeywordId)
+      var ucsId = el.dataset.id;
+      if (!this.oEditKeyword || ucsId !== this.editKeywordId)
       {
         var contextEl = Dom.getAncestorByTagName(el, 'td');
         
         options = { 
           context: [contextEl, "tr", "tr", null, [0, 0]],
-          params:  { id: data.id, manage: true } /* manage: use the "Save & Next" chain editing */
+          params:  { id: ucsId, manage: true } /* manage: use the "Save & Next" chain editing */
         };
 
         // FIXME ideally should call this.oEditKeyword.destroy() here if it is set
 
         this.oEditKeyword = new App.Ui.EditKeywordComponent(this.editKeywordUri, options, callback);
-        this.editKeywordId = data.id;
+        this.editKeywordId = ucsId;
       }
       else
       {

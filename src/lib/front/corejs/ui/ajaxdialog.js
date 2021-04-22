@@ -70,7 +70,7 @@
  *     dialogTitle   (string)
  *
  *     
- *   If the response TRON status (Core.Helper.TRON.STATUS_xxx) is:
+ *   If the response TRON status is:
  *     STATUS_FAILED   -> fire "onDialogFailed" event -> close dialog -> END
  *     STATUS_SUCCESS  -> fire "onDialogSuccess" event -> close dialog -> END
  *     STATUS_PROGRESS -> fire "onDialogProgress" event
@@ -190,7 +190,7 @@
   /**
    * Constructor.
    * 
-   * @param {String} srcMarkup   Id of containing element if using srcMarkup, otherwise set null
+   * @param {String} srcMarkup   Selector for containing element if using srcMarkup, otherwise set null
    * @param {Object} options
    */
   Core.Ui.AjaxDialog = Core.make();
@@ -207,7 +207,9 @@
   // internal shorthands
   var 
     Y = YAHOO,
+    $$ = Koohii.Dom,
     Dom = Y.util.Dom,
+    TRON = Koohii.TRON,
     Event = Y.util.Event,
     AjaxPanel = Core.Ui.AjaxPanel,
     AjaxDialog = Core.Ui.AjaxDialog,
@@ -258,16 +260,18 @@
       console.log('AjaxDialog.init() Options: %o',options);
   
       // set defaults
-      this.options = Y.lang.merge({
-        autoclose: true,
-        close:     true,
-        modal:     true,
-        center:    true,
-        context:   null,
-        shadow:    true,
-        invisMask: false,
-        skin:      false
-      }, options);
+      this.options = {
+        ...{
+          autoclose: true,
+          close: true,
+          modal: true,
+          center: true,
+          context: null,
+          shadow: true,
+          invisMask: false,
+          skin: false
+        }, ...options
+      };
 
       // don't recenter dialog if using context
       if (this.options.context !== null) {
@@ -288,11 +292,10 @@
 
       if (options.useMarkup)
       {
-        console.assert(Y.lang.isString(srcMarkup), "AjaxDialog.init() srcMarkup must be string id");
+        console.assert($$(srcMarkup)[0], "AjaxDialog.init() srcMarkup is not valid, element not found");
 
         // we have to clone the markup of YUI uses it as is
-        var elSrcMarkup = Dom.get(srcMarkup);
-        elYuiPanel = Dom.get(srcMarkup).cloneNode(true);
+        elYuiPanel = $$(srcMarkup)[0].cloneNode(true);
         elYuiPanel.setAttribute('id', null);
         Core.Ui.Helper.insertTop(elYuiPanel);
 
@@ -420,10 +423,10 @@
           bUseShading:     false,
           timeout:         this.options.timeout,
           events: {
-            onContentInit:    Core.bind(this.onPanelInit, this),
-            onContentDestroy: Core.bind(this.onPanelDestroy, this),
-            onResponse:       Core.bind(this.onPanelResponse, this),
-            onSubmitForm:     Core.bind(this.onPanelSubmit, this)
+            onContentInit:    this.onPanelInit.bind(this),
+            onContentDestroy: this.onPanelDestroy.bind(this),
+            onResponse:       this.onPanelResponse.bind(this),
+            onSubmitForm:     this.onPanelSubmit.bind(this),
           }
         });
         
@@ -586,11 +589,8 @@
      */
     setElementFocus: function()
     {
-      var el = Dom.down(this.yPanel.body, "JSDialogFocus");
-      if (el)
-      {
-        el.focus();
-      }
+      var el = $$(".JSDialogFocus", this.yPanel.body)[0];
+      el && el.focus();
     },
 
     /**
@@ -619,9 +619,9 @@
           dialogStatus;
       
       switch (status) {
-        case Core.Helper.TRON.STATUS_FAILED:   dialogStatus = AjaxDialog.STATUS_FAILED; break;
-        case Core.Helper.TRON.STATUS_PROGRESS: dialogStatus = AjaxDialog.STATUS_PROGRESS; break;
-        case Core.Helper.TRON.STATUS_SUCCESS:  dialogStatus = AjaxDialog.STATUS_SUCCESS; break;
+        case TRON.STATUS_FAILED:   dialogStatus = AjaxDialog.STATUS_FAILED; break;
+        case TRON.STATUS_PROGRESS: dialogStatus = AjaxDialog.STATUS_PROGRESS; break;
+        case TRON.STATUS_SUCCESS:  dialogStatus = AjaxDialog.STATUS_SUCCESS; break;
         default:
           console.warn('AjaxDialog::handleTRONStatus() invalid status');
           break;

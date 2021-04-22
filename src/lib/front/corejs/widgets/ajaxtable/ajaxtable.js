@@ -37,6 +37,7 @@
   Core.Widgets.AjaxTable = Core.make();
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -59,8 +60,8 @@
       this.container = Dom.get(container);
       this.oAjaxPanel = new Core.Ui.AjaxPanel(this.container, {
         events: {
-          onResponse:   Core.bind(this.onResponse, this),
-          onSubmitForm: Core.bind(this.onSubmitForm, this)
+          onResponse:   this.onResponse.bind(this),
+          onSubmitForm: this.onSubmitForm.bind(this),
         }
       });
 
@@ -123,9 +124,9 @@
     setPagingToDisabledStyle: function(bDisable)
     {
       var opacityValue = bDisable ? '0.3' : '1' /* default */;
-      if ((this.elPagerDiv = Dom.down(this.container, 'uiPagerDiv')))
+      if ((this.elPagerDiv = $$('.uiPagerDiv', this.container)[0]))
       {
-        Dom.setStyles(this.elPagerDiv, { opacity: opacityValue });
+        $$(this.elPagerDiv).css({ opacity: opacityValue });
       }
     },
 
@@ -135,7 +136,7 @@
      * Display an error message to the client based on the TRON status, without
      * replacing the content.
      *
-     * @param {Object} t    Core.Helper.TRON instance or null
+     * @param {Object} t    TRON instance or null
      */
     onResponse: function(t)
     {
@@ -155,7 +156,7 @@
         if (el)
         {
           el.innerHTML = sMsg; 
-          Dom.setStyles(el, { display: 'block' });
+          $$(el).css({ display: 'block' });
         }
         else
         {

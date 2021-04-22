@@ -99,10 +99,10 @@
         return true;
       }
 
-      Dom.toggle('introduction', false);
+      $$('#introduction').toggle(false);
 
       this.formVisible = !this.formVisible;
-      Dom.toggle('form', this.formVisible);
+      $$('#form').toggle(this.formVisible);
       
       return false;
     },
@@ -135,7 +135,7 @@
       {
         this.autohide = (ev.type !== 'click');
 
-        data = Dom.getDataset(el);
+        data = el.dataset;
 
         html = data.text + ' <a href="' + Dom.getAttribute(el, "href") + '">Study</a>';
 

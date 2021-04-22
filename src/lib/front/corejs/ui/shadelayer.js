@@ -43,6 +43,7 @@
 
   var
     Y = YAHOO,
+      $$ = Koohii.Dom,
     Dom = Y.util.Dom,
     //Event = Y.util.Event,
     ShadeLayer = Core.Ui.ShadeLayer,
@@ -106,7 +107,7 @@
          layerStyles.opacity = Math.round(this.opacity)/100;
       }
   
-      Dom.setStyles(elLayer, layerStyles);
+      $$(elLayer).css(layerStyles);
        if (this.isIE){
          // IE6 opacity filter
         elLayer.style.filter = 'alpha(opacity=' + this.opacity + ')';
@@ -145,8 +146,7 @@
       {
         this.size = newSize;
         //  uiConsole.log('resize to %o', this.size);
-        Dom.setStyles(this.elLayer,
-        {
+        $$(this.elLayer).css({
           width: this.size.width + 'px',
           height: this.size.height + 'px'
         });

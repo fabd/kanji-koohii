@@ -24,6 +24,7 @@
 (function(){
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom;
 
   App.KanjiReview = 
@@ -80,16 +81,16 @@
       //this.oReview.addShortcutKey('d', 'delete');
 
       // flashcad container
-      this.elFlashcard = Dom.down(document.body, 'uiFcCard', 'div');
+      // this.elFlashcard = $$('.uiFcCard')[0];
 
       // stats panel
-      this.elStats = Dom.get('uiFcStats');
-      this.elsCount = Dom.queryAll('#uiFcProgressBar', '.count'); //array
-      this.elProgressBar = Dom.query('#review-progress', 'span');
+      this.elStats = $$('#uiFcStats')[0];
+      this.elsCount = $$('#uiFcProgressBar .count'); //array
+      this.elProgressBar = $$('#review-progress span')[0];
 
       // answer stats
-      this.elAnswerPass = Dom.down(this.elStats, 'JsPass');
-      this.elAnswerFail = Dom.down(this.elStats, 'JsFail');
+      this.elAnswerPass = $$('.JsPass', this.elStats)[0];
+      this.elAnswerFail = $$('.JsFail', this.elStats)[0];
       this.countYes = 0;
       this.countNo  = 0;
 
@@ -97,7 +98,7 @@
       this.deletedCards = [];
       
       // end review div
-      this.elFinish = Dom.down(this.elStats, 'JsFinish');
+      this.elFinish = $$('.JsFinish', this.elStats)[0];
     },
     
     /**
@@ -147,7 +148,7 @@
       }
 
       // Show undo action if available
-      Dom.toggle('JsBtnUndo', this.oReview.getNumUndos() > 0);
+      $$('#JsBtnUndo').toggle(this.oReview.getNumUndos() > 0);
 
       this.updateStatsPanel();
     },
@@ -158,8 +159,8 @@
      */
     onFlashcardDestroy: function()
     {
-      Dom.toggle('uiFcButtons0', false);
-      Dom.toggle('uiFcButtons1', false);
+      $$('#uiFcButtons0').toggle(false);
+      $$('#uiFcButtons1').toggle(false);
     },
 
     onFlashcardUndo: function(oAnswer)
@@ -173,8 +174,8 @@
     onFlashcardState: function(iState)
     {
       // console.log('onFlashcardState(%d)', iState);
-      Dom.toggle('uiFcButtons0', iState === 0);
-      Dom.toggle('uiFcButtons1', iState !== 0);
+      $$('#uiFcButtons0').toggle(iState === 0);
+      $$('#uiFcButtons1').toggle(iState !== 0);
     },
 
     onAction: function(sActionId, oEvent)
@@ -189,7 +190,7 @@
       // help dialog
       if (sActionId === 'help')
       {
-        var dlg = new Core.Ui.AjaxDialog('JsFcHelpDlg', {
+        var dlg = new Core.Ui.AjaxDialog('#JsFcHelpDlg', {
           useMarkup: true,
           context:   ["JsBtnHelp", "tl", "bl", null, [0, 0]],
           skin:      "rtk-skin-dlg",
@@ -351,7 +352,7 @@
     flashcardMenu: function()
     {
       var el        = Dom.get('uiFcMenu'),
-          data      = Dom.getDataset(el),
+          data      = el.dataset,
           oCardData = this.oReview.getFlashcardData();
 
       function onMenuHide()
@@ -394,7 +395,7 @@
 
       if (!this.oEditFlashcard)
       {
-        var params = Y.lang.merge(Y.lang.JSON.parse(data.param), { ucs: oCardData.id });
+        var params = Y.lang.merge(JSON.parse(data.param), { ucs: oCardData.id });
         //console.log("zomg %o", params);return false;
         
         this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, params, [el, "tr", "br"], {
@@ -472,7 +473,7 @@
         this.deletedCards.pop();
       }
 
-      Dom.toggle('uiFcStDeld', this.countDeleted > 0);
+      $$('#uiFcStDeld').toggle(this.countDeleted > 0);
 
       Dom.get('uiFcStDeld').getElementsByTagName('em')[0].innerHTML = this.countDeleted;
 
@@ -496,7 +497,7 @@
 
       for (i = 0; i < buttons.length; i++)
       {
-        Dom.setClass(buttons[i], 'uiFcBtnDisabled', bEnabled);
+        buttons[i].classList.toggle('uiFcBtnDisabled', bEnabled);
       }
     }
   };

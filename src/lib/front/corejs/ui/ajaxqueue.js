@@ -61,6 +61,7 @@
   
   // internal shorthands
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -188,7 +189,7 @@
      */
     onAjaxStart: function(eventType, args)
     {
-      Dom.setStyles(this.ajaxIndicator, {
+      $$(this.ajaxIndicator).css({
         position: 'absolute',
         zIndex:   1000,
         display:  'block'
@@ -203,7 +204,7 @@
      */
     onAjaxComplete: function(eventType, args)
     {
-      Dom.setStyles(this.ajaxIndicator, {
+      $$(this.ajaxIndicator).css({
         display:  'none'
       });
     },
@@ -282,11 +283,11 @@
     {
       if (sErrorMessage)
       {
-        var el = Dom.down(this.elAjaxError, 'uiFcAjaxError_msg');
+        var el = $$('.uiFcAjaxError_msg', this.elAjaxError)[0];
         el.innerHTML = sErrorMessage;
       }
 
-      Dom.toggle(this.elAjaxError, !!sErrorMessage);
+      $$(this.elAjaxError).toggle(!!sErrorMessage);
     }
   };
 

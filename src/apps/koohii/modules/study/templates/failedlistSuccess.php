@@ -41,6 +41,8 @@
   </div>
 
 <?php koohii_onload_slot() ?>
-App.ready(function() { var ajaxTable = new Core.Widgets.AjaxTable('FailedListTable'); });
+App.ready(function() {
+  var ajaxTable = new Core.Widgets.AjaxTable('FailedListTable');
+});
 <?php end_slot() ?>
 

@@ -4,37 +4,20 @@
  * Core is the global namespace that acts as a wrapper around library specific code.
  * 
  * Core methods
- *   bind()           Create a closure to preserve execution context
  *   make()           OOP, returns constructor for a base class
  *   extend()         OOP, returns a constructor for an extended class
- *   assert()         Logs a message if condition failed.
- *   warn()           Log a warning message (maps to Firebug console.warn() if present)
- *   halt()           Throws an error message (maps to Firebug console.error() if present).
  *   ready()          Sets window onload code 
- *   log()            Log message to console (maps to Firebug console.log() if present)
  * 
  * @author  Fabrice Denis
  */
 /*jslint forin: true */
 /* globals YAHOO */
 
-/* =require from "%CORE%" */
-/* =require "/core/core-yui2.js" */
+/* =require from "%YUI2%" */
+/* =require "/yahoo-dom-event/yahoo-dom-event.js" */
 
 var Core =
 {
-  /**
-   * Helper to bind function with arguments always appended to
-   * the END of the argument collection.
-   * 
-   * See toolkit.js 
-   */
-  bind: function(fn, context, args)
-  {
-    // $.proxy.apply($, arguments);
-    return YAHOO.bind.apply(YAHOO, arguments);
-  },
-  
   /**
    * A constructor function to create a new class.
    * 
@@ -89,18 +72,66 @@ var Core =
     YAHOO.lang.extend(subc, superc, overrides);
   },
 
-  /**
-   * Set the document onload event.
-   *
-   */
   ready: function(f)
   {
-    YAHOO.util.Event.onDOMReady(f);
+    window.addEventListener('DOMContentLoaded', f);
   }
   
 };
 
-/* =require "/core/toolkit.js" */
+/* (refactoring) was "/core/toolkit.js" */
+(function() {
+
+  var Y = YAHOO,
+      Lang = Y.lang;
+
+  Core.Toolkit =
+  {
+    /**
+     * Turns an object into its URL-encoded query string representation.
+     * 
+     * Note the comment below, adding [] for arrays is only for use with php.
+     *
+     * @param {Object} obj   Parameters as properties and values 
+     */
+    toQueryString: function(obj, name)
+    {
+      var i, l, s = [];
+  
+      if (Lang.isNull(obj) || Lang.isUndefined(obj)) {
+        return name ? encodeURIComponent(name) + '=' : '';
+      }
+      
+      if (Lang.isBoolean(obj)) {
+        obj = obj ? 1 : 0;
+      }
+      
+      if (Lang.isNumber(obj) || Lang.isString(obj)) {
+        return encodeURIComponent(name) + '=' + encodeURIComponent(obj);
+      }
+      
+      if (Lang.isArray(obj)) {
+        // add '[]' here for php to receive an array
+        name = name + '[]'; 
+        for (i = 0, l = obj.length; i < l; i ++) {
+          s.push(Core.Toolkit.toQueryString(obj[i], name));
+        }
+        return s.join('&');
+      }
+      
+      // now we know it's an object.
+      var begin = name ? name + '[' : '',
+          end = name ? ']' : '';
+      for (i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          s.push(Core.Toolkit.toQueryString(obj[i], begin + i + end));
+        }
+      }
+  
+      return s.join("&");
+    }
+  };
+}());
 
 // shortcut to test & learn YUI in Firebug's console
 var Y = YAHOO;

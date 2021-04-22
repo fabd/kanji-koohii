@@ -9,6 +9,7 @@
   App.Ui.EditKeywordComponent = Core.make();
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event,
       EditKeywordComponent = App.Ui.EditKeywordComponent;
@@ -77,7 +78,7 @@
       
       // listener for the TAB key (chain edit on the Manage page)
       this.evtCache = new Core.Ui.EventCache();
-      this.evtCache.addEvent(this.getInput(), 'keydown', Core.bind(this.onKeyDown, this));
+      this.evtCache.addEvent(this.getInput(), 'keydown', this.onKeyDown.bind(this));
       
       this.focus();
     },
@@ -125,7 +126,7 @@
 
     getInput: function()
     {
-      return Dom.down(this.dialog.getBody(), "txt-ckw");
+      return $$(".txt-ckw", this.dialog.getBody())[0];
     }
   };
 

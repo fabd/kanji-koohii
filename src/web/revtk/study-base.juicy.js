@@ -23,6 +23,7 @@
 (function(){
 
   var Y = YAHOO,
+      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -47,8 +48,8 @@
       
       // quick search autocomplete
       var actb1 = this.actb1 = new actb(this.elSearch, kwlist);
-      actb1.onChangeCallback = Core.bind(this.quicksearchOnChangeCallback, this);
-      actb1.onPressEnterCallback = Core.bind(this.quicksearchEnterCallback, this);
+      actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
+      actb1.onPressEnterCallback = this.quicksearchEnterCallback.bind(this);
 
       // function move to _SideColumnView.php for CJK lang attributes
       actb1.actb_extracolumns = this.actb_extracols; // _SideColumnView.php
@@ -109,16 +110,16 @@
     {
       var visible = !this.dictVisible,
           elBody  = Dom.get("JsDictBody"),
-          data    = Dom.getDataset(elBody);
+          ucsId   = elBody.dataset.ucs;
 
-      Dom.toggle(elBody, visible);
+      $$(elBody).toggle(visible);
       this.dictVisible = visible;
 
       if (!this.dictPanel) {
         // use inner div set in the php template
         var elMount = elBody.querySelector('.JsMount');
         var inst = VueInstance(Koohii.UX.KoohiiDictList, elMount, {}, true);
-        inst.load(data.ucs);
+        inst.load(ucsId);
 
         this.dictPanel = true;
       }
@@ -134,7 +135,7 @@
 
     onEditFlashcard: function(ev, el)
     {
-      var data = Dom.getDataset(el);
+      var data = el.dataset;
 
       function onMenuResponse(result)
       {
@@ -157,8 +158,7 @@
 
       if (!this.oEditFlashcard)
       {
-        console.log("gotcha %o", data);
-        this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, Y.lang.JSON.parse(data.param), [this.elEditFlashcard, "tr", "br"], {
+        this.oEditFlashcard = new App.Ui.EditFlashcardDialog(data.uri, JSON.parse(data.param), [this.elEditFlashcard, "tr", "br"], {
           events: {
             "onMenuResponse": onMenuResponse,
             "onMenuHide":     onMenuHide,

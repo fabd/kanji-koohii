@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfSecurityConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfSecurityConfigHandler extends sfYamlConfigHandler
 {
@@ -32,7 +32,7 @@ class sfSecurityConfigHandler extends sfYamlConfigHandler
   public function execute($configFiles)
   {
     // parse the yaml
-    $config = self::getConfiguration($configFiles);
+    $config = static::getConfiguration($configFiles);
 
     // compile data
     $retval = sprintf("<?php\n".
@@ -45,10 +45,11 @@ class sfSecurityConfigHandler extends sfYamlConfigHandler
 
   /**
    * @see sfConfigHandler
+   * @inheritdoc
    */
   static public function getConfiguration(array $configFiles)
   {
-    $config = self::flattenConfiguration(self::parseYamls($configFiles));
+    $config = static::flattenConfiguration(static::parseYamls($configFiles));
 
     // change all of the keys to lowercase
     $config = array_change_key_case($config);

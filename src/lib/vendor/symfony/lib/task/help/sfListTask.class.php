@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfListTask.class.php 21428 2009-08-25 11:24:13Z fabien $
+ * @version    SVN: $Id$
  */
 class sfListTask extends sfCommandApplicationTask
 {
@@ -154,7 +154,7 @@ EOF;
         $currentNamespace = $task->getNamespace();
         $namespacesXML->appendChild($namespaceArrayXML[$task->getNamespace()] = $dom->createElement('namespace'));
 
-        $namespaceArrayXML[$task->getNamespace()]->setAttribute('id', $task->getNamespace() ? $task->getNamespace() : '_global');
+        $namespaceArrayXML[$task->getNamespace()]->setAttribute('id', $task->getNamespace() ?: '_global');
       }
 
       if (!$namespace)
@@ -172,6 +172,6 @@ EOF;
       $tasksXML->appendChild($node);
     }
 
-    echo $dom->saveXml();
+    echo $dom->saveXML();
   }
 }

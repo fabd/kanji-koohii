@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestCoverageTask.class.php 25036 2009-12-07 19:41:58Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfTestCoverageTask extends sfBaseTask
 {
@@ -73,7 +73,7 @@ EOF;
 
   protected function getTestHarness($harnessOptions = array())
   {
-    require_once dirname(__FILE__).'/sfLimeHarness.class.php';
+    require_once __DIR__.'/sfLimeHarness.class.php';
 
     $harness = new sfLimeHarness($harnessOptions);
     $harness->addPlugins(array_map(array($this->configuration, 'getPluginConfiguration'), $this->configuration->getPlugins()));

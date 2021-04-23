@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: NumberHelper.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 
 function format_number($number, $culture = null)
@@ -43,5 +43,5 @@ function format_currency($amount, $currency = null, $culture = null)
 
 function _current_language($culture)
 {
-  return $culture ? $culture : sfContext::getInstance()->getUser()->getCulture();
+  return $culture ?: sfContext::getInstance()->getUser()->getCulture();
 }

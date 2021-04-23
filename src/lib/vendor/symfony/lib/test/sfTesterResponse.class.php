@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterResponse.class.php 27061 2010-01-22 17:08:04Z FabianLange $
+ * @version    SVN: $Id$
  */
 class sfTesterResponse extends sfTester
 {
@@ -204,7 +204,7 @@ class sfTesterResponse extends sfTester
           $filesystem = new sfFilesystem();
 
           $finder = sfFinder::type('any')->discard('.sf');
-          $filesystem->mirror(dirname(__FILE__).'/w3', $cache, $finder);
+          $filesystem->mirror(__DIR__.'/w3', $cache, $finder);
 
           $finder = sfFinder::type('file');
           $filesystem->replaceTokens($finder->in($cache), '##', '##', array('LOCAL_W3' => $local));

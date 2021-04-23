@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: DateHelper.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 
 function format_daterange($start_date, $end_date, $format = 'd', $full_text, $start_text, $end_text, $culture = null, $charset = null)
@@ -67,7 +67,7 @@ function format_datetime($date, $format = 'F', $culture = null, $charset = null)
 
 function distance_of_time_in_words($from_time, $to_time = null, $include_seconds = false)
 {
-  $to_time = $to_time? $to_time: time();
+  $to_time = $to_time ?: time();
 
   $distance_in_minutes = floor(abs($to_time - $from_time) / 60);
   $distance_in_seconds = floor(abs($to_time - $from_time));
@@ -153,7 +153,7 @@ function distance_of_time_in_words($from_time, $to_time = null, $include_seconds
 
   if (sfConfig::get('sf_i18n'))
   {
-    require_once dirname(__FILE__).'/I18NHelper.php';
+    require_once __DIR__.'/I18NHelper.php';
 
     return __($string, $parameters);
   }

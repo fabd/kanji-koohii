@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorAnd.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id$
  */
 class sfValidatorAnd extends sfValidatorBase
 {
@@ -53,7 +53,7 @@ class sfValidatorAnd extends sfValidatorBase
     {
       throw new InvalidArgumentException('sfValidatorAnd constructor takes a sfValidatorBase object, or a sfValidatorBase array.');
     }
-    
+
     parent::__construct($options, $messages);
   }
 
@@ -102,7 +102,7 @@ class sfValidatorAnd extends sfValidatorBase
   protected function doClean($value)
   {
     $clean = $value;
-    $errors = array();
+    $errors = new sfValidatorErrorSchema($this);
     foreach ($this->validators as $validator)
     {
       try
@@ -111,7 +111,7 @@ class sfValidatorAnd extends sfValidatorBase
       }
       catch (sfValidatorError $e)
       {
-        $errors[] = $e;
+        $errors->addError($e);
 
         if ($this->getOption('halt_on_error'))
         {
@@ -120,14 +120,14 @@ class sfValidatorAnd extends sfValidatorBase
       }
     }
 
-    if (count($errors))
+    if ($errors->count())
     {
       if ($this->getMessage('invalid'))
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
 
-      throw new sfValidatorErrorSchema($this, $errors);
+      throw $errors;
     }
 
     return $clean;

@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
+require_once(__DIR__.'/sfPluginBaseTask.class.php');
 
 /**
  * Installs a plugin.
@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginInstallTask.class.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id$
  */
 class sfPluginInstallTask extends sfPluginBaseTask
 {

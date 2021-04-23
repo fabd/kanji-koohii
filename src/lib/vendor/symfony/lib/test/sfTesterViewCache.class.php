@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterViewCache.class.php 24615 2009-11-30 22:30:46Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfTesterViewCache extends sfTester
 {

@@ -6,7 +6,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfModelGeneratorHelper.class.php 22914 2009-10-10 12:24:29Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 abstract class sfModelGeneratorHelper
 {
@@ -21,7 +21,12 @@ abstract class sfModelGeneratorHelper
   {
     return '<li class="sf_admin_action_edit">'.link_to(__($params['label'], array(), 'sf_admin'), $this->getUrlForAction('edit'), $object).'</li>';
   }
-
+  
+  /**
+   * @param Persistent|mixed $object
+   * @param array $params
+   * @return string
+   */
   public function linkToDelete($object, $params)
   {
     if ($object->isNew())
@@ -41,7 +46,12 @@ abstract class sfModelGeneratorHelper
   {
     return '<li class="sf_admin_action_save"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" /></li>';
   }
-
+  
+  /**
+   * @param Persistent|mixed $object
+   * @param array $params
+   * @return string
+   */
   public function linkToSaveAndAdd($object, $params)
   {
     if (!$object->isNew())

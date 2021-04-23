@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRootConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfRootConfigHandler extends sfYamlConfigHandler
 {
@@ -32,10 +32,10 @@ class sfRootConfigHandler extends sfYamlConfigHandler
   public function execute($configFiles)
   {
     // parse the yaml
-    $config = self::getConfiguration($configFiles);
+    $config = static::getConfiguration($configFiles);
 
     // determine if we're loading the system config_handlers.yml or a module config_handlers.yml
-    $moduleLevel = ($this->getParameterHolder()->get('module_level') === true) ? true : false;
+    $moduleLevel = ($this->getParameterHolder()->get('module_level') === true);
 
     if ($moduleLevel)
     {
@@ -98,13 +98,13 @@ class sfRootConfigHandler extends sfYamlConfigHandler
    */
   static public function getConfiguration(array $configFiles)
   {
-    $config = self::replaceConstants(self::parseYamls($configFiles));
+    $config = static::replaceConstants(static::parseYamls($configFiles));
 
     foreach ($config as $category => $keys)
     {
       if (isset($keys['file']))
       {
-        $config[$category]['file'] = self::replacePath($keys['file']);
+        $config[$category]['file'] = static::replacePath($keys['file']);
       }
     }
 

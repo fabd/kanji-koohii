@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfViewConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfViewConfigHandler extends sfYamlConfigHandler
 {
@@ -32,7 +32,7 @@ class sfViewConfigHandler extends sfYamlConfigHandler
   public function execute($configFiles)
   {
     // parse the yaml
-    $this->yamlConfig = self::getConfiguration($configFiles);
+    $this->yamlConfig = static::getConfiguration($configFiles);
 
     // init our data array
     $data = array();
@@ -253,6 +253,7 @@ EOF;
    * Creates a list of add$Type PHP statements for the given type and config.
    *
    * @param string $type of asset. Requires an sfWebResponse->add$Type(string, string, array) method
+   * @param array  $assets
    *
    * @return array ist of add$Type PHP statements
    */
@@ -263,6 +264,7 @@ EOF;
       $position = '';
       if (is_array($asset))
       {
+        reset($asset);
         $key = key($asset);
         $options = $asset[$key];
         if (isset($options['position']))
@@ -316,10 +318,11 @@ EOF;
 
   /**
    * @see sfConfigHandler
+   * @inheritdoc
    */
   static public function getConfiguration(array $configFiles)
   {
-    return self::mergeConfig(self::parseYamls($configFiles));
+    return static::mergeConfig(static::parseYamls($configFiles));
   }
 
   static protected function mergeConfig($config)
@@ -339,6 +342,6 @@ EOF;
 
     unset($config['default']);
 
-    return self::replaceConstants($config);
+    return static::replaceConstants($config);
   }
 }

@@ -6,7 +6,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfModelGeneratorConfigurationField.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id$
  */
 class sfModelGeneratorConfigurationField
 {

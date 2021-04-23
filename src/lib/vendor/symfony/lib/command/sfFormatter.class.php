@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFormatter.class.php 30008 2010-06-28 09:48:15Z fabien $
+ * @version    SVN: $Id$
  */
 class sfFormatter
 {
@@ -65,9 +65,11 @@ class sfFormatter
   /**
    * Formats a message within a section.
    *
-   * @param string  $section  The section name
-   * @param string  $text     The text message
-   * @param integer $size     The maximum size allowed for a line
+   * @param string  $section The section name
+   * @param string  $text    The text message
+   * @param integer $size    The maximum size allowed for a line
+   *
+   * @return string
    */
   public function formatSection($section, $text, $size = null)
   {

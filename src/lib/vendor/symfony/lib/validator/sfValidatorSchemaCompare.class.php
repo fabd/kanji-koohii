@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorSchemaCompare.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id$
  */
 class sfValidatorSchemaCompare extends sfValidatorSchema
 {
@@ -124,7 +124,10 @@ class sfValidatorSchemaCompare extends sfValidatorSchema
         throw $error;
       }
 
-      throw new sfValidatorErrorSchema($this, array($this->getOption('left_field') => $error));
+      $errorSchema = new sfValidatorErrorSchema($this);
+      $errorSchema->addError($error, $this->getOption('left_field'));
+
+      throw $errorSchema;
     }
 
     return $values;

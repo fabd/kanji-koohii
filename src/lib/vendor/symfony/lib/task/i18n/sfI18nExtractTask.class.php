@@ -9,7 +9,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -20,7 +20,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfI18nExtractTask.class.php 9883 2008-06-26 09:04:13Z FabianLange $
+ * @version    SVN: $Id$
  */
 class sfI18nExtractTask extends sfBaseTask
 {
@@ -35,6 +35,7 @@ class sfI18nExtractTask extends sfBaseTask
     ));
 
     $this->addOptions(array(
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_OPTIONAL, 'The environment', 'dev'),
       new sfCommandOption('display-new', null, sfCommandOption::PARAMETER_NONE, 'Output all new found strings'),
       new sfCommandOption('display-old', null, sfCommandOption::PARAMETER_NONE, 'Output all old strings'),
       new sfCommandOption('auto-save', null, sfCommandOption::PARAMETER_NONE, 'Save the new strings'),
@@ -54,6 +55,10 @@ for the given application and target culture:
 By default, the task only displays the number of new and old strings
 it found in the current project.
 
+You can specify project environment by setting option:
+
+  [./symfony i18n:extract --env=ENVIRONMENT|INFO]
+
 If you want to display the new strings, use the [--display-new|COMMENT] option:
 
   [./symfony i18n:extract --display-new frontend fr|INFO]
@@ -63,7 +68,7 @@ To save them in the i18n message catalogue, use the [--auto-save|COMMENT] option
   [./symfony i18n:extract --auto-save frontend fr|INFO]
 
 If you want to display strings that are present in the i18n messages
-catalogue but are not found in the application, use the 
+catalogue but are not found in the application, use the
 [--display-old|COMMENT] option:
 
   [./symfony i18n:extract --display-old frontend fr|INFO]
@@ -98,7 +103,7 @@ EOF;
 
     if ($options['display-new'])
     {
-      $this->logSection('i18n', sprintf('display new i18n strings', count($extract->getOldMessages())));
+      $this->logSection('i18n', sprintf('display "%d" new i18n strings', count($extract->getOldMessages())));
       foreach ($extract->getNewMessages() as $message)
       {
         $this->log('               '.$message."\n");
@@ -114,7 +119,7 @@ EOF;
 
     if ($options['display-old'])
     {
-      $this->logSection('i18n', sprintf('display old i18n strings', count($extract->getOldMessages())));
+      $this->logSection('i18n', sprintf('display "%d" old i18n strings', count($extract->getOldMessages())));
       foreach ($extract->getOldMessages() as $message)
       {
         $this->log('               '.$message."\n");

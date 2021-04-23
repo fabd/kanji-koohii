@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__).'/../vendor/lime/lime.php');
+require_once(__DIR__.'/../vendor/lime/lime.php');
 
 /*
  * This file is part of the symfony package.
@@ -19,7 +19,7 @@ require_once(dirname(__FILE__).'/../vendor/lime/lime.php');
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestBrowser.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfTestBrowser extends sfTestFunctional
 {

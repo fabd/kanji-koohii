@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAppRoutesTask.class.php 23549 2009-11-03 09:10:12Z fabien $
+ * @version    SVN: $Id$
  */
 class sfAppRoutesTask extends sfBaseTask
 {

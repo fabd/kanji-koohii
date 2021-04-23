@@ -56,7 +56,7 @@ class sfWebRequest extends sfRequest
    * @param  array             $attributes  An associative array of initialization attributes
    * @param  array             $options     An associative array of options
    *
-   * @return bool true, if initialization completes successfully, otherwise false
+   * @return void
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this sfRequest
    *
@@ -70,6 +70,7 @@ class sfWebRequest extends sfRequest
       'http_port'       => null,
       'https_port'      => null,
       'default_format'  => null, // to maintain bc
+      'trust_proxy'     => true, // to maintain bc
     ), $options);
     parent::initialize($dispatcher, $parameters, $attributes, $options);
 
@@ -120,6 +121,14 @@ class sfWebRequest extends sfRequest
           }
           break;
 
+        case 'PATCH':
+          $this->setMethod(self::PATCH);
+          if ('application/x-www-form-urlencoded' === $this->getContentType())
+          {
+            parse_str($this->getContent(), $postParameters);
+          }
+          break;
+
         case 'DELETE':
           $this->setMethod(self::DELETE);
           if ('application/x-www-form-urlencoded' === $this->getContentType())
@@ -130,6 +139,10 @@ class sfWebRequest extends sfRequest
 
         case 'HEAD':
           $this->setMethod(self::HEAD);
+          break;
+
+        case 'OPTIONS':
+          $this->setMethod(self::OPTIONS);
           break;
 
         default:
@@ -395,16 +408,14 @@ class sfWebRequest extends sfRequest
   {
     $pathArray = $this->getPathInfoArray();
 
-    if (isset($pathArray['HTTP_X_FORWARDED_HOST']))
+    if ($this->getOption('trust_proxy') && isset($pathArray['HTTP_X_FORWARDED_HOST']))
     {
       $elements = explode(',', $pathArray['HTTP_X_FORWARDED_HOST']);
 
       return trim($elements[count($elements) - 1]);
     }
-    else
-    {
-      return isset($pathArray['HTTP_HOST']) ? $pathArray['HTTP_HOST'] : '';
-    }
+
+    return isset($pathArray['HTTP_HOST']) ? $pathArray['HTTP_HOST'] : '';
   }
 
   /**
@@ -627,11 +638,11 @@ class sfWebRequest extends sfRequest
     $pathArray = $this->getPathInfoArray();
 
     return
-      (isset($pathArray['HTTPS']) && ('on' == strtolower($pathArray['HTTPS']) || 1 == $pathArray['HTTPS']))
+      (isset($pathArray['HTTPS']) && (('on' == strtolower($pathArray['HTTPS']) || 1 == $pathArray['HTTPS'])))
       ||
-      (isset($pathArray['HTTP_SSL_HTTPS']) && ('on' == strtolower($pathArray['HTTP_SSL_HTTPS']) || 1 == $pathArray['HTTP_SSL_HTTPS']))
+      ($this->getOption('trust_proxy') && isset($pathArray['HTTP_SSL_HTTPS']) && (('on' == strtolower($pathArray['HTTP_SSL_HTTPS']) || 1 == $pathArray['HTTP_SSL_HTTPS'])))
       ||
-      $this->isForwardedSecure()
+      ($this->getOption('trust_proxy') && $this->isForwardedSecure())
     ;
   }
 

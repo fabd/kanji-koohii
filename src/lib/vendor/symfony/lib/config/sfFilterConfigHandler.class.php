@@ -16,7 +16,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfFilterConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfFilterConfigHandler extends sfYamlConfigHandler
 {
@@ -33,7 +33,7 @@ class sfFilterConfigHandler extends sfYamlConfigHandler
   public function execute($configFiles)
   {
     // parse the yaml
-    $config = self::getConfiguration($configFiles);
+    $config = static::getConfiguration($configFiles);
 
     // init our data and includes arrays
     $data     = array();
@@ -166,17 +166,18 @@ EOF;
 
   /**
    * @see sfConfigHandler
+   * @inheritdoc
    */
   static public function getConfiguration(array $configFiles)
   {
-    $config = self::parseYaml($configFiles[0]);
+    $config = static::parseYaml($configFiles[0]);
     foreach (array_slice($configFiles, 1) as $i => $configFile)
     {
       // we get the order of the new file and merge with the previous configurations
       $previous = $config;
 
       $config = array();
-      foreach (self::parseYaml($configFile) as $key => $value)
+      foreach (static::parseYaml($configFile) as $key => $value)
       {
         $value = (array) $value;
         $config[$key] = isset($previous[$key]) ? sfToolkit::arrayDeepMerge($previous[$key], $value) : $value;
@@ -192,13 +193,13 @@ EOF;
       }
     }
 
-    $config = self::replaceConstants($config);
+    $config = static::replaceConstants($config);
 
     foreach ($config as $category => $keys)
     {
       if (isset($keys['file']))
       {
-        $config[$category]['file'] = self::replacePath($keys['file']);
+        $config[$category]['file'] = static::replacePath($keys['file']);
       }
     }
 

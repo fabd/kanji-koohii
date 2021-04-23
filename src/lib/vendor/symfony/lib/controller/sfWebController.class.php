@@ -16,7 +16,7 @@
  * @subpackage controller
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfWebController.class.php 30563 2010-08-06 11:22:44Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfWebController extends sfController
 {
@@ -51,7 +51,7 @@ abstract class sfWebController extends sfController
       {
         return $parameters;
       }
-  
+
       // strip fragment
       if (false !== ($pos = strpos($parameters, '#')))
       {
@@ -87,6 +87,8 @@ abstract class sfWebController extends sfController
    * @param string $url An internal URI
    *
    * @return array An array of parameters
+   *
+   * @throws sfParseException
    */
   public function convertUrlStringToParameters($url)
   {
@@ -120,7 +122,7 @@ abstract class sfWebController extends sfController
     }
 
     // routeName?
-    if ($url[0] == '@')
+    if ($url && $url[0] == '@')
     {
       $route = substr($url, 1);
     }
@@ -177,7 +179,7 @@ abstract class sfWebController extends sfController
   {
     if (empty($url))
     {
-      throw new InvalidArgumentException('Cannot redirect to an empty URL.'); 
+      throw new InvalidArgumentException('Cannot redirect to an empty URL.');
     }
 
     $url = $this->genUrl($url, true);
@@ -190,6 +192,7 @@ abstract class sfWebController extends sfController
     }
 
     // redirect
+    /** @var sfWebResponse $response */
     $response = $this->context->getResponse();
     $response->clearHttpHeaders();
     $response->setStatusCode($statusCode);

@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/sfGeneratorBaseTask.class.php');
+require_once(__DIR__.'/sfGeneratorBaseTask.class.php');
 
 /**
  * Generates a new application.
@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfGeneratorBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGenerateAppTask.class.php 24039 2009-11-16 17:52:14Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfGenerateAppTask extends sfGeneratorBaseTask
 {
@@ -101,7 +101,7 @@ EOF;
     }
     else
     {
-      $skeletonDir = dirname(__FILE__).'/skeleton/app';
+      $skeletonDir = __DIR__.'/skeleton/app';
     }
 
     // Create basic application structure
@@ -118,7 +118,7 @@ EOF;
 
     if (true === $options['csrf-secret'])
     {
-      $options['csrf-secret'] = sha1(rand(111111111, 99999999).getmypid());
+      $options['csrf-secret'] = sha1(mt_rand(11111111, 99999999).getmypid());
     }
 
     // Set no_script_name value in settings.yml for production environment

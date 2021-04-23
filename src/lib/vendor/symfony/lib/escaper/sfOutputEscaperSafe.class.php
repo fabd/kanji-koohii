@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfOutputEscaperSafe.class.php 16553 2009-03-24 16:49:06Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfOutputEscaperSafe extends ArrayIterator
 {

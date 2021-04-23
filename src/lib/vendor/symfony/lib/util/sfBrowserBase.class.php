@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfBrowserBase.class.php 33373 2012-03-08 15:45:46Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfBrowserBase
 {
@@ -60,8 +60,7 @@ abstract class sfBrowserBase
    */
   public function initialize($hostname = null, $remote = null, $options = array())
   {
-    unset($_SERVER['argv']);
-    unset($_SERVER['argc']);
+    unset($_SERVER['argv'], $_SERVER['argc']);
 
     // setup our fake environment
     $this->hostname = null === $hostname ? 'localhost' : $hostname;
@@ -273,7 +272,7 @@ abstract class sfBrowserBase
 
     // request parameters
     $_GET = $_POST = array();
-    if (in_array(strtoupper($method), array('POST', 'DELETE', 'PUT')))
+    if (in_array(strtoupper($method), array('POST', 'DELETE', 'PUT', 'PATCH')))
     {
       if (isset($parameters['_with_csrf']) && $parameters['_with_csrf'])
       {
@@ -779,8 +778,11 @@ abstract class sfBrowserBase
     }
     else if ('button' == $item->nodeName || ('input' == $item->nodeName && in_array($item->getAttribute('type'), array('submit', 'button', 'image'))))
     {
-      // add the item's value to the arguments
-      $this->parseArgumentAsArray($item->getAttribute('name'), $item->getAttribute('value'), $arguments);
+      // add the item's value to the arguments if name is provided
+      if ($item->getAttribute('name'))
+      {
+        $this->parseArgumentAsArray($item->getAttribute('name'), $item->getAttribute('value'), $arguments);
+      }
 
       // use the ancestor form element
       do
@@ -799,7 +801,7 @@ abstract class sfBrowserBase
     {
       $url = $this->stack[$this->stackPosition]['uri'];
     }
-    $method = strtolower(isset($options['method']) ? $options['method'] : ($item->getAttribute('method') ? $item->getAttribute('method') : 'get'));
+    $method = strtolower(isset($options['method']) ? $options['method'] : ($item->getAttribute('method') ?: 'get'));
 
     // merge form default values and arguments
     $defaults = array();
@@ -925,7 +927,7 @@ abstract class sfBrowserBase
     if (false !== $pos = strpos($name, '['))
     {
       $var = &$vars;
-      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name), create_function('$s', 'return $s !== "";'));
+      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name), function($s) { return $s !== ''; });
       foreach ($tmps as $tmp)
       {
         $var = &$var[$tmp];
@@ -1018,6 +1020,6 @@ abstract class sfBrowserBase
    */
   protected function newSession()
   {
-    $this->defaultServerArray['session_id'] = $_SERVER['session_id'] = md5(uniqid(rand(), true));
+    $this->defaultServerArray['session_id'] = $_SERVER['session_id'] = md5(uniqid(mt_rand(), true));
   }
 }

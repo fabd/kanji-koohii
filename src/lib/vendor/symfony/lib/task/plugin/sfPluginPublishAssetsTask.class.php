@@ -3,12 +3,12 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
+require_once(__DIR__.'/sfPluginBaseTask.class.php');
 
 /**
  * Publishes Web Assets for Core and third party plugins
@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabian Lange <fabian.lange@symfony-project.com>
- * @version    SVN: $Id: sfPluginPublishAssetsTask.class.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id$
  */
 class sfPluginPublishAssetsTask extends sfPluginBaseTask
 {
@@ -31,6 +31,10 @@ class sfPluginPublishAssetsTask extends sfPluginBaseTask
 
     $this->addOptions(array(
       new sfCommandOption('core-only', '', sfCommandOption::PARAMETER_NONE, 'If set only core plugins will publish their assets'),
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('relative', '', sfCommandOption::PARAMETER_NONE, 'If set symlinks will be relative'),
     ));
 
     $this->namespace = 'plugin';
@@ -61,7 +65,7 @@ EOF;
 
     if ($diff = array_diff($arguments['plugins'], $enabledPlugins))
     {
-      throw new InvalidArgumentException('Plugin(s) not found: '.join(', ', $diff));
+      throw new InvalidArgumentException('Plugin(s) not found: '.implode(', ', $diff));
     }
 
     if ($options['core-only'])
@@ -79,7 +83,7 @@ EOF;
       $pluginConfiguration = $this->configuration->getPluginConfiguration($plugin);
 
       $this->logSection('plugin', 'Configuring plugin - '.$plugin);
-      $this->installPluginAssets($plugin, $pluginConfiguration->getRootDir());
+      $this->installPluginAssets($plugin, $pluginConfiguration->getRootDir(), $options['relative']);
     }
   }
 
@@ -89,13 +93,17 @@ EOF;
    * @param string $plugin The plugin name
    * @param string $dir    The plugin directory
    */
-  protected function installPluginAssets($plugin, $dir)
+  protected function installPluginAssets($plugin, $dir, $relative)
   {
     $webDir = $dir.DIRECTORY_SEPARATOR.'web';
 
     if (is_dir($webDir))
     {
-      $this->getFilesystem()->relativeSymlink($webDir, sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$plugin, true);
+    	if($relative) {
+	      $this->getFilesystem()->relativeSymlink($webDir, sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$plugin, true);
+    	} else {
+	      $this->getFilesystem()->symlink($webDir, sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$plugin, true);
+    	}
     }
   }
 }

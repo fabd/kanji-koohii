@@ -1037,7 +1037,7 @@ class sfViewCacheManager
     $id           = md5($event['uri']);
 
     return '
-      <div id="main_'.$id.'" class="sfWebDebugActionCache kkSymfonyCache">
+      <div id="main_'.$id.'" class="sfWebDebugActionCache" style="border: 1px solid #f00">
       <div id="sub_main_'.$id.'" class="sfWebDebugCache" style="background-color: '.$bgColor.'; border-right: 1px solid #f00; border-bottom: 1px solid #f00;">
       <div style="height: 16px; padding: 2px"><a href="#" onclick="sfWebDebugToggle(\'sub_main_info_'.$id.'\'); return false;"><strong>cache information</strong></a>&nbsp;<a href="#" onclick="sfWebDebugToggle(\'sub_main_'.$id.'\'); document.getElementById(\'main_'.$id.'\').style.border = \'none\'; return false;">'.image_tag(sfConfig::get('sf_web_debug_web_dir').'/images/close.png', array('alt' => 'close')).'</a>&nbsp;</div>
         <div style="padding: 2px; display: none" id="sub_main_info_'.$id.'">

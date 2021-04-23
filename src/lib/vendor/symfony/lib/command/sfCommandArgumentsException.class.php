@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage exception
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandArgumentsException.class.php 5175 2007-09-18 12:07:14Z fabien $
+ * @version    SVN: $Id$
  */
 class sfCommandArgumentsException extends sfCommandException
 {

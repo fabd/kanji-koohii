@@ -14,10 +14,11 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebugPanelMailer.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfWebDebugPanelMailer extends sfWebDebugPanel
 {
+  /** @var sfMailer */
   protected $mailer = null;
 
   /**

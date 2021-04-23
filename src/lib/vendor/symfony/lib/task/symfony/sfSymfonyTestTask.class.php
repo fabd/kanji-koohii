@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfSymfonyTestTask.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfSymfonyTestTask extends sfTask
 {
@@ -35,9 +35,9 @@ class sfSymfonyTestTask extends sfTask
     $this->briefDescription = 'Launches the symfony test suite';
 
     $this->detailedDescription = <<<EOF
-The [test:all|INFO] task launches the symfony test suite:
+The [{$this->getFullName()}|INFO] task launches the symfony test suite:
 
-  [./symfony symfony:test|INFO]
+  [./symfony {$this->getFullName()}|INFO]
 EOF;
   }
 
@@ -46,11 +46,11 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    require_once(dirname(__FILE__).'/../../vendor/lime/lime.php');
-    require_once(dirname(__FILE__).'/lime_symfony.php');
+    require_once(__DIR__.'/../../vendor/lime/lime.php');
+    require_once(__DIR__.'/lime_symfony.php');
 
     // cleanup
-    require_once(dirname(__FILE__).'/../../util/sfToolkit.class.php');
+    require_once(__DIR__.'/../../util/sfToolkit.class.php');
     if ($files = glob(sys_get_temp_dir().DIRECTORY_SEPARATOR.'/sf_autoload_unit_*'))
     {
       foreach ($files as $file)
@@ -62,12 +62,12 @@ EOF;
     // update sfCoreAutoload
     if ($options['update-autoloader'])
     {
-      require_once(dirname(__FILE__).'/../../autoload/sfCoreAutoload.class.php');
+      require_once(__DIR__.'/../../autoload/sfCoreAutoload.class.php');
       sfCoreAutoload::make();
     }
 
     $status = false;
-    $statusFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.sprintf('/.test_symfony_%s_status', md5(dirname(__FILE__)));
+    $statusFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.sprintf('/.test_symfony_%s_status', md5(__DIR__));
     if ($options['only-failed'])
     {
       if (file_exists($statusFile))
@@ -77,7 +77,7 @@ EOF;
     }
 
     $h = new lime_symfony(array('force_colors' => $options['color'], 'verbose' => $options['trace']));
-    $h->base_dir = realpath(dirname(__FILE__).'/../../../test');
+    $h->base_dir = realpath(__DIR__.'/../../../test');
 
     // remove generated files
     if ($options['rebuild-all'])

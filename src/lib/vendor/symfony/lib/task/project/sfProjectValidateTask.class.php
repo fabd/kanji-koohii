@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfProjectValidateTask.class.php 24610 2009-11-30 22:07:34Z FabianLange $
+ * @version    SVN: $Id$
  */
 class sfValidateTask extends sfBaseTask
 {
@@ -82,7 +82,7 @@ EOF;
 
   protected function getUpgradeClasses()
   {
-    $baseDir = dirname(__FILE__).'/validation/';
+    $baseDir = __DIR__.'/validation/';
     $classes = array();
 
     foreach (glob($baseDir.'*.class.php') as $file)

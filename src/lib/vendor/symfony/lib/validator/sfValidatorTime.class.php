@@ -15,7 +15,7 @@
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Fabian Lange <fabian.lange@symfony-project.com>
- * @version    SVN: $Id: sfValidatorTime.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfValidatorTime extends sfValidatorBase
 {
@@ -59,7 +59,7 @@ class sfValidatorTime extends sfValidatorBase
     {
       if (!preg_match($regex, $value, $match))
       {
-        throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'time_format' => $this->getOption('time_format_error') ? $this->getOption('time_format_error') : $this->getOption('time_format')));
+        throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'time_format' => $this->getOption('time_format_error') ?: $this->getOption('time_format')));
       }
 
       $clean = $this->convertTimeArrayToTimestamp($match);
@@ -94,7 +94,7 @@ class sfValidatorTime extends sfValidatorBase
     // all elements must be empty or a number
     foreach (array('hour', 'minute', 'second') as $key)
     {
-      if (isset($value[$key]) && !preg_match('#^\d+$#', $value[$key]) && !empty($value[$key]))
+      if (isset($value[$key]) && !ctype_digit((string)$value[$key]) && !empty($value[$key]))
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
@@ -112,9 +112,9 @@ class sfValidatorTime extends sfValidatorBase
     }
 
     $clean = mktime(
-      isset($value['hour']) ? intval($value['hour']) : 0,
-      isset($value['minute']) ? intval($value['minute']) : 0,
-      isset($value['second']) ? intval($value['second']) : 0
+      isset($value['hour']) ? (int) $value['hour'] : 0,
+      isset($value['minute']) ? (int) $value['minute'] : 0,
+      isset($value['second']) ? (int) $value['second'] : 0
     );
 
     if (false === $clean)

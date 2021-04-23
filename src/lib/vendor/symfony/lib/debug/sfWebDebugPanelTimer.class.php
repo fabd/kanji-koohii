@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebugPanelTimer.class.php 22955 2009-10-12 16:44:07Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfWebDebugPanelTimer extends sfWebDebugPanel
 {

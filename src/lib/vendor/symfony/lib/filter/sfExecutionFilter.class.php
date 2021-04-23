@@ -17,7 +17,7 @@
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfExecutionFilter.class.php 29523 2010-05-19 12:50:54Z fabien $
+ * @version    SVN: $Id$
  */
 class sfExecutionFilter extends sfFilter
 {
@@ -32,6 +32,7 @@ class sfExecutionFilter extends sfFilter
   public function execute($filterChain)
   {
     // get the current action instance
+    /** @var sfAction $actionInstance */
     $actionInstance = $this->context->getController()->getActionStack()->getLastEntry()->getActionInstance();
 
     // execute the action, execute and render the view

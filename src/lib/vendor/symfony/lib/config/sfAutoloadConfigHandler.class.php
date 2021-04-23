@@ -15,7 +15,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfAutoloadConfigHandler.class.php 24062 2009-11-16 23:31:25Z FabianLange $
+ * @version    SVN: $Id$
  */
 class sfAutoloadConfigHandler extends sfYamlConfigHandler
 {
@@ -69,7 +69,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
   protected function parse(array $configFiles)
   {
     // parse the yaml
-    $config = self::getConfiguration($configFiles);
+    $config = static::getConfiguration($configFiles);
 
     $mappings = array();
     foreach ($config['autoload'] as $name => $entry)
@@ -126,7 +126,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
   static public function parseFile($path, $file, $prefix)
   {
     $mapping = array();
-    preg_match_all('~^\s*(?:abstract\s+|final\s+)?(?:class|interface)\s+(\w+)~mi', file_get_contents($file), $classes);
+    preg_match_all('~^\s*(?:abstract\s+|final\s+)?(?:class|interface|trait)\s+(\w+)~mi', file_get_contents($file), $classes);
     foreach ($classes[1] as $class)
     {
       $localPrefix = '';
@@ -148,6 +148,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
 
   /**
    * @see sfConfigHandler
+   * @inheritdoc
    */
   static public function getConfiguration(array $configFiles)
   {
@@ -160,7 +161,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
     foreach ($configFiles as $i => $configFile)
     {
       $configFilePath = str_replace(DIRECTORY_SEPARATOR, '/', $configFile);
-      $path = str_replace(DIRECTORY_SEPARATOR, '/', realpath(join('/', array_slice(explode('/', $configFilePath), 0, -2))));
+      $path = str_replace(DIRECTORY_SEPARATOR, '/', realpath(implode('/', array_slice(explode('/', $configFilePath), 0, -2))));
       if (in_array($path, $pluginPaths))
       {
         $pluginConfigFiles[] = $configFile;
@@ -170,13 +171,13 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
 
     $configFiles = array_merge($pluginConfigFiles, $configFiles);
 
-    $config = self::replaceConstants(self::parseYamls($configFiles));
+    $config = static::replaceConstants(static::parseYamls($configFiles));
 
     foreach ($config['autoload'] as $name => $values)
     {
       if (isset($values['path']))
       {
-        $config['autoload'][$name]['path'] = self::replacePath($values['path']);
+        $config['autoload'][$name]['path'] = static::replacePath($values['path']);
       }
     }
 

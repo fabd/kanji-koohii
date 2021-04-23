@@ -18,7 +18,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorDecorator.class.php 7902 2008-03-15 13:17:33Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfValidatorDecorator extends sfValidatorBase
 {

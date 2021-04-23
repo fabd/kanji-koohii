@@ -3,12 +3,12 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/sfGeneratorBaseTask.class.php');
+require_once(__DIR__.'/sfGeneratorBaseTask.class.php');
 
 /**
  * Generates a new project.
@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfGeneratorBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGenerateProjectTask.class.php 30530 2010-08-04 16:38:41Z fabien $
+ * @version    SVN: $Id$
  */
 class sfGenerateProjectTask extends sfGeneratorBaseTask
 {
@@ -59,10 +59,7 @@ for a new project in the current directory:
 If the current directory already contains a symfony project,
 it throws a [sfCommandException|COMMENT].
 
-By default, the task configures Doctrine as the ORM. If you want to use
-Propel, use the [--orm|COMMENT] option:
-
-  [./symfony generate:project blog --orm=Propel|INFO]
+By default, the task configures Doctrine as the ORM.
 
 If you don't want to use an ORM, pass [none|COMMENT] to [--orm|COMMENT] option:
 
@@ -90,7 +87,7 @@ EOF;
       throw new sfCommandException(sprintf('A symfony project already exists in this directory (%s).', getcwd()));
     }
 
-    if (!in_array(strtolower($options['orm']), array('propel', 'doctrine', 'none')))
+    if (!in_array(strtolower($options['orm']), array('doctrine', 'none')))
     {
       throw new InvalidArgumentException(sprintf('Invalid ORM name "%s".', $options['orm']));
     }
@@ -107,11 +104,11 @@ EOF;
     $this->options = $options;
 
     // create basic project structure
-    $this->installDir(dirname(__FILE__).'/skeleton/project');
+    $this->installDir(__DIR__.'/skeleton/project');
 
     // update ProjectConfiguration class (use a relative path when the symfony core is nested within the project)
     $symfonyCoreAutoload = 0 === strpos(sfConfig::get('sf_symfony_lib_dir'), sfConfig::get('sf_root_dir')) ?
-      sprintf('dirname(__FILE__).\'/..%s/autoload/sfCoreAutoload.class.php\'', str_replace(sfConfig::get('sf_root_dir'), '', sfConfig::get('sf_symfony_lib_dir'))) :
+      sprintf('__DIR__.\'/..%s/autoload/sfCoreAutoload.class.php\'', str_replace(sfConfig::get('sf_root_dir'), '', sfConfig::get('sf_symfony_lib_dir'))) :
       var_export(sfConfig::get('sf_symfony_lib_dir').'/autoload/sfCoreAutoload.class.php', true);
 
     $this->replaceTokens(array(sfConfig::get('sf_config_dir')), array('SYMFONY_CORE_AUTOLOAD' => str_replace('\\', '/', $symfonyCoreAutoload)));
@@ -126,9 +123,9 @@ EOF;
     $this->replaceTokens();
 
     // execute the choosen ORM installer script
-    if (in_array($options['orm'], array('Doctrine', 'Propel')))
+    if ('Doctrine' === $options['orm'])
     {
-      include dirname(__FILE__).'/../../plugins/sf'.$options['orm'].'Plugin/config/installer.php';
+      include __DIR__.'/../../plugins/sf'.$options['orm'].'Plugin/config/installer.php';
     }
 
     // execute a custom installer

@@ -16,7 +16,7 @@
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfToolkit.class.php 29525 2010-05-19 13:01:43Z fabien $
+ * @version    SVN: $Id$
  */
 class sfToolkit
 {
@@ -126,7 +126,7 @@ class sfToolkit
   /**
    * Determine if a filesystem path is absolute.
    *
-   * @param  path $path  A filesystem path.
+   * @param  string $path  A filesystem path.
    *
    * @return bool true, if the path is absolute, otherwise false.
    */
@@ -274,7 +274,7 @@ class sfToolkit
   public static function stringToArray($string)
   {
     preg_match_all('/
-      \s*(\w+)              # key                               \\1
+      \s*((?:\w+-)*\w+)     # key                               \\1
       \s*=\s*               # =
       (\'|")?               # values may be included in \' or " \\2
       (.*?)                 # value                             \\3
@@ -352,7 +352,7 @@ class sfToolkit
     {
       return $value;
     }
- 
+
     return preg_replace_callback('/%(.+?)%/', function ($v) {
       return sfConfig::has(strtolower($v[1])) ? sfConfig::get(strtolower($v[1])) : '%'.$v[1].'%';
     }, $value);
@@ -380,7 +380,7 @@ class sfToolkit
     static $isEmpty = true;
     foreach ($array as $value)
     {
-      $isEmpty = (is_array($value)) ? self::isArrayValuesEmpty($value) : (strlen($value) == 0);
+      $isEmpty = is_array($value) ? self::isArrayValuesEmpty($value) : '' === (string)$value;
       if (!$isEmpty)
       {
         break;
@@ -508,7 +508,7 @@ class sfToolkit
    */
   public static function getPhpCli()
   {
-    $path = getenv('PATH') ? getenv('PATH') : getenv('Path');
+    $path = getenv('PATH') ?: getenv('Path');
     $suffixes = DIRECTORY_SEPARATOR == '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : array('.exe', '.bat', '.cmd', '.com')) : array('');
     foreach (array('php5', 'php') as $phpCli)
     {
@@ -613,6 +613,6 @@ class sfToolkit
         throw new InvalidArgumentException(sprintf('Unrecognized position: "%s"', $position));
     }
 
-    return set_include_path(join(PATH_SEPARATOR, $paths));
+    return set_include_path(implode(PATH_SEPARATOR, $paths));
   }
 }

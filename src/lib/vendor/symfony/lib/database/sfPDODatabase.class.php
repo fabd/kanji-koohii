@@ -18,7 +18,7 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
  * @author     Dustin Whittle <dustin.whittle@symfony-project.com>
- * @version    SVN: $Id: sfPDODatabase.class.php 33486 2012-07-09 08:57:29Z fabien $
+ * @version    SVN: $Id$
  */
 class sfPDODatabase extends sfDatabase
 {
@@ -42,7 +42,7 @@ class sfPDODatabase extends sfDatabase
       $password   = $this->getParameter('password');
       $persistent = $this->getParameter('persistent');
 
-      $options = ($persistent) ? array(PDO::ATTR_PERSISTENT => true) : array();
+      $options = $persistent ? array(PDO::ATTR_PERSISTENT => true) : array();
 
       $this->connection = new $pdo_class($dsn, $username, $password, $options);
 

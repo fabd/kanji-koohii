@@ -18,7 +18,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfConfigCache.class.php 32639 2011-06-11 13:28:46Z fabien $
+ * @version    SVN: $Id$
  */
 class sfConfigCache
 {
@@ -134,7 +134,7 @@ class sfConfigCache
    *
    * The recompilation only occurs in a non debug environment.
    *
-   * If the configuration file path is relative, symfony will look in directories 
+   * If the configuration file path is relative, symfony will look in directories
    * defined in the sfConfiguration::getConfigPaths() method.
    *
    * @param string  $configPath A filesystem path to a configuration file
@@ -199,6 +199,7 @@ class sfConfigCache
 
     if (sfConfig::get('sf_debug') && sfConfig::get('sf_logging_enabled'))
     {
+      /** @var $timer sfTimer */
       $timer->addTime();
     }
 
@@ -333,15 +334,13 @@ class sfConfigCache
   protected function writeCacheFile($config, $cache, $data)
   {
     $current_umask = umask(0000);
-    if (!is_dir(dirname($cache)))
+    $cacheDir      = dirname($cache);
+    if (!is_dir($cacheDir) && !@mkdir($cacheDir, 0777, true) && !is_dir($cacheDir))
     {
-      if (false === @mkdir(dirname($cache), 0777, true))
-      {
-        throw new sfCacheException(sprintf('Failed to make cache directory "%s" while generating cache for configuration file "%s".', dirname($cache), $config));
-      }
+        throw new \sfCacheException(sprintf('Failed to make cache directory "%s" while generating cache for configuration file "%s".', $cacheDir, $config));
     }
 
-    $tmpFile = tempnam(dirname($cache), basename($cache));
+    $tmpFile = tempnam($cacheDir, basename($cache));
 
     if (!$fp = @fopen($tmpFile, 'wb'))
     {
@@ -379,7 +378,7 @@ class sfConfigCache
   }
 
   /**
-   * Merges configuration handlers from the config_handlers.yml  
+   * Merges configuration handlers from the config_handlers.yml
    * and the ones defined with registerConfigHandler()
    *
    */

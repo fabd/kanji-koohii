@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfLogRotateTask.class.php 24331 2009-11-24 13:15:01Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfLogRotateTask extends sfBaseTask
 {

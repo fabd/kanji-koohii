@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Mike Squire <mike@somosis.co.uk>
- * @version    SVN: $Id: sfOutputEscaperGetterDecorator.class.php 9047 2008-05-19 08:43:05Z FabianLange $
+ * @version    SVN: $Id$
  */
 abstract class sfOutputEscaperGetterDecorator extends sfOutputEscaper
 {

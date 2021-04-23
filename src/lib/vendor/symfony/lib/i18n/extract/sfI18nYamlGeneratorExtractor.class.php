@@ -12,7 +12,7 @@
  * @package    symfony
  * @subpackage i18n
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfI18nYamlGeneratorExtractor.class.php 28848 2010-03-29 09:37:05Z fabien $
+ * @version    SVN: $Id$
  */
 class sfI18nYamlGeneratorExtractor extends sfI18nYamlExtractor
 {
@@ -29,7 +29,7 @@ class sfI18nYamlGeneratorExtractor extends sfI18nYamlExtractor
   {
     $this->strings = array();
 
-    $config = sfYaml::load($content);
+    $config = sfYaml::load($content, sfConfig::get('sf_charset', 'UTF-8'));
 
     if (!isset($config['generator']['param']['config']))
     {
@@ -82,7 +82,7 @@ class sfI18nYamlGeneratorExtractor extends sfI18nYamlExtractor
         }
       }
     }
-  
+
     return $this->strings;
   }
 

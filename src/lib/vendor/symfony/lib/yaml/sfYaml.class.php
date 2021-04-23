@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the symfony package.
- * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
+ * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -64,7 +64,7 @@ class sfYaml
    *
    * @throws InvalidArgumentException If the YAML is not valid
    */
-  public static function load($input)
+  public static function load($input, $encoding = 'UTF-8')
   {
     $file = '';
 
@@ -87,7 +87,13 @@ class sfYaml
       return $input;
     }
 
-    require_once dirname(__FILE__).'/sfYamlParser.php';
+    $mbConvertEncoding = false;
+    $encoding = strtoupper($encoding);
+    if ('UTF-8' != $encoding && function_exists('mb_convert_encoding'))
+    {
+      $input = mb_convert_encoding($input, 'UTF-8', $encoding);
+      $mbConvertEncoding = true;
+    }
 
     $yaml = new sfYamlParser();
 
@@ -98,6 +104,11 @@ class sfYaml
     catch (Exception $e)
     {
       throw new InvalidArgumentException(sprintf('Unable to parse %s: %s', $file ? sprintf('file "%s"', $file) : 'string', $e->getMessage()));
+    }
+
+    if ($ret && $mbConvertEncoding)
+    {
+      $ret = self::arrayConvertEncoding($ret, $encoding);
     }
 
     return $ret;
@@ -116,20 +127,41 @@ class sfYaml
    */
   public static function dump($array, $inline = 2)
   {
-    require_once dirname(__FILE__).'/sfYamlDumper.php';
-
     $yaml = new sfYamlDumper();
 
     return $yaml->dump($array, $inline);
   }
-}
 
-/**
- * Wraps echo to automatically provide a newline.
- *
- * @param string $string The string to echo with new line
- */
-function echoln($string)
-{
-  echo $string."\n";
+  /**
+   * Converts all kayes and values from UTF-8 to given encoding
+   *
+   * @param  array  $result   Original result
+   * @param  string $encoding The expected encoding
+   * @return array
+   */
+  protected static function arrayConvertEncoding(array $result, $encoding)
+  {
+    $convertedResult = array();
+    foreach ($result as $key => $value)
+    {
+      if (is_string($key))
+      {
+        $key = mb_convert_encoding($key, $encoding, 'UTF-8');
+      }
+      if (is_array($value))
+      {
+        $convertedResult[$key] = self::arrayConvertEncoding($value, $encoding);
+      }
+      else if (is_string($value))
+      {
+        $convertedResult[$key] = mb_convert_encoding($value, $encoding, 'UTF-8');
+      }
+      else
+      {
+        $convertedResult[$key] = $value;
+      }
+    }
+
+    return $convertedResult;
+  }
 }

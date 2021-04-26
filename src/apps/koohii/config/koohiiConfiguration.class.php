@@ -1,5 +1,8 @@
 <?php
 
+// disable SwiftMailer (cf. lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php)
+class Swift { }
+
 class koohiiConfiguration extends sfApplicationConfiguration
 {
   private

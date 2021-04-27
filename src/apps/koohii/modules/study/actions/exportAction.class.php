@@ -104,7 +104,7 @@ class exportAction extends sfAction
     CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
     $select
       ->joinLeft('users u', 's.userid = u.userid')
-      ->where('s.sid IN('.implode($sidArray, ',').')');
+      ->where('s.sid IN('.implode(',', $sidArray).')');
     $favStories = $db->fetchAll($select);
 
     // 3) now merge the starred stories info into the export data,

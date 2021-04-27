@@ -34,7 +34,7 @@ function decorate_start($name, $vars = [])
   sfConfig::set('view.decorator.vars', $vars);
 
   ob_start();
-  ob_implicit_flush(0);
+  ob_implicit_flush(false);
 }
 
 function decorate_end()

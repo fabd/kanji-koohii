@@ -257,7 +257,7 @@ function slot($name, $value = null)
   sfConfig::set('symfony.view.slot_names', $slot_names);
 
   ob_start();
-  ob_implicit_flush(0);
+  ob_implicit_flush(false);
 }
 
 /**

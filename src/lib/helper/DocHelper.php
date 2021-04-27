@@ -47,7 +47,7 @@ function pre_start($cssClass = 'code')
   sfConfig::set('pre_highlight_mode', $cssClass);
   
     ob_start();
-    ob_implicit_flush(0);
+    ob_implicit_flush(false);
 }
 
 function pre_end()

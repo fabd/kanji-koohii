@@ -41,6 +41,9 @@ phperrlog() { tail -f /var/log/apache2/error.log ; }
 # watch two logs?
 #tail -F /var/log/apache2/other_vhosts_access.log /var/log/apache2/error.log
 
+# edit the ini file
+phpini() { vim /etc/php/7.4/apache2/conf.d/koohii.php.ini ; }
+
 
 ###############
 # NPM

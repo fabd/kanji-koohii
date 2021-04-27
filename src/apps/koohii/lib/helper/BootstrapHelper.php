@@ -77,7 +77,7 @@ function _bs_button($name, $internal_uri, array $options = [])
 function _bs_button_with_icon($name, $internal_uri, array $options = [])
 {
   $iconId = _get_option($options, 'icon');
-  assert('$iconId !== null');
+  assert($iconId !== null);
 
   _bs_class_merge($options, 'btn btn-success');
 

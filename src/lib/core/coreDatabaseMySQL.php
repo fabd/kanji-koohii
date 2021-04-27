@@ -275,7 +275,7 @@ class coreDatabaseMySQL extends coreDatabase
         $parts[] = $fullExpr . ' AS ' . $aliasExpr;
       }
       else {
-        assert('!is_array($fullExpr)');
+        assert(!is_array($fullExpr));
         $parts[] = $fullExpr;
       }
     }

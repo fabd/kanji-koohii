@@ -20,7 +20,7 @@ class VocabPicksPeer extends coreDatabaseTable
    */
   public static function link($userId, $ucsId, $dictId)
   {
-    assert('$dictId > 0');
+    assert($dictId > 0);
     if ($dictId <= 0) return;
 
     $data = ['dictid' => $dictId];

@@ -69,7 +69,7 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getFlashcardData($userId, $ucsId)
   {
     // debug: make sure it's not a (obsolete) frame number
-    assert('(int)$ucsId > 0x3000');
+    assert((int)$ucsId > 0x3000);
 
     $context = sfContext::getInstance();
     $key = 'fc-data-'.$ucsId;

@@ -48,7 +48,7 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getStory($userId, $ucsId)
   {
-    assert('(int)$ucsId >= 0x3000');
+    assert((int)$ucsId >= 0x3000);
 
     $select = self::getInstance()->select()
       ->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
@@ -94,14 +94,14 @@ class StoriesPeer extends coreDatabaseTable
   {
     $result = true;
 
-    assert('(int)$ucsId >= 0x3000');
+    assert((int)$ucsId >= 0x3000);
 
     $storyId = self::$db->fetchOne(
       self::$db->select('sid')->from('stories')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
     );
 
     // either false (no row), or a positive auto increment number > 0 
-    assert('$storyId !== 0');
+    assert($storyId !== 0);
 
     if (false === $storyId)
     {
@@ -115,7 +115,7 @@ class StoriesPeer extends coreDatabaseTable
     }
 
     // after insert or update we need a valid story id > 0
-    assert('$storyId > 0', 'updateStory()');
+    assert($storyId > 0, 'updateStory()');
 
     // if this table isn't updated it's not crucial (but the other way around is)
     StoriesSharedPeer::updateStoryRef($storyId, $ucsId, $userId, $data['public'] === 1);
@@ -133,7 +133,7 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function deleteStory($userId, $ucsId)
   {
-    assert('(int)$ucsId >= 0x3000');
+    assert((int)$ucsId >= 0x3000);
 
     if (false !== ($storyId = self::getStoryId($userId, $ucsId)))
     {
@@ -290,7 +290,7 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getSharedStories($ucsId, $keyword, $userId, $type)
   {
-    assert('is_int($ucsId) && $ucsId >= 0x3000');
+    assert(is_int($ucsId) && $ucsId >= 0x3000);
 
     $select = self::$db->select();
 

@@ -359,7 +359,7 @@ function _repopulate_input_cb($name, $value, $checked)
   {
     if ( ($array_values = $_request->getParameter(rtrim($name,'[]')))!==null )
     {
-      assert('is_array($array_values)');
+      assert(is_array($array_values));
       if (in_array($value, $array_values)) {
         $checked = true;
       }

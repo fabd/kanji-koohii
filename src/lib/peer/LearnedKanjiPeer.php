@@ -50,7 +50,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
    */
   public static function addKanji($userId, $ucsId)
   {
-    assert('(int)$ucsId > 0x3000');
+    assert((int)$ucsId > 0x3000);
 
     return self::$db->query('REPLACE INTO '.self::getInstance()->getName().' (userid, ucs_id) VALUES (?, ?)',
       [$userId, $ucsId]);
@@ -62,7 +62,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
     $values = [];
     foreach ($ucsIds as $ucsId)
     {
-      assert('(int)$ucsId > 0x3000');
+      assert((int)$ucsId > 0x3000);
       array_push($values, $userId);
       array_push($values, $ucsId);
     }
@@ -77,7 +77,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
    */
   public static function hasKanji($userId, $ucsId)
   {
-    assert('(int)$ucsId > 0x3000');
+    assert((int)$ucsId > 0x3000);
 
     return self::getInstance()->count('userid = ? AND ucs_id = ?', [$userId, $ucsId]) > 0;
   }
@@ -89,7 +89,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
    */
   public static function clearKanji($userId, $ucsId)
   {
-    assert('(int)$ucsId > 0x3000');
+    assert((int)$ucsId > 0x3000);
 
     return self::getInstance()->delete('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
@@ -103,7 +103,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
   {
     foreach ($ucsIds as $ucsId)
     {
-      assert('(int)$ucsId > 0x3000');
+      assert((int)$ucsId > 0x3000);
     }
       
     $values = [$userId];

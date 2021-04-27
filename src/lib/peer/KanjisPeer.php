@@ -45,7 +45,7 @@ class KanjisPeer extends coreDatabaseTable
   public static function getKanjiByUCS($ucsId)
   {
     // FIXME   remove the validation code (validate higher up!! + cohesion)
-    assert('ctype_digit($ucsId) && rtkIndex::isExtendedIndex($ucsId)');
+    assert(ctype_digit($ucsId) && rtkIndex::isExtendedIndex($ucsId));
 
     if (!BaseValidators::validateInteger($ucsId))
     {
@@ -77,7 +77,7 @@ class KanjisPeer extends coreDatabaseTable
    */
   public static function getKanjiByHeisig($heisigNum)
   {
-    assert('(int)$heisigNum < 0x3000');
+    assert((int)$heisigNum < 0x3000);
 
     self::getInstance()->select()->where('framenum = ?', $heisigNum)->query();
 

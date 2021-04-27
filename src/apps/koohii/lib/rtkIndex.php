@@ -216,7 +216,7 @@ class rtkIndex
   {
     $seqId = sfContext::getInstance()->getUser()->getUserSequence();
     $sequences = self::getSequences();
-    assert('$seqId >= 0 && $seqId < count($sequences)');
+    assert($seqId >= 0 && $seqId < count($sequences));
     return $sequences[$seqId]['sqlCol'];
   }
 

@@ -1,8 +1,14 @@
 #
 #  Configs
 #
-#    /etc/php/7.4/apache2/conf.d/koohii.php.ini
-#    /etc/apache2/sites-enabled/000-default.conf
+#    Php inis
+#      /etc/php/7.4/apache2/conf.d/koohii.php.ini
+#
+#    Php mods
+#      /etc/php/7.4/mods-available/
+#
+#    Apache sites
+#      /etc/apache2/sites-enabled/000-default.conf
 #
 
 FROM ubuntu:20.04
@@ -32,6 +38,7 @@ RUN apt-get install -yq --no-install-recommends \
 # Install php
 RUN apt-get install -yq --no-install-recommends \
     libapache2-mod-php7.4 \
+    php7.4-bz2 \
     php7.4-cli \
     php7.4-json \
     php7.4-curl \

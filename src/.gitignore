@@ -14,7 +14,7 @@
 # php-cs-fixer
 !.php_cs
 /composer.phar
-/tools/php-cs-fixer.phar
+/tools/*.phar
 
 # generated / logs
 *.log

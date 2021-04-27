@@ -223,11 +223,9 @@ class StoriesPeer extends coreDatabaseTable
     {
       $s = preg_replace_callback(
         '/{([0-9]+)}/',
-        create_function(
-          // single quotes are essential here, or alternative escape all $ as \$
-          '$matches',
-          'return sprintf("#%d", $matches[1]);'
-        ), $s);
+        function ($match) {
+          return sprintf("#%d", $match[1]);
+        }, $s);
     }
 
     // Now restore the single quotes (as escaped single quotes)

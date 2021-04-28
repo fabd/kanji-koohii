@@ -104,7 +104,7 @@ class lime_test
       foreach ($result['tests'] as $test)
       {
         $testsuite->appendChild($testcase = $dom->createElement('testcase'));
-        $testcase->setAttribute('name', $test['message']);
+        $testcase->setAttribute('name', utf8_encode($test['message']));
         $testcase->setAttribute('file', $test['file']);
         $testcase->setAttribute('line', $test['line']);
         $testcase->setAttribute('assertions', 1);
@@ -191,6 +191,27 @@ class lime_test
   }
 
   /**
+   * Compares two values and returns true if they are equal
+   *
+   * @param mixed  $exp1    left value
+   * @param mixed  $exp2    right value
+   * @return bool
+   */
+  private function equals($exp1, $exp2)
+  {
+    if (is_object($exp1) || is_object($exp2)) {
+      return $exp1 === $exp2;
+    } else if (is_float($exp1) && is_float($exp2)) {
+      return abs($exp1 - $exp2) < self::EPSILON;
+    } else if (is_string($exp1) && is_numeric($exp1) || is_string($exp2) && is_numeric($exp2)) {
+      return $exp1 == $exp2;
+    } else if (is_string($exp1) || is_string($exp2)) {
+      return (string) $exp1 === (string) $exp2;
+    }
+    return $exp1 == $exp2;
+  }
+
+  /**
    * Compares two values and passes if they are equal (==)
    *
    * @param mixed  $exp1    left value
@@ -201,18 +222,7 @@ class lime_test
    */
   public function is($exp1, $exp2, $message = '')
   {
-    if (is_object($exp1) || is_object($exp2))
-    {
-      $value = $exp1 === $exp2;
-    }
-    else if (is_float($exp1) && is_float($exp2))
-    {
-      $value = abs($exp1 - $exp2) < self::EPSILON;
-    }
-    else
-    {
-      $value = $exp1 == $exp2;
-    }
+    $value = $this->equals($exp1, $exp2);
 
     if (!$result = $this->ok($value, $message))
     {
@@ -233,9 +243,11 @@ class lime_test
    */
   public function isnt($exp1, $exp2, $message = '')
   {
-    if (!$result = $this->ok($exp1 != $exp2, $message))
+    $value = $this->equals($exp1, $exp2);
+
+    if (!$result = $this->ok(!$value, $message))
     {
-      $this->set_last_test_errors(array(sprintf("      %s", var_export($exp2, true)), '          ne', sprintf("      %s", var_export($exp2, true))));
+      $this->set_last_test_errors(array(sprintf("      %s", var_export($exp1, true)), '          ne', sprintf("      %s", var_export($exp2, true))));
     }
 
     return $result;
@@ -530,13 +542,18 @@ class lime_test
     $this->results['tests'][$this->test_nb]['error'] = implode("\n", $errors);
   }
 
+  private function is_test_object($object)
+  {
+    return $object instanceof lime_test || $object instanceof sfTestFunctionalBase || $object instanceof sfTester;
+  }
+
   protected function find_caller($traces)
   {
     // find the first call to a method of an object that is an instance of lime_test
     $t = array_reverse($traces);
     foreach ($t as $trace)
     {
-      if (isset($trace['object']) && $trace['object'] instanceof lime_test)
+      if (isset($trace['object']) && $this->is_test_object($trace['object']))
       {
         return array($trace['file'], $trace['line']);
       }
@@ -570,7 +587,7 @@ class lime_test
     $this->error($type.': '.$message, $file, $line, $trace);
   }
 
-  public function handle_exception(Exception $exception)
+  public function handle_exception(Throwable $exception)
   {
     $this->error(get_class($exception).': '.$exception->getMessage(), $exception->getFile(), $exception->getLine(), $exception->getTrace());
 
@@ -684,10 +701,35 @@ class lime_output
   {
     if ($colorize)
     {
-      $message = preg_replace('/(?:^|\.)((?:not ok|dubious|errors) *\d*)\b/e', '$this->colorizer->colorize(\'$1\', \'ERROR\')', $message);
-      $message = preg_replace('/(?:^|\.)(ok *\d*)\b/e', '$this->colorizer->colorize(\'$1\', \'INFO\')', $message);
-      $message = preg_replace('/"(.+?)"/e', '$this->colorizer->colorize(\'$1\', \'PARAMETER\')', $message);
-      $message = preg_replace('/(\->|\:\:)?([a-zA-Z0-9_]+?)\(\)/e', '$this->colorizer->colorize(\'$1$2()\', \'PARAMETER\')', $message);
+      $colorizer = $this->colorizer;
+      $message = preg_replace_callback(
+        '/(?:^|\.)((?:not ok|dubious|errors) *\d*)\b/',
+        function ($match) use ($colorizer) {
+          return $colorizer->colorize($match[1], 'ERROR');
+        },
+        $message
+      );
+      $message = preg_replace_callback(
+        '/(?:^|\.)(ok *\d*)\b/',
+        function ($match) use ($colorizer) {
+          return $colorizer->colorize($match[1], 'INFO');
+        },
+        $message
+      );
+      $message = preg_replace_callback(
+        '/"(.+?)"/',
+        function ($match) use ($colorizer) {
+          return $colorizer->colorize($match[1], 'PARAMETER');
+        },
+        $message
+      );
+      $message = preg_replace_callback(
+        '/(\->|\:\:)?([a-zA-Z0-9_]+?)\(\)/',
+        function ($match) use ($colorizer) {
+          return $colorizer->colorize($match[1].$match[2].'()', 'PARAMETER');
+        },
+        $message
+      );
     }
 
     echo ($colorizer_parameter ? $this->colorizer->colorize($message, $colorizer_parameter) : $message)."\n";
@@ -786,6 +828,7 @@ class lime_harness extends lime_registration
   public $php_cli = null;
   public $stats   = array();
   public $output  = null;
+  public $full_output = false;
 
   public function __construct($options = array())
   {
@@ -800,6 +843,7 @@ class lime_harness extends lime_registration
       'force_colors' => false,
       'output'       => null,
       'verbose'      => false,
+      'test_path'    => sys_get_temp_dir(),
     ), $options);
 
     $this->php_cli = $this->find_php_cli($this->options['php_cli']);
@@ -890,8 +934,8 @@ class lime_harness extends lime_registration
 
       $relative_file = $this->get_relative_file($file);
 
-      $test_file = tempnam(sys_get_temp_dir(), 'lime');
-      $result_file = tempnam(sys_get_temp_dir(), 'lime');
+      $test_file = tempnam($this->options['test_path'], 'lime_test').'.php';
+      $result_file = tempnam($this->options['test_path'], 'lime_result');
       file_put_contents($test_file, <<<EOF
 <?php
 function lime_shutdown()
@@ -947,7 +991,14 @@ EOF
         }
       }
 
-      $this->output->echoln(sprintf('%s%s%s', substr($relative_file, -min(67, strlen($relative_file))), str_repeat('.', 70 - min(67, strlen($relative_file))), $stats['status']));
+      if (true === $this->full_output)
+      {
+        $this->output->echoln(sprintf('%s%s%s', $relative_file, '.....', $stats['status']));
+      }
+      else
+      {
+        $this->output->echoln(sprintf('%s%s%s', substr($relative_file, -min(67, strlen($relative_file))), str_repeat('.', 70 - min(67, strlen($relative_file))), $stats['status']));
+      }
 
       if ('dubious' == $stats['status'])
       {

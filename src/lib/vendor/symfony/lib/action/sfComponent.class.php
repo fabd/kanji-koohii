@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,24 +14,35 @@
  * @package    symfony
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfComponent.class.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfComponent
 {
-  protected
-    $moduleName             = '',
-    $actionName             = '',
-    $context                = null,
-    $dispatcher             = null,
-    $request                = null,
-    $response               = null,
-    $varHolder              = null,
-    $requestParameterHolder = null;
+  /** @var string */
+  protected $moduleName             = '';
+  /** @var string */
+  protected $actionName             = '';
+  /** @var sfContext */
+  protected $context                = null;
+  /** @var sfEventDispatcher */
+  protected $dispatcher             = null;
+  /** @var sfRequest */
+  protected $request                = null;
+  /** @var sfResponse */
+  protected $response               = null;
+  /** @var sfParameterHolder */
+  protected $varHolder              = null;
+  /** @var sfParameterHolder */
+  protected $requestParameterHolder = null;
 
   /**
    * Class constructor.
    *
    * @see initialize()
+   *
+   * @param sfContext $context
+   * @param string $moduleName
+   * @param string $actionName
    */
   public function __construct($context, $moduleName, $actionName)
   {
@@ -45,7 +56,7 @@ abstract class sfComponent
    * @param string    $moduleName The module name.
    * @param string    $actionName The action name.
    *
-   * @return boolean true, if initialization completes successfully, otherwise false
+   * @return void
    */
   public function initialize($context, $moduleName, $actionName)
   {
@@ -107,6 +118,28 @@ abstract class sfComponent
   }
 
   /**
+   * Retrieves the current service container instance.
+   *
+   * @return sfServiceContainer The current sfServiceContainer instance
+   */
+  public final function getServiceContainer()
+  {
+    return $this->context->getServiceContainer();
+  }
+
+  /**
+   * Retrieves a service from the service container.
+   *
+   * @param  string $id The service identifier
+   *
+   * @return object The service instance
+   */
+  public function getService($id)
+  {
+    return $this->getServiceContainer()->getService($id);
+  }
+
+  /**
    * Retrieves the current logger instance.
    *
    * @return sfLogger The current sfLogger instance
@@ -132,6 +165,20 @@ abstract class sfComponent
     {
       $this->dispatcher->notify(new sfEvent($this, 'application.log', array($message, 'priority' => constant('sfLogger::'.strtoupper($priority)))));
     }
+  }
+
+  /**
+   * Gets the translation for the given string
+   *
+   * @param  string $string     The string to translate
+   * @param  array  $args       An array of arguments for the translation
+   * @param  string $catalogue  The catalogue name
+   *
+   * @return string The translated string
+   */
+  public function __($string, $args = array(), $catalogue = 'messages')
+  {
+    return $this->context->getI18N()->__($string, $args, $catalogue);
   }
 
   /**
@@ -215,9 +262,9 @@ abstract class sfComponent
    *
    * <code>$this->getContext()->getRouting()->generate(...)</code>
    *
-   * @param string  The route name
-   * @param array   An array of parameters for the route
-   * @param Boolean Whether to generate an absolute URL or not
+   * @param string  $route    The route name
+   * @param array   $params   An array of parameters for the route
+   * @param Boolean $absolute Whether to generate an absolute URL or not
    *
    * @return string  The URL
    */

@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFormFieldSchema.class.php 23214 2009-10-20 18:11:23Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Countable
 {
@@ -120,7 +120,9 @@ class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Co
 
         if ($error && !$error instanceof sfValidatorErrorSchema)
         {
-          $error = new sfValidatorErrorSchema($error->getValidator(), array($error));
+          $current = $error;
+          $error = new sfValidatorErrorSchema($error->getValidator());
+          $error->addError($current);
         }
       }
       else

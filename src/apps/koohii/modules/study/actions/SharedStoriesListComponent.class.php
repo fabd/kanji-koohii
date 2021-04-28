@@ -14,7 +14,7 @@ class SharedStoriesListComponent extends sfComponent
     // sent by the paging list POST request
     $ucsId = (int)$request->getParameter('ucsId', 0);
 
-    assert('BaseValidators::validateInteger($ucsId) && $ucsId >= 0x3000');
+    assert(BaseValidators::validateInteger($ucsId) && $ucsId >= 0x3000);
 
     $keyword = trim($request->getParameter('keyword', ''));
 
@@ -99,7 +99,7 @@ class SharedStoriesListComponent extends sfComponent
    */
   private function getSharedStoriesListSelect($ucsId, $keyword, $userId)
   {
-    assert('is_int($ucsId) && $ucsId >= 0x3000');
+    assert(is_int($ucsId) && $ucsId >= 0x3000);
 
     $db = sfProjectConfiguration::getActive()->getDatabase();
 

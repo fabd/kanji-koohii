@@ -24,7 +24,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Mike Squire <mike@somosis.co.uk>
- * @version    SVN: $Id: sfOutputEscaperIteratorDecorator.class.php 23436 2009-10-29 16:10:39Z fabien $
+ * @version    SVN: $Id$
  */
 class sfOutputEscaperIteratorDecorator extends sfOutputEscaperObjectDecorator implements Iterator, ArrayAccess
 {
@@ -54,7 +54,7 @@ class sfOutputEscaperIteratorDecorator extends sfOutputEscaperObjectDecorator im
   /**
    * Resets the iterator (as required by the Iterator interface).
    *
-   * @return bool true, if the iterator rewinds successfully otherwise false
+   * @return void
    */
   public function rewind()
   {
@@ -83,6 +83,8 @@ class sfOutputEscaperIteratorDecorator extends sfOutputEscaperObjectDecorator im
 
   /**
    * Moves to the next element in the iterator (as required by the Iterator interface).
+   *
+   * @return void
    */
   public function next()
   {

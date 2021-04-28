@@ -60,7 +60,7 @@ class LeitnerSRS
   {
     static $intervals = null;
 
-    assert('$box > 0');
+    assert($box > 0);
 
     if (null === $intervals) {
       $max_box = self::getMaxBox() - 1;

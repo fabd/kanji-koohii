@@ -12,7 +12,7 @@
  * @package    symfony
  * @subpackage i18n
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfI18nYamlValidateExtractor.class.php 9128 2008-05-21 00:58:19Z Carl.Vondrick $
+ * @version    SVN: $Id$
  */
 class sfI18nYamlValidateExtractor extends sfI18nYamlExtractor
 {
@@ -27,7 +27,7 @@ class sfI18nYamlValidateExtractor extends sfI18nYamlExtractor
   {
     $strings = array();
 
-    $config = sfYaml::load($content);
+    $config = sfYaml::load($content, sfConfig::get('sf_charset', 'UTF-8'));
 
     // New validate.yml format
 

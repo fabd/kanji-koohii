@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorChoice.class.php 22264 2009-09-23 05:54:32Z fabien $
+ * @version    SVN: $Id$
  */
 class sfValidatorChoice extends sfValidatorBase
 {
@@ -66,6 +66,11 @@ class sfValidatorChoice extends sfValidatorBase
     return $value;
   }
 
+  /**
+   * Get choices
+   *
+   * @return array
+   */
   public function getChoices()
   {
     $choices = $this->getOption('choices');
@@ -112,6 +117,39 @@ class sfValidatorChoice extends sfValidatorBase
     }
 
     return $value;
+  }
+
+  /**
+   * Returns true if the value is empty.
+   *
+   * @param  mixed $value  The input value
+   *
+   * @return bool true if the value is empty, false otherwise
+   */
+  protected function isEmpty($value)
+  {
+    if (parent::isEmpty($value))
+    {
+      return true;
+    }
+
+    if (is_array($value))
+    {
+      $isEmpty = true;
+      foreach ($value as $v)
+      {
+        if (!parent::isEmpty($v))
+        {
+          $isEmpty = false;
+
+          break;
+        }
+      }
+
+      return $isEmpty;
+    }
+
+    return false;
   }
 
   /**

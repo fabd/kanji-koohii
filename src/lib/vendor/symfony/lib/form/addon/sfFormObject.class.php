@@ -10,11 +10,11 @@
 
 /**
  * Base class for forms that deal with a single object.
- * 
+ *
  * @package    symfony
  * @subpackage form
  * @author     Kris Wallsmith <kris.wallsmith@symfony-project.com>
- * @version    SVN: $Id: sfFormObject.class.php 33250 2011-12-12 16:02:15Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfFormObject extends BaseForm
 {
@@ -24,7 +24,7 @@ abstract class sfFormObject extends BaseForm
 
   /**
    * Returns the current model name.
-   * 
+   *
    * @return string
    */
   abstract public function getModelName();
@@ -50,7 +50,7 @@ abstract class sfFormObject extends BaseForm
    * Processes cleaned up values.
    *
    * @param  array $values An array of values
-   * 
+   *
    * @return array An array of cleaned up values
    */
   abstract public function processValues($values);
@@ -78,9 +78,9 @@ abstract class sfFormObject extends BaseForm
   /**
    * Binds the current form and saves the object to the database in one step.
    *
-   * @param  array An array of tainted values to use to bind the form
-   * @param  array An array of uploaded files (in the $_FILES or $_GET format)
-   * @param  mixed An optional connection object
+   * @param  array $taintedValues An array of tainted values to use to bind the form
+   * @param  array $taintedFiles An array of uploaded files (in the $_FILES or $_GET format)
+   * @param  mixed $con An optional connection object
    *
    * @return Boolean true if the form is valid, false otherwise
    */
@@ -107,9 +107,10 @@ abstract class sfFormObject extends BaseForm
    *
    * @return mixed The current saved object
    *
+   * @throws Exception
+   * @throws sfValidatorErrorSchema
+   *
    * @see doSave()
-   * 
-   * @throws sfValidatorError If the form is not valid
    */
   public function save($con = null)
   {
@@ -123,10 +124,9 @@ abstract class sfFormObject extends BaseForm
       $con = $this->getConnection();
     }
 
+    $con->beginTransaction();
     try
     {
-      $con->beginTransaction();
-
       $this->doSave($con);
 
       $con->commit();
@@ -151,17 +151,26 @@ abstract class sfFormObject extends BaseForm
    */
   protected function doSave($con = null)
   {
+    $this->updateObject();
+    $this->saveObject($con);
+  }
+
+  /**
+   * Save form object
+   *
+   * @param  mixed $con An optional connection object
+   */
+  public function saveObject($con = null)
+  {
     if (null === $con)
     {
       $con = $this->getConnection();
     }
 
-    $this->updateObject();
-
     $this->getObject()->save($con);
 
     // embedded forms
-    $this->saveEmbeddedForms($con);
+    $this->saveObjectEmbeddedForms($con);
   }
 
   /**
@@ -225,7 +234,7 @@ abstract class sfFormObject extends BaseForm
    * @param mixed $con   An optional connection object
    * @param array $forms An array of forms
    */
-  public function saveEmbeddedForms($con = null, $forms = null)
+  public function saveObjectEmbeddedForms($con = null, $forms = null)
   {
     if (null === $con)
     {
@@ -241,12 +250,11 @@ abstract class sfFormObject extends BaseForm
     {
       if ($form instanceof sfFormObject)
       {
-        $form->getObject()->save($con);
-        $form->saveEmbeddedForms($con);
+        $form->saveObject($con);
       }
       else
       {
-        $this->saveEmbeddedForms($con, $form->getEmbeddedForms());
+        $this->saveObjectEmbeddedForms($con, $form->getEmbeddedForms());
       }
     }
   }
@@ -278,6 +286,6 @@ abstract class sfFormObject extends BaseForm
 
   protected function camelize($text)
   {
-    return preg_replace(array('#/(.?)#e', '/(^|_|-)+(.)/e'), array("'::'.strtoupper('\\1')", "strtoupper('\\2')"), $text);
+    return strtr(ucwords(strtr($text, array('/' => ':: ', '_' => ' ', '-' => ' '))), array(' ' => ''));
   }
 }

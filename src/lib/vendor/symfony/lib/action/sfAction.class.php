@@ -16,7 +16,10 @@
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfAction.class.php 24279 2009-11-23 15:21:18Z fabien $
+ * @version    SVN: $Id$
+ *
+ * @method sfWebController getController()
+ * @method sfWebResponse getResponse()
  */
 abstract class sfAction extends sfComponent
 {
@@ -30,7 +33,7 @@ abstract class sfAction extends sfComponent
    * @param string    $moduleName The module name.
    * @param string    $actionName The action name.
    *
-   * @return bool true, if initialization completes successfully, otherwise false
+   * @return void
    */
   public function initialize($context, $moduleName, $actionName)
   {
@@ -186,7 +189,7 @@ abstract class sfAction extends sfComponent
    * This method stops the action. So, no code is executed after a call to this method.
    *
    * @param  string $url         Url
-   * @param  string $statusCode  Status code (default to 302)
+   * @param  int    $statusCode  Status code (default to 302)
    *
    * @throws sfStopException
    */
@@ -211,7 +214,7 @@ abstract class sfAction extends sfComponent
    *
    * @param  bool   $condition  A condition that evaluates to true or false
    * @param  string $url        Url
-   * @param  string $statusCode Status code (default to 302)
+   * @param  int    $statusCode Status code (default to 302)
    *
    * @throws sfStopException
    *
@@ -234,7 +237,7 @@ abstract class sfAction extends sfComponent
    *
    * @param  bool   $condition  A condition that evaluates to true or false
    * @param  string $url        Url
-   * @param  string $statusCode Status code (default to 302)
+   * @param  int    $statusCode Status code (default to 302)
    *
    * @throws sfStopException
    *
@@ -259,11 +262,28 @@ abstract class sfAction extends sfComponent
    *
    * @param string $text Text to append to the response
    *
-   * @return sfView::NONE
+   * @return string sfView::NONE
    */
   public function renderText($text)
   {
     $this->getResponse()->setContent($this->getResponse()->getContent().$text);
+
+    return sfView::NONE;
+  }
+
+  /**
+   * Convert the given data into a JSON response.
+   *
+   * <code>return $this->renderJson(array('username' => 'john'))</code>
+   *
+   * @param mixed $data Data to encode as JSON
+   *
+   * @return string sfView::NONE
+   */
+  public function renderJson($data)
+  {
+    $this->getResponse()->setContentType('application/json');
+    $this->getResponse()->setContent(json_encode($data));
 
     return sfView::NONE;
   }
@@ -301,7 +321,7 @@ abstract class sfAction extends sfComponent
    * @param  string $templateName partial name
    * @param  array  $vars         vars
    *
-   * @return sfView::NONE
+   * @return string sfView::NONE
    *
    * @see    getPartial
    */
@@ -345,7 +365,7 @@ abstract class sfAction extends sfComponent
    * @param  string  $componentName  component name
    * @param  array   $vars          vars
    *
-   * @return sfView::NONE
+   * @return string  sfView::NONE
    *
    * @see    getComponent
    */
@@ -436,7 +456,8 @@ abstract class sfAction extends sfComponent
 
     if (null !== $module)
     {
-      $name = sfConfig::get('sf_app_dir').'/modules/'.$module.'/templates/'.$name;
+      $dir = $this->context->getConfiguration()->getTemplateDir($module, $name.sfView::SUCCESS.'.php');
+      $name = $dir.'/'.$name;
     }
 
     sfConfig::set('symfony.view.'.$this->getModuleName().'_'.$this->getActionName().'_template', $name);

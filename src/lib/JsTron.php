@@ -87,7 +87,7 @@ class JsTron extends sfParameterHolder
 
   public function setStatus($status)
   {
-    assert('$status === self::STATUS_FAILED || $status === self::STATUS_SUCCESS || $status === self::STATUS_PROGRESS');
+    assert($status === self::STATUS_FAILED || $status === self::STATUS_SUCCESS || $status === self::STATUS_PROGRESS);
     $this->status = $status;
   }
 

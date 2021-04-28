@@ -165,7 +165,7 @@ class uiSelectTable
     $this->columns =& $config->columns;
     foreach ($this->columns as $colDef)
     {
-      assert('isset($colDef->colData) || isset($colDef->colDisplay)');
+      assert(isset($colDef->colData) || isset($colDef->colDisplay));
 
       // columns are not editable by default
       if (!isset($colDef->editable)) {
@@ -613,7 +613,7 @@ EOD;
   private function isValidRowId($rowid)
   {
     $ids = explode(self::COMPOUNDROWID_SEPARATOR, $rowid);
-    assert('count($ids)>=2');
+    assert(count($ids)>=2);
     $postChecksum = array_shift($ids);
     $sPrimaryKeys = implode('', $ids);
     $trueChecksum = md5(self::CHECKSUM_MAGICWORD.$sPrimaryKeys);

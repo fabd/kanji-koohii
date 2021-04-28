@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Mike Squire <mike@somosis.co.uk>
- * @version    SVN: $Id: sfOutputEscaperArrayDecorator.class.php 27752 2010-02-08 19:21:22Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfOutputEscaperArrayDecorator extends sfOutputEscaperGetterDecorator implements Iterator, ArrayAccess, Countable
 {
@@ -30,6 +30,7 @@ class sfOutputEscaperArrayDecorator extends sfOutputEscaperGetterDecorator imple
    * Constructor.
    *
    * @see sfOutputEscaper
+   * @inheritdoc
    */
   public function __construct($escapingMethod, $value)
   {

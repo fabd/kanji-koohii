@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterForm.class.php 24217 2009-11-22 06:47:54Z fabien $
+ * @version    SVN: $Id$
  */
 class sfTesterForm extends sfTester
 {
@@ -95,6 +95,16 @@ class sfTesterForm extends sfTester
       $this->tester->is($this->form->hasErrors(), $value, sprintf('the submitted form %s.', ($value) ? 'has some errors' : 'is valid'));
     }
 
+    if ((false === $value || is_int($value) && $value != count($this->form->getErrorSchema()))
+      && $this->form->hasErrors())
+    {
+      $this->tester->diag(sprintf('%s Errors:', get_class($this->form)));
+      foreach ($this->form->getErrorSchema()->getErrors() as $key => $error)
+      {
+        $this->tester->diag(sprintf('  - %s: %s', $key, $error));
+      }
+    }
+
     return $this->getObjectToReturn();
   }
 
@@ -127,7 +137,11 @@ class sfTesterForm extends sfTester
 
     if (null === $field)
     {
-      $error = new sfValidatorErrorSchema(new sfValidatorPass(), $this->form->getGlobalErrors());
+      $error = new sfValidatorErrorSchema(new sfValidatorPass());
+      foreach ($this->form->getGlobalErrors() as $globalError)
+      {
+        $error->addError($globalError);
+      }
     }
     else
     {

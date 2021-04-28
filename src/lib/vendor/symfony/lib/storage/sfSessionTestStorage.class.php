@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage storage
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfSessionTestStorage.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfSessionTestStorage extends sfStorage
 {
@@ -52,11 +52,11 @@ class sfSessionTestStorage extends sfStorage
     {
       // we read session data from temp file
       $file = $this->options['session_path'].DIRECTORY_SEPARATOR.$this->sessionId.'.session';
-      $this->sessionData = file_exists($file) ? unserialize(file_get_contents($file)) : array();
+      $this->sessionData = is_file($file) ? unserialize(file_get_contents($file)) : array();
     }
     else
     {
-      $this->sessionId   = md5(uniqid(rand(), true));
+      $this->sessionId   = md5(uniqid(mt_rand(), true));
       $this->sessionData = array();
     }
   }
@@ -158,12 +158,13 @@ class sfSessionTestStorage extends sfStorage
     if ($this->sessionId)
     {
       $current_umask = umask(0000);
-      if (!is_dir($this->options['session_path']))
+      $sessionsDir   = $this->options['session_path'];
+      if (!is_dir($sessionsDir) && !@mkdir($sessionsDir, 0777, true) && !is_dir($sessionsDir))
       {
-        mkdir($this->options['session_path'], 0777, true);
+        throw new \RuntimeException(sprintf('Logger was not able to create a directory "%s"', $sessionsDir));
       }
       umask($current_umask);
-      file_put_contents($this->options['session_path'].DIRECTORY_SEPARATOR.$this->sessionId.'.session', serialize($this->sessionData));
+      file_put_contents($sessionsDir.DIRECTORY_SEPARATOR.$this->sessionId.'.session', serialize($this->sessionData));
       $this->sessionId   = '';
       $this->sessionData = array();
     }

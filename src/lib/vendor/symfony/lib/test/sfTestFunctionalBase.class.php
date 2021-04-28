@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__).'/../vendor/lime/lime.php');
+require_once(__DIR__.'/../vendor/lime/lime.php');
 
 /*
  * This file is part of the symfony package.
@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/../vendor/lime/lime.php');
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestFunctionalBase.class.php 28641 2010-03-21 10:20:44Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfTestFunctionalBase
 {
@@ -480,7 +480,7 @@ abstract class sfTestFunctionalBase
    *
    * @param Exception $exception The exception
    */
-  function handleException(Exception $exception)
+  function handleException($exception)
   {
     $this->test()->error(sprintf('%s: %s', get_class($exception), $exception->getMessage()));
 

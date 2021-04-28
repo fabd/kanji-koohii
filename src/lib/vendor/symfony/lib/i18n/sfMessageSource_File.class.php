@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfMessageSource_File.class.php 9128 2008-05-21 00:58:19Z Carl.Vondrick $
+ * @version    $Id$
  * @package    symfony
  * @subpackage i18n
  */
@@ -159,7 +159,7 @@ abstract class sfMessageSource_File extends sfMessageSource
    */
   protected function getCatalogues($dir = null, $variant = null)
   {
-    $dir = $dir ? $dir : $this->getSource($variant);
+    $dir = $dir ?: $this->getSource($variant);
     $files = scandir($dir);
 
     $catalogue = array();

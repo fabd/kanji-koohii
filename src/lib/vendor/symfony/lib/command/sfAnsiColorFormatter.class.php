@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAnsiColorFormatter.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id$
  */
 class sfAnsiColorFormatter extends sfFormatter
 {
@@ -79,14 +79,16 @@ class sfAnsiColorFormatter extends sfFormatter
 
     return "\033[".implode(';', $codes).'m'.$text."\033[0m";
   }
-
+  
   /**
    * Formats a message within a section.
    *
-   * @param string  $section  The section name
-   * @param string  $text     The text message
-   * @param integer $size     The maximum size allowed for a line
-   * @param string  $style    The color scheme to apply to the section string (INFO, ERROR, COMMENT or QUESTION)
+   * @param string  $section The section name
+   * @param string  $text    The text message
+   * @param integer $size    The maximum size allowed for a line
+   * @param string  $style   The color scheme to apply to the section string (INFO, ERROR, COMMENT or QUESTION)
+   *
+   * @return string
    */
   public function formatSection($section, $text, $size = null, $style = 'INFO')
   {
@@ -98,7 +100,7 @@ class sfAnsiColorFormatter extends sfFormatter
     $style = array_key_exists($style, $this->styles) ? $style : 'INFO';
     $width = 9 + strlen($this->format('', $style));
 
-    return sprintf(">> %-{$width}s %s", $this->format($section, $style), $this->excerpt($text, $size - 4 - (strlen($section) > 9 ? strlen($section) : 9)));
+    return sprintf(">> %-${width}s %s", $this->format($section, $style), $this->excerpt($text, $size - 4 - (strlen($section) > 9 ? strlen($section) : 9)));
   }
 
   /**

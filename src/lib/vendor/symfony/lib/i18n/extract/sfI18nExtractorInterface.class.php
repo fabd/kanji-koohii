@@ -12,7 +12,7 @@
  * @package    symfony
  * @subpackage i18n
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfI18nExtractorInterface.class.php 9128 2008-05-21 00:58:19Z Carl.Vondrick $
+ * @version    SVN: $Id$
  */
 interface sfI18nExtractorInterface
 {

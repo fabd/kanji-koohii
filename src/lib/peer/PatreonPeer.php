@@ -38,7 +38,7 @@ class PatreonPeer extends coreDatabaseTable
    */
   static public function updatePatron($data)
   {
-    assert('isset($data["pa_id"])');
+    assert(isset($data["pa_id"]));
 
     // update flags
     $pa_amount_cents = isset($data['pa_amount_cents']) ? $data['pa_amount_cents'] :_0;

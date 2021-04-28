@@ -59,7 +59,7 @@ class UsersSettingsPeer extends coreDatabaseTable
 //DBG::printr($settings);
     foreach ($settings as $name => $value)
     {
-      assert('array_key_exists($name, self::$map)');
+      assert(array_key_exists($name, self::$map));
       $colName = self::$map[$name];
       $colData[$colName] = $value;
     }

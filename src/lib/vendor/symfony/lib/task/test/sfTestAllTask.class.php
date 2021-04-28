@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestAllTask.class.php 29415 2010-05-12 06:24:54Z fabien $
+ * @version    SVN: $Id$
  */
 class sfTestAllTask extends sfTestBaseTask
 {
@@ -25,6 +25,7 @@ class sfTestAllTask extends sfTestBaseTask
   {
     $this->addOptions(array(
       new sfCommandOption('only-failed', 'f', sfCommandOption::PARAMETER_NONE, 'Only run tests that failed last time'),
+      new sfCommandOption('full-output', 'o', sfCommandOption::PARAMETER_NONE, 'Display full path for the test'),
       new sfCommandOption('xml', null, sfCommandOption::PARAMETER_REQUIRED, 'The file name for the JUnit compatible XML log file'),
     ));
 
@@ -62,6 +63,11 @@ The task can output a JUnit compatible XML log file with the [--xml|COMMENT]
 options:
 
   [./symfony test:all --xml=log.xml|INFO]
+
+If you want to display full path for each test in output, add the option
+[--full-output|COMMENT] or [-o|COMMENT] :
+
+  [./symfony test:all --full-output|INFO]
 EOF;
   }
 
@@ -70,12 +76,13 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    require_once dirname(__FILE__).'/sfLimeHarness.class.php';
+    require_once __DIR__.'/sfLimeHarness.class.php';
 
     $h = new sfLimeHarness(array(
       'force_colors' => isset($options['color']) && $options['color'],
       'verbose'      => isset($options['trace']) && $options['trace'],
     ));
+    $h->full_output = $options['full-output'] ? true : false;
     $h->addPlugins(array_map(array($this->configuration, 'getPluginConfiguration'), $this->configuration->getPlugins()));
     $h->base_dir = sfConfig::get('sf_test_dir');
 

@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,18 +14,24 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandManager.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id$
  */
 class sfCommandManager
 {
-  protected
-    $arguments            = '',
-    $errors               = array(),
-    $optionSet            = null,
-    $argumentSet          = array(),
-    $optionValues         = array(),
-    $argumentValues       = array(),
-    $parsedArgumentValues = array();
+  /** @var array */
+  protected $arguments = '';
+  /** @var string[] */
+  protected $errors = array();
+  /** @var sfCommandOptionSet */
+  protected $optionSet = null;
+  /** @var sfCommandArgumentSet */
+  protected $argumentSet = array();
+  /** @var array */
+  protected $optionValues = array();
+  /** @var array */
+  protected $argumentValues = array();
+  /** @var array */
+  protected $parsedArgumentValues = array();
 
   /**
    * Constructor.
@@ -111,7 +117,6 @@ class sfCommandManager
       $arguments = preg_replace_callback('/(\'|")(.+?)\\1/', function ($match) {
         return str_replace(' ', '=PLACEHOLDER=', $match[2]);
       }, $arguments);
-
       $arguments = preg_split('/\s+/', $arguments);
       $arguments = str_replace('=PLACEHOLDER=', ' ', $arguments);
     }
@@ -211,6 +216,8 @@ class sfCommandManager
    * @param string $name The argument name
    *
    * @return mixed The argument value
+   *
+   * @throws sfCommandException
    */
   public function getArgumentValue($name)
   {
@@ -238,6 +245,8 @@ class sfCommandManager
    * @param string $name The option name
    *
    * @return mixed The option value
+   *
+   * @throws sfCommandException
    */
   public function getOptionValue($name)
   {

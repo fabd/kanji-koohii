@@ -31,6 +31,7 @@
 
 class rtkUser extends sfBasicSecurityUser
 {
+  /** @var LocalPrefs */
   protected
     $localPrefs = null;
   

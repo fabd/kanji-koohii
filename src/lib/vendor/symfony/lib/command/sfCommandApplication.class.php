@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,23 +14,36 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandApplication.class.php 33151 2011-10-24 08:55:03Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfCommandApplication
 {
-  protected
-    $commandManager = null,
-    $trace          = false,
-    $verbose        = true,
-    $nowrite        = false,
-    $name           = 'UNKNOWN',
-    $version        = 'UNKNOWN',
-    $tasks          = array(),
-    $currentTask    = null,
-    $dispatcher     = null,
-    $options        = array(),
-    $formatter      = null;
-
+  /** @var sfCommandManager */
+  protected $commandManager = null;
+  /** @var bool */
+  protected $trace = false;
+  /** @var bool */
+  protected $verbose = true;
+  /** @var bool */
+  protected $debug = true;
+  /** @var bool */
+  protected $nowrite = false;
+  /** @var string */
+  protected $name = 'UNKNOWN';
+  /** @var string */
+  protected $version = 'UNKNOWN';
+  /** @var array */
+  protected $tasks = array();
+  /** @var sfTask */
+  protected $currentTask = null;
+  /** @var sfEventDispatcher */
+  protected $dispatcher = null;
+  /** @var array */
+  protected $options = array();
+  /** @var sfFormatter */
+  protected $formatter = null;
+  /** @var mixed */
+  protected $commandOptions;
   /**
    * Constructor.
    *
@@ -55,6 +68,7 @@ abstract class sfCommandApplication
       new sfCommandOption('--trace',   '-t', sfCommandOption::PARAMETER_NONE, 'Turn on invoke/execute tracing, enable full backtrace.'),
       new sfCommandOption('--version', '-V', sfCommandOption::PARAMETER_NONE, 'Display the program version.'),
       new sfCommandOption('--color',   '',   sfCommandOption::PARAMETER_NONE, 'Forces ANSI color output.'),
+      new sfCommandOption('--no-debug','',   sfCommandOption::PARAMETER_NONE, 'Disable debug'),
     ));
     $this->commandManager = new sfCommandManager($argumentSet, $optionSet);
 
@@ -93,7 +107,7 @@ abstract class sfCommandApplication
   /**
    * Sets the formatter instance.
    *
-   * @param sfFormatter The formatter instance
+   * @param sfFormatter $formatter The formatter instance
    */
   public function setFormatter(sfFormatter $formatter)
   {
@@ -134,6 +148,8 @@ abstract class sfCommandApplication
    * Registers a task object.
    *
    * @param sfTask $task An sfTask object
+   *
+   * @throws sfCommandException
    */
   public function registerTask(sfTask $task)
   {
@@ -192,6 +208,8 @@ abstract class sfCommandApplication
    * @param string $name The task name or alias
    *
    * @return sfTask An sfTask object
+   *
+   * @throws sfCommandException
    */
   public function getTask($name)
   {
@@ -295,6 +313,16 @@ abstract class sfCommandApplication
   }
 
   /**
+   * Returns whether the application must be verbose.
+   *
+   * @return Boolean true if the application is in debug mode, false otherwise
+   */
+  public function isDebug()
+  {
+    return $this->debug;
+  }
+
+  /**
    * Outputs a help message for the current application.
    */
   public function help()
@@ -337,6 +365,11 @@ abstract class sfCommandApplication
     if ($this->commandManager->getOptionSet()->hasOption('quiet') && false !== $this->commandManager->getOptionValue('quiet'))
     {
       $this->verbose = false;
+    }
+
+    if ($this->commandManager->getOptionSet()->hasOption('no-debug') && false !== $this->commandManager->getOptionValue('no-debug'))
+    {
+      $this->debug = false;
     }
 
     if ($this->commandManager->getOptionSet()->hasOption('trace') && false !== $this->commandManager->getOptionValue('trace'))
@@ -427,14 +460,18 @@ abstract class sfCommandApplication
 
       fwrite(STDERR, "\n");
     }
+
+    $this->dispatcher->notify(new sfEvent($e, 'application.throw_exception'));
   }
 
   /**
    * Gets a task from a task name or a shortcut.
    *
-   * @param  string  $name  The task name or a task shortcut
+   * @param  string $name The task name or a task shortcut
    *
    * @return sfTask A sfTask object
+   *
+   * @throws sfCommandException
    */
   public function getTaskToExecute($name)
   {
@@ -538,7 +575,11 @@ abstract class sfCommandApplication
   protected function fixCgi()
   {
     // handle output buffering
-    @ob_end_flush();
+    if (ob_get_level() > 0)
+    {
+      @ob_end_flush();
+    }
+
     ob_implicit_flush(true);
 
     // PHP ini settings
@@ -564,13 +605,22 @@ abstract class sfCommandApplication
     }
 
     // close the streams on script termination
-    register_shutdown_function(create_function('', 'fclose(STDIN); fclose(STDOUT); fclose(STDERR); return true;'));
+    register_shutdown_function(function() {
+        fclose(STDIN);
+        fclose(STDOUT);
+        fclose(STDERR);
+        return true;
+    });
   }
 
   /**
    * Returns an array of possible abbreviations given a set of names.
    *
    * @see Text::Abbrev perl module for the algorithm
+   *
+   * @param string[] $names
+   *
+   * @return string[]
    */
   protected function getAbbreviations($names)
   {

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorInteger.class.php 22018 2009-09-14 16:56:28Z fabien $
+ * @version    SVN: $Id$
  */
 class sfValidatorInteger extends sfValidatorBase
 {
@@ -52,9 +52,9 @@ class sfValidatorInteger extends sfValidatorBase
    */
   protected function doClean($value)
   {
-    $clean = intval($value);
+    $clean = (int) $value;
 
-    if (strval($clean) != $value)
+    if ((string) $clean != $value)
     {
       throw new sfValidatorError($this, 'invalid', array('value' => $value));
     }

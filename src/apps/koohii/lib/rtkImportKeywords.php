@@ -204,7 +204,7 @@ class rtkImportKeywords
               . '<td>'.esc_specialchars($keyword).'</td></tr>';
     }
 
-    return implode($rows, "\n");
+    return implode("\n", $rows);
   }
 
   public function getKeywords()

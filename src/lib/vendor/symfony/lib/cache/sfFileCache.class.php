@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFileCache.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfFileCache extends sfCache
 {
@@ -24,17 +24,18 @@ class sfFileCache extends sfCache
 
   const EXTENSION = '.cache';
 
- /**
-  * Initializes this sfCache instance.
-  *
-  * Available options:
-  *
-  * * cache_dir: The directory where to put cache files
-  *
-  * * see sfCache for options available for all drivers
-  *
-  * @see sfCache
-  */
+  /**
+   * Initializes this sfCache instance.
+   *
+   * Available options:
+   *
+   * * cache_dir: The directory where to put cache files
+   *
+   * * see sfCache for options available for all drivers
+   *
+   * @see sfCache
+   * @inheritdoc
+   */
   public function initialize($options = array())
   {
     parent::initialize($options);
@@ -49,11 +50,12 @@ class sfFileCache extends sfCache
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function get($key, $default = null)
   {
     $file_path = $this->getFilePath($key);
-    if (!file_exists($file_path))
+    if (!is_file($file_path))
     {
       return $default;
     }
@@ -70,19 +72,22 @@ class sfFileCache extends sfCache
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function has($key)
   {
     $path = $this->getFilePath($key);
-    return file_exists($path) && $this->isValid($path);
+
+    return is_file($path) && $this->isValid($path);
   }
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function set($key, $data, $lifetime = null)
   {
-    if ($this->getOption('automatic_cleaning_factor') > 0 && rand(1, $this->getOption('automatic_cleaning_factor')) == 1)
+    if ($this->getOption('automatic_cleaning_factor') > 0 && mt_rand(1, $this->getOption('automatic_cleaning_factor')) == 1)
     {
       $this->clean(sfCache::OLD);
     }
@@ -92,6 +97,7 @@ class sfFileCache extends sfCache
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function remove($key)
   {
@@ -100,6 +106,7 @@ class sfFileCache extends sfCache
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function removePattern($pattern)
   {
@@ -137,6 +144,7 @@ class sfFileCache extends sfCache
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function clean($mode = sfCache::ALL)
   {
@@ -159,12 +167,13 @@ class sfFileCache extends sfCache
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function getTimeout($key)
   {
     $path = $this->getFilePath($key);
 
-    if (!file_exists($path))
+    if (!is_file($path))
     {
       return 0;
     }
@@ -176,16 +185,17 @@ class sfFileCache extends sfCache
 
   /**
    * @see sfCache
+   * @inheritdoc
    */
   public function getLastModified($key)
   {
     $path = $this->getFilePath($key);
 
-    if (!file_exists($path))
+    if (!is_file($path))
     {
       return 0;
     }
-    
+
     $data = $this->read($path, self::READ_TIMEOUT | self::READ_LAST_MODIFIED);
 
     if ($data[self::READ_TIMEOUT] < time())
@@ -234,12 +244,12 @@ class sfFileCache extends sfCache
     }
 
     @flock($fp, LOCK_SH);
-    $data[self::READ_TIMEOUT] = intval(@stream_get_contents($fp, 12, 0));
+    $data[self::READ_TIMEOUT] = (int) @stream_get_contents($fp, 12, 0);
     if ($type != self::READ_TIMEOUT && time() < $data[self::READ_TIMEOUT])
     {
       if ($type & self::READ_LAST_MODIFIED)
       {
-        $data[self::READ_LAST_MODIFIED] = intval(@stream_get_contents($fp, 12, 12));
+        $data[self::READ_LAST_MODIFIED] = (int) @stream_get_contents($fp, 12, 12);
       }
       if ($type & self::READ_DATA)
       {
@@ -276,13 +286,13 @@ class sfFileCache extends sfCache
     $current_umask = umask();
     umask(0000);
 
-    if (!is_dir(dirname($path)))
+    $cacheDir = dirname($path);
+    if (!is_dir($cacheDir) && !@mkdir($cacheDir, 0777, true) && !is_dir($cacheDir))
     {
-      // create directory structure if needed
-      mkdir(dirname($path), 0777, true);
+      throw new \sfCacheException(sprintf('Cache was not able to create a directory "%s".', $cacheDir));
     }
 
-    $tmpFile = tempnam(dirname($path), basename($path));
+    $tmpFile = tempnam($cacheDir, basename($path));
 
     if (!$fp = @fopen($tmpFile, 'wb'))
     {

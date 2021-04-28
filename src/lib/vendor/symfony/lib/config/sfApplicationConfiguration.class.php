@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfApplicationConfiguration.class.php 33214 2011-11-19 13:47:24Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfApplicationConfiguration extends ProjectConfiguration
 {
@@ -55,7 +55,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
       $this->checkLock();
     }
 
-    if (file_exists($file = sfConfig::get('sf_app_cache_dir').'/config/configuration.php'))
+    if (is_file($file = sfConfig::get('sf_app_cache_dir').'/config/configuration.php'))
     {
       $this->cache = require $file;
     }
@@ -98,13 +98,13 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
     $configCache = $this->getConfigCache();
 
     // in debug mode, start global timer
-    if ($this->isDebug() && !sfWebDebugPanelTimer::isStarted())
+    if ($this->isDebug() && !sfConfig::get('sf_cli') && !sfWebDebugPanelTimer::isStarted())
     {
       sfWebDebugPanelTimer::startTime();
     }
 
     // required core classes for the framework
-    if (!$this->isDebug() && !sfConfig::get('sf_test') && !self::$coreLoaded)
+    if (!$this->isDebug() && !sfConfig::get('sf_test') && !sfConfig::get('sf_cli') && !self::$coreLoaded)
     {
       $configCache->import('config/core_compile.yml', false);
     }
@@ -124,7 +124,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
       include($file);
     }
 
-    if (false !== sfConfig::get('sf_csrf_secret'))
+    if (!sfConfig::get('sf_cli') && false !== sfConfig::get('sf_csrf_secret'))
     {
       sfForm::enableCSRFProtection(sfConfig::get('sf_csrf_secret'));
     }
@@ -178,10 +178,10 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
 
   /**
    * Adds enabled plugins to autoload config.
-   * 
+   *
    * @param   sfEvent $event
    * @param   array   $config
-   * 
+   *
    * @return  array
    */
   public function filterAutoloadConfig(sfEvent $event, array $config)
@@ -288,6 +288,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
       'sf_app'         => $this->getApplication(),
       'sf_environment' => $this->getEnvironment(),
       'sf_debug'       => $this->isDebug(),
+      'sf_cli'         => PHP_SAPI === 'cli',
     ));
 
     $this->setAppDir(sfConfig::get('sf_apps_dir').DIRECTORY_SEPARATOR.$this->getApplication());
@@ -618,8 +619,8 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Loads helpers.
    *
-   * @param array  $helpers     An array of helpers to load
-   * @param string $moduleName  A module name (optional)
+   * @param array|string $helpers    An array of helpers to load
+   * @param string       $moduleName A module name (optional)
    */
   public function loadHelpers($helpers, $moduleName = '')
   {

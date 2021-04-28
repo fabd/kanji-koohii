@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage mailer
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfMailer.class.php 28841 2010-03-29 08:13:57Z fabien $
+ * @version    SVN: $Id$
  */
 class sfMailer extends Swift_Mailer
 {
@@ -59,7 +59,7 @@ class sfMailer extends Swift_Mailer
     $options = array_merge(array(
       'charset' => 'UTF-8',
       'logging' => false,
-      'delivery_strategy' => 'realtime',
+      'delivery_strategy' => self::REALTIME,
       'transport' => array(
         'class' => 'Swift_MailTransport',
         'param' => array(),
@@ -71,6 +71,11 @@ class sfMailer extends Swift_Mailer
     if (!$this->strategy)
     {
       throw new InvalidArgumentException(sprintf('Unknown mail delivery strategy "%s" (should be one of realtime, spool, single_address, or none)', $options['delivery_strategy']));
+    }
+
+    if (sfMailer::NONE == $this->strategy)
+    {
+      $options['transport']['class'] = 'Swift_NullTransport';
     }
 
     // transport
@@ -139,12 +144,6 @@ class sfMailer extends Swift_Mailer
       $this->logger = new sfMailerMessageLoggerPlugin($dispatcher);
 
       $transport->registerPlugin($this->logger);
-    }
-
-    if (sfMailer::NONE == $this->strategy)
-    {
-      // must be registered after logging
-      $transport->registerPlugin(new Swift_Plugins_BlackholePlugin());
     }
 
     // preferences
@@ -240,7 +239,9 @@ class sfMailer extends Swift_Mailer
    */
   public function compose($from = null, $to = null, $subject = null, $body = null)
   {
-    return Swift_Message::newInstance()
+    $msg = new Swift_Message();
+
+    return $msg
       ->setFrom($from)
       ->setTo($to)
       ->setSubject($subject)
@@ -278,12 +279,12 @@ class sfMailer extends Swift_Mailer
   /**
    * Sends the given message.
    *
-   * @param Swift_Transport $transport         A transport instance
-   * @param string[]        &$failedRecipients An array of failures by-reference
+   * @param Swift_Mime_Message|Swift_Mime_SimpleMessage $message           The message to send.
+   * @param string[]                                    &$failedRecipients An array of failures by-reference
    *
    * @return int|false The number of sent emails
    */
-  public function send(Swift_Mime_Message $message, &$failedRecipients = null)
+  public function send($message, &$failedRecipients = null)
   {
     if ($this->force)
     {
@@ -322,10 +323,5 @@ class sfMailer extends Swift_Mailer
     }
 
     return $this->spool;
-  }
-
-  static public function initialize()
-  {
-    require_once sfConfig::get('sf_symfony_lib_dir').'/vendor/swiftmailer/swift_init.php';
   }
 }

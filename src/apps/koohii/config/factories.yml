@@ -15,16 +15,6 @@ test:
       level:   err
       loggers: ~
 
-  #storage:
-  #  class: sfSessionTestStorage
-  #  param:
-  #    session_path: %SF_TEST_CACHE_DIR%/sessions
-
-  #response:
-  #  class: sfWebResponse
-  #  param:
-  #    send_http_headers: false
-
   mailer:
     param:
       delivery_strategy: none
@@ -37,6 +27,11 @@ dev:
 all:
   request:
     class: coreRequest
+
+  # disable SwiftMailer initialization
+  #  ( cf. https://github.com/FriendsOfSymfony1/symfony1/issues/244#issuecomment-825880023 )
+  mailer:
+    class: sfNoMailer
 
   response:
     class: coreWebResponse

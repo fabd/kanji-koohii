@@ -20,7 +20,7 @@
  * @subpackage user
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfUser.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfUser implements ArrayAccess
 {
@@ -31,17 +31,23 @@ class sfUser implements ArrayAccess
 
   const CULTURE_NAMESPACE = 'symfony/user/sfUser/culture';
 
-  protected
-    $options         = array(),
-    $attributeHolder = null,
-    $culture         = null,
-    $storage         = null,
-    $dispatcher      = null;
+  protected $options = array();
+  /** @var sfNamespacedParameterHolder */
+  protected $attributeHolder = null;
+  protected $culture = null;
+  /** @var sfStorage */
+  protected $storage = null;
+  /** @var sfEventDispatcher */
+  protected $dispatcher = null;
 
   /**
    * Class constructor.
    *
    * @see initialize()
+   *
+   * @param sfEventDispatcher $dispatcher
+   * @param sfStorage         $storage
+   * @param array             $options
    */
   public function __construct(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
   {
@@ -68,7 +74,7 @@ class sfUser implements ArrayAccess
    * @param sfStorage         $storage     An sfStorage instance.
    * @param array             $options     An associative array of options.
    *
-   * @return Boolean          true, if initialization completes successfully, otherwise false.
+   * @return void
    */
   public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
   {

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormSchemaFormatter.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfWidgetFormSchemaFormatter
 {
@@ -245,7 +245,7 @@ abstract class sfWidgetFormSchemaFormatter
           $err = $this->translate($error);
         }
 
-        if (!is_integer($name))
+        if (!is_int($name))
         {
           $newErrors[] = strtr($this->getNamedErrorRowFormatInARow(), array('%error%' => $err, '%name%' => ($prefix ? $prefix.' > ' : '').$name));
         }

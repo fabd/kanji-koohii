@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormChoice.class.php 32835 2011-07-27 07:07:00Z fabien $
+ * @version    SVN: $Id$
  */
 class sfWidgetFormChoice extends sfWidgetFormChoiceBase
 {

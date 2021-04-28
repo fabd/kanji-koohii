@@ -104,7 +104,7 @@ class StoriesSharedPeer extends coreDatabaseTable
 
   public static function deleteStoryRef($storyId)
   {
-    assert('is_int($storyId)');
+    assert(is_int($storyId));
     return self::getInstance()->delete('sid = ?', $storyId);
   }
 }

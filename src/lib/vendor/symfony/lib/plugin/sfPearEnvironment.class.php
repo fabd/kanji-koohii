@@ -26,7 +26,7 @@ require_once 'PEAR/Installer.php';
  * @package    symfony
  * @subpackage plugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPearEnvironment.class.php 17450 2009-04-20 17:37:49Z fabien $
+ * @version    SVN: $Id$
  */
 class sfPearEnvironment
 {
@@ -79,9 +79,9 @@ class sfPearEnvironment
       throw new sfConfigurationException('You must provide a "cache_dir" option.');
     }
 
-    if (!is_dir($options['cache_dir']))
+    if (!is_dir($options['cache_dir']) && !@mkdir($options['cache_dir'], 0777, true) && !is_dir($options['cache_dir']))
     {
-      mkdir($options['cache_dir'], 0777, true);
+      throw new \RuntimeException(sprintf('Pear was not able to create a directory "%s"', $options['cache_dir']));
     }
 
     if (!isset($options['rest_base_class']))

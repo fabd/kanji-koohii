@@ -13,7 +13,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfInflector.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfInflector
 {
@@ -27,11 +27,8 @@ class sfInflector
    */
   public static function camelize($lower_case_and_underscored_word)
   {
-    $tmp = $lower_case_and_underscored_word;
-    $tmp = sfToolkit::pregtr($tmp, array('#/(.?)#e'    => "'::'.strtoupper('\\1')",
-                                         '/(^|_|-)+(.)/e' => "strtoupper('\\2')"));
 
-    return $tmp;
+    return strtr(ucwords(strtr($lower_case_and_underscored_word, array('/' => ':: ', '_' => ' ', '-' => ' '))), array(' ' => ''));
   }
 
   /**
@@ -70,7 +67,7 @@ class sfInflector
    * @param string $class_name                Class name.
    * @param bool   $separate_with_underscore  Separate with underscore.
    *
-   * @return strong Foreign key
+   * @return string Foreign key
    */
   public static function foreign_key($class_name, $separate_with_underscore = true)
   {

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: PartialHelper.php 33122 2011-10-07 12:42:49Z fabien $
+ * @version    SVN: $Id$
  */
 
 /**
@@ -257,7 +257,7 @@ function slot($name, $value = null)
   sfConfig::set('symfony.view.slot_names', $slot_names);
 
   ob_start();
-  ob_implicit_flush(0);
+  ob_implicit_flush(false);
 }
 
 /**

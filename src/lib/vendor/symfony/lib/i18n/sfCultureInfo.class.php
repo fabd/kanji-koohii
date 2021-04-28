@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfCultureInfo.class.php 33361 2012-03-08 13:48:42Z fabien $
+ * @version    $Id$
  * @package    symfony
  * @subpackage i18n
  */
@@ -225,7 +225,7 @@ class sfCultureInfo
    */
   protected static function dataDir()
   {
-    return dirname(__FILE__).'/data/';
+    return __DIR__.'/data/';
   }
 
   /**

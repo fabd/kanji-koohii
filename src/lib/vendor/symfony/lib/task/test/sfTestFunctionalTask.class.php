@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestFunctionalTask.class.php 29415 2010-05-12 06:24:54Z fabien $
+ * @version    SVN: $Id$
  */
 class sfTestFunctionalTask extends sfTestBaseTask
 {
@@ -96,7 +96,7 @@ EOF;
     }
     else
     {
-      require_once dirname(__FILE__).'/sfLimeHarness.class.php';
+      require_once __DIR__.'/sfLimeHarness.class.php';
 
       $h = new sfLimeHarness(array(
         'force_colors' => isset($options['color']) && $options['color'],

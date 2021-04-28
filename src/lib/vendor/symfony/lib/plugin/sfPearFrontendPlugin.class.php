@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -17,7 +17,7 @@ require_once 'PEAR/Frontend/CLI.php';
  * @package    symfony
  * @subpackage plugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPearFrontendPlugin.class.php 9131 2008-05-21 04:12:00Z Carl.Vondrick $
+ * @version    SVN: $Id$
  */
 class sfPearFrontendPlugin extends PEAR_Frontend_CLI
 {
@@ -46,7 +46,7 @@ class sfPearFrontendPlugin extends PEAR_Frontend_CLI
 
   protected function splitLongLine($text)
   {
-    $lines = '';
+    $lines = array();
     foreach (explode("\n", $text) as $longline)
     {
       foreach (explode("\n", wordwrap($longline, 62)) as $line)

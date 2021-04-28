@@ -4,7 +4,7 @@
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
  * (c) 2004-2006 Sean Kerr <sean@code-box.org>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -16,14 +16,15 @@
  * @subpackage storage
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfDatabaseSessionStorage.class.php 22037 2009-09-15 11:00:20Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfDatabaseSessionStorage extends sfSessionStorage
 {
-  protected
-    $db = null,
-    $con = null;
-
+  /** @var sfDatabase */
+  protected $db = null;
+  /** @var PDO */
+  protected $con = null;
+  
   /**
    * Available options:
    *
@@ -33,7 +34,10 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
    *   * db_data_col: The database column in which the session data will be stored (sess_data by default)
    *   * db_time_col: The database column in which the session timestamp will be stored (sess_time by default)
    *
-   * @param  array $options  An associative array of options
+   * @param  array $options An associative array of options
+   * @return bool|void
+   *
+   * @throws sfInitializationException
    *
    * @see sfSessionStorage
    */
@@ -97,11 +101,12 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
   public function sessionOpen($path = null, $name = null)
   {
     // what database are we using?
+    /** @var sfDatabase $database */
     $database = $this->options['database'];
 
     // get the database and connection
     $databaseClass = get_class($database);
-    if($databaseClass == 'sfPropelDatabase')
+    if ($databaseClass == 'sfPropelDatabase')
     {
       $this->db = Propel::getConnection($database->getParameter('name'));
     }
@@ -113,7 +118,7 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
     {
       $this->db = $database->getResource();
     }
-    
+
     $this->con = $database->getConnection();
 
     if (null === $this->db && null === $this->con)
@@ -174,7 +179,7 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
    *
    * @param  boolean $destroy Destroy session when regenerating?
    *
-   * @return boolean True if session regenerated, false if error
+   * @return boolean|void True if session regenerated, false if error
    *
    */
   public function regenerate($destroy = false)
@@ -192,14 +197,5 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
     $this->sessionRead($newId);
 
     return $this->sessionWrite($newId, $this->sessionRead($currentId));
-  }
-
-  /**
-   * Executes the shutdown procedure.
-   *
-   */
-  public function shutdown()
-  {
-    parent::shutdown();
   }
 }

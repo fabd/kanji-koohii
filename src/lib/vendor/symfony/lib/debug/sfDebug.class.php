@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDebug.class.php 33309 2012-01-20 13:06:21Z fabien $
+ * @version    SVN: $Id$
  */
 class sfDebug
 {
@@ -44,7 +44,7 @@ class sfDebug
       'extensions' => get_loaded_extensions(),
     );
 
-    natcasesort($values['extensions']); 
+    natcasesort($values['extensions']);
 
     // assign extension version
     if ($values['extensions'])
@@ -124,7 +124,7 @@ class sfDebug
   /**
    * Returns response parameters as an array.
    *
-   * @param sfResponse $response A sfResponse instance
+   * @param sfWebResponse $response A sfResponse instance
    *
    * @return array The response parameters
    */
@@ -251,9 +251,9 @@ class sfDebug
 
   /**
    * Shortens a file path by replacing symfony directory constants.
-   * 
+   *
    * @param  string $file
-   * 
+   *
    * @return string
    */
   static public function shortenFilePath($file)

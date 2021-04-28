@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,10 +14,11 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfLoggerWrapper.class.php 9081 2008-05-20 00:47:12Z Carl.Vondrick $
+ * @version    SVN: $Id$
  */
 class sfLoggerWrapper extends sfLogger
 {
+  /** @var sfLoggerInterface */
   protected
     $logger = null;
 
@@ -35,7 +36,7 @@ class sfLoggerWrapper extends sfLogger
    * Logs a message.
    *
    * @param string $message   Message
-   * @param string $priority  Message priority
+   * @param int    $priority  Message priority
    */
   protected function doLog($message, $priority)
   {

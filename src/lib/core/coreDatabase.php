@@ -601,7 +601,7 @@ class coreDatabaseSelect
    */
   public function limitPage($pageNum, $rowsPerPage)
   {
-    assert('is_int($pageNum) && is_int($rowsPerPage)');
+    assert(is_int($pageNum) && is_int($rowsPerPage));
     $this->parts[self::LIMIT_COUNT] = $rowsPerPage;
     $this->parts[self::LIMIT_OFFSET] = $rowsPerPage * $pageNum;
     return $this;

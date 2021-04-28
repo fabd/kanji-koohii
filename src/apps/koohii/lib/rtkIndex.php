@@ -40,34 +40,26 @@
 
 class rtkIndex
 {
-  /**
-   * @const  MAXKANJI_RTK    Total kanji count in $kanjis (RTK1, RTK3, RTK1 Supplement)
-   */
+  /** @var int Total kanji count in $kanjis (RTK1, RTK3, RTK1 Supplement) */
   protected $MAXKANJI_RTK = null;
 
-  /**
-   * @const  MAXKANJI_VOL1    Kanji count for RTK/RSH/RTH Volume 1
-   */
+  /** @var int Kanji count for RTK/RSH/RTH Volume 1 */
   protected $MAXKANJI_VOL1 = null;
 
-  /**
-   * @const  MAXKANJI_VOL3    Kanji count for complete RTK (Volume 1+3) RSH/RTH (Volume 1+2)
-   */
+  /** @var int Kanji count for complete RTK (Volume 1+3) RSH/RTH (Volume 1+2) */
   protected $MAXKANJI_VOL3 = null;
 
-  /**
-   * @const  NUMLESSONS_VOL1  Max. lesson number in Volume 1.
-   */
+  /** @var int Max. lesson number in Volume 1. */
   protected $NUMLESSONS_VOL1 = null;
 
-  /**
-   * Hash of lesson numbers => character count for all volumes of RTK/RSH/RTH.
-   */
+  /** @var array  Hash of lesson numbers => character count for all volumes of RTK/RSH/RTH. */
   protected $lessons;
 
   /**
    * All characters in RTK/RSH/RTH Volume 1-3 ordered by frame number,
    * so that the character offset in the string + 1 maps to Heisig indexes.
+   * 
+   * @var string
    */
   protected $kanjis;
 
@@ -116,6 +108,7 @@ class rtkIndex
   ];
 
   // Instantiation is used to load the correct class for the user's active sequence.
+  /** @var self */
   protected static $instance = null;
 
   public static function createInstance()
@@ -216,7 +209,7 @@ class rtkIndex
   {
     $seqId = sfContext::getInstance()->getUser()->getUserSequence();
     $sequences = self::getSequences();
-    assert('$seqId >= 0 && $seqId < count($sequences)');
+    assert($seqId >= 0 && $seqId < count($sequences));
     return $sequences[$seqId]['sqlCol'];
   }
 

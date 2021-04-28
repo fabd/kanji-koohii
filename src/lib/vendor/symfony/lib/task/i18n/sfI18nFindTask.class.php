@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfI18nFindTask.class.php 8453 2008-04-14 16:39:14Z fabien $
+ * @version    SVN: $Id$
  */
 class sfI18nFindTask extends sfBaseTask
 {

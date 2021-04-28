@@ -24,7 +24,7 @@ class CacheDictLookupPeer extends coreDatabaseTable
     // fixme? could test 'num_entries' instead of storing '[]'
     if (false !== ($text = self::$db->fetchOne($select))) {
       $json  = json_decode($text, true);
-      assert('!is_null($json)');
+      assert(!is_null($json));
     }
 
     return $json;

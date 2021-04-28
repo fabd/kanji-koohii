@@ -15,6 +15,7 @@
 
 class LocalPrefs
 {
+  /** @var rtkUser */
   protected
     $user    = null;
   
@@ -22,17 +23,17 @@ class LocalPrefs
    * 
    * @return 
    */
-  public function __construct($user)
+  public function __construct(rtkUser $user)
   {
     $this->user = $user;
   }
   
-  public function set($name, $value)
+  public function set(string $name, $value)
   {
     $this->user->setAttribute($name, $value);
   }
 
-  public function get($name, $default = null)
+  public function get(string $name, $default = null)
   {
     return $this->user->getAttribute($name, $default);
   }
@@ -46,12 +47,12 @@ class LocalPrefs
    * Otherwise return null.
    * 
    * @param  string  $name     Name for user attribute (session).
-   * @param  mixed   $value    Value for local pref, or null (typically from request->getParameter)
+   * @param  mixed|null   $value    Value for local pref, or null (typically from request->getParameter)
    * @param  mixed   $default  Default value if local pref and value are not set
    * 
    * @return mixed   Current value
    */
-  public function sync($name, $value, $default = null)
+  public function sync(string $name, $value, $default = null)
   {
     $current = $this->get($name);
 
@@ -111,7 +112,7 @@ class LocalPrefs
    * 
    * @return array   A hash of parameters (without prefix) and their updated values
    */
-  public function syncRequestParams($prefix, array $params)
+  public function syncRequestParams(string $prefix, array $params)
   {
     $request = sfContext::getInstance()->getRequest();
     $values = [];

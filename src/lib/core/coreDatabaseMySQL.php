@@ -385,7 +385,7 @@ class coreDatabaseMySQL extends coreDatabase
         if (is_array($rowdata)){
           $colvalue = isset($rowdata[$i]) ? $rowdata[$i] : $rowdata[$colNames[$i]];
         }else if (is_object($rowdata)){
-          $colvalue = $rowdata->$colNames[$i];
+          $colvalue = $rowdata->{$colNames[$i]};
         }
 
         $cellHtml = $colvalue!==null ? $tdBegin.$colvalue.$tdEnd : $emptyCellHtml;

@@ -131,31 +131,6 @@ class apiActions extends sfActions
     return $callable;
   }
 
-  /**
-   * Similar to renderText() but this one also sets the application/json
-   * content-type.
-   *
-   * If an object or array is passed, it will be encoded to JSON.
-   *
-   * Example:
-   * <code>return $this->renderJson($oJson)</code>
-   *
-   * @param  string   Json format string to append to the response
-   *
-   * @return coreView::NONE
-   */
-  protected function renderJson($json)
-  {
-    if (is_object($json) || is_array($json))
-    {
-      $json = coreJson::encode($json);
-    }
-
-    $this->getResponse()->setHttpHeader('Content-Type','application/json; charset=utf-8');
-
-    return $this->renderText($json);
-  }
-
   protected function createResponseOk($rsp)
   {
     $msg = ['stat' => 'ok'];

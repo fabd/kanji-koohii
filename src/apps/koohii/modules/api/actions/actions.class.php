@@ -189,15 +189,6 @@ class apiActions extends sfActions
   }
 
   /**
-  protected function responseJson($response)
-  {
-    $json = coreJson::encode($response);
-    $this->getResponse()->setContentType('application/json; charset=utf-8');
-    return $this->renderText($json);
-//  return $this->renderJson($response);
-  }*/
-
-  /**
    * API Methods
    */
 

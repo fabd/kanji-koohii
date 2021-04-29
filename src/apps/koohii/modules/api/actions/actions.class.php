@@ -332,20 +332,13 @@ echo $result;exit;
    */
   protected function API_reviewSync($request)
   {
-    $rsp = new stdClass;
-
     if ($request->getMethod() !== sfRequest::POST) {
       return $this->createResponseFail(1, 'Should be a POST request');
     }
 
-    $body = file_get_contents("php://input");
-    if ($body)
-    {
-      try {
-        $json = coreJson::decode($body);
-      } catch (Exception $e) {
-        $json = null;
-      }
+    $json = null;
+    if (false !== ($data = $request->getContent())) {
+      $json = json_decode($data);
     }
 
     if (!is_object($json) || !isset($json->time) || !isset($json->sync) || !is_array($json->sync)) {
@@ -436,15 +429,10 @@ echo $result;exit;
     if ($request->getMethod() !== sfRequest::POST) {
       return $this->createResponseFail(1, 'Should be a POST request');
     }
-      
-    $body = file_get_contents("php://input");
-    if ($body)
-    {
-      try {
-        $json = coreJson::decode($body);
-      } catch (Exception $e) {
-        $json = null;
-      }
+
+    $json = null;
+    if (false !== ($data = $request->getContent())) {
+      $json = json_decode($data);
     }
       
     if (!is_object($json) || !isset($json->learned) || !is_array($json->learned) || !isset($json->notLearned) || !is_array($json->notLearned)) {

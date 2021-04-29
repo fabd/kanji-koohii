@@ -131,31 +131,6 @@ class apiActions extends sfActions
     return $callable;
   }
 
-  /**
-   * Similar to renderText() but this one also sets the application/json
-   * content-type.
-   *
-   * If an object or array is passed, it will be encoded to JSON.
-   *
-   * Example:
-   * <code>return $this->renderJson($oJson)</code>
-   *
-   * @param  string   Json format string to append to the response
-   *
-   * @return coreView::NONE
-   */
-  protected function renderJson($json)
-  {
-    if (is_object($json) || is_array($json))
-    {
-      $json = coreJson::encode($json);
-    }
-
-    $this->getResponse()->setHttpHeader('Content-Type','application/json; charset=utf-8');
-
-    return $this->renderText($json);
-  }
-
   protected function createResponseOk($rsp)
   {
     $msg = ['stat' => 'ok'];
@@ -187,15 +162,6 @@ class apiActions extends sfActions
 
     return $msg;
   }
-
-  /**
-  protected function responseJson($response)
-  {
-    $json = coreJson::encode($response);
-    $this->getResponse()->setContentType('application/json; charset=utf-8');
-    return $this->renderText($json);
-//  return $this->renderJson($response);
-  }*/
 
   /**
    * API Methods
@@ -366,20 +332,13 @@ echo $result;exit;
    */
   protected function API_reviewSync($request)
   {
-    $rsp = new stdClass;
-
     if ($request->getMethod() !== sfRequest::POST) {
       return $this->createResponseFail(1, 'Should be a POST request');
     }
 
-    $body = file_get_contents("php://input");
-    if ($body)
-    {
-      try {
-        $json = coreJson::decode($body);
-      } catch (Exception $e) {
-        $json = null;
-      }
+    $json = null;
+    if (false !== ($data = $request->getContent())) {
+      $json = json_decode($data);
     }
 
     if (!is_object($json) || !isset($json->time) || !isset($json->sync) || !is_array($json->sync)) {
@@ -470,15 +429,10 @@ echo $result;exit;
     if ($request->getMethod() !== sfRequest::POST) {
       return $this->createResponseFail(1, 'Should be a POST request');
     }
-      
-    $body = file_get_contents("php://input");
-    if ($body)
-    {
-      try {
-        $json = coreJson::decode($body);
-      } catch (Exception $e) {
-        $json = null;
-      }
+
+    $json = null;
+    if (false !== ($data = $request->getContent())) {
+      $json = json_decode($data);
     }
       
     if (!is_object($json) || !isset($json->learned) || !is_array($json->learned) || !isset($json->notLearned) || !is_array($json->notLearned)) {

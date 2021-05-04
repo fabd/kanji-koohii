@@ -8,12 +8,6 @@ class coreWebResponse extends sfWebResponse
 {
   protected
     $resourceVersion = null;
-  
-  public function clearStuffsRefactorMe()
-  {
-    $this->javascripts = array_combine($this->positions, array_fill(0, count($this->positions), []));
-    $this->stylesheets = array_combine($this->positions, array_fill(0, count($this->positions), []));
-  }
 
   /**
    * Adds a stylesheet to the current web response.

@@ -66,8 +66,8 @@ import Vue from "vue";
 import { DictId, DictListEntry, GetDictListForUCS } from "@core/api/models";
 
 // comps
-import CjkLangJa from "@components/CjkLangJa.vue";
-import KoohiiLoading from "@components/KoohiiLoading/index.js";
+import CjkLangJa from "@vue/components/CjkLangJa.vue";
+import KoohiiLoading from "@vue/components/KoohiiLoading/index.js";
 
 // utils
 import { kkFormatReading } from "@lib/koohii/format";

@@ -24,7 +24,7 @@
 import Vue from "vue";
 import Component from "./KoohiiLoading.vue";
 import { getStyle } from "@lib/koohii/dom";
-import Lang from "@core/lang";
+import Lang from "@lib/core/lang";
 
 /*
 interface KoohiiLoadingInstance extends Vue {

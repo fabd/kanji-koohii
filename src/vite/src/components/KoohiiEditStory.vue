@@ -147,10 +147,10 @@ import {
 import VueInstance from "@lib/helpers/vue-instance";
 
 // comps
-import KoohiiCharsLeft from "@components/KoohiiCharsLeft.vue";
-import CjkLangJa from "@components/CjkLangJa.vue";
-import KoohiiSharedStory from "@components/KoohiiSharedStory.vue";
-import KoohiiLoading from "@components/KoohiiLoading/index.js";
+import KoohiiCharsLeft from "@vue/components/KoohiiCharsLeft.vue";
+import CjkLangJa from "@vue/components/CjkLangJa.vue";
+import KoohiiSharedStory from "@vue/components/KoohiiSharedStory.vue";
+import KoohiiLoading from "@vue/components/KoohiiLoading/index.js";
 
 export default Vue.extend({
   name: "KoohiiEditStory",

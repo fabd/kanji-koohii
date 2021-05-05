@@ -1,20 +1,17 @@
 <template>
   <ul class="k-nav-menu">
-    <template v-for="$tm in menu.items">
-      <koohii-nav-menu-item :key="$tm.id" :sm="$tm" />
+    <template v-for="$tm in menu.items" :key="$tm.id" >
+      <koohii-nav-menu-item :sm="$tm" />
     </template>
   </ul>
 </template>
 
-<style>
-/* the styles are kept in KoohiiNavMenuItem */
-</style>
-
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import $$ from "@lib/koohii/dom";
 import KoohiiNavMenuItem from "./KoohiiNavMenuItem.vue";
 
-export default {
+export default defineComponent({
   name: "KoohiiNavMenu",
 
   components: {
@@ -94,5 +91,5 @@ export default {
       this.initted = true;
     },
   },
-};
+});
 </script>

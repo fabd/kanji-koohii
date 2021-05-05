@@ -26,10 +26,11 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import $$ from "@lib/koohii/dom";
 
-export default {
+export default defineComponent({
   name: "KoohiiNavMenuItem",
 
   props: {
@@ -145,7 +146,7 @@ export default {
       // (event passing through)
     },
   },
-};
+});
 </script>
 
 <style>
@@ -229,5 +230,5 @@ export default {
   .k-nav-menu {
     font-size: 22px;
   }
-}
+};
 </style>

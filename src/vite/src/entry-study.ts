@@ -20,13 +20,13 @@ import * as RootBundle from "@lib/helpers/root-bundle";
 RootBundle.init();
 
 // make the axios based API (vue build) available to legacy js
-import { getApi } from "@core/api";
+import { getApi } from "@lib/core/api";
 window.Koohii.API = window.Vue.prototype.$api = getApi();
 
 // components instanced by external code
-import LeitnerChart from "@components/LeitnerChart.vue";
-import KoohiiDictList from "@components/KoohiiDictList.vue";
-import KoohiiEditStory from "@components/KoohiiEditStory.vue";
+import LeitnerChart from "@/components/LeitnerChart.vue";
+import KoohiiDictList from "@/components/KoohiiDictList.vue";
+import KoohiiEditStory from "@/components/KoohiiEditStory.vue";
 
 window.Koohii.UX = {
   ...window.Koohii.UX,

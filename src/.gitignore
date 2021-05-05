@@ -22,7 +22,7 @@ error_log*
 
 # generated / misc files
 /cache
-/config/versioning*
+/config/vite-build.*
 
 # generated / output from Juicer (frontend build tool) 
 *.juiced.js

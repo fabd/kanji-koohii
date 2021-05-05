@@ -56,6 +56,9 @@ alias sass='./node_modules/.bin/node-sass'
 # KOOHII DEV
 ###############
 
+# build / production
+alias kkbuild='php batch/build_app.php -w web --vite web/build/dist/manifest.json -o config/vite-build.inc.php'
+
 # build / alias for favicon generator (see src/web/favicons/README.md)
 alias real-favicon=./node_modules/.bin/real-favicon
 

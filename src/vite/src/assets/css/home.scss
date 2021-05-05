@@ -1,10 +1,6 @@
-/**
- * Landing page (Nov 2016).
- *
- */
+// Landing page ONLY (Nov 2016)
 
-// *don't* use extension to inlude vendor css in the output
-@import "../vendor/bootstrap-build/css/bootstrap";
+@import "./bootstrap.css";
 
 
 /* BOOTSTRAP OVERRIDES ( todo: sass truc machin? ) */

@@ -183,6 +183,11 @@ const YAHOO = window.YAHOO;
 import App from "@old/app.js";
 import Core from "@old/core.js";
 
+function insertTop(node) {
+  var elParent = document.body;
+  elParent.insertBefore(node, elParent.firstChild);
+}
+
 /**
  * Constructor.
  *
@@ -293,13 +298,13 @@ AjaxDialog.prototype = {
       // we have to clone the markup of YUI uses it as is
       elYuiPanel = $$(srcMarkup)[0].cloneNode(true);
       elYuiPanel.setAttribute("id", null);
-      Core.Ui.Helper.insertTop(elYuiPanel);
+      insertTop(elYuiPanel);
 
       this.container = elYuiPanel;
     } else {
       // dynamically create empty dialog to load content
       elYuiPanel = document.createElement("div");
-      Core.Ui.Helper.insertTop(elYuiPanel);
+      insertTop(elYuiPanel);
       this.container = elYuiPanel;
     }
 

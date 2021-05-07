@@ -10,8 +10,6 @@
  *
  */
 
-const YAHOO = window.YAHOO;
-
 var Core = {
   /**
    * A constructor function to create a new class.
@@ -35,45 +33,12 @@ var Core = {
     return fn;
   },
 
-  /**
-   * Create a child class from a base class and optional properties/methods
-   *
-   * Example:
-   *
-   *   var Human = Core.make();
-   *   Human.prototype = {
-   *     init: function() {
-   *       // ...
-   *     }
-   *   };
-   *
-   *   var SuperHuman = Core.make();
-   *   Core.extend(SuperHuman, Human, {
-   *     init: function() {
-   *       // call parent constructor
-   *       SuperHuman.superclass.init.apply(this, arguments);
-   *     }
-   *   });
-   *
-   * See YAHOO.lang.extend example http://developer.yahoo.com/yui/examples/yahoo/yahoo_extend.html
-   *
-   * @param {Function} subc     Sub class constructor
-   * @param {Function} superc   Base class constructor
-   * @param {Object} overrides  Additional properties/methods to add to the child prototype
-   */
-  extend: function (subc, superc, overrides) {
-    YAHOO.lang.extend(subc, superc, overrides);
-  },
-
   ready: function (f) {
     window.addEventListener("DOMContentLoaded", f);
   },
 };
 
 /* (refactoring) was "/core/toolkit.js" */
-
-var Y = YAHOO,
-  Lang = Y.lang;
 
 Core.Toolkit = {
   /**
@@ -84,6 +49,8 @@ Core.Toolkit = {
    * @param {Object} obj   Parameters as properties and values
    */
   toQueryString: function (obj, name) {
+    var Lang = YAHOO.lang;
+
     var i,
       l,
       s = [];
@@ -122,13 +89,7 @@ Core.Toolkit = {
   },
 };
 
-/**
- * Core.Ui Helpers
- *
- * These are global helpers related to the DOM and user interface.
- */
 Core.Ui = {};
 Core.Widgets = {};
-
 
 export default Core;

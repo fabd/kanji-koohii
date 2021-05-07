@@ -15,14 +15,12 @@
  * App.ready(fn)
  * 
  */
-console.log('hey');
 
-import YAHOO from "@yui/index.js";
-import Core from "@old/core.js";
+// legacy YUI2 is loaded separately by <script>
+if (!window.YAHOO) {
+  console.warn('YAHOO is not loaded');
+}
 
-
-// make available to other YAHOO modules
-window.YAHOO = YAHOO;
 
 // namespace
 var App = window.App = {};

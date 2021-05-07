@@ -119,7 +119,7 @@ function setCaret(obj, l)
     obj.setSelectionRange(l, l);
   } else if (obj.createTextRange) 
   {
-    m = obj.createTextRange();
+    var m = obj.createTextRange();
     m.moveStart('character', l);
     m.collapse();
     m.select();
@@ -134,7 +134,7 @@ function setSelection(obj, s, e)
     obj.setSelectionRange(s, e);
   } else if (obj.createTextRange) 
   {
-    m = obj.createTextRange();
+    var m = obj.createTextRange();
     m.moveStart('character', s);
     m.moveEnd('character', e);
     m.select();
@@ -151,7 +151,7 @@ String.prototype.trim = function()
 };
 function curTop(obj)
 {
-  toreturn = 0;
+  var toreturn = 0;
   while (obj) 
   {
     toreturn += obj.offsetTop;
@@ -162,7 +162,7 @@ function curTop(obj)
 
 function curLeft(obj)
 {
-  toreturn = 0;
+  var toreturn = 0;
   while (obj) 
   {
     toreturn += obj.offsetLeft;
@@ -178,14 +178,15 @@ function isNumber(a)
 
 function replaceHTML(obj, text)
 {
-  while ((el = obj.childNodes[0])) 
+  let el;
+  while (el = obj.childNodes[0])
   {
     obj.removeChild(el);
   }
   obj.appendChild(document.createTextNode(text));
 }
 
-function actb(obj, ca)
+const actb = function(obj, ca)
 {
   /* ---- Public Variables ---- */
   this.actb_timeOut = -1; // Autocomplete Timeout in ms (-1: autocomplete never time out)
@@ -269,7 +270,6 @@ function actb(obj, ca)
       var t = actb_elem.value.addslashes();
       var plen = actb_elem.value.length;
     }
-    var tobuild = '';
     var i;
     
     if (actb_self.actb_firstText) 
@@ -285,7 +285,7 @@ function actb(obj, ca)
     if (actb_self.actb_firstText && p >= 0 && n.substr(p, 1).search(actb_self.actb_midTextSeparator) >= 0) 
       p++;
     
-    tobuild = n.substr(i, p) + "<span class='h'>" + n.substr(p, plen) + "</span>" + n.substr(plen + p);
+    var tobuild = n.substr(i, p) + "<span class='h'>" + n.substr(p, plen) + "</span>" + n.substr(plen + p);
     
     return tobuild;
   }
@@ -330,12 +330,12 @@ function actb(obj, ca)
       actb_display = false;
       return;
     }
-    a = document.createElement('table');
+    var a = document.createElement('table');
     a.cellSpacing = '0';
     a.style.position = 'absolute';
     a.id = 'actb-' + actb_elem.id; // build id from textbox id, for styling
-    posTop = eval(curTop(actb_elem) + actb_elem.offsetHeight) + 2;
-    posLeft = curLeft(actb_elem);
+    var posTop = eval(curTop(actb_elem) + actb_elem.offsetHeight) + 2;
+    var posLeft = curLeft(actb_elem);
 
     var width = Math.max(actb_elem.offsetWidth, 172);
     
@@ -373,7 +373,7 @@ function actb(obj, ca)
       if (actb_bool[i]) 
       {
         counter++;
-        r = a.insertRow(-1);
+        let r = a.insertRow(-1);
         if (first && !actb_tomake) 
         {
           r.className = 'highlight';
@@ -389,7 +389,7 @@ function actb(obj, ca)
           r.className = 'inactive';
         }
         r.id = 'tat_tr' + (j);
-        c = r.insertCell(-1);
+        let c = r.insertCell(-1);
         c.innerHTML = actb_self.actb_extracolumns(i) + actb_parse(actb_self.actb_keywords[i]);
         c.id = 'tat_td' + (j);
         c.setAttribute('pos', j);
@@ -403,9 +403,9 @@ function actb(obj, ca)
       
       if (j - 1 == actb_self.actb_lim && j < actb_total) 
       {
-        r = a.insertRow(-1);
+        let r = a.insertRow(-1);
         r.className = 'inactive';
-        c = r.insertCell(-1);
+        let c = r.insertCell(-1);
         c.className = 'more';
         replaceHTML(c, '...');
         if (actb_self.actb_mouse) 
@@ -427,7 +427,7 @@ function actb(obj, ca)
     cdiv = document.getElementById(AUTOSUGGEST_CONTAINER_ID);//++
     cdiv.removeChild(document.getElementById(AUTOSUGGEST_TABLE_ID));
     
-    a = document.createElement('table');
+    var a = document.createElement('table');
     a.cellSpacing = '0';
     a.style.position = 'absolute';
     //    a.style.width = '100%'; //actb_elem.offsetWidth + 'px';
@@ -460,9 +460,9 @@ function actb(obj, ca)
     var j = 1;
     if (actb_rangeu > 1) 
     {
-      r = a.insertRow(-1);
+      let r = a.insertRow(-1);
       r.className = 'inactive';
-      c = r.insertCell(-1);
+      let c = r.insertCell(-1);
       c.className = 'more';
       replaceHTML(c, '...');
       if (actb_self.actb_mouse) 
@@ -476,10 +476,10 @@ function actb(obj, ca)
       {
         if (j >= actb_rangeu && j <= actb_ranged) 
         {
-          r = a.insertRow(-1);
+          let r = a.insertRow(-1);
           r.className = 'inactive';
           r.id = 'tat_tr' + (j);
-          c = r.insertCell(-1);
+          let c = r.insertCell(-1);
           c.innerHTML = actb_self.actb_extracolumns(i) + actb_parse(actb_self.actb_keywords[i]);
           c.id = 'tat_td' + (j);
           c.setAttribute('pos', j);
@@ -499,9 +499,9 @@ function actb(obj, ca)
     }
     if (j - 1 < actb_total) 
     {
-      r = a.insertRow(-1);
+      let r = a.insertRow(-1);
       r.className = 'inactive';
-      c = r.insertCell(-1);
+      let c = r.insertCell(-1);
       c.className = 'more';
       replaceHTML(c, '...');
       if (actb_self.actb_mouse) 
@@ -661,8 +661,8 @@ function actb(obj, ca)
   {
     if (actb_self.actb_delimiter.length > 0) 
     {
-      str = '';
-      l = 0;
+      var str = '';
+      var l = 0;
       for (i = 0; i < actb_delimwords.length; i++) 
       {
         if (actb_cdelimword == i) 
@@ -727,7 +727,7 @@ function actb(obj, ca)
       }
     }
     actb_insertword(word);
-    l = getCaretStart(actb_elem);
+    // l = getCaretStart(actb_elem);
     
     if (actb_self.onChangeCallback) 
     {
@@ -757,9 +757,9 @@ function actb(obj, ca)
   {
     if (!evt) 
       evt = event;
-    a = evt.keyCode;
+    var a = evt.keyCode;
     
-    caret_pos_start = getCaretStart(actb_elem);
+    // caret_pos_start = getCaretStart(actb_elem);
     actb_caretmove = 0;
     switch (a) {
       case 38://uparrow
@@ -873,17 +873,17 @@ function actb(obj, ca)
     
     if (actb_self.actb_delimiter.length > 0) 
     {
-      caret_pos_start = getCaretStart(actb_elem);
-      caret_pos_end = getCaretEnd(actb_elem);
+      // caret_pos_start = getCaretStart(actb_elem);
+      var caret_pos_end = getCaretEnd(actb_elem);
       
-      delim_split = '';
+      let delim_split = '';
       for (i = 0; i < actb_self.actb_delimiter.length; i++) 
       {
         delim_split += actb_self.actb_delimiter[i];
       }
       delim_split = delim_split.addslashes();
       delim_split_rx = new RegExp("([" + delim_split + "])");
-      c = 0;
+      let c = 0;
       actb_delimwords = [];
       actb_delimwords[0] = '';
       for (i = 0, j = actb_elem.value.length; i < actb_elem.value.length; i++, j--) 
@@ -975,3 +975,5 @@ function actb(obj, ca)
   }
   return this;
 }
+
+export default actb;

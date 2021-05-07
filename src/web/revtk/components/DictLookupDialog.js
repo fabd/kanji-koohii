@@ -11,7 +11,7 @@
 
   App.Ui.DictLookupDialog = Core.make();
   
-  var isMobile = Core.Ui.Mobile.isMobile();
+  const isMobile = (window.innerWidth <= 720);
 
   var Y = YAHOO,
       Dom = Y.util.Dom;

@@ -30,6 +30,8 @@
 
   App.Ui.EditFlashcardDialog = Core.make();
 
+  const isMobile = (window.innerWidth <= 720);
+
   var Y = YAHOO,
       Dom = Y.util.Dom,
       Event = Y.util.Event,
@@ -45,8 +47,6 @@
     {
       console.log("EditFlashcardDialog(%s)", uri);
 
-      var mobile = Core.Ui.Mobile.isMobile();
-
       this.params  = params;
       this.uri     = uri;
       this.options = options;
@@ -54,9 +54,9 @@
       this.dlgOpts = {
         requestUri:  uri,
         requestData: params,
-        skin:        mobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
-        mobile:      mobile,
-        close:       true, //!mobile,
+        skin:        isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+        mobile:      isMobile,
+        close:       true, //!isMobile,
         width:       270,
         scope:       this,
         events:      {
@@ -66,7 +66,7 @@
         }
       };
 
-      if (!mobile)
+      if (!isMobile)
       {
         this.dlgOpts.context = context;
       }

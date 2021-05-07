@@ -223,21 +223,5 @@ Core.Ui.Helper = {
   },
 };
 
-/**
- * Core.Ui Helpers
- *
- * These are global helpers related to the DOM and user interface.
- */
-Core.Ui.Mobile = {
-  /**
-   * Checks whether viewport width is below threshold where we want to use optimized
-   * styles and behaviours (eg. edge to edge dialogs, larger buttons).
-   *
-   * @return {boolean}
-   */
-  isMobile: function () {
-    return window.innerWidth <= 720;
-  },
-};
 
 export default Core;

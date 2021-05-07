@@ -17,7 +17,7 @@
 
   App.Ui.EditStoryDialog = Core.make();
 
-  var isMobile = Core.Ui.Mobile.isMobile();
+  const isMobile = (window.innerWidth <= 720);
 
   var LOADING_WIDTH = 500;
 

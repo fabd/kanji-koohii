@@ -2,14 +2,12 @@
  * EditKeywordDialog
  *
  */
-/* globals YAHOO, Core, App */
+import $$ from "@lib/koohii/dom";
 
-(function(){
 
   App.Ui.EditKeywordComponent = Core.make();
 
   var Y = YAHOO,
-      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event,
       EditKeywordComponent = App.Ui.EditKeywordComponent;
@@ -129,6 +127,3 @@
       return $$(".txt-ckw", this.dialog.getBody())[0];
     }
   };
-
-}());
-

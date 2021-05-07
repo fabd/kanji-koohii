@@ -182,7 +182,7 @@
 const YAHOO = window.YAHOO;
 import App from "@old/app.js";
 import Core from "@old/core.js";
-
+import $$ from "@lib/koohii/dom";
 import EventDelegator from "@old/ui/eventdelegator.js";
 
 function insertTop(node) {
@@ -209,7 +209,6 @@ YAHOO.widget.Panel.FOCUSABLE = [];
 
 // internal shorthands
 var Y = YAHOO,
-  $$ = Koohii.Dom,
   Dom = Y.util.Dom,
   TRON = Koohii.TRON,
   Event = Y.util.Event,

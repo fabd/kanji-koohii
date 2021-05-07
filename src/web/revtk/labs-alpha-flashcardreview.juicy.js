@@ -1,18 +1,14 @@
 /**
  * Labs "alpha" (experimental features) -- Simple random test of vocabulary
  * 
- * @author  Fabrice Denis
  */
-/* globals App, Core, YAHOO */
 
+/* FIXME : old deps */
 /* =require from "%WEB%" */
 /* =require "/revtk/components/FlashcardReview.js" */
-
-
-(function(){
+import $$ from "@lib/koohii/dom";
 
   var Y = YAHOO,
-      $$ = Koohii.Dom,
       Dom = Y.util.Dom;
 
   App.LabsReview = 
@@ -181,5 +177,5 @@
     }
   };
 
-}());
+
 

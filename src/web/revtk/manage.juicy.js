@@ -1,22 +1,19 @@
 /**
  * Manage pages.
  * 
- * @author  Fabrice Denis
  */
-/* globals App, Core, YAHOO */
-
-/* REQUIRES  legacy-bundle ! */
 
 /* =require from "%WEB%" */
 /* =require "/revtk/components/EditKeywordDialog.js" */
-
 /* =require from "%CORE%" */
 /* =require "/widgets/selectiontable/selectiontable.js" */
+
+import $$ from "@lib/koohii/dom";
+import App from "@old/app.js";
 
 App.ready(function()
 {
   var Y = YAHOO,
-      $$ = Koohii.Dom,
       Dom = Y.util.Dom;
 
   App.ManageFlashcards =

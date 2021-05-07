@@ -9,18 +9,14 @@
  *                     use to refresh the selection state.
  *
  * @see       See related backend class uiSelectionState.php
- * 
- * @author    Fabrice Denis
  */
-/*global App, Core, YAHOO */
 
 /* =require from "%CORE%" */
 /* =require "/widgets/ajaxtable/ajaxtable.js" */
+import $$ from "@lib/koohii/dom";
 
-(function() {
 
   var Y = YAHOO,
-      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -139,4 +135,3 @@
     }
   };
 
-}());

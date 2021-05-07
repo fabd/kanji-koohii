@@ -49,6 +49,7 @@
 
 const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
+import $$ from "@lib/koohii/dom";
 
 /**
  * Constructor.
@@ -60,7 +61,6 @@ Core.Ui.AjaxQueue = Core.make();
 
 // internal shorthands
 var Y = YAHOO,
-  $$ = Koohii.Dom,
   Dom = Y.util.Dom,
   Event = Y.util.Event;
 

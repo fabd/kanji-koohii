@@ -26,18 +26,15 @@
  *
  *   errorDiv     Element id (string) of element to display (display:block) if TRON message
  *                returns an error.
- * 
  *
- * @author   Fabrice Denis
  */
-/*global App, Core, YAHOO */
+import $$ from "@lib/koohii/dom";
 
-(function() {
+
 
   Core.Widgets.AjaxTable = Core.make();
 
   var Y = YAHOO,
-      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event;
 
@@ -178,4 +175,4 @@
     }
   };
 
-}());
+

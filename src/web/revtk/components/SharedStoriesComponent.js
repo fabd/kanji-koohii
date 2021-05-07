@@ -5,13 +5,11 @@
  */
 
 import EventDelegator from "@old/ui/eventdelegator.js";
-
-
+import $$ from "@lib/koohii/dom";
 
   App.Ui.SharedStoriesComponent = Core.make();
 
   var Y = YAHOO,
-      $$ = Koohii.Dom,
       Dom = Y.util.Dom,
       Event = Y.util.Event,
       SharedStoriesComponent = App.Ui.SharedStoriesComponent;

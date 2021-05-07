@@ -35,7 +35,6 @@ import App from "@old/app.js";
 /* =require "/revtk/components/KoohiiNav.js" */
 
 var Y = YAHOO,
-  $$ = Koohii.Dom,
   Dom = Y.util.Dom,
   Event = Y.util.Event;
 

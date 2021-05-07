@@ -102,6 +102,7 @@
 const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
 import EventDelegator from "@old/ui/eventdelegator.js";
+import $$ from "@lib/koohii/dom";
 
 Core.Ui.AjaxPanel = Core.make();
 

@@ -12,11 +12,11 @@
 
 const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
+import $$ from "@lib/koohii/dom";
 
 Core.Ui.AjaxIndicator = Core.make();
 
 var Y = YAHOO,
-  $$ = Koohii.Dom,
   Dom = Y.util.Dom,
   AjaxIndicator = Core.Ui.AjaxIndicator,
   // constants

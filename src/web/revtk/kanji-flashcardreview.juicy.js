@@ -6,25 +6,19 @@
  *   fcr_options   Options to setup uiFlashcardReview
  *   end_url       Url to redirect to at the end of the review
  *
- * @author   Fabrice Denis
- * @package  RevTK
  */
-/* globals App, Core, YAHOO */
 
+/* FIXME : old deps */
 /* =require from "%WEB%" */
-
 /* =require "/revtk/components/FlashcardReview.js" */
-
 /* =require "/revtk/components/EditStoryDialog.js" */
 /* =require "/revtk/components/EditKeywordDialog.js" */
 /* =require "/revtk/components/EditFlashcardDialog.js" */
 /* =require "/revtk/components/DictLookupDialog.js" */
 
-
-(function(){
+import $$ from "@lib/koohii/dom";
 
   var Y = YAHOO,
-      $$ = Koohii.Dom,
       Dom = Y.util.Dom;
 
   App.KanjiReview = 
@@ -504,6 +498,3 @@
   
   // GreaseMonkey "kanji to keyword" compatibility (2011-02-21)
   window.rkKanjiReview = App.KanjiReview;
-
-}());
-

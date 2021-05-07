@@ -3,9 +3,10 @@
  * 
  * @author  Fabrice Denis
  */
-/* globals YAHOO, Core, App */
 
-(function(){
+import EventDelegator from "@old/ui/eventdelegator.js";
+
+
 
   App.Ui.SharedStoriesComponent = Core.make();
 
@@ -34,7 +35,7 @@
       this.oStudyPage = oStudyPage;
 
       // handling of votes, etc
-      this.evtDel = new Core.Ui.EventDelegator(elContainer, "click");
+      this.evtDel = new EventDelegator(elContainer, "click");
       this.evtDel.on('JsNewest', this.onNewestClick, this);
       this.evtDel.on('JsCopy',   this.onCopy, this );
       this.evtDel.on('JsReport', this.onReport, this );
@@ -297,4 +298,4 @@ if (data.__debug_log) {
     }
   };
 
-}());
+

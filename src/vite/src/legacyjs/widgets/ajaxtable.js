@@ -66,7 +66,7 @@
       });
 
       // intercept clicks in the pager widget (rows per page, and paging links)
-      this.evtDel = new Core.Ui.EventDelegator(container, 'click');
+      this.evtDel = new EventDelegator(container, 'click');
       this.evtDel.on("JSTableSort", this.onRefreshTable, this);
       this.evtDel.on("JSPagerLink", this.onRefreshTable, this);
       this.evtDel.on("JSFilterStd", this.onRefreshTable, this);

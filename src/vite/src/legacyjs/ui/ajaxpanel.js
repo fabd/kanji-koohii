@@ -101,6 +101,7 @@
 
 const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
+import EventDelegator from "@old/ui/eventdelegator.js";
 
 Core.Ui.AjaxPanel = Core.make();
 
@@ -123,7 +124,7 @@ AjaxPanel.prototype = {
   eventDispatcher: null,
 
   /**
-   * @type Core.Ui.EventDelegator
+   * @type EventDelegator
    */
   eventDel: null,
 
@@ -169,7 +170,7 @@ AjaxPanel.prototype = {
     this.ajaxRequest = null;
 
     // event delegator to handle clicks in the panel
-    this.eventDel = new Core.Ui.EventDelegator(this.container, "click");
+    this.eventDel = new EventDelegator(this.container, "click");
     this.eventDel.on("JSDialogSubmit", this.onPanelSubmit, this); // legacy support from AjaxDialog refactor
 
     // register events

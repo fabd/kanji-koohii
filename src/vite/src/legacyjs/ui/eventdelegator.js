@@ -51,7 +51,7 @@
  *
  * Usage:
  *
- *   var ed = new Core.Ui.EventDelegator("myDiv", ["click"]);
+ *   var ed = new EventDelegator("myDiv", ["click"]);
  *
  *   // call this.onAdd() when element of class .add is clicked
  *   ed.on("add", this.onAdd, this);
@@ -73,26 +73,25 @@
  *
  */
 
-const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
+const YAHOO = window.YAHOO;
 
-/**
- * Constructor.
- *
- * @param {String|HTMLElement} parent   Parent element to watch events
- * @param {Array} type           Event types to watch ("click", ...)
- */
-Core.Ui.EventDelegator = Core.make();
+const EventDelegator = Core.make();
 
 var Y = YAHOO,
   Dom = Y.util.Dom,
   Event = Y.util.Event,
-  EventDelegator = Core.Ui.EventDelegator,
   PREFIX_TAG = "%",
   PREFIX_ID = "#",
   ROOT_EVENT = "@root";
 
 EventDelegator.prototype = {
+  /**
+   * Constructor.
+   *
+   * @param {String|HTMLElement} elRoot   Parent element to watch events
+   * @param {Array} type           Event types to watch ("click", ...)
+   */
   init: function (elRoot, types) {
     var i;
 

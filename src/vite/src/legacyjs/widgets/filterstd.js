@@ -13,9 +13,8 @@
  * 
  * @author   Fabrice Denis
  */
-/*global App, Core, YAHOO */
 
-(function(){
+import EventDelegator from "@old/ui/eventdelegator.js";
 
   Core.Widgets.FilterStd = Core.make();
 
@@ -56,7 +55,7 @@
   
       this.currentTab = null;
  
-      this.evtDel = new Core.Ui.EventDelegator(elContainer, "click");
+      this.evtDel = new EventDelegator(elContainer, "click");
       this.evtDel.on("JSFilterStd", this.onClick, this);
 
       tabs = Dom.getElementsByClassName('JSFilterStd', 'a', elContainer);
@@ -114,7 +113,7 @@
       return false;
     }
   };
-  
-}());
+
+
 
 

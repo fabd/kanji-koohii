@@ -183,6 +183,8 @@ const YAHOO = window.YAHOO;
 import App from "@old/app.js";
 import Core from "@old/core.js";
 
+import EventDelegator from "@old/ui/eventdelegator.js";
+
 function insertTop(node) {
   var elParent = document.body;
   elParent.insertBefore(node, elParent.firstChild);
@@ -234,7 +236,7 @@ AjaxDialog.prototype = {
   eventDispatcher: null,
 
   /**
-   * @type Core.Ui.EventDelegator
+   * @type EventDelegator
    */
   eventDel: {},
 
@@ -370,7 +372,7 @@ AjaxDialog.prototype = {
     }
 
     // register default actions
-    this.eventDel = new Core.Ui.EventDelegator(this.container, "click");
+    this.eventDel = new EventDelegator(this.container, "click");
     this.eventDel.on("JSDialogSuccess", function () {
       that.handleDialogStatus(AjaxDialog.STATUS_SUCCESS);
       return false;

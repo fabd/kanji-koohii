@@ -4,9 +4,10 @@
  * Lint:
  *   jshint --config=batch/tools/jshint/jshint.conf.json web/revtk/components/KoohiiNav.js
  */
-/*global YAHOO, Core, App */
 
-(function(){
+import EventDelegator from "@old/ui/eventdelegator.js";
+
+
 
   var Y = YAHOO,
       Dom = Y.util.Dom;
@@ -30,7 +31,7 @@
       console.log('KoohiiNav::init()');
 
       // desktop nav
-      var eventDel = new Core.Ui.EventDelegator(document.body, ['click', 'touchend', 'mouseover', 'mouseout']);
+      var eventDel = new EventDelegator(document.body, ['click', 'touchend', 'mouseover', 'mouseout']);
       eventDel.on('JsHasDropdown', this.onDropdown, this);
       eventDel.onDefault(this.onClick, this);
     },
@@ -152,4 +153,4 @@
     App.Ui.KoohiiNav.init();
   });
 
-}());
+

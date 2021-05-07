@@ -20,7 +20,9 @@
 /* =require "/revtk/components/EditFlashcardDialog.js" */
 /* =require "/revtk/components/SharedStoriesComponent.js" */
 
-(function(){
+import EventDelegator from "@old/ui/eventdelegator.js";
+
+
 
   var Y = YAHOO,
       $$ = Koohii.Dom,
@@ -88,7 +90,7 @@
       if ((el = Dom.get('EditFlashcard')))
       {
         this.elEditFlashcard = el;
-        var ed = new Core.Ui.EventDelegator(el, "click");
+        var ed = new EventDelegator(el, "click");
         ed.on("JsEditFlashcard", this.onEditFlashcard, this);
       }
 
@@ -223,5 +225,5 @@
     }
   };
 
-}());
+
 

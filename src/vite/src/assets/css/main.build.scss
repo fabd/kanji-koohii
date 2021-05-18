@@ -9,8 +9,7 @@
  * @author  Fabrice Denis
  */
 
-// *don't* use extension to inlude vendor css in the output
-@import "../vendor/bootstrap-build/css/bootstrap";
+@import "./legacy/vendor/bootstrap.css";
 
 @import "./_theme.scss";
 

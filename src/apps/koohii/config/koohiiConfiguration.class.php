@@ -19,9 +19,6 @@ class koohiiConfiguration extends sfApplicationConfiguration
       // FIXME .. refactor to sf
       define('CORE_ENVIRONMENT', $this->getEnvironment());
 
-      // Vite's `outDir` (where the assets are) -- NO trailing slash
-      define('KK_VITE_DIST', '/build/dist');
-
       //
       define('KK_ENV_DEV', CORE_ENVIRONMENT === 'dev');
       define('KK_ENV_PROD', CORE_ENVIRONMENT === 'prod');

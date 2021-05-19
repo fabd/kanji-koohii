@@ -1,11 +1,13 @@
 <?php
 /**
- * Parse Vite manifest file and output a config file for Symfony´s web
- * response to output javascript/stylesheet include tags for Vite dev
- * server and production build.
+ * Pre-parse the Vite manifest.json file into a php include file for
+ * production environment to quickly match entries to css/js dependencies.
  *
- *   NOTE : UNUSED OLD CODE HANDLING VERSIONING OF STANDALONE CSS/JS
- *          FILES, MIGHT BE USEFUL LATER.
+ * Notes:
+ *
+ *   - uses SF_ROOT_DIR/lib/Vite.php to parse manifest (which is also
+ *     used by coreWebResponse to parse manifest in real time, after
+ *     Vite build --watch updates the file).
  *
  * Usage:
  *
@@ -13,10 +15,12 @@
  *
  * Example:
  *
- *   > vite build
- *   > php batch/build_app.php -w web --vite web/build/dist/manifest.json -o config/vite.inc.php
+ *   $ vite build
+ *   $ php batch/build_app.php -w web --vite web/build/dist/manifest.json -o config/vite.inc.php
  *
- * @author   Fabrice Denis
+ *
+ * NOTE : LEFTOVER OLD CODE HANDLING VERSIONING OF STANDALONE CSS/JS
+ *        FILES, MIGHT BE USEFUL LATER.
  */
 require_once realpath(dirname(__FILE__).'/..').'/lib/batch/Command_CLI.php';
 
@@ -78,9 +82,9 @@ EOD;
 
     if (null !== ($manifest = $this->getFlag('vite')))
     {
-      $contents = $contents
-        ."\n\n"
-        .$this->parseViteManifest($manifest);
+      $entries = Vite::getManifestJson();
+
+      $contents = $contents."\n\n".$this->formatEntries($entries);
 
       $this->verbose("Vite manifest parsed.\n");
     }
@@ -141,65 +145,18 @@ EOD;
   {
     $assets = [];
 
-    foreach ($includeAssets as $pattern) {
+    foreach ($includeAssets as $pattern)
+    {
       $files = glob($pattern);
       $assets = array_merge($assets, $files);
     }
 
-    $assets = array_map(function($path) {
+    $assets = array_map(function ($path)
+    {
       return $this->normalizeForwardSlashes($path);
     }, $assets);
 
     return $assets;
-  }
-
-  /**
-   * Parse manifest.json from vite build.
-   *
-   * @param string $file [description]
-   *
-   * @return [type] [description]
-   */
-  private function parseViteManifest(string $file)
-  {
-    if (false === ($jsonText = file_get_contents($file)))
-    {
-      $this->throwError('Could not read manifest file "%s".', $file);
-    }
-
-    if (null === ($manifest = json_decode($jsonText, true)))
-    {
-      $this->throwError('Error parsing JSON in manifest file "%s".', $file);
-    }
-
-    $entries = [];
-
-    foreach ($manifest as $chunk => $chunkInfo)
-    {
-      if (!isset($chunkInfo['isEntry']))
-      {
-        continue;
-      }
-
-      $imports = $chunkInfo['imports'] ?? [];
-      $deps = [];
-      foreach ($imports as $importChunk)
-      {
-        $deps[] = $manifest[$importChunk]['file'] ?? '-ERROR-';
-      }
-
-      // output format
-      $entries[$chunk] = [
-        'file' => $manifest[$chunk]['file'],
-        'deps' => $deps,
-        'css' => $manifest[$chunk]['css'],
-      ];
-    }
-
-    // print_r($entries);exit;
-
-    return $this->formatEntries($entries);
-    // echo $output;exit;
   }
 
   private function formatEntries(array $entries)

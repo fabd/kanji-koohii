@@ -1,19 +1,5 @@
 /**
- * Creates a basic framework and namespace for the client-side code of the
- * application.
- *
- * App
- *   Application namespace, initializes the page contents.
- *
- * App.env
- *   Environment for client side, mostly used to pass data to javascript.
- *   - App.env is defined here and can be extended by <script> tags in the page
- *
- * App.Helper
- *
- * App.getBodyED()
- * App.ready(fn)
- * 
+ * OBSOLETE. Needs to be phased out eventually.
  */
 
 // legacy YUI2 is loaded separately by <script>
@@ -21,39 +7,17 @@ if (!window.YAHOO) {
   console.warn('YAHOO is not loaded');
 }
 
+import Core from "@old/core.js";
 
-// namespace
-var App = window.App = {};
+var App = {};
 
-/**
- * Global application configuration.
- *
- * Options:
- *
- * These options MUST be set via backend templates, AFTER app.js (this) is
- * included:
- *
- *  App.env.logging (boolean)
- *    Enable javascript console in, set false for production. If possible all
- *    App.log() calls should be stripped from the production javascript.
- *
- */
-App.env = {};
+App.StudyPage = null; // declare it here, set in study entry point
 
-/**
- * Application specific UI helpers go here.
- *
- *   generateDialogMarkup()      Generate markup for a dialog, ready to use with Core.Ui.AjaxDialog
- */
 App.Ui = {};
 
-/**
- * Global application object
- *
- */
+import $$ from "@lib/koohii/dom.ts";
 
 var Y = YAHOO,
-  $$ = Koohii.Dom,
   Dom = Y.util.Dom,
   Event = Y.util.Event;
 
@@ -101,16 +65,16 @@ Y.lang.augmentObject(App, {
   /**
    * Returns an EventDelegator instance for click events on the page body.
    *
-   * @return  {Object}   Core.Ui.EventDelegator instance.
+   * @return  {Object}   EventDelegator instance.
    */
   getBodyED: function () {
     return this.bodyED
       ? this.bodyED
-      : (this.bodyED = new Core.Ui.EventDelegator(document.body, "click"));
+      : (this.bodyED = new EventDelegator(document.body, "click"));
   },
 });
 
-Core.ready(function () {
+window.addEventListener("DOMContentLoaded", () => {
   App.init();
 });
 

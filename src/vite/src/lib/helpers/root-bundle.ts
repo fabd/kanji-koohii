@@ -2,8 +2,12 @@
  * Common dependencies for the multi-page entries.
  */
 
-// not sure where this goes, à priori not being used
+// FIXME: remove with Vite 2.3.x ?
+//   https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#230-2021-05-11
 import "vite/dynamic-import-polyfill";
+
+import LegacyBundle from "@old/index";
+LegacyBundle.init();
 
 // include site-wide mobile navigation in the root bundle (for the landing page)
 import KoohiiAside from "@/components/Aside";

@@ -9,9 +9,8 @@ module.exports = {
 
   theme: {
     colors: {
-      gold: {
-        light: "#BAB197",
-        DEFAULT: "#8A8062",
+      shaded: {
+        DEFAULT: "#e7e1d3",
       },
     },
   },

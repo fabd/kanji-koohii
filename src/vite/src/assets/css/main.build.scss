@@ -1,23 +1,25 @@
-/**
- * Main stylesheet.
- * 
- * Font sizes cheatsheet:
- *  16 px = 1em = default
- *  18 px = 1.25em
- *  20 px = 1.4em
- *
- * @author  Fabrice Denis
- */
+// LEGACY main.build.scss stylesheet
+// --------------------------------------------------------------------
+// 1. tailwind's "preflight" and opiniated resets
+// --------------------------------------------------------------------
+@import "tailwindcss/base";
 
 @import "./legacy/vendor/bootstrap.css";
 
+
+// --------------------------------------------------------------------
+// FIXES
+//
+//   Undo Bootstrap styles setting html font-size to 10px.
+//   Legacy stylesheets almost never used rems so this shouldn't break anything.
+// --------------------------------------------------------------------
+html {
+  font-size: 16px; // make sure 1rem = 16px
+}
+
 @import "./_theme.scss";
 
-// (2021/01) a subset of tailwind utilities for legacy templates
-@import "./utils/tailwind";
-
-// (2021/01) Sass based utilities
-@import "./utils/utilities";
+@import "./_utilities.scss";
 
 /* ---------------------------- */
 /* RESPONSIVE utilities */
@@ -495,7 +497,7 @@ a.admin-edit {
 
 /* content boxes */
 .padded-box {
-  padding: 14px 16px;
+  @apply px-4 py-4;
   background-color: $--clr-bg-1;
 }
 
@@ -1504,11 +1506,7 @@ table.lessons td {
 /* ------------------ */
 /* AjaxDialog         */
 /* ------------------ */
-
-/* Sam Skin CSS (Core.Ui.AjaxDialog) */
-@import "../vendor/yui2-build/container/container";
-
-@import "./legacy/ajaxdialog"; //.css
+@import "./legacy/ajaxdialog.css";
 
 /**
  * Debugging Ajax Responses.
@@ -1695,3 +1693,8 @@ table.lessons td {
   font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai",
     "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC", serif;
 }
+
+// --------------------------------------------------------------------
+// (last) tailwind utilities
+// --------------------------------------------------------------------
+@import "tailwindcss/utilities";

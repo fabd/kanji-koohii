@@ -72,4 +72,9 @@ export default defineConfig({
     //   apply: "build",
     // },
   ],
+
+  server: {
+    // make Vite dev server reachable from outside container (same as `vite --host`)
+    host: true,
+  },
 });

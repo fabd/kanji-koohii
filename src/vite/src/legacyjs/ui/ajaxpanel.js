@@ -171,12 +171,7 @@ ShadeLayer.prototype = {
     this.isIE = !!domGet("ie");
 
     if (options.element) {
-      var offsets = Dom.getXY(options.element);
-      this.pos = {
-        left: offsets[0],
-        top: offsets[1],
-      };
-
+      this.pos = $$(options.element).offset();
       this.size = this.getDimensions(options.element);
 
       this.element = options.element;

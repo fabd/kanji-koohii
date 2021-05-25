@@ -10,7 +10,7 @@
  *
  */
 
-import $$, { domGet } from "@lib/koohii/dom";
+import $$, { domGet, px } from "@lib/koohii/dom";
 import Core from "@old/core";
 
 let AjaxIndicator = Core.make();
@@ -39,7 +39,7 @@ AjaxIndicator.prototype = {
   show: function () {
     // create the element
     if (!this.indicator) {
-      var pos = Dom.getXY(this.container);
+      let { top, left } = $$(this.container).offset();
 
       this.indicator = document.createElement("span");
       $$(this.indicator).css({
@@ -48,8 +48,8 @@ AjaxIndicator.prototype = {
         color: "#fff",
         font: "13px/18px Arial, sans-serif",
         position: "absolute",
-        left: pos[0] + "px",
-        top: pos[1] + "px",
+        left: px(pos.left),
+        top: px(pos.top),
         zIndex: DEFAULT_ZINDEX,
         display: "block",
       });

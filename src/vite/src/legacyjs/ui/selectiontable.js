@@ -11,7 +11,7 @@
  * @see       See related backend class uiSelectionState.php
  */
 
-import $$ from "@lib/koohii/dom";
+import $$, { stopEvent } from "@lib/koohii/dom";
 import AjaxTable from "@old/ui/ajaxtable";
 
 console.assert(window.YAHOO);
@@ -105,7 +105,7 @@ SelectionTable.prototype = {
     if ((row = $$(el).closest("tr"))) {
       if ((check = $$(".checkbox", row)[0])) {
         check.click();
-        Event.stopEvent(ev);
+        stopEvent(ev);
       }
     }
 

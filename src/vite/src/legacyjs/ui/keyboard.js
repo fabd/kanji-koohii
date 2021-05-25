@@ -23,6 +23,7 @@
  *
  */
 
+import { stopEvent } from "@lib/koohii/dom";
 import Core from "@old/core.js";
 
 Core.Ui.Keyboard = Core.make();
@@ -106,7 +107,7 @@ Keyboard.prototype = {
       var fnListener = this.oKeys[iKeyCode];
       if (fnListener) {
         fnListener.call(null, ev);
-        Event.stopEvent(ev);
+        stopEvent(ev);
         return false;
       }
     }

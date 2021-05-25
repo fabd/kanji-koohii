@@ -3,7 +3,7 @@
  *
  */
 
-import $$ from "@lib/koohii/dom";
+import $$, { stopEvent } from "@lib/koohii/dom";
 import EventCache from "@old/ui/eventcache";
 
 
@@ -95,7 +95,7 @@ import EventCache from "@old/ui/eventcache";
       if (e.keyCode === 9) 
       {
         this.dialog.getAjaxPanel().post({ "doNext": true });
-        Event.stopEvent(e);
+        stopEvent(e);
         return false;
       }
 

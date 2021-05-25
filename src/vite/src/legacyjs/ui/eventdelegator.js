@@ -73,7 +73,7 @@
  *
  */
 
-import $$, { domGet } from "@lib/koohii/dom";
+import $$, { domGet, stopEvent } from "@lib/koohii/dom";
 import Core from "@old/core";
 
 const EventDelegator = Core.make();
@@ -239,7 +239,7 @@ EventDelegator.prototype = {
           this.listeners[idEvent] &&
           this._fire(idEvent, e, elTarget) === false
         ) {
-          Event.stopEvent(e);
+          stopEvent(e);
           return false;
         }
       }
@@ -252,7 +252,7 @@ EventDelegator.prototype = {
           this.listeners[classes[n]] &&
           this._fire(classes[n], e, elTarget) === false
         ) {
-          Event.stopEvent(e);
+          stopEvent(e);
           return false;
         }
       }
@@ -263,7 +263,7 @@ EventDelegator.prototype = {
         this.listeners[tagEvent] &&
         this._fire(tagEvent, e, elTarget) === false
       ) {
-        Event.stopEvent(e);
+        stopEvent(e);
         return false;
       }
 
@@ -273,7 +273,7 @@ EventDelegator.prototype = {
     // root element event
     if (elTarget === this.elRoot && this.listeners[ROOT_EVENT]) {
       if (this._fire(ROOT_EVENT, e, elTarget) === false) {
-        Event.stopEvent(e);
+        stopEvent(e);
         return false;
       }
     }

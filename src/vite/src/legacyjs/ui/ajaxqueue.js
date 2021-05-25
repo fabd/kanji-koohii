@@ -47,7 +47,7 @@
  *
  */
 
-import $$, { domGet } from "@lib/koohii/dom";
+import $$, { domGet, stopEvent } from "@lib/koohii/dom";
 import Core from "@old/core";
 import EventDispatcher from "@old/ui/eventdispatcher";
 
@@ -245,7 +245,7 @@ Core.Ui.AjaxQueue.prototype = {
   reconnectEvent: function (ev) {
     this.setErrorDialog(false);
     this.send(this.curblob);
-    Event.stopEvent(ev);
+    stopEvent(ev);
   },
 
   /**

@@ -179,7 +179,7 @@
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
-import $$, { domGet } from "@lib/koohii/dom";
+import $$, { domGet, hasClass } from "@lib/koohii/dom";
 import App from "@old/app";
 import Core from "@old/core";
 import AjaxPanel from "@old/ui/ajaxpanel";
@@ -395,7 +395,7 @@ AjaxDialog.prototype = {
     // autoclose option: clicking the modal mask will hide the dialog
     if (this.options.autoclose && App && App.getBodyED) {
       App.getBodyED().onDefault(function (ev) {
-        if (Dom.hasClass(ev.target, "mask")) {
+        if (hasClass(ev.target, "mask")) {
           this.hide();
         }
       }, this);

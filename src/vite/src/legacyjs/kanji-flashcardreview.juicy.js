@@ -16,7 +16,7 @@
 /* =require "/revtk/components/EditFlashcardDialog.js" */
 /* =require "/revtk/components/DictLookupDialog.js" */
 
-import $$, { domGet } from "@lib/koohii/dom";
+import $$, { domGet, hasClass } from "@lib/koohii/dom";
 
   var Y = YAHOO,
       Dom = Y.util.Dom;
@@ -243,7 +243,7 @@ import $$, { domGet } from "@lib/koohii/dom";
           break;
 
         case 'flip':
-          if (oEvent.type === 'click' && Dom.hasClass(oEvent.target, 'JsKeywordLink'))
+          if (oEvent.type === 'click' && hasClass(oEvent.target, 'JsKeywordLink'))
           {
             // pass through so the link functions
             return true;
@@ -352,7 +352,7 @@ import $$, { domGet } from "@lib/koohii/dom";
       function onMenuHide()
       {
         // clear icon focus state when dialog closes
-        Dom.removeClass(el, 'active');
+        el.classList.remove('active');
       }
 
       function onMenuItem(menuid)
@@ -373,7 +373,7 @@ import $$, { domGet } from "@lib/koohii/dom";
         return false;
       }
 
-      Dom.addClass(el, 'active');
+      el.classList.add('active');
 
       // reload the edit flashcard menu when changed flashcard
       if (oCardData.id !== this.oEditFlashcardId)
@@ -471,7 +471,7 @@ import $$, { domGet } from "@lib/koohii/dom";
 
       domGet('uiFcStDeld').getElementsByTagName('em')[0].innerHTML = this.countDeleted;
 
-      Dom.getFirstChild('uiFcStDeldK').innerHTML = this.getDeletedCards();
+      domGet('uiFcStDeldK').firstChild.innerHTML = this.getDeletedCards();
     },
 
     getDeletedCards: function()

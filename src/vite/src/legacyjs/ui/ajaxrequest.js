@@ -89,12 +89,9 @@
  *
  */
 
-const YAHOO = window.YAHOO;
+import $$ from "@lib/koohii/dom";
 import Core from "@old/core";
 import * as TRON from "@lib/koohii/tron";
-
-/* =require from "%YUI2%" */
-/* =require "/connection/connection-min.js" */
 
 /**
  * Constructor.
@@ -102,14 +99,10 @@ import * as TRON from "@lib/koohii/tron";
  * @param {String} url      Request url, if it contains a query string, don't set options.parameters
  * @param {Object} options  Constructor options
  */
-Core.Ui.AjaxRequest = Core.make();
+let AjaxRequest = Core.make();
 
-// internal shorthands
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  AjaxRequest = Core.Ui.AjaxRequest,
-  // constants
-  DEFAULT_TIMEOUT = 5000; // default time out for AjaxRequests
+// constants
+const DEFAULT_TIMEOUT = 5000; // default time out for AjaxRequests
 
 /**
  * Override this to filter all responses globally.
@@ -129,6 +122,7 @@ AjaxRequest.prototype = {
       callback = {},
       postdata;
 
+    console.assert(window.YAHOO);
     console.log("AjaxRequest.init()", options);
 
     // set defaults
@@ -180,21 +174,22 @@ AjaxRequest.prototype = {
       callback.scope = options.scope;
     }
 
-    callback.timeout = Y.lang.isNumber(options.timeout)
+    callback.timeout = YAHOO.lang.isNumber(options.timeout)
       ? options.timeout
       : DEFAULT_TIMEOUT;
     //console.log("Setting callback.timeout to %o", callback.timeout);
 
     // serialize form data?
     if (options.form) {
-      var formObject = Dom.get(options.form);
+      console.assert(options.form instanceof Node);
+      var formObject = $$(options.form)[0];
 
       console.assert(
         formObject.nodeName && formObject.nodeName.toLowerCase() === "form",
         "AjaxRequest::init() form is not a FORM element"
       );
 
-      Y.util.Connect.setForm(formObject);
+      YAHOO.util.Connect.setForm(formObject);
     }
 
     // create the request URL
@@ -204,23 +199,23 @@ AjaxRequest.prototype = {
       query = [];
 
     // encode JSON ?
-    if (options.json && Y.lang.isObject(options.json)) {
+    if (options.json && YAHOO.lang.isObject(options.json)) {
       json = JSON.stringify(options.json);
     }
 
     // convert request parameters to url encoded string (damn you, YUI)
     if (params) {
       console.assert(
-        Y.lang.isString(params) || Y.lang.isObject(params),
+        YAHOO.lang.isString(params) || YAHOO.lang.isObject(params),
         "AjaxRequest() invalid typeof options.parameters"
       );
 
-      if (Y.lang.isString(params)) {
+      if (YAHOO.lang.isString(params)) {
         var pos = params.indexOf("?");
         if (pos >= 0) {
           params = params.slice(pos + 1);
         }
-      } else if (Y.lang.isObject(params)) {
+      } else if (YAHOO.lang.isObject(params)) {
         // convert hash to query string parameters
         params = Core.Toolkit.toQueryString(params);
       }
@@ -252,7 +247,7 @@ AjaxRequest.prototype = {
       }
     }
 
-    this.connection = Y.util.Connect.asyncRequest(
+    this.connection = YAHOO.util.Connect.asyncRequest(
       options.method,
       requestUri,
       callback,
@@ -267,9 +262,9 @@ AjaxRequest.prototype = {
    *
    */
   isCallInProgress: function () {
-    //var b=Y.util.Connect.isCallInProgress(this.connection);;
+    //var b=YAHOO.util.Connect.isCallInProgress(this.connection);;
     //console.log('isCallInProgress says... %o', b);
-    return Y.util.Connect.isCallInProgress(this.connection);
+    return YAHOO.util.Connect.isCallInProgress(this.connection);
   },
 
   /**
@@ -332,7 +327,7 @@ AjaxRequest.prototype = {
       }
 
       o.responseTRON = o.responseJSON ? new TRON.Inst(o.responseJSON) : null;
-console.log('responseTRON ...', o.responseTRON);
+      console.log("responseTRON ...", o.responseTRON);
 
       fn.apply(scope || window, [o]);
     }

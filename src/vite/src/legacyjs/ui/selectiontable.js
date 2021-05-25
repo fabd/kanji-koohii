@@ -14,9 +14,8 @@
 import $$ from "@lib/koohii/dom";
 import AjaxTable from "@old/ui/ajaxtable";
 
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event;
+console.assert(window.YAHOO);
+const YAHOO = window.YAHOO;
 
 let SelectionTable = Core.make();
 
@@ -49,11 +48,7 @@ SelectionTable.prototype = {
    * @see  uiSelectionState.php
    */
   getPostData: function () {
-    var inputs = Dom.getElementsByClassName(
-        "checkbox",
-        "input",
-        this.getTable().tBodies[0]
-      ),
+    var inputs = $$("input.checkbox", this.getTable().tBodies[0]),
       data = {},
       i;
     for (i = 0; i < inputs.length; i++) {
@@ -70,8 +65,8 @@ SelectionTable.prototype = {
   },
 
   onCheckBox: function (ev, el) {
-    var row = Dom.getAncestorByTagName(el, "tr"),
-      inputs = el.parentNode.getElementsByTagName("input");
+    var row = $$(el).closest("tr");
+    var inputs = el.parentNode.getElementsByTagName("input");
 
     this.setSelection(row, inputs[0], el.checked);
 
@@ -107,7 +102,7 @@ SelectionTable.prototype = {
     }
 
     // if clicked in a row, select it
-    if ((row = Dom.getAncestorByTagName(el, "tr"))) {
+    if ((row = $$(el).closest("tr"))) {
       if ((check = $$(".checkbox", row)[0])) {
         check.click();
         Event.stopEvent(ev);

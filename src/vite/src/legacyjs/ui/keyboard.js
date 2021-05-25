@@ -23,14 +23,15 @@
  *
  */
 
-const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
 
 Core.Ui.Keyboard = Core.make();
 
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event,
+console.assert(window.YAHOO);
+const YAHOO = window.YAHOO;
+
+var 
+  Event = YAHOO.util.Event,
   Keyboard = Core.Ui.Keyboard;
 
 Keyboard.prototype = {
@@ -85,7 +86,7 @@ Keyboard.prototype = {
 
     // Don't enable shortcut keys in Input, Textarea fields
     if (this.options.bDisableInInput) {
-      var element = Event.getTarget(ev);
+      var element = ev.target;
       if (element.nodeType === 3) {
         element = element.parentNode;
       }

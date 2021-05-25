@@ -47,11 +47,9 @@
  *
  */
 
-import Core from "@old/core.js";
-import $$ from "@lib/koohii/dom";
+import Core from "@old/core";
+import $$, { get as domGet } from "@lib/koohii/dom";
 import EventDispatcher from "@old/ui/eventdispatcher";
-
-const YAHOO = window.YAHOO;
 
 /**
  * Constructor.
@@ -60,11 +58,6 @@ const YAHOO = window.YAHOO;
  * @param {Object} options  Constructor options
  */
 let AjaxQueue = Core.make();
-
-// internal shorthands
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event;
 
 Core.Ui.AjaxQueue.prototype = {
   blobs: [],
@@ -88,12 +81,12 @@ Core.Ui.AjaxQueue.prototype = {
     }
 
     // init error dialog
-    this.elAjaxError = Dom.get(options.elError);
-    var elAction = this.elAjaxError.getElementsByTagName("a")[0];
-    Event.on(elAction, "click", this.reconnectEvent, this, true);
+    this.elAjaxError = domGet(options.elError);
+    const $elAction = $$("a", this.elAjaxError)[0];
+    $elAction.on("click", this.reconnectEvent.bind(this));
 
     // init ajax loading icon
-    this.ajaxIndicator = Dom.get(options.elLoading);
+    this.ajaxIndicator = domGet(options.elLoading);
   },
 
   /**
@@ -207,7 +200,7 @@ Core.Ui.AjaxQueue.prototype = {
 
     // success notification
     var args = ["onSuccess", o];
-    if (!Y.lang.isUndefined(this.curblob.options.argument)) {
+    if (!YAHOO.lang.isUndefined(this.curblob.options.argument)) {
       args.push(this.curblob.options.argument);
     }
     this.eventDispatcher.notify.apply(this.eventDispatcher, args);

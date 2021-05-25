@@ -14,9 +14,10 @@
 
 import Core from "@old/core.js";
 
-let EventDispatcher = Core.make();
+console.assert(window.YAHOO);
+const YAHOO = window.YAHOO;
 
-const Y = window.YAHOO;
+let EventDispatcher = Core.make();
 
 EventDispatcher.prototype = {
   listeners: null,
@@ -102,7 +103,7 @@ EventDispatcher.prototype = {
     callables = this.listeners[name] ? this.listeners[name] : [];
 
     console.assert(
-      args.length !== 1 || !Y.lang.isArray(args[0]),
+      args.length !== 1 || !YAHOO.lang.isArray(args[0]),
       "EventDispatcher::notify()  using obsolete signature?"
     );
 

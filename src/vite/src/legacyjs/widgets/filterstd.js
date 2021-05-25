@@ -16,19 +16,16 @@
  * @author   Fabrice Denis
  */
 
-import EventDelegator from "@old/ui/eventdelegator.js";
+import Core from "@old/core";
+import EventDelegator from "@old/ui/eventdelegator";
 import EventDispatcher from "@old/ui/eventdispatcher";
 
 let FilterStd = Core.make();
 
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event;
-
 /**
  * Class name set on the active tab.
  */
-var ACTIVE = "active";
+const ACTIVE = "active";
 
 /**
  * Name of the notification for switch clicked and activated.
@@ -57,12 +54,12 @@ FilterStd.prototype = {
     this.evtDel = new EventDelegator(elContainer, "click");
     this.evtDel.on("JSFilterStd", this.onClick, this);
 
-    tabs = Dom.getElementsByClassName("JSFilterStd", "a", elContainer);
-    for (i = 0; i < tabs.length; i++) {
-      if (/uiFilterStd-(\S+)/.test(tabs[i].className)) {
+    let $tabs = $$("a.JSFilterStd", elContainer);
+    for (i = 0; i < $tabs.length; i++) {
+      if (/uiFilterStd-(\S+)/.test($tabs[i].className)) {
         var tabId = RegExp.$1,
-          elLink = tabs[i];
-        if (Dom.hasClass(elLink, ACTIVE)) {
+          elLink = $tabs[i];
+        if (elLink.classList.contains(ACTIVE)) {
           this.currentTab = elLink;
         }
       }
@@ -94,11 +91,11 @@ FilterStd.prototype = {
     }
 
     if (this.currentTab) {
-      Dom.removeClass(this.currentTab, ACTIVE);
+      this.currentTab.classList.remove(ACTIVE);
     }
 
     this.currentTab = el;
-    Dom.addClass(el, ACTIVE);
+    el.classList.add(ACTIVE);
 
     this.eventDispatcher.notify(SWITCH_EVENT, tabId);
 

@@ -73,13 +73,12 @@
  *
  */
 
-import Core from "@old/core.js";
+import Core from "@old/core";
 
 const EventDelegator = Core.make();
 
-var Y = window.YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event,
+var   Dom = YAHOO.util.Dom,
+  Event = YAHOO.util.Event,
   PREFIX_TAG = "%",
   PREFIX_ID = "#",
   ROOT_EVENT = "@root";
@@ -101,7 +100,7 @@ EventDelegator.prototype = {
 
     console.assert(!!this.elRoot, "EventDelegator::init() elRoot is not valid");
 
-    if (Y.lang.isString(types)) {
+    if (YAHOO.lang.isString(types)) {
       types = [types];
     }
 
@@ -283,7 +282,7 @@ EventDelegator.prototype = {
 
   _fire: function (name, e, matchedEl) {
     var oListener = this.listeners[name];
-    var context = Y.lang.isUndefined(oListener.context)
+    var context = YAHOO.lang.isUndefined(oListener.context)
       ? window
       : oListener.context;
     return oListener.fn.apply(context, [e, matchedEl]);

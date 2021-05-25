@@ -10,15 +10,12 @@
  *
  */
 
-const YAHOO = window.YAHOO;
-import Core from "@old/core.js";
 import $$ from "@lib/koohii/dom";
+import Core from "@old/core";
 
-Core.Ui.AjaxIndicator = Core.make();
+let AjaxIndicator = Core.make();
 
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  AjaxIndicator = Core.Ui.AjaxIndicator,
+var Dom = YAHOO.util.Dom,
   // constants
   DEFAULT_ZINDEX = 100,
   DEFAULT_MESSAGE = "Loading...";

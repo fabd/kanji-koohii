@@ -34,9 +34,8 @@ import AjaxPanel from "@old/ui/ajaxpanel";
 
 let AjaxTable = Core.make();
 
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event;
+var   Dom = YAHOO.util.Dom,
+  Event = YAHOO.util.Event;
 
 AjaxTable.prototype = {
   container: null,

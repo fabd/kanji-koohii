@@ -179,13 +179,12 @@
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
-import App from "@old/app.js";
-import Core from "@old/core.js";
 import $$ from "@lib/koohii/dom";
-import EventDelegator from "@old/ui/eventdelegator.js";
+import App from "@old/app";
+import Core from "@old/core";
+import AjaxPanel from "@old/ui/ajaxpanel";
+import EventDelegator from "@old/ui/eventdelegator";
 import EventDispatcher from "@old/ui/eventdispatcher";
-
-const YAHOO = window.YAHOO;
 
 function insertTop(node) {
   var elParent = document.body;
@@ -198,7 +197,7 @@ function insertTop(node) {
  * @param {String} srcMarkup   Selector for containing element if using srcMarkup, otherwise set null
  * @param {Object} options
  */
-Core.Ui.AjaxDialog = Core.make();
+let AjaxDialog = Core.make();
 
 /**
  * Disable the first/last focus because of annoying :focus outline,
@@ -207,15 +206,12 @@ Core.Ui.AjaxDialog = Core.make();
  *
  * @see http://developer.yahoo.com/yui/docs/YAHOO.widget.Panel.html#property_YAHOO.widget.Panel.FOCUSABLE
  */
+console.assert(window.YAHOO);
 YAHOO.widget.Panel.FOCUSABLE = [];
 
 // internal shorthands
-var Y = YAHOO,
-  Dom = Y.util.Dom,
+var Dom = YAHOO.util.Dom,
   TRON = Koohii.TRON,
-  Event = Y.util.Event,
-  AjaxPanel = Core.Ui.AjaxPanel,
-  AjaxDialog = Core.Ui.AjaxDialog,
   INVISIBLE_MASK = "yui-invis-mask";
 
 // dialog status as returned by custom events (bind())
@@ -322,7 +318,7 @@ AjaxDialog.prototype = {
       this.options.center = yOptions.center = false;
     }
 
-    this.yPanel = new Y.widget.Panel(elYuiPanel, yOptions);
+    this.yPanel = new YAHOO.widget.Panel(elYuiPanel, yOptions);
 
     if (options.useMarkup) {
       // it is not visible yet, but clear "display:none" state from the src markup
@@ -340,7 +336,7 @@ AjaxDialog.prototype = {
 
     // apply skin if provided BEFORE we render the dialog, duh
     if (this.options.skin !== false) {
-      Dom.addClass(this.yPanel.element, this.options.skin);
+      this.yPanel.element.classList.add(this.options.skin);
     }
 
     // this positions the dialog with visibility:hidden, so the dialog dimensions can be found
@@ -409,7 +405,7 @@ AjaxDialog.prototype = {
   render: function () {
     if (this.options.useMarkup) {
       // show the static markup that was hidden
-      Dom.setStyle(this.container, "display", "block");
+      $$(this.container).css("display", "block");
     }
 
     if (this.options.center) {
@@ -418,7 +414,7 @@ AjaxDialog.prototype = {
 
     // enable our custom style that will make the modal mask transparent (see base.css)
     if (this.options.invisMask) {
-      Dom.addClass(document.body, INVISIBLE_MASK);
+      document.body.classList.add(INVISIBLE_MASK);
     }
 
     this.rendered = true;
@@ -717,7 +713,7 @@ AjaxDialog.prototype = {
 
     // remore our custom class
     if (this.options.invisMask) {
-      Dom.removeClass(document.body, INVISIBLE_MASK);
+      document.body.classList.remove(INVISIBLE_MASK);
     }
   },
 };

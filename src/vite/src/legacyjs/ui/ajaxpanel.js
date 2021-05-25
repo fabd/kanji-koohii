@@ -99,11 +99,11 @@
  *
  */
 
-import Core from "@old/core.js";
+import $$ from "@lib/koohii/dom";
+import Core from "@old/core";
 import EventCache from "@old/ui/eventcache";
 import EventDelegator from "@old/ui/eventdelegator";
 import EventDispatcher from "@old/ui/eventdispatcher";
-import $$ from "@lib/koohii/dom";
 import * as TRON from "@lib/koohii/tron";
 
 const YAHOO = window.YAHOO;
@@ -111,9 +111,7 @@ const YAHOO = window.YAHOO;
 let AjaxPanel = Core.make();
 
 // internal shorthands
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event;
+var Dom = YAHOO.util.Dom;
 
 /**
  * ShadeLayer creates a absolutely positioned div that covers an area of the page,
@@ -147,8 +145,6 @@ var Y = YAHOO,
  *
  */
 
-let ShadeLayer = Core.make();
-
 /**
  * Default settings
  */
@@ -158,6 +154,8 @@ const DEFAULT_OPACITY = 20;
  * Currently assumed to be lower value than Core.Ui.AjaxIndicator DEFAULT_ZINDEX
  */
 const DEFAULT_ZINDEX = 90;
+
+let ShadeLayer = Core.make();
 
 ShadeLayer.prototype = {
   init: function (options) {
@@ -225,11 +223,11 @@ ShadeLayer.prototype = {
     if (this.element) {
       this.resize();
     }
-    Dom.setStyle(this.elLayer, "display", "block");
+    $$(this.elLayer).css("display", "block");
   },
 
   hide: function () {
-    Dom.setStyle(this.elLayer, "display", "none");
+    $$(this.elLayer).css("display", "none");
   },
 
   resize: function () {
@@ -462,7 +460,7 @@ AjaxPanel.prototype = {
   getForm: function () {
     if (this.options.form === true) {
       return this.container.getElementsByTagName("form")[0];
-    } else if (Y.lang.isString(this.options.form)) {
+    } else if (YAHOO.lang.isString(this.options.form)) {
       // return the first form that matches the class name
       var form = Dom.getElementsByClassName(
         this.options.form,
@@ -488,7 +486,7 @@ AjaxPanel.prototype = {
     var form,
       skipSubmit = false;
 
-    console.log("AjaxPanel.submitFormEvent(%o) Form %o", e, Event.getTarget(e));
+    console.log("AjaxPanel.submitFormEvent(%o) Form %o", e, e.target);
 
     // if listener exists, and it returns false, do not auto-submit
     if (this.eventDispatcher.hasListeners("onSubmitForm")) {
@@ -503,7 +501,7 @@ AjaxPanel.prototype = {
       this.send();
     }
 
-    Event.stopEvent(e);
+    e.stopEvent();
   },
 
   /**
@@ -760,7 +758,7 @@ AjaxPanel.prototype = {
       this.connect();
     };
 
-    Event.on(elRetryLink, "click", retry, this, true);
+    $$(elRetryLink).on("click", this.retry.bind(this));
   },
 
   /**
@@ -779,7 +777,7 @@ AjaxPanel.prototype = {
    * Picks the first INPUT.text element in the form, and focus() it.
    */
   autoFocus: function () {
-    var input = Dom.getElementsByClassName("text", "input", this.container)[0];
+    var input = $$("input.text", this.container)[0];
     if (input && typeof input.focus === "function") {
       input.focus();
     }

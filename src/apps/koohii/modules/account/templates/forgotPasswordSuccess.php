@@ -30,12 +30,6 @@
 
 
 <?php koohii_onload_slot() ?>
-App.ready(function() {
-  var elFocus = YAHOO.util.Dom.get('email_address');
-  if (elFocus)
-  {
-    elFocus.focus();
-  }
-});
+  App.focusOnLoad('#email_address');
 <?php end_slot() ?>
 

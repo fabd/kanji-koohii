@@ -83,8 +83,6 @@
 </form>
 
 <?php koohii_onload_slot() ?>
-App.ready(function() {
-  
   // focus the first input field, or if there is an error the first invalid field
   const $$ = window.Koohii.Dom;
   const errorDiv = $$('#signup-form .has-error')[0];
@@ -92,6 +90,4 @@ App.ready(function() {
       ? $$('.form-control', errorDiv)[0]
       : $$('#signup-form .form-control')[0];
   App.focusOnLoad(elFocus);
-
-});
 <?php end_slot() ?>

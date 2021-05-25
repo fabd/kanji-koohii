@@ -5,153 +5,146 @@
 
 import $$, { domGet } from "@lib/koohii/dom";
 import App from "@old/app.js";
+import AjaxPanel from "@old/ui/ajaxpanel";
 import AjaxTable from "@old/ui/ajaxtable";
 
-App.ready(function () {
-  var Y = YAHOO,
-    Dom = Y.util.Dom;
+App.ManageFlashcards = {
+  init: function () {
+    var bodyED = App.getBodyED();
 
-  App.ManageFlashcards = {
-    init: function () {
-      var bodyED = App.getBodyED();
+    this.initView("#manage-view .ajax");
 
-      this.initView("#manage-view .ajax");
+    // Cancel/Reset buttons on ajax forms
+    bodyED.on("JSManageCancel", (e, el) => {
+      return this.load(el, { cancel: true });
+    });
+    bodyED.on("JSManageReset", (e, el) => {
+      return this.load(el, { reset: true });
+    });
 
-      // Cancel/Reset buttons on ajax forms
-      bodyED.on("JSManageCancel", (e, el) => {
-        return this.load(el, { cancel: true });
+    // Manage > Edit Keywords
+    var el = domGet("EditKeywordsTableComponent");
+    if (el) {
+      this.ajaxTable = new AjaxTable(el);
+      this.editKeywordUri = el.dataset.uri;
+      bodyED.on("JSEditKeyword", this.onEditKeyword.bind(this));
+    }
+  },
+
+  initView: function (viewId) {
+    this.viewDiv = $$(viewId)[0];
+
+    if (this.viewDiv) {
+      this.viewPanel = new AjaxPanel(this.viewDiv, {
+        bUseShading: false,
+        initContent: true,
+        form: "main-form",
+        events: {
+          onSubmitForm: this.onSubmitForm.bind(this),
+          onContentInit: this.onContentInit.bind(this),
+          onContentDestroy: this.onContentDestroy.bind(this),
+        },
       });
-      bodyED.on("JSManageReset", (e, el) => {
-        return this.load(el, { reset: true });
+    }
+  },
+
+  onContentInit: function () {
+    var i;
+
+    console.log("onContentInit()");
+
+    var el = (this.elSelectionTable = $$(".selection-table", this.viewDiv)[0]);
+    if (el) {
+      // clear checkboxes in case of page refresh
+      $$(".checkbox", el).each((el, i) => {
+        el.checked = false;
       });
 
-      // Manage > Edit Keywords
-      var el = domGet("EditKeywordsTableComponent");
-      if (el) {
-        this.ajaxTable = new AjaxTable(el);
-        this.editKeywordUri = el.dataset.uri;
-        bodyED.on("JSEditKeyword", this.onEditKeyword.bind(this));
-      }
-    },
+      this.selectionTable = new SelectionTable(el);
+    }
+  },
 
-    initView: function (viewId) {
-      this.viewDiv = $$(viewId)[0];
+  onContentDestroy: function () {
+    if (this.selectionTable) {
+      this.selectionTable.destroy();
+      this.selectionTable = null;
+    }
+  },
 
-      if (this.viewDiv) {
-        this.viewPanel = new Core.Ui.AjaxPanel(this.viewDiv, {
-          bUseShading: false,
-          initContent: true,
-          form: "main-form",
-          events: {
-            onSubmitForm: this.onSubmitForm.bind(this),
-            onContentInit: this.onContentInit.bind(this),
-            onContentDestroy: this.onContentDestroy.bind(this),
-          },
-        });
-      }
-    },
+  onSubmitForm: function (oEvent) {
+    var data = this.selectionTable ? this.selectionTable.getPostData() : null;
 
-    onContentInit: function () {
-      var i;
+    this.viewPanel.post(data);
 
-      console.log("onContentInit()");
+    return false;
+  },
 
-      var el = (this.elSelectionTable = $$(
-        ".selection-table",
-        this.viewDiv
-      )[0]);
-      if (el) {
-        // clear checkboxes in case of page refresh
-        $$(".checkbox", el).each((el, i) => {
-          el.checked = false;
-        });
+  load: function (element, params) {
+    this.viewPanel.post(params);
+    return false;
+  },
 
-        this.selectionTable = new SelectionTable(el);
-      }
-    },
+  /**
+   * Open the Edit Keyword dialog for keywords in the Manage > Edit Keywords table.
+   *
+   */
+  onEditKeyword: function (e, el) {
+    var options;
 
-    onContentDestroy: function () {
-      if (this.selectionTable) {
-        this.selectionTable.destroy();
-        this.selectionTable = null;
-      }
-    },
+    // @param  {String}   keyword
+    // @param  {Boolean}  next (optional)
+    const callback = (keyword, next) => {
+      console.log("EditKeywordComponent callback");
 
-    onSubmitForm: function (oEvent) {
-      var data = this.selectionTable ? this.selectionTable.getPostData() : null;
+      // get the custkeyword td
+      let tr = $$(el).closest("tr");
+      let td = $$(".JSCkwTd", tr)[0];
+      td.innerHTML = keyword;
 
-      this.viewPanel.post(data);
+      // force reload
+      this.oEditKeyword.destroy();
+      this.oEditKeyword = null;
 
-      return false;
-    },
-
-    load: function (element, params) {
-      this.viewPanel.post(params);
-      return false;
-    },
-
-    /**
-     * Open the Edit Keyword dialog for keywords in the Manage > Edit Keywords table.
-     *
-     */
-    onEditKeyword: function (e, el) {
-      var options;
-
-      // @param  {String}   keyword
-      // @param  {Boolean}  next (optional)
-      const callback = (keyword, next) => {
-        console.log("EditKeywordComponent callback");
-
-        // get the custkeyword td
-        let tr = $$(el).closest("tr");
-        let td = $$(".JSCkwTd", tr)[0];
-        td.innerHTML = keyword;
-
-        // force reload
-        this.oEditKeyword.destroy();
-        this.oEditKeyword = null;
-
-        if (next) {
-          console.log("Edit next keyword...");
-          let nextRow = Dom.getNextSibling(tr);
-          if (nextRow) {
-            let nextEl = $$(".JSEditKeyword", nextRow)[0];
-            window.setTimeout(() => {
-              this.onEditKeyword(null, nextEl);
-            }, 200);
-          }
+      if (next) {
+        console.log("Edit next keyword...");
+        let nextRow = tr.nextElementSibling();
+        if (nextRow) {
+          let nextEl = $$(".JSEditKeyword", nextRow)[0];
+          window.setTimeout(() => {
+            this.onEditKeyword(null, nextEl);
+          }, 200);
         }
       }
+    };
 
-      // just show dialog if clicking the same keyword twice, otherwise load
+    // just show dialog if clicking the same keyword twice, otherwise load
 
-      var ucsId = el.dataset.id;
-      if (!this.oEditKeyword || ucsId !== this.editKeywordId) {
-        var contextEl = $$(el).closest("td");
+    var ucsId = el.dataset.id;
+    if (!this.oEditKeyword || ucsId !== this.editKeywordId) {
+      var contextEl = $$(el).closest("td");
 
-        options = {
-          context: [contextEl, "tr", "tr", null, [0, 0]],
-          params: {
-            id: ucsId,
-            manage: true,
-          } /* manage: use the "Save & Next" chain editing */,
-        };
+      options = {
+        context: [contextEl, "tr", "tr", null, [0, 0]],
+        params: {
+          id: ucsId,
+          manage: true,
+        } /* manage: use the "Save & Next" chain editing */,
+      };
 
-        // FIXME ideally should call this.oEditKeyword.destroy() here if it is set
+      // FIXME ideally should call this.oEditKeyword.destroy() here if it is set
 
-        this.oEditKeyword = new App.Ui.EditKeywordComponent(
-          this.editKeywordUri,
-          options,
-          callback
-        );
-        this.editKeywordId = ucsId;
-      } else {
-        this.oEditKeyword.show();
-      }
+      this.oEditKeyword = new App.Ui.EditKeywordComponent(
+        this.editKeywordUri,
+        options,
+        callback
+      );
+      this.editKeywordId = ucsId;
+    } else {
+      this.oEditKeyword.show();
+    }
 
-      return false;
-    },
-  };
+    return false;
+  },
+};
 
-  App.ManageFlashcards.init();
-});
+// App.ManageFlashcards.init();

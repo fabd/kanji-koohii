@@ -78,7 +78,7 @@
     methods: {
       getAjaxPanel: function() {
         if (ajaxTable === null) {
-          ajaxTable = new Core.Widgets.AjaxTable('MyStoriesComponent')
+          ajaxTable = new App.Ui.AjaxTable('MyStoriesComponent')
         }
         return ajaxTable.oAjaxPanel
       },

@@ -10,6 +10,7 @@
 
 import $$ from "@lib/koohii/dom";
 import App from "@old/app.js";
+import AjaxTable from "@old/ui/ajaxtable";
 
 App.ready(function()
 {
@@ -33,7 +34,7 @@ App.ready(function()
       var el = Dom.get('EditKeywordsTableComponent');
       if (el)
       {
-        this.ajaxTable = new Core.Widgets.AjaxTable(el);
+        this.ajaxTable = new AjaxTable(el);
         this.editKeywordUri = el.dataset.uri;
         bodyED.on("JSEditKeyword", this.onEditKeyword, this);
       }

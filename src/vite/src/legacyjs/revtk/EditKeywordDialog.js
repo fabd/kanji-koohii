@@ -2,7 +2,9 @@
  * EditKeywordDialog
  *
  */
+
 import $$ from "@lib/koohii/dom";
+import EventCache from "@old/ui/eventcache";
 
 
   App.Ui.EditKeywordComponent = Core.make();
@@ -75,7 +77,7 @@ import $$ from "@lib/koohii/dom";
       this.props = t.getProps();
       
       // listener for the TAB key (chain edit on the Manage page)
-      this.evtCache = new Core.Ui.EventCache();
+      this.evtCache = new EventCache();
       this.evtCache.addEvent(this.getInput(), 'keydown', this.onKeyDown.bind(this));
       
       this.focus();

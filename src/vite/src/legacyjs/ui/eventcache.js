@@ -14,16 +14,16 @@
  *   destroy()
  *
  * Examples:
- *   this.evtCache = new Core.Ui.EventCache();
+ *   this.evtCache = new EventCache();
  *   this.evtCache.addEvent(elem, 'click', this.clickEvent.bind(this));
  *
  */
+import Core from "@old/core";
 
-const YAHOO = window.YAHOO;
-import Core from "@old/core.js";
+const YAHOO = window.YAHOO,
+  Event = YAHOO.util.Event;
 
-var Event = YAHOO.util.Event,
-  EventCache = (Core.Ui.EventCache = Core.make());
+let EventCache = Core.make();
 
 EventCache.prototype = {
   sId: null,

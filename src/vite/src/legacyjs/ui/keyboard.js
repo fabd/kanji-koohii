@@ -43,7 +43,7 @@ Keyboard.prototype = {
     this.options = options;
 
     this.oKeys = [];
-    this.evtCache = new Core.Ui.EventCache();
+    this.evtCache = new EventCache();
     this.evtCache.addEvent(document, "keydown", this.evKeydown.bind(this));
   },
 

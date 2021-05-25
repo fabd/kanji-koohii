@@ -10,7 +10,7 @@
  *
  */
 
-import $$ from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/koohii/dom";
 import Core from "@old/core";
 
 let AjaxIndicator = Core.make();
@@ -23,7 +23,7 @@ var Dom = YAHOO.util.Dom,
 AjaxIndicator.prototype = {
   init: function (options) {
     this.container =
-      options && options.container ? Dom.get(options.container) : document.body;
+      options && options.container ? domGet(options.container) : document.body;
     this.message = options.message ? options.message : DEFAULT_MESSAGE;
     this.indicator = null;
   },

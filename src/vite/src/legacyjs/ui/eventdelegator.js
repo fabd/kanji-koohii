@@ -73,6 +73,7 @@
  *
  */
 
+import $$, { domGet } from "@lib/koohii/dom";
 import Core from "@old/core";
 
 const EventDelegator = Core.make();
@@ -96,7 +97,7 @@ EventDelegator.prototype = {
     this.listeners = {};
     this.eventCache = [];
 
-    this.elRoot = Dom.get(elRoot);
+    this.elRoot = domGet(elRoot);
 
     console.assert(!!this.elRoot, "EventDelegator::init() elRoot is not valid");
 
@@ -167,7 +168,7 @@ EventDelegator.prototype = {
     this._debug(arguments);
 
     // a warning to help development
-    if (!Dom.get(name)) {
+    if (!domGet(name)) {
       console.warn(
         "Warning: EventDelegator()::onId('%s') id is not present in document",
         name

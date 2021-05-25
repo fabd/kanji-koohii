@@ -28,9 +28,10 @@
  *                returns an error.
  *
  */
-import $$ from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/koohii/dom";
 import Core from "@old/core";
 import AjaxPanel from "@old/ui/ajaxpanel";
+import EventDelegator from "@old/ui/eventdelegator";
 
 let AjaxTable = Core.make();
 
@@ -51,7 +52,7 @@ AjaxTable.prototype = {
   init: function (container, options) {
     this.options = !!options ? options : {};
 
-    this.container = Dom.get(container);
+    this.container = domGet(container);
     this.oAjaxPanel = new AjaxPanel(this.container, {
       events: {
         onResponse: this.onResponse.bind(this),
@@ -141,7 +142,7 @@ AjaxTable.prototype = {
 
     if (t.hasErrors()) {
       var sMsg = t.getErrors().join("\n"),
-        el = Dom.get(this.options.errorDiv);
+        el = domGet(this.options.errorDiv);
 
       if (el) {
         el.innerHTML = sMsg;

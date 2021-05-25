@@ -179,7 +179,7 @@
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
-import $$ from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/koohii/dom";
 import App from "@old/app";
 import Core from "@old/core";
 import AjaxPanel from "@old/ui/ajaxpanel";

@@ -3,10 +3,7 @@
  *
  */
 
-/* =require from "%WEB%" */
-/* =require "/revtk/components/EditKeywordDialog.js" */
-
-import $$ from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/koohii/dom";
 import App from "@old/app.js";
 import AjaxTable from "@old/ui/ajaxtable";
 
@@ -16,25 +13,24 @@ App.ready(function () {
 
   App.ManageFlashcards = {
     init: function () {
-      var that = this,
-        bodyED = App.getBodyED();
+      var bodyED = App.getBodyED();
 
       this.initView("#manage-view .ajax");
 
       // Cancel/Reset buttons on ajax forms
-      bodyED.on("JSManageCancel", function (e, el) {
-        return that.load(el, { cancel: true });
+      bodyED.on("JSManageCancel", (e, el) => {
+        return this.load(el, { cancel: true });
       });
-      bodyED.on("JSManageReset", function (e, el) {
-        return that.load(el, { reset: true });
+      bodyED.on("JSManageReset", (e, el) => {
+        return this.load(el, { reset: true });
       });
 
       // Manage > Edit Keywords
-      var el = Dom.get("EditKeywordsTableComponent");
+      var el = domGet("EditKeywordsTableComponent");
       if (el) {
         this.ajaxTable = new AjaxTable(el);
         this.editKeywordUri = el.dataset.uri;
-        bodyED.on("JSEditKeyword", this.onEditKeyword, this);
+        bodyED.on("JSEditKeyword", this.onEditKeyword.bind(this));
       }
     },
 
@@ -99,36 +95,29 @@ App.ready(function () {
      *
      */
     onEditKeyword: function (e, el) {
-      var options,
-        that = this;
+      var options;
 
       // @param  {String}   keyword
       // @param  {Boolean}  next (optional)
-      function callback(keyword, next) {
-        var tr, td, nextRow, nextEl;
-
+      const callback = (keyword, next) => {
         console.log("EditKeywordComponent callback");
 
         // get the custkeyword td
-        tr = Dom.getAncestorByTagName(el, "tr");
-        td = $$(".JSCkwTd", tr)[0];
+        let tr = $$(el).closest("tr");
+        let td = $$(".JSCkwTd", tr)[0];
         td.innerHTML = keyword;
 
         // force reload
-        that.oEditKeyword.destroy();
-        that.oEditKeyword = null;
+        this.oEditKeyword.destroy();
+        this.oEditKeyword = null;
 
         if (next) {
           console.log("Edit next keyword...");
-          nextRow = Dom.getNextSibling(tr);
+          let nextRow = Dom.getNextSibling(tr);
           if (nextRow) {
-            nextEl = Dom.getElementsByClassName(
-              "JSEditKeyword",
-              "img",
-              nextRow
-            )[0];
-            window.setTimeout(function () {
-              that.onEditKeyword(null, nextEl);
+            let nextEl = $$(".JSEditKeyword", nextRow)[0];
+            window.setTimeout(() => {
+              this.onEditKeyword(null, nextEl);
             }, 200);
           }
         }
@@ -138,7 +127,7 @@ App.ready(function () {
 
       var ucsId = el.dataset.id;
       if (!this.oEditKeyword || ucsId !== this.editKeywordId) {
-        var contextEl = Dom.getAncestorByTagName(el, "td");
+        var contextEl = $$(el).closest("td");
 
         options = {
           context: [contextEl, "tr", "tr", null, [0, 0]],

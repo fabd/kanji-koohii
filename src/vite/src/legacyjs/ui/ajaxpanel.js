@@ -99,7 +99,7 @@
  *
  */
 
-import $$ from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/koohii/dom";
 import Core from "@old/core";
 import EventCache from "@old/ui/eventcache";
 import EventDelegator from "@old/ui/eventdelegator";
@@ -168,7 +168,7 @@ ShadeLayer.prototype = {
     this.opacity = Math.max(Math.min(this.opacity, 100), 0);
 
     // look for conditional comment div
-    this.isIE = !!Dom.get("ie");
+    this.isIE = !!domGet("ie");
 
     if (options.element) {
       var offsets = Dom.getXY(options.element);
@@ -340,7 +340,7 @@ AjaxPanel.prototype = {
     // make sure to call onContentDestroy() before the first content replace, if used initContent
     this.contentLoaded = this.options.initContent === true ? true : false;
 
-    this.container = Dom.get(container);
+    this.container = domGet(container);
     console.assert(this.container, "AjaxPanel::init()  container not found");
 
     this.evtCache = new EventCache();
@@ -444,7 +444,7 @@ AjaxPanel.prototype = {
    * @param  {String|HTMLElement}  elForm   Form id or element
    */
   setForm: function (elForm) {
-    elForm = Dom.get(elForm);
+    elForm = domGet(elForm);
     if (!elForm.nodeName || elForm.nodeName.toLowerCase() !== "form") {
       throw new Error("setForm() argument 0 is not a form element");
     }

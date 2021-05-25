@@ -47,8 +47,8 @@
  *
  */
 
+import $$, { domGet } from "@lib/koohii/dom";
 import Core from "@old/core";
-import $$, { get as domGet } from "@lib/koohii/dom";
 import EventDispatcher from "@old/ui/eventdispatcher";
 
 /**

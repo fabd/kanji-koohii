@@ -3,10 +3,8 @@
  * 
  */
 
-/* FIXME : old deps */
-/* =require from "%WEB%" */
-/* =require "/revtk/components/FlashcardReview.js" */
-import $$ from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/koohii/dom";
+import FlashcardReview from "@old/revtk/FlashcardReview";
 
   var Y = YAHOO,
       Dom = Y.util.Dom;
@@ -29,14 +27,14 @@ import $$ from "@lib/koohii/dom";
         'scope':             this
       };
 
-      this.oReview = new App.Ui.FlashcardReview(options.fcr_options);
+      this.oReview = new FlashcardReview(options.fcr_options);
       
       this.oReview.addShortcutKey('f', 'flip');
       this.oReview.addShortcutKey(' ', 'flip');
       this.oReview.addShortcutKey('b', 'back');
 
       // stats panel
-      this.elStats = Dom.get('uiFcStats');
+      this.elStats = domGet('uiFcStats');
       this.elsCount = $$('#uiFcProgressBar .count'); //array
       this.elProgressBar = $$('#review-progress span')[0];
     },
@@ -85,7 +83,7 @@ import $$ from "@lib/koohii/dom";
       // set the google search url
       var searchTerm = this.oReview.getFlashcardData().compound;
       var searchUrl = 'http://www.google.co.jp/search?hl=ja&q=' + encodeURIComponent(searchTerm);
-      Dom.get('search-google-jp').href = searchUrl;
+      domGet('search-google-jp').href = searchUrl;
     },
 
     /**
@@ -166,14 +164,9 @@ import $$ from "@lib/koohii/dom";
      */
     setButtonState: function(elParent, bEnabled)
     {
-      var buttons, i;
-      
-      buttons = Dom.getElementsByClassName('uiIBtn', 'a', elParent);
-
-      for (i = 0; i < buttons.length; i++)
-      {
-        buttons[i].classList.toggle('uiFcBtnDisabled', bEnabled);
-      }
+      $$('.uiIBtn', elParent).each(el => {
+        el.classList.toggle('uiFcBtnDisabled', bEnabled);
+      })
     }
   };
 

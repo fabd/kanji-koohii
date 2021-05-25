@@ -16,7 +16,7 @@
 /* =require "/revtk/components/EditFlashcardDialog.js" */
 /* =require "/revtk/components/DictLookupDialog.js" */
 
-import $$ from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/koohii/dom";
 
   var Y = YAHOO,
       Dom = Y.util.Dom;
@@ -122,7 +122,7 @@ import $$ from "@lib/koohii/dom";
       this.updateStatsPanel();
 
       // set form data and redirect to summary with POST
-      var elFrm = Dom.get('uiFcRedirectForm');
+      var elFrm = domGet('uiFcRedirectForm');
       elFrm.method = 'post';
       elFrm.action = this.getOption('end_url');
       elFrm.elements['fc_pass'].value = this.countYes;
@@ -345,7 +345,7 @@ import $$ from "@lib/koohii/dom";
      */
     flashcardMenu: function()
     {
-      var el        = Dom.get('uiFcMenu'),
+      var el        = domGet('uiFcMenu'),
           data      = el.dataset,
           oCardData = this.oReview.getFlashcardData();
 
@@ -469,7 +469,7 @@ import $$ from "@lib/koohii/dom";
 
       $$('#uiFcStDeld').toggle(this.countDeleted > 0);
 
-      Dom.get('uiFcStDeld').getElementsByTagName('em')[0].innerHTML = this.countDeleted;
+      domGet('uiFcStDeld').getElementsByTagName('em')[0].innerHTML = this.countDeleted;
 
       Dom.getFirstChild('uiFcStDeldK').innerHTML = this.getDeletedCards();
     },
@@ -485,14 +485,9 @@ import $$ from "@lib/koohii/dom";
      */
     setButtonState: function(elParent, bEnabled)
     {
-      var buttons, i;
-      
-      buttons = Dom.getElementsByClassName('uiIBtn', 'a', elParent);
-
-      for (i = 0; i < buttons.length; i++)
-      {
-        buttons[i].classList.toggle('uiFcBtnDisabled', bEnabled);
-      }
+      $$('.uiIBtn', elParent).each(el => {
+        el.classList.toggle('uiFcBtnDisabled', bEnabled);
+      })
     }
   };
   

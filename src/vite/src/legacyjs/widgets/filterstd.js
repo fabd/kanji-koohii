@@ -17,6 +17,7 @@
  */
 
 import EventDelegator from "@old/ui/eventdelegator.js";
+import EventDispatcher from "@old/ui/eventdispatcher";
 
 let FilterStd = Core.make();
 
@@ -44,7 +45,7 @@ FilterStd.prototype = {
   init: function (elContainer, events) {
     var sEvent, i, tabs;
 
-    this.eventDispatcher = new Core.Ui.EventDispatcher();
+    this.eventDispatcher = new EventDispatcher();
     if (events) {
       for (sEvent in events) {
         this.eventDispatcher.connect(sEvent, events[sEvent]);

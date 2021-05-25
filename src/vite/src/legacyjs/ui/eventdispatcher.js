@@ -12,13 +12,11 @@
  *
  */
 
-const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
 
-Core.Ui.EventDispatcher = Core.make();
+let EventDispatcher = Core.make();
 
-var Y = YAHOO,
-  EventDispatcher = Core.Ui.EventDispatcher;
+const Y = window.YAHOO;
 
 EventDispatcher.prototype = {
   listeners: null,

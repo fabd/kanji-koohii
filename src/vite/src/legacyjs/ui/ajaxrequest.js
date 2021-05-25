@@ -90,7 +90,8 @@
  */
 
 const YAHOO = window.YAHOO;
-import Core from "@old/core.js";
+import Core from "@old/core";
+import * as TRON from "@lib/koohii/tron";
 
 /* =require from "%YUI2%" */
 /* =require "/connection/connection-min.js" */
@@ -106,7 +107,6 @@ Core.Ui.AjaxRequest = Core.make();
 // internal shorthands
 var Y = YAHOO,
   Dom = Y.util.Dom,
-  TRON = Koohii.TRON,
   AjaxRequest = Core.Ui.AjaxRequest,
   // constants
   DEFAULT_TIMEOUT = 5000; // default time out for AjaxRequests
@@ -331,7 +331,8 @@ AjaxRequest.prototype = {
         }
       }
 
-      o.responseTRON = o.responseJSON ? new TRON(o.responseJSON) : null;
+      o.responseTRON = o.responseJSON ? new TRON.Inst(o.responseJSON) : null;
+console.log('responseTRON ...', o.responseTRON);
 
       fn.apply(scope || window, [o]);
     }

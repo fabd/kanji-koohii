@@ -47,9 +47,11 @@
  *
  */
 
-const YAHOO = window.YAHOO;
 import Core from "@old/core.js";
 import $$ from "@lib/koohii/dom";
+import EventDispatcher from "@old/ui/eventdispatcher";
+
+const YAHOO = window.YAHOO;
 
 /**
  * Constructor.
@@ -57,7 +59,7 @@ import $$ from "@lib/koohii/dom";
  * @param {String} url      Request url, if it contains a query string, don't set options.parameters
  * @param {Object} options  Constructor options
  */
-Core.Ui.AjaxQueue = Core.make();
+let AjaxQueue = Core.make();
 
 // internal shorthands
 var Y = YAHOO,
@@ -78,7 +80,7 @@ Core.Ui.AjaxQueue.prototype = {
     this.flow = false;
 
     // events
-    this.eventDispatcher = new Core.Ui.EventDispatcher();
+    this.eventDispatcher = new EventDispatcher();
     if (options.events) {
       for (var sEvent in options.events) {
         this.eventDispatcher.connect(sEvent, options.events[sEvent]);

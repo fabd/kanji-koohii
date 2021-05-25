@@ -26,152 +26,141 @@
  */
 /* globals YAHOO, Core, App */
 
-(function(){
+import EventDispatcher from "@old/ui/eventdispatcher";
 
-  App.Ui.EditFlashcardDialog = Core.make();
+let EditFlashcardDialog = Core.make();
 
-  const isMobile = (window.innerWidth <= 720);
+const isMobile = window.innerWidth <= 720;
 
-  var Y = YAHOO,
-      Dom = Y.util.Dom,
-      Event = Y.util.Event,
-      EditFlashcardDialog = App.Ui.EditFlashcardDialog;
+const Y = YAHOO,
+  Dom = Y.util.Dom,
+  Event = Y.util.Event;
 
-  EditFlashcardDialog.prototype =
-  {
-    /**
-     * 
-     * @constructor
-     */
-    init: function(uri, params, context, options)
-    {
-      console.log("EditFlashcardDialog(%s)", uri);
+EditFlashcardDialog.prototype = {
+  /**
+   *
+   * @constructor
+   */
+  init: function (uri, params, context, options) {
+    console.log("EditFlashcardDialog(%s)", uri);
 
-      this.params  = params;
-      this.uri     = uri;
-      this.options = options;
+    this.params = params;
+    this.uri = uri;
+    this.options = options;
 
-      this.dlgOpts = {
-        requestUri:  uri,
-        requestData: params,
-        skin:        isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
-        mobile:      isMobile,
-        close:       true, //!isMobile,
-        width:       270,
-        scope:       this,
-        events:      {
-          onDialogHide:    this.onHide,
-          onDialogResponse:this.onResponse,
-          onDialogSuccess: this.onSuccess
-        }
-      };
+    this.dlgOpts = {
+      requestUri: uri,
+      requestData: params,
+      skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+      mobile: isMobile,
+      close: true, //!isMobile,
+      width: 270,
+      scope: this,
+      events: {
+        onDialogHide: this.onHide,
+        onDialogResponse: this.onResponse,
+        onDialogSuccess: this.onSuccess,
+      },
+    };
 
-      if (!isMobile)
-      {
-        this.dlgOpts.context = context;
+    if (!isMobile) {
+      this.dlgOpts.context = context;
+    }
+
+    // register events
+    this.eventDispatcher = new EventDispatcher();
+    if (options.events) {
+      var events = options.events,
+        eventName;
+      for (eventName in events) {
+        // if scope is undefined, it will be ignored
+        this.eventDispatcher.connect(
+          eventName,
+          events[eventName],
+          options.scope
+        );
       }
+    }
 
-      // register events
-      this.eventDispatcher = new Core.Ui.EventDispatcher();
-      if (options.events) {
-        var events = options.events, eventName;
-        for (eventName in events) {
-          // if scope is undefined, it will be ignored
-          this.eventDispatcher.connect(eventName, events[eventName], options.scope);
-        }
-      }
+    this.show();
+  },
 
-      this.show();
-    },
+  destroy: function () {
+    this.dialog.destroy();
+    this.dialog = null;
+    this.eventDispatcher.destroy();
+  },
 
-    destroy: function()
-    {
+  /**
+   * Show again, after it is closed with the YUI close button.
+   */
+  show: function () {
+    if (this.dialogRefresh) {
       this.dialog.destroy();
       this.dialog = null;
-      this.eventDispatcher.destroy();
-    },
+      this.dialogRefresh = false;
+    }
 
-    /**
-     * Show again, after it is closed with the YUI close button.
-     */
-    show: function()
-    {
-      if (this.dialogRefresh)
-      {
-        this.dialog.destroy();
-        this.dialog = null;
-        this.dialogRefresh = false;
-      }
+    if (!this.dialog) {
+      this.dialog = new Core.Ui.AjaxDialog(null, this.dlgOpts);
+      this.dialog.on("JsMenuItem", this.onMenuItem, this);
+    }
 
-      if (!this.dialog)
-      {
-        this.dialog = new Core.Ui.AjaxDialog(null, this.dlgOpts);
-        this.dialog.on('JsMenuItem', this.onMenuItem, this);
-      }
+    this.dialog.show();
+  },
 
-      this.dialog.show();
-    },
+  onHide: function () {
+    console.log("EditFlashcardDialog::onHide()");
 
-    onHide: function()
-    {
-      console.log('EditFlashcardDialog::onHide()');
-     
-      // clumsy page reload uri received from last response TRON "reload" property
-      if (this.reload)
-      {
-        window.location.href = this.reload;
-        return false;
-      }
-
-      this.eventDispatcher.notify('onMenuHide');
-
-      // returns false to prevent the dialog from being destroyed.
-      return false;
-    },
-
-    onResponse: function(t)
-    {
-      var props = t.getProps();
-      if (props.result)
-      {
-        // flashcard state changed so dialog will reload
-        this.dialogRefresh = true;
-        this.eventDispatcher.notify('onMenuResponse', props.result);
-      }
-
-      this.reload = props.reload;
-    },
-
-    onMenuItem: function(ev, el)
-    {
-      var data   = el.dataset,
-          panel = this.dialog.getAjaxPanel();
-
-      if (data.menuid === 'page')
-      {
-        // this menuitem forwards to another page
-        window.location.href = data.uri;
-        return false;
-      }
-      else if (data.menuid === 'close')
-      {
-        // this menuitem closes the dialog
-        this.dialog.hide();
-        return false;
-      }
-      else if (this.eventDispatcher.hasListeners('onMenuItem') && this.eventDispatcher.notify('onMenuItem', data.menuid))
-      {
-        // menu item listener returns true to close dialog
-        this.dialog.hide();
-        return false;
-      }
-
-      // post the base params and the menuid
-      var params = { ...this.params, ...{ "menu": data.menuid } };
-      panel.post(params, this.dlgOpts.requestUri);
+    // clumsy page reload uri received from last response TRON "reload" property
+    if (this.reload) {
+      window.location.href = this.reload;
       return false;
     }
-  };
 
-}());
+    this.eventDispatcher.notify("onMenuHide");
 
+    // returns false to prevent the dialog from being destroyed.
+    return false;
+  },
+
+  onResponse: function (t) {
+    var props = t.getProps();
+    if (props.result) {
+      // flashcard state changed so dialog will reload
+      this.dialogRefresh = true;
+      this.eventDispatcher.notify("onMenuResponse", props.result);
+    }
+
+    this.reload = props.reload;
+  },
+
+  onMenuItem: function (ev, el) {
+    var data = el.dataset,
+      panel = this.dialog.getAjaxPanel();
+
+    if (data.menuid === "page") {
+      // this menuitem forwards to another page
+      window.location.href = data.uri;
+      return false;
+    } else if (data.menuid === "close") {
+      // this menuitem closes the dialog
+      this.dialog.hide();
+      return false;
+    } else if (
+      this.eventDispatcher.hasListeners("onMenuItem") &&
+      this.eventDispatcher.notify("onMenuItem", data.menuid)
+    ) {
+      // menu item listener returns true to close dialog
+      this.dialog.hide();
+      return false;
+    }
+
+    // post the base params and the menuid
+    var params = { ...this.params, ...{ menu: data.menuid } };
+    panel.post(params, this.dlgOpts.requestUri);
+    return false;
+  },
+};
+
+export default EditFlashcardDialog;

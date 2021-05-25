@@ -74,11 +74,10 @@
  */
 
 import Core from "@old/core.js";
-const YAHOO = window.YAHOO;
 
 const EventDelegator = Core.make();
 
-var Y = YAHOO,
+var Y = window.YAHOO,
   Dom = Y.util.Dom,
   Event = Y.util.Event,
   PREFIX_TAG = "%",

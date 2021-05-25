@@ -96,14 +96,14 @@
  *
  */
 /* globals YAHOO, Core, App, VueInstance */
-(function() {
 
-  App.Ui.FlashcardReview = Core.make();
+import EventDispatcher from "@old/ui/eventdispatcher";
 
-  var Y = YAHOO,
-      Dom = Y.util.Dom,
-      Event = Y.util.Event,
-      FlashcardReview = App.Ui.FlashcardReview;
+  let FlashcardReview = Core.make();
+
+const Y = YAHOO,
+  Dom = Y.util.Dom,
+  Event = Y.util.Event;
 
   FlashcardReview.prototype =
   {
@@ -173,7 +173,7 @@
       }
 
       // register listeners
-      this.eventDispatcher = new Core.Ui.EventDispatcher();
+      this.eventDispatcher = new EventDispatcher();
       var scope = oOptions.events.scope;
       for (var sEvent in oOptions.events) {
         this.eventDispatcher.connect(sEvent, oOptions.events[sEvent], scope);
@@ -247,9 +247,9 @@
     },
 
     /**
-     * Core.Ui.EventDispatcher proxy.
+     * EventDispatcher proxy.
      * 
-     * @see Core.Ui.EventDispatcher, scope is optional.
+     * @see EventDispatcher, scope is optional.
      */
     connect: function(sName, fnEvent, scope)
     {
@@ -738,4 +738,4 @@
     
   };
 
-}());
+export default FlashcardReview;

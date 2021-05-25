@@ -179,11 +179,13 @@
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
-const YAHOO = window.YAHOO;
 import App from "@old/app.js";
 import Core from "@old/core.js";
 import $$ from "@lib/koohii/dom";
 import EventDelegator from "@old/ui/eventdelegator.js";
+import EventDispatcher from "@old/ui/eventdispatcher";
+
+const YAHOO = window.YAHOO;
 
 function insertTop(node) {
   var elParent = document.body;
@@ -356,7 +358,7 @@ AjaxDialog.prototype = {
     //this.yPanel.destroyEvent.subscribe(function(){ that.onDialogClose(); }, this, true);
 
     // register events
-    this.eventDispatcher = new Core.Ui.EventDispatcher();
+    this.eventDispatcher = new EventDispatcher();
     if (options.events) {
       var events = options.events,
         eventName;

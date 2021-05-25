@@ -65,7 +65,7 @@
  *                                   Note that TRON (t) is undefined the first time, if using initContent option, since
  *                                   there was no response.
  *   onContentDestroy()              Called before content is replaced, cleanup widgets, events, etc.
- *   onSubmitForm(e)                 A form is submitted (e is the event object). Use YAHOO.util.Event.getTarget(e)
+ *   onSubmitForm(e)                 A form is submitted (e is the event object). Use e.target
  *                                   to identify the form element if needed. Return false to cancel the default submission,
  *                                   (the listener may do a manual get/post/send with extra parameters), return a truthy value
  *                                   to proceed with the default form submission.
@@ -100,18 +100,16 @@
  */
 
 import $$, { domGet } from "@lib/koohii/dom";
+import Lang from "@lib/core/lang";
 import Core from "@old/core";
+import AjaxIndicator from "@old/ui/ajaxindicator";
+import AjaxRequest from "@old/ui/ajaxrequest";
 import EventCache from "@old/ui/eventcache";
 import EventDelegator from "@old/ui/eventdelegator";
 import EventDispatcher from "@old/ui/eventdispatcher";
 import * as TRON from "@lib/koohii/tron";
 
-const YAHOO = window.YAHOO;
-
 let AjaxPanel = Core.make();
-
-// internal shorthands
-var Dom = YAHOO.util.Dom;
 
 /**
  * ShadeLayer creates a absolutely positioned div that covers an area of the page,
@@ -151,7 +149,7 @@ var Dom = YAHOO.util.Dom;
 const DEFAULT_COLOR = "#000";
 const DEFAULT_OPACITY = 20;
 /**
- * Currently assumed to be lower value than Core.Ui.AjaxIndicator DEFAULT_ZINDEX
+ * Currently assumed to be lower value than AjaxIndicator DEFAULT_ZINDEX
  */
 const DEFAULT_ZINDEX = 90;
 
@@ -455,7 +453,7 @@ AjaxPanel.prototype = {
   getForm: function () {
     if (this.options.form === true) {
       return this.container.getElementsByTagName("form")[0];
-    } else if (YAHOO.lang.isString(this.options.form)) {
+    } else if (Lang.isString(this.options.form)) {
       // return the first form that matches the class name
       var form = Dom.getElementsByClassName(
         this.options.form,
@@ -628,7 +626,7 @@ AjaxPanel.prototype = {
       scope: this,
     };
 
-    this.ajaxRequest = new Core.Ui.AjaxRequest(this.connection.url, options);
+    this.ajaxRequest = new AjaxRequest(this.connection.url, options);
   },
 
   /**
@@ -657,7 +655,7 @@ AjaxPanel.prototype = {
 
     // create a new uiAjaxIndicator because it is added inside the container
     // and the container content can be replaced
-    this.ajaxIndicator = new Core.Ui.AjaxIndicator({
+    this.ajaxIndicator = new AjaxIndicator({
       container: this.container,
       message: "Loading...",
     });
@@ -736,7 +734,7 @@ AjaxPanel.prototype = {
    * @param {Object} sMessage
    */
   showErrorMessage: function (sMessage) {
-    this.ajaxErrorIndicator = new Core.Ui.AjaxIndicator({
+    this.ajaxErrorIndicator = new AjaxIndicator({
       container: this.container,
       message:
         sMessage +

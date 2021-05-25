@@ -318,7 +318,7 @@ AjaxRequest.prototype = {
           o.responseJSON = JSON.parse(o.responseText);
         } catch (e) {
           console.warn(
-            "Core.Ui.AjaxRequest::handleSuccess()  Could not parse JSON."
+            "AjaxRequest::handleSuccess()  Could not parse JSON."
           );
           o.responseJSON = null;
 

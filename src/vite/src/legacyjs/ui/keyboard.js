@@ -1,5 +1,5 @@
 /**
- * Core.Ui.Keyboard adds simple keyboard shortcut handling with callbacks.
+ * Keyboard adds simple keyboard shortcut handling with callbacks.
  *
  * - Only alphanumerical characters.
  * - Control key combos do not trigger the callback so as not to override
@@ -26,14 +26,7 @@
 import { stopEvent } from "@lib/koohii/dom";
 import Core from "@old/core.js";
 
-Core.Ui.Keyboard = Core.make();
-
-console.assert(window.YAHOO);
-const YAHOO = window.YAHOO;
-
-var 
-  Event = YAHOO.util.Event,
-  Keyboard = Core.Ui.Keyboard;
+let Keyboard = Core.make();
 
 Keyboard.prototype = {
   keys: null,

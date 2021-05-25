@@ -1,5 +1,5 @@
 /**
- * Core.Ui.AjaxQueue handles single and mutliple ajax requests in sequential fashion.
+ * AjaxQueue handles single and mutliple ajax requests in sequential fashion.
  *
  * Simply queue() urls and options as for uiAjaxRequest, and the callbacks will
  * be called in sequence.
@@ -16,7 +16,7 @@
  * Methods:
  *
  *   initialize(options)
- *   add(url, options)                Url and options passed straight to Core.Ui.AjaxRequest.
+ *   add(url, options)                Url and options passed straight to AjaxRequest.
  *                                    The property options.argument becomes the argument for the "onSuccess" notification.
  *                                    EXCEPT set options.events, DO NOT USE the AjaxRequest callbacks.
  *
@@ -48,7 +48,9 @@
  */
 
 import $$, { domGet, stopEvent } from "@lib/koohii/dom";
+import Lang from "@lib/core/lang";
 import Core from "@old/core";
+import AjaxRequest from "@old/ui/ajaxrequest";
 import EventDispatcher from "@old/ui/eventdispatcher";
 
 /**
@@ -59,7 +61,7 @@ import EventDispatcher from "@old/ui/eventdispatcher";
  */
 let AjaxQueue = Core.make();
 
-Core.Ui.AjaxQueue.prototype = {
+AjaxQueue.prototype = {
   blobs: [],
   curblob: null,
   flow: false,
@@ -94,7 +96,7 @@ Core.Ui.AjaxQueue.prototype = {
    *
    * Parameters as for AjaxRequest constructor.
    *
-   * @see  Core.Ui.AjaxRequest for all options.
+   * @see  AjaxRequest for all options.
    */
   add: function (url, options) {
     // set some defaults
@@ -162,7 +164,7 @@ Core.Ui.AjaxQueue.prototype = {
   send: function (blob) {
     // console.log('AjaxQueue.send(%o)', blob);
 
-    this.ajaxRequest = new Core.Ui.AjaxRequest(blob.url, blob.options);
+    this.ajaxRequest = new AjaxRequest(blob.url, blob.options);
   },
 
   /**
@@ -200,7 +202,7 @@ Core.Ui.AjaxQueue.prototype = {
 
     // success notification
     var args = ["onSuccess", o];
-    if (!YAHOO.lang.isUndefined(this.curblob.options.argument)) {
+    if (!Lang.isUndefined(this.curblob.options.argument)) {
       args.push(this.curblob.options.argument);
     }
     this.eventDispatcher.notify.apply(this.eventDispatcher, args);

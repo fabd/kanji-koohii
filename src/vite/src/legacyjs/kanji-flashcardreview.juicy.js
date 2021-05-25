@@ -17,6 +17,7 @@
 /* =require "/revtk/components/DictLookupDialog.js" */
 
 import $$, { domGet, hasClass } from "@lib/koohii/dom";
+import AjaxDialog from "@old/ui/ajaxdialog";
 
   var Y = YAHOO,
       Dom = Y.util.Dom;
@@ -184,7 +185,7 @@ import $$, { domGet, hasClass } from "@lib/koohii/dom";
       // help dialog
       if (sActionId === 'help')
       {
-        var dlg = new Core.Ui.AjaxDialog('#JsFcHelpDlg', {
+        var dlg = new AjaxDialog('#JsFcHelpDlg', {
           useMarkup: true,
           context:   ["JsBtnHelp", "tl", "bl", null, [0, 0]],
           skin:      "rtk-skin-dlg",

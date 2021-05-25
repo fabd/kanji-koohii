@@ -15,7 +15,10 @@ var Core = {
    * A constructor function to create a new class.
    *
    * Examples:
-   *   Core.Ui.FooWidget = Core.make();
+   *   ```
+   *   var Widget = Core.make();
+   *   Widget.prototype = { init(), etc. }
+   *   ```
    *
    * @param {Object} px   Optional prototype object containing properties and methods
    * @return {Function}   Class constructor that will call init() method when instanced

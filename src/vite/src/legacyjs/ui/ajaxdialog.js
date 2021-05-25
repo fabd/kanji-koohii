@@ -95,7 +95,7 @@
  *
  *     handler: function(e, el) {
  *       // OPTIONAL: return a dialog status to trigger the status events
- *       myAjaxDialog.handleDialogStatus(Core.Ui.AjaxDialog.STATUS_SUCCESS);
+ *       myAjaxDialog.handleDialogStatus(AjaxDialog.STATUS_SUCCESS);
  *
  *       return false;
  *     }
@@ -170,16 +170,16 @@
  *
  */
 
-/* =require from "%YUI2%" */
+/* OBSOLETE Juicer imports, (= dependencies) */
+/* requires !!! from "%YUI2%" */
 /* =require "/container/container-min.js" */
-
 /* OPTIONAL: Animation (only required if using ContainerEffect) */
 /* =require "/animation/animation-min.js" */
-
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
 import $$, { domGet, hasClass } from "@lib/koohii/dom";
+import * as TRON from "@lib/koohii/tron";
 import App from "@old/app";
 import Core from "@old/core";
 import AjaxPanel from "@old/ui/ajaxpanel";
@@ -199,20 +199,7 @@ function insertTop(node) {
  */
 let AjaxDialog = Core.make();
 
-/**
- * Disable the first/last focus because of annoying :focus outline,
- * and eventually if we want a user friendly auto-focus of the first form field
- * we want more control than yui's default behaviour.
- *
- * @see http://developer.yahoo.com/yui/docs/YAHOO.widget.Panel.html#property_YAHOO.widget.Panel.FOCUSABLE
- */
-console.assert(window.YAHOO);
-YAHOO.widget.Panel.FOCUSABLE = [];
-
-// internal shorthands
-var Dom = YAHOO.util.Dom,
-  TRON = Koohii.TRON,
-  INVISIBLE_MASK = "yui-invis-mask";
+const INVISIBLE_MASK = "yui-invis-mask";
 
 // dialog status as returned by custom events (bind())
 AjaxDialog.STATUS_FAILED = 0;
@@ -255,6 +242,16 @@ AjaxDialog.prototype = {
     options = !!options ? options : {};
 
     console.log("AjaxDialog.init() Options: %o", options);
+
+    /**
+     * Disable the first/last focus because of annoying :focus outline,
+     * and eventually if we want a user friendly auto-focus of the first form field
+     * we want more control than yui's default behaviour.
+     *
+     * @see http://developer.yahoo.com/yui/docs/YAHOO.widget.Panel.html#property_YAHOO.widget.Panel.FOCUSABLE
+     */
+    console.assert(window.YAHOO);
+    YAHOO.widget.Panel.FOCUSABLE = [];
 
     // set defaults
     this.options = {
@@ -432,7 +429,7 @@ AjaxDialog.prototype = {
       // the YUI Panel body (.bd) element is our AjaxPanel container
       this.contentDiv = this.yPanel.body;
 
-      this.ajaxPanel = new Core.Ui.AjaxPanel(this.contentDiv, {
+      this.ajaxPanel = new AjaxPanel(this.contentDiv, {
         initContent: false, // trigger onPanelInit only after content is loaded
         bUseShading: false,
         timeout: this.options.timeout,
@@ -520,7 +517,7 @@ AjaxDialog.prototype = {
   /**
    * Returns this dialog's AjaxPanel.
    *
-   * @return {Object}   Core.Ui.AjaxPanel instance, or null (eg, if using static dialog).
+   * @return {Object}   AjaxPanel instance, or null (eg, if using static dialog).
    */
   getAjaxPanel: function () {
     return this.ajaxPanel;

@@ -26,15 +26,13 @@
  */
 /* globals YAHOO, Core, App */
 
+import Core from "@old/core";
+import AjaxDialog from "@old/ui/ajaxdialog";
 import EventDispatcher from "@old/ui/eventdispatcher";
 
 let EditFlashcardDialog = Core.make();
 
 const isMobile = window.innerWidth <= 720;
-
-const Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event;
 
 EditFlashcardDialog.prototype = {
   /**
@@ -102,7 +100,7 @@ EditFlashcardDialog.prototype = {
     }
 
     if (!this.dialog) {
-      this.dialog = new Core.Ui.AjaxDialog(null, this.dlgOpts);
+      this.dialog = new AjaxDialog(null, this.dlgOpts);
       this.dialog.on("JsMenuItem", this.onMenuItem, this);
     }
 

@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ComponentPublicInstance } from "vue";
 import $$ from "@lib/koohii/dom";
 
 export default defineComponent({
@@ -44,11 +44,11 @@ export default defineComponent({
   },
 
   computed: {
-    hasChildren() {
+    hasChildren(): boolean {
       return this.sm.children && this.sm.children.length > 0;
     },
     rootMenu() {
-      var parent = this.$parent;
+      var parent = this.$parent as ComponentPublicInstance;
       while (parent.$options.name !== "KoohiiNavMenu") {
         parent = parent.$parent;
       }

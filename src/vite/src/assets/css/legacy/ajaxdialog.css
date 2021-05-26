@@ -22,6 +22,9 @@
  * @version  2.0
  */
 
+ /* Sam Skin CSS (AjaxDialog) */
+@import "./vendor/yui2-container.css";
+
 /**
  * Styling defaults for AjaxDialog.
  */

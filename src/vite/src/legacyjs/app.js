@@ -2,26 +2,18 @@
  * OBSOLETE. Needs to be phased out eventually.
  */
 
-// legacy YUI2 is loaded separately by <script>
-if (!window.YAHOO) {
-  console.warn('YAHOO is not loaded');
-}
-
-import Core from "@old/core.js";
-
-var App = {};
-
-App.StudyPage = null; // declare it here, set in study entry point
-
-App.Ui = {};
-
 import $$ from "@lib/koohii/dom.ts";
+import Core from "@old/core";
+import EventDelegator from "@old/ui/eventdelegator";
 
-var Y = YAHOO,
-  Dom = Y.util.Dom,
-  Event = Y.util.Event;
+let App = {};
 
-Y.lang.augmentObject(App, {
+import AjaxTable from "@old/ui/ajaxtable";
+App.Ui = {
+  AjaxTable,
+};
+
+App = Object.assign(App, {
   /**
    * EventDelegator.
    */

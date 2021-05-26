@@ -4,9 +4,8 @@
  */
 
 @import "./_theme.scss";
-
-@import "./components/_EditKeywordDialog.scss";
-@import "./components/_EditFlashcardDialog.scss";
+@import "@css/components/_EditKeywordDialog.scss";
+@import "@css/components/_EditFlashcardDialog.scss";
 
 
 #EditStoryComponent { margin:0 0 2em; }

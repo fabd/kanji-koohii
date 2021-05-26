@@ -13,12 +13,33 @@
  *
  */
 
-import Vue, { VueConstructor } from "vue";
-import { KoohiiAPI } from "@core/api";
+import Vue, {
+  DefineComponent,
+  ComponentPublicInstance,
+  VueConstructor,
+} from "vue";
+import { KoohiiAPI } from "@lib/core/api";
 import Lang from "@lib/core/lang";
 import Dom from "@lib/koohii/dom";
 import { Inst as TronFactory } from "@lib/koohii/tron";
 import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
+
+/**
+ * Vue misc.
+ */
+declare global {
+  // generic component definition (as from an .vue import)
+  export type TVueDefine = DefineComponent<{}, {}, any>;
+
+  // typing of props passed to createApps(root, props)
+  export type TVuePropsData = Record<string, unknown>;
+
+  // a generic Vue component instance
+  export type TVueInstance = ComponentPublicInstance;
+
+  // extract component instance (component T's custom properties, methods, etc)
+  export type TVueInstanceOf<T> = T extends new () => infer I ? I : never;
+}
 
 declare global {
   export interface KoohiiGlobals {
@@ -26,20 +47,20 @@ declare global {
 
     // DomJS provides simple DOM utilities to the old frontend code
     Dom: typeof Dom;
-    
+
     // JSON wrapper
     TRON: typeof TronFactory;
-    
+
     // *instances* of components, shared between misc. legacy Javascripts
     Refs: {
       [componentName: string]: any;
     };
-    
+
     //
     Util: {
       Lang: typeof Lang;
     };
-    
+
     // references to Vue components that can be instanced later
     UX: { [componentName: string]: any };
   }
@@ -47,13 +68,15 @@ declare global {
   interface Window {
     // base URL for API requests (cf. layout.php & koohii_base_url() helper)
     KK_BASE_URL: string;
-    
+
     Koohii: KoohiiGlobals;
-    Vue: VueConstructor<Vue>;
+    // Vue: VueConstructor<Vue>;
     VueInstance: VueInstanceFn;
 
     // set from php & legacy javascript
-    App: {
+    App: any;
+
+    /* OBSOLETE
       Ui?: {
         // these are set by legacy js components in `web/revtk/components/`
         // when included in the legacy bundles `web/revtk/*.juicy.js`
@@ -65,8 +88,9 @@ declare global {
       KanjiReview?: AppKanjiReview; // flashcard review page
     };
 
-    // TypeScrift refactor WIP
+    // FIXME (use props?) apps/koohii/modules/review/templates/_LeitnerChart.php
     leitner_chart_data: any;
+    */
   }
 
   /**

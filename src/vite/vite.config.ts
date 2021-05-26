@@ -15,8 +15,12 @@ export default defineConfig({
     // emit manifest so PHP can find the hashed files
     manifest: true,
 
+    // `false` currently doesn't output css in manifest.json
+    cssCodeSplit: true,
+
+    // custom entry points  https://rollupjs.org/guide/en/#input
     rollupOptions: {
-      input: "./src/entry-landing.ts",
+      input: ["./src/entry-landing.ts", "./src/entry-study.ts"],
     },
   },
 
@@ -26,11 +30,20 @@ export default defineConfig({
     // ---------------------------------------------------------------------------
     alias: [
       { find: "@", replacement: path.resolve(__dirname, "./src") },
-      { find: "@css", replacement: path.resolve(__dirname, "./src/assets/css") },
-      { find: "@img", replacement: path.resolve(__dirname, "./src/assets/img") },
+      {
+        find: "@css",
+        replacement: path.resolve(__dirname, "./src/assets/css"),
+      },
+      {
+        find: "@img",
+        replacement: path.resolve(__dirname, "./src/assets/img"),
+      },
       { find: "@lib", replacement: path.resolve(__dirname, "./src/lib") },
       { find: "@old", replacement: path.resolve(__dirname, "./src/legacyjs") },
-      { find: "@yui", replacement: path.resolve(__dirname, "./src/legacyjs/yui2-build") },
+      {
+        find: "@yui",
+        replacement: path.resolve(__dirname, "./src/legacyjs/yui2-build"),
+      },
       // {
       //   find: "@assets",
       //   replacement: path.resolve(__dirname, "./src/assets"),

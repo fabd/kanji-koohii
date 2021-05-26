@@ -1,4 +1,3 @@
-
 /**
  * LANDING PAGE BUNDLE
  *
@@ -8,11 +7,10 @@
  *
  */
 
-// console.log("@landing-bundle 1");
+console.log("@entry landing ...");
 
 // import "landing page only" stylesheet
 import "@css/home.scss";
-
 
 import * as RootBundle from "@lib/helpers/root-bundle";
 RootBundle.init();

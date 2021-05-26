@@ -98,7 +98,7 @@ EventDelegator.prototype = {
 
     this.elRoot = domGet(elRoot);
 
-    console.assert(!!this.elRoot, "EventDelegator::init() elRoot is not valid");
+    console.assert(Lang.isNode(this.elRoot), "EventDelegator::init() elRoot is not valid");
 
     if (Lang.isString(types)) {
       types = [types];

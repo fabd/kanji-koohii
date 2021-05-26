@@ -4,7 +4,7 @@
  * @see  https://vuejs.org/v2/guide/typescript.html#Augmenting-Types-for-Use-with-Plugins
  */
 
-import { KoohiiAPI } from "@core/api";
+import { KoohiiAPI } from "@lib/core/api";
 import Vue from "vue";
 
 declare module "vue/types/vue" {

@@ -25,10 +25,9 @@
 </template>
 
 <script lang="ts">
-// import Vue from "vue";
 import { defineComponent, nextTick } from "vue";
 import $$ from "@lib/koohii/dom";
-import { getScrollBarWidth } from "@lib/koohii/utils";
+import { getScrollBarWidth } from "@lib/koohii/utils.js";
 
 export default defineComponent({
   data() {

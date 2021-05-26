@@ -1,32 +1,12 @@
 /**
- * Bundle include de tous les widgets utilisés dans Kanji Koohii.
- *
- * Ce bundle est aussi inclus dans le backend, et (idéalement) Core (pour les demos des widgets).
- *
- * TODO
- *
- *   Les widgets devraient être organisés sous:
- *
- *     lib/front/corejs/widgets/<widgetname>/...
- *
- *   Et pour les widgets spécifiques Kanji Koohii:
- *
- *     lib/front/revtk/widgets/<widgetname>/...
- *
+ * THIS IS OLD ...
  *
  * @see     /lib/helper/WidgetsHelper
  * @see     /apps/revtk/lib/helper/GadgetsHelper
  */
 
-
-
-/* First we include the Core widgets (non app specific), and the styles can be overwritten as necessary. */
-
-@import "_filterstd"; //.css
-@import "_pager"; //.css
-
-
-/* =require from "%REVTK%" */
+@import "@css/legacy/_filterstd.css";
+@import "@css/legacy/_pager.css";
 
 /**
  * uiIBtn - Inline Block Buttons
@@ -286,4 +266,3 @@ table.uiTabular td.keyword { text-align:left; font:15px/1em Georgia, serif; whit
 .side-menu li a:hover { background-color:$--clr-bg-1; }
 .side-menu li.active { }
 .side-menu li.active a { border-left:3px solid #8C8; color:#222; font-weight:bold; }
-

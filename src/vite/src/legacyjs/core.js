@@ -92,6 +92,4 @@ Core.Toolkit = {
   },
 };
 
-Core.Ui = {};
-
 export default Core;

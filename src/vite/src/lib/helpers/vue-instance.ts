@@ -1,18 +1,19 @@
 import { createApp, DefineComponent, ComponentPublicInstance } from "vue";
 import Lang from "@lib/core/lang";
-import { TVueDefine, TVuePropsData, TVueInstance } from "@/types/index";
 
-export type { TVueDefine, TVuePropsData, TVueInstance };
+export type { ComponentPublicInstance };
 
-const fnVueInstance = function (
-  rootComponent: TVueDefine,
+// type ExtractComponentInstance<T> = T extends new () => infer I ? I : never;
+
+const fnVueInstance = (
+  component: any,
   mount: string | Element,
-  rootProps: TVuePropsData
-): TVueInstance {
+  props?: TVuePropsData
+): ComponentPublicInstance => {
   let el = Lang.isString(mount) ? document.querySelectorAll(mount)[0] : mount;
   console.assert(Lang.isNode(el), "VueInstance() : mount is invalid");
 
-  const app = createApp(rootComponent, rootProps);
+  const app = createApp(component, props);
   const vm = app.mount(mount);
 
   return vm;

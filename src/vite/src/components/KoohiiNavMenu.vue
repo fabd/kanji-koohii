@@ -7,9 +7,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { DefineComponent, defineComponent } from "vue";
 import $$ from "@lib/koohii/dom";
-import KoohiiNavMenuItem from "./KoohiiNavMenuItem.vue";
+import KoohiiNavMenuItem from "@/components/KoohiiNavMenuItem.vue";
+import KoohiiNavMenuItemVue from "@/components/KoohiiNavMenuItem.vue";
 
 export default defineComponent({
   name: "KoohiiNavMenu",
@@ -32,7 +33,7 @@ export default defineComponent({
   },
 
   computed: {
-    defaultOpened() {
+    defaultOpened(): boolean {
       return this.menu.opened;
     },
   },
@@ -47,7 +48,7 @@ export default defineComponent({
   },
 
   methods: {
-    handleSelect(id, item) {
+    handleSelect(id: string, item: ComponentPublicInstance<typeof KoohiiNavMenuItem>) {
       if (!item.hasChildren) {
         return;
       }

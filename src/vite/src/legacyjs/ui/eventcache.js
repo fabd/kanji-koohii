@@ -20,9 +20,6 @@
  */
 import Core from "@old/core";
 
-console.assert(window.YAHOO);
-const Event = YAHOO.util.Event;
-
 let EventCache = Core.make();
 
 EventCache.prototype = {

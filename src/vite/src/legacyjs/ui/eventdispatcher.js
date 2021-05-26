@@ -15,9 +15,6 @@
 import Lang from "@lib/core/lang";
 import Core from "@old/core.js";
 
-console.assert(window.YAHOO);
-const YAHOO = window.YAHOO;
-
 let EventDispatcher = Core.make();
 
 EventDispatcher.prototype = {

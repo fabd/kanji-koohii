@@ -35,9 +35,6 @@ import EventDelegator from "@old/ui/eventdelegator";
 
 let AjaxTable = Core.make();
 
-var   Dom = YAHOO.util.Dom,
-  Event = YAHOO.util.Event;
-
 AjaxTable.prototype = {
   container: null,
 
@@ -97,10 +94,7 @@ AjaxTable.prototype = {
       this.setPagingToDisabledStyle(true);
     }
 
-    if (
-      (query = Dom.getAttribute(el, "href")) &&
-      (pos = query.indexOf("?")) >= 0
-    ) {
+    if ((query = el.getAttribute("href")) && (pos = query.indexOf("?")) >= 0) {
       params = query.substr(pos + 1);
       this.oAjaxPanel.send(params);
 

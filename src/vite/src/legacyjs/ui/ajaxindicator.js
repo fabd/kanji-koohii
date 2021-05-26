@@ -15,9 +15,7 @@ import Core from "@old/core";
 
 let AjaxIndicator = Core.make();
 
-var Dom = YAHOO.util.Dom,
-  // constants
-  DEFAULT_ZINDEX = 100,
+const DEFAULT_ZINDEX = 100,
   DEFAULT_MESSAGE = "Loading...";
 
 AjaxIndicator.prototype = {

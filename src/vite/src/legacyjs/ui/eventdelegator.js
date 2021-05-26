@@ -76,11 +76,10 @@
 import $$, { domGet, stopEvent } from "@lib/koohii/dom";
 import Lang from "@lib/core/lang";
 import Core from "@old/core";
+
 const EventDelegator = Core.make();
 
-var   Dom = YAHOO.util.Dom,
-  Event = YAHOO.util.Event,
-  PREFIX_TAG = "%",
+const PREFIX_TAG = "%",
   PREFIX_ID = "#",
   ROOT_EVENT = "@root";
 
@@ -105,9 +104,12 @@ EventDelegator.prototype = {
       types = [types];
     }
 
+    const listenerFn = this._handler.bind(this);
+
     for (i = 0; i < types.length; i++) {
-      this.eventCache.push([elRoot, types[i], this._handler]);
-      Event.on(elRoot, types[i], this._handler, this, true);
+      const args = [types[i], listenerFn];
+      this.eventCache.push(args);
+      this.elRoot.addEventListener(...args);
     }
   },
 
@@ -118,7 +120,7 @@ EventDelegator.prototype = {
   destroy: function () {
     var i;
     while (this.eventCache.length) {
-      Event.removeListener.call(Event, this.eventCache.pop());
+      this.elRoot.removeEventListener(...this.eventCache.pop());
     }
   },
 
@@ -227,7 +229,7 @@ EventDelegator.prototype = {
    *
    */
   _handler: function (e) {
-    var elTarget = Event.getTarget(e);
+    var elTarget = e.target;
 
     while (elTarget && elTarget !== this.elRoot) {
       var idEvent, tagEvent, classes, n;

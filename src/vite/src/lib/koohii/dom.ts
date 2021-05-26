@@ -1,20 +1,20 @@
 /**
  * A tiny jQuery-style library for DOM manipulation.
- * 
+ *
  * NAMED IMPORTS
- * 
+ *
  *   (default)                         ... DomJS factory function
  *
+ *   getNode()
  *   getStyle()
  *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
- *   offsetTop()
  *
  *   domGet()                          ... same as YUI2 Dom.get()
  *   hasClass(el, token)               ... alias for `el.classList.contains(token)`
  *   stopEvent(ev)                     ... helper for stopPropagation() & preventDefault()
- * 
+ *
  *   px(value)                         ... format value for css property eg. `45` => `45px`
- * 
+ *
  *
  * CONSTRUCTOR
  *
@@ -389,34 +389,19 @@ export { factory as default };
 // --------------------------------------------------------------------
 
 /**
- * Returns a single Element, or null.
- *
- * This is a helper for other methods, to accept a node either as a DOM
- * node reference, or a selector string.
- */
-export function getNode(sel: Element | string): Element | null {
-  return (isString(sel) && document.querySelectorAll(sel)[0]) || null;
-}
-
-/**
  * Inserts the new node as the next sibling of the reference node.
  *
- * @returns The appended child node
+ * @returns The added child node
  */
-export function insertAfter(
-  newNode: Element,
-  refNode: Element | string
-): Element {
-  refNode = getNode(refNode)!;
+export function insertAfter(newNode: Element, refNode: Element): Element {
   console.assert(
     isNode(newNode) && isNode(refNode),
     "insertAfter() : newNode and/or refNode is invalid"
   );
-  if (refNode.nextSibling) {
-    return refNode.parentElement!.insertBefore(newNode, refNode.nextSibling);
-  } else {
-    return refNode.parentElement!.appendChild(newNode);
+  if (refNode.parentNode) {
+    return refNode.parentNode.insertBefore(newNode, refNode.nextSibling);
   }
+  return newNode;
 }
 
 /**
@@ -445,6 +430,14 @@ export function getStyle(
 }
 
 /**
+ * Always return an Element from either a selector or an Element.
+ */
+export function getNode<EL extends Element>(sel: EL | string): EL | null {
+  const node = isString(sel) ? (document.querySelector(sel) as EL) : sel;
+  return node;
+};
+
+/**
  * Helper that always returns an element, from either a node or a string id.
  * Drop-in replacement for YUI2 Dom.get().
  *
@@ -453,9 +446,7 @@ export function getStyle(
  * @returns Element
  */
 export const domGet = <EL extends Element>(el: string | EL): EL | null => {
-  const node = isString(el)
-    ? (window.document.querySelector("#" + el) as EL)
-    : el;
+  const node = isString(el) ? (document.querySelector("#" + el) as EL) : el;
   return node;
 };
 

@@ -3,46 +3,27 @@
  * with a solid color and a level of transparency. Typical use is to show an
  * area as "disabled" while a dialog is on, or while content is loading with ajax.
  *
- *
  * OPTIONS
  *
  *   target      {HTMLElement}  Element which is covered by the mask
  *
- *
- * METHODS
- *
- *   show()
- *   hide()
- *
- *
- * TODO
- *
- *   - always destroy the mask after 10 seconds or so, in case of timeout so the user can re-submit a form?
- *
  */
 
-import Vue from "vue";
-import Component from "./KoohiiLoading.vue";
+import VueInstance, { ComponentPublicInstance } from "@lib/helpers/vue-instance";
+import KoohiiLoading from "./KoohiiLoading.vue";
 import { getStyle } from "@lib/koohii/dom";
 import Lang from "@lib/core/lang";
 
-/*
-interface KoohiiLoadingInstance extends Vue {
-  visible: boolean;
-  originalPosition: string | null;
-  close(): void;
-}*/
+type VueInstanceOf<T> = T extends new () => infer I ? I : never;
+type ExtractComponentInstance<T> = T extends new ()=> infer I ? I : never
 
-/**
- * @param {HTMLElement}    parent
- * @param {any} instance  Vue component instance
- */
-const setMaskStyle = (parent, instance) => {
+const setMaskStyle = (parent: HTMLElement, instance: ExtractComponentInstance<typeof KoohiiLoading>) => {
   instance.originalPosition = getStyle(parent, "position");
 };
 
-/** @type {any} KoohiiLoading component instance */
-let inst = null;
+let instance: any = null;
+
+export type KoohiiLoadingOptions = { target: HTMLElement; background?: string };
 
 export default {
   /**
@@ -50,19 +31,15 @@ export default {
    *   target     {HTMLElement}     target to cover with mask
    *   background {String}          background color of the mask
    *
-   * @param {{ target: HTMLElement; background?: string }} options
+   * @param {} options
    */
-  show(options) {
+  show(options: KoohiiLoadingOptions) {
     console.log("koohiiloading::show()");
     let target = options.target;
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 
-    const LoadingConstructor = Vue.extend(Component);
-    const instance = new LoadingConstructor({
-      el: document.createElement("div"),
-      propsData: options,
-    });
+    instance = VueInstance(KoohiiLoading, document.createElement("div"), options); // as TVueInstanceOf<typeof KoohiiLoading>;
 
     setMaskStyle(target, instance);
 

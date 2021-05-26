@@ -1,10 +1,20 @@
 /**
  * A tiny jQuery-style library for DOM manipulation.
+ * 
+ * NAMED IMPORTS
+ * 
+ *   (default)                         ... DomJS factory function
  *
- * BROWSER SUPPORT
+ *   getStyle()
+ *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
+ *   offsetTop()
  *
- *   Modern browsers, including EDGE.
- *
+ *   domGet()                          ... same as YUI2 Dom.get()
+ *   hasClass(el, token)               ... alias for `el.classList.contains(token)`
+ *   stopEvent(ev)                     ... helper for stopPropagation() & preventDefault()
+ * 
+ *   px(value)                         ... format value for css property eg. `45` => `45px`
+ * 
  *
  * CONSTRUCTOR
  *
@@ -61,6 +71,8 @@
  *
  *   each((el, index) => {})           ... iterate over selected elements
  *
+ *   offset(el)                        ... returns absolute position on page
+ *
  *   on(type, listener)                ... bind one or more listeners to .el(0)
  *    on([type1, type2, ...], fn)
  *
@@ -73,13 +85,6 @@
  *   remove(node)                      ... same as `node.parentNode.removeChild(node)`
  *
  *   toggle(display)                   ... toggle element rendering via `display` property
- *
- *
- * NAMED IMPORTS
- *
- *   getStyle()
- *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
- *   offsetTop()
  *
  */
 
@@ -127,14 +132,18 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
     }
     // assume it's a Node
     else {
-      this[0] = selector as EL;
-      this.length = 1;
-      return this;
+      return this.setNode(selector as EL);
     }
 
     for (let i = 0, l = (this.length = nodes.length); i < l; i++) {
       this[i] = nodes[i];
     }
+  }
+
+  private setNode(node: EL) {
+    this[0] = node;
+    this.length = 1;
+    return this;
   }
 
   /**
@@ -179,6 +188,16 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
   }
 
   /**
+   * Similar to jQuery find(), can be chained.
+   *
+   * @param selector string
+   */
+  down(selector: string): this {
+    let el = this[0] as Element;
+    return this.setNode(el.querySelector(selector) as EL);
+  }
+
+  /**
    * Iterate over collection returned by the constructor.
    *
    * Return explicit `false` to end the loop.
@@ -191,6 +210,18 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
     for (let i = 0, l = this.length; i < l; i++) {
       if (callback(this[i] as EL, i) === false) break;
     }
+  }
+
+  /**
+   * Helper similar to jQuery offset(), drop-in replacement for YUI2 Dom.getXY().
+   */
+  offset(el: EL): { left: number; top: number } {
+    const { left, top } = el.getBoundingClientRect();
+
+    return {
+      top: top + window.pageYOffset - document.documentElement.clientTop,
+      left: left + window.pageXOffset - document.documentElement.clientLeft,
+    };
   }
 
   /**
@@ -291,7 +322,7 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
    *
    */
   css(props: string | StringHash, value?: string): any {
-    const element = (this[0] as any) as HTMLElement;
+    const element = this[0] as any as HTMLElement;
     let styles: StringHash;
 
     if (isString(props)) {
@@ -331,7 +362,7 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @returns void
    */
   toggle(display: boolean): void {
-    const element = (this[0] as any) as HTMLElement;
+    const element = this[0] as any as HTMLElement;
     element.style.display = display ? "" : "none";
   }
 
@@ -372,7 +403,10 @@ export function getNode(sel: Element | string): Element | null {
  *
  * @returns The appended child node
  */
-export function insertAfter(newNode: Element, refNode: Element | string): Element {
+export function insertAfter(
+  newNode: Element,
+  refNode: Element | string
+): Element {
   refNode = getNode(refNode)!;
   console.assert(
     isNode(newNode) && isNode(refNode),
@@ -411,9 +445,46 @@ export function getStyle(
 }
 
 /**
- * Returns the element's top offset relative to the entire document.
- * @param el html element
+ * Helper that always returns an element, from either a node or a string id.
+ * Drop-in replacement for YUI2 Dom.get().
+ *
+ * @param el  An element reference as an id string (without the "#") or the element itself
+ *
+ * @returns Element
  */
-export const offsetTop = (el: Element): number => {
-  return window.pageYOffset + el.getBoundingClientRect().top;
+export const domGet = <EL extends Element>(el: string | EL): EL | null => {
+  const node = isString(el)
+    ? (window.document.querySelector("#" + el) as EL)
+    : el;
+  return node;
+};
+
+/**
+ * Proxy for classList.contains().
+ *
+ * Drop-in replacement for YUI2 Dom.hasClass().
+ *
+ * @param el Element
+ * @param token A css class name
+ */
+export const hasClass = (el: Element, token: string): boolean => {
+  console.assert(isNode(el));
+  return el.classList.contains(token);
+};
+
+/**
+ * Helper, and drop-in replacement for YUI2 Event.stopEvent().
+ */
+export const stopEvent = (evt: Event): void => {
+  evt.stopPropagation();
+  evt.preventDefault();
+};
+
+/**
+ * Helper to format px unit, for use in element style properties.
+ *
+ * Example: `px(45)` => `"45px"`
+ */
+export const px = (n: number): string => {
+  return `${n}px`;
 };

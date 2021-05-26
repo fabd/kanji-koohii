@@ -10,6 +10,8 @@
  *
  */
 
+import Lang from "@lib/core/lang";
+
 var Core = {
   /**
    * A constructor function to create a new class.
@@ -52,8 +54,6 @@ Core.Toolkit = {
    * @param {Object} obj   Parameters as properties and values
    */
   toQueryString: function (obj, name) {
-    var Lang = YAHOO.lang;
-
     var i,
       l,
       s = [];

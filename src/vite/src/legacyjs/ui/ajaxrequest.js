@@ -12,12 +12,12 @@
  * - Custom response filter
  * - Custom TRON filter
  *
- * Sending JSON data (requires YAHOO.lang.JSON):
+ * Sending JSON data:
  *
  *   If the parameters hash contains a "json" property, its contents will be encoded
  *   into a JSON string (eg: parameters: { json: { mydata: "lorem ipsum" } } ).
  *
- * Receiving JSON data (requires YAHOO.lang.JSON):
+ * Receiving JSON data:
  *
  *   successHandler: function(t) {
  *     if (t.isSuccess()) {
@@ -90,6 +90,7 @@
  */
 
 import $$ from "@lib/koohii/dom";
+import Lang from "@lib/core/lang";
 import Core from "@old/core";
 import * as TRON from "@lib/koohii/tron";
 
@@ -174,7 +175,7 @@ AjaxRequest.prototype = {
       callback.scope = options.scope;
     }
 
-    callback.timeout = YAHOO.lang.isNumber(options.timeout)
+    callback.timeout = Lang.isNumber(options.timeout)
       ? options.timeout
       : DEFAULT_TIMEOUT;
     //console.log("Setting callback.timeout to %o", callback.timeout);
@@ -199,23 +200,23 @@ AjaxRequest.prototype = {
       query = [];
 
     // encode JSON ?
-    if (options.json && YAHOO.lang.isObject(options.json)) {
+    if (options.json && Lang.isObject(options.json)) {
       json = JSON.stringify(options.json);
     }
 
     // convert request parameters to url encoded string (damn you, YUI)
     if (params) {
       console.assert(
-        YAHOO.lang.isString(params) || YAHOO.lang.isObject(params),
+        Lang.isString(params) || Lang.isObject(params),
         "AjaxRequest() invalid typeof options.parameters"
       );
 
-      if (YAHOO.lang.isString(params)) {
+      if (Lang.isString(params)) {
         var pos = params.indexOf("?");
         if (pos >= 0) {
           params = params.slice(pos + 1);
         }
-      } else if (YAHOO.lang.isObject(params)) {
+      } else if (Lang.isObject(params)) {
         // convert hash to query string parameters
         params = Core.Toolkit.toQueryString(params);
       }
@@ -317,9 +318,7 @@ AjaxRequest.prototype = {
         try {
           o.responseJSON = JSON.parse(o.responseText);
         } catch (e) {
-          console.warn(
-            "AjaxRequest::handleSuccess()  Could not parse JSON."
-          );
+          console.warn("AjaxRequest::handleSuccess()  Could not parse JSON.");
           o.responseJSON = null;
 
           return;

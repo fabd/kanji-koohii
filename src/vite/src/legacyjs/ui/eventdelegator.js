@@ -74,8 +74,8 @@
  */
 
 import $$, { domGet, stopEvent } from "@lib/koohii/dom";
+import Lang from "@lib/core/lang";
 import Core from "@old/core";
-
 const EventDelegator = Core.make();
 
 var   Dom = YAHOO.util.Dom,
@@ -101,7 +101,7 @@ EventDelegator.prototype = {
 
     console.assert(!!this.elRoot, "EventDelegator::init() elRoot is not valid");
 
-    if (YAHOO.lang.isString(types)) {
+    if (Lang.isString(types)) {
       types = [types];
     }
 
@@ -283,7 +283,7 @@ EventDelegator.prototype = {
 
   _fire: function (name, e, matchedEl) {
     var oListener = this.listeners[name];
-    var context = YAHOO.lang.isUndefined(oListener.context)
+    var context = Lang.isUndefined(oListener.context)
       ? window
       : oListener.context;
     return oListener.fn.apply(context, [e, matchedEl]);

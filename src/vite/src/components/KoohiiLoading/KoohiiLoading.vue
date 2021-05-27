@@ -12,12 +12,19 @@
   </transition>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  data() {
+    return {
+      originalPosition: "",
+    };
+  },
 
   props: {
     target: { type: Element, required: true },
-    background: { type: String, default: '' },
+    background: { type: String, default: "" },
     visible: { type: Boolean, default: false },
   },
 
@@ -34,32 +41,9 @@ export default {
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el);
       }
-
-      this.$destroy();
-      // }, 300)
-
-      // this.visible = false
     },
-
-    /*
-     @after-leave="onAfterLeave"
-
-    onAfterLeave() {
-      console.log('KoohiiLoading :: after-leave ()')
-
-      const target = this.target
-      classList.remove(target, 'kk-loading-target--relative')
-      if (this.$el && this.$el.parentNode) {
-        this.$el.parentNode.removeChild(this.$el)
-      }
-
-      this.visible = false
-
-      this.$destroy()
-    }
-    */
   },
-};
+});
 </script>
 
 <style>

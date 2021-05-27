@@ -36,9 +36,9 @@
  *          * "enter" animation
  *          * maybe a "unpublish" buttoN?
  */
-import Vue from "vue";
+import { defineComponent } from "vue";
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     profileLink: { type: String, required: true },
     story: { type: String, required: true },

@@ -11,9 +11,11 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
+
 import CjkLangJa from './CjkLangJa.vue'
 
-export default {
+export default defineComponent({
 
   name: 'KoohiiFlashcardVocabShuffle',
 
@@ -41,7 +43,7 @@ export default {
   methods: {
     //     
   }
-}
+});
 </script>
 
 <style>

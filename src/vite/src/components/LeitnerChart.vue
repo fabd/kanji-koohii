@@ -56,7 +56,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   props: {
     // id of a parent container used to determine the available horizontal space
     containerId: { type: String, required: true },
@@ -65,8 +67,8 @@ export default {
   data: function() {
     return {
       /* global leitner_chart_data */
-      box_data: leitner_chart_data.boxes,
-      box_urls: leitner_chart_data.urls,
+      box_data: window.App.LeitnerChart.leitner_chart_data.boxes,
+      box_urls: window.App.LeitnerChart.leitner_chart_data.urls,
 
       colors: {
         // bar.type
@@ -234,7 +236,7 @@ export default {
       this.itsMounted = true
     })
   }*/
-};
+});
 </script>
 
 <style>

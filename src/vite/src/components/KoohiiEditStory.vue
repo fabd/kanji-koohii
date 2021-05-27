@@ -136,23 +136,25 @@
 </template>
 
 <script lang="ts">
-// @ts-nocheck (need to fix "read-only props" shenanigans)
-import Vue from "vue";
-import $$, { insertAfter } from "@lib/koohii/dom";
+// @xts-nocheck (need to fix "read-only props" shenanigans)
+import { defineComponent } from "vue";
+
+import $$, { insertAfter, getNode } from "@lib/koohii/dom";
 import {
   KanjiData,
-  KoohiiApiPostUserStoryResponse,
-  TRON,
-} from "@lib/KoohiiAPI";
+  PostUserStoryResponse,
+} from "@lib/core/api/models";
+import * as TRON from "@lib/koohii/tron";
+
 import VueInstance from "@lib/helpers/vue-instance";
 
 // comps
-import KoohiiCharsLeft from "@vue/components/KoohiiCharsLeft.vue";
-import CjkLangJa from "@vue/components/CjkLangJa.vue";
-import KoohiiSharedStory from "@vue/components/KoohiiSharedStory.vue";
-import KoohiiLoading from "@vue/components/KoohiiLoading/index.js";
+import KoohiiCharsLeft from "@/components/KoohiiCharsLeft.vue";
+import CjkLangJa from "@/components/CjkLangJa.vue";
+import KoohiiSharedStory from "@/components/KoohiiSharedStory.vue";
+import KoohiiLoading from "@/components/KoohiiLoading";
 
-export default Vue.extend({
+export default defineComponent({
   name: "KoohiiEditStory",
 
   components: {
@@ -211,7 +213,7 @@ export default Vue.extend({
     },
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     // (legacy code) free resources/events used by Edit Keyword dialog
     if (this.oEditKeyword) {
       this.oEditKeyword.destroy();
@@ -258,7 +260,7 @@ export default Vue.extend({
         });
     },
 
-    onSaveStoryResponse(props: KoohiiApiPostUserStoryResponse) {
+    onSaveStoryResponse(props: PostUserStoryResponse) {
       // keep it simple for now, after a POST forget about the "starred story" thing
       this.isFavoriteStory = false;
 
@@ -286,7 +288,7 @@ export default Vue.extend({
       if (!this.isReviewMode && props.isStoryShared) {
         // add the story in "new & updated"
         const elMount = document.createElement("div");
-        insertAfter(elMount, "#sharedstories-new .title");
+        insertAfter(elMount, getNode("#sharedstories-new .title")!);
 
         let propsData = {
           profileLink: props.sharedStoryAuthor,

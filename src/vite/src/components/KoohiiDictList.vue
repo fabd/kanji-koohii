@@ -2,13 +2,12 @@
   <div>
     <div ref="refLoadingMask" class="dict-panel">
       <template v-if="isLoading">
-        <div style="min-height:100px;"></div>
+        <div style="min-height: 100px"></div>
       </template>
       <template v-else-if="items.length">
         <div class="dict-list">
-          <template v-for="$item in items">
+          <template v-for="$item in items" :key="$item.id">
             <div
-              :key="$item.id"
               :class="['dl_item', { 'dl_item--pick': $item.pick }]"
               @click="onVocabPick($item)"
             >
@@ -62,12 +61,13 @@
  * a list of vocabulary for the user.
  *
  */
-import Vue from "vue";
-import { DictId, DictListEntry, GetDictListForUCS } from "@core/api/models";
+import { defineComponent } from "vue";
+
+import { DictId, DictListEntry, GetDictListForUCS } from "@lib/core/api/models";
 
 // comps
-import CjkLangJa from "@vue/components/CjkLangJa.vue";
-import KoohiiLoading from "@vue/components/KoohiiLoading/index.js";
+import CjkLangJa from "@/components/CjkLangJa.vue";
+import KoohiiLoading from "@/components/KoohiiLoading/index.js";
 
 // utils
 import { kkFormatReading } from "@lib/koohii/format";
@@ -92,7 +92,7 @@ const PRI_GAI1  = 2
 const PRI_GAI2  = 1
 */
 
-export default Vue.extend({
+export default defineComponent({
   name: "KoohiiDictList",
 
   components: {

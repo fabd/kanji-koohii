@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import CjkLangJa from './CjkLangJa.vue'
 
 // utils

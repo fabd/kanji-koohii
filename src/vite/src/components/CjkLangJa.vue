@@ -24,9 +24,9 @@
     <cjk-lang-ja className="css-class">{{ content }}</cjk-lang-ja> 
 
 */
-import Vue from "vue";
+import { defineComponent } from "vue";
 
-export default Vue.extend({
+export default defineComponent({
   name: "CjkLangJa",
 
   props: {
@@ -35,5 +35,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style></style>

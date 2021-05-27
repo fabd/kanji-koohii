@@ -3,7 +3,7 @@ import Dom from "@lib/dom";
 import KoohiiAside from "@/vue/Aside";
 import KoohiiNav from "@old/components/KoohiiNav";
 
-export function init() {
+export default function() {
   console.log("@root-bundle ...");
 
   window.App = App;

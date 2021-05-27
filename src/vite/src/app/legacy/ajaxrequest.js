@@ -89,11 +89,11 @@
  *
  */
 
-import $$ from "@lib/koohii/dom";
-import Lang from "@lib/core/lang";
-import Core from "@old/core";
-import * as TRON from "@lib/koohii/tron";
-import toQueryString from "@lib/helpers/to-query-string";
+import $$ from "@lib/dom";
+import Lang from "@lib/lang";
+import * as Core from "@old/core";
+import * as TRON from "@lib/tron";
+import { toQueryString } from "@lib/helpers/to-query-string";
 
 /**
  * Constructor.

@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, ComponentPublicInstance } from "vue";
-import $$ from "@lib/koohii/dom";
+import $$ from "@lib/dom";
 
 export default defineComponent({
   name: "KoohiiNavMenuItem",

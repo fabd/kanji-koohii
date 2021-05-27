@@ -26,9 +26,9 @@
  */
 /* globals YAHOO, Core, App */
 
-import Core from "@old/core";
-import AjaxDialog from "@old/ui/ajaxdialog";
-import EventDispatcher from "@old/ui/eventdispatcher";
+import * as Core from "@old/core";
+import AjaxDialog from "@old/ajaxdialog";
+import EventDispatcher from "@old/eventdispatcher";
 
 let EditFlashcardDialog = Core.make();
 

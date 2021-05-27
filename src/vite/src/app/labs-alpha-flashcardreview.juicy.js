@@ -3,8 +3,8 @@
  * 
  */
 
-import $$, { domGet } from "@lib/koohii/dom";
-import FlashcardReview from "@old/revtk/FlashcardReview";
+import $$, { domGet } from "@lib/dom";
+import FlashcardReview from "@old/components/FlashcardReview";
 
   var Y = YAHOO,
       Dom = Y.util.Dom;

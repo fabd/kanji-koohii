@@ -12,8 +12,8 @@
  *
  */
 
-import Lang from "@lib/core/lang";
-import Core from "@old/core.js";
+import Lang from "@lib/lang";
+import * as Core from "@old/core.js";
 
 let EventDispatcher = Core.make();
 

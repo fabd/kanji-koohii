@@ -47,11 +47,11 @@
  *
  */
 
-import $$, { domGet, stopEvent } from "@lib/koohii/dom";
-import Lang from "@lib/core/lang";
-import Core from "@old/core";
-import AjaxRequest from "@old/ui/ajaxrequest";
-import EventDispatcher from "@old/ui/eventdispatcher";
+import $$, { domGet, stopEvent } from "@lib/dom";
+import Lang from "@lib/lang";
+import * as Core from "@old/core";
+import AjaxRequest from "@old/ajaxrequest";
+import EventDispatcher from "@old/eventdispatcher";
 
 /**
  * Constructor.

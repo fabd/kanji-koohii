@@ -13,8 +13,8 @@
  */
 /* globals YAHOO, Core, App, VueInstance */
 
-import Core from "@old/core";
-import AjaxDialog from "@old/ui/ajaxdialog";
+import * as Core from "@old/core";
+import AjaxDialog from "@old/ajaxdialog";
 import VueInstance from "@lib/helpers/vue-instance";
 
 let EditStoryDialog = Core.make();

@@ -6,17 +6,17 @@
 import "@web/koohii/main.build.scss";
 import "@web/koohii/kanji-flashcardreview.build.scss";
 
-import * as RootBundle from "@lib/helpers/root-bundle";
+import * as RootBundle from "@app/root-bundle";
 RootBundle.init();
 
 // make the axios based API (vue build) available to legacy js
-import { getApi } from "@lib/core/api";
+import { getApi } from "@app/api";
 window.Koohii.API = window.Vue.prototype.$api = getApi();
 
 // components instanced by external code
-import KoohiiDictList from "@/components/KoohiiDictList.vue";
-import KoohiiEditStory from "@/components/KoohiiEditStory.vue";
-import KoohiiFlashcard from "@/components/KoohiiFlashcard.vue";
+import KoohiiDictList from "@/vue/KoohiiDictList.vue";
+import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
+import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 
 // declare some globals to be available for legacy Javascript (non-Vue build)
 window.Koohii.UX = {

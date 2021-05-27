@@ -97,9 +97,9 @@
  */
 /* globals YAHOO, Core, App, VueInstance */
 
-import Core from "@old/core";
-import AjaxQueue from "@old/ui/ajaxqueue";
-import EventDispatcher from "@old/ui/eventdispatcher";
+import * as Core from "@old/core";
+import AjaxQueue from "@old/ajaxqueue";
+import EventDispatcher from "@old/eventdispatcher";
 
 let FlashcardReview = Core.make();
 

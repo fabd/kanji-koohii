@@ -1,9 +1,9 @@
-import $$, { domGet } from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/dom";
 import actb from "@old/autocomplete.js";
-import EventDelegator from "@old/ui/eventdelegator";
+import EventDelegator from "@old/eventdelegator";
 
-import EditFlashcardDialog from "@old/revtk/EditFlashcardDialog";
-import SharedStoriesComponent from "@old/revtk/SharedStoriesComponent";
+import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
+import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
 const CLASS_ACTIVE = "active";
 

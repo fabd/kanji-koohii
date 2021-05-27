@@ -16,8 +16,8 @@
 /* =require "/revtk/components/EditFlashcardDialog.js" */
 /* =require "/revtk/components/DictLookupDialog.js" */
 
-import $$, { domGet, hasClass } from "@lib/koohii/dom";
-import AjaxDialog from "@old/ui/ajaxdialog";
+import $$, { domGet, hasClass } from "@lib/dom";
+import AjaxDialog from "@old/ajaxdialog";
 
   var Y = YAHOO,
       Dom = Y.util.Dom;

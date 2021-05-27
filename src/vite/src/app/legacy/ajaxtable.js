@@ -28,10 +28,10 @@
  *                returns an error.
  *
  */
-import $$, { domGet } from "@lib/koohii/dom";
-import Core from "@old/core";
-import AjaxPanel from "@old/ui/ajaxpanel";
-import EventDelegator from "@old/ui/eventdelegator";
+import $$, { domGet } from "@lib/dom";
+import * as Core from "@old/core";
+import AjaxPanel from "@old/ajaxpanel";
+import EventDelegator from "@old/eventdelegator";
 
 let AjaxTable = Core.make();
 

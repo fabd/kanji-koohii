@@ -99,15 +99,15 @@
  *
  */
 
-import $$, { domGet } from "@lib/koohii/dom";
-import Lang from "@lib/core/lang";
-import Core from "@old/core";
-import AjaxIndicator from "@old/ui/ajaxindicator";
-import AjaxRequest from "@old/ui/ajaxrequest";
-import EventCache from "@old/ui/eventcache";
-import EventDelegator from "@old/ui/eventdelegator";
-import EventDispatcher from "@old/ui/eventdispatcher";
-import * as TRON from "@lib/koohii/tron";
+import $$, { domGet } from "@lib/dom";
+import Lang from "@lib/lang";
+import * as Core from "@old/core";
+import AjaxIndicator from "@old/ajaxindicator";
+import AjaxRequest from "@old/ajaxrequest";
+import EventCache from "@old/eventcache";
+import EventDelegator from "@old/eventdelegator";
+import EventDispatcher from "@old/eventdispatcher";
+import * as TRON from "@lib/tron";
 
 let AjaxPanel = Core.make();
 

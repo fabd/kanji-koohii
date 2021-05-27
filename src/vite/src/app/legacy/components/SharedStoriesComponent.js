@@ -1,9 +1,9 @@
 // FIXME: legacy componet, should become a Vue at some point
 
-import $$, { domGet } from "@lib/koohii/dom";
-import Core from "@old/core";
-import AjaxTable from "@old/ui/ajaxtable";
-import EventDelegator from "@old/ui/eventdelegator";
+import $$, { domGet } from "@lib/dom";
+import * as Core from "@old/core";
+import AjaxTable from "@old/ajaxtable";
+import EventDelegator from "@old/eventdelegator";
 
 let SharedStoriesComponent = Core.make();
 

@@ -18,7 +18,7 @@
  *   this.evtCache.addEvent(elem, 'click', this.clickEvent.bind(this));
  *
  */
-import Core from "@old/core";
+import * as Core from "@old/core";
 
 let EventCache = Core.make();
 

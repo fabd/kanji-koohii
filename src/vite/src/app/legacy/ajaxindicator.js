@@ -10,8 +10,8 @@
  *
  */
 
-import $$, { domGet, px } from "@lib/koohii/dom";
-import Core from "@old/core";
+import $$, { domGet, px } from "@lib/dom";
+import * as Core from "@old/core";
 
 let AjaxIndicator = Core.make();
 

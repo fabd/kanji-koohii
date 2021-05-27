@@ -178,13 +178,13 @@
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
-import $$, { domGet, hasClass } from "@lib/koohii/dom";
-import * as TRON from "@lib/koohii/tron";
-import App from "@old/app";
-import Core from "@old/core";
-import AjaxPanel from "@old/ui/ajaxpanel";
-import EventDelegator from "@old/ui/eventdelegator";
-import EventDispatcher from "@old/ui/eventdispatcher";
+import $$, { domGet, hasClass } from "@lib/dom";
+import * as TRON from "@lib/tron";
+import App from "@app/app";
+import * as Core from "@old/core";
+import AjaxPanel from "@old/ajaxpanel";
+import EventDelegator from "@old/eventdelegator";
+import EventDispatcher from "@old/eventdispatcher";
 
 function insertTop(node) {
   var elParent = document.body;

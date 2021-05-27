@@ -139,20 +139,20 @@
 // @xts-nocheck (need to fix "read-only props" shenanigans)
 import { defineComponent } from "vue";
 
-import $$, { insertAfter, getNode } from "@lib/koohii/dom";
+import $$, { insertAfter, getNode } from "@lib/dom";
 import {
   KanjiData,
   PostUserStoryResponse,
 } from "@lib/core/api/models";
-import * as TRON from "@lib/koohii/tron";
+import * as TRON from "@lib/tron";
 
 import VueInstance from "@lib/helpers/vue-instance";
 
 // comps
-import KoohiiCharsLeft from "@/components/KoohiiCharsLeft.vue";
-import CjkLangJa from "@/components/CjkLangJa.vue";
-import KoohiiSharedStory from "@/components/KoohiiSharedStory.vue";
-import KoohiiLoading from "@/components/KoohiiLoading";
+import KoohiiCharsLeft from "@/vue/KoohiiCharsLeft.vue";
+import CjkLangJa from "@/vue/CjkLangJa.vue";
+import KoohiiSharedStory from "@/vue/KoohiiSharedStory.vue";
+import KoohiiLoading from "@/vue/KoohiiLoading";
 
 export default defineComponent({
   name: "KoohiiEditStory",

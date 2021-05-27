@@ -4,7 +4,6 @@
 
 import $$ from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";
-import Core from "@old/core";
 import AjaxTable from "@old/ajaxtable";
 import EventDelegator from "@old/eventdelegator";
 

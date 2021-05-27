@@ -3,10 +3,10 @@
  *
  */
 
-import $$, { domGet } from "@lib/koohii/dom";
+import $$, { domGet } from "@lib/dom";
 import App from "@old/app.js";
-import AjaxPanel from "@old/ui/ajaxpanel";
-import AjaxTable from "@old/ui/ajaxtable";
+import AjaxPanel from "@old/ajaxpanel";
+import AjaxTable from "@old/ajaxtable";
 
 App.ManageFlashcards = {
   init: function () {

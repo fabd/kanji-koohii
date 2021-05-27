@@ -12,7 +12,7 @@ console.log("@entry landing ...");
 // stylesheets
 import "@css/home.scss";
 
-import * as RootBundle from "@lib/helpers/root-bundle";
-RootBundle.init();
+import rootBundleInit from "@app/root-bundle";
+rootBundleInit();
 
 console.log("@entry landing");

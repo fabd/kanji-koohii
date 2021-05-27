@@ -73,9 +73,9 @@
  *
  */
 
-import $$, { domGet, stopEvent } from "@lib/koohii/dom";
-import Lang from "@lib/core/lang";
-import Core from "@old/core";
+import $$, { domGet, stopEvent } from "@lib/dom";
+import Lang from "@lib/lang";
+import * as Core from "@old/core";
 
 const EventDelegator = Core.make();
 

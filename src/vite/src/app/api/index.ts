@@ -4,8 +4,8 @@ import {
   PostUserStoryResponse,
   PostVoteStoryRequest,
   PostVoteStoryResponse,
-} from "@lib/core/api/models";
-import * as TRON from "@lib/koohii/tron";
+} from "./models";
+import * as TRON from "@lib/tron";
 
 const API_DEFAULT_TIMEOUT = 5000;
 

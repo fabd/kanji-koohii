@@ -38,12 +38,9 @@ export default defineConfig({
         find: "@img",
         replacement: path.resolve(__dirname, "./src/assets/img"),
       },
+      { find: "@app", replacement: path.resolve(__dirname, "./src/app") },
       { find: "@lib", replacement: path.resolve(__dirname, "./src/lib") },
-      { find: "@old", replacement: path.resolve(__dirname, "./src/legacyjs") },
-      {
-        find: "@yui",
-        replacement: path.resolve(__dirname, "./src/legacyjs/yui2-build"),
-      },
+      { find: "@old", replacement: path.resolve(__dirname, "./src/app/legacy") },
       // {
       //   find: "@assets",
       //   replacement: path.resolve(__dirname, "./src/assets"),

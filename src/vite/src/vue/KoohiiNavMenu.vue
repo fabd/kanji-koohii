@@ -8,9 +8,9 @@
 
 <script lang="ts">
 import { DefineComponent, defineComponent } from "vue";
-import $$ from "@lib/koohii/dom";
-import KoohiiNavMenuItem from "@/components/KoohiiNavMenuItem.vue";
-import KoohiiNavMenuItemVue from "@/components/KoohiiNavMenuItem.vue";
+import $$ from "@lib/dom";
+import KoohiiNavMenuItem from "@/vue/KoohiiNavMenuItem.vue";
+import KoohiiNavMenuItemVue from "@/vue/KoohiiNavMenuItem.vue";
 
 export default defineComponent({
   name: "KoohiiNavMenu",

@@ -7,8 +7,8 @@
  */
 /* globals YAHOO, Core, App, VueInstance */
 
-import Core from "@old/core";
-import AjaxDialog from "@old/ui/ajaxdialog";
+import * as Core from "@old/core";
+import AjaxDialog from "@old/ajaxdialog";
 
 let DictLookupDialog = Core.make();
 

@@ -1,5 +1,5 @@
 import { createApp, DefineComponent, ComponentPublicInstance } from "vue";
-import Lang from "@lib/core/lang";
+import Lang from "@lib/lang";
 
 export type { ComponentPublicInstance };
 

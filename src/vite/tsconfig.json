@@ -43,11 +43,14 @@
       "@css/*": [
         "src/vite/src/assets/css/*"
       ],
+      "@app/*": [
+        "src/app/*"
+      ],
       "@lib/*": [
         "src/lib/*"
       ],
       "@old/*": [
-        "src/legacyjs/*"
+        "src/app/legacy/*"
       ],
     },
   },

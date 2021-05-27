@@ -23,8 +23,8 @@
  *
  */
 
-import { stopEvent } from "@lib/koohii/dom";
-import Core from "@old/core.js";
+import { stopEvent } from "@lib/dom";
+import * as Core from "@old/core.js";
 
 let Keyboard = Core.make();
 

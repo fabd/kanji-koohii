@@ -19,9 +19,9 @@ import Vue, {
   VueConstructor,
 } from "vue";
 import { KoohiiAPI } from "@lib/core/api";
-import Lang from "@lib/core/lang";
-import Dom from "@lib/koohii/dom";
-import { Inst as TronFactory } from "@lib/koohii/tron";
+import Lang from "@lib/lang";
+import Dom from "@lib/dom";
+import { Inst as TronFactory } from "@lib/tron";
 import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
 
 /**

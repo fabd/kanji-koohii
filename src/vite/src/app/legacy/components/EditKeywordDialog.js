@@ -3,9 +3,9 @@
  *
  */
 
-import $$, { stopEvent } from "@lib/koohii/dom";
-import Core from "@old/core";
-import EventCache from "@old/ui/eventcache";
+import $$, { stopEvent } from "@lib/dom";
+import * as Core from "@old/core";
+import EventCache from "@old/eventcache";
 
 let EditKeywordComponent = Core.make();
 

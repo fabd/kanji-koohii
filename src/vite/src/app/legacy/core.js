@@ -1,55 +1,27 @@
 /**
- * LEGACY helpers that augmented YUI2 with utilities to create classes.
+ * LEGACY helper function that creates a class that calls init() on instanciation.
  *
- *   make()           OOP, returns constructor for a base class
- *   extend()         OOP, returns a constructor for an extended class
- *   ready()          Sets window onload code
+ * Example:
+ *   ```
+ *   var Widget = make();
+ *   Widget.prototype = { init(), etc. }
+ *   var instance = new Widget();
+ *   ```
  *
+ * @param {Object} px   Optional prototype object containing properties and methods
+ * @return {Function}   Class constructor that will call init() method when instanced
  */
+function make(px) {
+  var fn = function () {
+    return this.init.apply(this, arguments);
+  };
 
-/* Copy/Paste board.
+  // optional: set prototype for the new class
+  if (px) {
+    fn.prototype = px;
+  }
 
-import $$, { domGet, px } from "@lib/dom";
-import Core from "@old/core";
-import AjaxDialog from "@old/ajaxdialog";
-import AjaxIndicator  from "@old/ajaxindicator";
-import AjaxPanel from "@old/ajaxpanel";
-import AjaxQueue from "@old/ajaxqueue";
-import AjaxRequest from "@old/ajaxrequest";
-import AjaxTable from "@old/ajaxtable";
-import Keyboard from "@old/keyboard";
-import EventCache from "@old/eventcache";
-import EventDelegator from "@old/eventdelegator";
-import EventDispatcher  from "@old/eventdispatcher";
+  return fn;
+}
 
-*/
-
-
-export default {
-  /**
-   * A constructor function to create a new class.
-   *
-   * Examples:
-   *   ```
-   *   var Widget = Core.make();
-   *   Widget.prototype = { init(), etc. }
-   *   ```
-   *
-   * @param {Object} px   Optional prototype object containing properties and methods
-   * @return {Function}   Class constructor that will call init() method when instanced
-   */
-  make(px) {
-    var fn = function () {
-      return this.init.apply(this, arguments);
-    };
-
-    // optional: set prototype for the new class
-    if (px) {
-      fn.prototype = px;
-    }
-
-    return fn;
-  },
-};
-
-export default Core;
+export { make };

@@ -11,8 +11,8 @@
 
 import VueInstance, { ComponentPublicInstance } from "@lib/helpers/vue-instance";
 import KoohiiLoading from "./KoohiiLoading.vue";
-import { getStyle } from "@lib/koohii/dom";
-import Lang from "@lib/core/lang";
+import { getStyle } from "@lib/dom";
+import Lang from "@lib/lang";
 
 type VueInstanceOf<T> = T extends new () => infer I ? I : never;
 type ExtractComponentInstance<T> = T extends new ()=> infer I ? I : never

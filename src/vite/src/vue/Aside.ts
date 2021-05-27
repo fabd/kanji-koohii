@@ -1,7 +1,7 @@
 import { nextTick } from "vue";
 import VueInstance, { ComponentPublicInstance } from "@lib/helpers/vue-instance";
-import AsideComponent from "@/components/Aside.vue";
-import KoohiiNavMenu from "@/components/KoohiiNavMenu.vue";
+import AsideComponent from "@/vue/Aside.vue";
+import KoohiiNavMenu from "@/vue/KoohiiNavMenu.vue";
 import { Dictionary } from "@/types";
 
 let instance: any = null;

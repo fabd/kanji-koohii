@@ -11,8 +11,8 @@
  * @see       See related backend class uiSelectionState.php
  */
 
-import $$, { stopEvent } from "@lib/koohii/dom";
-import AjaxTable from "@old/ui/ajaxtable";
+import $$, { stopEvent } from "@lib/dom";
+import AjaxTable from "@old/ajaxtable";
 
 console.assert(window.YAHOO);
 const YAHOO = window.YAHOO;

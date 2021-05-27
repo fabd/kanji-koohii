@@ -2,22 +2,26 @@
  * OBSOLETE. Needs to be phased out eventually.
  */
 
-import $$ from "@lib/koohii/dom.ts";
+import $$ from "@lib/koohii/dom";
+import VueInstance from "@lib/helpers/vue-instance";
 import Core from "@old/core";
+import AjaxTable from "@old/ui/ajaxtable";
 import EventDelegator from "@old/ui/eventdelegator";
 
-let App = {};
+const App = {
+  // helper to instance a Vue from php templates
+  VueInstance,
 
-import AjaxTable from "@old/ui/ajaxtable";
-App.Ui = {
-  AjaxTable,
-};
+  // components instanced from php templates
+  Ui: {
+    AjaxTable,
+  },
 
-App = Object.assign(App, {
-  /**
-   * EventDelegator.
-   */
+  /** @type EventDelegator */
   bodyED: null,
+
+  /** @type Function */
+  fnReady: null as Function | null,
 
   /** @type String  selector for input to focus after DOMContentLoaded */
   focusOnLoadSel: "",
@@ -26,7 +30,7 @@ App = Object.assign(App, {
    * Constructor.
    *
    */
-  init: function () {
+  init() {
     console.log("App.init()");
 
     // initialize the page
@@ -37,20 +41,21 @@ App = Object.assign(App, {
 
     // focus input on load (AFTER fnReady())
     if (this.focusOnLoadSel) {
-      const elFocus = $$(this.focusOnLoadSel)[0];
+      const elFocus = $$(this.focusOnLoadSel)[0] as HTMLElement;
       elFocus && elFocus.focus();
     }
   },
 
   /**
    * Pass a selector for an element (typically an input field) to focus.
+   * 
    * @param {String} selector  selector to pick element to focus
    */
-  focusOnLoad: function (selector) {
+  focusOnLoad(selector: string) {
     this.focusOnLoadSel = selector;
   },
 
-  ready: function (fn) {
+  ready(fn: Function) {
     this.fnReady = fn;
   },
 
@@ -59,15 +64,11 @@ App = Object.assign(App, {
    *
    * @return  {Object}   EventDelegator instance.
    */
-  getBodyED: function () {
+  getBodyED() {
     return this.bodyED
       ? this.bodyED
-      : (this.bodyED = new EventDelegator(document.body, "click"));
+      : (this.bodyED = new (EventDelegator as any)(document.body, "click"));
   },
-});
-
-window.addEventListener("DOMContentLoaded", () => {
-  App.init();
-});
+};
 
 export default App;

@@ -1,11 +1,9 @@
 import App from "@old/app";
 import KoohiiNav from "@old/revtk/KoohiiNav";
 
-/*
+/* Copy/Paste board.
 import $$, { domGet, px } from "@lib/koohii/dom";
-
 import Core from "@old/core";
-
 import AjaxDialog from "@old/ui/ajaxdialog";
 import AjaxIndicator  from "@old/ui/ajaxindicator";
 import AjaxPanel from "@old/ui/ajaxpanel";
@@ -16,7 +14,6 @@ import Keyboard from "@old/ui/keyboard";
 import EventCache from "@old/ui/eventcache";
 import EventDelegator from "@old/ui/eventdelegator";
 import EventDispatcher  from "@old/ui/eventdispatcher";
-
 */
 
 export default {

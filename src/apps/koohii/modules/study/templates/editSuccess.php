@@ -181,7 +181,6 @@ EOD;
 
   koohii_onload_slot();
 ?>
-
-  Koohii.Refs.vueEditStory = VueInstance(Koohii.UX.KoohiiEditStory, '#JsEditStoryInst', <?= json_encode($propsData) ?>, /* replace! */ true);
+  Koohii.Refs.vueEditStory = App.VueInstance(Koohii.UX.KoohiiEditStory, '#JsEditStoryInst', <?= json_encode($propsData) ?>, /* replace! */ true);
 
 <?php end_slot() ?>

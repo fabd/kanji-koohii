@@ -48,33 +48,30 @@ declare global {
     // DomJS provides simple DOM utilities to the old frontend code
     Dom: typeof Dom;
 
-    // JSON wrapper
-    TRON: typeof TronFactory;
-
     // *instances* of components, shared between misc. legacy Javascripts
     Refs: {
       [componentName: string]: any;
-    };
-
-    //
-    Util: {
-      Lang: typeof Lang;
     };
 
     // references to Vue components that can be instanced later
     UX: { [componentName: string]: any };
   }
 
+  export interface AppGlobals {
+    VueInstance: VueInstanceFn;
+    [key: string]: any;
+  }
+
   interface Window {
     // base URL for API requests (cf. layout.php & koohii_base_url() helper)
     KK_BASE_URL: string;
 
-    Koohii: KoohiiGlobals;
-    // Vue: VueConstructor<Vue>;
-    VueInstance: VueInstanceFn;
-
     // set from php & legacy javascript
-    App: any;
+    App: AppGlobals;
+
+    Koohii: KoohiiGlobals;
+
+    // Vue: VueConstructor<Vue>;
 
     /* OBSOLETE
       Ui?: {

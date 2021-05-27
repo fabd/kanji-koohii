@@ -62,10 +62,7 @@
 <?php if ($sf_request->getParameter('_homeFooter')) { include_partial('home/homeFooter'); } ?>
 <?php } ?>
 
-<?php
-  echo '<script>'.koohii_base_url()."</script>\n";
-?>
-
+<?php echo '<script>'.koohii_base_url()."</script>\n"; ?>
 <?php if (!$landingPage):  ?>
   <script type="text/javascript" defer src="/vendor/yui2-build/index.min_v290.js"></script>
 <?php endif ?>

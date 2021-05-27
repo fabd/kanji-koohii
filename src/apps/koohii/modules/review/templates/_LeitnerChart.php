@@ -46,26 +46,16 @@
 
   <div class="clear"></div>
 
-  <div id="app-vue">
-
-    <div id="leitner-chart_pane" class="padded-box no-gutter-xs-sm">
-      <!-- container-id is used by the component to determine available width -->
-      <leitner-chart container-id="leitner-chart_pane"></leitner-chart>
-    </div>
-      
+  <div id="leitner-chart_pane" class="padded-box no-gutter-xs-sm">
+    <div id="app-vue"></div>
   </div>
 
 
 <?php koohii_onload_slot() ?>
-// syntax highlight my <script> :)
-"use strict";
 
   var leitner_chart_data = <?php echo json_encode($leitner_chart_data /*, JSON_PRETTY_PRINT*/); ?>;
 
-  var vm = new Vue({
-    el: '#app-vue',
-    components: {
-      LeitnerChart: Koohii.UX.LeitnerChart
-    },
-  });
+  App.LeitnerChart.leitner_chart_data = leitner_chart_data;
+  App.LeitnerChart.init(leitner_chart_data);
+
 <?php end_slot() ?>

@@ -13,6 +13,7 @@ failedlist:
 mystories:
   metas:
     title: 'Study: My Stories List'
-  
-all:
-  javascripts: [ '/revtk/study-base.juicy.js' ]
+ 
+# FIXME : use study entry for study module  OR  use additional entry here?
+# all:
+#   javascripts: [ '/revtk/study-base.juicy.js' ]

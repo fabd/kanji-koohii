@@ -52,7 +52,6 @@ const StudyPage = {
       this.initDictionary(el);
     }
 
-    console.log("studyyy");
     if ((el = domGet("SharedStoriesComponent"))) {
       this.sharedStoriesComponent = new SharedStoriesComponent(this, el);
     }
@@ -62,6 +61,8 @@ const StudyPage = {
       var ed = new EventDelegator(el, "click");
       ed.on("JsEditFlashcard", this.onEditFlashcard, this);
     }
+
+    console.log("studyyy");
   },
 
   initDictionary: function (el) {

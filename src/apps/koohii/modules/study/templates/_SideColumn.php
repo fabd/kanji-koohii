@@ -36,7 +36,7 @@
 </div><!-- /col -->
 
 <?php koohii_onload_slot() ?>
-Core.ready(function(){
+
   App.StudyPage.actb_extracols = function(iRow) {
     return '<span class="f">'+(iRow+1)+'</span><span <?php echo cjk_lang_attrs(['k']) ?>>&#'+kklist.charCodeAt(iRow)+';</span>';
   };
@@ -44,6 +44,6 @@ Core.ready(function(){
   App.StudyPage.initialize({
     URL_SEARCH:        "<?php echo url_for('study/kanji', true) ?>"
   });
-});
+
 <?php end_slot() ?>
 

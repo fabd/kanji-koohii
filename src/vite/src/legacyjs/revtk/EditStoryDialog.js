@@ -15,6 +15,7 @@
 
 import Core from "@old/core";
 import AjaxDialog from "@old/ui/ajaxdialog";
+import VueInstance from "@lib/helpers/vue-instance";
 
 let EditStoryDialog = Core.make();
 

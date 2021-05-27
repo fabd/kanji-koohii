@@ -2,7 +2,7 @@
  * This bundle is used on all pages, except landing (home) & flashcard review.
  */
 
-// import legacy stylesheets
+// stylesheets
 import "@css/main.build.scss";
 import "@css/study-base.build.scss";
 // import "@css/manage.build.scss";
@@ -18,10 +18,6 @@ RootBundle.init();
 // const app = createApp({});
 // app.config.globalProperties.$api = getApi();
 // window.Koohii.API = window.Vue.prototype.$api =
-
-// globals for php
-import App from "@old/app";
-App.StudyPage = null;
 
 // components instanced by external code
 // import LeitnerChart from "@/components/LeitnerChart.vue";
@@ -41,6 +37,6 @@ window.Koohii.UX = {
 
 // @see apps/koohii/modules/study/templates/_SideColumn.php
 import StudyPage from "@old/study-page";
-App.StudyPage = StudyPage;
+window.App.StudyPage = StudyPage;
 
 console.log("@entry study ... OK");

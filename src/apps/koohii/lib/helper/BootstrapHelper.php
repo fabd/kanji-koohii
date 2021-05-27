@@ -224,18 +224,12 @@ function _bs_submit_tag($label, $options = []) {
 
 
 
-/**
- * Just a proxy for now to ease refactoring later. Start inline javascriot
- * slot, which is included at end of document *AFTER* the javascript bundles.
- *
- * Put it here for now (included in config/settings.yml default helpers)
- *
- */
 function koohii_onload_slot() {
-  $name = 'inline_javascript';
+  $name = 'koohii_onload_js';
   $prevContent = get_slot($name);
   slot($name);
   print $prevContent;
+print "console.log('DOM CONTENT LOADED')\n";
 }
 
 function koohii_base_url() {

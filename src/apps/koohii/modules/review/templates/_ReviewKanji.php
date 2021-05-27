@@ -164,15 +164,5 @@ Koohii.UX.reviewMode = {
 
 App.ready(function(){
   App.KanjiReview.initialize(options);
-
-<?php /*
-  var div = document.getElementById("mobile-debug");
-  div.innerHTML = '<pre style="color:#4a9dd7">(this will be removed soon)' + "\n" +
-    'document client w/h = ' + document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight + "\n" +
-    'document inner  w/h = ' + window.innerWidth + 'x' + window.innerHeight+"\n" +
-    'screen ........ w/h = ' + screen.width+'x'+screen.height+"\n"+
-    'document offset w/h = ' + document.documentElement.offsetWidth + 'x' + document.documentElement.offsetHeight + "\n" +
-    '</pre>';
-*/ ?>
 });
 <?php end_slot() ?>

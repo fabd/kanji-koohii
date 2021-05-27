@@ -6,7 +6,6 @@
 
 @import "./legacy/vendor/bootstrap.css";
 
-
 // --------------------------------------------------------------------
 // FIXES
 //
@@ -15,6 +14,15 @@
 // --------------------------------------------------------------------
 html {
   font-size: 16px; // make sure 1rem = 16px
+}
+
+// fix. headings, until we remove Bootstrap
+h2 {
+  font-size: 30px;
+}
+h3 {
+  // font-size: 18px;
+  color: purple;
 }
 
 @import "./_theme.scss";

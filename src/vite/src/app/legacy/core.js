@@ -1,3 +1,20 @@
+/* Copy/Paste board.
+
+import $$, { domGet, px } from "@lib/dom";
+import Core from "@old/core";
+import AjaxDialog from "@old/ajaxdialog";
+import AjaxIndicator  from "@old/ajaxindicator";
+import AjaxPanel from "@old/ajaxpanel";
+import AjaxQueue from "@old/ajaxqueue";
+import AjaxRequest from "@old/ajaxrequest";
+import AjaxTable from "@old/ajaxtable";
+import Keyboard from "@old/keyboard";
+import EventCache from "@old/eventcache";
+import EventDelegator from "@old/eventdelegator";
+import EventDispatcher  from "@old/eventdispatcher";
+
+*/
+
 /**
  * Core framework.
  *

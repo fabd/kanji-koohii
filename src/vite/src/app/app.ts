@@ -2,11 +2,11 @@
  * OBSOLETE. Needs to be phased out eventually.
  */
 
-import $$ from "@lib/koohii/dom";
+import $$ from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";
 import Core from "@old/core";
-import AjaxTable from "@old/ui/ajaxtable";
-import EventDelegator from "@old/ui/eventdelegator";
+import AjaxTable from "@old/ajaxtable";
+import EventDelegator from "@old/eventdelegator";
 
 const App = {
   // helper to instance a Vue from php templates

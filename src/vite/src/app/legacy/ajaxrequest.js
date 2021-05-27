@@ -93,6 +93,7 @@ import $$ from "@lib/koohii/dom";
 import Lang from "@lib/core/lang";
 import Core from "@old/core";
 import * as TRON from "@lib/koohii/tron";
+import toQueryString from "@lib/helpers/to-query-string";
 
 /**
  * Constructor.
@@ -218,7 +219,7 @@ AjaxRequest.prototype = {
         }
       } else if (Lang.isObject(params)) {
         // convert hash to query string parameters
-        params = Core.Toolkit.toQueryString(params);
+        params = toQueryString(params);
       }
     }
 

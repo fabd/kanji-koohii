@@ -11,6 +11,7 @@ import $$, { domGet } from "@lib/dom";
 import App from "@app/app";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
+import SelectionTable from "@old/selectiontable";
 
 export default {
   init() {

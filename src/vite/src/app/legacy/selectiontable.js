@@ -12,10 +12,8 @@
  */
 
 import $$, { stopEvent } from "@lib/dom";
+import * as Core from "@old/core";
 import AjaxTable from "@old/ajaxtable";
-
-console.assert(window.YAHOO);
-const YAHOO = window.YAHOO;
 
 let SelectionTable = Core.make();
 
@@ -94,7 +92,7 @@ SelectionTable.prototype = {
   onClick: function (ev) {
     var row,
       check,
-      el = Event.getTarget(ev);
+      el = ev.target;
 
     // watch for already handled checkbox clicks
     if (el.tagName.toLowerCase() === "input") {

@@ -1,15 +1,21 @@
 /**
- * Manage pages.
- *
+ * FIXME: legacy code, should use Vue but this requires the entire
+ *        Manage Flashcards section to be redone, using API calls,
+ * with each sub-page (add cards, remove cards, edit keywords...)
+ * redone as separate views + state management...
+ *        Which is not worth the trouble unless we redesign/rethink
+ * the UI.
  */
 
 import $$, { domGet } from "@lib/dom";
-import App from "@old/app.js";
+import App from "@app/app";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
 
-App.ManageFlashcards = {
-  init: function () {
+export default {
+  init() {
+    console.log("manage-page::init()");
+    
     var bodyED = App.getBodyED();
 
     this.initView("#manage-view .ajax");
@@ -31,14 +37,14 @@ App.ManageFlashcards = {
     }
   },
 
-  initView: function (viewId) {
+  initView(viewId) {
     this.viewDiv = $$(viewId)[0];
 
     if (this.viewDiv) {
       this.viewPanel = new AjaxPanel(this.viewDiv, {
         bUseShading: false,
         initContent: true,
-        form: "main-form",
+        form: ".main-form",
         events: {
           onSubmitForm: this.onSubmitForm.bind(this),
           onContentInit: this.onContentInit.bind(this),
@@ -48,7 +54,7 @@ App.ManageFlashcards = {
     }
   },
 
-  onContentInit: function () {
+  onContentInit() {
     var i;
 
     console.log("onContentInit()");
@@ -64,14 +70,14 @@ App.ManageFlashcards = {
     }
   },
 
-  onContentDestroy: function () {
+  onContentDestroy() {
     if (this.selectionTable) {
       this.selectionTable.destroy();
       this.selectionTable = null;
     }
   },
 
-  onSubmitForm: function (oEvent) {
+  onSubmitForm(oEvent) {
     var data = this.selectionTable ? this.selectionTable.getPostData() : null;
 
     this.viewPanel.post(data);
@@ -79,7 +85,7 @@ App.ManageFlashcards = {
     return false;
   },
 
-  load: function (element, params) {
+  load(element, params) {
     this.viewPanel.post(params);
     return false;
   },
@@ -88,7 +94,7 @@ App.ManageFlashcards = {
    * Open the Edit Keyword dialog for keywords in the Manage > Edit Keywords table.
    *
    */
-  onEditKeyword: function (e, el) {
+  onEditKeyword(e, el) {
     var options;
 
     // @param  {String}   keyword
@@ -146,5 +152,3 @@ App.ManageFlashcards = {
     return false;
   },
 };
-
-// App.ManageFlashcards.init();

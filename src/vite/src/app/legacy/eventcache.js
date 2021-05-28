@@ -32,9 +32,9 @@ EventCache.prototype = {
     this.eCache = [];
   },
 
-  addEvent: function (element, sEventType, fn) {
-    Event.addListener(element, sEventType, fn);
-    this.push(element, sEventType, fn);
+  addEvent: function (target, type, listener) {
+    target.addEventListener(type, listener);
+    this.eCache.push({ target, type, listener });
   },
 
   /**
@@ -51,16 +51,12 @@ EventCache.prototype = {
     }
   },
 
-  push: function (element, sEventType, handler) {
-    this.eCache.push({ oElem: element, evType: sEventType, fn: handler });
-  },
-
   destroy: function () {
     if (this.eCache) {
       // uiConsole.log('uiEventCache.destroy('+this.sId+') '+this.eCache.length+' events');
       for (var i = this.eCache.length - 1; i >= 0; i--) {
-        var evc = this.eCache[i];
-        Event.removeListener(evc.oElem, evc.evType, evc.fn);
+        var evt = this.eCache[i];
+        evt.target.removeEventListener(evt.type, evt.listener);
       }
       // free up references to the elements
       this.eCache = [];

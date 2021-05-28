@@ -44,7 +44,7 @@
  * Options:
  *   form             Specifies which form to serialize when the submit event is fired.
  *                    By default the first FORM element in the panel is used (boolean true).
- *                    To use another FORM by class name, specify a CSS class name (string).
+ *                    To use another FORM, pass a selector (string).
  *                    Use false to disable form serializing, even if one is present.
  *   events           Handlers for notifications to subscribe to (see below)
  *   bUseLayer        Cover the area with a layer that blocks mouse clicks during ajax (defaults TRUE)
@@ -99,7 +99,7 @@
  *
  */
 
-import $$, { domGet } from "@lib/dom";
+import $$, { domGet, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
 import * as Core from "@old/core";
 import AjaxIndicator from "@old/ajaxindicator";
@@ -285,8 +285,14 @@ ShadeLayer.prototype = {
 
 AjaxPanel.prototype = {
   options: null,
+
+  /** @type Element */
   container: null,
+
+  /** @type EventCache */
   evtCache: null,
+
+  /** @type AjaxRequest*/
   ajaxRequest: null,
 
   /**
@@ -294,9 +300,7 @@ AjaxPanel.prototype = {
    */
   eventDispatcher: null,
 
-  /**
-   * @type EventDelegator
-   */
+  /** @type EventDelegator */
   eventDel: null,
 
   // Custom Events instances
@@ -452,17 +456,15 @@ AjaxPanel.prototype = {
    */
   getForm: function () {
     if (this.options.form === true) {
-      return this.container.getElementsByTagName("form")[0];
+      return $$("form", this.container)[0];
     } else if (Lang.isString(this.options.form)) {
       // return the first form that matches the class name
-      var form = Dom.getElementsByClassName(
-        this.options.form,
-        "form",
-        this.container
-      )[0];
+      var form = $$(this.options.form, this.container)[0];
+
       console.assert(
         form,
-        "AjaxPanel::getForm() form not found (by class name)"
+        "AjaxPanel::getForm() form not found: `%s`",
+        this.options.form
       );
 
       return form;
@@ -473,17 +475,17 @@ AjaxPanel.prototype = {
 
   /**
    *
-   * @param {Object} e   YUI Event
+   * @param {Object} e   native event
    */
-  submitFormEvent: function (e) {
+  submitFormEvent: function(evt) {
     var form,
       skipSubmit = false;
 
-    console.log("AjaxPanel.submitFormEvent(%o) Form %o", e, e.target);
+    console.log("AjaxPanel.submitFormEvent(%o) Form %o", evt, evt.target);
 
     // if listener exists, and it returns false, do not auto-submit
     if (this.eventDispatcher.hasListeners("onSubmitForm")) {
-      skipSubmit = false === this.eventDispatcher.notify("onSubmitForm", e);
+      skipSubmit = false === this.eventDispatcher.notify("onSubmitForm", evt);
     }
 
     if (!skipSubmit) {
@@ -494,7 +496,7 @@ AjaxPanel.prototype = {
       this.send();
     }
 
-    e.stopEvent();
+    stopEvent(evt);
   },
 
   /**

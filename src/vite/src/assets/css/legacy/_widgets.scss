@@ -1,5 +1,8 @@
 /**
- * THIS IS OLD ...
+ * LEGACY "Widgets"
+ * 
+ *   This should be Vue comps, if we refactor related pages, otherwise
+ *   they are "templated" via php.
  *
  * @see     /lib/helper/WidgetsHelper
  * @see     /apps/revtk/lib/helper/GadgetsHelper
@@ -67,30 +70,6 @@
 .uiBMenuItem .uiIBtn { display:block; width:auto; text-align:center; }
 .uiBMenuItem .uiIBtn span { display:block; width:auto; }
 .uiBMenuItem .uiIBtnDefault { font-size:16px; line-height:41px; height:42px; } /* larger buttons for touch/mobile */
-
-
-/**
- * uiDataFilter (Apple.com style "ribbon")
- * 
- * 
- */
-.uiDataFilter,
-.uiDataFilter .corner-left, .uiDataFilter .corner-right,
-.uiDataFilter h4, .uiDataFilter a, .uiDataFilter a span { background:url(/koohii/legacy/widgets-datafilter.gif) repeat-x 0 0; }
-.uiDataFilter, .uiDataFilter h4, .uiDataFilter span, .uiDataFilter a { font:14px/28px Arial, sans-serif; }
-.uiDataFilter { width:100%; margin:0 0 5px; }
-.uiDataFilter .corner-left  { float:left; width:16px; height:29px; background-position:0 -40px; }
-.uiDataFilter .corner-right { float:right; width:16px; height:29px; background-position:100% -40px; }
-.uiDataFilter h4 { color:#7D7D7D; float:left; padding:0 16px 0 0; margin:0; background-position:100% -120px; }
-.uiDataFilter ul { float:left; list-style:none; padding:0; margin:0; }
-.uiDataFilter li { float:left; list-style:none; margin:0; padding:0; }
-.uiDataFilter li a { float:left; padding:0 0 0 10px; height:29px; color:#5C5C5C; text-decoration:none; background-position:0 -120px; }
-.uiDataFilter li a span { float:left; padding-right:10px; background-position:100% -120px; }
-
-.uiDataFilter li a:hover { color:#000; }
-.uiDataFilter li.active a { background-position:0 -80px; color:#000; }
-.uiDataFilter li.active a span { background-position:100% -80px; }
-
 
 /**
  * uiTabs - base styles to use with ui_tabs() helper.
@@ -174,7 +153,7 @@
 .uiTabular { border:1px solid #BDBCAA; border-top:1px solid #D9D8CE; width:100%; }
 /* thead */
 .uiTabular th { padding:0; font:13px Arial, sans-serif; color:#5C5B52; border-bottom:1px solid #A1A1A1; text-align:left;
-  background:#D9D6B7 url(/koohii/legacy/widgets-selecttable.gif) repeat-x 0 0; }
+  background:#D9D6B7 url(/assets/legacy/widgets-selecttable.gif) repeat-x 0 0; }
 .uiTabular th a,
 .uiTabular th span.hd { display:block; float:left; padding:6px 10px; text-align:left; text-decoration:none; } /* non-sortable */
 .uiTabular th a { color:#005CB1; }
@@ -182,9 +161,9 @@
 .uiTabular th a.active { color:#000; }
  /* sort icon */
 .uiTabular th a.sort { padding-right:12px; }
-.uiTabular th a.sort:hover { background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% 50%;   }
-.uiTabular th a.sortasc { padding-right:12px; background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% -37px; }
-.uiTabular th a.sortdesc { padding-right:12px; background:url(/koohii/legacy/widgets-selecttable.gif) no-repeat 100% -72px; }
+.uiTabular th a.sort:hover { background:url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% 50%;   }
+.uiTabular th a.sortasc { padding-right:12px; background:url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% -37px; }
+.uiTabular th a.sortdesc { padding-right:12px; background:url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% -72px; }
 /* tbody */
 .uiTabular td {
   padding:8px 10px;
@@ -242,7 +221,7 @@ table.uiTabular td.keyword { text-align:left; font:15px/1em Georgia, serif; whit
 .uiProgressBar { margin:0 1px; padding:1px 0; background:#A1A1A1; }
 .uiProgressBar div { position:relative; height:19px; margin:0 -1px; border-left:1px solid #A1A1A1; border-right:1px solid #A1A1A1; }
 .uiProgressBar span { position:absolute; left:0; top:0; text-indent:-5000px; font-size:1px; line-height:1px; display:block; width:100%; height:100%; }
-.uiProgressBar div, .uiProgressBar span { background:#5A5A5A url(/koohii/legacy/gadgets-progressbar.gif) repeat-x 0 0; }
+.uiProgressBar div, .uiProgressBar span { background:#5A5A5A url(/assets/legacy/gadgets-progressbar.gif) repeat-x 0 0; }
 .uiProgressBar span.g /*green*/ { background-color:#72A311; background-position:0 -32px; }
 .uiProgressBar span.r /*red*/   { background-color:#A32011; background-position:0 -64px; }
 

@@ -148,6 +148,9 @@ import * as TRON from "@lib/tron";
 
 import VueInstance from "@lib/helpers/vue-instance";
 
+// legacy component (js, also used in "Edit Keywords" manage page)
+import EditKeywordDialog from "@old/components/EditKeywordDialog";
+
 // comps
 import KoohiiCharsLeft from "@/vue/KoohiiCharsLeft.vue";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
@@ -379,7 +382,7 @@ export default defineComponent({
       if (!this.oEditKeyword) {
         const url = this.editKeywordUrl;
         const options = { context: ["my-story", "tr", "tr", null, [-6, 6]] };
-        this.oEditKeyword = new window.App.Ui!.EditKeywordComponent(
+        this.oEditKeyword = new EditKeywordDialog(
           url,
           options,
           callback

@@ -74,14 +74,6 @@ declare global {
     // Vue: VueConstructor<Vue>;
 
     /* OBSOLETE
-      Ui?: {
-        // these are set by legacy js components in `web/revtk/components/`
-        // when included in the legacy bundles `web/revtk/*.juicy.js`
-        DictLookupDialog: any;
-        EditFlashcardDialog: any;
-        EditStoryDialog: any;
-        EditKeywordComponent: any;
-      };
       KanjiReview?: AppKanjiReview; // flashcard review page
     };
 

@@ -13,6 +13,8 @@ import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
 import SelectionTable from "@old/selectiontable";
 
+import EditKeywordDialog from "@old/components/EditKeywordDialog";
+
 export default {
   init() {
     console.log("manage-page::init()");
@@ -101,7 +103,7 @@ export default {
     // @param  {String}   keyword
     // @param  {Boolean}  next (optional)
     const callback = (keyword, next) => {
-      console.log("EditKeywordComponent callback");
+      console.log("EditKeywordDialog callback");
 
       // get the custkeyword td
       let tr = $$(el).closest("tr");
@@ -113,8 +115,8 @@ export default {
       this.oEditKeyword = null;
 
       if (next) {
-        console.log("Edit next keyword...");
-        let nextRow = tr.nextElementSibling();
+        console.log("Edit next keyword...", tr);
+        let nextRow = tr.nextElementSibling;
         if (nextRow) {
           let nextEl = $$(".JSEditKeyword", nextRow)[0];
           window.setTimeout(() => {
@@ -140,7 +142,7 @@ export default {
 
       // FIXME ideally should call this.oEditKeyword.destroy() here if it is set
 
-      this.oEditKeyword = new App.Ui.EditKeywordComponent(
+      this.oEditKeyword = new EditKeywordDialog(
         this.editKeywordUri,
         options,
         callback

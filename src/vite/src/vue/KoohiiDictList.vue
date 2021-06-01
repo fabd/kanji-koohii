@@ -62,15 +62,12 @@
  *
  */
 import { defineComponent } from "vue";
+import { DictId, DictListEntry, GetDictListForUCS } from "@app/api/models";
+import { getApi } from "@app/api/api";
+import { kkFormatReading } from "@lib/format";
 
-import { DictId, DictListEntry, GetDictListForUCS } from "@lib/core/api/models";
-
-// comps
 import CjkLangJa from "@/vue/CjkLangJa.vue";
-import KoohiiLoading from "@/vue/KoohiiLoading/index.js";
-
-// utils
-import { kkFormatReading } from "@lib/koohii/format";
+import KoohiiLoading from "@/vue/KoohiiLoading";
 
 // our simple regexp matching needs this so that vocab with okurigana is considered known
 const HIRAGANA =
@@ -148,8 +145,8 @@ export default defineComponent({
     this.isLoading = true;
   },
 
-  beforeDestroy() {
-    console.log("KoohiiDictList::beforeDestroy()");
+  beforeUnmount() {
+    console.log("KoohiiDictList::beforeUnmount()");
   },
 
   methods: {
@@ -179,7 +176,7 @@ export default defineComponent({
           target: this.$refs.refLoadingMask as HTMLElement,
         });
 
-        this.$api.legacy.setVocabForCard(this.ucsId, item.id).then((tron) => {
+        getApi().legacy.setVocabForCard(this.ucsId, item.id).then((tron) => {
           KoohiiLoading.hide();
           // success:  show vocab onto the flashcard, and close the dictionary
           tron.isSuccess() && this.onVocabPickResponse(item);
@@ -191,7 +188,7 @@ export default defineComponent({
           target: this.$refs.refLoadingMask as HTMLElement,
         });
 
-        this.$api.legacy.deleteVocabForCard(this.ucsId).then((tron) => {
+        getApi().legacy.deleteVocabForCard(this.ucsId).then((tron) => {
           KoohiiLoading.hide();
           tron.isSuccess() && this.onVocabDeleteResponse(item);
         });
@@ -241,7 +238,7 @@ export default defineComponent({
         //   even though they are also cached in php session, it's better to avoid returning
         //   several KBs of data with each dictionary lookup request
 
-        this.$api.legacy
+        getApi().legacy
           .getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
           .then((tron) => {
             KoohiiLoading.hide();

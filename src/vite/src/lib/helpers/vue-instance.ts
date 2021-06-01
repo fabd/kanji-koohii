@@ -3,8 +3,6 @@ import Lang from "@lib/lang";
 
 export type { ComponentPublicInstance };
 
-// type ExtractComponentInstance<T> = T extends new () => infer I ? I : never;
-
 const fnVueInstance = (
   component: any,
   mount: string | Element,

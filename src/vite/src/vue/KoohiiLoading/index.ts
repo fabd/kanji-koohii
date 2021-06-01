@@ -9,19 +9,24 @@
  *
  */
 
-import VueInstance, { ComponentPublicInstance } from "@lib/helpers/vue-instance";
+import { nextTick } from "vue";
+import VueInstance, {
+  ComponentPublicInstance,
+} from "@lib/helpers/vue-instance";
 import KoohiiLoading from "./KoohiiLoading.vue";
 import { getStyle } from "@lib/dom";
 import Lang from "@lib/lang";
 
 type VueInstanceOf<T> = T extends new () => infer I ? I : never;
-type ExtractComponentInstance<T> = T extends new ()=> infer I ? I : never
 
-const setMaskStyle = (parent: HTMLElement, instance: ExtractComponentInstance<typeof KoohiiLoading>) => {
-  instance.originalPosition = getStyle(parent, "position");
+const setMaskStyle = (
+  parent: HTMLElement,
+  instance: VueInstanceOf<typeof KoohiiLoading>
+) => {
+  instance.originalPosition = getStyle(parent, "position")!;
 };
 
-let instance: any = null;
+let instance: VueInstanceOf<typeof KoohiiLoading> | null;
 
 export type KoohiiLoadingOptions = { target: HTMLElement; background?: string };
 
@@ -39,7 +44,9 @@ export default {
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 
-    instance = VueInstance(KoohiiLoading, document.createElement("div"), options); // as TVueInstanceOf<typeof KoohiiLoading>;
+    instance = <VueInstanceOf<typeof KoohiiLoading>>(
+      VueInstance(KoohiiLoading, document.createElement("div"), options)
+    );
 
     setMaskStyle(target, instance);
 
@@ -51,16 +58,14 @@ export default {
     }
 
     target.appendChild(instance.$el);
-    Vue.nextTick(() => {
-      instance.visible = true;
+    nextTick(() => {
+      instance!.setVisible(true);
     });
-
-    inst = instance;
   },
 
   hide() {
     console.log("koohiiloading::hide()");
-    inst && inst.close();
-    inst = null;
+    instance!.close();
+    instance = null;
   },
 };

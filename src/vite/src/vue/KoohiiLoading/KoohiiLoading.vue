@@ -1,7 +1,7 @@
 <template>
   <transition name="kk-loading-fade">
     <div
-      v-show="visible"
+      v-show="isVisible"
       class="kk-loading-mask"
       :style="{ backgroundColor: background || '' }"
     >
@@ -18,6 +18,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   data() {
     return {
+      isVisible: false,
       originalPosition: "",
     };
   },
@@ -41,6 +42,10 @@ export default defineComponent({
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el);
       }
+    },
+
+    setVisible(value: boolean) {
+      this.isVisible = value;
     },
   },
 });

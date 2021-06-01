@@ -1,8 +1,11 @@
 import $$, { domGet } from "@lib/dom";
+import VueInstance from "@lib/helpers/vue-instance";
+
 import actb from "@old/autocomplete.js";
 import EventDelegator from "@old/eventdelegator";
 
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
+import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
 const CLASS_ACTIVE = "active";
@@ -73,17 +76,16 @@ const StudyPage = {
 
   toggleDictionary: function (e, el) {
     var visible = !this.dictVisible,
-      $elBody = $$("#JsDictBody")[0],
-      ucsId = elBody.dataset.ucs;
+      $elBody = $$("#JsDictBody"),
+      ucsId = $elBody[0].dataset.ucs;
 
     $elBody.toggle(visible);
     this.dictVisible = visible;
 
     if (!this.dictPanel) {
       // use inner div set in the php template
-      console.log("yya");
-      var elMount = $elBody.down(".JsMount");
-      var inst = VueInstance(Koohii.UX.KoohiiDictList, elMount, {}, true);
+      var elMount = $elBody.down(".JsMount")[0];
+      var inst = VueInstance(KoohiiDictList, elMount, {}, true);
       inst.load(ucsId);
 
       this.dictPanel = true;

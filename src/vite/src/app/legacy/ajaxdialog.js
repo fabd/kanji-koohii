@@ -217,16 +217,13 @@ AjaxDialog.DIALOG_LOADING_HTML =
 AjaxDialog.prototype = {
   options: null,
 
+  /** @type {EventDispatcher | null} */
   eventDispatcher: null,
 
-  /**
-   * @type EventDelegator
-   */
+  /** @type EventDelegator */
   eventDel: {},
 
-  /**
-   * @type YAHOO.widget.Panel
-   */
+  /** @type YAHOO.widget.Panel */
   yPanel: null,
 
   // if loading content
@@ -324,10 +321,12 @@ AjaxDialog.prototype = {
 
     // set loading style for ajax dialogs, now otherwise positioning issues
     if (options.requestUri) {
-      console.assert(
-        !!options.width,
-        "AjaxDialog.init()   Ajax dialog should set width!"
-      );
+      if (!options.width) {
+        console.warn(
+          !!options.width,
+          "AjaxDialog.init()   Ajax dialog should set width!"
+        );
+      }
       this.setBodyLoading(options.width);
     }
 
@@ -615,9 +614,10 @@ AjaxDialog.prototype = {
     return this.eventDispatcher.notify("onDialogSubmit", e);
   },
 
-  /*
+  /**
    * Handles status from TRON response
    *
+   * @param {TRON.TronInst} tron
    * @return {boolean}  True if the dialog is closed
    */
   handleTRONStatus: function (tron) {
@@ -625,13 +625,13 @@ AjaxDialog.prototype = {
       dialogStatus;
 
     switch (status) {
-      case TRON.STATUS_FAILED:
+      case TRON.STATUS.FAILED:
         dialogStatus = AjaxDialog.STATUS_FAILED;
         break;
-      case TRON.STATUS_PROGRESS:
+      case TRON.STATUS.PROGRESS:
         dialogStatus = AjaxDialog.STATUS_PROGRESS;
         break;
-      case TRON.STATUS_SUCCESS:
+      case TRON.STATUS.SUCCESS:
         dialogStatus = AjaxDialog.STATUS_SUCCESS;
         break;
       default:

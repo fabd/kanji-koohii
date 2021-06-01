@@ -38,7 +38,7 @@ import Lang from "@lib/lang";
 // keep in sync with constants in /lib/JsTRON.php
 
 // TRON message was not found in given source
-export const enum STATUS {
+export enum STATUS {
   EMPTY = -1,
   // a form submission contains errors, or a blocker (do not close ajax dialog)
   FAILED = 0,
@@ -91,12 +91,12 @@ function Inst<T = TronProps>(message: Partial<TronMessage>): TronInst<T> {
     isFailed: () => tronObj.status === STATUS.FAILED,
 
     getStatus: (): STATUS => tronObj.status,
-    getProps: (): T => (tronObj.props as unknown) as T,
+    getProps: (): T => tronObj.props as unknown as T,
     getHtml: (): string => tronObj.html,
 
     getErrors: () => tronObj.errors,
     hasErrors: () => tronObj.errors.length > 0,
-    setErrors: function(...errors: string[]) {
+    setErrors: function (...errors: string[]) {
       tronObj.errors.push(...errors);
     },
   };

@@ -57,17 +57,15 @@ declare global {
     UX: { [componentName: string]: any };
   }
 
-  export interface AppGlobals {
-    VueInstance: VueInstanceFn;
-    [key: string]: any;
-  }
-
   interface Window {
     // base URL for API requests (cf. layout.php & koohii_base_url() helper)
     KK_BASE_URL: string;
 
-    // set from php & legacy javascript
-    App: AppGlobals;
+    // for instancing Vue components from php templates
+    App: {
+      VueInstance: VueInstanceFn;
+      [key: string]: any;
+    };
 
     Koohii: KoohiiGlobals;
 

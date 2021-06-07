@@ -17,16 +17,14 @@ import KoohiiLoading from "./KoohiiLoading.vue";
 import { getStyle } from "@lib/dom";
 import Lang from "@lib/lang";
 
-type VueInstanceOf<T> = T extends new () => infer I ? I : never;
-
 const setMaskStyle = (
   parent: HTMLElement,
-  instance: VueInstanceOf<typeof KoohiiLoading>
+  instance: TVueInstanceOf<typeof KoohiiLoading>
 ) => {
   instance.originalPosition = getStyle(parent, "position")!;
 };
 
-let instance: VueInstanceOf<typeof KoohiiLoading> | null;
+let instance: TVueInstanceOf<typeof KoohiiLoading> | null;
 
 export type KoohiiLoadingOptions = { target: HTMLElement; background?: string };
 
@@ -44,7 +42,7 @@ export default {
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 
-    instance = <VueInstanceOf<typeof KoohiiLoading>>(
+    instance = <TVueInstanceOf<typeof KoohiiLoading>>(
       VueInstance(KoohiiLoading, document.createElement("div"), options)
     );
 

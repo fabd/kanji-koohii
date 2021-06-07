@@ -60,14 +60,14 @@ export type PostVoteStoryResponse = {
 };
 
 export type GetUserStoryResponse = {
-  postStoryEdit?: string;
-  postStoryPublic?: boolean;
-  isFavoriteStory?: boolean; // if true, postStoryView is a "starred" story
+  initStoryEdit?: string;
+  initStoryPublic?: boolean;
+  initFavoriteStory?: boolean; // if true, postStoryView is a "starred" story
 };
 
 export type PostUserStoryResponse = {
   // story formatted for display (non-edit mode)
-  postStoryView: string;
+  initStoryView: string;
   // story is currently shared
   isStoryShared: boolean;
   // unique id for the "shared story" added to the page `story-${userId}-${ucsId}`

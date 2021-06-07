@@ -139,15 +139,15 @@ EditStoryDialog.prototype = {
       custKeyword: data.custKeyword,
 
       isReviewMode: true,
-      isFavoriteStory: data.isFavoriteStory,
+      initFavoriteStory: data.initFavoriteStory,
 
-      postStoryEdit: data.postStoryEdit,
-      postStoryView: data.postStoryView,
-      postStoryPublic: data.postStoryPublic,
+      initStoryEdit: data.initStoryEdit,
+      initStoryView: data.initStoryView,
+      initStoryPublic: data.initStoryPublic,
     };
 
     var elMount = this.dialog.getBody().querySelector("div"); // replace the AjaxDialog's loading div
-    this.editStory = Koohii.Refs.vueEditStory = VueInstance(
+    this.editStory = VueInstance(
       Koohii.UX.KoohiiEditStory,
       elMount,
       vueProps,

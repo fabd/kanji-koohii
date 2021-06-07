@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height:100px;background:#ccc;">
+  <div class="min-h-[100px] bg-[#ccc]">
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
       <input v-model="kanjiData.ucs_id" type="hidden" name="ucs_code" />
@@ -18,7 +18,7 @@
 
             <div class="strokecount" title="Stroke count"
               >[{{ kanjiData.strokecount }}]<br />
-              <span style="font-size:120%"
+              <span class="text-[120%]"
                 ><cjk-lang-ja>{{ kanjiData.onyomi }}</cjk-lang-ja></span
               >
             </div>
@@ -52,7 +52,7 @@
 
                 <!-- FIXME  refactor to flex... -->
                 <div class="controls valign">
-                  <div style="float:left;">
+                  <div class="float-left">
                     <input
                       id="storyedit_public"
                       v-model="postStoryPublic"
@@ -61,7 +61,7 @@
                     />
                     <label for="storyedit_public">Share this story</label>
                   </div>
-                  <div style="float:right;">
+                  <div class="float-right">
                     <koohii-chars-left
                       :text="postStoryEdit"
                       :max-length="512"
@@ -120,13 +120,16 @@
                     This kanji is ready for review in the
                     <strong>learned</strong> list.
                   </div>
-                </template> </div
-              ><!-- /storyview --> </div
-            ><!-- /storybox --> </div
-          ><!-- /right -->
-
-          <div class="clear"></div> </div
-        ><!-- /rtkframe -->
+                </template>
+              </div>
+              <!-- /storyview -->
+            </div>
+            <!-- /storybox -->
+          </div>
+          <!-- /right -->
+          <div class="clear"></div>
+        </div>
+        <!-- /rtkframe -->
 
         <div class="bottom"></div>
       </div>
@@ -137,13 +140,11 @@
 
 <script lang="ts">
 // @xts-nocheck (need to fix "read-only props" shenanigans)
-import { defineComponent } from "vue";
+import { defineComponent, nextTick } from "vue";
 
 import $$, { insertAfter, getNode } from "@lib/dom";
-import {
-  KanjiData,
-  PostUserStoryResponse,
-} from "@lib/core/api/models";
+import { getApi } from "@app/api/api";
+import { KanjiData, PostUserStoryResponse } from "@app/api/models";
 import * as TRON from "@lib/tron";
 
 import VueInstance from "@lib/helpers/vue-instance";
@@ -177,16 +178,16 @@ export default defineComponent({
     isReviewMode: { type: Boolean, default: false },
 
     // show a starred story in reviewmode when user's story is empty
-    isFavoriteStory: { type: Boolean, default: false },
+    initFavoriteStory: { type: Boolean, default: false },
 
     // Study page only, "Add to learned list" functionality
     showLearnButton: { type: Boolean, default: false },
     showLearnedMessage: { type: Boolean, default: false },
 
     // ajax state
-    postStoryView: { type: String, default: "" },
-    postStoryEdit: { type: String, default: "" },
-    postStoryPublic: { type: Boolean, default: false },
+    initStoryView: { type: String, default: "" },
+    initStoryEdit: { type: String, default: "" },
+    initStoryPublic: { type: Boolean, default: false },
   },
 
   data() {
@@ -196,13 +197,20 @@ export default defineComponent({
 
       isEditing: false,
 
+      isFavoriteStory: false,
+
       // holds instance of a KoohiiSharedStory component (visual feedback for sharing a story)
-      vmStoryPublished: null as Vue | null,
+      vmStoryPublished: null,
 
       // keep a copy to cancel changes
       uneditedStory: "",
 
       formErrors: [] as string[],
+
+      //
+      postStoryView: "",
+      postStoryEdit: "",
+      postStoryPublic: false,
     };
   },
 
@@ -247,14 +255,14 @@ export default defineComponent({
     onSubmit() {
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
-      this.$api.legacy
-        .postUserStory(
+      getApi()
+        .legacy.postUserStory(
           this.kanjiData.ucs_id,
           this.postStoryEdit,
           this.postStoryPublic,
           this.isReviewMode
         )
-        .then((tron) => {
+        .then((tron: TRON.TronInst<PostUserStoryResponse>) => {
           KoohiiLoading.hide();
           this.formHandleResponse(tron);
           if (!tron.hasErrors()) {
@@ -267,14 +275,11 @@ export default defineComponent({
       // keep it simple for now, after a POST forget about the "starred story" thing
       this.isFavoriteStory = false;
 
-      this.postStoryView = props.postStoryView;
+      this.postStoryView = props.initStoryView;
       this.isEditing = false;
-
-      // FIXME -- temporary code for user feedback (should use Vue based SharedStories list)
 
       // destroy previous instance if created
       if (this.vmStoryPublished) {
-        this.vmStoryPublished.$destroy();
         this.vmStoryPublished = null;
       }
 
@@ -303,7 +308,7 @@ export default defineComponent({
           KoohiiSharedStory,
           elMount,
           propsData
-        );
+        ) as any;
       }
     },
 
@@ -318,7 +323,7 @@ export default defineComponent({
 
       this.editStory(storyText);
 
-      this.$nextTick(function() {
+      nextTick(function () {
         // $$('#main_container')[0].scrollIntoView(true)
 
         // scroll to top of window
@@ -357,7 +362,7 @@ export default defineComponent({
       this.isEditing = true;
 
       // note:AFTER toggling isEditing,order is important!
-      this.$nextTick(function() {
+      nextTick(() => {
         const elTextArea = $$<HTMLTextAreaElement>("#frmStory")[0];
         // DOM is now updated
         this.setCaretToEnd(elTextArea);
@@ -382,11 +387,7 @@ export default defineComponent({
       if (!this.oEditKeyword) {
         const url = this.editKeywordUrl;
         const options = { context: ["my-story", "tr", "tr", null, [-6, 6]] };
-        this.oEditKeyword = new EditKeywordDialog(
-          url,
-          options,
-          callback
-        );
+        this.oEditKeyword = new EditKeywordDialog(url, options, callback);
       } else {
         this.oEditKeyword.show();
       }
@@ -401,14 +402,14 @@ export default defineComponent({
     },
   },
 
-  // created()
-  // {
-  //   console.log('KoohiiEditStory::created()')
+  created() {
+    console.log("KoohiiEditStory::created()");
 
-  //   this.postStoryView   = this.postStoryView
-  //   this.postStoryEdit   = this.postStoryEdit
-  //   this.postStoryPublic = this.postStoryPublic
-  // }
+    this.isFavoriteStory = !!this.initFavoriteStory;
+
+    this.postStoryView = this.initStoryView;
+    this.postStoryEdit = this.initStoryEdit;
+    this.postStoryPublic = this.initStoryPublic;
+  },
 });
 </script>
-

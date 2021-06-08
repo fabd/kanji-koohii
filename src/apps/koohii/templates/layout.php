@@ -9,11 +9,11 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="rss">
 <?php 
   $pageId      = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
-  $landingPage = $sf_request->getParameter('_landingPage');
+  $isLandingPage = $sf_request->getParameter('isLandingPage');
   $withFooter  = $sf_request->getParameter('_homeFooter') ? 'with-footer ' : '';
 
-  $entry = $landingPage ? 'src/entry-landing.ts' : 'src/entry-study.ts';
-  $sf_response->addViteEntry($entry); 
+  // call it here at last, if it wasn't already triggered via view.yml (addJavascript())
+  $sf_response->addViteEntries();
 
   include_stylesheets();
 ?>
@@ -49,9 +49,9 @@
 
 <!--[if lt IE 9]><div id="ie"><![endif]--> 
 
-<?php include_partial('global/navbar', ['pageId' => $pageId, 'landingPage' => $landingPage]) ?>
+<?php include_partial('global/navbar', ['pageId' => $pageId]) ?>
 
-<?php if ($landingPage) {
+<?php if ($isLandingPage) {
   echo $sf_content;
 } else { ?>
 <div id="main">
@@ -63,9 +63,7 @@
 <?php } ?>
 
 <?php echo '<script>'.koohii_base_url()."</script>\n"; ?>
-<?php if (!$landingPage):  ?>
-  <script type="text/javascript" defer src="/vendor/yui2-build/index.min_v290.js"></script>
-<?php endif ?>
+
 <?php include_javascripts(); ?>
 
 <?php

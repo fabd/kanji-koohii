@@ -17,45 +17,79 @@ class coreWebResponse extends sfWebResponse
   const VITE_SERVER = 'http://localhost:3000/';
   const VITE_CLIENT = '@vite/client';
 
-  const USE_DEV_SERVER = false;
+  const USE_DEV_SERVER = true;
 
-  /**
-   * Adds a stylesheet to the current web response.
-   *
-   * @see  sfWebResponse::addStylesheet()
-   *
-   * @param mixed $entryFile
-   */
-  // public function addStylesheet($file, $position = '', $options = [])
-  // {
-  //   $file = $this->getVersionUrl($file);
-  //   parent::addStylesheet($file, $position, $options);
-  // }
+  public function addViteEntries()
+  {
+    static $viteClientLoaded = false;
+
+    if ($viteClientLoaded)
+    {
+      return;
+    }
+
+    $request = sfContext::getInstance()->getRequest();
+
+    // $module = $request->getParameter('module');
+    // $action = $request->getParameter('action');
+
+    $isLandingPage = $request->getParameter('isLandingPage');
+
+    // FIXME : obsolete YUI2 dependency to be phased out
+    if (!$isLandingPage)
+    {
+      $this->addJavascript('/vendor/yui2-build/index.min_v290.js', self::FIRST, ['defer' => true]);
+    }
+
+    if (self::USE_DEV_SERVER && false === $viteClientLoaded)
+    {
+      $this->addViteClient();
+      $viteClientLoaded = true;
+    }
+
+    // common base entry for all authenticated pages
+    if (!$isLandingPage)
+    {
+      $this->addViteEntry('src/entry-study.ts');
+    }
+  }
+
+  public function addViteClient()
+  {
+    $this->addJavascript(self::VITE_SERVER.self::VITE_CLIENT, self::FIRST, self::SCRIPT_TYPE_MODULE);
+  }
 
   /**
    * Adds javascript code to the current web response.
    *
    * @see  sfWebResponse::addJavascript()
+   *
+   * @param mixed $file
+   * @param mixed $position
+   * @param mixed $options
    */
-  // public function addJavascript($file, $position = '', $options = [])
-  // {
-  //   $file = $this->getVersionUrl($file);
-  //   parent::addJavascript($file, $position, $options);
-  // }
-
-  public function addViteEntry($entryFile)
+  public function addJavascript($file, $position = '', $options = [])
   {
-    static $viteClientLoaded = false;
-
-    if (self::USE_DEV_SERVER && false === $viteClientLoaded)
+    if (strpos($file, 'src/') === 0)
     {
-      $this->addViteClient();
-    }
+      // this adds Vite dependencies, when triggered early via adding an entry in view.yml
+      $this->addViteEntries();
 
+      // typically this will be the last added entry for specific pages (after common entries)
+      $this->addViteEntry($file, $position);
+    }
+    else
+    {
+      parent::addJavascript($file, $position, $options);
+    }
+  }
+
+  public function addViteEntry($entryFile, string $position = '')
+  {
     // with Vite's dev server, just import the entry file(s) which also include the CSS
     if (KK_ENV_DEV && self::USE_DEV_SERVER)
     {
-      $this->addJavascript(self::VITE_SERVER.$entryFile, '', self::SCRIPT_TYPE_MODULE);
+      $this->addJavascript(self::VITE_SERVER.$entryFile, $position, self::SCRIPT_TYPE_MODULE);
 
       return;
     }
@@ -70,37 +104,32 @@ class coreWebResponse extends sfWebResponse
 
     $position = '';
 
-    function addViteDist($assetFile)
+    $addViteDist = function ($assetFile)
     {
       return Vite::OUTDIR.'/'.$assetFile;
-    }
+    };
 
     // add imports
     if (null !== ($deps = $manifest[$entryFile]['deps'] ?? null))
     {
       foreach ($deps as $importFile)
       {
-        $this->addJavascript(addViteDist($importFile), $position, self::SCRIPT_TYPE_MODULE);
+        $this->addJavascript($addViteDist($importFile), $position, self::SCRIPT_TYPE_MODULE);
       }
     }
 
     // add entry file itself
     $importFile = $entryInfo['file'];
-    $this->addJavascript(addViteDist($importFile), $position, self::SCRIPT_TYPE_MODULE);
+    $this->addJavascript($addViteDist($importFile), $position, self::SCRIPT_TYPE_MODULE);
 
     // add stylesheet(s) if any
     if ($cssDeps = $entryInfo['css'])
     {
       foreach ($cssDeps as $importFile)
       {
-        $this->addStylesheet(addViteDist($importFile), $position);
+        $this->addStylesheet($addViteDist($importFile), $position);
       }
     }
-  }
-
-  public function addViteClient()
-  {
-    $this->addJavascript(self::VITE_SERVER.self::VITE_CLIENT, 'first', self::SCRIPT_TYPE_MODULE);
   }
 
   protected function getViteManifest()
@@ -122,49 +151,6 @@ class coreWebResponse extends sfWebResponse
     }
 
     return $viteManifest;
-  }
-
-  /**
-   * Adds a unique version identifier to the css and javascript file names,
-   * (using the local file modified times from build script), to prevent client
-   * browsers from using the cache when a css/js file is updated.
-   *
-   * The .htaccess files redirects those "versioned" files to a php script that
-   * will strip the version number to get the actual file, and return the file
-   * gzipped if possible to minimized download size.
-   *
-   * @param string $url Css or Javascript url
-   *
-   * @return string Resource url with version number in it
-   */
-  protected function getVersionUrl($url)
-  {
-    // leave absolute URLs (usually from CDNs like Google and Yahoo) unchanged
-    if (stripos($url, 'http:') === 0)
-    {
-      return $url;
-    }
-
-    if (sfConfig::get('sf_environment') === 'dev')
-    {
-    }
-    else
-    {
-      // legacy bundles compiled with batch/build script
-      if (($pos = strpos($url, '.juicy.js')) !== false)
-      {
-        $url = '/build'.str_replace('.juicy.', '.min.', $url);
-      }
-
-      // add version string
-      $versions = $this->getResourceVersion();
-      $path = pathinfo($url);
-      $ver = isset($versions[$url]) ? '_v'.$versions[$url] : '';
-      preg_match('/(.+)(\\.[a-z]+)/', $path['basename'], $matches);
-      $url = $path['dirname'].'/'.$matches[1].$ver.$matches[2];
-    }
-
-    return $url;
   }
 
   /**

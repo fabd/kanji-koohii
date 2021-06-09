@@ -16,6 +16,7 @@
   $sf_response->addViteEntries();
 
   include_stylesheets();
+  include_javascripts();
 ?>
   <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
 
@@ -63,8 +64,6 @@
 <?php } ?>
 
 <?php echo '<script>'.koohii_base_url()."</script>\n"; ?>
-
-<?php include_javascripts(); ?>
 
 <?php
   if ($s = get_slot('koohii_onload_js')) {

@@ -162,7 +162,5 @@ Koohii.UX.reviewMode = {
   fc_edit_params: '{"review": 1}'
 };
 
-App.ready(function(){
-  App.KanjiReview.initialize(options);
-});
+App.KanjiReview.initialize(options);
 <?php end_slot() ?>

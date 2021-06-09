@@ -32,12 +32,6 @@ const App = {
   init() {
     console.log("App.init()");
 
-    // initialize the page
-    if (this.fnReady) {
-      console.log("App.ready()");
-      this.fnReady();
-    }
-
     // focus input on load (AFTER fnReady())
     if (this.focusOnLoadSel) {
       const elFocus = $$(this.focusOnLoadSel)[0] as HTMLElement;
@@ -52,10 +46,6 @@ const App = {
    */
   focusOnLoad(selector: string) {
     this.focusOnLoadSel = selector;
-  },
-
-  ready(fn: Function) {
-    this.fnReady = fn;
   },
 
   /**

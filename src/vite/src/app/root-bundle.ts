@@ -1,5 +1,5 @@
 import App from "@app/app";
-import Dom from "@lib/dom";
+import Dom, { domContentLoaded } from "@lib/dom";
 import KoohiiAside from "@/vue/Aside";
 import KoohiiNav from "@old/components/KoohiiNav";
 
@@ -17,12 +17,9 @@ export default function() {
     },
   };
 
-  window.addEventListener("DOMContentLoaded", () => {
+  domContentLoaded(() => {
     // init the site-wide desktop navigation
     KoohiiNav.init();
-
     App.init();
   });
-
-  console.log("@root-bundle");
 }

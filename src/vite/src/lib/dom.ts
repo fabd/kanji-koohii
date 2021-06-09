@@ -9,52 +9,12 @@
  *   getStyle()
  *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
  *
+ *   domContentLoaded(fn)              ... proxy for window.addEventListener(...)
  *   domGet()                          ... same as YUI2 Dom.get()
  *   hasClass(el, token)               ... alias for `el.classList.contains(token)`
  *   stopEvent(ev)                     ... helper for stopPropagation() & preventDefault()
  *
  *   px(value)                         ... format value for css property eg. `45` => `45px`
- *
- *
- * CONSTRUCTOR
- *
- *   For convenience, chaining a method is allowed *once* after the constructor:
- *
- *     $('#help-box').css('display', 'block')
- *
- *   To call more than one method, assign the result to a temporary variable, eg:
- *
- *     const $app = $('#app')
- *     $app.css('background', 'powderblue')
- *     $app.on('click', evt => { console.log('clicked %o', evt.target) })
- *
- *
- * EXAMPLES
- *
- *   Import:
- *
- *     import $ from 'dom'
- *
- *   Using the constructor with a selector:
- *
- *     let el = $('.box')
- *     let articles = $('article', '#main-content')  // optional context element
- *
- *   Two ways of obtaining the actual element reference:
- *
- *     let $el = $('.box')[0]
- *     let $el = $('.box').el()
- *
- *   Using the constructor, from an element or `window` reference:
- *
- *     $(element).css('display', 'block')
- *     $(window).on('DOMContentLoaded', function() { ... })
- *
- *   Convention: use a `$` prefix to distinguish DomJS instance from the element:
- *
- *     let $box = $('.box')
- *     $box.css('width') = '20px'
- *     $box.on('click', (ev) => { console.log("clicked el %o", ev.target) })
  *
  *
  * METHODS
@@ -68,6 +28,8 @@
  *   css(prop)                         ... get/set inline styles
  *    css(prop, value)
  *    css({ prop1: value, ...})
+ *
+ *   down(selector)                    ... similar to jQuery find(), can be chained
  *
  *   each((el, index) => {})           ... iterate over selected elements
  *
@@ -85,6 +47,44 @@
  *   remove(node)                      ... same as `node.parentNode.removeChild(node)`
  *
  *   toggle(display)                   ... toggle element rendering via `display` property
+ *
+ *
+ * USAGE
+ *
+ *   Chaining a method is allowed *once* after the constructor:
+ *
+ *     $('#help-box').css('display', 'block')
+ *
+ *   To call more than one method, assign the result to a temporary variable, eg:
+ *
+ *     const $app = $('#app')
+ *     $app.css('background', 'powderblue')
+ *     $app.on('click', evt => { console.log('clicked %o', evt.target) })
+ *
+ *
+ * EXAMPLES
+ *
+ *   Using the constructor with a selector:
+ *
+ *     import $ from 'dom'
+ *     let el = $('.box')
+ *     let articles = $('article', '#main-content')  // optional context element
+ *
+ *   Two ways of obtaining the actual element reference:
+ *
+ *     let el = $('.box')[0]
+ *     let el = $('.box').el()
+ *
+ *   Form an element or window reference:
+ *
+ *     $(element).css('display', 'block')
+ *     $(window).on('DOMContentLoaded', function() { ... })
+ *
+ *   Convention: use a `$` prefix to distinguish DomJS instance from the element:
+ *
+ *     let $box = $('.box')
+ *     $box.css('width') = '20px'
+ *     $box.on('click', (ev) => { console.log("clicked el %o", ev.target) })
  *
  */
 
@@ -435,6 +435,10 @@ export function getStyle(
 export function getNode<EL extends Element>(sel: EL | string): EL | null {
   const node = isString(sel) ? (document.querySelector(sel) as EL) : sel;
   return node;
+}
+
+export const domContentLoaded = (fn: Function) => {
+  window.addEventListener("DOMContentLoaded", fn as any);
 };
 
 /**

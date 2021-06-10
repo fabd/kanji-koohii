@@ -16,8 +16,7 @@ const App = {
     AjaxTable,
   },
 
-  /** @type EventDelegator */
-  bodyED: null,
+  bodyED: null as IEventDelegator | null,
 
   /** @type Function */
   fnReady: null as Function | null,
@@ -56,7 +55,7 @@ const App = {
   getBodyED() {
     return this.bodyED
       ? this.bodyED
-      : (this.bodyED = new (EventDelegator as any)(document.body, "click"));
+      : (this.bodyED = new (EventDelegator as IEventDelegator)(document.body, "click"));
   },
 };
 

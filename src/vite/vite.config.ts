@@ -20,7 +20,12 @@ export default defineConfig({
 
     // custom entry points  https://rollupjs.org/guide/en/#input
     rollupOptions: {
-      input: ["./src/entry-landing.ts", "./src/entry-study.ts"],
+      input: [
+        "./src/entry-account.ts",
+        "./src/entry-landing.ts",
+        "./src/entry-manage.ts",
+        "./src/entry-study.ts",
+      ],
     },
   },
 
@@ -40,7 +45,10 @@ export default defineConfig({
       },
       { find: "@app", replacement: path.resolve(__dirname, "./src/app") },
       { find: "@lib", replacement: path.resolve(__dirname, "./src/lib") },
-      { find: "@old", replacement: path.resolve(__dirname, "./src/app/legacy") },
+      {
+        find: "@old",
+        replacement: path.resolve(__dirname, "./src/app/legacy"),
+      },
       // {
       //   find: "@assets",
       //   replacement: path.resolve(__dirname, "./src/assets"),

@@ -18,9 +18,6 @@ const App = {
 
   bodyED: null as IEventDelegator | null,
 
-  /** @type Function */
-  fnReady: null as Function | null,
-
   /** @type String  selector for input to focus after DOMContentLoaded */
   focusOnLoadSel: "",
 
@@ -31,7 +28,7 @@ const App = {
   init() {
     console.log("App.init()");
 
-    // focus input on load (AFTER fnReady())
+    // focus input on load
     if (this.focusOnLoadSel) {
       const elFocus = $$(this.focusOnLoadSel)[0] as HTMLElement;
       elFocus && elFocus.focus();

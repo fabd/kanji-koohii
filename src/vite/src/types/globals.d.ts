@@ -87,14 +87,4 @@ declare global {
     oReview: any;
     toggleDictDialog: () => void;
   }
-
-  /**
-   * Instance of legacy component:
-   *   App.Ui.EditKeywordComponent
-   * @see web/revtk/components/EditKeywordDialog.js
-   */
-  export interface EditKeywordDialogInstance {
-    show(): void;
-    destroy(): void;
-  }
 }

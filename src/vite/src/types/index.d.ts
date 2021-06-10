@@ -1,8 +1,9 @@
-type Dictionary<T> = { [key: string]: T };
+type Dictionary<T = any> = { [key: string]: T };
 
 // --------------------------------------------------------------------
 // legacy component definitions; for .js files imported in .ts
 // --------------------------------------------------------------------
+
 // ajaxdialog.js
 interface IAjaxDialog {
   new (srcMarkup: string | null, options?: Dictionary): this;

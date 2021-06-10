@@ -37,7 +37,7 @@ export default class EditKeywordDialog {
    * @param {any} options   params (AjaxDialog requestData), context (YUI2 Panel option)
    * @param {function} callback   Callback to insert the updated keyword back into the page
    */
-  constructor(url: string, options: any, callback: Function) {
+  constructor(url: string, options: Dictionary, callback: Function) {
     console.log("EditKeywordDialog(%s, %o)", url, options);
 
     this.options = options;

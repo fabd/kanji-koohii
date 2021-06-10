@@ -193,7 +193,7 @@ export default defineComponent({
   data() {
     return {
       // Edit Keyword dialog instance
-      oEditKeyword: null as EditKeywordDialogInstance | null,
+      oEditKeyword: null as EditKeywordDialog | null,
 
       isEditing: false,
 

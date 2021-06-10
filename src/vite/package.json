@@ -24,7 +24,6 @@
     "vue": "^3.0.5"
   },
   "devDependencies": {
-    "axios": "^0.21.1",
     "@rollup/plugin-eslint": "^8.0.1",
     "@rollup/plugin-strip": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
@@ -32,13 +31,14 @@
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.11",
     "autoprefixer": "^10.2.5",
+    "axios": "^0.21.1",
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.10.0",
     "postcss": "^8.2.15",
-    "prettier": "^2.3.1",
+    "prettier": "~1.19.1",
     "sass": "^1.32.13",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",

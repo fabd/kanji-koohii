@@ -48,9 +48,10 @@ declare global {
     // DomJS provides simple DOM utilities to the old frontend code
     Dom: typeof Dom;
 
-    // *instances* of components, shared between misc. legacy Javascripts
+    // misc. references shared between backend/frontend,
+    //  also Vue components from Vite build, instanced from php templates
     Refs: {
-      [componentName: string]: any;
+      [key: string]: any;
     };
 
     // references to Vue components that can be instanced later
@@ -61,23 +62,7 @@ declare global {
     // base URL for API requests (cf. layout.php & koohii_base_url() helper)
     KK_BASE_URL: string;
 
-    // for instancing Vue components from php templates
-    App: {
-      VueInstance: VueInstanceFn;
-      [key: string]: any;
-    };
-
     Koohii: KoohiiGlobals;
-
-    // Vue: VueConstructor<Vue>;
-
-    /* OBSOLETE
-      KanjiReview?: AppKanjiReview; // flashcard review page
-    };
-
-    // FIXME (use props?) apps/koohii/modules/review/templates/_LeitnerChart.php
-    leitner_chart_data: any;
-    */
   }
 
   /**

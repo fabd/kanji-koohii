@@ -22,7 +22,7 @@ rootBundleInit();
 // components instanced by external code
 // import LeitnerChart from "@/vue/LeitnerChart.vue";
 import LeitnerChartJs from "@/vue/LeitnerChart";
-window.App.LeitnerChart = LeitnerChartJs;
+window.Koohii.Refs.LeitnerChart = LeitnerChartJs;
 
 // import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
@@ -37,6 +37,5 @@ window.Koohii.UX = {
 
 // @see apps/koohii/modules/study/templates/_SideColumn.php
 import StudyPage from "@app/study-page";
-window.App.StudyPage = StudyPage;
+window.Koohii.Refs.StudyPage = StudyPage;
 
-console.log("@entry study ... OK");

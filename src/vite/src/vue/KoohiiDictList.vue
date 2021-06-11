@@ -126,7 +126,7 @@ export default defineComponent({
 
   computed: {
     KanjiReview(): AppKanjiReview | undefined {
-      return window.App && window.App.KanjiReview;
+      return window.Koohii.Refs.KanjiReview;
     },
 
     isKanjiReview(): boolean {
@@ -171,7 +171,6 @@ export default defineComponent({
 
       // add
       if (item.pick !== true) {
-        // App.KanjiReview.oReview.curCard.cardData.v_on ...
         KoohiiLoading.show({
           target: this.$refs.refLoadingMask as HTMLElement,
         });

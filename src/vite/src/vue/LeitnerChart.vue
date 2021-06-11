@@ -67,8 +67,8 @@ export default defineComponent({
   data: function() {
     return {
       /* global leitner_chart_data */
-      box_data: window.App.LeitnerChart.leitner_chart_data.boxes,
-      box_urls: window.App.LeitnerChart.leitner_chart_data.urls,
+      box_data: Koohii.Refs.LeitnerChart.leitner_chart_data.boxes,
+      box_urls: Koohii.Refs.LeitnerChart.leitner_chart_data.urls,
 
       colors: {
         // bar.type

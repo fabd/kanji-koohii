@@ -98,7 +98,7 @@ export default defineComponent({
           var wh = window.innerHeight; //document.documentElement.
           if (parseInt(wh)) {
             var cardh = wh - (43 + 37 + 67);
-            if (/*App.Ui.resizedCard === 0 &&*/ cardh > 150) {
+            if (cardh > 150) {
               this.resizedCard = cardh;
 
               this.cardHeight = cardh;

@@ -15,5 +15,5 @@
 </div>
 
 <?php koohii_onload_slot() ?>
-  var ajaxTable = new App.Ui.AjaxTable('MembersListComponent');
+  var ajaxTable = new Koohii.UX.AjaxTable('MembersListComponent');
 <?php end_slot() ?>

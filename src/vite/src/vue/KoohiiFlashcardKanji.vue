@@ -129,7 +129,7 @@ export default {
   methods: {
     onVocabClick() {
       // console.log('onVocabClick()')
-      App.KanjiReview.toggleDictDialog()
+      Koohii.Refs.KanjiReview.toggleDictDialog()
     },
 
     // @param {object} DictEntry    { compound, reading, gloss }, cf. rtkLabs.php

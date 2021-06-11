@@ -11,12 +11,11 @@
 import "@css/manage.build.scss";
 
 import $$, { domGet } from "@lib/dom";
-import App from "@app/app";
+import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
 import EditKeywordDialog from "@old/components/EditKeywordDialog";
 import SelectionTable from "@old/selectiontable";
-import EventDelegator from "./app/legacy/eventdelegator";
 
 class ManagePage {
   private viewDiv?: Element;
@@ -30,7 +29,7 @@ class ManagePage {
   constructor() {
     console.log("@entry-manage ...");
 
-    const bodyED = App.getBodyED();
+    const bodyED = getBodyED();
 
     this.viewDiv = this.initView("#manage-view .ajax");
 

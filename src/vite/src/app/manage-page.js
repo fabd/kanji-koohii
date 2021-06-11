@@ -8,7 +8,7 @@
  */
 
 import $$, { domGet } from "@lib/dom";
-import App from "@app/app";
+import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
 import SelectionTable from "@old/selectiontable";
@@ -19,7 +19,7 @@ export default {
   init() {
     console.log("manage-page::init()");
     
-    var bodyED = App.getBodyED();
+    var bodyED = getBodyED();
 
     this.initView("#manage-view .ajax");
 

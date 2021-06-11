@@ -98,6 +98,7 @@
 /* globals YAHOO, Core, App, VueInstance */
 
 import * as Core from "@old/core";
+import { getBodyED } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
 import EventDispatcher from "@old/eventdispatcher";
 
@@ -185,7 +186,7 @@ FlashcardReview.prototype = {
     });
 
     // buttons and other custom actions
-    var ed = App.getBodyED();
+    var ed = getBodyED();
     ed.on("uiFcAction", this.onActionEvent, this);
 
     // initialize shortcuts and keyboard handler

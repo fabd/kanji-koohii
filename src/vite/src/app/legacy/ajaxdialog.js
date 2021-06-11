@@ -180,8 +180,8 @@
 
 import $$, { domGet, hasClass } from "@lib/dom";
 import * as TRON from "@lib/tron";
-import App from "@app/app";
 import * as Core from "@old/core";
+import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import EventDelegator from "@old/eventdelegator";
 import EventDispatcher from "@old/eventdispatcher";
@@ -389,8 +389,8 @@ AjaxDialog.prototype = {
     }
 
     // autoclose option: clicking the modal mask will hide the dialog
-    if (this.options.autoclose && App && App.getBodyED) {
-      App.getBodyED().onDefault(function (ev) {
+    if (this.options.autoclose) {
+      getBodyED().onDefault(function (ev) {
         if (hasClass(ev.target, "mask")) {
           this.hide();
         }

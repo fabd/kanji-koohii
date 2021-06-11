@@ -85,7 +85,7 @@ const StudyPage = {
     if (!this.dictPanel) {
       // use inner div set in the php template
       var elMount = $elBody.down(".JsMount")[0];
-      var inst = VueInstance(KoohiiDictList, elMount, {}, true);
+      var inst = VueInstance(KoohiiDictList, elMount);
       inst.load(ucsId);
 
       this.dictPanel = true;

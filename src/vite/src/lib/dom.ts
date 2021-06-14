@@ -132,18 +132,14 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
     }
     // assume it's a Node
     else {
-      return this.setNode(selector as EL);
+      this[0] = selector as EL;
+      this.length = 1;
+      return this;
     }
 
     for (let i = 0, l = (this.length = nodes.length); i < l; i++) {
       this[i] = nodes[i];
     }
-  }
-
-  private setNode(node: EL) {
-    this[0] = node;
-    this.length = 1;
-    return this;
   }
 
   /**
@@ -192,9 +188,9 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
    *
    * @param selector string
    */
-  down(selector: string): this {
+  down(selector: DomJSSelector): DomJS<EL> {
     let el = this[0] as Element;
-    return this.setNode(el.querySelector(selector) as EL);
+    return factory<EL>(selector, this[0]);
   }
 
   /**

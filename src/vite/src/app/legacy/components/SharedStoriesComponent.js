@@ -1,10 +1,12 @@
 // FIXME: legacy componet, should become a Vue at some point
 
 import $$, { domGet } from "@lib/dom";
+import { getApi } from "@app/api/api";
 import * as Core from "@old/core";
 import AjaxTable from "@old/ajaxtable";
 import EventDelegator from "@old/eventdelegator";
 
+/** @type { new(oStudyPage: any, elContainer: Element): this } */
 let SharedStoriesComponent = Core.make();
 
 // css class names
@@ -15,9 +17,9 @@ SharedStoriesComponent.prototype = {
   /**
    *
    * @param  {Object}  oStudyPage   StudyPage
-   * @param  {HTMLElement}  elContainer   Main div
+   * @param  {Element}  elContainer   Main div
    */
-  init: function (oStudyPage, elContainer) {
+  init: function(oStudyPage, elContainer) {
     this.oStudyPage = oStudyPage;
 
     // handling of votes, etc
@@ -31,13 +33,12 @@ SharedStoriesComponent.prototype = {
     this.evtDel.on("JsUnhide", this.onUnhide, this);
 
     // handling of the stories paging
-    var shaddapJSHint = new AjaxTable(
-      "SharedStoriesListComponent",
-      { errorDiv: "SharedStoriesError" }
-    );
+    var shaddapJSHint = new AjaxTable("SharedStoriesListComponent", {
+      errorDiv: "SharedStoriesError",
+    });
   },
 
-  onUnhide: function (ev, el) {
+  onUnhide: function(ev, el) {
     if (ev.type === "click") {
       var parentDiv = $$(el).closest(".sharedstory")[0];
       if (parentDiv) {
@@ -49,7 +50,7 @@ SharedStoriesComponent.prototype = {
     return false;
   },
 
-  onNewestClick: function (ev, el) {
+  onNewestClick: function(ev, el) {
     if (ev.type === "click") {
       var div = domGet("sharedstories-new");
 
@@ -63,27 +64,21 @@ SharedStoriesComponent.prototype = {
     }
   },
 
-  onCopy: function (ev, el) {
+  onCopy: function(ev, el) {
     ev.preventDefault();
     this.onClickStory("copy", el);
   },
-  onReport: function (ev, el) {
+  onReport: function(ev, el) {
     ev.preventDefault();
     this.onClickStory("report", el);
   },
-  onStar: function (ev, el) {
+  onStar: function(ev, el) {
     ev.preventDefault();
     this.onClickStory("star", el);
   },
 
-  getElMsg: function (el) {
-    el = $$(el).closest(".JsAction")[0];
-    el = $$(".JsMsg", el)[0];
-    return el;
-  },
-
   // returns "star" "report" or "copy" from the element class name
-  getFirstClassName: function (el) {
+  getFirstClassName: function(el) {
     if (/(\w+)/.test(el.className)) {
       return RegExp.$1;
     }
@@ -91,7 +86,7 @@ SharedStoriesComponent.prototype = {
   },
 
   // refactor this with throttle or debounce() ..
-  throttleClick: function (span) {
+  throttleClick: function() {
     var nowclick, nowsecs;
 
     nowclick = new Date().getTime();
@@ -110,39 +105,41 @@ SharedStoriesComponent.prototype = {
   },
 
   /**
-   *  which      action from the element's class name ('star', 'report', 'copy')
+   * @param {"copy"|"report"|"star"} which     action from the element's class name
+   * @param {Element} el
    */
-  onClickStory: function (which, el) {
-    var span = this.getElMsg(el);
-
-    if (this.throttleClick(span)) {
+  onClickStory: function(which, el) {
+    if (this.throttleClick()) {
       return;
     }
 
     // eg. "story-14266-22679"
-    var ids = span.parentNode.dataset;
+    let elActions = $$(el).closest(".JsAction");
+    let storyIds = elActions.dataset;
 
     // userid, ucs_id
     var params = {
       // use the class name (star/report/copy) as "request"
       request: which,
-      uid: ids.uid,
-      sid: ids.cid,
+      uid: storyIds.uid,
+      sid: storyIds.cid,
     };
 
     if (params.request) {
-      var elClickedStory = this.getStoryParentDiv(span);
+      const elSharedStory = this.getStoryParentDiv(elActions);
 
-      Koohii.API.legacy.ajaxSharedStory(params).then((tron) => {
-        this.onAjaxResponse(tron, elClickedStory);
-      });
+      getApi()
+        .legacy.ajaxSharedStory(params)
+        .then((tron) => {
+          this.onAjaxResponse(tron, elSharedStory);
+        });
     }
 
     return;
   },
 
   // refactoring! is now a KoohiiRequest handler!
-  onAjaxResponse: function (tron, elClickedStory) {
+  onAjaxResponse: function(tron, elClickedStory) {
     var data = tron.getProps();
 
     // console.log('onAjaxResponse tron %o    el %o', tron, elClickedStory);
@@ -212,11 +209,11 @@ SharedStoriesComponent.prototype = {
   },
 
   // helper that returns the main div (parent element) of a Shared Story
-  getStoryParentDiv: function (el) {
+  getStoryParentDiv: function(el) {
     return $$(el).closest(".sharedstory");
   },
 
-  moveStoryToFavourites: function (elSharedStory, storyId) {
+  moveStoryToFavourites: function(elSharedStory, storyId) {
     var elFavourites = domGet("sharedstories-top");
 
     if (!this.movedStory) {
@@ -247,11 +244,11 @@ SharedStoriesComponent.prototype = {
     anim.animate();
   },
 
-  moveStoryId: function (storyId) {
+  moveStoryId: function(storyId) {
     return storyId.replace("story-", "moved-");
   },
 
-  moveStoryBack: function (elSharedStory, storyId) {
+  moveStoryBack: function(elSharedStory, storyId) {
     var elMoveTo = $$("#" + this.moveStoryId(storyId))[0];
 
     if (elMoveTo) {

@@ -1,15 +1,9 @@
 /**
- * Declare global interface between legacy js & Vue/Ts build.
- *
- *   Vue               ... exposed as window.Vue
- *   VueInstance       ... exposed as window.VueInstance
- *   Koohii            ... exposed as window.Koohii
+ * Declare globals for legacy components (.js).
  *
  *   Koohii
  *   . API             ... expose axios based API for review & study bundles
  *   . Dom             ... expose DOM utilities
- *   . Util
- *   . . Lang
  *
  */
 
@@ -18,7 +12,6 @@ import Vue, {
   ComponentPublicInstance,
   VueConstructor,
 } from "vue";
-import { KoohiiAPI } from "@lib/core/api";
 import Lang from "@lib/lang";
 import Dom from "@lib/dom";
 import { Inst as TronFactory } from "@lib/tron";
@@ -43,8 +36,6 @@ declare global {
 
 declare global {
   export interface KoohiiGlobals {
-    API?: KoohiiAPI;
-
     // DomJS provides simple DOM utilities to the old frontend code
     Dom: typeof Dom;
 
@@ -74,13 +65,5 @@ declare global {
     kwlist: string[];
 
     Koohii: KoohiiGlobals;
-  }
-
-  /**
-   * @see web/revtk/kanji-flashcardreview.juicy.js
-   */
-  export interface AppKanjiReview {
-    oReview: any;
-    toggleDictDialog: () => void;
   }
 }

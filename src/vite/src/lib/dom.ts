@@ -318,7 +318,7 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
    *
    */
   css(props: string | StringHash, value?: string): any {
-    const element = this[0] as any as HTMLElement;
+    const element = (this[0] as any) as HTMLElement;
     let styles: StringHash;
 
     if (isString(props)) {
@@ -358,7 +358,7 @@ class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @returns void
    */
   toggle(display: boolean): void {
-    const element = this[0] as any as HTMLElement;
+    const element = (this[0] as any) as HTMLElement;
     element.style.display = display ? "" : "none";
   }
 
@@ -389,15 +389,16 @@ export { factory as default };
  *
  * @returns The added child node
  */
-export function insertAfter(newNode: Element, refNode: Element): Element {
+export function insertAfter(
+  newNode: Element,
+  refNode: Element
+): Element | null {
   console.assert(
     isNode(newNode) && isNode(refNode),
     "insertAfter() : newNode and/or refNode is invalid"
   );
-  if (refNode.parentNode) {
-    return refNode.parentNode.insertBefore(newNode, refNode.nextSibling);
-  }
-  return newNode;
+  console.assert(!!refNode.parentNode, "refNode needs a parent element");
+  return refNode.insertAdjacentElement("afterend", newNode);
 }
 
 /**

@@ -222,8 +222,6 @@ function _bs_submit_tag($label, $options = []) {
   return submit_tag($label, $options);
 }
 
-
-
 function koohii_onload_slot() {
   $name = 'koohii_onload_js';
   $prevContent = get_slot($name);
@@ -232,6 +230,23 @@ function koohii_onload_slot() {
 print "console.log('koohii_onload_slot()')\n";
 }
 
-function koohii_base_url() {
-  return 'window.KK_BASE_URL = "'.url_for('@homepage', true).'";';
+function kk_globals_base_url() {
+  kk_globals_put('BASE_URL', url_for('@homepage', true));
+}
+
+/**
+ * Helper to "hydrate" template with data for the frontend.
+ * 
+ * Cf. window.KK.* in globals.d.ts
+ * 
+ * Conveniently, this hydration happens BEFORE defered modules
+ * from Vite build are run, since defered modules happen after
+ * the document is parsed, and <script>'s are part of the document.
+ *
+ * @param string $name  the key name (convention ALL_UPPERCASE)
+ * @param mixed $value  any valid value that parses to JSON (string, boolean, null, etc)
+ */
+function kk_globals_put(string $name, $value) {
+  $var = json_encode($value);
+  echo "\n<script>window.KK || (KK = {}); KK.${name} = ${var}</script>\n";
 }

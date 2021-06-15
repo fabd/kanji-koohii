@@ -50,13 +50,15 @@ declare global {
   }
 
   interface Window {
-    // base URL for API requests (cf. layout.php & koohii_base_url() helper)
-    KK_BASE_URL: string;
+    // cf. kk_globals_put() on the php side
+    KK: {
+      // base URL for API requests (cf. layout.php & koohii_base_url() helper)
+      BASE_URL: string;
 
-    // _SideColumn.php
-    KK_STUDY_KANJI_URL: string;
+      STUDY_SEARCH_URL: string;
 
-    KK_EDITSTORY_PROPS: Dictionary;
+      EDITSTORY_PROPS: Dictionary;
+    };
 
     // 4th/5th edition keywords and kanji, import cf. _SideColumn.php
     //   web/revtk/study/keywords-rtk-0.js

@@ -18,8 +18,5 @@ import StudyPage from "@app/study-page";
 
 domContentLoaded(() => {
   console.log("@entry study ...");
-
-  StudyPage.initialize({
-    URL_SEARCH: window.KK_STUDY_KANJI_URL
-  });
+  StudyPage.initialize();
 });

@@ -159,10 +159,10 @@ export class LegacyApi extends HttpClient {
 }
 
 export function getApi(): KoohiiAPI {
-  console.assert(!!window.KK_BASE_URL, "KK_BASE_URL is not set?");
+  console.assert(!!window.KK.BASE_URL, "KK_BASE_URL is not set?");
 
   // base url to account for dev/test envs, no trailing slash
-  const apiBaseUrl = window.KK_BASE_URL.replace(/\/$/, "");
+  const apiBaseUrl = window.KK.BASE_URL.replace(/\/$/, "");
 
   return {
     legacy: LegacyApi.getInstance(apiBaseUrl),

@@ -35,4 +35,4 @@
 
 </div><!-- /col -->
 
-<script>window.KK_STUDY_KANJI_URL = <?php echo var_export(url_for('study/kanji', true)); ?>;</script>
+<?php kk_globals_put('STUDY_SEARCH_URL', url_for('study/kanji', true)) ?>

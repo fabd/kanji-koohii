@@ -12,13 +12,7 @@ import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
 const CLASS_ACTIVE = "active";
 
-type StudyPageOptions = {
-  URL_SEARCH: string;
-};
-
 export default {
-  options: {} as StudyPageOptions,
-
   elEditFlashcard: null as Element | null,
   oEditFlashcard: null as EditFlashcardDialog | null,
 
@@ -27,9 +21,7 @@ export default {
   dictVisible: false,
   dictPanel: null as AjaxPanel | null,
 
-  initialize(options: StudyPageOptions) {
-    // options & php constants
-    this.options = options;
+  initialize() {
 
     // references
     this.elSearch = domGet<HTMLInputElement>("txtSearch")!;
@@ -62,7 +54,7 @@ export default {
     window.Koohii.Refs.vueEditStory = VueInstance(
       KoohiiEditStory,
       elEditStory,
-      window.KK_EDITSTORY_PROPS
+      window.KK.EDITSTORY_PROPS
     );
 
     const elDictStudy = domGet("DictStudy");
@@ -170,8 +162,7 @@ export default {
         text = RegExp.$1;
       }
 
-      window.location.href =
-        this.options.URL_SEARCH + "/" + this.anesthetizeThisBloodyUri(text);
+      window.location.href = window.KK.STUDY_SEARCH_URL + "/" + this.anesthetizeThisBloodyUri(text);
       return true;
     }
   },

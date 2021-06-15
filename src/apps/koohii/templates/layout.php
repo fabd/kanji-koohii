@@ -63,7 +63,7 @@
 <?php if ($sf_request->getParameter('_homeFooter')) { include_partial('home/homeFooter'); } ?>
 <?php } ?>
 
-<?php echo '<script>'.koohii_base_url()."</script>\n"; ?>
+<?php kk_globals_base_url(); ?>
 
 <?php
   if ($s = get_slot('koohii_onload_js')) {

@@ -171,4 +171,4 @@ EOD;
   ];
 
   $propsData = array_merge($propsData, $initStoryData);
-  echo "\n<script>window.KK_EDITSTORY_PROPS = ".json_encode($propsData)."</script>\n";
+  echo kk_globals_put('EDITSTORY_PROPS', $propsData);

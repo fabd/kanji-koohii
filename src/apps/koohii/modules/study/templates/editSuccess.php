@@ -70,21 +70,19 @@ EOD;
 <?php else: ?>
 
   <div id="EditStoryComponent">
-    
     <div style="position:relative;">
       <h2><?php echo $title; ?></h2>
       <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($userId, $sf_context, $kanjiData->ucs_id); } ?>
     </div>
 
     <div id="JsEditStoryInst" class="min-h-[100px]">
-
-<!-- placeholder till Vue comp is mounted -->
-<?php
-  include_partial('EditStoryPlaceholder', [
-    'kanjiData' => $kanjiData, 'formattedStory' => $initStoryData['initStoryView'], 'custKeyword' => $custKeyword]) ?>
-   
+      <!-- placeholder till Vue comp is mounted -->
+      <?php include_partial('EditStoryPlaceholder', [
+        'kanjiData' => $kanjiData,
+        'formattedStory' => $initStoryData['initStoryView'],
+        'custKeyword' => $custKeyword])
+      ?>
     </div>
-
   </div>
 
   <div id="DictStudy" class="col-box no-gutter-xs-sm">
@@ -173,12 +171,4 @@ EOD;
   ];
 
   $propsData = array_merge($propsData, $initStoryData);
-
-  koohii_onload_slot();
-?>
-  Koohii.Refs.vueEditStory = App.VueInstance(
-    Koohii.UX.KoohiiEditStory,
-    '#JsEditStoryInst',
-    <?= json_encode($propsData) ?>   
-  );
-<?php end_slot() ?>
+  echo "\n<script>window.KK_EDITSTORY_PROPS = ".json_encode($propsData)."</script>\n";

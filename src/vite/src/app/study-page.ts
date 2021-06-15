@@ -1,48 +1,55 @@
+// FIXME: legacy study-page.js
+
 import $$, { domGet } from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";
-
 import actb from "@old/autocomplete.js";
+import AjaxPanel from "@old/ajaxpanel";
 import EventDelegator from "@old/eventdelegator";
-
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
+import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
 const CLASS_ACTIVE = "active";
 
-const StudyPage = {
-  /** @type {{ URL_SEARCH: string }?} */
-  options: null,
+type StudyPageOptions = {
+  URL_SEARCH: string;
+};
 
-  /**
-   *
-   * @param {{ URL_SEARCH: string }} options
-   */
-  initialize: function (options) {
-    var el;
+export default {
+  options: {} as StudyPageOptions,
 
-    // otpions & php constants
+  elEditFlashcard: null as Element | null,
+  oEditFlashcard: null as EditFlashcardDialog | null,
+
+  elSearch: (null as any) as HTMLInputElement,
+
+  dictVisible: false,
+  dictPanel: null as AjaxPanel | null,
+
+  initialize(options: StudyPageOptions) {
+    // options & php constants
     this.options = options;
 
     // references
-    this.elSearch = domGet("txtSearch");
+    this.elSearch = domGet<HTMLInputElement>("txtSearch")!;
 
     // quick search autocomplete
-    var actb1 = (this.actb1 = new actb(this.elSearch, kwlist));
+    const actb1 = new actb(this.elSearch, window.kwlist);
     actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
     actb1.onPressEnterCallback = this.quicksearchEnterCallback.bind(this);
 
-    // function move to _SideColumnView.php for CJK lang attributes
-    actb1.actb_extracolumns = this.actb_extracols; // _SideColumnView.php
-    /*
-      function(iRow) {
-        return '<span class="f">'+(iRow+1)+'</span><span class="k cj-t">&#'+kklist.charCodeAt(iRow)+';</span>';
-      };*/
+    actb1.actb_extracolumns = function(iRow) {
+      return `<span class="f">${iRow +
+        1}</span><span class="k cj-k" lang="ja" xml:lang="ja">&#${window.kklist.charCodeAt(
+        iRow
+      )};</span>`;
+    };
 
     // clicking in quick search box selects the text
-    $$(this.elSearch).on("focus", function (ev) {
-      if ((el = ev.target) && el.value !== "") {
-        el.select();
+    $$(this.elSearch).on("focus", (evt: Event) => {
+      if (this.elSearch.value !== "") {
+        this.elSearch.select();
       }
     });
 
@@ -51,62 +58,68 @@ const StudyPage = {
       this.elSearch.focus();
     }
 
-    if ((el = $$("#DictStudy")[0])) {
-      this.initDictionary(el);
+    let elEditStory = domGet("JsEditStoryInst")!;
+    window.Koohii.Refs.vueEditStory = VueInstance(
+      KoohiiEditStory,
+      elEditStory,
+      window.KK_EDITSTORY_PROPS
+    );
+
+    const elDictStudy = domGet("DictStudy");
+    elDictStudy && this.initDictionary(elDictStudy);
+
+    const elSharedStories = domGet("SharedStoriesComponent");
+    if (elSharedStories) {
+      new SharedStoriesComponent(this, elSharedStories);
     }
 
-    if ((el = domGet("SharedStoriesComponent"))) {
-      this.sharedStoriesComponent = new SharedStoriesComponent(this, el);
-    }
-
-    if ((el = $$("#EditFlashcard")[0])) {
-      this.elEditFlashcard = el;
-      var ed = new EventDelegator(el, "click");
+    const elEditFlashcard = domGet("EditFlashcard");
+    if (elEditFlashcard) {
+      this.elEditFlashcard = elEditFlashcard;
+      var ed = new (EventDelegator as IEventDelegator)(
+        elEditFlashcard,
+        "click"
+      );
       ed.on("JsEditFlashcard", this.onEditFlashcard, this);
     }
 
-    console.log("studyyy");
+    console.log("@entry study ...done");
   },
 
-  initDictionary: function (el) {
+  initDictionary(el: Element) {
     $$("#DictHead").on("click", this.toggleDictionary.bind(this));
     this.dictVisible = false;
     this.dictPanel = null;
   },
 
-  toggleDictionary: function (e, el) {
-    var visible = !this.dictVisible,
-      $elBody = $$("#JsDictBody"),
-      ucsId = $elBody[0].dataset.ucs;
+  toggleDictionary(evt: Event) {
+    const visible = !this.dictVisible;
+    const $elBody = $$<HTMLElement>("#JsDictBody");
 
     $elBody.toggle(visible);
     this.dictVisible = visible;
 
     if (!this.dictPanel) {
       // use inner div set in the php template
-      var elMount = $elBody.down(".JsMount")[0];
-      var inst = VueInstance(KoohiiDictList, elMount);
+      let elMount = $elBody.down(".JsMount")[0];
+      let inst = VueInstance(KoohiiDictList, elMount) as TVueInstanceOf<
+        typeof KoohiiDictList
+      >;
+      let ucsId = parseInt($elBody[0].dataset.ucs!);
       inst.load(ucsId);
 
       this.dictPanel = true;
     }
   },
 
-  onSearchBtn: function (e) {
-    var text = this.elSearch.value;
-    this.quicksearchOnChangeCallback(text);
-    e.preventDefault();
-    return false;
-  },
+  onEditFlashcard(evt: Event, el: HTMLElement) {
+    let data = el.dataset;
 
-  onEditFlashcard: function (ev, el) {
-    var data = el.dataset;
-
-    function onMenuResponse(result) {
+    function onMenuResponse(result: "added" | "deleted") {
       // update icon to reflect new flashcard state
-      var z = { added: "1", deleted: "0" };
+      let z = { added: "1", deleted: "0" };
       if (z.hasOwnProperty(result)) {
-        var div = el.parentNode;
+        let div = el.parentElement!;
         div.className = div.className.replace(
           /\bis-toggle-\d\b/,
           "is-toggle-" + z[result]
@@ -123,8 +136,8 @@ const StudyPage = {
 
     if (!this.oEditFlashcard) {
       this.oEditFlashcard = new EditFlashcardDialog(
-        data.uri,
-        JSON.parse(data.param),
+        data.uri!,
+        JSON.parse(data.param!),
         [this.elEditFlashcard, "tr", "br"],
         {
           events: {
@@ -135,7 +148,7 @@ const StudyPage = {
         }
       );
     } else {
-      this.oEditFlashcard.show();
+      (this.oEditFlashcard as any).show();
     }
 
     return false;
@@ -149,7 +162,7 @@ const StudyPage = {
    *
    * @see    autocomplete.js
    */
-  quicksearchOnChangeCallback: function (text) {
+  quicksearchOnChangeCallback(text: string) {
     if (text.length > 0) {
       // Lookup the first kanji if there is any kanji in the search string, ignore other characters
       // Regexp is equivalent of \p{InCJK_Unified_Ideographs}
@@ -168,7 +181,7 @@ const StudyPage = {
    *
    * @see    autocomplete.js
    */
-  quicksearchEnterCallback: function (text) {
+  quicksearchEnterCallback(text: string) {
     this.quicksearchOnChangeCallback(text);
   },
 
@@ -180,10 +193,8 @@ const StudyPage = {
    *
    * On the backend side, the dashes become wildcards.
    */
-  anesthetizeThisBloodyUri: function (annoyingUri) {
+  anesthetizeThisBloodyUri(annoyingUri: string) {
     var s = annoyingUri.replace(/[\/\.]/g, "-");
     return encodeURIComponent(s);
   },
 };
-
-export default StudyPage;

@@ -62,6 +62,17 @@ declare global {
     // base URL for API requests (cf. layout.php & koohii_base_url() helper)
     KK_BASE_URL: string;
 
+    // _SideColumn.php
+    KK_STUDY_KANJI_URL: string;
+
+    KK_EDITSTORY_PROPS: Dictionary;
+
+    // 4th/5th edition keywords and kanji, import cf. _SideColumn.php
+    //   web/revtk/study/keywords-rtk-0.js
+    //   web/revtk/study/keywords-rtk-1.js
+    kklist: string;
+    kwlist: string[];
+
     Koohii: KoohiiGlobals;
   }
 

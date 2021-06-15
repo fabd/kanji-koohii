@@ -30,6 +30,7 @@ import * as Core from "@old/core";
 import AjaxDialog from "@old/ajaxdialog";
 import EventDispatcher from "@old/eventdispatcher";
 
+/** @type { new(url: string, params: any, context: Array, options: any): this } */
 let EditFlashcardDialog = Core.make();
 
 const isMobile = window.innerWidth <= 720;

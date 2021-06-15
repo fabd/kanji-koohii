@@ -226,7 +226,7 @@ SharedStoriesComponent.prototype = {
       div.id = this.moveStoryId(storyId);
 
       // insert our "remember this story position" div before the Shared Story div
-      Dom.insertBefore(div, elSharedStory);
+      elSharedStory.insertAdjacentElement('beforeBegin', div);
 
       this.movedStory[storyId] = true;
     }

@@ -198,10 +198,11 @@ const actb = function(obj, ca)
   this.actb_delimiter = []; // Delimiter for multiple autocomplete. Set it to empty array for single autocomplete
   this.onChangeCallback = null;
   this.onPressEnterCallback = null;
-  this.actb_extracolumns = function()
-  {
-    return '';
-  }; // formats extra information into each row of the dropdown, given row number
+
+  // formats extra information into each row of the dropdown, given row number
+  /** @type {(row: number) => string} */
+  this.actb_extracolumns = function (iRow) { return ''; };
+
   /* ---- Private Variables ---- */
   var actb_delimwords = [];
   var actb_cdelimword = 0;

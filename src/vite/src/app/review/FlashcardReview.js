@@ -147,7 +147,7 @@ FlashcardReview.prototype = {
   /**
    * Initialize the front end Flashcard Review component.
    *
-   * @param {Object} options
+   * @param {Window["KK"]["REVIEW_OPTIONS"]} options
    */
   init: function (oOptions) {
     console.log("FlashcardReview::init()");

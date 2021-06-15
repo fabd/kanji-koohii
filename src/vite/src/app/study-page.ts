@@ -1,6 +1,7 @@
 // FIXME: legacy study-page.js
 
 import $$, { domGet } from "@lib/dom";
+import { kk_globals_get } from "@app/root-bundle";
 import VueInstance from "@lib/helpers/vue-instance";
 import actb from "@old/autocomplete.js";
 import AjaxPanel from "@old/ajaxpanel";
@@ -22,7 +23,6 @@ export default {
   dictPanel: null as AjaxPanel | null,
 
   initialize() {
-
     // references
     this.elSearch = domGet<HTMLInputElement>("txtSearch")!;
 
@@ -54,7 +54,7 @@ export default {
     window.Koohii.Refs.vueEditStory = VueInstance(
       KoohiiEditStory,
       elEditStory,
-      window.KK.EDITSTORY_PROPS
+      kk_globals_get("EDITSTORY_PROPS")
     );
 
     const elDictStudy = domGet("DictStudy");
@@ -162,7 +162,10 @@ export default {
         text = RegExp.$1;
       }
 
-      window.location.href = window.KK.STUDY_SEARCH_URL + "/" + this.anesthetizeThisBloodyUri(text);
+      window.location.href =
+        kk_globals_get("STUDY_SEARCH_URL") +
+        "/" +
+        this.anesthetizeThisBloodyUri(text);
       return true;
     }
   },

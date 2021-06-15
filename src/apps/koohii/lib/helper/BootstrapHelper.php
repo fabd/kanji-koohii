@@ -237,7 +237,7 @@ function kk_globals_base_url() {
 /**
  * Helper to "hydrate" template with data for the frontend.
  * 
- * Cf. window.KK.* in globals.d.ts
+ * Use `kk_globals_get()` in Javascript (cf. globals.d.ts)
  * 
  * Conveniently, this hydration happens BEFORE defered modules
  * from Vite build are run, since defered modules happen after

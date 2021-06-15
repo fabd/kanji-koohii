@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { kk_globals_get } from "@app/root-bundle";
 import {
   GetDictListForUCS,
   PostUserStoryResponse,
@@ -159,10 +160,10 @@ export class LegacyApi extends HttpClient {
 }
 
 export function getApi(): KoohiiAPI {
-  console.assert(!!window.KK.BASE_URL, "KK_BASE_URL is not set?");
+  const baseUrl = kk_globals_get('BASE_URL') as string;
 
   // base url to account for dev/test envs, no trailing slash
-  const apiBaseUrl = window.KK.BASE_URL.replace(/\/$/, "");
+  const apiBaseUrl = kk_globals_get('BASE_URL').replace(/\/$/, "");
 
   return {
     legacy: LegacyApi.getInstance(apiBaseUrl),

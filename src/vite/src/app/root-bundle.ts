@@ -40,6 +40,20 @@ function focusOnLoad() {
   }
 }
 
+/**
+ * Helper makes it easier to find code where values are shared between php/js.
+ * 
+ * Cf. `kk_globals_put()` on the php side.
+ * 
+ * @param name key (make sure to declare them in globals.d.ts)
+ */
+// see kk_globals_put() on the php side
+export function kk_globals_get(name: keyof Window["KK"]): any {
+  console.assert(!!window.KK);
+  console.assert((window.KK as Object).hasOwnProperty(name), `window.KK[${name}] is not set`);
+  return window.KK[name];
+}
+
 export default function() {
   console.log("... rootBundleInit()");
 

@@ -27,35 +27,39 @@ export default {
     this.elSearch = domGet<HTMLInputElement>("txtSearch")!;
 
     // quick search autocomplete
-    const actb1 = new actb(this.elSearch, window.kwlist);
-    actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
-    actb1.onPressEnterCallback = this.quicksearchEnterCallback.bind(this);
+    if (this.elSearch) {
+      const actb1 = new actb(this.elSearch, window.kwlist);
+      actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
+      actb1.onPressEnterCallback = this.quicksearchEnterCallback.bind(this);
 
-    actb1.actb_extracolumns = function(iRow) {
-      return `<span class="f">${iRow +
-        1}</span><span class="k cj-k" lang="ja" xml:lang="ja">&#${window.kklist.charCodeAt(
-        iRow
-      )};</span>`;
-    };
+      actb1.actb_extracolumns = function(iRow) {
+        return `<span class="f">${iRow +
+          1}</span><span class="k cj-k" lang="ja" xml:lang="ja">&#${window.kklist.charCodeAt(
+          iRow
+        )};</span>`;
+      };
 
-    // clicking in quick search box selects the text
-    $$(this.elSearch).on("focus", (evt: Event) => {
-      if (this.elSearch.value !== "") {
-        this.elSearch.select();
-      }
-    });
+      // clicking in quick search box selects the text
+      $$(this.elSearch).on("focus", (evt: Event) => {
+        if (this.elSearch.value !== "") {
+          this.elSearch.select();
+        }
+      });
+    }
 
     // auto focus search box
     if (this.elSearch && this.elSearch.value === "") {
       this.elSearch.focus();
     }
 
-    let elEditStory = domGet("JsEditStoryInst")!;
-    window.Koohii.Refs.vueEditStory = VueInstance(
-      KoohiiEditStory,
-      elEditStory,
-      kk_globals_get("EDITSTORY_PROPS")
-    );
+    const elEditStory = domGet("JsEditStoryInst")!;
+    if (elEditStory) {
+      window.Koohii.Refs.vueEditStory = VueInstance(
+        KoohiiEditStory,
+        elEditStory,
+        kk_globals_get("EDITSTORY_PROPS")
+      );
+    }
 
     const elDictStudy = domGet("DictStudy");
     elDictStudy && this.initDictionary(elDictStudy);

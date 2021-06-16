@@ -18,24 +18,23 @@
  *   this.evtCache.addEvent(elem, 'click', this.clickEvent.bind(this));
  *
  */
-import * as Core from "@old/core";
 
-let EventCache = Core.make();
+export default class EventCache {
+  sId = null;
 
-EventCache.prototype = {
-  sId: null,
+  /** @type {{ target: Element, type: string, listener: Function}[]} */
+  eCache = null;
 
-  eCache: null,
-
-  init: function (sId) {
+  /** @type new (sId?: string): this */
+  constructor(sId) {
     this.sId = sId || "";
     this.eCache = [];
-  },
+  }
 
-  addEvent: function (target, type, listener) {
+  addEvent(target, type, listener) {
     target.addEventListener(type, listener);
     this.eCache.push({ target, type, listener });
-  },
+  }
 
   /**
    * Bind multiple events to one event handler function.
@@ -44,14 +43,14 @@ EventCache.prototype = {
    * @param {Object} aEventTypes   An array of event types
    * @param {Object} fn
    */
-  addEvents: function (element, aEventTypes, fn) {
+  addEvents(element, aEventTypes, fn) {
     var i;
     for (i = 0; i < aEventTypes.length; i++) {
       this.addEvent(element, aEventTypes[i], fn);
     }
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     if (this.eCache) {
       // uiConsole.log('uiEventCache.destroy('+this.sId+') '+this.eCache.length+' events');
       for (var i = this.eCache.length - 1; i >= 0; i--) {
@@ -61,7 +60,5 @@ EventCache.prototype = {
       // free up references to the elements
       this.eCache = [];
     }
-  },
-};
-
-export default EventCache;
+  }
+}

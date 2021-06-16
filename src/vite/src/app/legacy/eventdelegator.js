@@ -75,22 +75,19 @@
 
 import $$, { domGet, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
-import * as Core from "@old/core";
-
-const EventDelegator = Core.make();
 
 const PREFIX_TAG = "%",
   PREFIX_ID = "#",
   ROOT_EVENT = "@root";
 
-EventDelegator.prototype = {
+export default class EventDelegator {
   /**
    * Constructor.
    *
    * @param {String|HTMLElement} elRoot   Parent element to watch events
    * @param {Array} type           Event types to watch ("click", ...)
    */
-  init: function (elRoot, types) {
+  constructor(elRoot, types) {
     var i;
 
     this.listeners = {};
@@ -98,7 +95,10 @@ EventDelegator.prototype = {
 
     this.elRoot = domGet(elRoot);
 
-    console.assert(Lang.isNode(this.elRoot), "EventDelegator::init() elRoot is not valid");
+    console.assert(
+      Lang.isNode(this.elRoot),
+      "EventDelegator::init() elRoot is not valid"
+    );
 
     if (Lang.isString(types)) {
       types = [types];
@@ -111,18 +111,18 @@ EventDelegator.prototype = {
       this.eventCache.push(args);
       this.elRoot.addEventListener(...args);
     }
-  },
+  }
 
   /**
    * Todo.
    *
    */
-  destroy: function () {
+  destroy() {
     var i;
     while (this.eventCache.length) {
       this.elRoot.removeEventListener(...this.eventCache.pop());
     }
-  },
+  }
 
   /**
    * Subscribe event for elements of given class name.
@@ -133,19 +133,19 @@ EventDelegator.prototype = {
    * @param {Function} callback    A function callback
    * @param {Object} scope   A scope for the callback (optional)
    */
-  onClass: function (name, callback, scope) {
+  onClass(name, callback, scope) {
     this._debug(arguments);
     this._on(name, callback, scope);
-  },
+  }
 
   /**
    * Shortcut.
    *
    * @see  onClass
    */
-  on: function () {
+  on() {
     this.onClass.apply(this, arguments);
-  },
+  }
 
   /**
    * Subscribe an event for elements with given tag name.
@@ -154,10 +154,10 @@ EventDelegator.prototype = {
    * @param {Function} callback    A function callback
    * @param {Object} scope   A scope for the callback (optional)
    */
-  onTag: function (name, callback, scope) {
+  onTag(name, callback, scope) {
     this._debug(arguments);
     this._on(PREFIX_TAG + name.toUpperCase(), callback, scope);
-  },
+  }
 
   /**
    * Subscribe an event for element that matches given id.
@@ -166,7 +166,7 @@ EventDelegator.prototype = {
    * @param {Function} callback    A function callback
    * @param {Object} scope   A scope for the callback (optional)
    */
-  onId: function (name, callback, scope) {
+  onId(name, callback, scope) {
     this._debug(arguments);
 
     // a warning to help development
@@ -178,7 +178,7 @@ EventDelegator.prototype = {
     }
 
     this._on(PREFIX_ID + name, callback, scope);
-  },
+  }
 
   /**
    * Subscribe the default event that fires on the root element.
@@ -186,10 +186,10 @@ EventDelegator.prototype = {
    * @param {Function} callback    A function callback
    * @param {Object} scope   A scope for the callback (optional)
    */
-  onDefault: function (callback, scope) {
+  onDefault(callback, scope) {
     this._debug(arguments);
     this._on(ROOT_EVENT, callback, scope);
-  },
+  }
 
   /**
    * Subscribe an event, registers callback.
@@ -201,20 +201,20 @@ EventDelegator.prototype = {
    * @param {Object} callback
    * @param {Object} scope
    */
-  _on: function (name, callback, scope) {
+  _on(name, callback, scope) {
     this.listeners[name] = {
       fn: callback,
       context: scope,
       re: new RegExp("(?:^|\\s)" + name + "(?:$|\\s)"),
     };
-  },
+  }
 
   /**
    * Help to find possible bugs, warns if there are any undefined values
    *
    * @param {Array} args  Arguments to check
    */
-  _debug: function (args) {
+  _debug(args) {
     var i;
     for (i = args.length - 1; i >= 0; i--) {
       if (typeof args[i] === "undefined") {
@@ -223,12 +223,12 @@ EventDelegator.prototype = {
         );
       }
     }
-  },
+  }
 
   /**
    *
    */
-  _handler: function (e) {
+  _handler(e) {
     var elTarget = e.target;
 
     while (elTarget && elTarget !== this.elRoot) {
@@ -281,15 +281,13 @@ EventDelegator.prototype = {
     }
 
     // return undefined or true : event continues
-  },
+  }
 
-  _fire: function (name, e, matchedEl) {
+  _fire(name, e, matchedEl) {
     var oListener = this.listeners[name];
     var context = Lang.isUndefined(oListener.context)
       ? window
       : oListener.context;
     return oListener.fn.apply(context, [e, matchedEl]);
-  },
-};
-
-export default EventDelegator;
+  }
+}

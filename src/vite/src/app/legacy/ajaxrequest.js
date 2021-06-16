@@ -19,7 +19,7 @@
  *
  * Receiving JSON data:
  *
- *   successHandler: function(t) {
+ *   successHandler(t) {
  *     if (t.isSuccess()) {
  *       console.log("Success!");
  *     }
@@ -59,14 +59,6 @@
  *   customevents  For transaction-level events (onStart, onComplete, ...).
  *                 http://developer.yahoo.com/yui/connection/#customevents
  *
- * Custom response filter:
- *
- *   Use AjaxRequest.responseFilter to filter all ajax responses globally, for example to handle specific
- *   server error codes. The functions should return true to indicate that the event chain should proceed,
- *   false to stop.
- *
- *     onSuccess(o)   Returns boolean, o is the YUI Connect object.
- *     onFailure(o)   ...
  *
  * The success, failure and upload handlers will receive YUI's Response Object:
  *
@@ -91,35 +83,20 @@
 
 import $$ from "@lib/dom";
 import Lang from "@lib/lang";
-import * as Core from "@old/core";
 import * as TRON from "@lib/tron";
 import { toQueryString } from "@lib/helpers/to-query-string";
-
-/**
- * Constructor.
- *
- * @param {String} url      Request url, if it contains a query string, don't set options.parameters
- * @param {Object} options  Constructor options
- */
-let AjaxRequest = Core.make();
 
 // constants
 const DEFAULT_TIMEOUT = 5000; // default time out for AjaxRequests
 
-/**
- * Override this to filter all responses globally.
- */
-AjaxRequest.responseFilter = {
-  onSuccess: function () {
-    return true;
-  },
-  onFailure: function () {
-    return true;
-  },
-};
-
-AjaxRequest.prototype = {
-  init: function (url, options) {
+export default class AjaxRequest {
+  /**
+   * Constructor.
+   *
+   * @param {String} url      Request url, if it contains a query string, don't set options.parameters
+   * @param {Object} options  Constructor options
+   */
+  constructor(url, options) {
     var that = this,
       callback = {},
       postdata;
@@ -138,10 +115,10 @@ AjaxRequest.prototype = {
 
     options.method = options.method.toUpperCase();
 
-    callback.success = function (o) {
+    callback.success = function(o) {
       that.handleSuccess(o, options.success, options.scope);
     };
-    callback.failure = function (o) {
+    callback.failure = function(o) {
       that.handleFailure(o, options.failure, options.scope);
     };
 
@@ -255,7 +232,7 @@ AjaxRequest.prototype = {
       callback,
       postdata
     );
-  },
+  }
 
   /**
    * Determines if the transaction is still being processed.
@@ -263,11 +240,11 @@ AjaxRequest.prototype = {
    * @return {Boolean}
    *
    */
-  isCallInProgress: function () {
+  isCallInProgress() {
     //var b=YAHOO.util.Connect.isCallInProgress(this.connection);;
     //console.log('isCallInProgress says... %o', b);
     return YAHOO.util.Connect.isCallInProgress(this.connection);
-  },
+  }
 
   /**
    * Returns a HTTP header from the YUI Connect object, checking also for
@@ -281,17 +258,15 @@ AjaxRequest.prototype = {
    *
    * @return {String|Undefined}   Returns the value or undefined.
    */
-  getHttpHeader: function (o, name) {
+  getHttpHeader(o, name) {
     return (
       o.getResponseHeader &&
       (o.getResponseHeader[name] || o.getResponseHeader[name.toLowerCase()])
     );
-  },
+  }
 
   /**
    * The success handler is called for HTTP 2xx async responses.
-   *
-   * Handles JSON responses, and responseFilter plugin.
    *
    * Adds a "responseJSON" property to the YUI Connect object, if the content type
    * is "application/json" and the response is parsed succesfully.
@@ -303,10 +278,10 @@ AjaxRequest.prototype = {
    * @param {Function} fn      Success handler (optional)
    * @param {Object}   scope   Scope for the event handler (optional)
    */
-  handleSuccess: function (o, fn, scope) {
+  handleSuccess(o, fn, scope) {
     //console.log('*** ' + this.getHttpHeader(o, 'Content-Type'));
 
-    if (AjaxRequest.responseFilter.onSuccess(o) && fn) {
+    if (fn) {
       var contentType = this.getHttpHeader(o, "Content-Type") || "",
         json = null,
         tron;
@@ -327,26 +302,20 @@ AjaxRequest.prototype = {
       }
 
       o.responseTRON = o.responseJSON ? new TRON.Inst(o.responseJSON) : null;
-      console.log("responseTRON ...", o.responseTRON);
+      // console.log("responseTRON ...", o.responseTRON);
 
       fn.apply(scope || window, [o]);
     }
-  },
+  }
 
   /**
    * The failure method is called with HTTP status 400 or greater.
-   *
-   * Handle the responseFilter plugin.
    *
    * @param {Object} o
    * @param {Function=} fn   Failure handler (optional)
    * @param {Object=} scope
    */
-  handleFailure: function (o, fn, scope) {
-    if (AjaxRequest.responseFilter.onFailure(o) && fn) {
-      fn.apply(scope || window, [o]);
-    }
-  },
-};
-
-export default AjaxRequest;
+  handleFailure(o, fn, scope) {
+    fn && fn.apply(scope || window, [o]);
+  }
+}

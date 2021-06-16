@@ -12,21 +12,21 @@ import $$, { DomJS, domGet, hasClass } from "@lib/dom";
 import AjaxDialog from "@old/ajaxdialog";
 import FlashcardReview from "@app/review/FlashcardReview";
 
-const KanjiReview = {
+export default class KanjiReview {
   /** @type Dictionary */
-  options: {},
+  options = {};
 
   /** @type IFlashcardReview */
-  oReview: null,
+  oReview = null;
 
   /** @type DomJS<Element> */
-  $elStats: null,
+  $elStats = null;
 
   /**
-   * 
-   * @param {Dictionary} options 
+   *
+   * @param {Dictionary} options
    */
-  initialize: function(options) {
+  constructor(options) {
     this.options = options;
 
     options.fcr_options.events = {
@@ -93,28 +93,28 @@ const KanjiReview = {
 
     // end review div
     this.elFinish = this.$elStats.down(".JsFinish")[0];
-  },
+  }
 
   /**
    * Returns an option value
    *
    * @param  String   Option name
    */
-  getOption: function(name) {
+  getOption(name) {
     return this.options[name];
-  },
+  }
 
-  onBeginReview: function() {
-    //console.log('App.KanjiReview.onBeginReview()');
-  },
+  onBeginReview() {
+    //console.log('KanjiReview.onBeginReview()');
+  }
 
   /**
    * Update the visible stats to the latest server hit,
    * and setup form data for redirection to the Review Summary page.
    *
    */
-  onEndReview: function() {
-    console.log("App.KanjiReview.onEndReview()");
+  onEndReview() {
+    console.log("KanjiReview.onEndReview()");
 
     this.updateStatsPanel();
 
@@ -126,10 +126,10 @@ const KanjiReview = {
     elFrm.elements["fc_fail"].value = this.countNo;
     elFrm.elements["fc_deld"].value = this.deletedCards.join(",");
     elFrm.submit();
-  },
+  }
 
-  onFlashcardCreate: function() {
-    //console.log('App.KanjiReview.onFlashcardCreate()');
+  onFlashcardCreate() {
+    console.log("KanjiReview.onFlashcardCreate()");
 
     // Show panels when first card is loaded
     if (this.oReview.getPosition() === 0) {
@@ -140,37 +140,37 @@ const KanjiReview = {
     $$("#JsBtnUndo").toggle(this.oReview.getNumUndos() > 0);
 
     this.updateStatsPanel();
-  },
+  }
 
   /**
    * Hide buttons until next card shows up.
    *
    */
-  onFlashcardDestroy: function() {
+  onFlashcardDestroy() {
     $$("#uiFcButtons0").toggle(false);
     $$("#uiFcButtons1").toggle(false);
-  },
+  }
 
-  onFlashcardUndo: function(oAnswer) {
+  onFlashcardUndo(oAnswer) {
     //  console.log('onFlashcardUndo(%o)', oAnswer);
 
     // correct the Yes / No totals
     this.updateAnswerStats(oAnswer, true);
-  },
+  }
 
-  onFlashcardState: function(iState) {
-    // console.log('onFlashcardState(%d)', iState);
+  onFlashcardState(iState) {
+    console.log("onFlashcardState(%d)", iState);
     $$("#uiFcButtons0").toggle(iState === 0);
     $$("#uiFcButtons1").toggle(iState !== 0);
-  },
+  }
 
-  onAction: function(sActionId, oEvent) {
+  onAction(sActionId, oEvent) {
     var oCardData;
 
     /** @type {number | 'h' | false} */
     var cardAnswer = false;
 
-    console.log("App.KanjiReview.onAction(%o)", arguments);
+    console.log("KanjiReview.onAction(%o)", arguments);
 
     // help dialog
     if (sActionId === "help") {
@@ -280,9 +280,9 @@ const KanjiReview = {
     }
 
     return false;
-  },
+  }
 
-  toggleDictDialog: function() {
+  toggleDictDialog() {
     if (this.dictDialog && this.dictDialog.isVisible()) {
       this.dictDialog.hide();
     } else {
@@ -296,24 +296,24 @@ const KanjiReview = {
       this.dictDialog.show();
       this.dictDialog.load(ucsId);
     }
-  },
+  }
 
   /**
    *
    * @param  int   answer   1-3 (No/Yes/Easy) h (Hard), 4 (Delete), 5 (Skip)
    */
-  answerCard: function(answer) {
+  answerCard(answer) {
     var oCardData = this.oReview.getFlashcardData(),
       oAnswer = { id: oCardData.id, r: answer };
 
     this.oReview.answerCard(oAnswer);
     this.updateAnswerStats(oAnswer, false);
     this.oReview.forward();
-  },
+  }
 
-  skipFlashcard: function() {
+  skipFlashcard() {
     this.answerCard(5);
-  },
+  }
 
   /**
    * The little wrench icon that opens the menu contains:
@@ -322,7 +322,7 @@ const KanjiReview = {
    *  data-uri                    Flashcard Edit Dialog ajax url
    *
    */
-  flashcardMenu: function() {
+  flashcardMenu() {
     var el = domGet("uiFcMenu"),
       data = el.dataset,
       oCardData = this.oReview.getFlashcardData();
@@ -379,10 +379,10 @@ const KanjiReview = {
     }
 
     return false;
-  },
+  }
 
-  updateStatsPanel: function() {
-    //  console.log('App.KanjiReview.updateStatsPanel()');
+  updateStatsPanel() {
+    //  console.log('KanjiReview.updateStatsPanel()');
     var items = this.oReview.getItems(),
       num_items = items.length,
       position = this.oReview.getPosition();
@@ -395,14 +395,14 @@ const KanjiReview = {
     var pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;
     pct = Math.min(pct, 100);
     this.elProgressBar.style.width = (pct > 0 ? pct : 0) + "%";
-  },
+  }
 
   /**
    *
    * @param  {Object}  answer  { id: <ucs_id>, r: <answer code> }
    * @param  {Boolean} undo
    */
-  updateAnswerStats: function(answer, undo) {
+  updateAnswerStats(answer, undo) {
     // cf. uiFlashcardReview.php const
     var yes = answer.r === 2 || answer.r === 3 ? 1 : 0,
       no = answer.r === 1 || answer.r === "h" ? 1 : 0,
@@ -422,9 +422,9 @@ const KanjiReview = {
     if (deld !== 0) {
       this.updateDeletedCards(answer.id, deld);
     }
-  },
+  }
 
-  updateDeletedCards: function(ucsId, count) {
+  updateDeletedCards(ucsId, count) {
     this.countDeleted += count;
 
     if (count > 0) {
@@ -440,21 +440,19 @@ const KanjiReview = {
     )[0].innerHTML = this.countDeleted;
 
     domGet("uiFcStDeldK").firstChild.innerHTML = this.getDeletedCards();
-  },
+  }
 
-  getDeletedCards: function() {
+  getDeletedCards() {
     return "&#" + this.deletedCards.join(";&#") + ";";
-  },
+  }
 
   /**
    * Sets buttons (children of element) to default state, or disabled state
    *
    */
-  setButtonState: function(elParent, bEnabled) {
+  setButtonState(elParent, bEnabled) {
     $$(".uiIBtn", elParent).each((el) => {
       el.classList.toggle("uiFcBtnDisabled", bEnabled);
     });
-  },
-};
-
-export default KanjiReview;
+  }
+}

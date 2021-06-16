@@ -20,5 +20,5 @@ import Review from "@app/review/review-kanji";
 
 domContentLoaded(() => {
   console.log("@entry review ...");
-  Review.initialize(kk_globals_get("REVIEW_OPTIONS"));
+  new Review(kk_globals_get("REVIEW_OPTIONS"));
 });

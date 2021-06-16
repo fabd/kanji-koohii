@@ -96,7 +96,6 @@
  *
  */
 
-import * as Core from "@old/core";
 import { getBodyED, kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
 import EventDispatcher from "@old/eventdispatcher";
@@ -105,15 +104,12 @@ import VueInstance from "@lib/helpers/vue-instance";
 
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 
-/** @type new(): this */
-let FlashcardReview = Core.make();
-
-FlashcardReview.prototype = {
+class FlashcardReview {
   // flashcard selection as an array of flashcard ids
-  items: null,
+  items = null;
 
   // review position, from 0 to items.length-1
-  position: null,
+  position = null;
 
   // Cache of flashcard data.
   // Associative array using flashcard ids for retrieval.
@@ -122,38 +118,38 @@ FlashcardReview.prototype = {
   //
   // cacheStart and cacheEnd indicate the range of valid flashcard data
   // in the cache array.
-  cache: null,
-  cacheStart: null,
-  cacheEnd: null,
+  cache = null;
+  cacheStart = null;
+  cacheEnd = null;
 
   // the next position at which to prefetch new flashcard data
   // is recalculated on server reply, based on number of items server returned
-  prefetchPos: null,
+  prefetchPos = null;
 
   // max items to cache for undo
-  max_undo: null,
+  max_undo = null;
   // current undo level (number of steps backward)
-  undoLevel: null,
+  undoLevel = null;
 
   // how many items to preload
-  num_prefetch: null,
+  num_prefetch = null;
 
   // event dispatcher for notifications
-  eventDispatcher: null,
+  eventDispatcher = null;
 
   // array of answer data for flashcards that is not posted yet
   // the data is freeform, the property id corresponds to a flashcard id
-  postCache: null,
+  postCache = null;
 
   // uiAjaxQueue instance
-  ajaxQueue: null,
+  ajaxQueue = null;
 
   /**
    * Initialize the front end Flashcard Review component.
    *
    * @param {Window["KK"]["REVIEW_OPTIONS"]} options
    */
-  init: function(options) {
+  constructor(options) {
     console.log("FlashcardReview::init(%o)", options);
 
     // set options and fix defaults
@@ -206,14 +202,14 @@ FlashcardReview.prototype = {
     //    this.ofs_prefetch = Math.floor(this.num_prefetch);
 
     this.beginReview();
-  },
+  }
 
   /**
    * Add or remove onbeforeunload event to warn user of loosing
    * flashcard answers.
    *
    */
-  updateUnloadEvent: function() {
+  updateUnloadEvent() {
     if (this.getPostCount()) {
       window.onbeforeunload = function() {
         return (
@@ -225,7 +221,7 @@ FlashcardReview.prototype = {
     } else {
       window.onbeforeunload = null;
     }
-  },
+  }
 
   /**
    * The event listener bound to html elements that use "uiFcAction-XXX" class names.
@@ -235,7 +231,7 @@ FlashcardReview.prototype = {
    * @param  {Object}      ev   Event object
    * @param  {HTMLElement} el   Matched element
    */
-  onActionEvent: function(ev, el) {
+  onActionEvent(ev, el) {
     var data = el.dataset,
       action = data.action;
     console.assert(
@@ -245,26 +241,26 @@ FlashcardReview.prototype = {
     );
 
     return false !== this.notify("onAction", action, ev);
-  },
+  }
 
   /**
    * EventDispatcher proxy.
    *
    * @see EventDispatcher, scope is optional.
    */
-  connect: function(sName, fnEvent, scope) {
+  connect(sName, fnEvent, scope) {
     this.eventDispatcher.connect(sName, fnEvent, scope);
-  },
+  }
 
-  disconnect: function(sName, fnEvent) {
+  disconnect(sName, fnEvent) {
     this.eventDispatcher.disconnect(sName, fnEvent);
-  },
+  }
 
-  notify: function() {
+  notify() {
     return this.eventDispatcher.notify.apply(this.eventDispatcher, arguments);
-  },
+  }
 
-  beginReview: function() {
+  beginReview() {
     this.notify("onBeginReview");
 
     this.position = -1;
@@ -275,14 +271,14 @@ FlashcardReview.prototype = {
     this.prefetchPos = 0; // when to prefetch new cards, updated by each ajax response
 
     this.forward();
-  },
+  }
 
   /**
    * Go back to previous page if no cards were answered yet,
    * otherwise flush post cache and notify review end.
    *
    */
-  endReview: function() {
+  endReview() {
     if (this.position <= 0) {
       // redirect to back_url
       if (this.options.back_url) {
@@ -303,9 +299,9 @@ FlashcardReview.prototype = {
       // notify end of review here because there is nothing to post
       this.notify("onEndReview");
     }
-  },
+  }
 
-  forward: function() {
+  forward() {
     this.position++;
 
     if (this.undoLevel > 0) {
@@ -333,7 +329,7 @@ FlashcardReview.prototype = {
     if (this.cacheEnd >= this.position) {
       this.cardReady();
     }
-  },
+  }
 
   /**
    * Undo (go backwards)
@@ -344,7 +340,7 @@ FlashcardReview.prototype = {
    * "ungo range" flushed out to the server.
    *
    */
-  backward: function() {
+  backward() {
     // assertion
     if (this.undoLevel >= this.max_undo) {
       throw new Error("FlashcardReview::backward() undoLevel >= max_undo");
@@ -371,13 +367,13 @@ FlashcardReview.prototype = {
     }
 
     this.cardReady();
-  },
+  }
 
   /**
    * This function is called only when the current flashcard
    * data is available in the cache.
    */
-  cardReady: function() {
+  cardReady() {
     // clear event
     this.disconnect("onWaitCache");
 
@@ -399,13 +395,13 @@ FlashcardReview.prototype = {
     this.setFlashcardState(0);
 
     this.curCard.display(true);
-  },
+  }
 
   /**
    * Clears current flashcard, so that it disappears
    * until the next one is ready.
    */
-  destroyCurCard: function() {
+  destroyCurCard() {
     if (this.curCard) {
       this.notify("onFlashcardDestroy");
 
@@ -421,14 +417,14 @@ FlashcardReview.prototype = {
 
       this.curCard = null;
     }
-  },
+  }
 
   /**
    * Check if there are cards to prefetch, and/or answers to post.
    *
    * @param boolean  bFlushData  At end of review, force flush all remaining items in postCache.
    */
-  sendReceive: function(bFlushData) {
+  sendReceive(bFlushData) {
     var oJsonData = {};
 
     // any cards to fetch ?
@@ -494,7 +490,7 @@ FlashcardReview.prototype = {
     }
 
     return false;
-  },
+  }
 
   /**
    * AjaxQueue success callback (HTTP 200 only).
@@ -505,7 +501,7 @@ FlashcardReview.prototype = {
    * @param {Object} o    The YUI Connect object (extended by AjaxRequest)
    * @param {Number} argument        Index value if prefetching, 'end' if completing review
    */
-  onAjaxSuccess: function(o, argument) {
+  onAjaxSuccess(o, argument) {
     var i,
       oJson = o.responseJSON;
 
@@ -553,11 +549,11 @@ FlashcardReview.prototype = {
         this.notify("onEndReview");
       }
     }
-  },
+  }
 
-  cacheItem: function(oItem) {
+  cacheItem(oItem) {
     this.cache[oItem.id] = oItem;
-  },
+  }
 
   /**
    * Clear flashcard display data for items behind, to free some
@@ -565,61 +561,61 @@ FlashcardReview.prototype = {
    * for undo.
    *
    */
-  cleanCache: function() {
+  cleanCache() {
     while (this.cacheStart < this.position - this.max_undo) {
       var id = this.items[this.cacheStart];
       delete this.cache[id];
       this.cacheStart++;
     }
-  },
+  }
 
   /**
    * Getters
    */
-  getOption: function(sName) {
+  getOption(sName) {
     return this.options[sName];
-  },
+  }
 
-  getPosition: function() {
+  getPosition() {
     return this.position;
-  },
+  }
 
-  getFlashcard: function() {
+  getFlashcard() {
     return this.curCard;
-  },
+  }
 
   /** @return {number | null} */
-  getFlashcardData: function() {
+  getFlashcardData() {
     var id = this.items[this.position];
     return id ? this.cache[id] : null;
-  },
+  }
 
   /**
    * Count numner of items in postCache.
    */
-  getPostCount: function() {
+  getPostCount() {
     return this.postCache.length;
-  },
+  }
 
-  getNumUndos: function() {
+  getNumUndos() {
     return Math.min(this.position, this.max_undo - this.undoLevel);
-  },
+  }
 
-  getItems: function() {
+  getItems() {
     return this.items;
-  },
+  }
 
-  setFlashcardState: function(iState) {
+  setFlashcardState(iState) {
     if (this.curCard) {
       this.curCard.setState(iState);
     }
 
     this.notify("onFlashcardState", iState);
-  },
+  }
 
-  getFlashcardState: function() {
+  getFlashcardState() {
     return this.curCard ? this.curCard.getState() : false;
-  },
+  }
 
   /**
    * Register a shortcut key for an action id. Pressing the given key
@@ -629,7 +625,7 @@ FlashcardReview.prototype = {
    * @param {String} sKey  Shortcut key, should be lowercase, or ' ' for spacebar
    * @param {String} sActionId  Id passed to the 'onAction' event when key is pressed
    */
-  addShortcutKey: function(sKey, sActionId) {
+  addShortcutKey(sKey, sActionId) {
     if (!this.eventDispatcher.hasListeners("onAction")) {
       console.warn(
         'FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener'
@@ -639,19 +635,19 @@ FlashcardReview.prototype = {
     this.oKeyboard.addListener(sKey, (event) => {
       this.notify("onAction", sActionId, event);
     });
-  },
+  }
 
   /**
    * Store answer and any other custom data for the current card,
    * to be posted on subsequent ajax requests.
    *
    */
-  answerCard: function(oData) {
+  answerCard(oData) {
     // console.log('FlashcardReview::answerCard(%o)', oData);
     this.postCache.push(oData);
 
     this.updateUnloadEvent();
-  },
+  }
 
   /**
    * Cleans up the answer of current flashcard (when going backwards).
@@ -661,7 +657,7 @@ FlashcardReview.prototype = {
    *
    * @return  {Object}   Returns flashcard answer data (cf. answerCard()) that is being cleared
    */
-  unanswerCard: function() {
+  unanswerCard() {
     // console.log('FlashcardReview::unanswerCard()');
     var id, oData;
 
@@ -676,14 +672,14 @@ FlashcardReview.prototype = {
     this.updateUnloadEvent();
 
     return oData;
-  },
+  }
 
   /**
    * Remove one element of the postCache array, by id.
    *
    * @return {Object}  Returns the spliced element (flashcard answer data).
    */
-  removePostData: function(id) {
+  removePostData(id) {
     var i;
     for (i = 0; i < this.postCache.length; i++) {
       // watchout with === because returned json can have strings for numbers
@@ -694,7 +690,7 @@ FlashcardReview.prototype = {
         return popped[0];
       }
     }
-  },
-};
+  }
+}
 
 export default FlashcardReview;

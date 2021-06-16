@@ -142,9 +142,9 @@ if (!$freemode) {
 
     'fcr_options' => [
       //num_prefetch: 10,
-      'ajax_url' => $sf_data->get('ajax_url', ESC_JS_NO_ENTITIES),
+      'ajax_url' => $ajax_url,
       'back_url' => url_for($exit_url, true),
-      'items' => implode(',', $sf_data->getRaw('items'))
+      'items' => $items,
     ]
   ];
 

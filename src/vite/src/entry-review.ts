@@ -1,18 +1,16 @@
 /**
  * Fullscreen Flashcard Review BUNDLE.
  */
-  
+
 // import legacy stylesheets
 import "@css/kanji-review.build.scss";
 
 // components instanced by external code
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
-import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 window.Koohii.UX = {
   ...window.Koohii.UX,
   KoohiiDictList, // dictionary list (Study & Flashcard Review)
-  KoohiiFlashcard, // (wip) review page refactoring
   KoohiiEditStory, // Edit Story dialog
 };
 
@@ -22,5 +20,5 @@ import Review from "@app/review/review-kanji";
 
 domContentLoaded(() => {
   console.log("@entry review ...");
-  Review.initialize(kk_globals_get('REVIEW_OPTIONS'));
+  Review.initialize(kk_globals_get("REVIEW_OPTIONS"));
 });

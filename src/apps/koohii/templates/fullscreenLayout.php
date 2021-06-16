@@ -8,10 +8,12 @@
 <?php
   // temporary (fix dirty js inclusions from labs mode later)
   $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
+  $isLandingPage = $sf_request->getParameter('isLandingPage');
 
-  $sf_response->addViteEntry('src/entry-review.ts');
+  $sf_response->addViteEntries();
 
   include_stylesheets();
+  include_javascripts();
 ?>
   <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
 
@@ -47,10 +49,6 @@ body { padding-top:0;  }
 
 <?php kk_globals_base_url() ?>
 
-<?php if (!$landingPage) {  ?>
-  <script type="text/javascript" defer src="/vendor/yui2-build/index.min_v290.js"></script>
-<?php } ?>
-<?php include_javascripts(); ?>
 <?php
   if ($s = get_slot('koohii_onload_js'))
   {

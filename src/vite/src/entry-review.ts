@@ -1,24 +1,14 @@
 /**
  * Fullscreen Flashcard Review BUNDLE.
  */
-
+  
 // import legacy stylesheets
-import "@web/koohii/main.build.scss";
-import "@web/koohii/kanji-flashcardreview.build.scss";
-
-import * as RootBundle from "@app/root-bundle";
-RootBundle.init();
-
-// make the axios based API (vue build) available to legacy js
-import { getApi } from "@app/api";
-window.Koohii.API = window.Vue.prototype.$api = getApi();
+import "@css/kanji-review.build.scss";
 
 // components instanced by external code
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
-
-// declare some globals to be available for legacy Javascript (non-Vue build)
 window.Koohii.UX = {
   ...window.Koohii.UX,
   KoohiiDictList, // dictionary list (Study & Flashcard Review)
@@ -26,4 +16,11 @@ window.Koohii.UX = {
   KoohiiEditStory, // Edit Story dialog
 };
 
-console.log("@review-bundle");
+import { domContentLoaded } from "@lib/dom";
+import { kk_globals_get } from "@app/root-bundle";
+import Review from "@app/review/review-kanji";
+
+domContentLoaded(() => {
+  console.log("@entry review ...");
+  Review.initialize(kk_globals_get('REVIEW_OPTIONS'));
+});

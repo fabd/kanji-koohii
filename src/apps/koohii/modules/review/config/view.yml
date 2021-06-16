@@ -5,7 +5,8 @@ indexSuccess:
 reviewSuccess:
   metas:
     title: 'Flashcard Review'
-  javascripts: [ /revtk/kanji-flashcardreview.juicy.js ]
+  javascripts:
+    - src/entry-review.ts
 
 summarySuccess:
   metas:

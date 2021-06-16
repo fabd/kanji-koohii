@@ -9,7 +9,7 @@
  *
  * Public methods:
  *
- *   initialize(oOptions)   Constructor, pass an options object:
+ *   initialize(options)   Constructor, pass an options object:
  *
  *       items            An array of flashcard ids (REQUIRED)
  *       ajax_url         Url of ajax action to get/post flashcard data (REQUIRED)
@@ -101,7 +101,9 @@ import * as Core from "@old/core";
 import { getBodyED } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
 import EventDispatcher from "@old/eventdispatcher";
+import Keyboard from "@old/keyboard";
 
+/** @type new(): this */
 let FlashcardReview = Core.make();
 
 FlashcardReview.prototype = {
@@ -149,14 +151,14 @@ FlashcardReview.prototype = {
    *
    * @param {Window["KK"]["REVIEW_OPTIONS"]} options
    */
-  init: function (oOptions) {
-    console.log("FlashcardReview::init()");
+  init: function (options) {
+    console.log("FlashcardReview::init(%o)", options);
 
     // set options and fix defaults
-    this.options = oOptions;
-    this.options.max_undo = oOptions.max_undo || 3;
-    this.options.num_prefetch = oOptions.num_prefetch || 10;
-    this.options.put_request = oOptions.put_request === false ? false : true;
+    this.options = options;
+    this.options.max_undo = options.max_undo || 3;
+    this.options.num_prefetch = options.num_prefetch || 10;
+    this.options.put_request = options.put_request === false ? false : true;
 
     // set options and make proxies
     this.items = this.options.items;
@@ -171,9 +173,9 @@ FlashcardReview.prototype = {
 
     // register listeners
     this.eventDispatcher = new EventDispatcher();
-    var scope = oOptions.events.scope;
-    for (var sEvent in oOptions.events) {
-      this.eventDispatcher.connect(sEvent, oOptions.events[sEvent], scope);
+    var scope = options.events.scope;
+    for (var sEvent in options.events) {
+      this.eventDispatcher.connect(sEvent, options.events[sEvent], scope);
     }
 
     // init ajax

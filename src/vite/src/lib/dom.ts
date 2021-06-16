@@ -108,9 +108,9 @@ type $Event = {
 };
 let $Events: $Event[] = [];
 
-type DomJSSelector = string | Window | Node;
+export type DomJSSelector = string | Window | Node;
 
-class DomJS<EL extends Element> implements ArrayLike<EL> {
+export class DomJS<EL extends Element> implements ArrayLike<EL> {
   // ArrayLike
   length: number;
   [n: number]: EL;

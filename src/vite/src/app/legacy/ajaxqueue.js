@@ -47,7 +47,7 @@
  *
  */
 
-import $$, { domGet, stopEvent } from "@lib/dom";
+import $$, { DomJS, domGet, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
 import * as Core from "@old/core";
 import AjaxRequest from "@old/ajaxrequest";
@@ -67,8 +67,11 @@ AjaxQueue.prototype = {
   flow: false,
 
   ajaxRequest: null,
+
   ajaxIndicator: null,
-  elAjaxError: null,
+
+  /** @type DomJS<HTMLElement> */
+  $elAjaxError: null,
 
   init: function (options) {
     this.blobs = [];
@@ -83,8 +86,8 @@ AjaxQueue.prototype = {
     }
 
     // init error dialog
-    this.elAjaxError = domGet(options.elError);
-    const $elAction = $$("a", this.elAjaxError)[0];
+    this.$elAjaxError = $$(`#${options.elError}`);
+    const $elAction = this.$elAjaxError.down("a");
     $elAction.on("click", this.reconnectEvent.bind(this));
 
     // init ajax loading icon
@@ -257,11 +260,11 @@ AjaxQueue.prototype = {
    */
   setErrorDialog: function (sErrorMessage) {
     if (sErrorMessage) {
-      var el = $$(".uiFcAjaxError_msg", this.elAjaxError)[0];
+      let el = this.$elAjaxError.down(".uiFcAjaxError_msg")[0];
       el.innerHTML = sErrorMessage;
     }
 
-    $$(this.elAjaxError).toggle(!!sErrorMessage);
+    this.$elAjaxError.toggle(!!sErrorMessage);
   },
 };
 

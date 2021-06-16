@@ -24,8 +24,10 @@
  */
 
 import { stopEvent } from "@lib/dom";
-import * as Core from "@old/core.js";
+import * as Core from "@old/core";
+import EventCache from "@old/eventcache";
 
+/** @type new(): this */
 let Keyboard = Core.make();
 
 Keyboard.prototype = {

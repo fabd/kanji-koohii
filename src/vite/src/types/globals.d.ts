@@ -58,6 +58,9 @@ declare global {
       STUDY_SEARCH_URL: string;
 
       EDITSTORY_PROPS: Dictionary;
+
+      REVIEW_OPTIONS: Dictionary;
+      REVIEW_MODE: Dictionary;
     };
 
     // 4th/5th edition keywords and kanji, import cf. _SideColumn.php

@@ -5,27 +5,21 @@
  *  load()   load another result (avoids recreating dialog and maintains drag/drop position)
  *
  */
-/* globals YAHOO, Core, App, VueInstance */
 
-import * as Core from "@old/core";
+import VueInstance from "@lib/helpers/vue-instance";
 import AjaxDialog from "@old/ajaxdialog";
-
-let DictLookupDialog = Core.make();
+import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 
 const isMobile = window.innerWidth <= 720;
 
-DictLookupDialog.prototype = {
+export default class DictLookupDialog {
   // unique id to find when we need to reload the dialog
-  ucsId: 0,
+  ucsId = 0;
 
-  // instance of Koohii.UX.KoohiiDictList, if created
-  vueInst: null,
+  /** @type {TVueInstanceOf<typeof KoohiiDictList>} */
+  vueInst = null;
 
-  /**
-   *
-   *
-   */
-  init: function () {
+  constructor() {
     this.ucsId = 0;
 
     var dlgopts = {
@@ -47,46 +41,53 @@ DictLookupDialog.prototype = {
 
     // hack-ish (legacy code) -- we need a mount point
     this.dialog.yPanel.setBody(
-      '<div class="JsMount" style="min-height:100px;background:red;"></div>'
+      '<div class="JsMount" style="min-height:100px;background:#fff;"></div>'
     );
-  },
+  }
 
-  load: function (ucsId) {
+  /**
+   *
+   * @param {number} ucsId  kanji UCS code
+   * @returns
+   */
+  load(ucsId) {
     // Don't load the same kanji twice in a row
     if (this.ucsId === ucsId) {
       return;
     }
 
     if (!this.vueInst) {
-      var elMount = this.dialog.getBody().querySelector(".JsMount");
-      this.vueInst = VueInstance(Koohii.UX.KoohiiDictList, elMount, {}, true);
+      // note: mounting the Vue 3 component will replace our "loading" div
+      var elMount = this.dialog.getBody();
+      this.vueInst = VueInstance(KoohiiDictList, elMount, {});
     }
 
     this.vueInst.load(ucsId);
 
     // note: this also prevents spamming load() while ajax is in progress
     this.ucsId = ucsId;
-  },
+  }
 
-  show: function () {
+  show() {
     console.log("DictLookupDialog::show()");
     this.dialog.show();
-  },
+  }
 
-  hide: function () {
+  hide() {
     this.dialog.hide();
-  },
+  }
 
-  onDialogHide: function () {
+  onDialogHide() {
     console.log("DictLookupDialog::hide()");
 
     // keep the dialog in the page
     return false;
-  },
+  }
 
-  onDialogDestroy: function () {},
+  onDialogDestroy() {}
 
-  isVisible: function () {
+  /** @return {boolean} */
+  isVisible() {
     return this.dialog.isVisible();
-  },
-};
+  }
+}

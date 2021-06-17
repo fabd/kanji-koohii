@@ -58,7 +58,9 @@
                       type="checkbox"
                       name="chkPublic"
                     />
-                    <label for="storyedit_public" class="ml-2">Share this story</label>
+                    <label for="storyedit_public" class="ml-2"
+                      >Share this story</label
+                    >
                   </div>
                   <div class="">
                     <koohii-chars-left
@@ -104,7 +106,10 @@
                 </div>
 
                 <template v-if="!isReviewMode">
-                  <div v-if="showLearnButton" class="flex justify-end items-center mt-3">
+                  <div
+                    v-if="showLearnButton"
+                    class="flex justify-end items-center mt-3"
+                  >
                     <!-- handle via legacy code / page load -->
                     <input
                       type="submit"
@@ -114,7 +119,10 @@
                     />
                   </div>
 
-                  <div v-if="showLearnedMessage" class="text-right text-[#61932b] pt-3">
+                  <div
+                    v-if="showLearnedMessage"
+                    class="text-right text-[#61932b] pt-3"
+                  >
                     This kanji is ready for review in the
                     <strong>learned</strong> list.
                   </div>
@@ -321,7 +329,7 @@ export default defineComponent({
 
       this.editStory(storyText);
 
-      nextTick(function () {
+      nextTick(function() {
         // $$('#main_container')[0].scrollIntoView(true)
 
         // scroll to top of window

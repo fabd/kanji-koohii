@@ -24,16 +24,16 @@
  */
 
 import { stopEvent } from "@lib/dom";
-import * as Core from "@old/core";
 import EventCache from "@old/eventcache";
 
-/** @type new(): this */
-let Keyboard = Core.make();
+export default class Keyboard {
+  /** @type {{[key: number]: EventListener} */
+  oKeys;
 
-Keyboard.prototype = {
-  keys: null,
-
-  init: function (options) {
+  /**
+   * @param {{ bDisableInInput?: boolean}} options
+   */
+  constructor(options) {
     // set options and defaults
     options = options ? options : {};
     options.bDisableInInput = options.bDisableInInput !== false;
@@ -42,38 +42,39 @@ Keyboard.prototype = {
     this.oKeys = [];
     this.evtCache = new EventCache();
     this.evtCache.addEvent(document, "keydown", this.evKeydown.bind(this));
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     this.evtCache.destroy();
-  },
+  }
 
   /**
    * Always return a keycode.
    *
-   * @param  {String|Number}  key   The key as a char (0-9, a-z, A-Z only) or the key code
-   * @return {Integer}
+   * @param  {string|number}  key   The key as a char (0-9, a-z, A-Z only) or the key code
+   * @return {number}
    */
-  getKeyCode: function (key) {
+  getKeyCode(key) {
     // charCodeAt() returns the correct keyboard event keycode for uppercase letters only
     return typeof key === "number" ? key : key.toUpperCase().charCodeAt(0);
-  },
-
-  addListener: function (key, fnListener) {
-    var keycode = this.getKeyCode(key);
-    this.oKeys[keycode] = fnListener;
-  },
-
-  removeListener: function (key) {
-    var keycode = this.getKeyCode(key);
-    delete this.oKeys[keycode];
-  },
+  }
 
   /**
-   * Keyboard event handler.
    *
+   * @param {string|number} key
+   * @param {EventListener} fnListener
    */
-  evKeydown: function (ev) {
+  addListener(key, fnListener) {
+    var keycode = this.getKeyCode(key);
+    this.oKeys[keycode] = fnListener;
+  }
+
+  removeListener(key) {
+    var keycode = this.getKeyCode(key);
+    delete this.oKeys[keycode];
+  }
+
+  evKeydown(ev) {
     var isCtrl, iKeyCode;
     //console.log('Keyboard::evKeydown(%o)', ev.keyCode);
 
@@ -108,7 +109,5 @@ Keyboard.prototype = {
     }
 
     return true;
-  },
-};
-
-export default Keyboard;
+  }
+}

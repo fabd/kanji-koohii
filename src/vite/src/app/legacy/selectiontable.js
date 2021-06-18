@@ -12,40 +12,34 @@
  */
 
 import $$, { stopEvent } from "@lib/dom";
-import * as Core from "@old/core";
 import AjaxTable from "@old/ajaxtable";
 
-let SelectionTable = Core.make();
-
-SelectionTable.prototype = {
-  selection: {},
-
+export default class SelectionTable {
   /**
-   * @constructor
    *
-   * @param {String|HTMLElement} container   Container element or string id.
+   * @param {string|HTMLElement} container   Container element or string id.
    */
-  init: function (container) {
-    this.selection = {};
-
+  constructor(container) {
     this.oAjaxTable = new AjaxTable(container);
     this.oAjaxTable.evtDel.on("checkbox", this.onCheckBox, this);
     this.oAjaxTable.evtDel.on("chkAll", this.onCheckAll, this);
     this.oAjaxTable.evtDel.onDefault(this.onClick, this);
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     this.oAjaxTable.destroy();
     this.oAjaxTable = null;
-  },
+  }
 
   /**
    * Returns serialized form data for the hidden inputs that store
    * the state of selected rows.
    *
    * @see  uiSelectionState.php
+   *
+   * @returns {Dictionary}
    */
-  getPostData: function () {
+  getPostData() {
     var inputs = $$("input.checkbox", this.getTable().tBodies[0]),
       data = {},
       i;
@@ -56,13 +50,13 @@ SelectionTable.prototype = {
     }
 
     return data;
-  },
+  }
 
-  getTable: function () {
+  getTable() {
     return this.oAjaxTable.container.getElementsByTagName("table")[0];
-  },
+  }
 
-  onCheckBox: function (ev, el) {
+  onCheckBox(ev, el) {
     var row = $$(el).closest("tr");
     var inputs = el.parentNode.getElementsByTagName("input");
 
@@ -70,9 +64,9 @@ SelectionTable.prototype = {
 
     // pass through otherwise the checkbox won't check
     return true;
-  },
+  }
 
-  onCheckAll: function (ev, el) {
+  onCheckAll(ev, el) {
     var i,
       check = el.checked,
       rows = this.getTable().tBodies[0].getElementsByTagName("tr");
@@ -87,9 +81,9 @@ SelectionTable.prototype = {
     }
 
     return true;
-  },
+  }
 
-  onClick: function (ev) {
+  onClick(ev) {
     var row,
       check,
       el = ev.target;
@@ -108,14 +102,14 @@ SelectionTable.prototype = {
     }
 
     return true;
-  },
+  }
 
-  setSelection: function (row, input, check) {
+  setSelection(row, input, check) {
     // set value
     input.value = check ? "1" : "0";
     // set highlight
     row.classList.toggle("selected", check);
-  },
-};
+  }
+}
 
 export default SelectionTable;

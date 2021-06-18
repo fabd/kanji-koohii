@@ -20,7 +20,7 @@ import SelectionTable from "@old/selectiontable";
 class ManagePage {
   private viewDiv?: Element;
   private viewPanel?: IAjaxPanel;
-  private selectionTable: ISelectionTable | null = null;
+  private selectionTable: SelectionTable | null = null;
 
   private editKeywordUri: string = "";
   private editKeywordId: string = "";
@@ -79,7 +79,7 @@ class ManagePage {
         el.checked = false;
       });
 
-      this.selectionTable = new (SelectionTable as ISelectionTable)(el);
+      this.selectionTable = new SelectionTable(el as HTMLElement);
     }
   }
 

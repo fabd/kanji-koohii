@@ -29,24 +29,19 @@
  *
  */
 import $$, { domGet } from "@lib/dom";
-import * as Core from "@old/core";
 import AjaxPanel from "@old/ajaxpanel";
 import EventDelegator from "@old/eventdelegator";
 
-let AjaxTable = Core.make();
-
-AjaxTable.prototype = {
-  container: null,
+export default class AjaxTable {
+  /** @type {HTMLElement} */
+  container = null;
 
   /**
    *
-   * @constructor
-   *
-   * @param {String|HTMLElement} container   Container element for the AjaxPanel. This is usually a DIV that wraps
-   *                                         around the view template of the php table component (and pager, etc).
-   * @param {Object} options                 See documentation.
+   * @param {string | HTMLElement} container   Container element for the AjaxPanel. This is usually a DIV that wraps around the view template of the php table component (and pager, etc).
+   * @param {{ errorDiv: string}} options   See documentation.
    */
-  init: function (container, options) {
+  constructor(container, options = {}) {
     this.options = !!options ? options : {};
 
     this.container = domGet(container);
@@ -65,13 +60,13 @@ AjaxTable.prototype = {
 
     // clicks in the pager widget will be ignored while waiting for a response
     this.ajaxInProgress = false;
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     this.evtDel.destroy();
     this.oAjaxPanel.destroy();
     this.oAjaxPanel = null;
-  },
+  }
 
   /**
    * Send the query string from the clicked link as an ajax request.
@@ -80,7 +75,7 @@ AjaxTable.prototype = {
    *
    * @note  EventDelegator handler.
    */
-  onRefreshTable: function (ev, el) {
+  onRefreshTable(ev, el) {
     var query, pos, params;
 
     if (this.ajaxInProgress) {
@@ -104,18 +99,18 @@ AjaxTable.prototype = {
     }
 
     return true;
-  },
+  }
 
   /**
    * Sets the pager container with the paging links to a "disabled" style
    * to indicate it is not available while the ajax connection is under progress.
    */
-  setPagingToDisabledStyle: function (bDisable) {
+  setPagingToDisabledStyle(bDisable) {
     var opacityValue = bDisable ? "0.3" : "1"; /* default */
     if ((this.elPagerDiv = $$(".uiPagerDiv", this.container)[0])) {
       $$(this.elPagerDiv).css({ opacity: opacityValue });
     }
-  },
+  }
 
   /**
    * Listener for AjaxPanel's onResponse(), gets called before content replace.
@@ -125,7 +120,7 @@ AjaxTable.prototype = {
    *
    * @param {Object} t    TRON instance or null
    */
-  onResponse: function (t) {
+  onResponse(t) {
     console.log("AjaxTable::onResponse(%o)", t);
 
     if (t === null) {
@@ -148,15 +143,13 @@ AjaxTable.prototype = {
       // content was not replaced, so enable paging links
       this.setPagingToDisabledStyle(false);
     }
-  },
+  }
 
   /**
    * This is a placeholder to prevent default FORM submission of AjaxPanel.
    *
    */
-  onSubmitForm: function (ev) {
+  onSubmitForm(ev) {
     return false;
-  },
-};
-
-export default AjaxTable;
+  }
+}

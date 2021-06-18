@@ -28,17 +28,6 @@ interface IAjaxPanel {
   post(data: Dictionary, url?: string): void;
 }
 
-// ajaxtable.js
-interface IAjaxTable {
-  new (container: string | Element): this;
-  destroy(): void;
-}
-
-// interface IFlashcardReview {
-//   new(options: Dictionary): this;
-//   addShortcutKey: function (sKey, sActionId);
-// }
-
 interface ISelectionTable {
   new (container: string | Element): this;
   destroy(): void;

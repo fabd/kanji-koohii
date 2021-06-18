@@ -44,7 +44,7 @@ class ManagePage {
     // Manage > Edit Keywords
     const el = domGet("EditKeywordsTableComponent") as HTMLElement;
     if (el) {
-      const ajaxTable = new (AjaxTable as IAjaxTable)(el);
+      const ajaxTable = new AjaxTable(el);
       this.editKeywordUri = el.dataset.uri!;
       bodyED.on("JSEditKeyword", this.onEditKeyword.bind(this));
     }

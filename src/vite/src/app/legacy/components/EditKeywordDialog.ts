@@ -23,7 +23,7 @@ export default class EditKeywordDialog {
 
   private dialog: IAjaxDialog | null = null;
 
-  private evtCache: IEventCache | null = null;
+  private evtCache: EventCache | null = null;
 
   private props: EditKeywordResponse | null = null;
 
@@ -83,7 +83,7 @@ export default class EditKeywordDialog {
     this.props = t.getProps();
 
     // listener for the TAB key (chain edit on the Manage page)
-    this.evtCache = new (EventCache as IEventCache)();
+    this.evtCache = new EventCache();
     this.evtCache.addEvent(
       this.getInput(),
       "keydown",

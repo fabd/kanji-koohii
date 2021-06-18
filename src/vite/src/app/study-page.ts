@@ -72,10 +72,7 @@ export default {
     const elEditFlashcard = domGet("EditFlashcard");
     if (elEditFlashcard) {
       this.elEditFlashcard = elEditFlashcard;
-      var ed = new (EventDelegator as IEventDelegator)(
-        elEditFlashcard,
-        "click"
-      );
+      var ed = new EventDelegator(elEditFlashcard as HTMLElement, "click");
       ed.on("JsEditFlashcard", this.onEditFlashcard, this);
     }
 

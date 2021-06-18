@@ -4,18 +4,15 @@ import EventDelegator from "@old/eventdelegator";
 import KoohiiAside from "@/vue/Aside";
 import KoohiiNav from "@old/components/KoohiiNav";
 
-let bodyED: IEventDelegator | null = null;
+let bodyED: EventDelegator | null = null;
 
 /**
  * Returns an EventDelegator instance for click events on the page body.
  */
-export function getBodyED(): IEventDelegator {
+export function getBodyED(): EventDelegator {
   return bodyED
     ? bodyED
-    : (bodyED = new (EventDelegator as IEventDelegator)(
-        document.body,
-        "click"
-      ));
+    : (bodyED = new EventDelegator(document.body, "click"));
 }
 
 /**
@@ -42,15 +39,18 @@ function focusOnLoad() {
 
 /**
  * Helper makes it easier to find code where values are shared between php/js.
- * 
+ *
  * Cf. `kk_globals_put()` on the php side.
- * 
+ *
  * @param name key (make sure to declare them in globals.d.ts)
  */
 // see kk_globals_put() on the php side
 export function kk_globals_get(name: keyof Window["KK"]): any {
   console.assert(!!window.KK);
-  console.assert((window.KK as Object).hasOwnProperty(name), `window.KK[${name}] is not set`);
+  console.assert(
+    (window.KK as Object).hasOwnProperty(name),
+    `window.KK[${name}] is not set`
+  );
   return window.KK[name];
 }
 

@@ -20,14 +20,10 @@
  */
 
 export default class EventCache {
-  sId = null;
-
   /** @type {{ target: Element, type: string, listener: Function}[]} */
-  eCache = null;
+  eCache;
 
-  /** @type new (sId?: string): this */
-  constructor(sId) {
-    this.sId = sId || "";
+  constructor() {
     this.eCache = [];
   }
 
@@ -52,7 +48,6 @@ export default class EventCache {
 
   destroy() {
     if (this.eCache) {
-      // uiConsole.log('uiEventCache.destroy('+this.sId+') '+this.eCache.length+' events');
       for (var i = this.eCache.length - 1; i >= 0; i--) {
         var evt = this.eCache[i];
         evt.target.removeEventListener(evt.type, evt.listener);

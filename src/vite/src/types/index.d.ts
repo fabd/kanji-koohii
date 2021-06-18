@@ -34,23 +34,10 @@ interface IAjaxTable {
   destroy(): void;
 }
 
-// eventcache.js
-interface IEventCache {
-  new (sId?: string): this;
-  addEvent(target: Element, type: string, listener: Function);
-  addEvents(target: Element, eventTypes: string[], fn: Function);
-  destroy(): void;
-}
-
-// eventdelegator.js
-interface IEventDelegator {
-  new (root: string | Element, types: string | string[]): this;
-  on(
-    className: string,
-    fn: (e: Event, el: HTMLElement) => boolean,
-    scope?: any
-  ): void;
-}
+// interface IFlashcardReview {
+//   new(options: Dictionary): this;
+//   addShortcutKey: function (sKey, sActionId);
+// }
 
 interface ISelectionTable {
   new (container: string | Element): this;

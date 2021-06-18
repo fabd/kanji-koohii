@@ -54,11 +54,12 @@ export default {
 
     const elEditStory = domGet("JsEditStoryInst")!;
     if (elEditStory) {
-      window.Koohii.Refs.vueEditStory = VueInstance(
+      let { vm } = VueInstance(
         KoohiiEditStory,
         elEditStory,
         kk_globals_get("EDITSTORY_PROPS")
       );
+      window.Koohii.Refs.vueEditStory = vm;
     }
 
     const elDictStudy = domGet("DictStudy");

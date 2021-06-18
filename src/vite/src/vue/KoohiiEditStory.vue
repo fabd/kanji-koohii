@@ -310,11 +310,12 @@ export default defineComponent({
           divId: props.sharedStoryId,
         };
 
-        this.vmStoryPublished = VueInstance(
+        let { vm } = VueInstance(
           KoohiiSharedStory,
           elMount,
           propsData
         ) as any;
+        this.vmStoryPublished = vm;
       }
     },
 

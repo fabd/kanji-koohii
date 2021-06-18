@@ -1,5 +1,5 @@
 import { nextTick } from "vue";
-import VueInstance, { ComponentPublicInstance } from "@lib/helpers/vue-instance";
+import VueInstance from "@lib/helpers/vue-instance";
 import AsideComponent from "@/vue/Aside.vue";
 import KoohiiNavMenu from "@/vue/KoohiiNavMenu.vue";
 
@@ -16,12 +16,18 @@ export default {
       let data = { width: 280 };
 
       // render off-document and append afterwards
-      instance = VueInstance(AsideComponent, "#aside-component", data);
+      let { vm } = VueInstance(AsideComponent, "#aside-component", data);
+      instance = vm;
 
       // render nav
-      navMenu = VueInstance(KoohiiNavMenu, instance.$refs.navContent, {
-        menu: options.navOptionsMenu,
-      });
+      let { vm: navMenuVm } = VueInstance(
+        KoohiiNavMenu,
+        instance.$refs.navContent,
+        {
+          menu: options.navOptionsMenu,
+        }
+      );
+      navMenu = navMenuVm;
     }
 
     instance.show = true;

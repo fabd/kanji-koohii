@@ -144,6 +144,11 @@ class FlashcardReview {
   // uiAjaxQueue instance
   ajaxQueue = null;
 
+  /** @type {TVueInstanceOf<typeof KoohiiFlashcard>} */
+  curCard = null;
+  /** @type Function */
+  curCardUnmount = null;
+
   /**
    * Initialize the front end Flashcard Review component.
    *
@@ -389,7 +394,9 @@ class FlashcardReview {
       reviewMode: kk_globals_get("REVIEW_MODE"),
     };
 
-    this.curCard = VueInstance(KoohiiFlashcard, "#uiFcMain", propsData);
+    let { vm, unmount } = VueInstance(KoohiiFlashcard, "#uiFcMain", propsData);
+    this.curCard = vm;
+    this.curCardUnmount = unmount;
 
     // notifies 'onFlashcardState'
     this.setFlashcardState(0);
@@ -405,16 +412,7 @@ class FlashcardReview {
     if (this.curCard) {
       this.notify("onFlashcardDestroy");
 
-      // doesn't work when followed by $destroy()
-      //this.curCard.display(false);
-
-      this.curCard.$destroy();
-
-      var $el = this.curCard.$el;
-      if ($el) {
-        $el.parentNode.removeChild($el);
-      }
-
+      this.curCardUnmount();
       this.curCard = null;
     }
   }

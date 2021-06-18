@@ -29,6 +29,10 @@ export default defineComponent({
     visible: { type: Boolean, default: false },
   },
 
+  // unmounted() {
+  //   console.log('KoohiiLoading::unmounted()');
+  // },
+
   methods: {
     close() {
       // afterLeave(this, () => {

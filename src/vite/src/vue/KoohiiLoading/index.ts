@@ -19,12 +19,13 @@ import Lang from "@lib/lang";
 
 const setMaskStyle = (
   parent: HTMLElement,
-  instance: TVueInstanceOf<typeof KoohiiLoading>
+  component: TVueInstanceOf<typeof KoohiiLoading>
 ) => {
-  instance.originalPosition = getStyle(parent, "position")!;
+  component.originalPosition = getStyle(parent, "position")!;
 };
 
-let instance: TVueInstanceOf<typeof KoohiiLoading> | null;
+let component: TVueInstanceOf<typeof KoohiiLoading> | null;
+let componentUnmount: Function;
 
 export type KoohiiLoadingOptions = { target: HTMLElement; background?: string };
 
@@ -42,28 +43,31 @@ export default {
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 
-    instance = <TVueInstanceOf<typeof KoohiiLoading>>(
-      VueInstance(KoohiiLoading, document.createElement("div"), options)
-    );
+    let { vm, unmount } = VueInstance(KoohiiLoading, document.createElement("div"), options);
+    component = vm as TVueInstanceOf<typeof KoohiiLoading>;
+    componentUnmount = unmount;
 
-    setMaskStyle(target, instance);
+    setMaskStyle(target, component);
 
     if (
-      instance.originalPosition !== "absolute" &&
-      instance.originalPosition !== "fixed"
+      component.originalPosition !== "absolute" &&
+      component.originalPosition !== "fixed"
     ) {
       target.classList.add("kk-loading-target--relative");
     }
 
-    target.appendChild(instance.$el);
+    target.appendChild(component.$el);
     nextTick(() => {
-      instance!.setVisible(true);
+      component!.setVisible(true);
     });
   },
 
   hide() {
     console.log("koohiiloading::hide()");
-    instance!.close();
-    instance = null;
+    if (component) {
+      component.close();
+      componentUnmount();
+      component = null;
+    }
   },
 };

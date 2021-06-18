@@ -59,7 +59,8 @@ export default class DictLookupDialog {
     if (!this.vueInst) {
       // note: mounting the Vue 3 component will replace our "loading" div
       var elMount = this.dialog.getBody();
-      this.vueInst = VueInstance(KoohiiDictList, elMount, {});
+      let { vm } = VueInstance(KoohiiDictList, elMount);
+      this.vueInst = vm;
     }
 
     this.vueInst.load(ucsId);

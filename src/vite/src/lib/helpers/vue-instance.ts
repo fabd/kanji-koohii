@@ -8,7 +8,7 @@ const fnVueInstance = (
   mount: string | Element,
   props?: TVuePropsData,
   replace = false,
-): ComponentPublicInstance => {
+): { vm: ComponentPublicInstance, unmount: Function } => {
   let el = Lang.isString(mount) ? document.querySelectorAll(mount)[0] : mount;
   console.assert(Lang.isNode(el), "VueInstance() : mount is invalid");
 
@@ -25,9 +25,13 @@ const fnVueInstance = (
   else {
     // appends as a child
     vm = app.mount(mount);
-  } 
+  }
 
-  return vm;
+  const unmount = () => {
+    app.unmount();
+  }
+
+  return { vm, unmount };
 };
 
 export default fnVueInstance;

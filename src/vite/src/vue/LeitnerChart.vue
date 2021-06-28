@@ -1,8 +1,8 @@
 <template>
   <transition name="chart-fade" appear>
-    <div v-once class="leitner-chart_outer">
-      <div v-for="(bar, b) in displayBoxes" :key="b" class="box">
-        <div class="box_inner">
+    <div v-once class="pt-[30px] pb-[40px] flex justify-between">
+      <div v-for="(bar, b) in displayBoxes" :key="b" class="box flex-1">
+        <div class="box_inner relative h-[170px] md:h-[200px]">
           <div
             :class="{ lbl: true, first: b === 0 }"
             v-html="getBoxLabel(b)"
@@ -228,145 +228,6 @@ export default defineComponent({
 });
 </script>
 
-<style>
-/* this is the parent container of this vue component... FIXME should move here eventually */
-#leitner-chart_pane {
-  padding: 1em; /* to avoid content jumping while loading */
-  min-height: 298px;
-}
-
-/* fade in the bar chart, along with the min-height on container, looks nicer when page load is slow */
-.chart-fade-enter {
-  opacity: 0;
-}
-.chart-fade-enter-active {
-  transition: opacity 0.3s;
-}
-
-.leitner-chart_outer {
-  display: table;
-  width: 100%;
-  padding: 30px 0 40px;
-}
-.leitner-chart_outer .box {
-  display: table-cell;
-}
-
-.box_inner {
-  position: relative;
-  height: 200px;
-}
-
-/* the link */
-.box .bar {
-  outline: none;
-}
-.box .bar:hover .val {
-  font-weight: bold;
-}
-
-/* 3D effect */
-.box .bar .side {
-  position: absolute;
-  width: 7px;
-  height: 100%;
-  left: 100%;
-  background-color: #777;
-  transform: skew(0, -45deg);
-  transform-origin: top left;
-}
-.box .bar .top {
-  position: absolute;
-  width: 100%;
-  height: 7px;
-  bottom: 100%;
-  background-color: #aaa;
-  transform: skew(-45deg);
-  transform-origin: bottom right;
-}
-
-/* two stacks per box */
-.box .bar1 {
-  position: absolute;
-  left: 11%;
-  bottom: 0;
-  width: 39%;
-  background: #f8f8f8;
-}
-.box .bar2 {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 39%;
-  background: #f8c8f8;
-}
-
-.box .lbl {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -37px; /*width:100%; height:24px; */
-  margin-bottom: 4px;
-  color: #a9a396;
-  font-size: 17px;
-  line-height: 1.1em;
-  white-space: nowrap;
-  text-align: center;
-}
-.box .lbl.first {
-  bottom: -44px;
-  font-size: 15px;
-}
-
-.box .val {
-  position: absolute;
-  left: 4px;
-  top: -28px;
-  width: 100%;
-  padding: 0;
-  color: #444;
-  font-weight: normal;
-  white-space: nowrap;
-  text-align: center;
-  z-index: 1; /* fix "due" label overlapped by a taller "undue" bar */
-}
-.box .val-zero {
-  color: #a09a8b;
-  display: none;
-}
-
-@media (max-width: 767px) {
-  .box_inner {
-    height: 170px;
-  }
-  #leitner-chart_pane {
-    min-height: 268px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  /* On small screen, hide the side, keep the top for a depth effect! */
-  .box .bar .val {
-    left: 0;
-  }
-  .box .bar .side {
-    display: none;
-  }
-  .box .bar .top {
-    transform: none;
-  } /* front facing */
-}
-
-@media (min-width: 767px) {
-  /* increase bar thickness on larger displays */
-  .box .bar .top {
-    height: 10px;
-  }
-  .box .bar .side {
-    width: 10px;
-  }
-  .box .bar .val {
-    top: -32px;
-  }
-}
+<style lang="scss">
+@import "@css/components/_LeitnerChart.scss";
 </style>

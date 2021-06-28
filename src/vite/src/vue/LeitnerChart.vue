@@ -57,6 +57,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { kk_globals_get } from "@app/root-bundle";
 
 export default defineComponent({
   props: {
@@ -66,9 +67,8 @@ export default defineComponent({
 
   data: function() {
     return {
-      /* global leitner_chart_data */
-      box_data: Koohii.Refs.LeitnerChart.leitner_chart_data.boxes,
-      box_urls: Koohii.Refs.LeitnerChart.leitner_chart_data.urls,
+      box_data: kk_globals_get("LEITNER_CHART_DATA").boxes,
+      box_urls: kk_globals_get("LEITNER_CHART_DATA").urls,
 
       colors: {
         // bar.type
@@ -78,8 +78,6 @@ export default defineComponent({
         due: ["#ffae57", "#d2633f", "#ffcc7f"],
         nill: ["#929292", "#818181", "#b1b1b1"],
       },
-
-      // itsMounted: false
     };
   },
 
@@ -227,15 +225,6 @@ export default defineComponent({
       });
     },
   },
-
-  /*
-  mounted: function () {
-    this.$nextTick(function () {
-      // Code that will run only after the entire view (+children) has been rendered
-      console.log('mounted yo')
-      this.itsMounted = true
-    })
-  }*/
 });
 </script>
 

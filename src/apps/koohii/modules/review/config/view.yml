@@ -1,6 +1,8 @@
 indexSuccess:
   metas:
     title: 'Spaced Repetition - Kanji Koohii'
+  javascripts:
+    - src/entry-review.ts
 
 reviewSuccess:
   metas:

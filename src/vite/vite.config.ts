@@ -24,6 +24,7 @@ export default defineConfig({
         "./src/entry-account.ts",
         "./src/entry-landing.ts",
         "./src/entry-manage.ts",
+        "./src/entry-review.ts",
         "./src/entry-study.ts",
       ],
     },

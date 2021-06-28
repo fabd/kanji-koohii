@@ -7,20 +7,32 @@
  *   end_url       Url to redirect to at the end of the review
  *
  */
+// dont@ts-check
 
 import $$, { DomJS, domGet, hasClass } from "@lib/dom";
 import AjaxDialog from "@old/ajaxdialog";
+import DictLookupDialog from "@old/components/DictLookupDialog";
+import EditStoryDialog from "@old/components/EditStoryDialog";
 import FlashcardReview from "@app/review/FlashcardReview";
 
 export default class KanjiReview {
-  /** @type Dictionary */
+  /** @type {Dictionary} */
   options = {};
 
-  /** @type IFlashcardReview */
+  /** @type {FlashcardReview | null} */
   oReview = null;
 
-  /** @type DomJS<Element> */
+  /** @type {DomJS<Element> | null}*/
   $elStats = null;
+
+  /** @type {DictLookupDialog | null} */
+  dictDialog = null;
+
+  /** @type {EditStoryDialog | null} */
+  editStoryDialog = null;
+
+  /** @type {number[]} */
+  deletedCards = [];
 
   /**
    *
@@ -98,7 +110,7 @@ export default class KanjiReview {
   /**
    * Returns an option value
    *
-   * @param  String   Option name
+   * @param {string} name
    */
   getOption(name) {
     return this.options[name];
@@ -165,8 +177,6 @@ export default class KanjiReview {
   }
 
   onAction(sActionId, oEvent) {
-    var oCardData;
-
     /** @type {number | 'h' | false} */
     var cardAnswer = false;
 
@@ -192,24 +202,7 @@ export default class KanjiReview {
     }
 
     if (sActionId === "story") {
-      if (this.editStoryDialog && this.editStoryDialog.isVisible()) {
-        this.editStoryDialog.hide();
-      } else {
-        oCardData = this.oReview.getFlashcardData();
-
-        if (!this.editStoryDialog) {
-          // initialize Story Window and its position
-          //var left = this.elFlashcard.offsetLeft + (this.elFlashcard.offsetWidth /2) - (520/2);
-          //var top = this.elFlashcard.offsetTop + 61;
-          this.editStoryDialog = new App.Ui.EditStoryDialog(
-            this.getOption("editstory_url"),
-            oCardData.id
-          );
-        } else {
-          this.editStoryDialog.load(oCardData.id);
-          this.editStoryDialog.show();
-        }
-      }
+      this.toggleEditStory();
       return false;
     }
 
@@ -282,15 +275,36 @@ export default class KanjiReview {
     return false;
   }
 
+  toggleEditStory() {
+    if (this.editStoryDialog && this.editStoryDialog.isVisible()) {
+      this.editStoryDialog.hide();
+    } else {
+      const oCardData = this.oReview.getFlashcardData();
+
+      if (!this.editStoryDialog) {
+        // initialize Story Window and its position
+        //var left = this.elFlashcard.offsetLeft + (this.elFlashcard.offsetWidth /2) - (520/2);
+        //var top = this.elFlashcard.offsetTop + 61;
+        this.editStoryDialog = new EditStoryDialog(
+          this.getOption("editstory_url"),
+          oCardData.id
+        );
+      } else {
+        this.editStoryDialog.load(oCardData.id);
+        this.editStoryDialog.show();
+      }
+    }
+  }
+
   toggleDictDialog() {
     if (this.dictDialog && this.dictDialog.isVisible()) {
       this.dictDialog.hide();
     } else {
-      var oCardData = this.oReview.getFlashcardData();
-      var ucsId = oCardData.id;
+      const oCardData = this.oReview.getFlashcardData();
+      const ucsId = oCardData.id;
 
       if (!this.dictDialog) {
-        this.dictDialog = new App.Ui.DictLookupDialog();
+        this.dictDialog = new DictLookupDialog();
       }
 
       this.dictDialog.show();

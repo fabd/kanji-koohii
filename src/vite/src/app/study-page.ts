@@ -96,11 +96,9 @@ export default {
     if (!this.dictPanel) {
       // use inner div set in the php template
       let elMount = $elBody.down(".JsMount")[0];
-      let inst = VueInstance(KoohiiDictList, elMount) as TVueInstanceOf<
-        typeof KoohiiDictList
-      >;
+      let { vm } = VueInstance(KoohiiDictList, elMount);
       let ucsId = parseInt($elBody[0].dataset.ucs!);
-      inst.load(ucsId);
+      (vm  as TVueInstanceOf<typeof KoohiiDictList>).load(ucsId);
 
       this.dictPanel = true;
     }

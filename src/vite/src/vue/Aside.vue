@@ -140,7 +140,7 @@ export default defineComponent({
   margin: 72px 0 0;
 }
 
-.slideleft-enter {
+.slideleft-enter-from {
   transform: translateX(-100%);
 }
 .slideleft-enter-active {

@@ -51,7 +51,7 @@ export default defineComponent({
 
 <style>
 /* fade in the published story for visual feedback */
-.newstory-fadein-enter {
+.newstory-fadein-enter-from {
   opacity: 0;
   transform: translateX(20px);
 }

@@ -1,58 +1,60 @@
 <template>
-  <transition name="chart-fade" appear>
-    <div v-once class="pt-[30px] pb-[40px] flex justify-between">
-      <div v-for="(bar, b) in displayBoxes" :key="b" class="box flex-1">
-        <div class="box_inner relative h-[170px] md:h-[200px]">
-          <div
-            :class="{ lbl: true, first: b === 0 }"
-            v-html="getBoxLabel(b)"
-          ></div>
-          <a
-            href="#"
-            class="bar bar1"
-            :style="{
-              height: getHeight(bar[0]),
-              backgroundColor: getColor(bar[0], 0),
-            }"
-            @click="onClick($event, bar[0])"
-          >
+  <div>
+    <transition name="chart-fade" appear>
+      <div v-once class="pt-[30px] pb-[40px] flex justify-between">
+        <div v-for="(bar, b) in displayBoxes" :key="b" class="box flex-1">
+          <div class="box_inner relative h-[170px] md:h-[200px]">
             <div
-              class="side"
-              :style="{ backgroundColor: getColor(bar[0], 1) }"
+              :class="{ lbl: true, first: b === 0 }"
+              v-html="getBoxLabel(b)"
             ></div>
-            <div
-              class="top"
-              :style="{ backgroundColor: getColor(bar[0], 2) }"
-            ></div>
-            <span :class="['val', bar[0].value ? '' : 'val-zero']">{{
-              bar[0].value
-            }}</span>
-          </a>
-          <a
-            href="#"
-            class="bar bar2"
-            :style="{
-              height: getHeight(bar[1]),
-              backgroundColor: getColor(bar[1], 0),
-            }"
-            @click="onClick($event, bar[1])"
-          >
-            <div
-              class="side"
-              :style="{ backgroundColor: getColor(bar[1], 1) }"
-            ></div>
-            <div
-              class="top"
-              :style="{ backgroundColor: getColor(bar[1], 2) }"
-            ></div>
-            <span :class="['val', bar[1].value ? '' : 'val-zero']">{{
-              bar[1].value
-            }}</span>
-          </a>
+            <a
+              href="#"
+              class="bar bar1"
+              :style="{
+                height: getHeight(bar[0]),
+                backgroundColor: getColor(bar[0], 0),
+              }"
+              @click="onClick($event, bar[0])"
+            >
+              <div
+                class="side"
+                :style="{ backgroundColor: getColor(bar[0], 1) }"
+              ></div>
+              <div
+                class="top"
+                :style="{ backgroundColor: getColor(bar[0], 2) }"
+              ></div>
+              <span :class="['val', bar[0].value ? '' : 'val-zero']">{{
+                bar[0].value
+              }}</span>
+            </a>
+            <a
+              href="#"
+              class="bar bar2"
+              :style="{
+                height: getHeight(bar[1]),
+                backgroundColor: getColor(bar[1], 0),
+              }"
+              @click="onClick($event, bar[1])"
+            >
+              <div
+                class="side"
+                :style="{ backgroundColor: getColor(bar[1], 1) }"
+              ></div>
+              <div
+                class="top"
+                :style="{ backgroundColor: getColor(bar[1], 2) }"
+              ></div>
+              <span :class="['val', bar[1].value ? '' : 'val-zero']">{{
+                bar[1].value
+              }}</span>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script>

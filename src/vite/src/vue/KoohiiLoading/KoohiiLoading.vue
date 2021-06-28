@@ -109,7 +109,7 @@ export default defineComponent({
 }
 
 /* vue transition */
-.kk-loading-fade-enter,
+.kk-loading-fade-enter-from,
 .kk-loading-fade-leave-active {
   opacity: 0;
 }

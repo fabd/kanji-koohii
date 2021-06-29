@@ -47,15 +47,8 @@ body { padding-top:0;  }
 
 <?php echo $sf_content; ?>
 
-<?php kk_globals_base_url() ?>
+<?php kk_globals_out() ?>
+<?php koohii_onload_slots_out() ?>
 
-<?php
-  if ($s = get_slot('koohii_onload_js'))
-  {
-    echo "<script>\n",
-      '/* Koohii onload slot */ ',
-      "window.addEventListener('DOMContentLoaded',function(){\n", $s, "});</script>\n";
-  }
-?>
 </body>
 </html>

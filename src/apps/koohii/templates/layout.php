@@ -63,15 +63,8 @@
 <?php if ($sf_request->getParameter('_homeFooter')) { include_partial('home/homeFooter'); } ?>
 <?php } ?>
 
-<?php kk_globals_base_url(); ?>
-
-<?php
-  if ($s = get_slot('koohii_onload_js')) {
-    echo "<script>\n",
-      "/* Koohii onload slot */ ",
-      "window.addEventListener('DOMContentLoaded',function(){\n", $s, "});</script>\n";
-  }
-?>
+<?php kk_globals_out() ?>
+<?php koohii_onload_slots_out() ?>
 
 <script>
 var koohii_nav_data = <?php echo json_encode(get_slot('koohii.nav.data'), /*JSON_PRETTY_PRINT |*/ JSON_UNESCAPED_SLASHES) ?>;

@@ -36,6 +36,9 @@ export default class AjaxTable {
   /** @type {HTMLElement} */
   container = null;
 
+  /** @type {AjaxPanel} */
+  oAjaxPanel = null;
+
   /**
    *
    * @param {string | HTMLElement} container   Container element for the AjaxPanel. This is usually a DIV that wraps around the view template of the php table component (and pager, etc).

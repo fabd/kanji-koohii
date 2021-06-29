@@ -176,18 +176,6 @@
 }
 
 
-/* ------------------- */
-/* My Stories          */
-/* ------------------- */
-
-/* this is SO much simpler then flex ... */
-.my-stories-select { display:table; }
-.my-stories-select .td { display:table-cell; padding:0 0.5em 0 0; vertical-align:middle; }
-.my-stories-select select { width:140px; }
-
-#stories-list div.pager { float:right; padding:0 0 0.5em 2em; font-size:11px; }
-
-
 /* ------------------ */
 /* Study Search       */
 /* ------------------ */

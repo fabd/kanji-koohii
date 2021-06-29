@@ -13,7 +13,6 @@ import Vue, {
   VueConstructor,
 } from "vue";
 import Lang from "@lib/lang";
-import Dom from "@lib/dom";
 import { Inst as TronFactory } from "@lib/tron";
 import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
 
@@ -36,9 +35,6 @@ declare global {
 
 declare global {
   export interface KoohiiGlobals {
-    // DomJS provides simple DOM utilities to the old frontend code
-    Dom: typeof Dom;
-
     // misc. references shared between backend/frontend,
     //  also Vue components from Vite build, instanced from php templates
     Refs: {

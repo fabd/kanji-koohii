@@ -78,7 +78,7 @@ var koohii_nav_data = <?php echo json_encode(get_slot('koohii.nav.data'), /*JSON
 
 // (fabd) note javascript modules are deferred, and not yet available
 window.addEventListener("DOMContentLoaded", () => {
-  Koohii.Dom('#k-slide-nav-btn').on("click", function(){
+  document.querySelector('#k-slide-nav-btn').addEventListener("click", function() {
     Koohii.UX.KoohiiAside.open({
       navOptionsMenu: koohii_nav_data
     })

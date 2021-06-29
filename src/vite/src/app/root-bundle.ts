@@ -58,7 +58,6 @@ export default function() {
   console.log("... rootBundleInit()");
 
   window.Koohii = {
-    Dom: Dom,
     Refs: {},
     UX: {
       // legacy AjaxTable component instanced in pages like Members List

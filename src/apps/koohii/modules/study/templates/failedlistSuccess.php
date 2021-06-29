@@ -41,6 +41,6 @@
   </div>
 
 <?php koohii_onload_slot() ?>
-  var ajaxTable = new Koohii.UX.AjaxTable('FailedListTable');
+  new Koohii.UX.AjaxTable('FailedListTable');
 <?php end_slot() ?>
 

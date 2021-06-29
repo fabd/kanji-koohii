@@ -64,7 +64,5 @@
 </div>
 
 <?php koohii_onload_slot() ?>
-  var $$ = Koohii.Dom;
-  var elTable = $$('#summaryTable')[0];
-  elTable && new Koohii.UX.AjaxTable(elTable);
+  new Koohii.UX.AjaxTable('summaryTable');
 <?php end_slot() ?>

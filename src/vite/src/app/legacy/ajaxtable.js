@@ -28,7 +28,7 @@
  *                returns an error.
  *
  */
-import $$, { domGet } from "@lib/dom";
+import $$, { domGetById } from "@lib/dom";
 import AjaxPanel from "@old/ajaxpanel";
 import EventDelegator from "@old/eventdelegator";
 
@@ -47,7 +47,7 @@ export default class AjaxTable {
   constructor(container, options = {}) {
     this.options = !!options ? options : {};
 
-    this.container = domGet(container);
+    this.container = domGetById(container);
     this.oAjaxPanel = new AjaxPanel(this.container, {
       events: {
         onResponse: this.onResponse.bind(this),
@@ -134,7 +134,7 @@ export default class AjaxTable {
 
     if (t.hasErrors()) {
       var sMsg = t.getErrors().join("\n"),
-        el = domGet(this.options.errorDiv);
+        el = domGetById(this.options.errorDiv);
 
       if (el) {
         el.innerHTML = sMsg;

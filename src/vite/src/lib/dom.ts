@@ -10,7 +10,7 @@
  *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
  *
  *   domContentLoaded(fn)              ... proxy for window.addEventListener(...)
- *   domGet()                          ... same as YUI2 Dom.get()
+ *   domGetById()                      ... returns an HTMLElement reference from ref or string id
  *   hasClass(el, token)               ... alias for `el.classList.contains(token)`
  *   stopEvent(ev)                     ... helper for stopPropagation() & preventDefault()
  *
@@ -444,9 +444,9 @@ export const domContentLoaded = (fn: Function) => {
  *
  * @param el  An element reference as an id string (without the "#") or the element itself
  *
- * @returns Element
+ * @returns HTMLElement
  */
-export const domGet = <EL extends Element>(el: string | EL): EL | null => {
+export const domGetById = <EL extends HTMLElement>(el: string | EL): EL | null => {
   const node = isString(el) ? (document.querySelector("#" + el) as EL) : el;
   return node;
 };

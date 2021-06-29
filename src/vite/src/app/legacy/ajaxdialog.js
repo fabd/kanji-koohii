@@ -178,7 +178,7 @@
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
-import $$, { domGet, hasClass } from "@lib/dom";
+import $$, { domGetById, hasClass } from "@lib/dom";
 import * as TRON from "@lib/tron";
 import * as Core from "@old/core";
 import { getBodyED } from "@app/root-bundle";

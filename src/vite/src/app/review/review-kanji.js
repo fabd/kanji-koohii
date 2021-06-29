@@ -9,7 +9,7 @@
  */
 // dont@ts-check
 
-import $$, { DomJS, domGet, hasClass } from "@lib/dom";
+import $$, { DomJS, domGetById, hasClass } from "@lib/dom";
 import AjaxDialog from "@old/ajaxdialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
@@ -131,7 +131,7 @@ export default class KanjiReview {
     this.updateStatsPanel();
 
     // set form data and redirect to summary with POST
-    var elFrm = domGet("uiFcRedirectForm");
+    var elFrm = domGetById("uiFcRedirectForm");
     elFrm.method = "post";
     elFrm.action = this.getOption("end_url");
     elFrm.elements["fc_pass"].value = this.countYes;
@@ -337,7 +337,7 @@ export default class KanjiReview {
    *
    */
   flashcardMenu() {
-    var el = domGet("uiFcMenu"),
+    var el = domGetById("uiFcMenu"),
       data = el.dataset,
       oCardData = this.oReview.getFlashcardData();
 
@@ -449,11 +449,11 @@ export default class KanjiReview {
 
     $$("#uiFcStDeld").toggle(this.countDeleted > 0);
 
-    domGet("uiFcStDeld").getElementsByTagName(
+    domGetById("uiFcStDeld").getElementsByTagName(
       "em"
     )[0].innerHTML = this.countDeleted;
 
-    domGet("uiFcStDeldK").firstChild.innerHTML = this.getDeletedCards();
+    domGetById("uiFcStDeldK").firstChild.innerHTML = this.getDeletedCards();
   }
 
   getDeletedCards() {

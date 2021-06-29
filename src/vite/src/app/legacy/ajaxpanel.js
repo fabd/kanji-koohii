@@ -99,7 +99,7 @@
  *
  */
 
-import $$, { domGet, stopEvent } from "@lib/dom";
+import $$, { domGetById, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
 import * as Core from "@old/core";
 import AjaxIndicator from "@old/ajaxindicator";
@@ -165,9 +165,6 @@ ShadeLayer.prototype = {
         : DEFAULT_OPACITY;
     this.opacity = Math.max(Math.min(this.opacity, 100), 0);
 
-    // look for conditional comment div
-    this.isIE = !!domGet("ie");
-
     if (options.element) {
       this.pos = $$(options.element).offset();
       this.size = this.getDimensions(options.element);
@@ -201,10 +198,6 @@ ShadeLayer.prototype = {
     }
 
     $$(elLayer).css(layerStyles);
-    if (this.isIE) {
-      // IE6 opacity filter
-      elLayer.style.filter = "alpha(opacity=" + this.opacity + ")";
-    }
 
     this.elBody = document.getElementsByTagName("body")[0];
     this.elBody.insertBefore(elLayer, this.elBody.firstChild);
@@ -337,7 +330,7 @@ AjaxPanel.prototype = {
     // make sure to call onContentDestroy() before the first content replace, if used initContent
     this.contentLoaded = this.options.initContent === true ? true : false;
 
-    this.container = domGet(container);
+    this.container = domGetById(container);
     console.assert(this.container, "AjaxPanel::init()  container not found");
 
     this.evtCache = new EventCache();
@@ -441,7 +434,7 @@ AjaxPanel.prototype = {
    * @param  {String|HTMLElement}  elForm   Form id or element
    */
   setForm: function (elForm) {
-    elForm = domGet(elForm);
+    elForm = domGetById(elForm);
     if (!elForm.nodeName || elForm.nodeName.toLowerCase() !== "form") {
       throw new Error("setForm() argument 0 is not a form element");
     }

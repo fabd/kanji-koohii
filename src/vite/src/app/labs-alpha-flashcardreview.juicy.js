@@ -3,7 +3,7 @@
  * 
  */
 
-import $$, { domGet } from "@lib/dom";
+import $$, { domGetById } from "@lib/dom";
 import FlashcardReview from "@old/components/FlashcardReview";
 
   var Y = YAHOO,
@@ -34,7 +34,7 @@ import FlashcardReview from "@old/components/FlashcardReview";
       this.oReview.addShortcutKey('b', 'back');
 
       // stats panel
-      this.elStats = domGet('uiFcStats');
+      this.elStats = domGetById('uiFcStats');
       this.elsCount = $$('#uiFcProgressBar .count'); //array
       this.elProgressBar = $$('#review-progress span')[0];
     },
@@ -83,7 +83,7 @@ import FlashcardReview from "@old/components/FlashcardReview";
       // set the google search url
       var searchTerm = this.oReview.getFlashcardData().compound;
       var searchUrl = 'http://www.google.co.jp/search?hl=ja&q=' + encodeURIComponent(searchTerm);
-      domGet('search-google-jp').href = searchUrl;
+      domGetById('search-google-jp').href = searchUrl;
     },
 
     /**

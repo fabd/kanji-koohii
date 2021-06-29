@@ -1,6 +1,6 @@
 // FIXME: legacy study-page.js
 
-import $$, { domGet } from "@lib/dom";
+import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
 import VueInstance from "@lib/helpers/vue-instance";
 import actb from "@old/autocomplete.js";
@@ -24,7 +24,7 @@ export default {
 
   initialize() {
     // references
-    this.elSearch = domGet<HTMLInputElement>("txtSearch")!;
+    this.elSearch = domGetById<HTMLInputElement>("txtSearch")!;
 
     // quick search autocomplete
     if (this.elSearch) {
@@ -52,7 +52,7 @@ export default {
       this.elSearch.focus();
     }
 
-    const elEditStory = domGet("JsEditStoryInst")!;
+    const elEditStory = domGetById("JsEditStoryInst")!;
     if (elEditStory) {
       let { vm } = VueInstance(
         KoohiiEditStory,
@@ -62,15 +62,15 @@ export default {
       window.Koohii.Refs.vueEditStory = vm;
     }
 
-    const elDictStudy = domGet("DictStudy");
+    const elDictStudy = domGetById("DictStudy");
     elDictStudy && this.initDictionary(elDictStudy);
 
-    const elSharedStories = domGet("SharedStoriesComponent");
+    const elSharedStories = domGetById("SharedStoriesComponent");
     if (elSharedStories) {
       new SharedStoriesComponent(this, elSharedStories);
     }
 
-    const elEditFlashcard = domGet("EditFlashcard");
+    const elEditFlashcard = domGetById("EditFlashcard");
     if (elEditFlashcard) {
       this.elEditFlashcard = elEditFlashcard;
       var ed = new EventDelegator(elEditFlashcard as HTMLElement, "click");

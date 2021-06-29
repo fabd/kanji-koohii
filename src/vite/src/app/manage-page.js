@@ -7,7 +7,7 @@
  * the UI.
  */
 
-import $$, { domGet } from "@lib/dom";
+import $$, { domGetById } from "@lib/dom";
 import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
@@ -32,7 +32,7 @@ export default {
     });
 
     // Manage > Edit Keywords
-    var el = domGet("EditKeywordsTableComponent");
+    var el = domGetById("EditKeywordsTableComponent");
     if (el) {
       this.ajaxTable = new AjaxTable(el);
       this.editKeywordUri = el.dataset.uri;

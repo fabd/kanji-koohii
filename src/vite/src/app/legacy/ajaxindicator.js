@@ -10,7 +10,7 @@
  *
  */
 
-import $$, { domGet, px } from "@lib/dom";
+import $$, { domGetById, px } from "@lib/dom";
 import * as Core from "@old/core";
 
 let AjaxIndicator = Core.make();
@@ -21,7 +21,7 @@ const DEFAULT_ZINDEX = 100,
 AjaxIndicator.prototype = {
   init: function (options) {
     this.container =
-      options && options.container ? domGet(options.container) : document.body;
+      options && options.container ? domGetById(options.container) : document.body;
     this.message = options.message ? options.message : DEFAULT_MESSAGE;
     this.indicator = null;
   },

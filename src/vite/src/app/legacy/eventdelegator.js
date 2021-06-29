@@ -73,7 +73,7 @@
  *
  */
 
-import $$, { domGet, stopEvent } from "@lib/dom";
+import $$, { domGetById, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
 
 const PREFIX_TAG = "%",
@@ -93,7 +93,7 @@ export default class EventDelegator {
     this.listeners = {};
     this.eventCache = [];
 
-    this.elRoot = domGet(elRoot);
+    this.elRoot = domGetById(elRoot);
 
     console.assert(
       Lang.isNode(this.elRoot),
@@ -170,7 +170,7 @@ export default class EventDelegator {
     this._debug(arguments);
 
     // a warning to help development
-    if (!domGet(name)) {
+    if (!domGetById(name)) {
       console.warn(
         "Warning: EventDelegator()::onId('%s') id is not present in document",
         name

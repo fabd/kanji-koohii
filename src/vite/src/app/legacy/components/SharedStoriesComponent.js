@@ -1,6 +1,6 @@
 // FIXME: legacy componet, should become a Vue at some point
 
-import $$, { domGet } from "@lib/dom";
+import $$, { domGetById } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import * as Core from "@old/core";
 import AjaxTable from "@old/ajaxtable";
@@ -52,7 +52,7 @@ SharedStoriesComponent.prototype = {
 
   onNewestClick: function(ev, el) {
     if (ev.type === "click") {
-      var div = domGet("sharedstories-new");
+      var div = domGetById("sharedstories-new");
 
       this.hideStories = !this.hideStories;
       div.classList.toggle("JsHide", this.hideStories);
@@ -214,7 +214,7 @@ SharedStoriesComponent.prototype = {
   },
 
   moveStoryToFavourites: function(elSharedStory, storyId) {
-    var elFavourites = domGet("sharedstories-top");
+    var elFavourites = domGetById("sharedstories-top");
 
     if (!this.movedStory) {
       this.movedStory = {};

@@ -47,7 +47,7 @@
  *
  */
 
-import $$, { DomJS, domGet, stopEvent } from "@lib/dom";
+import $$, { DomJS, domGetById, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
 import * as Core from "@old/core";
 import AjaxRequest from "@old/ajaxrequest";
@@ -91,7 +91,7 @@ AjaxQueue.prototype = {
     $elAction.on("click", this.reconnectEvent.bind(this));
 
     // init ajax loading icon
-    this.ajaxIndicator = domGet(options.elLoading);
+    this.ajaxIndicator = domGetById(options.elLoading);
   },
 
   /**

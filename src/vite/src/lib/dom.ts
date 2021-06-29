@@ -357,7 +357,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    *                  to its default value
    * @returns void
    */
-  toggle(display: boolean): void {
+  toggle(display: boolean = true): void {
     const element = (this[0] as any) as HTMLElement;
     element.style.display = display ? "" : "none";
   }

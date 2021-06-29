@@ -8,6 +8,23 @@ class readingAction extends sfAction
 {
   public function execute($request)
   {
+    /**
+     * TEMPORARILY disable this page because too much work refactoring
+     *   if there is interest then we will fix it with a proper Vue comp.
+     */
+    $this->getResponse()->setStatusCode(403);
+    $text = <<< EOD
+    <h3>This page is no longer available</h3>
+    Unless there is interest for it, this feature is being phased out because 
+    there is a lot of work refactoring the site.<br>
+    <br>
+    <a href="/contact">Let me know</a> if you would like to see this page back.
+    <br><br>
+    <a href="/">&laquo; BACK TO HOMEPAGE</a>
+    EOD;
+    return $this->renderText($text);
+
+
     $this->display_form = true;
     $this->display_kanji = false;
     $this->kanji_text = '';

@@ -11,7 +11,7 @@ import "@css/kanji-review.build.scss";
 import { domGetById, domContentLoaded } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
 import VueInstance from "@lib/helpers/vue-instance";
-import Review from "@app/review/review-kanji";
+import KanjiReview from "@app/review/review-kanji";
 import LeitnerChart from "@/vue/LeitnerChart.vue";
 
 domContentLoaded(() => {
@@ -26,6 +26,6 @@ domContentLoaded(() => {
 
   // review page
   if (domGetById("uiFcMain")) {
-    new Review(kk_globals_get("REVIEW_OPTIONS"));
+    window.Koohii.Refs.KanjiReview = new KanjiReview(kk_globals_get("REVIEW_OPTIONS"));
   }
 });

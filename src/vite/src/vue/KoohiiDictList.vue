@@ -12,7 +12,7 @@
               @click="onVocabPick($item)"
             >
               <div class="dl_t">
-                <div v-if="isKanjiReview" class="dl_t_menu">
+                <div v-if="!!KanjiReview" class="dl_t_menu">
                   <i v-if="$item.pick === true" class="fa fa-star"></i>
                   <i v-else class="far fa-star"></i>
                 </div>
@@ -66,8 +66,10 @@ import { DictId, DictListEntry, GetDictListForUCS } from "@app/api/models";
 import { getApi } from "@app/api/api";
 import { kkFormatReading } from "@lib/format";
 
+import KanjiReview from "@app/review/review-kanji";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 import KoohiiLoading from "@/vue/KoohiiLoading";
+import KoohiiFlashcardKanji from "./KoohiiFlashcardKanji.vue";
 
 // our simple regexp matching needs this so that vocab with okurigana is considered known
 const HIRAGANA =
@@ -125,12 +127,8 @@ export default defineComponent({
   },
 
   computed: {
-    KanjiReview(): AppKanjiReview | undefined {
+    KanjiReview(): KanjiReview | undefined {
       return window.Koohii.Refs.KanjiReview;
-    },
-
-    isKanjiReview(): boolean {
-      return !!this.KanjiReview;
     },
 
     isMobile(): boolean {
@@ -152,20 +150,19 @@ export default defineComponent({
   methods: {
     // ! CAN NOT be computed because the dictionary is instanced *once*, while flashcard comp is recreated
     //
-    // @return {object} the KoohiiFlashcardKanji Vue instance, or false if not available (eg. Study page)
-    getKanjiCard() {
-      if (!this.isKanjiReview) {
-        return false;
+    getKanjiCard(): TVueInstanceOf<typeof KoohiiFlashcardKanji> | null {
+      if (!this.KanjiReview) {
+        return null;
       }
-      let vmFlashcard = this.KanjiReview!.oReview.getFlashcard();
-      let inst = vmFlashcard.getChild();
+      let vmFlashcard = this.KanjiReview!.oReview!.getFlashcard();
+      let inst = vmFlashcard.getChild() as TVueInstanceOf<typeof KoohiiFlashcardKanji>;
       return inst;
     },
 
     onVocabPick(item: DictListEntry) {
-      // console.log('onVocabPick "%s"', item.c)
+      console.log('onVocabPick "%s"', item.c)
 
-      if (!this.isKanjiReview) {
+      if (!this.KanjiReview) {
         return;
       }
 
@@ -196,8 +193,8 @@ export default defineComponent({
 
     onVocabDeleteResponse(item: DictListEntry) {
       item.pick = false;
-      this.getKanjiCard().removeVocab(item);
-      this.isKanjiReview && this.KanjiReview!.toggleDictDialog();
+      this.getKanjiCard()!.removeVocab(item);
+      this.KanjiReview && this.KanjiReview.toggleDictDialog();
     },
 
     /**
@@ -215,9 +212,9 @@ export default defineComponent({
         reading: item.r,
         gloss: item.g,
       };
-      this.getKanjiCard().setVocab(VocabPick);
+      this.getKanjiCard()!.setVocab(VocabPick);
 
-      this.isKanjiReview && this.KanjiReview!.toggleDictDialog();
+      this.KanjiReview && this.KanjiReview.toggleDictDialog();
     },
 
     load(ucsId: number) {

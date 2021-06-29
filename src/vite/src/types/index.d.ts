@@ -33,8 +33,3 @@ interface ISelectionTable {
   destroy(): void;
   getPostData(): Dictionary;
 }
-
-interface AppKanjiReview {
-  oReview: any;
-  toggleDictDialog: () => void;
-}

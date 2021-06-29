@@ -104,7 +104,7 @@ import VueInstance from "@lib/helpers/vue-instance";
 
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 
-class FlashcardReview {
+export default class FlashcardReview {
   // flashcard selection as an array of flashcard ids
   items = null;
 
@@ -582,7 +582,7 @@ class FlashcardReview {
     return this.curCard;
   }
 
-  /** @return {number | null} */
+  /** @return {Dictionary | null} */
   getFlashcardData() {
     var id = this.items[this.position];
     return id ? this.cache[id] : null;
@@ -620,8 +620,8 @@ class FlashcardReview {
    * will notify 'onAction' with the given action id. Lowercase letters will match
    * the uppercase letter.
    *
-   * @param {String} sKey  Shortcut key, should be lowercase, or ' ' for spacebar
-   * @param {String} sActionId  Id passed to the 'onAction' event when key is pressed
+   * @param {string | number} sKey  Shortcut key, should be lowercase, or ' ' for spacebar
+   * @param {string} sActionId  Id passed to the 'onAction' event when key is pressed
    */
   addShortcutKey(sKey, sActionId) {
     if (!this.eventDispatcher.hasListeners("onAction")) {
@@ -690,5 +690,3 @@ class FlashcardReview {
     }
   }
 }
-
-export default FlashcardReview;

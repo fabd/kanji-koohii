@@ -30,7 +30,7 @@ If you need any of these files to run a script from the data/scripts/ folder, th
       datafiles/
         download/
 
-          jmdict_e.xml.utf8
+          jmdict.xml.utf8
             Download JMdict_e.gz ("only English glosses") [from here](http://ftp.edrdg.org/pub/Nihongo/00INDEX.html#dic_fil)
 
           kanjidic2.xml.utf8

@@ -31,10 +31,10 @@ If you need any of these files to run a script from the data/scripts/ folder, th
         download/
 
           jmdict.xml.utf8
-            Download JMdict_e.gz ("only English glosses") [from here](http://www.edrdg.org/jmdict/edict_doc.html)
+            Download JMdict_e.gz ("only English glosses") [from here](http://ftp.edrdg.org/pub/Nihongo/00INDEX.html#dic_fil)
 
           kanjidic2.xml.utf8
-            Download the current version of kanjidic2.xml (.gz) [from here](http://www.edrdg.org/kanjidic/kanjd2index.html)
+            Download the current version of kanjidic2.xml (.gz) [from here](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project#Introduction)
 
           Unihan/
             Unihan_DictionaryIndices.txt

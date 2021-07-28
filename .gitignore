@@ -3,6 +3,9 @@
 #        project in /src
 #
 
+# macOS
+.DS_Store
+
 # not public / work-in-progress and personal files
 __*
 

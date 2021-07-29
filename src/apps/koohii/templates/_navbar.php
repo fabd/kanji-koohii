@@ -178,7 +178,7 @@ if (!$sf_user->isAuthenticated()) {
   ]);
 
   $nav_items[] = nav_m_t('Flashcards', 'flashcards', 'fa-copy', [
-    nav_m_i('Manage', 's-r', 'manage/addcustom'),
+    nav_m_i('Manage', 's-r', '@manage'),
     nav_m_i('List',   's-i', 'manage/flashcardlist')
   ]);
 

@@ -111,5 +111,3 @@ export default class SelectionTable {
     row.classList.toggle("selected", check);
   }
 }
-
-export default SelectionTable;

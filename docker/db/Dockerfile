@@ -1,4 +1,5 @@
-FROM mysql:5.6
+# use mariadb (was "mysql:5.6") for running on Apple Silicon 
+FROM mariadb
 
 RUN apt-get update && \
     apt-get install -y less

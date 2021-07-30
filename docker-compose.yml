@@ -35,6 +35,8 @@ services:
     image: kk_mysql_img
 
     container_name: kk_mysql
+
+    restart: always
     
     ports:
       - "3306:3306"

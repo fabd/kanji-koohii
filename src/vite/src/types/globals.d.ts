@@ -34,17 +34,6 @@ declare global {
 }
 
 declare global {
-  export interface KoohiiGlobals {
-    // misc. references shared between backend/frontend,
-    //  also Vue components from Vite build, instanced from php templates
-    Refs: {
-      [key: string]: any;
-    };
-
-    // references to Vue components that can be instanced later
-    UX: { [componentName: string]: any };
-  }
-
   interface Window {
     // cf. kk_globals_put() on the php side
     KK: {
@@ -69,6 +58,15 @@ declare global {
     kklist: string;
     kwlist: string[];
 
-    Koohii: KoohiiGlobals;
+    Koohii: {
+      // misc. references shared between backend/frontend,
+      //  also Vue components from Vite build, instanced from php templates
+      Refs: {
+        [key: string]: any;
+      };
+  
+      // references to Vue components that can be instanced later
+      UX: { [componentName: string]: any };
+    };
   }
 }

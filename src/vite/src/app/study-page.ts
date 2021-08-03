@@ -1,4 +1,4 @@
-// FIXME: legacy study-page.js
+// FIXME: this is the legacy study-page.js, should be a master Vue component someday
 
 import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
@@ -67,7 +67,7 @@ export default {
 
     const elSharedStories = domGetById("SharedStoriesComponent");
     if (elSharedStories) {
-      new SharedStoriesComponent(this, elSharedStories);
+      new SharedStoriesComponent(elSharedStories);
     }
 
     const elEditFlashcard = domGetById("EditFlashcard");

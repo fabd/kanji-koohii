@@ -442,7 +442,7 @@ export const domContentLoaded = (fn: Function) => {
  * Helper that always returns an element, from either a node or a string id.
  * Drop-in replacement for YUI2 Dom.get().
  *
- * @param el  An element reference as an id string (without the "#") or the element itself
+ * @param el  An element's id (without the "#") or the element itself
  *
  * @returns HTMLElement
  */

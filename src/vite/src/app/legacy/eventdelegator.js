@@ -139,12 +139,14 @@ export default class EventDelegator {
   }
 
   /**
-   * Shortcut.
-   *
-   * @see  onClass
+   * Proxy for `onClass`
+   * 
+   * @param {String} name    A css class name
+   * @param {Function} callback    A function callback
+   * @param {Object} scope   A scope for the callback (optional)
    */
-  on() {
-    this.onClass.apply(this, arguments);
+  on(name, callback, scope) {
+    this.onClass.call(this, name, callback, scope);
   }
 
   /**

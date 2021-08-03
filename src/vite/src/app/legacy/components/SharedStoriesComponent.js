@@ -1,6 +1,6 @@
 // FIXME: legacy componet, should become a Vue at some point
 
-import $$, { domGetById } from "@lib/dom";
+import $$, { domGetById, insertBefore } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import * as Core from "@old/core";
 import AjaxTable from "@old/ajaxtable";
@@ -257,7 +257,7 @@ class SharedStoriesComponent {
 
       // if no page refresh or stories paging happened, the div we created can be used
       // to move the story back in the list where it was
-      Dom.insertBefore(elSharedStory, elMoveTo);
+      insertBefore(elSharedStory, elMoveTo);
     } else {
       // otherwise, avoid unnecessary complexity, just remove the div from the Favourites section
       elSharedStory.parentNode.removeChild(elSharedStory);

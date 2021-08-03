@@ -402,6 +402,17 @@ export function insertAfter(
 }
 
 /**
+ * Simpler insertBefore.
+ *  
+ * @param newNode the element to be inserted before target element
+ * @param refNode target element
+ * @returns {Element | null}
+ */
+export function insertBefore(newNode: Element, refNode: Element): Element | null {
+  return refNode.insertAdjacentElement('beforebegin', newNode);
+}
+
+/**
  * getStyle()
  *
  *   styleName    MUST be camelCase form!

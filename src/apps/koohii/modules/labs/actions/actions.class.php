@@ -20,9 +20,12 @@ class labsActions extends sfActions
       $this->forward404If($max_framenum < 1 || $max_framenum > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
     }
 
-    $templateVars['items']    = rtkLabs::getVocabShuffleMode1Items($max_framenum);
-    $templateVars['exit_url'] = 'review/vocab';
-    $this->templateVars       = $templateVars;
+    $reviewOptions['items']    = rtkLabs::getVocabShuffleMode1Items($max_framenum);
+    $reviewOptions['ajax_url'] = $this->getController()->genUrl('labs/ajax');
+    $reviewOptions['exit_url'] = 'review/vocab';
+    
+    // these will be variables in the review template partial
+    $this->reviewOptions = $reviewOptions;
 
     $uiFR = new uiFlashcardReview([], true);
   }
@@ -35,9 +38,12 @@ class labsActions extends sfActions
   {
     $this->setLayout('fullscreenLayout');
 
-    $templateVars['items']    = rtkLabs::getVocabShuffleMode2Items();
-    $templateVars['exit_url'] = 'review/vocab';
-    $this->templateVars       = $templateVars;
+    $reviewOptions['items']    = rtkLabs::getVocabShuffleMode2Items();
+    $reviewOptions['ajax_url'] = $this->getController()->genUrl('labs/ajax');
+    $reviewOptions['exit_url'] = 'review/vocab';
+
+    // these will be variables in the review template partial
+    $this->reviewOptions = $reviewOptions;
 
     $uiFR = new uiFlashcardReview([], true);
   }

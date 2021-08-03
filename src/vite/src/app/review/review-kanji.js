@@ -180,7 +180,7 @@ export default class KanjiReview {
     /** @type {number | 'h' | false} */
     var cardAnswer = false;
 
-    console.log("KanjiReview.onAction(%o)", arguments);
+    console.log("KanjiReview.onAction(%o)", sActionId);
 
     // help dialog
     if (sActionId === "help") {

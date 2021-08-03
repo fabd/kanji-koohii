@@ -75,25 +75,22 @@
   <div class="clear"></div>
 </div><!-- fr-body -->
 
-<?php koohii_onload_slot() ?>
-var options =
-{
-  // the page to go to when clicking End with 0 reviews
-  back_url:    "<?= url_for($exit_url, true) ?>",
-  
-  fcr_options: {
-    max_undo:    10,
-    ajax_url:    "<?= $sf_context->getController()->genUrl('labs/ajax') ?>",
-    put_request: false,
-    items:       [<?= implode(',', $items) ?>]
-  }
-};
+<?php
+  $reviewOptions = [
+    // the page to go to when clicking End with 0 reviews
+    'back_url' => url_for($exit_url, true),
 
-// (wip) Vue refactoring
-Koohii.UX.reviewMode = {
-  fc_view:        'vocabshuffle'
-};
+    'fcr_options' => [
+      'max_undo' => 10,
+      'ajax_url' => $ajax_url,
+      'put_request' => false,
+      'items' => $items,
+    ],
+  ];
 
-App.LabsReview.initialize(options);
-<?php end_slot() ?>
+  $reviewMode = [
+    'fc_view' => 'vocabshuffle',
+  ];
 
+  kk_globals_put('REVIEW_OPTIONS', $reviewOptions);
+  kk_globals_put('REVIEW_MODE', $reviewMode);

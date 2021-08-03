@@ -182,7 +182,7 @@ class reviewActions extends sfActions
 
     $uiFR = new uiFlashcardReview([], true);
     
-    // these will become the review template partial options
+    // these will be variables in the review template partial
     $this->reviewOptions = $options;
   }
 
@@ -210,6 +210,10 @@ class reviewActions extends sfActions
       'fn_get_flashcard' => ['KanjisPeer', 'getFlashcardData'],
       'fn_put_flashcard' => ['reviewActions', 'freeReviewUpdate']
     ];
+//debugging
+// sleep(6);
+// $response = sfContext::getInstance()->getResponse();
+// $response->setStatusCode(500);
 
     return $this->handleFlashcardRequest($request, $options);
   }

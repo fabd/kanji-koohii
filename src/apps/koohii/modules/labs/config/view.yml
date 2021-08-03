@@ -1,19 +1,19 @@
-index:
+indexSuccess:
   metas:
-    title: 'Index'
-  
+    title: "Index"
+
 shuffle1Success:
   metas:
-    title: 'Vocab Shuffle'
-
-  javascripts: [ '/src/labs-alpha-flashcardreview.ts' ]
+    title: "Vocab Shuffle : Discover words made only of learned kanji"
+  javascripts:
+    - src/entry-review.ts
 
 shuffle2Success:
   metas:
-    title: 'Vocab Shuffle'
-
-  javascripts: [ '/src/labs-alpha-flashcardreview.ts' ]
+    title: "Vocab Shuffle : Discover words based on RTK index"
+  javascripts:
+    - src/entry-review.ts
 
 all:
   metas:
-    title: 'Labs'
+    title: "Labs"

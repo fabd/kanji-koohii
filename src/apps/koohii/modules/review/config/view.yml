@@ -13,3 +13,7 @@ reviewSuccess:
 summarySuccess:
   metas:
     title: 'Review Summary'
+
+vocabSuccess:
+  metas:
+    title: 'Vocab Shuffle Review'

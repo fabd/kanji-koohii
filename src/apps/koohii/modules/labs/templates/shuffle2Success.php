@@ -1,1 +1,1 @@
-<?php include_partial('iTouchVocabReview', $templateVars) ?>
+<?php include_partial('iTouchVocabReview', $reviewOptions) ?>

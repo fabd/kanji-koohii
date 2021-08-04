@@ -24,27 +24,27 @@
  *                   clicked item's data-uri attribute.
  *
  */
-/* globals YAHOO, Core, App */
 
-import * as Core from "@old/core";
 import AjaxDialog from "@old/ajaxdialog";
 import EventDispatcher from "@old/eventdispatcher";
 
-/** @type { new(url: string, params: any, context: Array, options: any): this } */
-let EditFlashcardDialog = Core.make();
-
 const isMobile = window.innerWidth <= 720;
 
-EditFlashcardDialog.prototype = {
+class EditFlashcardDialog {
+  /** @type {AjaxDialog} */
+  dialog = null;
+
   /**
    *
-   * @constructor
+   * @param {string} uri
+   * @param {any} params
+   * @param {Array} context   YUI2 context, eg. [element, "tl", "br"]
+   * @param {any} options
    */
-  init: function (uri, params, context, options) {
+  constructor(uri, params, context, options) {
     console.log("EditFlashcardDialog(%s)", uri);
 
     this.params = params;
-    this.uri = uri;
     this.options = options;
 
     this.dlgOpts = {
@@ -82,18 +82,18 @@ EditFlashcardDialog.prototype = {
     }
 
     this.show();
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     this.dialog.destroy();
     this.dialog = null;
     this.eventDispatcher.destroy();
-  },
+  }
 
   /**
    * Show again, after it is closed with the YUI close button.
    */
-  show: function () {
+  show() {
     if (this.dialogRefresh) {
       this.dialog.destroy();
       this.dialog = null;
@@ -106,9 +106,9 @@ EditFlashcardDialog.prototype = {
     }
 
     this.dialog.show();
-  },
+  }
 
-  onHide: function () {
+  onHide() {
     console.log("EditFlashcardDialog::onHide()");
 
     // clumsy page reload uri received from last response TRON "reload" property
@@ -121,9 +121,9 @@ EditFlashcardDialog.prototype = {
 
     // returns false to prevent the dialog from being destroyed.
     return false;
-  },
+  }
 
-  onResponse: function (t) {
+  onResponse(t) {
     var props = t.getProps();
     if (props.result) {
       // flashcard state changed so dialog will reload
@@ -132,9 +132,9 @@ EditFlashcardDialog.prototype = {
     }
 
     this.reload = props.reload;
-  },
+  }
 
-  onMenuItem: function (ev, el) {
+  onMenuItem(ev, el) {
     var data = el.dataset,
       panel = this.dialog.getAjaxPanel();
 
@@ -159,7 +159,7 @@ EditFlashcardDialog.prototype = {
     var params = { ...this.params, ...{ menu: data.menuid } };
     panel.post(params, this.dlgOpts.requestUri);
     return false;
-  },
-};
+  }
+}
 
 export default EditFlashcardDialog;

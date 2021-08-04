@@ -12,6 +12,7 @@
 import $$, { DomJS, domGetById, hasClass } from "@lib/dom";
 import AjaxDialog from "@old/ajaxdialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
+import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
 import FlashcardReview from "@app/review/FlashcardReview";
 
@@ -27,6 +28,9 @@ export default class KanjiReview {
 
   /** @type {DictLookupDialog | null} */
   dictDialog = null;
+
+  /** @type {EditFlashcardDialog} */
+  oEditFlashcard = null;
 
   /** @type {EditStoryDialog | null} */
   editStoryDialog = null;
@@ -373,10 +377,13 @@ export default class KanjiReview {
     }
 
     if (!this.oEditFlashcard) {
-      var params = Y.lang.merge(JSON.parse(data.param), { ucs: oCardData.id });
-      //console.log("zomg %o", params);return false;
+      var params = {
+        ...JSON.parse(data.param),
+        ...{ ucs: oCardData.id }
+      };
+      // console.log("zomg %o", params);return false;
 
-      this.oEditFlashcard = new App.Ui.EditFlashcardDialog(
+      this.oEditFlashcard = new EditFlashcardDialog(
         data.uri,
         params,
         [el, "tr", "br"],

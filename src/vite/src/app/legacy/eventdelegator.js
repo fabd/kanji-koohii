@@ -146,7 +146,7 @@ export default class EventDelegator {
    * @param {Object} scope   A scope for the callback (optional)
    */
   on(name, callback, scope) {
-    this.onClass.call(this, name, callback, scope);
+    this.onClass.apply(this, arguments);
   }
 
   /**

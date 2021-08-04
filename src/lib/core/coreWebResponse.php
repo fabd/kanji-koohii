@@ -38,7 +38,7 @@ class coreWebResponse extends sfWebResponse
     // FIXME : obsolete YUI2 dependency to be phased out
     if (!$isLandingPage)
     {
-      $this->addJavascript('/vendor/yui2-build/index.min_v290.js', self::FIRST, ['defer' => true]);
+      $this->addJavascript('/vendor/yui2-build/yui2-bundle.min.js', self::FIRST, ['defer' => true]);
     }
 
     if (self::USE_DEV_SERVER && false === $viteClientLoaded)

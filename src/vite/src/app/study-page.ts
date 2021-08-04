@@ -90,7 +90,7 @@ export default {
     const visible = !this.dictVisible;
     const $elBody = $$<HTMLElement>("#JsDictBody");
 
-    $elBody.toggle(visible);
+    $elBody.display(visible);
     this.dictVisible = visible;
 
     if (!this.dictPanel) {

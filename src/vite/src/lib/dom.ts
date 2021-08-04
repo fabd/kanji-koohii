@@ -46,7 +46,7 @@
  *
  *   remove(node)                      ... same as `node.parentNode.removeChild(node)`
  *
- *   toggle(display)                   ... toggle element rendering via `display` property
+ *   display(display)                  ... show or hide element via `display` property
  *
  *
  * USAGE
@@ -209,7 +209,8 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
   }
 
   /**
-   * Helper similar to jQuery offset(), drop-in replacement for YUI2 Dom.getXY().
+   * Helper similar to jQuery offset().
+   * Drop-in replacement for YUI2 Dom.getXY().
    */
   offset(el: EL): { left: number; top: number } {
     const { left, top } = el.getBoundingClientRect();
@@ -351,15 +352,15 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
   }
 
   /**
-   * Toggle element visibility via `display` property.
+   * Show or hide element via `display` property.
    *
-   * @param display   false to hide the element with `display: none`, true to revert
+   * @param show   use `false` to hide the element with `display: none`, `true` to revert
    *                  to its default value
    * @returns void
    */
-  toggle(display: boolean = true): void {
+  display(show: boolean = true): void {
     const element = (this[0] as any) as HTMLElement;
-    element.style.display = display ? "" : "none";
+    element.style.display = show ? "" : "none";
   }
 
   /**
@@ -464,7 +465,6 @@ export const domGetById = <EL extends HTMLElement>(el: string | EL): EL | null =
 
 /**
  * Proxy for classList.contains().
- *
  * Drop-in replacement for YUI2 Dom.hasClass().
  *
  * @param el Element

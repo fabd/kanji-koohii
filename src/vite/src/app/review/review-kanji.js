@@ -149,11 +149,11 @@ export default class KanjiReview {
 
     // Show panels when first card is loaded
     if (this.oReview.getPosition() === 0) {
-      this.$elStats.toggle();
+      this.$elStats.display();
     }
 
     // Show undo action if available
-    $$("#JsBtnUndo").toggle(this.oReview.getNumUndos() > 0);
+    $$("#JsBtnUndo").display(this.oReview.getNumUndos() > 0);
 
     this.updateStatsPanel();
   }
@@ -163,8 +163,8 @@ export default class KanjiReview {
    *
    */
   onFlashcardDestroy() {
-    $$("#uiFcButtons0").toggle(false);
-    $$("#uiFcButtons1").toggle(false);
+    $$("#uiFcButtons0").display(false);
+    $$("#uiFcButtons1").display(false);
   }
 
   onFlashcardUndo(oAnswer) {
@@ -176,8 +176,8 @@ export default class KanjiReview {
 
   onFlashcardState(iState) {
     console.log("onFlashcardState(%d)", iState);
-    $$("#uiFcButtons0").toggle(iState === 0);
-    $$("#uiFcButtons1").toggle(iState !== 0);
+    $$("#uiFcButtons0").display(iState === 0);
+    $$("#uiFcButtons1").display(iState !== 0);
   }
 
   onAction(sActionId, oEvent) {
@@ -454,7 +454,7 @@ export default class KanjiReview {
       this.deletedCards.pop();
     }
 
-    $$("#uiFcStDeld").toggle(this.countDeleted > 0);
+    $$("#uiFcStDeld").display(this.countDeleted > 0);
 
     domGetById("uiFcStDeld").getElementsByTagName(
       "em"

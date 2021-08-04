@@ -45,7 +45,7 @@ class SharedStoriesComponent {
       let storyDiv = el.closest(".sharedstory");      
       if (storyDiv) {
         storyDiv.classList.remove(CLASS_HIDDEN_STORY);
-        $$(el).toggle(false);
+        $$(el).display(false);
       }
     }
 

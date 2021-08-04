@@ -264,7 +264,7 @@ AjaxQueue.prototype = {
       el.innerHTML = sErrorMessage;
     }
 
-    this.$elAjaxError.toggle(!!sErrorMessage);
+    this.$elAjaxError.display(!!sErrorMessage);
   },
 };
 

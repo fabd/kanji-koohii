@@ -68,11 +68,11 @@ export default class VocabReview {
 
     // Show panels when first card is loaded
     if (this.oReview.getPosition() === 0) {
-      this.$elStats.toggle();
+      this.$elStats.display();
     }
 
     // Show undo action if available
-    $$("#JsBtnBack").toggle(this.oReview.getPosition() > 0);
+    $$("#JsBtnBack").display(this.oReview.getPosition() > 0);
 
     this.updateStatsPanel();
 
@@ -89,13 +89,13 @@ export default class VocabReview {
    *
    */
   onFlashcardDestroy() {
-    $$("#uiFcButtons0").toggle(false);
-    $$("#uiFcButtons1").toggle(false);
+    $$("#uiFcButtons0").display(false);
+    $$("#uiFcButtons1").display(false);
   }
 
   onFlashcardState(iState) {
-    $$("#uiFcButtons0").toggle(iState === 0);
-    $$("#uiFcButtons1").toggle(iState !== 0);
+    $$("#uiFcButtons0").display(iState === 0);
+    $$("#uiFcButtons1").display(iState !== 0);
   }
 
   onAction(sActionId, oEvent) {

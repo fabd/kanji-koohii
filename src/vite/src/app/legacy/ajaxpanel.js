@@ -542,13 +542,13 @@ AjaxPanel.prototype = {
     var elMessage = this.ajaxErrorIndicator.getElement();
     var elRetryLink = elMessage.getElementsByTagName("a")[0];
 
-    var retry = function (oEvent) {
+    const retry = (oEvent) => {
       console.log("AjaxPanel.ajaxRetryEvent()");
       this.ajaxErrorIndicator.destroy();
       this.connect();
     };
 
-    $$(elRetryLink).on("click", this.retry.bind(this));
+    $$(elRetryLink).on("click", retry);
   },
 
   /**

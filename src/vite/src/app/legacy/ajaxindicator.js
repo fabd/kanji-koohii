@@ -37,7 +37,7 @@ AjaxIndicator.prototype = {
   show: function () {
     // create the element
     if (!this.indicator) {
-      let { top, left } = $$(this.container).offset();
+      let { top, left } = this.container.getBoundingClientRect();
 
       this.indicator = document.createElement("span");
       $$(this.indicator).css({
@@ -46,8 +46,8 @@ AjaxIndicator.prototype = {
         color: "#fff",
         font: "13px/18px Arial, sans-serif",
         position: "absolute",
-        left: px(pos.left),
-        top: px(pos.top),
+        left: px(left),
+        top: px(top),
         zIndex: DEFAULT_ZINDEX,
         display: "block",
       });

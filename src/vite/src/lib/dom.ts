@@ -10,7 +10,9 @@
  *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
  *
  *   domContentLoaded(fn)              ... proxy for window.addEventListener(...)
- *   domGetById()                      ... returns an HTMLElement reference from ref or string id
+ *   domGetById()                      ... returns element from element or string id
+ *   domGetXY()                        ... return element left/top in page coordinates
+ *
  *   hasClass(el, token)               ... alias for `el.classList.contains(token)`
  *   stopEvent(ev)                     ... helper for stopPropagation() & preventDefault()
  *
@@ -32,8 +34,6 @@
  *   down(selector)                    ... similar to jQuery find(), can be chained
  *
  *   each((el, index) => {})           ... iterate over selected elements
- *
- *   offset(el)                        ... returns absolute position on page
  *
  *   on(type, listener)                ... bind one or more listeners to .el(0)
  *    on([type1, type2, ...], fn)
@@ -206,19 +206,6 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
     for (let i = 0, l = this.length; i < l; i++) {
       if (callback(this[i] as EL, i) === false) break;
     }
-  }
-
-  /**
-   * Helper similar to jQuery offset().
-   * Drop-in replacement for YUI2 Dom.getXY().
-   */
-  offset(el: EL): { left: number; top: number } {
-    const { left, top } = el.getBoundingClientRect();
-
-    return {
-      top: top + window.pageYOffset - document.documentElement.clientTop,
-      left: left + window.pageXOffset - document.documentElement.clientLeft,
-    };
   }
 
   /**
@@ -404,13 +391,16 @@ export function insertAfter(
 
 /**
  * Simpler insertBefore.
- *  
+ *
  * @param newNode the element to be inserted before target element
  * @param refNode target element
  * @returns {Element | null}
  */
-export function insertBefore(newNode: Element, refNode: Element): Element | null {
-  return refNode.insertAdjacentElement('beforebegin', newNode);
+export function insertBefore(
+  newNode: Element,
+  refNode: Element
+): Element | null {
+  return refNode.insertAdjacentElement("beforebegin", newNode);
 }
 
 /**
@@ -458,10 +448,24 @@ export const domContentLoaded = (fn: Function) => {
  *
  * @returns HTMLElement
  */
-export const domGetById = <EL extends HTMLElement>(el: string | EL): EL | null => {
+export const domGetById = <EL extends HTMLElement>(
+  el: string | EL
+): EL | null => {
   const node = isString(el) ? (document.querySelector("#" + el) as EL) : el;
   return node;
 };
+
+/**
+ * Gets the current position of an element based on page coordinates.
+ * Drop-in replacement for YUI2 Dom.getXY().
+ */
+export function domGetXY(el: HTMLElement) {
+  const { left, top } = el.getBoundingClientRect();
+  return {
+    top: top + window.pageYOffset - document.documentElement.clientTop,
+    left: left + window.pageXOffset - document.documentElement.clientLeft,
+  };
+}
 
 /**
  * Proxy for classList.contains().

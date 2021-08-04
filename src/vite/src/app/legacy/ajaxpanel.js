@@ -464,14 +464,6 @@ AjaxPanel.prototype = {
    */
   ajaxOnStart: function (eventType, args) {
     //console.log('AjaxPanel.ajaxOnStart(%o)', args);
-
-    // create a new uiAjaxIndicator because it is added inside the container
-    // and the container content can be replaced
-    this.ajaxIndicator = new AjaxIndicator({
-      container: this.container,
-      message: "Loading...",
-    });
-    this.ajaxIndicator.show();
   },
 
   /**
@@ -483,9 +475,6 @@ AjaxPanel.prototype = {
   ajaxOnComplete: function (eventType, args) {
     //console.log('AjaxPanel.ajaxOnComplete(%o)', args);
     //var response = args[0];
-
-    // hide loading indicator
-    this.ajaxIndicator.destroy();
   },
 
   /**

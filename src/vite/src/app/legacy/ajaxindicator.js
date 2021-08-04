@@ -11,30 +11,30 @@
  */
 
 import $$, { domGetById, px } from "@lib/dom";
-import * as Core from "@old/core";
 
-let AjaxIndicator = Core.make();
+const DEFAULT_ZINDEX = 100;
 
-const DEFAULT_ZINDEX = 100,
-  DEFAULT_MESSAGE = "Loading...";
+const DEFAULT_MESSAGE = "Loading...";
 
-AjaxIndicator.prototype = {
-  init: function (options) {
+class AjaxIndicator {
+  constructor(options) {
     this.container =
-      options && options.container ? domGetById(options.container) : document.body;
+      options && options.container
+        ? domGetById(options.container)
+        : document.body;
     this.message = options.message ? options.message : DEFAULT_MESSAGE;
     this.indicator = null;
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     // remove from DOM and clear reference
     if (this.indicator && this.indicator.parentNode) {
       document.body.removeChild(this.indicator);
     }
     this.indicator = null;
-  },
+  }
 
-  show: function () {
+  show() {
     // create the element
     if (!this.indicator) {
       let { top, left } = this.container.getBoundingClientRect();
@@ -48,7 +48,7 @@ AjaxIndicator.prototype = {
         position: "absolute",
         left: px(left),
         top: px(top),
-        zIndex: DEFAULT_ZINDEX,
+        "z-index": DEFAULT_ZINDEX,
         display: "block",
       });
       this.indicator.innerHTML = this.message;
@@ -56,22 +56,22 @@ AjaxIndicator.prototype = {
     }
 
     this.indicator.style.display = "block";
-  },
+  }
 
-  hide: function () {
+  hide() {
     if (this.indicator) {
       this.indicator.style.display = "none";
     }
-  },
+  }
 
   /**
    * Return the html element used by the ajax indicator.
    *
    * @return HTMLElement   Html element or null
    */
-  getElement: function () {
+  getElement() {
     return this.indicator;
-  },
-};
+  }
+}
 
 export default AjaxIndicator;

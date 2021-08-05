@@ -51,7 +51,6 @@
  *   bUseShading      If set and true, the container is darkened with a opacity layer while ajax is
  *                    in process, otherwise a transparent layer is used (defaults FALSE).
  *   initContent      Set to true to fire onContentInit when the panel is instanced (defaults FALSE).
- *   autoScroll       Scroll container into view on content init phase (see initContent) (defaults FALSE)
  *   autoFocus        Make the first INPUT .text focused during content init phase (defaults FALSE)
  *
  *
@@ -146,7 +145,7 @@ AjaxPanel.prototype = {
    * @param {String|HTMLElement} container     Container element where content is loaded
    * @param {Object} options                   See class doc
    */
-  init: function (container, options) {
+  init: function(container, options) {
     console.log("AjaxPanel.init() options %o ", options);
 
     options = !!options ? options : {};
@@ -198,7 +197,7 @@ AjaxPanel.prototype = {
     }
   },
 
-  destroy: function () {
+  destroy: function() {
     if (this.contentLoaded) {
       this.eventDispatcher.notify("onContentDestroy");
     }
@@ -211,18 +210,13 @@ AjaxPanel.prototype = {
    * @param {TRON|undefined}  tron   TRON instance if loaded html, undefined if called
    *                                first time using initContent option!
    */
-  initContent: function (tron) {
+  initContent: function(tron) {
     //console.log('AjaxPanel.initContent()');
 
     // Attach an event to FORMs that will dispatch a "onSubmit" event.
     var elForm = (this.serializeForm = this.getForm());
     if (elForm) {
       this.evtCache.addEvent(elForm, "submit", this.submitFormEvent.bind(this));
-    }
-
-    // handle autoScroll option
-    if (this.options.autoScroll) {
-      this.autoScroll();
     }
 
     // handle autoFocus option
@@ -241,7 +235,7 @@ AjaxPanel.prototype = {
    *
    * @param  {Object}  tron   TRON instance.
    */
-  replaceContent: function (tron) {
+  replaceContent: function(tron) {
     var html = tron.getHtml();
 
     console.log("AjaxPanel.replaceContent(html %s)", html ? "YES" : "NO");
@@ -265,7 +259,7 @@ AjaxPanel.prototype = {
    *
    * @param  {String|HTMLElement}  elForm   Form id or element
    */
-  setForm: function (elForm) {
+  setForm: function(elForm) {
     elForm = domGetById(elForm);
     if (!elForm.nodeName || elForm.nodeName.toLowerCase() !== "form") {
       throw new Error("setForm() argument 0 is not a form element");
@@ -279,7 +273,7 @@ AjaxPanel.prototype = {
    *
    * @return mixed  FORM element, or null if none is observed
    */
-  getForm: function () {
+  getForm: function() {
     if (this.options.form === true) {
       return $$("form", this.container)[0];
     } else if (Lang.isString(this.options.form)) {
@@ -331,7 +325,7 @@ AjaxPanel.prototype = {
    * @param {Object} e
    * @param {Object} el
    */
-  onPanelSubmit: function (e, el) {
+  onPanelSubmit: function(e, el) {
     if (this.getForm()) {
       // handle onSubmitForm listener, if any is set
       this.submitFormEvent.call(this, e);
@@ -345,7 +339,7 @@ AjaxPanel.prototype = {
    * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
    * @param {String} sUrl    Request uri (optional), if specifed overrides the form action!
    */
-  get: function (oData, sUrl) {
+  get: function(oData, sUrl) {
     this.prepareConnect(oData, "get", sUrl);
   },
 
@@ -355,7 +349,7 @@ AjaxPanel.prototype = {
    * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
    * @param {String} sUrl    Request uri (optional), if specifed overrides the form action!
    */
-  post: function (oData, sUrl) {
+  post: function(oData, sUrl) {
     this.prepareConnect(oData, "post", sUrl);
   },
 
@@ -364,7 +358,7 @@ AjaxPanel.prototype = {
    *
    * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
    */
-  send: function (oData) {
+  send: function(oData) {
     var form = this.getForm();
     console.assert(form, "AjaxPanel::send()  requires valid form");
     var method = form.getAttribute("method") || "post";
@@ -377,7 +371,7 @@ AjaxPanel.prototype = {
    * @param {string} sMethod  Method name 'post' or 'get'
    * @param {string} sUrl     Request uri (optional), if specifed overrides the form!
    */
-  prepareConnect: function (oData, sMethod, sUrl) {
+  prepareConnect: function(oData, sMethod, sUrl) {
     var url,
       form = false,
       connectObj = {};
@@ -425,7 +419,7 @@ AjaxPanel.prototype = {
    *   form          Form to serialize (optional)
    *   parameters    Extra GET/POST parameters
    */
-  connect: function (oConnect) {
+  connect: function(oConnect) {
     if (oConnect) {
       this.connection = oConnect;
     }
@@ -462,7 +456,7 @@ AjaxPanel.prototype = {
    * @param {String} eventType
    * @param {Object} args
    */
-  ajaxOnStart: function (eventType, args) {
+  ajaxOnStart: function(eventType, args) {
     //console.log('AjaxPanel.ajaxOnStart(%o)', args);
   },
 
@@ -472,7 +466,7 @@ AjaxPanel.prototype = {
    * @param {String} eventType
    * @param {Object} args
    */
-  ajaxOnComplete: function (eventType, args) {
+  ajaxOnComplete: function(eventType, args) {
     //console.log('AjaxPanel.ajaxOnComplete(%o)', args);
     //var response = args[0];
   },
@@ -482,7 +476,7 @@ AjaxPanel.prototype = {
    *
    * @param {Object} o   YUI Connect response object, augmented by AjaxRequest (responseJSON, ...)
    */
-  ajaxOnSuccess: function (o) {
+  ajaxOnSuccess: function(o) {
     console.log("AjaxPanel.ajaxOnSuccess(%o)", o);
 
     var html,
@@ -505,7 +499,7 @@ AjaxPanel.prototype = {
    *
    * @param {Object} oAjaxResponse   YUI Connect response object WITHOUT responseJSON or responseTRON.
    */
-  ajaxOnFailure: function (o) {
+  ajaxOnFailure: function(o) {
     console.log("AjaxPanel.ajaxOnFailure(%o)", o);
 
     // transaction aborted (timeout)
@@ -530,7 +524,7 @@ AjaxPanel.prototype = {
    *
    * @param {Object} sMessage
    */
-  showErrorMessage: function (sMessage) {
+  showErrorMessage: function(sMessage) {
     this.ajaxErrorIndicator = new AjaxIndicator({
       container: this.container,
       message:
@@ -554,19 +548,9 @@ AjaxPanel.prototype = {
   /**
    * Called if the corresponding option is set, on content init phase.
    *
-   * Scrolls down to make the container visible.
-   */
-  autoScroll: function () {
-    var ypos = Dom.getY(this.container);
-    window.scrollTo(0, ypos);
-  },
-
-  /**
-   * Called if the corresponding option is set, on content init phase.
-   *
    * Picks the first INPUT.text element in the form, and focus() it.
    */
-  autoFocus: function () {
+  autoFocus: function() {
     var input = $$("input.text", this.container)[0];
     if (input && typeof input.focus === "function") {
       input.focus();

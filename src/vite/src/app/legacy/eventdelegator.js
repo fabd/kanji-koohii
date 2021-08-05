@@ -81,14 +81,23 @@ const PREFIX_TAG = "%",
   ROOT_EVENT = "@root";
 
 export default class EventDelegator {
+
+  /** @type {HTMLElement} */
+  elRoot;
+
+  /** @type{Array<[string, EventListener]>} */
+  eventCache = [];
+
+  /** @type{{[key: string]: { fn: Function, context?: Object, re: RegExp}}} */
+  listeners;
+
   /**
    * Constructor.
    *
    * @param {String|HTMLElement} elRoot   Parent element to watch events
-   * @param {Array} type           Event types to watch ("click", ...)
+   * @param {Array<string> | string} types   Event types to watch ("click", ...)
    */
   constructor(elRoot, types) {
-    var i;
 
     this.listeners = {};
     this.eventCache = [];
@@ -106,21 +115,19 @@ export default class EventDelegator {
 
     const listenerFn = this._handler.bind(this);
 
-    for (i = 0; i < types.length; i++) {
+    for (let i = 0; i < types.length; i++) {
+      /** @type {[string, EventListener]} */
       const args = [types[i], listenerFn];
       this.eventCache.push(args);
-      this.elRoot.addEventListener(...args);
+      this.elRoot && this.elRoot.addEventListener(args[0], args[1]);
     }
   }
 
-  /**
-   * Todo.
-   *
-   */
   destroy() {
     var i;
     while (this.eventCache.length) {
-      this.elRoot.removeEventListener(...this.eventCache.pop());
+      const evt = this.eventCache.pop();
+      evt && this.elRoot.removeEventListener(evt[0], evt[1]);
     }
   }
 
@@ -131,10 +138,9 @@ export default class EventDelegator {
    *
    * @param {String} name    A css class name
    * @param {Function} callback    A function callback
-   * @param {Object} scope   A scope for the callback (optional)
+   * @param {Object=} scope   A scope for the callback (optional)
    */
   onClass(name, callback, scope) {
-    this._debug(arguments);
     this._on(name, callback, scope);
   }
 
@@ -142,11 +148,11 @@ export default class EventDelegator {
    * Proxy for `onClass`
    * 
    * @param {String} name    A css class name
-   * @param {Function} callback    A function callback
-   * @param {Object} scope   A scope for the callback (optional)
+   * @param {(ev: Event, el: HTMLElement) => {}} callback    A function callback
+   * @param {Object=} scope   A scope for the callback (optional)
    */
   on(name, callback, scope) {
-    this.onClass.apply(this, arguments);
+    this.onClass.call(this, name, callback, scope);
   }
 
   /**
@@ -157,7 +163,6 @@ export default class EventDelegator {
    * @param {Object} scope   A scope for the callback (optional)
    */
   onTag(name, callback, scope) {
-    this._debug(arguments);
     this._on(PREFIX_TAG + name.toUpperCase(), callback, scope);
   }
 
@@ -169,7 +174,6 @@ export default class EventDelegator {
    * @param {Object} scope   A scope for the callback (optional)
    */
   onId(name, callback, scope) {
-    this._debug(arguments);
 
     // a warning to help development
     if (!domGetById(name)) {
@@ -189,7 +193,6 @@ export default class EventDelegator {
    * @param {Object} scope   A scope for the callback (optional)
    */
   onDefault(callback, scope) {
-    this._debug(arguments);
     this._on(ROOT_EVENT, callback, scope);
   }
 
@@ -199,9 +202,9 @@ export default class EventDelegator {
    * Name must be prefixed with a special character so that tag names,
    * ids and class names have unique keys in this.listeners (for speed).
    *
-   * @param {Object} name
-   * @param {Object} callback
-   * @param {Object} scope
+   * @param {string} name
+   * @param {Function} callback
+   * @param {Object=} scope
    */
   _on(name, callback, scope) {
     this.listeners[name] = {
@@ -212,26 +215,12 @@ export default class EventDelegator {
   }
 
   /**
-   * Help to find possible bugs, warns if there are any undefined values
-   *
-   * @param {Array} args  Arguments to check
-   */
-  _debug(args) {
-    var i;
-    for (i = args.length - 1; i >= 0; i--) {
-      if (typeof args[i] === "undefined") {
-        console.warn(
-          "EventDelegator: WARNING: one of the supplied arguments is undefined."
-        );
-      }
-    }
-  }
-
-  /**
-   *
+   * 
+   * @param {Event} e   native Event
+   * @returns 
    */
   _handler(e) {
-    var elTarget = e.target;
+    let elTarget = e.target;
 
     while (elTarget && elTarget !== this.elRoot) {
       var idEvent, tagEvent, classes, n;
@@ -285,6 +274,13 @@ export default class EventDelegator {
     // return undefined or true : event continues
   }
 
+  /**
+   * 
+   * @param {string} name 
+   * @param {Event} e 
+   * @param {HTMLElement} matchedEl 
+   * @returns 
+   */
   _fire(name, e, matchedEl) {
     var oListener = this.listeners[name];
     var context = Lang.isUndefined(oListener.context)

@@ -113,7 +113,7 @@ class ManagePage {
       console.log("EditKeywordDialog callback");
 
       // get the custkeyword td
-      let tr = $$(el).closest("tr")!;
+      let tr = el.closest("tr")!;
       let td = $$(".JSCkwTd", tr)[0];
       td.innerHTML = keyword;
 
@@ -137,7 +137,7 @@ class ManagePage {
 
     const ucsId = el.dataset.id!;
     if (!this.oEditKeyword || ucsId !== this.editKeywordId) {
-      const contextEl = $$(el).closest("td");
+      const contextEl = el.closest("td");
 
       const options = {
         context: [contextEl, "tr", "tr", null, [0, 0]],

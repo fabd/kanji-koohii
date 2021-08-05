@@ -116,7 +116,7 @@ class SharedStoriesComponent {
     }
 
     // eg. "story-14266-22679"
-    let elActions = $$(el).closest(".JsAction");
+    let elActions = el.closest(".JsAction");
     let storyIds = elActions.dataset;
 
     // userid, ucs_id
@@ -211,7 +211,7 @@ class SharedStoriesComponent {
 
   // helper that returns the main div (parent element) of a Shared Story
   getStoryParentDiv(el) {
-    return $$(el).closest(".sharedstory");
+    return el.closest(".sharedstory");
   }
 
   moveStoryToFavourites(elSharedStory, storyId) {

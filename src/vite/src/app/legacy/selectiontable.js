@@ -57,7 +57,7 @@ export default class SelectionTable {
   }
 
   onCheckBox(ev, el) {
-    var row = $$(el).closest("tr");
+    var row = el.closest("tr");
     var inputs = el.parentNode.getElementsByTagName("input");
 
     this.setSelection(row, inputs[0], el.checked);
@@ -94,7 +94,7 @@ export default class SelectionTable {
     }
 
     // if clicked in a row, select it
-    if ((row = $$(el).closest("tr"))) {
+    if ((row = el.closest("tr"))) {
       if ((check = $$(".checkbox", row)[0])) {
         check.click();
         stopEvent(ev);

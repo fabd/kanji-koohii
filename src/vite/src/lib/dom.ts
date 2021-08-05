@@ -42,8 +42,6 @@
  *
  *   once(type, listener)              ... call handler once, then remove it
  *
- *   remove(node)                      ... same as `node.parentNode.removeChild(node)`
- *
  *   display(display)                  ... show or hide element via `display` property
  *
  *
@@ -297,16 +295,6 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
     for (const prop in styles) {
       element.style.setProperty(prop, styles[prop]);
     }
-  }
-
-  /**
-   * Removes the node from the tree it belongs to.
-   *
-   * @return    Returns removed node, or null
-   */
-  remove(): Node | null {
-    const node = this[0] as Node;
-    return (node.parentNode && node.parentNode.removeChild(node)) || null;
   }
 
   /**

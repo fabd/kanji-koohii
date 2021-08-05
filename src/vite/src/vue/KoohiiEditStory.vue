@@ -295,8 +295,7 @@ export default defineComponent({
       // delete story from page if already shared
       let $elSharedStory = $$("#" + props.sharedStoryId);
       if ($elSharedStory.el()) {
-        let el = $elSharedStory.el().closest(".rtkframe")!;
-        $$(el).remove();
+        $elSharedStory.el().closest(".rtkframe")!.remove();
       }
 
       if (!this.isReviewMode && props.isStoryShared) {

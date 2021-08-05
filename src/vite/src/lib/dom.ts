@@ -25,8 +25,6 @@
  *
  *   el(i = 0)                         ... return the underlying DOM element
  *
- *   closest(selector)                 ... find the first ancestor matching selector
- *
  *   css(prop)                         ... get/set inline styles
  *    css(prop, value)
  *    css({ prop1: value, ...})
@@ -154,33 +152,6 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    */
   el(i?: number) {
     return this[i || 0] as EL;
-  }
-
-  /**
-   * Returns first ancestor matching selector, or null.
-   *
-   * NOTE!  Unlike Element.closest() method, this function does NOT
-   *        return the original element.
-   *
-   *   const ul = $('.TodoList-item').closest('ul') as HTMLUListElement
-   */
-  closest(selector: string): Element | null {
-    console.assert(isString(selector), "closest() : selector is invalid");
-
-    let el = this[0] as Element;
-    console.assert(isNode(el), "closest() : el is invalid");
-
-    if (!inDocument(el)) {
-      return null;
-    }
-
-    const matchesSelector = (el: Element) => el.matches(selector);
-
-    while ((el = el.parentElement || (el.parentNode as Element))) {
-      if (matchesSelector(el)) return el;
-    }
-
-    return null;
   }
 
   /**

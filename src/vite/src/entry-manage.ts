@@ -10,7 +10,7 @@
 // stylesheets
 import "@css/manage.build.scss";
 
-import $$, { domGet } from "@lib/dom";
+import $$, { domContentLoaded, domGetById } from "@lib/dom";
 import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
@@ -42,7 +42,7 @@ class ManagePage {
     });
 
     // Manage > Edit Keywords
-    const el = domGet("EditKeywordsTableComponent") as HTMLElement;
+    const el = domGetById("EditKeywordsTableComponent") as HTMLElement;
     if (el) {
       const ajaxTable = new AjaxTable(el);
       this.editKeywordUri = el.dataset.uri!;
@@ -163,4 +163,7 @@ class ManagePage {
   }
 }
 
-new ManagePage();
+domContentLoaded(() => {
+  console.log("@entry-manage");
+  new ManagePage();
+});

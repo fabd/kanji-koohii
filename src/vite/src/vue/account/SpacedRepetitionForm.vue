@@ -13,7 +13,7 @@
         class="form-control max-w-[10em]"
         id="srs_max_box"
       >
-        <option v-for="o in srs_max_box_values" :value="o[0]">{{
+        <option v-for="o in srs_max_box_values" :value="o[0]" :key="o[0]">{{
           o[1]
         }}</option>
       </select>
@@ -29,7 +29,8 @@
       <div class="mt-2 mb-4">
         <em class="inline-block mr-4">Intervals (days):</em>
         <span
-          v-for="i in intervals"
+          v-for="(i, k) in intervals"
+          :key="k"
           class="
             inline-block mr-2 pt-1 px-2 pb-[0.15rem]
             font-mono
@@ -45,9 +46,12 @@
         class="form-control max-w-[10em]"
         id="srs_mult"
       >
-        <option v-for="o in srs_mult_values" :value="o[0]">{{
-          o[1] || o[0]
-        }}</option>
+        <option
+          v-for="(o, index) in srs_mult_values"
+          :key="index"
+          :value="o[0]"
+          >{{ o[1] || o[0] }}</option
+        >
       </select>
     </div>
 
@@ -77,9 +81,12 @@
         class="form-control max-w-[10em]"
         id="srs_hard_box"
       >
-        <option v-for="o in srs_hard_box_values" :value="o[0]">{{
-          o[1] || o[0]
-        }}</option>
+        <option
+          v-for="(o, index) in srs_hard_box_values"
+          :key="index"
+          :value="o[0]"
+          >{{ o[1] || o[0] }}</option
+        >
       </select>
 
       <span class="has-error-msg" v-if="!isValidHardBox">

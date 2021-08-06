@@ -78,6 +78,8 @@ class SharedStoriesListComponent extends sfComponent
     $this->ucsId   = $ucsId;
     $this->keyword = $keyword;
 
+// sleep(6); // debugging
+
     return sfView::SUCCESS;
   }
 

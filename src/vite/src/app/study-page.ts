@@ -76,8 +76,6 @@ export default {
       var ed = new EventDelegator(elEditFlashcard as HTMLElement, "click");
       ed.on("JsEditFlashcard", this.onEditFlashcard, this);
     }
-
-    console.log("@entry study ...done");
   },
 
   initDictionary(el: Element) {
@@ -98,7 +96,7 @@ export default {
       let elMount = $elBody.down(".JsMount")[0];
       let { vm } = VueInstance(KoohiiDictList, elMount);
       let ucsId = parseInt($elBody[0].dataset.ucs!);
-      (vm  as TVueInstanceOf<typeof KoohiiDictList>).load(ucsId);
+      (vm as TVueInstanceOf<typeof KoohiiDictList>).load(ucsId);
 
       this.dictPanel = true;
     }

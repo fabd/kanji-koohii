@@ -55,12 +55,16 @@ export default defineComponent({
 
   // life cycle events
 
-  beforeUnmount() {
-    // console.log('KoohiiFlashcard::beforeUnmount()');
-  },
+  // beforeUnmount() {
+  //   console.log('KoohiiFlashcard::beforeUnmount()');
+  // },
+
+  // unmounted() {
+  //   console.log('KoohiiFlashcard::unmounted()');
+  // },
 
   beforeMount() {
-    // console.log('KoohiiFlashcard::beforeMount(%o)', this.cardData);
+    console.log('KoohiiFlashcard::beforeMount(%o)', this.cardData);
   },
 
   created() {

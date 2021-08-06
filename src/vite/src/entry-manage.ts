@@ -27,8 +27,6 @@ class ManagePage {
   private oEditKeyword?: EditKeywordDialog | null;
 
   constructor() {
-    console.log("@entry-manage ...");
-
     const bodyED = getBodyED();
 
     this.viewDiv = this.initView("#manage-view .ajax");
@@ -42,7 +40,7 @@ class ManagePage {
     });
 
     // Manage > Edit Keywords
-    const el = domGetById("EditKeywordsTableComponent") as HTMLElement;
+    const el = domGetById("EditKeywordsTableComponent");
     if (el) {
       const ajaxTable = new AjaxTable(el);
       this.editKeywordUri = el.dataset.uri!;
@@ -70,8 +68,6 @@ class ManagePage {
   }
 
   onContentInit() {
-    console.log("onContentInit()");
-
     const el = $$(".selection-table", this.viewDiv)[0];
     if (el) {
       // clear checkboxes in case of page refresh

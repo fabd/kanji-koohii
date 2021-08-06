@@ -122,8 +122,6 @@ export default defineComponent({
         boxes.push([{ value: 0 }, { value: 0 }]);
       }
 
-      console.log(boxes);
-
       return boxes;
     },
 

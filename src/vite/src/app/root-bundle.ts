@@ -55,7 +55,7 @@ export function kk_globals_get(name: keyof Window["KK"]): any {
 }
 
 export default function() {
-  console.log("... rootBundleInit()");
+  console.log("@root-bundle");
 
   window.Koohii = {
     Refs: {},

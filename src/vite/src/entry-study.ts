@@ -15,7 +15,7 @@ import StudyPage from "@app/study-page";
 import MyStoriesTable from "@app/study/MyStoriesTable.vue";
 
 domContentLoaded(() => {
-  console.log("@entry study ...");
+  console.log("@entry-study");
 
   // My Stories page?
   let elMount = domGetById('MyStoriesSelect')!;
@@ -24,4 +24,6 @@ domContentLoaded(() => {
   }
 
   StudyPage.initialize();
+
+  // console.log("@entry study ...done");
 });

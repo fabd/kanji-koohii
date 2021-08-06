@@ -16,7 +16,7 @@ import KanjiReview from "@app/review/review-kanji";
 import VocabReview from "@app/review/review-vocab";
 
 domContentLoaded(() => {
-  console.log("@entry review ...");
+  console.log("@entry-review");
 
   let elRoot;
 

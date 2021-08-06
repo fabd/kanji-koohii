@@ -2,7 +2,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 // import eslint from "@rollup/plugin-eslint";
-// import strip from "@rollup/plugin-strip";
+import strip from "@rollup/plugin-strip";
 
 export default defineConfig({
   // base: "/build/dist/",
@@ -83,13 +83,13 @@ export default defineConfig({
 
     // ---------------------------------------------------------------------------
     // @rollup/plugin-strip
-    //   Removes all the console.assert/error/warn() from build
+    //   Removes all the console.* calls from production build
     //   https://github.com/rollup/plugins/tree/master/packages/strip
     // ---------------------------------------------------------------------------
-    // {
-    //   ...strip({ include: "./src/**/*.(js|ts)" }),
-    //   apply: "build",
-    // },
+    {
+      ...strip({ include: "./src/**/*.(js|ts|vue)" }),
+      apply: "build",
+    },
   ],
 
   server: {

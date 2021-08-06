@@ -50,6 +50,8 @@ declare global {
       // study > My Stories
       MYSTORIES_SORT_ACTIVE: string;
       MYSTORIES_SORT_OPTIONS: Dictionary;
+
+      ACCOUNT_SRS: Dictionary;
     };
 
     // 4th/5th edition keywords and kanji, import cf. _SideColumn.php
@@ -64,7 +66,7 @@ declare global {
       Refs: {
         [key: string]: any;
       };
-  
+
       // references to Vue components that can be instanced later
       UX: { [componentName: string]: any };
     };

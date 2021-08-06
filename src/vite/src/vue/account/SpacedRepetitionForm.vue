@@ -95,6 +95,7 @@
 // NOTE : the validation needs to match the backend (account/spacedrepetition)
 
 import { defineComponent } from "vue";
+import { kk_globals_get } from "@app/root-bundle";
 
 export default defineComponent({
   name: "spaced-repetition-form",
@@ -167,11 +168,12 @@ export default defineComponent({
   },
 
   created() {
-    // console.log("created()", this.srs_max_box);
+    // FIXME use props
+    const srsSettings = kk_globals_get("ACCOUNT_SRS");
 
-    this.srs_max_box = Koohii.SRS.settings[0];
-    this.srs_mult = Koohii.SRS.settings[1];
-    this.srs_hard_box = Koohii.SRS.settings[2];
+    this.srs_max_box = srsSettings.max_box;
+    this.srs_mult = srsSettings.mult;
+    this.srs_hard_box = srsSettings.hard_box;
   },
 });
 </script>

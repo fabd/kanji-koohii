@@ -1,7 +1,4 @@
-<?php
-  use_helper('Form', 'Validation', 'Decorator');
-
-?>
+<?php use_helper('Form', 'Validation', 'Decorator'); ?>
 
 <?php decorate_start('SideTabs', ['active' => 'spacedrepetition']) ?>
 
@@ -24,6 +21,5 @@
 
 <?php decorate_end() ?>
 
-<?php koohii_onload_slot() ?>
-  Koohii.SRS = { settings: <?= json_encode($srs_settings) ?> };
-<?php end_slot() ?>
+<?php
+  kk_globals_put('ACCOUNT_SRS', $srsSettings);

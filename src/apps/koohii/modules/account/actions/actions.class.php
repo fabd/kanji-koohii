@@ -503,10 +503,10 @@ class accountActions extends sfActions
       }
     }
 
-    $this->srs_settings = [
-      $user->getUserSetting('OPT_SRS_MAX_BOX'),
-      $user->getUserSetting('OPT_SRS_MULT'),
-      $user->getUserSetting('OPT_SRS_HARD_BOX')
+    $this->srsSettings = [
+      'max_box' => $user->getUserSetting('OPT_SRS_MAX_BOX'),
+      'mult' => $user->getUserSetting('OPT_SRS_MULT'),
+      'hard_box' => $user->getUserSetting('OPT_SRS_HARD_BOX')
     ];
   }
 

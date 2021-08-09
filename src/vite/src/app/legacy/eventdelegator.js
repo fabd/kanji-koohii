@@ -72,16 +72,16 @@
  *   in css priority order: id events, class events, and then tag events.
  *
  */
+// @ts-check
 
 import $$, { domGetById, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
 
-const PREFIX_TAG = "%",
-  PREFIX_ID = "#",
-  ROOT_EVENT = "@root";
+const PREFIX_TAG = "%";
+const PREFIX_ID = "#";
+const ROOT_EVENT = "@root";
 
 export default class EventDelegator {
-
   /** @type {HTMLElement} */
   elRoot;
 
@@ -98,11 +98,10 @@ export default class EventDelegator {
    * @param {Array<string> | string} types   Event types to watch ("click", ...)
    */
   constructor(elRoot, types) {
-
     this.listeners = {};
     this.eventCache = [];
 
-    this.elRoot = domGetById(elRoot);
+    this.elRoot = /**@type{HTMLElement}*/ (domGetById(elRoot));
 
     console.assert(
       Lang.isNode(this.elRoot),
@@ -119,12 +118,11 @@ export default class EventDelegator {
       /** @type {[string, EventListener]} */
       const args = [types[i], listenerFn];
       this.eventCache.push(args);
-      this.elRoot && this.elRoot.addEventListener(args[0], args[1]);
+      this.elRoot.addEventListener(args[0], args[1]);
     }
   }
 
   destroy() {
-    var i;
     while (this.eventCache.length) {
       const evt = this.eventCache.pop();
       evt && this.elRoot.removeEventListener(evt[0], evt[1]);
@@ -146,7 +144,7 @@ export default class EventDelegator {
 
   /**
    * Proxy for `onClass`
-   * 
+   *
    * @param {String} name    A css class name
    * @param {(ev: Event, el: HTMLElement) => {}} callback    A function callback
    * @param {Object=} scope   A scope for the callback (optional)
@@ -174,7 +172,6 @@ export default class EventDelegator {
    * @param {Object} scope   A scope for the callback (optional)
    */
   onId(name, callback, scope) {
-
     // a warning to help development
     if (!domGetById(name)) {
       console.warn(
@@ -215,12 +212,11 @@ export default class EventDelegator {
   }
 
   /**
-   * 
-   * @param {Event} e   native Event
-   * @returns 
+   *
+   * @param {Event} e
    */
   _handler(e) {
-    let elTarget = e.target;
+    let elTarget = /**@type{HTMLElement}*/ (e.target);
 
     while (elTarget && elTarget !== this.elRoot) {
       var idEvent, tagEvent, classes, n;
@@ -260,7 +256,7 @@ export default class EventDelegator {
         return false;
       }
 
-      elTarget = elTarget.parentNode;
+      elTarget = /**@type{HTMLElement}*/ (elTarget.parentElement);
     }
 
     // root element event
@@ -275,11 +271,10 @@ export default class EventDelegator {
   }
 
   /**
-   * 
-   * @param {string} name 
-   * @param {Event} e 
-   * @param {HTMLElement} matchedEl 
-   * @returns 
+   *
+   * @param {string} name
+   * @param {Event} e
+   * @param {HTMLElement} matchedEl
    */
   _fire(name, e, matchedEl) {
     var oListener = this.listeners[name];

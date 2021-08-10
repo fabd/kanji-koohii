@@ -12,7 +12,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && ../batch/build-prod.sh",
     "watch": "vite build --watch",
     "test": "vite build && vite preview --port 8080",
     "lint": "eslint './src/**/*.{js,ts,tsx,vue}'",

@@ -24,11 +24,13 @@
     ///////////////////////////////////////////////////////////////////
     // let Volar parse old Vue components
     "allowJs": true,
+    "checkJs": false,
     // instead of `@typescript-eslint/no-unused-vars`
     "noUnusedLocals": false,
     ///////////////////////////////////////////////////////////////////
     // additions
     ///////////////////////////////////////////////////////////////////
+    "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "skipLibCheck": true,

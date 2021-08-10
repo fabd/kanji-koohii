@@ -1,13 +1,24 @@
 <?php
 /**
- * Helpers to handle front-end assets built with Vite.
+ * This helper parses Vite's manifest.json into a more optimized format:.
+ *
+ *   - "flattens" all dependencies for each top-level entry or bundle (`src/*.ts|js`)
+ *   - removes any duplicate dependencies
+ *   - removes any assets that aren't .css/.js (like images)
+ *
+ * The helper is used in two places:
+ *
+ *   - coreWebResponse : when USE_DEV_SERVER is false, each page refresh will pick
+ *     up any changes from `vite build --watch` and output css/js tags accordingly
+ *   - build_app.php : for production env, the manifest is parsed ahead of time,
+ *     and output as a php include file (`config/vite-build.inc.php`) -- this
+ *     is probably a minor gain of performance but every little bit adds up.
+ *
+ * @see lib/core/coreWebResponse.php
  */
-
 class Vite
 {
-  /**
-   * Matches vite config `outDir` (ie. /abs/path inside www folder to Vite build)
-   */
+  // MUST match Vite config `build.outDir` (ie. /abs/path inside www folder to Vite build).
   const OUTDIR = '/build/dist';
 
   public static function getManifestJson()
@@ -46,7 +57,7 @@ class Vite
         $css[] = $cssFile;
       }
 
-// DBG::out(' return entryfile '.$entryFile);
+      // DBG::out(' return entryfile '.$entryFile);
       return $entryFile;
     };
 

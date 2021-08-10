@@ -1,7 +1,8 @@
 <?php
   use_helper('CJK', 'Form');
   
-  use_javascript('/revtk/study/keywords-'.CJ_MODE.'-'.$sf_user->getUserSequence().'.js');
+  // use versioning file pattern here (cf .htaccess rule) for max-age
+  use_javascript('/revtk/study/keywords-'.CJ_MODE.'-'.$sf_user->getUserSequence().'_v2019.js', 'first', ['defer' => true]);
 
   //$restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
 

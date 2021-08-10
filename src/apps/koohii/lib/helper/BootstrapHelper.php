@@ -282,7 +282,7 @@ function kk_globals_out()
     $lines = [];
     foreach ($kk_globals->getAll() as $name => $value)
     {
-      $lines[] = "KK.{$name} = ".json_encode($value);
+      $lines[] = "KK.{$name} = ".json_encode($value, JSON_UNESCAPED_SLASHES);
     }
 
     echo "\n<script>\nwindow.KK || (KK = {});\n".implode("\n", $lines)."\n</script>\n";

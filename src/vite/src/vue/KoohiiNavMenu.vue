@@ -1,16 +1,20 @@
 <template>
   <ul class="k-nav-menu">
-    <template v-for="$tm in menu.items" :key="$tm.id" >
+    <template v-for="$tm in menu.items" :key="$tm.id">
       <koohii-nav-menu-item :sm="$tm" />
     </template>
   </ul>
 </template>
 
 <script lang="ts">
-import { DefineComponent, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import $$ from "@lib/dom";
 import KoohiiNavMenuItem from "@/vue/KoohiiNavMenuItem.vue";
-import KoohiiNavMenuItemVue from "@/vue/KoohiiNavMenuItem.vue";
+
+type TMenuItem = {
+  oMenuItem: TVueInstanceOf<typeof KoohiiNavMenuItem>;
+  elHead: HTMLElement;
+};
 
 export default defineComponent({
   name: "KoohiiNavMenu",
@@ -26,7 +30,7 @@ export default defineComponent({
   data() {
     return {
       // references to top level KNavMenuItem's
-      menuItems: {},
+      menuItems: {} as { [id: string]: TMenuItem },
 
       initted: false,
     };
@@ -48,7 +52,7 @@ export default defineComponent({
   },
 
   methods: {
-    handleSelect(id: string, item: ComponentPublicInstance<typeof KoohiiNavMenuItem>) {
+    handleSelect(id: string, item: TVueInstanceOf<typeof KoohiiNavMenuItem>) {
       if (!item.hasChildren) {
         return;
       }

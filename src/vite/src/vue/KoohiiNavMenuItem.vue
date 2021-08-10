@@ -28,7 +28,11 @@
 
 <script lang="ts">
 import { defineComponent, ComponentPublicInstance } from "vue";
-import $$ from "@lib/dom";
+import $$, { px } from "@lib/dom";
+import KoohiiNavMenu from "@/vue/KoohiiNavMenu.vue";
+
+// fix for circular reference (can't type return value of rootMenu())
+type TKoohiiNavMenu = TVueInstanceOf<typeof KoohiiNavMenu>;
 
 export default defineComponent({
   name: "KoohiiNavMenuItem",
@@ -40,6 +44,8 @@ export default defineComponent({
   data() {
     return {
       opened: false,
+
+      contentHeight: 0, // set by parent component
     };
   },
 
@@ -47,10 +53,11 @@ export default defineComponent({
     hasChildren(): boolean {
       return this.sm.children && this.sm.children.length > 0;
     },
+
     rootMenu() {
       var parent = this.$parent as ComponentPublicInstance;
       while (parent.$options.name !== "KoohiiNavMenu") {
-        parent = parent.$parent;
+        parent = parent.$parent!;
       }
       return parent;
     },
@@ -65,7 +72,8 @@ export default defineComponent({
     }
 
     // set initial open state
-    this.opened = this.rootMenu.defaultOpened === this.sm.id;
+    this.opened =
+      (this.rootMenu as TKoohiiNavMenu).defaultOpened === this.sm.id;
 
     // console.log('created menu item %s opened %o', this.sm.id, this.opened);
   },
@@ -73,9 +81,9 @@ export default defineComponent({
   mounted() {
     // top level items
     if (this.rootMenu === this.$parent) {
-      this.rootMenu.menuItems[this.sm.id] = {
+      (this.rootMenu as TKoohiiNavMenu).menuItems[this.sm.id] = {
         oMenuItem: this,
-        elHead: this.$refs.contentWrap,
+        elHead: this.refContentWrap(),
       };
     }
   },
@@ -85,12 +93,16 @@ export default defineComponent({
       return this.opened;
     },
 
+    refContentWrap(): HTMLElement {
+      return this.$refs.contentWrap as HTMLElement;
+    },
+
     open() {
       // console.log('open(%s)', this.sm.id)
 
       this.opened = true;
 
-      const $elWrap = $$(this.$refs.contentWrap);
+      const $elWrap = $$(this.refContentWrap());
 
       //$(elContentWrap).setStyles({ display: 'block', height: 0 })
 
@@ -100,7 +112,7 @@ export default defineComponent({
         // console.log('transition to %d', this.contentHeight)
 
         // transition:height
-        $elWrap.css("height", this.contentHeight + "px");
+        $elWrap.css("height", px(this.contentHeight));
         $elWrap.once("transitionend", () => {
           // console.log('transitionend() this is this %o', this === that)
           $elWrap.css("height", "auto");
@@ -113,11 +125,11 @@ export default defineComponent({
 
       this.opened = false;
 
-      const $elWrap = $$(this.$refs.contentWrap);
+      const $elWrap = $$(this.refContentWrap());
       this.contentHeight = $elWrap[0].scrollHeight;
       // console.log('elWrap scroll height is  %d', this.contentHeight)
 
-      $elWrap.css("height", this.contentHeight + "px");
+      $elWrap.css("height", px(this.contentHeight));
 
       setTimeout(() => {
         // transition:height
@@ -129,12 +141,12 @@ export default defineComponent({
       }, 10);
     },
 
-    onMenuItemClick(event, id) {
+    onMenuItemClick(event: Event, id: string) {
       // console.log('onMenuItemClick(%s)', id);
 
       // handle folder
       if (this.hasChildren) {
-        this.rootMenu.handleSelect(this.sm.id, this);
+        (this.rootMenu as TKoohiiNavMenu).handleSelect(this.sm.id, this);
 
         event.preventDefault();
         event.stopPropagation();
@@ -214,8 +226,6 @@ export default defineComponent({
   outline: none;
   text-decoration: none;
 }
-.k-nav-menu-item a:hover {
-}
 
 /* applies to a collapse container WITHOUT any margins or padding */
 .k-fx-collapse__wrap {
@@ -230,5 +240,5 @@ export default defineComponent({
   .k-nav-menu {
     font-size: 22px;
   }
-};
+}
 </style>

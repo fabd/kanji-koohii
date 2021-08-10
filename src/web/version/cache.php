@@ -1,37 +1,11 @@
 <?php
 /**
  * Outputs resource with gzip compression and far future expire headers.
- * 
- * The client's cache is automatically refreshed because javascript and stylesheet
- * filenames are revved with the file modified timestamp.
  *
- * "dev" environment
- *
- *    ".juicy" files are piped through Juicer for css/js packaging, providing
- *    a form of "hot reload" so any changes to juicy files can be seen without
- *    building.
- *
- * "test", "staging", etc.
- *
- *    coreWebResponse outputs minified assert urls (*.min.css|js) along with
- *    timestamp versioning. These files must be built with `batch/build` and
- *    `npm run build`  Only these files are deployed to the production server.
- *    The timestamp information is generated at end of `batch/build`.
- *    
- * 
  * Query parameters (set by htaccess redirection):
  * 
  *   path   Absolute path from the web root to resource file (starts with leading slash)
- * 
- * Note!
- *   Currently .htaccess is hardcoded to use 'dev' env and the primary application
- *   name. The web response of secondary apps (eg. Core documentation) should output
- *   only plain urls with this script name and required variables below:
- *  
- *   env    Is required to point at the correct root folder location,
- *          because relative path from public_html (web root) may be different in production.
- *          
- *   app    Application name under /apps/ folder, to find the Juicer config file
+ *
  *   
  * @author  Fabrice Denis
  */
@@ -97,48 +71,9 @@ class CacheResource
     else
       ob_start();
 
-    // handle dynamic "juicing" of files here (dev environment only)
-    if (false !== strstr($filepath, '.juicy.'))
-    {
-      $webPath = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RELATIVE_PATH_TO_WEB);
-      $infile  = $webPath . $filepath;
-
-      $options = array(
-        'VERBOSE'  => false,
-        'WEB_PATH' => $webPath,
-        'WEB_EXCL' => '*.psd,*.txt,*.bak,*.css,*.js'
-      );
-
-      try {
-        $config = $this->getJuicerConfig();
-        $juicer = new Juicer($options, $config);
-        $contents = $juicer->juice($infile);
-        echo $contents;
-      }
-      catch (Exception $e) {
-        $this->throw404('***EXCEPTION*** ' . $e->getMessage());
-      }
-    }
-    else {
-      // include the file as is (fastest)
-      echo file_get_contents(self::RELATIVE_PATH_TO_WEB . $filepath);
-    }
+    echo file_get_contents(self::RELATIVE_PATH_TO_WEB . $filepath);
     
     ob_end_flush();
-  }
-  
-  private function getJuicerConfig()
-  {
-    // Juicer.php requires this to handle relative paths in the config file
-    define('SF_ROOT_DIR', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . self::RELATIVE_PATH_TO_ROOT));
-
-    // include Juicer from here only as needed to speedup things
-    require_once(SF_ROOT_DIR.'/lib/juicer/Juicer.php');
-
-    $appName = $this->getParameter('app');
-    $configFile = SF_ROOT_DIR.'/apps/'.$appName.'/config/juicer.config.php';
-    $config = require($configFile);
-    return $config; 
   }
   
   private function getParameter($name, $default = null)

@@ -4,6 +4,9 @@ import vue from "@vitejs/plugin-vue";
 // import eslint from "@rollup/plugin-eslint";
 import strip from "@rollup/plugin-strip";
 
+const ROLLUP_VENDOR_CHUNK = "vendor";
+const ROLLUP_COMMON_CHUNK = "common";
+
 export default defineConfig({
   // base: "/build/dist/",
 
@@ -27,6 +30,74 @@ export default defineConfig({
         "./src/entry-review.ts",
         "./src/entry-study.ts",
       ],
+
+      output: {
+        /**
+         * Create a "vendor" and a "common" bundles.
+         *
+         * This is similar to the default Vite/Rollup build, except that Rollup
+         * won't create multiple chunks for shared code. All the shared functions
+         * and components are grouped in a single "common" js/css files.
+         *
+         * This reduces the number of css/js includes generated in the php page,
+         * based on Vite's manifest.json
+         *
+         * Based on example from https://rollupjs.org/guide/en/#outputmanualchunks
+         * 
+         * FIXME?  Entries/modules should have only one dot, use "foo-bar.js"
+         *         not "foo.bar.js" -- or fix the name splitting code below.
+         */
+        manualChunks: (id, { getModuleInfo }) => {
+          if (/\/node_modules\//.test(id)) {
+            return ROLLUP_VENDOR_CHUNK;
+          }
+
+          const entryPoints = [];
+
+          // We use a Set here so we handle each module at most once. This
+          // prevents infinite loops in case of circular dependencies
+          const idsToHandle = new Set(getModuleInfo(id).importers);
+
+          for (const moduleId of idsToHandle) {
+            const { isEntry, importers } = getModuleInfo(moduleId);
+            if (isEntry) {
+              entryPoints.push(moduleId);
+            }
+
+            // The Set iterator is intelligent enough to iterate over elements that
+            // are added during iteration
+            for (const importerId of importers) idsToHandle.add(importerId);
+          }
+
+          // For the entries (top level), we must explicitly return the entry name,
+          // otherwise Rollup will create a duplicate chunk (same name, different hash)
+          if (entryPoints.length === 0) {
+            let entryName = `${
+              id
+                .split("/")
+                .slice(-1)[0]
+                .split(".")[0]
+            }`;
+            return entryName;
+          }
+
+          // If there is a unique entry, we bundle the code with that entry
+          if (entryPoints.length === 1) {
+            let entryName = `${
+              entryPoints[0]
+                .split("/")
+                .slice(-1)[0]
+                .split(".")[0]
+            }`;
+            return entryName;
+          }
+
+          // For multiple entries, we put it into a "shared" chunk
+          if (entryPoints.length > 1) {
+            return ROLLUP_COMMON_CHUNK;
+          }
+        },
+      },
     },
   },
 

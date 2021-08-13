@@ -24,12 +24,6 @@ error_log*
 /cache
 /config/vite-build.*
 
-# generated / output from Juicer (frontend build tool) 
-*.juiced.js
-*.juiced.css
-*.min.js
-*.min.css
-
 # generated / realfavicon output
 /batch/favicon/faviconData.json
 /web/favicons

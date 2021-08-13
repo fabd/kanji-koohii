@@ -27,7 +27,6 @@ domContentLoaded(() => {
 
   // Review page
   if (domGetById("uiFcMain")) {
-
     const reviewMode = kk_globals_get("REVIEW_MODE");
     const reviewOptions = kk_globals_get("REVIEW_OPTIONS");
 

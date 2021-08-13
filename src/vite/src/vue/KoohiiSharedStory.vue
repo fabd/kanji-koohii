@@ -12,9 +12,7 @@
           ><i class="far fa-clock"></i> NEW</div
         >
 
-        <div :id="divId" class="actions col-m ta-r JsAction">
-          &nbsp;
-        </div>
+        <div :id="divId" class="actions col-m ta-r JsAction">&nbsp;</div>
       </div>
     </div>
   </transition>

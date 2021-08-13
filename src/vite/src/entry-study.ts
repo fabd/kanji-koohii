@@ -18,7 +18,7 @@ domContentLoaded(() => {
   console.log("@entry-study");
 
   // My Stories page?
-  let elMount = domGetById('MyStoriesSelect')!;
+  let elMount = domGetById("MyStoriesSelect")!;
   if (elMount) {
     VueInstance(MyStoriesTable, elMount);
   }

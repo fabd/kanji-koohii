@@ -67,7 +67,7 @@ export default defineComponent({
     containerId: { type: String, required: true },
   },
 
-  data: function() {
+  data() {
     return {
       box_data: kk_globals_get("LEITNER_CHART_DATA").boxes,
       box_urls: kk_globals_get("LEITNER_CHART_DATA").urls,
@@ -126,7 +126,7 @@ export default defineComponent({
     },
 
     // flatten boxes (two stacks each) into an array of stacks
-    stacks: function() {
+    stacks() {
       // console.log("get property: stacks ...")
       let bars = [];
       this.displayBoxes.map((b) => {
@@ -135,9 +135,9 @@ export default defineComponent({
       return bars;
     },
 
-    maxHeight: function() {
+    maxHeight() {
       // console.log("get property: maxHeight ...")
-      var vals = this.stacks.map(function(s) {
+      var vals = this.stacks.map(function (s) {
         return s.value;
       });
       var c = Math.max.apply(null, vals);

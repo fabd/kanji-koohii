@@ -155,12 +155,14 @@ export default defineComponent({
         return null;
       }
       let vmFlashcard = this.KanjiReview!.oReview!.getFlashcard();
-      let inst = vmFlashcard.getChild() as TVueInstanceOf<typeof KoohiiFlashcardKanji>;
+      let inst = vmFlashcard.getChild() as TVueInstanceOf<
+        typeof KoohiiFlashcardKanji
+      >;
       return inst;
     },
 
     onVocabPick(item: DictListEntry) {
-      console.log('onVocabPick "%s"', item.c)
+      console.log('onVocabPick "%s"', item.c);
 
       if (!this.KanjiReview) {
         return;
@@ -172,11 +174,13 @@ export default defineComponent({
           target: this.$refs.refLoadingMask as HTMLElement,
         });
 
-        getApi().legacy.setVocabForCard(this.ucsId, item.id).then((tron) => {
-          KoohiiLoading.hide();
-          // success:  show vocab onto the flashcard, and close the dictionary
-          tron.isSuccess() && this.onVocabPickResponse(item);
-        });
+        getApi()
+          .legacy.setVocabForCard(this.ucsId, item.id)
+          .then((tron) => {
+            KoohiiLoading.hide();
+            // success:  show vocab onto the flashcard, and close the dictionary
+            tron.isSuccess() && this.onVocabPickResponse(item);
+          });
       }
       // remove
       else {
@@ -184,10 +188,12 @@ export default defineComponent({
           target: this.$refs.refLoadingMask as HTMLElement,
         });
 
-        getApi().legacy.deleteVocabForCard(this.ucsId).then((tron) => {
-          KoohiiLoading.hide();
-          tron.isSuccess() && this.onVocabDeleteResponse(item);
-        });
+        getApi()
+          .legacy.deleteVocabForCard(this.ucsId)
+          .then((tron) => {
+            KoohiiLoading.hide();
+            tron.isSuccess() && this.onVocabDeleteResponse(item);
+          });
       }
     },
 
@@ -234,8 +240,8 @@ export default defineComponent({
         //   even though they are also cached in php session, it's better to avoid returning
         //   several KBs of data with each dictionary lookup request
 
-        getApi().legacy
-          .getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
+        getApi()
+          .legacy.getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
           .then((tron) => {
             KoohiiLoading.hide();
             tron.isSuccess() && this.onDictLoadResponse(ucsId, tron.getProps());

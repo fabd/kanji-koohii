@@ -170,7 +170,7 @@
  *
  */
 
-/* OBSOLETE Juicer imports, (= dependencies) */
+/* OBSOLETE - but keep documenting Juicer imports here until YUI2 is removed */
 /* requires !!! from "%YUI2%" */
 /* =require "/container/container-min.js" */
 /* OPTIONAL: Animation (only required if using ContainerEffect) */

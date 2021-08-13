@@ -309,11 +309,7 @@ export default defineComponent({
           divId: props.sharedStoryId,
         };
 
-        let { vm } = VueInstance(
-          KoohiiSharedStory,
-          elMount,
-          propsData
-        ) as any;
+        let { vm } = VueInstance(KoohiiSharedStory, elMount, propsData) as any;
         this.vmStoryPublished = vm;
       }
     },
@@ -329,7 +325,7 @@ export default defineComponent({
 
       this.editStory(storyText);
 
-      nextTick(function() {
+      nextTick(function () {
         // $$('#main_container')[0].scrollIntoView(true)
 
         // scroll to top of window

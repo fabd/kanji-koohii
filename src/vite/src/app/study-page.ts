@@ -32,9 +32,10 @@ export default {
       actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
       actb1.onPressEnterCallback = this.quicksearchEnterCallback.bind(this);
 
-      actb1.actb_extracolumns = function(iRow) {
-        return `<span class="f">${iRow +
-          1}</span><span class="k cj-k" lang="ja" xml:lang="ja">&#${window.kklist.charCodeAt(
+      actb1.actb_extracolumns = function (iRow) {
+        return `<span class="f">${
+          iRow + 1
+        }</span><span class="k cj-k" lang="ja" xml:lang="ja">&#${window.kklist.charCodeAt(
           iRow
         )};</span>`;
       };

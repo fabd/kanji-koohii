@@ -91,7 +91,7 @@ function Inst<T = TronProps>(message: Partial<TronMessage>): TronInst<T> {
     isFailed: () => tronObj.status === STATUS.FAILED,
 
     getStatus: (): STATUS => tronObj.status,
-    getProps: (): T => tronObj.props as unknown as T,
+    getProps: (): T => (tronObj.props as unknown) as T,
     getHtml: (): string => tronObj.html,
 
     getErrors: () => tronObj.errors,

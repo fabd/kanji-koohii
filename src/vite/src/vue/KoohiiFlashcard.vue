@@ -64,7 +64,7 @@ export default defineComponent({
   // },
 
   beforeMount() {
-    console.log('KoohiiFlashcard::beforeMount(%o)', this.cardData);
+    console.log("KoohiiFlashcard::beforeMount(%o)", this.cardData);
   },
 
   created() {

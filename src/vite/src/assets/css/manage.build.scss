@@ -7,48 +7,103 @@
 /**
  * Manage Flashcards
  */
-#manage-cards .app-header { border:0; margin-bottom:0; }
-
-#manage-cards em.note {
-  color:green; font-style:italic;
-  display:inline-block; margin:0 0 0 1em;
+#manage-cards .app-header {
+  border: 0;
+  margin-bottom: 0;
 }
 
+#manage-cards em.note {
+  color: green;
+  font-style: italic;
+  display: inline-block;
+  margin: 0 0 0 1em;
+}
 
 /* view pane styles */
-.views, .views p { color:#3F3F3B; }
-.views .warning { color:red; font-weight:bold; }
+.views,
+.views p {
+  color: #3f3f3b;
+}
+.views .warning {
+  color: red;
+  font-weight: bold;
+}
 
 /* remove flashcards list */
-.selection-table .uiTabular td { padding:4px 10px; }
-.selection-table .uiTabular tbody td { cursor:pointer; }
-.selection-table .uiTabular tr.selected td { background:#FDF9D2; color:#9B9878; }
+.selection-table .uiTabular td {
+  padding: 4px 10px;
+}
+.selection-table .uiTabular tbody td {
+  cursor: pointer;
+}
+.selection-table .uiTabular tr.selected td {
+  background: #fdf9d2;
+  color: #9b9878;
+}
 
 /* Pencil edit */
 .edit-icon {
-  padding:4px 5px;
-  border-radius:3px 3px;
-  -moz-border-radius:3px 3px;
-  -webkit-border-radius:3px 3px;
-  background-color:#f3f1dc;
-  cursor:pointer;
+  padding: 4px 5px;
+  border-radius: 3px 3px;
+  -moz-border-radius: 3px 3px;
+  -webkit-border-radius: 3px 3px;
+  background-color: #f3f1dc;
+  cursor: pointer;
 }
 .edit-icon:hover {
-  background-color:#478ac0;
+  background-color: #478ac0;
 }
 
 /* Character Selection list on the confirmation views with "lifelike" flashcards. */
-#mng-cards { padding:4px 4px; margin:0 0 1em; }
-#mng-cards .scroll { padding:10px 0 0; height:auto !important; height:411px; max-height:411px; overflow-x:none; overflow-y:scroll; }
-#mng-cards .fc { 
-  width:114px; padding:12px 0 15px; margin:0 7px 9px; float:left;
-  border:1px solid #e8e6d2; border-top:none; border-bottom-color:#cfcdbb; 
-  text-align:center;
-/* http://www.colorzilla.com/gradient-editor/ */
-background: #fff; /* Old browsers */
-background: -moz-linear-gradient(315deg, #ffffff 0%, #f8f8f8 80%, #FFFFFF 93%, #EAEAEA 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#ffffff), color-stop(80%,#f8f8f8), color-stop(93%,#ffffff), color-stop(100%,#eaeaea)); /* Chrome,Safari4+ */
-  }
+#mng-cards {
+  padding: 4px 4px;
+  margin: 0 0 1em;
+}
+#mng-cards .scroll {
+  padding: 10px 0 0;
+  height: auto !important;
+  height: 411px;
+  max-height: 411px;
+  overflow-x: none;
+  overflow-y: scroll;
+}
+#mng-cards .fc {
+  width: 114px;
+  padding: 12px 0 15px;
+  margin: 0 7px 9px;
+  float: left;
+  border: 1px solid #e8e6d2;
+  border-top: none;
+  border-bottom-color: #cfcdbb;
+  text-align: center;
+  /* http://www.colorzilla.com/gradient-editor/ */
+  background: #fff; /* Old browsers */
+  background: -moz-linear-gradient(
+    315deg,
+    #ffffff 0%,
+    #f8f8f8 80%,
+    #ffffff 93%,
+    #eaeaea 100%
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    color-stop(0%, #ffffff),
+    color-stop(80%, #f8f8f8),
+    color-stop(93%, #ffffff),
+    color-stop(100%, #eaeaea)
+  ); /* Chrome,Safari4+ */
+}
 #mng-cards .cj-t,
-#mng-cards .cj-k { display:block; color:#000; font-size:72px; line-height:1em; padding:0 0 9px; }
-#mng-cards .n { color:#888; font:Verdana, Arial, sans-serif; }
+#mng-cards .cj-k {
+  display: block;
+  color: #000;
+  font-size: 72px;
+  line-height: 1em;
+  padding: 0 0 9px;
+}
+#mng-cards .n {
+  color: #888;
+  font: Verdana, Arial, sans-serif;
+}

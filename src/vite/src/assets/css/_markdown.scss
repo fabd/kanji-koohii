@@ -20,7 +20,6 @@
  * 
  */
 
-
 /* ---------------------------- */
 /* Parsedown output */
 /* ---------------------------- */
@@ -37,40 +36,81 @@
 .markdown pre,
 .markdown code,
 .markdown table,
-.markdown .img-block
-  { margin:0 0 var(--vunit); }
+.markdown .img-block {
+  margin: 0 0 var(--vunit);
+}
 
 .markdown ol,
-.markdown li
-  { margin:0 0 calc(var(--vunit) / 2); }
-
-.markdown ul
-  { margin:0 0 calc(var(--vunit) * 1.5); padding-left:2em; }
-
- /* lists */
-.markdown ul li { list-style:disc; }
-
- /* images */
-.markdown img { box-sizing:content-box; padding:3px; border:1px solid #C9C7B5; display:block; margin:0 auto; max-width:100%; height:auto; }
-.markdown .img-block { border:1px solid $--clr-bg-1s;  }
-
- /* tables */
-.markdown table { width:100%; border-left:1px solid $--clr-bg-1m; border-collapse:collapse; }
-.markdown th { background-color:$--clr-bg-1; border-top-width:0; color:#4f4e45; }
-.markdown th,
-.markdown td { border-top:1px solid #E8E5CA; border-right:1px solid #E8E5CA; padding:5px 10px; text-align:left; }
-.markdown td { background:$--clr-bg-nav; }
-.markdown td a:link, 
-.markdown td a:visited, 
-.markdown td a:active { font-weight:normal; }
-.markdown th a { font-weight:bold; }
-
- /* code : applies to `this` */
-.markdown code { background:$--clr-bg-nav; padding: 0.3em 0.8em; }
- /* code : applies to ```code blocks``` */
-.markdown pre {
-  background:$--clr-bg-nav;
-  padding:calc(var(--vunit) / 2) 1em;
-  border-left:4px solid $--clr-bg-1;
+.markdown li {
+  margin: 0 0 calc(var(--vunit) / 2);
 }
-.markdown pre code { background:none; padding: 0; }
+
+.markdown ul {
+  margin: 0 0 calc(var(--vunit) * 1.5);
+  padding-left: 2em;
+}
+
+/* lists */
+.markdown ul li {
+  list-style: disc;
+}
+
+/* images */
+.markdown img {
+  box-sizing: content-box;
+  padding: 3px;
+  border: 1px solid #c9c7b5;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+.markdown .img-block {
+  border: 1px solid $--clr-bg-1s;
+}
+
+/* tables */
+.markdown table {
+  width: 100%;
+  border-left: 1px solid $--clr-bg-1m;
+  border-collapse: collapse;
+}
+.markdown th {
+  background-color: $--clr-bg-1;
+  border-top-width: 0;
+  color: #4f4e45;
+}
+.markdown th,
+.markdown td {
+  border-top: 1px solid #e8e5ca;
+  border-right: 1px solid #e8e5ca;
+  padding: 5px 10px;
+  text-align: left;
+}
+.markdown td {
+  background: $--clr-bg-nav;
+}
+.markdown td a:link,
+.markdown td a:visited,
+.markdown td a:active {
+  font-weight: normal;
+}
+.markdown th a {
+  font-weight: bold;
+}
+
+/* code : applies to `this` */
+.markdown code {
+  background: $--clr-bg-nav;
+  padding: 0.3em 0.8em;
+}
+/* code : applies to ```code blocks``` */
+.markdown pre {
+  background: $--clr-bg-nav;
+  padding: calc(var(--vunit) / 2) 1em;
+  border-left: 4px solid $--clr-bg-1;
+}
+.markdown pre code {
+  background: none;
+  padding: 0;
+}

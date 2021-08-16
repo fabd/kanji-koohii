@@ -29,8 +29,8 @@ error_log*
 /web/favicons
 !/web/favicons/README.md
 
-# generated / build of front end assets
-/web/build
+# output of `vite build`
+/web/build/dist
 
 # npm install
 /node_modules

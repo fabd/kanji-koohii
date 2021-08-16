@@ -1,8 +1,11 @@
-#
-#  Added by @vitejs/create-app
-#
+# Added by @vitejs/create-app
 node_modules
 .DS_Store
 dist
 dist-ssr
 *.local
+
+# config files
+!.eslintignore
+!.eslintrc.js
+!.prettierrc.js

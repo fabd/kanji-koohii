@@ -1,5 +1,7 @@
 #
-# gitignore for all files relative to symfony project root
+# gitignore for the symfony related files
+# 
+# for vite (front end build) -- add rules to src/vite/.gitignore
 #
 
 # don't automatically add these
@@ -34,7 +36,6 @@ error_log*
 
 # npm install
 /node_modules
-/vite/node_modules
 
 # admin/misc
 /web/*.php

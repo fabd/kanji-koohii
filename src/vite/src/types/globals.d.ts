@@ -7,22 +7,12 @@
  *
  */
 
-import Vue, {
-  DefineComponent,
-  ComponentPublicInstance,
-  VueConstructor,
-} from "vue";
-import Lang from "@lib/lang";
-import { Inst as TronFactory } from "@lib/tron";
-import VueInstance, { VueInstanceFn } from "@lib/helpers/vue-instance";
+import { ComponentPublicInstance } from "vue";
 
 /**
  * Vue misc.
  */
 declare global {
-  // generic component definition (as from an .vue import)
-  export type TVueDefine = DefineComponent<{}, {}, any>;
-
   // typing of props passed to createApps(root, props)
   export type TVuePropsData = Record<string, unknown>;
 

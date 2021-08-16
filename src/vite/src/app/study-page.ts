@@ -74,7 +74,7 @@ export default {
     const elEditFlashcard = domGetById("EditFlashcard");
     if (elEditFlashcard) {
       this.elEditFlashcard = elEditFlashcard;
-      var ed = new EventDelegator(elEditFlashcard as HTMLElement, "click");
+      const ed = new EventDelegator(elEditFlashcard as HTMLElement, "click");
       ed.on("JsEditFlashcard", this.onEditFlashcard, this);
     }
   },
@@ -187,7 +187,7 @@ export default {
    * On the backend side, the dashes become wildcards.
    */
   anesthetizeThisBloodyUri(annoyingUri: string) {
-    var s = annoyingUri.replace(/[\/\.]/g, "-");
+    const s = annoyingUri.replace(/[\/\.]/g, "-");
     return encodeURIComponent(s);
   },
 };

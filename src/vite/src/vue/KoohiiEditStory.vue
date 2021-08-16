@@ -2,7 +2,7 @@
   <div class="min-h-[100px] bg-[#ccc]">
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
-      <input v-model="kanjiData.ucs_id" type="hidden" name="ucs_code" />
+      <input value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
 
       <div id="my-story" lang="ja">
         <div ref="maskArea" class="padding rtkframe">
@@ -238,6 +238,16 @@ export default defineComponent({
     }
   },
 
+  created() {
+    console.log("KoohiiEditStory::created()");
+
+    this.isFavoriteStory = !!this.initFavoriteStory;
+
+    this.postStoryView = this.initStoryView;
+    this.postStoryEdit = this.initStoryEdit;
+    this.postStoryPublic = this.initStoryPublic;
+  },
+
   methods: {
     formGetErrors(): string {
       const errors = this.formErrors;
@@ -402,16 +412,6 @@ export default defineComponent({
       let length = element.value.length;
       element.setSelectionRange(length, length);
     },
-  },
-
-  created() {
-    console.log("KoohiiEditStory::created()");
-
-    this.isFavoriteStory = !!this.initFavoriteStory;
-
-    this.postStoryView = this.initStoryView;
-    this.postStoryEdit = this.initStoryEdit;
-    this.postStoryPublic = this.initStoryPublic;
   },
 });
 </script>

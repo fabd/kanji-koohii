@@ -42,7 +42,7 @@ class ManagePage {
     // Manage > Edit Keywords
     const el = domGetById("EditKeywordsTableComponent");
     if (el) {
-      const ajaxTable = new AjaxTable(el);
+      new AjaxTable(el);
       this.editKeywordUri = el.dataset.uri!;
       bodyED.on("JSEditKeyword", this.onEditKeyword.bind(this));
     }

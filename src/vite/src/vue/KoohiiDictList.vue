@@ -342,9 +342,6 @@ export default defineComponent({
   background: #fff;
 }
 
-.dict-list .dl_item--pick {
-}
-
 .dict-list .dl_item .cj-k {
   line-height: 1em;
 }

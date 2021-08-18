@@ -1582,20 +1582,6 @@ table.lessons td {
   color: #000;
 }
 
-/* dialog footers, right aligned */
-.rtk-skin-dlg .ft-right {
-  clear: both;
-  width: 100%;
-  padding: 5px 0 0;
-  text-align: right;
-}
-
-/* left align buttons INSIDE ft-right */
-.rtk-skin-dlg .ft-left {
-  float: left;
-  text-align: left; /*padding from ft-right*/
-}
-
 /* dialog body wrapper for extra css styling (.rtk-skin-dlg .yui-panel .bd .body) */
 .rtk-skin-dlg .body {
   background: #fff;

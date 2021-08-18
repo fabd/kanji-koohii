@@ -72,6 +72,7 @@
                       type="button"
                       value="Save changes"
                       title="Save/Update story"
+                      class="btn btn-success inline-block w-auto mr-1"
                       @click.prevent="onSubmit"
                     />
                     <input
@@ -79,6 +80,7 @@
                       value="Cancel"
                       name="cancel"
                       title="Cancel changes"
+                      class="btn btn-default inline-block w-auto "
                       @click="onCancel"
                     />
                   </div>

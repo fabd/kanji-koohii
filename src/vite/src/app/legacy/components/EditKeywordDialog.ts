@@ -58,7 +58,7 @@ export default class EditKeywordDialog {
     };
 
     this.dialog = new (AjaxDialog as IAjaxDialog)(null, dlgopts);
-    this.dialog.on("reset", this.onReset, this);
+    this.dialog.on("JsReset", this.onReset, this);
     this.dialog.show();
   }
 

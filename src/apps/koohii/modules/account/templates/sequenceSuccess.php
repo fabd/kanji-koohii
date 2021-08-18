@@ -72,7 +72,11 @@ td input { vertical-align:middle; }
   <p><strong>Old Edition ONLY</strong> : includes 23 characters from <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">Newly Approved General-Use Kanji (pdf)</a>.
   These are added at the end, frame numbers 3008 - 3030.</p>
 
-  <span class="btn"><?php echo submit_tag('Save Changes') ?></span>
+<?php
+    echo _bs_form_group(
+      _bs_submit_tag('Save changes')
+    );
+?>
 
   </form>
 

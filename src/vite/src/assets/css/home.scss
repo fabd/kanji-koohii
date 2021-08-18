@@ -263,41 +263,38 @@ section p {
 /* ---------------------------- */
 /* Footer */
 /* ---------------------------- */
-
-.k_bg_foot {
+#footer-landing {
   background: #232323;
-}
-
-#footer {
   padding: 2em 0 5em;
   text-align: center;
   font-size: 17px;
-}
-#footer ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-#footer li {
-  display: inline-block;
-  margin: 0;
-  font-weight: normal;
-}
-#footer a {
-  padding: 0 0.8em; /*tap target*/
-  color: #a4a19b;
-  text-decoration: none;
-}
-#footer a:hover {
-  text-decoration: none;
-}
-#footer a:hover .fa {
-  color: #fff;
-}
 
-/* fontawesome icons */
-#footer .fa {
-  margin-right: 0.5em;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: inline-block;
+    margin: 0;
+    font-weight: normal;
+  }
+  a {
+    padding: 0 0.8em; /*tap target*/
+    color: #a4a19b;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:hover .fa {
+    color: #fff;
+  }
+
+  /* fontawesome icons */
+  .fa {
+    margin-right: 0.5em;
+  }
 }
 
 /*li#tweet-button { margin-left:2em; }

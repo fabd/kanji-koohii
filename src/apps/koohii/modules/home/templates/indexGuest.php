@@ -122,7 +122,7 @@ Kanji Koohii uses a friendly spaced repetition system: flashcard reviews are sch
   </div>
 </div>
 
-<footer id="footer" class="k_bg_foot">
+<footer id="footer-landing">
   <ul>
     <li><?php echo link_to('<i class="fa fa-comment"></i>Blog','news/index') ?></li>
     <li><?php echo link_to('<i class="fa fa-envelope"></i>Contact', '@contact') ?></li>

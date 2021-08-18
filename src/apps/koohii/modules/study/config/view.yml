@@ -14,7 +14,6 @@ mystories:
   metas:
     title: "Study: My Stories List"
 
-# NOTE!  entry-study is currently a common bundle added by coreWebResponse::addViteEntries()
-# all:
-#   javascripts: [ 'src/entry-study.ts' ]
-
+all:
+  javascripts:
+    - src/entry-study.ts

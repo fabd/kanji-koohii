@@ -3,11 +3,7 @@
  */
 
 // stylesheets
-import "@css/main.build.scss";
 import "@css/study-base.build.scss";
-
-import rootBundleInit from "@app/root-bundle";
-rootBundleInit();
 
 import { domGetById, domContentLoaded } from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";

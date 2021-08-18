@@ -41,7 +41,7 @@ class coreWebResponse extends sfWebResponse
       $this->addJavascript('/build/yui2/yui2-bundle.min.js', self::FIRST, ['defer' => true]);
     }
 
-    if (self::USE_DEV_SERVER && false === $viteClientLoaded)
+    if (KK_ENV_DEV && self::USE_DEV_SERVER && false === $viteClientLoaded)
     {
       $this->addViteClient();
       $viteClientLoaded = true;
@@ -50,7 +50,7 @@ class coreWebResponse extends sfWebResponse
     // common base entry for all authenticated pages
     if (!$isLandingPage)
     {
-      $this->addViteEntry('src/entry-study.ts');
+      $this->addViteEntry('src/entry-common.ts');
     }
   }
 

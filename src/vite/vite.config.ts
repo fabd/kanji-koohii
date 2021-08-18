@@ -4,8 +4,11 @@ import vue from "@vitejs/plugin-vue";
 // import eslint from "@rollup/plugin-eslint";
 import strip from "@rollup/plugin-strip";
 
+// bundle all node_modules into a vendor chunk
 const ROLLUP_VENDOR_CHUNK = "vendor";
-const ROLLUP_COMMON_CHUNK = "common";
+
+// bundle all shared code with the `common` entry point
+const ROLLUP_COMMON_CHUNK = "entry-common";
 
 export default defineConfig({
   // base: "/build/dist/",
@@ -25,6 +28,7 @@ export default defineConfig({
     rollupOptions: {
       input: [
         "./src/entry-account.ts",
+        "./src/entry-common.ts",
         "./src/entry-landing.ts",
         "./src/entry-manage.ts",
         "./src/entry-review.ts",

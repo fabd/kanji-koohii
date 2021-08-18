@@ -1,5 +1,8 @@
 all:
   metas:
-    title: 'Profile'
-    robots: 'noindex, nofollow'
+    title: "Profile"
+    robots: "noindex, nofollow"
 
+  # we just need the styles for "My Stories" table -- simple fix for now
+  javascripts:
+    - src/entry-study.ts

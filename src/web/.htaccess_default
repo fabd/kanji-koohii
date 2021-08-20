@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # php handler for versioning of front end assets and css/js concatenation
+  # php handler for versioning of front end assets
   RewriteRule ^(.*)_v[0-9.]+(css|js)$   /version/cache.php?env=dev&app=revtk&path=$1.$2 [L]
 
   # we skip all files with .something

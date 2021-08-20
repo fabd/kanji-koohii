@@ -41,10 +41,14 @@ function nav_item($nav_id, $text, $internal_uri, $options = [], $dropdown = fals
   return "<li${li_class}>\n  ${link}\n${dropdown}\n</li>\n";
 }
 
+function staging_marker() {
+  echo CORE_ENVIRONMENT === 'staging' ? '!bg-[#444]' : '';
+}
+
 ?>
 <div id="k-nav">
   <!-- mobile -->
-  <nav id="k-nav_m">
+  <nav id="k-nav_m" class="<?php echo staging_marker() ?>">
     <div id="k-nav_m_bar">
       <a class="k-nav_btn k-nav_m_btn_main JsNavToggle" id="k-slide-nav-btn">
         <i class="nav-h fa fa-bars"></i>
@@ -54,7 +58,7 @@ function nav_item($nav_id, $text, $internal_uri, $options = [], $dropdown = fals
   </nav>
 
   <!-- desktop -->
-  <nav id="k-nav_d">
+  <nav id="k-nav_d" class="<?php echo staging_marker() ?>">
     <div class="container">
 <?php
 

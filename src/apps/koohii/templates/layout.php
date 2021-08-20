@@ -66,19 +66,6 @@
 <?php kk_globals_out() ?>
 <?php koohii_onload_slots_out() ?>
 
-<script>
-var koohii_nav_data = <?php echo json_encode(get_slot('koohii.nav.data'), /*JSON_PRETTY_PRINT |*/ JSON_UNESCAPED_SLASHES) ?>;
-
-// (fabd) note javascript modules are deferred, and not yet available
-window.addEventListener("DOMContentLoaded", () => {
-  document.querySelector('#k-slide-nav-btn').addEventListener("click", function() {
-    Koohii.UX.KoohiiAside.open({
-      navOptionsMenu: koohii_nav_data
-    })
-  })
-});
-</script>
-
 <?php if (KK_ENV_DEV):  ?>
 <script>
   // auto-collapse sf debug bar

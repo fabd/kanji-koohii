@@ -30,6 +30,9 @@ declare global {
       // base URL for API requests (cf. layout.php & koohii_base_url() helper)
       BASE_URL: string;
 
+      // site-wide mobile nav, setup data from php with the correct urls
+      MBL_NAV_DATA: Dictionary;
+
       STUDY_SEARCH_URL: string;
 
       EDITSTORY_PROPS: Dictionary;

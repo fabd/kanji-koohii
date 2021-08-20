@@ -221,7 +221,7 @@ foreach ($pageToMenu as $pageId => $open) {
   }
 }
 
-slot('koohii.nav.data', (object) [
+kk_globals_put('MBL_NAV_DATA', [
   'opened' => $defaultOpen,
   'items'  => $nav_items
 ]);

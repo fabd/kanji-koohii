@@ -1,4 +1,4 @@
-import Dom, { domContentLoaded } from "@lib/dom";
+import $$, { domContentLoaded } from "@lib/dom";
 import AjaxTable from "@old/ajaxtable";
 import EventDelegator from "@old/eventdelegator";
 import KoohiiAside from "@/vue/Aside";
@@ -22,7 +22,6 @@ export function getBodyED(): EventDelegator {
  *   - otherwise if an element has class `JsFocusOnLoadInput`, focus that input
  */
 function focusOnLoad() {
-  const $$ = Dom;
   let elHasError;
 
   const elForm = $$(".JsFocusOnLoadError")[0];
@@ -62,12 +61,18 @@ export default function () {
     UX: {
       // legacy AjaxTable component instanced in pages like Members List
       AjaxTable,
-      // site-wide mobile navigation
-      KoohiiAside,
     },
   };
 
   domContentLoaded(() => {
+    // init site-wide mobile navigation
+    let $elAside = $$("#k-slide-nav-btn");
+    if ($elAside.el()) {
+      $elAside.on("click", () => {
+        KoohiiAside.open({ navOptionsMenu: kk_globals_get("MBL_NAV_DATA") });
+      });
+    }
+
     // init the site-wide desktop navigation
     KoohiiNav.init();
 

@@ -18,9 +18,9 @@
 
 Remembering the Kanji (RTK) teaches you how to break down the complex kanji in smaller, simple parts that can be memorized with a _mnemonic_ system (we call it _stories_).
 
-[**Start with the free sample chapter**](http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK-1-6th-edition-sample.pdf) from the publisher (PDF). It covers 294 kanji and 12 lessons.
+[**Start with the free sample chapter**](https://nirc.nanzan-u.ac.jp/en/files/2012/12/RK-1-6th-edition-sample.pdf) from the publisher (PDF). It covers 294 kanji and 12 lessons.
 
-You can buy the book on [Amazon](https://www.amazon.com/Remembering-Kanji-Complete-Japanese-Characters/dp/0824835921) as well as [publisher](http://nirc.nanzan-u.ac.jp/publications/miscPublications/Remembering_the_Kanji_1.htm) in paper or ebook format. [Here is a good review](http://www.kanjiclinic.com/reviewheisigwiig.htm) from KanjiClinic.
+You can buy the book on [Amazon](https://www.amazon.com/Remembering-Kanji-Complete-Japanese-Characters/dp/0824835921) as well as [publisher](https://nirc.nanzan-u.ac.jp/en/publications/miscellaneous-publications/remembering-the-kanji/) in paper or ebook format. [Here is a good review](https://www.kanjiclinic.com/reviewheisigwiig.htm) from KanjiClinic.
 
 </div>
 

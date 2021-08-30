@@ -7,22 +7,6 @@
  *
  */
 
-import { ComponentPublicInstance } from "vue";
-
-/**
- * Vue misc.
- */
-declare global {
-  // typing of props passed to createApps(root, props)
-  export type TVuePropsData = Record<string, unknown>;
-
-  // a generic Vue component instance
-  export type TVueInstance = ComponentPublicInstance;
-
-  // extract component instance (component T's custom properties, methods, etc)
-  export type TVueInstanceOf<T> = T extends new () => infer I ? I : never;
-}
-
 declare global {
   interface Window {
     // cf. kk_globals_put() on the php side

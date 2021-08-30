@@ -10,9 +10,7 @@
  */
 
 import { nextTick } from "vue";
-import VueInstance, {
-  ComponentPublicInstance,
-} from "@lib/helpers/vue-instance";
+import VueInstance from "@lib/helpers/vue-instance";
 import KoohiiLoading from "./KoohiiLoading.vue";
 import { getStyle } from "@lib/dom";
 import Lang from "@lib/lang";

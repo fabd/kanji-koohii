@@ -14,30 +14,22 @@
 </p>
 
 
-## Feedback & Suggestions
+## Bugs & Feature Requests
 
-Create an "issue" in the Issues tab. [New issue](https://github.com/fabd/kanji-koohii/issues/new).
+Bugs reports and feature requests are welcome, please create a [New issue](https://github.com/fabd/kanji-koohii/issues/new) in the Issues tab. 
 
 ## Contributing
-Realistically speaking, nobody wants to work on a very old codebase. That said, should you want to contribute some bug fixes, or some improvements here and there, help is welcome. 
+In general **pull requests** for small fixes/typos are welcome.
 
-[![Join the chat at https://gitter.im/kanji-koohii/Lobby](https://badges.gitter.im/kanji-koohii/Lobby.svg)](https://gitter.im/kanji-koohii/feedback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-<br>
+For substantial changes it's probably a good idea to let me know in advance so I can tell you if I'm interested to merge and also give you useful information.
 
-#### Project History
-Keep in mind I started the website all the way back in the [August 2005](https://kanji.koohii.com/news/2005/8). The website was pretty much one-php-script-per-page for the first year. It was known then as "Reviewing the Kanji". A year or so later, I created a very barebones MVC inspired by Symfony 1. Thankfully because I followed the same API and conventions than Symfony a few years later I was able to refactor to the actual Symfony 1 package.
+Keep in mind I started the website all the way back in the [August 2005](https://kanji.koohii.com/news/2005/8), so there are challenges that come with maintaining the site for such a long time. It was a barebones php4 site for the first year. It was later refactored to Symfony MVC. Today Koohii still runs with Symfony 1 in the backend, but the frontend can take advantage of **ViteJs, Vue 3 and Tailwind CSS**.
 
-#### Installation
-Installation is fairly simple with Docker CE. The MySQL container includes a sample database with a selection of the "top" voted kanji stories. See [Installation](doc/Installation.md) and [Database](doc/Database.md) guides.
+## Development
 
+Installation is fairly simple with Docker CE. The MySQL (Mariadb) container includes a sample database with a selection of the top-voted kanji stories. See [Installation](doc/Installation.md) and [Database](doc/Database.md) guides.
 
-## Project Roadmap
-
-* **Refactoring** legacy php templating to Vuejs client-side components
-* **Vocabulary features** : "favorite" example words in Study pages, create a vocab deck and review with SRS
-* **Improve Study pages** : better moderation & voting system, stroke order animations, better search
-* **Improve the API** for third party clients like [Kanji Ryokucha](https://twitter.com/kanji_ryokucha)
-
+For any questions related to the codebase, you may be able to reach me [on discord](https://discord.gg/VseqVcy3vS).
 
 ## LICENSE
 

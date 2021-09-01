@@ -1375,39 +1375,6 @@ table.lessons td {
 }
 
 /* ---------------------------- */
-/* Sight Reading */
-/* ---------------------------- */
-
-#sight-reading form {
-  margin: 0 0 2em;
-}
-#sight-reading textarea {
-  width: 100%;
-  margin: 0 0 0.5em;
-  font-size: 16px;
-}
-#sight-reading .output {
-  font-size: 30px;
-  line-height: 1.5em;
-  background: $--clr-bg-1;
-  padding: 0.5em;
-  border-radius: 3px;
-}
-#sight-reading .output .cj-k {
-  font-family: sans-serif;
-}
-#sight-reading .output a {
-  font-style: normal;
-  font-weight: normal;
-  color: blue;
-  text-decoration: none;
-}
-#sight-reading .output a:hover {
-  background: #fff;
-  color: #000;
-}
-
-/* ---------------------------- */
 /* Full kanji list */
 /* ---------------------------- */
 

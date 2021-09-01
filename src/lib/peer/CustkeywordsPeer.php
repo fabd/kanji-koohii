@@ -203,7 +203,8 @@ class CustkeywordsPeer extends coreDatabaseTable
       $select->where('reviews.userid = ?', $userid);
     }
 
-    $select = self::addCustomKeywordJoin($select, $userid);   // add last to avoid "ambiguous" ucs_id column
+    // add last to avoid "ambiguous" ucs_id column
+    $select = self::addCustomKeywordJoin($select, $userid);
 
     // FIXME for now use a hardcoded limit
     $select->where('? < ?', [rtkIndex::getSqlCol(), rtkIndex::RTK_UCS]);

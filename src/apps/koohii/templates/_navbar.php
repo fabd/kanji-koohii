@@ -79,15 +79,12 @@ if (!$sf_user->isAuthenticated()) {
 
   echo "<ul>\n";
 
-  /**
-   * REMOVED Jun 29, 20201 / until refactored, if people still want it : 
-   *   <li><a href="@/sightreading">Kanji Recognition</a></li>
-   */
   echo nav_item('study-index', 'Study', 'study/index', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/study">Browse</a></li>
   <li><a href="@/study/failedlist">Restudy List</a></li>
   <li><a href="@/study/mystories" class="active">My Stories</a></li>
+  <li><a href="@/sightreading">Kanji Recognition</a></li>
 </ul>
 DOM
   );

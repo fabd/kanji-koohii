@@ -1,5 +1,5 @@
-reading:
+readingSuccess:
   metas:
-    title: 'Sight Reading'
-  javascripts: [ '/revtk/bundles/yui-base.juicy.js' ]
-
+    title: "Sight Reading"
+  javascripts:
+    - src/entry-recognition.ts

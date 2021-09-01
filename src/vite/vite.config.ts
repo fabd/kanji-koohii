@@ -1,7 +1,6 @@
 import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-// import eslint from "@rollup/plugin-eslint";
 import strip from "@rollup/plugin-strip";
 
 // bundle all node_modules into a vendor chunk
@@ -143,18 +142,6 @@ export default defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
-
-    // ---------------------------------------------------------------------------
-    // @rollup/plugin-eslint
-    //   Run eslint, but only on build (also configure ESLint extension in VSCode)
-    // ---------------------------------------------------------------------------
-    // {
-    //   ...eslint({
-    //     include: "./src/**/*.(vue|js|jsx|ts|tsx)",
-    //   }),
-    //   enforce: "pre",
-    //   apply: "build",
-    // },
 
     // ---------------------------------------------------------------------------
     // @rollup/plugin-strip

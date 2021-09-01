@@ -19,6 +19,7 @@
     "disable-warnings": "sed -i 's/\\s\\swarnExperimental/\\/\\/warnExperimental/g' node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js ; sed -i 's/\\s\\s_log\\.default\\.warn/\\/\\/DISABLED/g' node_modules/tailwindcss/lib/index.js"
   },
   "dependencies": {
+    "@types/node": "^16.7.10",
     "esbuild": "^0.12.20",
     "npm-check-updates": "^11.8.3",
     "vue": "^3.2.x"

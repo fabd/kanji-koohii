@@ -11,7 +11,7 @@ module.exports = {
     //
     "plugin:compat/recommended",
     // parse Single File Components + Vue specific rules
-    "plugin:vue/vue3-strongly-recommended",
+    "plugin:vue/vue3-recommended",
     //
     "prettier",
   ],

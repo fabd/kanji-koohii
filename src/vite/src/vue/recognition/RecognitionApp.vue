@@ -1,5 +1,5 @@
 <template>
-  <div id="sight-reading">
+  <div>
     <h2>Kanji Recognition</h2>
 
     <div v-if="isStateEdit" class="mb-4">
@@ -9,11 +9,11 @@
         Study pages, and a popup will reveal the Heisig keywords.</p
       >
 
-      <form>
+      <form class="mb-4">
         <textarea
           ref="input"
           v-model="japaneseText"
-          class="w-full mb-4 p-2 min-h-[100px] border border-[#ddd] rounded text-lg"
+          class="w-full mb-2 p-2 min-h-[100px] border border-[#ddd] rounded-lg text-lg"
         ></textarea>
         <input
           type="submit"
@@ -23,14 +23,14 @@
         />
       </form>
 
-      <div id="introduction" class="markdown">
+      <div id="introduction" class="markdown mt-8">
         <h3>Purpose of this page</h3>
 
         <p>
-          In _Remembering the Kanji_, the Japanese characters are studied and
-          reviewed _from the keyword to the kanji_. In this sight-reading
+          In <em>Remembering the Kanji</em>, the Japanese characters are studied
+          and reviewed from the keyword to the kanji. In this sight-reading
           section, you can test your memory the other way round, all the while
-          seeing the characters _in context_.
+          seeing the characters <em>in context</em>.
         </p>
 
         <p
@@ -44,18 +44,11 @@
         <ul>
           <li>
             Japanese text:
-            <a href="http://www.yomiuri.co.jp" target="_blank">Yomiuri Online</a
-            >,
-            <a
-              href="http://www.geocities.co.jp/HeartLand-Gaien/7211/"
-              target="_blank"
-              >Old Stories of Japan</a
-            >,
-            <a href="http://www.aozora.gr.jp/" target="_blank">Aozora Bunko</a>.
+            <a href="https://www.aozora.gr.jp/" target="_blank">Aozora Bunko</a>.
           </li>
           <li>
             <a
-              href="http://www.kanji.org/kanji/japanese/writing/outline.htm"
+              href="https://www.kanji.org/kanji/japanese/writing/outline.htm"
               target="_blank"
               >Guide to the Japanese Writing System</a
             >
@@ -66,18 +59,18 @@
     </div>
 
     <div v-if="!isStateEdit">
-      <div>
-        <button class="btn btn-success" @click="isStateEdit = true"
+      <div class="mb-4 pb-4 border-b border-[#d4cdba]">
+        <button class="btn btn-success" @click="onClickToEdit"
           >Enter more japanese text</button
         >
       </div>
-      <p
-        >Point at the colored kanji with the mouse or click/tap to reveal the
+      <p>
+        Point at the colored kanji with the mouse or click/tap to reveal the
         keyword. To study the character, <strong><em>click</em></strong> (or
-        tap) the kanji, and then click the "Study" link inside the tooltip.</p
-      >
+        tap) the kanji, and then click the "Study" link inside the tooltip.
+      </p>
 
-      <div class="output">
+      <div class="kk-Recognition-output">
         <cjk-lang-ja :html="transformJapaneseText"></cjk-lang-ja>
       </div>
     </div>
@@ -88,7 +81,6 @@
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
-import { log } from "node:console";
 
 const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎとかめは、山の上まで競争しました。誰もが、うさぎの方がかめよりも早くそこに着くと思いました。しかし迂闊にも、うさぎは途中で寝てしまいました。目が覚めた時は、もうあとのまつりでした。かめはすでに山のてっ辺に立っていました。`;
 
@@ -116,8 +108,6 @@ export default defineComponent({
       japaneseText: DEFAULT_TEXT,
 
       isStateEdit: true,
-
-      kanjiText: "tis be the kanji text",
     };
   },
 
@@ -127,7 +117,7 @@ export default defineComponent({
 
       let text: string = this.japaneseText;
 
-console.log('text ', text)
+      console.log("text ", text);
 
       for (let ucsId in kanjis) {
         const kanjiInfo = kanjis[ucsId];
@@ -138,7 +128,7 @@ console.log('text ', text)
         const title = `${kanjiInfo.keyword} (#${kanjiInfo.seq_nr})`;
         const html = `<a href="study/kanji/${ucsId}" data-text="${title}">${kanjiInfo.kanji}</a>`;
 
-console.log('replace all ', kanjiInfo.kanji);
+        console.log("replace all ", kanjiInfo.kanji);
 
         text = text.replaceAll(kanjiInfo.kanji, html);
       }
@@ -155,27 +145,35 @@ console.log('replace all ', kanjiInfo.kanji);
     focusInput() {
       (this.$refs.input as HTMLElement).focus();
     },
+
+    onClickToEdit() {
+      this.isStateEdit = true;
+      this.$nextTick(() => {
+        this.focusInput();
+      });
+    },
   },
 });
 </script>
 
 <style lang="scss">
-#sight-reading .output {
-  font-size: 30px;
-  line-height: 1.5em;
-  background: #e7e1d3;
-  padding: 0.5em;
-  border-radius: 3px;
-}
-#sight-reading .output a {
-  font-style: normal;
-  font-weight: normal;
-  color: blue;
-  text-decoration: none;
-}
-#sight-reading .output a:hover {
-  background: #fff;
-  color: #000;
+.kk-Recognition {
+  &-output {
+    @apply p-4 rounded-lg;
+    font-size: 30px;
+    line-height: 1.5em;
+    background: #e7e1d3;
+  }
+  &-output a {
+    font-style: normal;
+    font-weight: normal;
+    color: blue;
+    text-decoration: none;
+  }
+  &-output a:hover {
+    background: #fff;
+    color: #000;
+  }
 }
 
 // FIXME : obsolete?

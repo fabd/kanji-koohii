@@ -2,7 +2,7 @@
   <div class="min-h-[100px] bg-[#ccc]">
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
-      <input value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
+      <input :value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
 
       <div id="my-story" lang="ja">
         <div ref="maskArea" class="padding rtkframe">

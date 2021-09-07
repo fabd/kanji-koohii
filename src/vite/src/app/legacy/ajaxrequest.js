@@ -97,8 +97,7 @@ export default class AjaxRequest {
    * @param {Object} options  Constructor options
    */
   constructor(url, options) {
-    var that = this,
-      callback = {},
+    var callback = {},
       postdata;
 
     console.assert(window.YAHOO);
@@ -115,11 +114,11 @@ export default class AjaxRequest {
 
     options.method = options.method.toUpperCase();
 
-    callback.success = function(o) {
-      that.handleSuccess(o, options.success, options.scope);
+    callback.success = (o) => {
+      this.handleSuccess(o, options.success, options.scope);
     };
-    callback.failure = function(o) {
-      that.handleFailure(o, options.failure, options.scope);
+    callback.failure = (o) => {
+      this.handleFailure(o, options.failure, options.scope);
     };
 
     if (options.upload) {

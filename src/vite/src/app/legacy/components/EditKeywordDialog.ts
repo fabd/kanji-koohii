@@ -2,7 +2,6 @@
 
 import $$, { stopEvent } from "@lib/dom";
 import * as TRON from "@lib/tron";
-import * as Core from "@old/core";
 import EventCache from "@old/eventcache";
 import AjaxDialog from "@old/ajaxdialog";
 
@@ -21,7 +20,7 @@ export default class EditKeywordDialog {
 
   private callback: Function;
 
-  private dialog: IAjaxDialog | null = null;
+  private dialog: AjaxDialog | null = null;
 
   private evtCache: EventCache | null = null;
 
@@ -57,7 +56,7 @@ export default class EditKeywordDialog {
       },
     };
 
-    this.dialog = new (AjaxDialog as IAjaxDialog)(null, dlgopts);
+    this.dialog = new AjaxDialog(null, dlgopts);
     this.dialog.on("JsReset", this.onReset, this);
     this.dialog.show();
   }

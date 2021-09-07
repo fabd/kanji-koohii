@@ -19,7 +19,7 @@ import SelectionTable from "@old/selectiontable";
 
 class ManagePage {
   private viewDiv?: Element;
-  private viewPanel?: IAjaxPanel;
+  private viewPanel?: AjaxPanel;
   private selectionTable: SelectionTable | null = null;
 
   private editKeywordUri: string = "";
@@ -49,10 +49,10 @@ class ManagePage {
   }
 
   initView(selector: string): Element | undefined {
-    const elView = $$(selector)[0];
+    const elView = $$(selector)[0] as HTMLElement;
 
     if (elView) {
-      this.viewPanel = new (AjaxPanel as IAjaxPanel)(elView, {
+      this.viewPanel = new AjaxPanel(elView, {
         bUseShading: false,
         initContent: true,
         form: ".main-form",
@@ -61,7 +61,7 @@ class ManagePage {
           onContentInit: this.onContentInit.bind(this),
           onContentDestroy: this.onContentDestroy.bind(this),
         },
-      });
+      } as AjaxPanelOpts);
     }
 
     return elView;

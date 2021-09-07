@@ -49,31 +49,36 @@
 
 import $$, { DomJS, domGetById, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
-import * as Core from "@old/core";
 import AjaxRequest from "@old/ajaxrequest";
 import EventDispatcher from "@old/eventdispatcher";
 
-/**
- * Constructor.
- *
- * @param {String} url      Request url, if it contains a query string, don't set options.parameters
- * @param {Object} options  Constructor options
- */
-let AjaxQueue = Core.make();
+export default class AjaxQueue {
+  /** @type {Array<{url: string, options: Dictionary}>} */
+  blobs = [];
 
-AjaxQueue.prototype = {
-  blobs: [],
-  curblob: null,
-  flow: false,
+  /** @type {{url: string, options: Dictionary}=} */
+  curblob;
 
-  ajaxRequest: null,
+  /** @type {boolean} */
+  flow = false;
 
-  ajaxIndicator: null,
+  /** @type {AjaxRequest?} */
+  ajaxRequest = null;
 
-  /** @type DomJS<HTMLElement> */
-  $elAjaxError: null,
+  /** @type {HTMLElement?} */
+  ajaxIndicator = null;
 
-  init: function (options) {
+  /** @type {EventDispatcher} */
+  eventDispatcher;
+
+  /** @type {DomJS<HTMLElement>} */
+  $elAjaxError;
+
+  /**
+   *
+   * @param {Dictionary} options
+   */
+  constructor(options) {
     this.blobs = [];
     this.flow = false;
 
@@ -92,16 +97,19 @@ AjaxQueue.prototype = {
 
     // init ajax loading icon
     this.ajaxIndicator = domGetById(options.elLoading);
-  },
+  }
 
   /**
    * Add a new request to the queue.
    *
    * Parameters as for AjaxRequest constructor.
    *
-   * @see  AjaxRequest for all options.
+   * Cf. AjaxRequest for all options.
+   * 
+   * @param {string} url
+   * @param {Dictionary} options
    */
-  add: function (url, options) {
+  add(url, options) {
     // set some defaults
     options.method = options.method || "post";
 
@@ -121,9 +129,9 @@ AjaxQueue.prototype = {
       url: url,
       options: options,
     });
-  },
+  }
 
-  start: function () {
+  start() {
     if (this.flow) {
       return false;
     }
@@ -132,20 +140,20 @@ AjaxQueue.prototype = {
     this.eventDispatcher.notify("onQueueStart");
 
     this.next();
-  },
+  }
 
-  end: function () {
+  end() {
     this.blobs = [];
     this.flow = false;
 
     this.eventDispatcher.notify("onQueueEnd");
-  },
+  }
 
-  busy: function () {
+  busy() {
     return this.flow === true;
-  },
+  }
 
-  next: function () {
+  next() {
     var blob = (this.curblob = this.blobs.shift());
 
     // console.log('AjaxQueue.next(%o)', blob);
@@ -156,7 +164,7 @@ AjaxQueue.prototype = {
     }
 
     this.send(blob);
-  },
+  }
 
   /**
    * Sends or resends (in case of reconnect) the current element in
@@ -164,11 +172,11 @@ AjaxQueue.prototype = {
    *
    * @param {Object} blob   Cf. add()
    */
-  send: function (blob) {
+  send(blob) {
     // console.log('AjaxQueue.send(%o)', blob);
 
     this.ajaxRequest = new AjaxRequest(blob.url, blob.options);
-  },
+  }
 
   /**
    * YUI Connect custom event.
@@ -176,31 +184,31 @@ AjaxQueue.prototype = {
    * @param {String} eventType
    * @param {Object} args
    */
-  onAjaxStart: function (eventType, args) {
+  onAjaxStart(eventType, args) {
     $$(this.ajaxIndicator).css({
       position: "absolute",
       zIndex: 1000,
       display: "block",
     });
-  },
+  }
 
   /**
    * YUI Connect custom event.
    *
-   * @param {String} eventType
+   * @param {string} eventType
    * @param {Object} args
    */
-  onAjaxComplete: function (eventType, args) {
+  onAjaxComplete(eventType, args) {
     $$(this.ajaxIndicator).css({
       display: "none",
     });
-  },
+  }
 
   /**
    *
    * @param {Object} o   YUI Connect response object, augmented by AjaxRequest (responseJSON, ...)
    */
-  onAjaxSuccess: function (o) {
+  onAjaxSuccess(o) {
     // console.log('AjaxQueue::onAjaxSuccess(%o)', o);
 
     // success notification
@@ -211,14 +219,14 @@ AjaxQueue.prototype = {
     this.eventDispatcher.notify.apply(this.eventDispatcher, args);
 
     this.next();
-  },
+  }
 
   /**
    *
    *
    * @param {Object} o   YUI Connect response object, augmented by AjaxRequest (responseJSON, ...)
    */
-  onAjaxFailure: function (o) {
+  onAjaxFailure(o) {
     // console.log('AjaxQueue::onAjaxFailure(%o)', o);
 
     var sErrorMessage = this.ajaxRequest.getHttpHeader(o, "RTK-Error");
@@ -240,32 +248,30 @@ AjaxQueue.prototype = {
       sErrorMessage = o.status + " " + o.statusText;
       alert('Oops! The server returned a "' + sErrorMessage + '" error.');
     }
-  },
+  }
 
   /**
    * Called when clicking link in the elAjaxError dialog.
    *
    * Retry the last message and resume the queue.
    */
-  reconnectEvent: function (ev) {
+  reconnectEvent(ev) {
     this.setErrorDialog(false);
     this.send(this.curblob);
     stopEvent(ev);
-  },
+  }
 
   /**
    * Show or hide the Ajax error message.
    *
    * @param {string|boolean} sErrorMessage    String or false to hide the message.
    */
-  setErrorDialog: function (sErrorMessage) {
+  setErrorDialog(sErrorMessage) {
     if (sErrorMessage) {
       let el = this.$elAjaxError.down(".uiFcAjaxError_msg")[0];
       el.innerHTML = sErrorMessage;
     }
 
     this.$elAjaxError.display(!!sErrorMessage);
-  },
-};
-
-export default AjaxQueue;
+  }
+}

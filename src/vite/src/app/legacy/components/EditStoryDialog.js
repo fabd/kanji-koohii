@@ -2,6 +2,7 @@
  * Dialog to edit a story, within Flashcard Review or other pages.
  *
  */
+// @ts-check
 
 import AjaxDialog from "@old/ajaxdialog";
 import VueInstance from "@lib/helpers/vue-instance";
@@ -9,15 +10,19 @@ import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 
 const isMobile = window.innerWidth <= 720;
 
-var LOADING_WIDTH = 500;
+const LOADING_WIDTH = 500;
 
 export default class EditStoryDialog {
   // unique id to find when we need to reload the dialog
+  /** @type {number} */
   ucsId = 0;
+
+  /** @type {AjaxDialog} */
+  dialog;
 
   /** @type {TVueInstanceOf<typeof KoohiiEditStory>} */
   editStory = null;
-  /** @type Function */
+  /** @type {Function?} */
   editStoryUnmount = null;
 
   /**
@@ -30,7 +35,8 @@ export default class EditStoryDialog {
 
     this.requestUri = url;
 
-    var dlgopts = {
+    /** @type {AjaxDialogOpts} */
+    let dlgopts = {
       requestUri: this.requestUri,
       requestData: { ucsCode: ucsId, reviewMode: true },
       skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
@@ -80,6 +86,7 @@ export default class EditStoryDialog {
     elBody.appendChild(el);
   }
 
+  /** @param {number} ucsId */
   load(ucsId) {
     // Don't load the same kanji twice in a row
     if (this.ucsId === ucsId) {
@@ -122,6 +129,7 @@ export default class EditStoryDialog {
     return false;
   }
 
+  /** @param {import("@/lib/tron").TronInst} tron */
   onDialogResponse(tron) {
     // console.log('ondialogresponse tron %o', tron);
 

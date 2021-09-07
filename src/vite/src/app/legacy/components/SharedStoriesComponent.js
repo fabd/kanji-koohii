@@ -2,7 +2,6 @@
 
 import $$, { domGetById, insertBefore } from "@lib/dom";
 import { getApi } from "@app/api/api";
-import * as Core from "@old/core";
 import AjaxTable from "@old/ajaxtable";
 import EventDelegator from "@old/eventdelegator";
 

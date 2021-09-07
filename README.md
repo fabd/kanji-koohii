@@ -1,42 +1,59 @@
 # Kanji Koohii
 
-**Kanji Koohii** (previously known as "Reviewing the Kanji") is a web application designed to help Japanese language learners memorize the kanji. This repository is used to track development of the website, and allow users to report bugs and make suggestions. http://kanji.koohii.com
+**Kanji Koohii** is a web application designed to help Japanese language learners remember the kanji. https://kanji.koohii.com
 <br>
-<br>
+
 <p align="center">
-  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/kanji-koohii-desktop-preview-2017-01-14.png"><br>
-  <em>The desktop view</em>
-</p>
-<br>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/images/kanji-koohii-mobile-preview-2017-01-14.png"><br>
+  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/doc/github/README - mobile.png"><br>
   <em>The mobile view</em>
 </p>
+<br>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/fabd/kanji-koohii/master/doc/github/README - desktop.png"><br>
+  <em>The desktop view</em>
+</p>
 
-## The "Staging" Website
 
-The "staging" website is an alternate version of the website including changes in development.
+## Bugs & Feature Requests
 
-You can find it at : **staging • koohii • com**
+Bugs reports and feature requests are welcome, please create a [New issue](https://github.com/fabd/kanji-koohii/issues/new) in the Issues tab. 
 
-*VERY IMPORTANT: it is connected to the live database, meaning you login with your same credentials, any changes happen to your real account.*
+## Contributing
+In general **pull requests** for small fixes/typos are welcome.
 
-## Contributing Feedback
+For substantial changes it's probably a good idea to let me know in advance so I can tell you if I'm interested to merge and also give you useful information.
 
-Both **issues and suggestions** can be posted in the Issues tab. Just click [New issue](https://github.com/fabd/kanji-koohii/issues/new) and voila!
+Keep in mind I started the website all the way back in the [August 2005](https://kanji.koohii.com/news/2005/8), so there are challenges that come with maintaining the site for such a long time. It was a barebones php4 site for the first year. It was later refactored to Symfony MVC. Today Koohii still runs with Symfony 1 in the backend, but the frontend can take advantage of **ViteJs, Vue 3 and Tailwind CSS**.
 
-Consider **Watching** this repository (dropdown at the top of the screen) if you want to see what's going on, what changes on staging, and follow up on discussions.
+## Development
 
-**NEXT ITEMS**: [issues I'm working on next](https://github.com/fabd/kanji-koohii/issues?q=is%3Aissue+is%3Aopen+label%3ANEXT) are labelled `NEXT`.
+Installation is fairly simple with Docker CE. The MySQL (Mariadb) container includes a sample database with a selection of the top-voted kanji stories. See [Installation](doc/Installation.md) and [Database](doc/Database.md) guides.
 
-**DISCUSSIONS**: [issues labelled discussion](https://github.com/fabd/kanji-koohii/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Adiscussion%20) are opened indefinitely and are less focused. They are intended to brainstorm fixes or features. Any concrete steps that come out of it will be added as separate issues.
+For any questions related to the codebase, you may be able to reach me [on discord](https://discord.gg/VseqVcy3vS).
 
-## Other Ways to Contribute
+## LICENSE
 
-The website is not in a state for publishing fully on Github. See [Open Source Status](https://github.com/fabd/kanji-koohii/wiki/Open-Source-Status).
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Join the chat at https://gitter.im/kanji-koohii/develop](https://badges.gitter.im/kanji-koohii/develop.svg)](https://gitter.im/kanji-koohii/develop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Code**: I am looking at ways to accept contributions via components. For example if I author a Vue JS component I could create a separate repo for that, so I can both share re-usable parts and accept improvements for the website. In that way I can expose just parts that are more up to date, and don't have to worry too much about all the legacy code I have to manage.
+The source code is licensed as [AGPLv3](http://www.fsf.org/licensing/licenses/agpl-3.0.html) (see the LICENSE file), with exception of the following third party licenses.
 
-**Design**: the [design/PSDs folder](https://github.com/fabd/kanji-koohii/tree/master/design/PSDs)  contains resources that you can use if you want to contribute alternative better designs. Ask me if I can add something there.
+### Acknowledgments
 
-**Content**: the outdated documentation page of the website is also a good example of content that could be community maintained (as a Markdown file that I can include in the site build). I'll figure out things like that as I get to grips with Github.
+This list is not exhaustive and may be updated from time to time. The main purpose is to give an overview of things Kanji Koohii is built on.
+
+* Symfony 1.4 (main framework)
+* Zend Framework (bits and pieces)
+* [Vue.js](https://vuejs.org/)
+* [YUI2](http://yui.github.io/yui2/) (legacy Javascript being phased out)
+* [UTF-8 to Code Point Array Converter in PHP](https://hsivonen.fi/php-utf8/) by Henri Sivonen
+* FontAwesome (icons)
+
+### Copyright Notices
+
+**Choice of license**. The GNU AFFERO GENERAL PUBLIC LICENSE v3 is chosen to encourage cooperation, particularly in the case of network distributed software. Specifically: *"public use of a modified version, on a publicly accessible server, gives the public access to the source code of the modified version."* 
+
+**Original assets**. The website design and identity as "Kanji Koohii", as well as original artwork (such as the logo) are Copyright 2017 Fabrice Denis and intended for use exclusively at the kanji.koohii.com domain.
+
+**RTK Index and Keywords**: The AGPL license does not cover permission granted explicitly to Fabrice Denis and for use on Kanji Koohii (previously "Reviewing the Kanji") by James W. Heisig, author of "Remembering the Kanji", to use the RTK index and keywords. The database provided with the repository includes RTK index and keywords for development purposes only, and the permission to use them does *not* extend to derived works based on this public repository and its data files.
+
+**Font Awesome 5 Pro**: as a backer of [FontAwesome 5 Pro](https://www.kickstarter.com/projects/232193852/font-awesome-5), I may use FA 5 Pro resources in the future. The license is for my own use on my projects including Kanji Koohii, and does not extend to any derivative uses of this software (see [FAQ](https://www.kickstarter.com/projects/232193852/font-awesome-5/faqs)).

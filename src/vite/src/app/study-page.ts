@@ -4,23 +4,26 @@ import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
 import VueInstance from "@lib/helpers/vue-instance";
 import actb from "@old/autocomplete.js";
-import AjaxPanel from "@old/ajaxpanel";
 import EventDelegator from "@old/eventdelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
+type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
+
 const CLASS_ACTIVE = "active";
 
 export default {
   elEditFlashcard: null as Element | null,
+
   oEditFlashcard: null as EditFlashcardDialog | null,
 
   elSearch: (null as any) as HTMLInputElement,
 
   dictVisible: false,
-  dictPanel: null as AjaxPanel | null,
+
+  dictPanel: false,
 
   initialize() {
     // references
@@ -82,7 +85,7 @@ export default {
   initDictionary(el: Element) {
     $$("#DictHead").on("click", this.toggleDictionary.bind(this));
     this.dictVisible = false;
-    this.dictPanel = null;
+    this.dictPanel = false;
   },
 
   toggleDictionary(evt: Event) {
@@ -97,7 +100,7 @@ export default {
       let elMount = $elBody.down(".JsMount")[0];
       let { vm } = VueInstance(KoohiiDictList, elMount);
       let ucsId = parseInt($elBody[0].dataset.ucs!);
-      (vm as TVueInstanceOf<typeof KoohiiDictList>).load(ucsId);
+      (vm as TVueKoohiiDictList).load(ucsId);
 
       this.dictPanel = true;
     }

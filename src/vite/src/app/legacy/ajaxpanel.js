@@ -342,7 +342,7 @@ export default class AjaxPanel {
    * Do a POST request with optional parameters to add to the request.
    *
    * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
-   * @param {String} sUrl    Request uri (optional), if specifed overrides the form action!
+   * @param {string=} sUrl    Request uri (optional), if specifed overrides the form action!
    */
   post(oData, sUrl) {
     this.prepareConnect(oData, "post", sUrl);

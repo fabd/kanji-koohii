@@ -12,6 +12,8 @@ const isMobile = window.innerWidth <= 720;
 
 const LOADING_WIDTH = 500;
 
+/** @typedef {TVueInstanceOf<typeof KoohiiEditStory>} TVueKoohiiEditStory */
+
 export default class EditStoryDialog {
   // unique id to find when we need to reload the dialog
   /** @type {number} */
@@ -20,8 +22,9 @@ export default class EditStoryDialog {
   /** @type {AjaxDialog} */
   dialog;
 
-  /** @type {TVueInstanceOf<typeof KoohiiEditStory>} */
+  /** @type {TVueKoohiiEditStory?} */
   editStory = null;
+
   /** @type {Function?} */
   editStoryUnmount = null;
 
@@ -78,7 +81,7 @@ export default class EditStoryDialog {
     el.innerHTML =
       '<div class="uiBMenu">' +
       '<div class="uiBMenuItem">' +
-      '<a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>' +
+      '<a class="JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>' +
       "</div>" +
       "</div>";
 
@@ -151,7 +154,7 @@ export default class EditStoryDialog {
     let elMount = this.dialog.getBody();
 
     let { vm, unmount } = VueInstance(KoohiiEditStory, elMount, propsData);
-    this.editStory = vm;
+    this.editStory = /** @type {TVueKoohiiEditStory} */(vm);
     this.editStoryUnmount = unmount;
   }
 

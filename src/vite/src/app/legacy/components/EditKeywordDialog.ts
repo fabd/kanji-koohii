@@ -15,10 +15,12 @@ type EditKeywordSuccessResponse = {
   next?: boolean;
 };
 
+export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
+
 export default class EditKeywordDialog {
   private options: any;
 
-  private callback: Function;
+  private callback: EditKeywordCallback;
 
   private dialog: AjaxDialog | null = null;
 
@@ -36,7 +38,7 @@ export default class EditKeywordDialog {
    * @param {any} options   params (AjaxDialog requestData), context (YUI2 Panel option)
    * @param {function} callback   Callback to insert the updated keyword back into the page
    */
-  constructor(url: string, options: Dictionary, callback: Function) {
+  constructor(url: string, options: Dictionary, callback: EditKeywordCallback) {
     console.log("EditKeywordDialog(%s, %o)", url, options);
 
     this.options = options;
@@ -120,7 +122,7 @@ export default class EditKeywordDialog {
     this.callback(props.keyword, props.next);
   }
 
-  onReset(e: Event, el: Element) {
+  onReset() {
     let input = this.getInput();
     input.value = this.props!.orig_keyword;
     input.focus();

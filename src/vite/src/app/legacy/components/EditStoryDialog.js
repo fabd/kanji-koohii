@@ -64,10 +64,8 @@ export default class EditStoryDialog {
     this.dialog = new AjaxDialog(null, dlgopts);
     this.dialog.show();
 
-    // Issue #106
-    if (isMobile) {
-      this.addCloseButton();
-    }
+    // loading state (first load)
+    this.addCloseButton();
   }
 
   // Issue #106 / hacky solution but this will be refactored to Vue anyway
@@ -99,12 +97,9 @@ export default class EditStoryDialog {
     // cleanup
     this.onDialogDestroy();
 
-    // clear the old html while loading
+    // loading state (clears the previous contents of the dialog body)
     this.dialog.setBodyLoading(LOADING_WIDTH);
-
-    if (isMobile) {
-      this.addCloseButton();
-    }
+    this.addCloseButton();
 
     this.ucsId = ucsId;
 
@@ -154,7 +149,7 @@ export default class EditStoryDialog {
     let elMount = this.dialog.getBody();
 
     let { vm, unmount } = VueInstance(KoohiiEditStory, elMount, propsData);
-    this.editStory = /** @type {TVueKoohiiEditStory} */(vm);
+    this.editStory = /** @type {TVueKoohiiEditStory} */ (vm);
     this.editStoryUnmount = unmount;
   }
 

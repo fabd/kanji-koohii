@@ -29,8 +29,8 @@
  */
 
 .uiIBtn {
-  display:-moz-inline-box; display:inline-block; padding:0 10px; 
-  /* no outline */ outline:none; -moz-user-select: none; -webkit-user-select: none;
+  display:inline-block; padding:0 10px; 
+  @apply outline-none select-none;
 }
 
 .uiIBtn span { white-space:nowrap; }
@@ -46,8 +46,12 @@
   background:#6fa300;
   background: linear-gradient(to bottom,  #6fa300 0%,#649300 100%);
 
-  color:#fff; font:bold 15px/34px Arial, sans-serif; height:34px; text-shadow:0 -1px rgba(0,0,0,0.5);
+  color:#fff;
+  font:bold 15px/34px Arial, sans-serif;
+  height:34px;
+  text-shadow:0 -1px rgba(0,0,0,0.5);
 }
+.uiIBtn:hover { color:#fff; }
 .uiIBtnDefault:hover { box-shadow:0 1px 2px 1px rgba(0, 0, 0, 0.2); }
 
 /* uiIBtn :: additional colours */

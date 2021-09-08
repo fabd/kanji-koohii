@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[100px] bg-[#ccc]">
+  <div class="min-h-[100px]">
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
       <input :value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
@@ -80,7 +80,7 @@
                       value="Cancel"
                       name="cancel"
                       title="Cancel changes"
-                      class="btn btn-default inline-block w-auto "
+                      class="btn btn-default inline-block w-auto"
                       @click="onCancel"
                     />
                   </div>
@@ -143,6 +143,16 @@
       </div>
       <!-- /#my-story -->
     </form>
+
+    <template v-if="isReviewMode">
+      <div class="uiBMenu">
+        <div class="uiBMenuItem">
+          <a class="JSDialogHide uiIBtn uiIBtnDefault" href="#">
+            <span>Close</span>
+          </a>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 

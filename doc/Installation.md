@@ -47,9 +47,13 @@ Init node packages (ignore warnings about "fsevents" and "ajv"):
 
     npm install
 
-Run the webpack build (you can also use `npm run watch`):
+Run the webpack build:
 
     npm run dev
+
+If you want vite to watch for changes to the source, run this instead of the above:
+
+    npm run watch
 
 You should see something like this (files are output to `src/web/build/pack/`):
 

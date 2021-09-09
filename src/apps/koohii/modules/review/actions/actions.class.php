@@ -248,16 +248,14 @@ class reviewActions extends sfActions
    */
   private function handleFlashcardRequest($request, $options)
   {
-    $oJson = coreJson::decode($request->getParameter('json', '{}'));
+    $fcrData = json_decode($request->getParameter('json', '{}'));
 
-    if (!empty($oJson))
-    {
-      $flashcardReview = new uiFlashcardReview($options);
-      $this->getResponse()->setContentType('application/json');
-      return $this->renderText( $flashcardReview->handleJsonRequest($oJson) );
+    if (empty($fcrData)) {
+      throw new rtkAjaxException('Empty JSON Request.');
     }
 
-    throw new rtkAjaxException('Empty JSON Request.');
+    $flashcardReview = new uiFlashcardReview($options);    
+    return $this->renderJson($flashcardReview->handleRequest($fcrData));
   }
 
   /**

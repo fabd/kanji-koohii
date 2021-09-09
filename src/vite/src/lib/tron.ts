@@ -35,7 +35,7 @@
 
 import Lang from "@lib/lang";
 
-// keep in sync with constants in /lib/JsTRON.php
+// keep in sync with constants in /lib/JsTron.php
 
 // TRON message was not found in given source
 export enum STATUS {

@@ -30,7 +30,7 @@
 function get_flashcard_button($userId, $context, $ucsId) {
   $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
   $dialogUri  = $context->getController()->genUrl('flashcards/dialog');
-  $params     = esc_specialchars(coreJson::encode(['ucs' => intval($ucsId)]));
+  $params     = esc_specialchars(json_encode(['ucs' => intval($ucsId)]));
 //<div id="EditFlashcard" class="f$bFlashcard">
 //  <a href="#" title="Edit Flashcard" class="uiGUI JsEditFlashcard" data-uri="$dialogUri" data-param="$params">&nbsp;</a>
 //</div>

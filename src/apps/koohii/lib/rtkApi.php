@@ -45,7 +45,7 @@ class rtkApi
     $ch = curl_init($url);
 
     //Encode the array into JSON.
-    $jsonDataEncoded = coreJson::encode($jsonData);
+    $jsonDataEncoded = json_encode($jsonData);
      
     //Tell cURL that we want to send a POST request.
     curl_setopt($ch, CURLOPT_POST, 1);

@@ -56,20 +56,16 @@ class labsActions extends sfActions
    */
   public function executeAjax($request)
   {
-    $oJson = coreJson::decode($request->getParameter('json', '{}'));
+    $fcrData = json_decode($request->getParameter('json', '{}'));
 
-    if (!empty($oJson))
-    {
-      $flashcardReview = new uiFlashcardReview(
-        [
-          'fn_get_flashcard' => ['rtkLabs', 'getVocabShuffleCardData']
-        ]
-      );
-
-      $this->getResponse()->setContentType('application/json');
-      return $this->renderText( $flashcardReview->handleJsonRequest($oJson) );
+    if (empty($fcrData)) {
+      throw new rtkAjaxException('Empty JSON Request.');
     }
 
-    throw new rtkAjaxException('Empty JSON Request.');
+    $flashcardReview = new uiFlashcardReview([
+      'fn_get_flashcard' => ['rtkLabs', 'getVocabShuffleCardData']
+    ]);
+
+    return $this->renderJson($flashcardReview->handleRequest($fcrData));
   }
 }

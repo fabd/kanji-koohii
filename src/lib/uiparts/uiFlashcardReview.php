@@ -34,19 +34,19 @@
  *                      $id is the same as $data->id, and must be sanitized.
  *                      Returns false if the update was not succesfull.
  *  
- *   handleJsonRequest($oJson)
  *
- * Format of JSON request:
+ * Format of data passed to handleRequest():
  * 
  *   get                  An array of item ids
  *                        [1, 2, 3, ...]
  *
- *   opt                  Options for the flashcard format to retrieve
+ *   opt                  Options sent with the request, passed to fn_get_flashcard()
  *
  *   put                  An array of flashcard update data as objects, each object has "id" property.
  *                        [ {id: 1, ... }, { id:2, ... }, ... ]
  *
- * Format of JSON response:
+ * 
+ * Format of response:
  * 
  *   get                  An array of flashcard data as objects, each object has an "id" property that
  *                        matches one of the ids from the JSON request.
@@ -139,34 +139,34 @@ class uiFlashcardReview
   }
 
   /**
-   * Handles JSON request and returns a JSON response
+   * Handles request from the client side FlashcardReview
    * 
-   * @param object  JSON request as a native php object (stdClass)
+   * @param object $fcrData   Request from FlashcardReview client side
    * 
-   * @return        JSON response as a string
+   * @return object   Response to be encoded as a JSON response
    */
-  public function handleJsonRequest($oJson)
+  public function handleRequest(object $fcrData)
   {
     $oResponse = new stdClass;
     
     // get flashcard data
-    if (isset($oJson->get) && is_array($oJson->get))
+    if (isset($fcrData->get) && is_array($fcrData->get))
     {
       $get_cards = [];
 
       // flashcard options
       $cardOpts = [];
-      if (isset($oJson->opt))
+      if (isset($fcrData->opt))
       {
-        $cardOpts = (object)$oJson->opt;
+        $cardOpts = (object)$fcrData->opt;
       }
 
       // do not accept too large prefetch (tampering with ajax request on client)
-      if (count($oJson->get) > self::MAX_PREFETCH) {
-        $oJson->get = array_slice($oJson->get, 0, self::MAX_PREFETCH);
+      if (count($fcrData->get) > self::MAX_PREFETCH) {
+        $fcrData->get = array_slice($fcrData->get, 0, self::MAX_PREFETCH);
       }
       
-      foreach ($oJson->get as $id)
+      foreach ($fcrData->get as $id)
       {
         $cardId = (int)$id;
 
@@ -184,11 +184,11 @@ class uiFlashcardReview
     }
 
     // update flashcard reviews
-    if (isset($oJson->put) && is_array($oJson->put))
+    if (isset($fcrData->put) && is_array($fcrData->put))
     {
       // don't update more than MAX_UPDATE cards, client will know
       // because the success status is returned only for updated cards
-      $items = array_slice($oJson->put, 0, self::MAX_UPDATE);
+      $items = array_slice($fcrData->put, 0, self::MAX_UPDATE);
 
       if (!isset($this->options->fn_put_flashcard)) {
         throw new rtkAjaxException('uiFlashcardReview: fn_put_flashcard is not set');
@@ -200,9 +200,9 @@ class uiFlashcardReview
     }
 
 // simulate timeout
-// if (isset($oJson->flush)) { sleep(2.5); }
+// if (isset($fcrData->flush)) { sleep(2.5); }
 
-    return coreJson::encode($oResponse);
+    return $oResponse;
   }
 
   /**

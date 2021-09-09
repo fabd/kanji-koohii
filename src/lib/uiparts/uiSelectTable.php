@@ -147,8 +147,7 @@ class uiSelectTable
     $config = $bindObj->getConfig();
     if (is_string($config))
     {
-      // read config as a json string
-      $config = coreJson::decode($config);
+      $config = json_decode($config);
     }
 //DBG::printr($config);exit;
     

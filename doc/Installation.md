@@ -55,13 +55,14 @@ If you want vite to watch for changes to the source, run this instead of the abo
 
     npm run watch
 
-You should see something like this (files are output to `src/web/build/pack/`):
+You should see something like this (files are output to `web/build/dist/`):
 
-                    Asset     Size          Chunks             Chunk Names
-    landing-bundle.raw.js  678 KiB  landing-bundle  [emitted]  landing-bundle
-    review-bundle.raw.js   580 KiB   review-bundle  [emitted]  review-bundle
-    root-bundle.raw.js     731 KiB     root-bundle  [emitted]  root-bundle
-    study-bundle.raw.js    497 KiB    study-bundle  [emitted]  study-bundle
+    vite v2.5.6 dev server running at:
+
+    > Local:    http://localhost:3000/
+    > Network:  http://172.20.0.3:3000/
+
+    ready in 3495ms.
 
 You should be able to see the homepage: http://localhost/index_dev.php
 

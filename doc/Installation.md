@@ -38,6 +38,10 @@ Also init some private config files:
     cp web/.htaccess_default web/.htaccess
     cp apps/koohii/config/app.example.yml apps/koohii/config/app.yml
     cp apps/koohii/config/settings.example.yml apps/koohii/config/settings.yml
+    
+For the next steps you should be in the vite directory.
+
+    cd vite/
 
 Init node packages (ignore warnings about "fsevents" and "ajv"):
 

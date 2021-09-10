@@ -21,8 +21,8 @@
 
 Pre-requisites:
 
-* Install [Docker CE](https://docs.docker.com/install/) on Ubuntu, or [Docker Desktop](https://docs.docker.com/desktop/mac/install/) on Macs.
-* `docker` and `docker-compose` are available in your terminal
+- Install [Docker CE](https://docs.docker.com/install/) on Ubuntu, or [Docker Desktop](https://docs.docker.com/desktop/mac/install/) on Macs.
+- `docker` and `docker-compose` are available in your terminal
 
 **Init bash history files** which are persisted through Docker volumes:
 
@@ -30,13 +30,13 @@ Pre-requisites:
 
 **Build the containers**.
 
-> :point_right: &nbsp; *Note right after the containers are up, MySQL/Mariadb may take a minute to populate the local database. Check with `docker-compose logs -f`. A new folder `mysql56/` will be created in the root directory, which maintains the state of the database.*
+> :point_right: &nbsp; Note right after the containers are up, MySQL/Mariadb may take a minute to populate the local database. Check with `docker-compose logs -f`. A new folder `mysql56/` will be created in the root directory, which maintains the state of the database.
 
     docker-compose up -d
 
-**CLI into the `web` (php/Apache) container**. You should see a colored prompt: `[php]  root /var/www/html $`.
+**CLI into the `web` (php/Apache) container**. You should see a colored prompt: `[php] root /var/www/html $`.
 
-> :point_right: &nbsp; *Note: the path `/var/www/html` is mapped to `src/` which is the Symfony root folder*.
+> :point_right: &nbsp; Note: the path `/var/www/html` is mapped to `src/` which is the Symfony root folder.
 
     docker-compose exec web bash
 
@@ -62,7 +62,7 @@ Pre-requisites:
 
 Remember to start the **Vite dev server**, otherwise the site will look broken without any stylesheets applied.
 
-:point_right: &nbsp; *Note: if the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead. See `USE_DEV_SERVER` info in [Development.md](./Development.md)*
+> :point_right: &nbsp; Note: if the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead. See `USE_DEV_SERVER` info in [Development.md](./Development.md)
 
     cd vite/
     npm run dev
@@ -71,12 +71,11 @@ Now you should be able to preview the site at (refresh the page if it looks brok
 
     http://localhost/index_dev.php
 
-:point_right: Note: if somehow your `vite` dev server is not running at `http://localhost:3000/` then edit `VITE_SERVER` in `coreWebResponse.php`
+> :point_right: &nbsp; Note: if somehow your `vite` dev server is not running at `http://localhost:3000/` then edit `VITE_SERVER` in `coreWebResponse.php`
 
 You can sign in as `admin`, or `guest` or any of the users that are linked to the shared stories. All users in the sample database have a the password `test` and a dummy email.
 
 You can of course create additional accounts. No emails are sent in development mode.
-
 
 # Development & Production Builds
 
@@ -84,13 +83,11 @@ Production scripts are not included.
 
 For the produciton experience, use `USE_DEV_SERVER = false` with `vite build --watch`.
 
-
 Please note Kanji Koohii's code base goes back to the summer of 2005!
 
 **Php**: The backend code started as plain php files. It was later refactored to Symfony 1.x (with some remaining small hacks / tweaks). The php code was updated to run on php 7. In general newer developments should use less php templating and more client side code.
 
 **Docker setup**: we use two simple containers: `web` for Php 7.x & Apache, `db` for MysQL 5.6. For convenience, both containers maintain bash history and custom aliases through a Docker volume (see `docker-compose.yml`).
-
 
 ## The Symfony 1 Project Structure
 
@@ -100,14 +97,12 @@ All application configuration is in `apps/koohii/config/` Yaml files: `app.yml`,
 
 The global layout is in `apps/koohii/templates/layout.php`.
 
-
 # Working with the Php-Apache container
 
 ## Environments
 
-* development: `index.php` or `index_dev.php`
-* test: `index_test.php`
-
+- development: `index.php` or `index_dev.php`
+- test: `index_test.php`
 
 ## Using Webpack
 
@@ -127,16 +122,15 @@ Update the `ServerName` in `.docker/php-apache/koohii.vhosts.conf`, then rebuild
 
 Also make sure to update `website_url` setting located in `src/apps/koohii/config/app.yml`. This setting is used to generate links in a few places.
 
-
 # Working with the MySQL container
 
-The local database is initialized from a SQL file located in `.docker/db/initdb.d/`. This folder is mapped to the MySQL Docker image (cf.  [Initializing a fresh instance](https://hub.docker.com/_/mysql/#initializing-a-fresh-instance)).
+The local database is initialized from a SQL file located in `.docker/db/initdb.d/`. This folder is mapped to the MySQL Docker image (cf. [Initializing a fresh instance](https://hub.docker.com/_/mysql/#initializing-a-fresh-instance)).
 
-The database state itself is maintained through a volume. The first time you run the *db*  service, a `mysql56` folder will appear in the root directory on your host. If you delete this folder, any changes like new user accounts, stories and flashcards will be lost.
+The database state itself is maintained through a volume. The first time you run the _db_ service, a `mysql56` folder will appear in the root directory on your host. If you delete this folder, any changes like new user accounts, stories and flashcards will be lost.
 
 ### About the sample database
 
-See [Database.md](./Database.md) in doc/  folder.
+See [Database.md](./Database.md) in doc/ folder.
 
 ### MySQL Workbench
 
@@ -147,14 +141,13 @@ You can use [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) on you
 To use mysql CLI, start bash from the `db` container:
 
     dc exec db bash
-    [mysql] root /etc/mysql $ 
+    [mysql] root /etc/mysql $
 
 Then run **mysql** CLI:
 
     mysql -u koohii -pkoohii -h localhost -D db_github --default-character-set=utf8
 
 You can also add an alias in `.docker/db/root/.bashrc`.
-
 
 ### Rebuild / reset the sample database
 
@@ -167,7 +160,6 @@ Should you need to reset the database:
 Then rebuild the MySQL container:
 
     $ dc down ; dc build ; dc up -d
-
 
 # F.A.Q.
 
@@ -182,11 +174,10 @@ Make sure both containers are running, and don't show "exit 0":
 
     $ dc ps
 
-    Name                 Command             State              Ports       
+    Name                 Command             State              Ports
     --------------------------------------------------------------------------------
-    kk_mysql       docker-entrypoint.sh mysqld   Up      0.0.0.0:3306->3306/tcp     
+    kk_mysql       docker-entrypoint.sh mysqld   Up      0.0.0.0:3306->3306/tcp
     kk_webserver   apache2ctl -D FOREGROUND      Up      443/tcp, 0.0.0.0:80->80/tcp
-
 
 If one container exited (eg. Apache complaining that httpd is already running), try:
 
@@ -196,7 +187,6 @@ You can also check the logs:
 
     dc logs -f
 
-
 ## Developing with Symfony 1.x
 
 [Documentation for Symfony 1.x](https://symfony.com/legacy/doc).
@@ -204,7 +194,6 @@ You can also check the logs:
 Most `yml` configuration changes are picked up automatically. In some cases such as adding a new php class, the config needs to be rebuilt. From the `web` bash (`dc exec web bash`):
 
     sf cache:clear --type=config
-
 
 ## Checking for errors
 
@@ -215,7 +204,6 @@ From the `web` container:
 Or use the bash alias (see .docker/php-apache/root/.bash_aliases):
 
     phperrlog
-
 
 ## Generate favicons (optional)
 

@@ -64,12 +64,12 @@ Pre-requisites:
 
 Remember to start the **Vite dev server**, otherwise the site will look broken without any stylesheets applied.
 
-> :point_right: &nbsp; Note: if the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead. See `USE_DEV_SERVER` info in [Development.md](./Development.md)
+> :point_right: &nbsp; Note: if the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead (aliased to `npm run watch`). See `USE_DEV_SERVER` info in [Development.md](./Development.md)
 
     cd vite/
     npm run dev
 
-You should see something like this (files are output to `web/build/dist/`):
+You should see something like this:
 
     vite v2.5.6 dev server running at:
 

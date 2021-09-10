@@ -1,11 +1,9 @@
 1. [First Time Setup](#first-time-setup)
-2. [Running the website locally](#running-the-website-locally)
+2. [Running the website](#running-the-website)
 3. [Development & Production Builds](#development--production-builds)
    1. [The Symfony 1 Project Structure](#the-symfony-1-project-structure)
 4. [Working with the Php-Apache container](#working-with-the-php-apache-container)
-   1. [Environments](#environments)
-   2. [Using Webpack](#using-webpack)
-   3. [Using virtual host name](#using-virtual-host-name)
+   1. [Using virtual host name](#using-virtual-host-name)
 5. [Working with the MySQL container](#working-with-the-mysql-container)
       1. [About the sample database](#about-the-sample-database)
       2. [MySQL Workbench](#mysql-workbench)
@@ -56,9 +54,12 @@ Pre-requisites:
 
 **Install node packages** (ignore warnings about "fsevents" and "ajv"):
 
+> :point_right: &nbsp; Note how our package.json, and **npm** scripts are run from the **vite/** subfolder -- which is NOT the Symfony root folder (so to eg. run Symfony's `sf cache:clear --type=config` you'll want to `cd ..` out of the vite/ subfolder).
+
+    cd vite/
     npm install
 
-# Running the website locally
+# Running the website
 
 Remember to start the **Vite dev server**, otherwise the site will look broken without any stylesheets applied.
 
@@ -99,18 +100,11 @@ The global layout is in `apps/koohii/templates/layout.php`.
 
 # Working with the Php-Apache container
 
-## Environments
+This setup assumes files are created & modified from outside the container, otherwise there may be permission issues (YMMV). Occasionally folders and files can appear with owner `www-data`. I have no idea why this happens. All files and folders in the php/apache container should show up as `root root`.
 
-- development: `index.php` or `index_dev.php`
-- test: `index_test.php`
+- Typically I run VSCode, Sublime Merge, Vim, git etc. **from the host**.
 
-## Using Webpack
-
-This setup assumes files are edited/added/removed from outside the container, otherwise there are annoying permission issues (in Ubuntu, at least).
-
-Typically I run git & git GUIs, as well as grep/ack/etc, from a terminal in the host.
-
-All `npm` commands are run from the container, as well as `batch/build.sh` script.
+- All `npm` scripts, including the Vite client are run **from the container**.
 
 ## Using virtual host name
 

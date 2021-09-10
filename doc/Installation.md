@@ -38,22 +38,31 @@ Also init some private config files:
     cp web/.htaccess_default web/.htaccess
     cp apps/koohii/config/app.example.yml apps/koohii/config/app.yml
     cp apps/koohii/config/settings.example.yml apps/koohii/config/settings.yml
+    
+For the next steps you should be in the vite directory.
+
+    cd vite/
 
 Init node packages (ignore warnings about "fsevents" and "ajv"):
 
     npm install
 
-Run the webpack build (you can also use `npm run watch`):
+Run the webpack build:
 
     npm run dev
 
-You should see something like this (files are output to `src/web/build/pack/`):
+If you want vite to watch for changes to the source, run this instead of the above:
 
-                    Asset     Size          Chunks             Chunk Names
-    landing-bundle.raw.js  678 KiB  landing-bundle  [emitted]  landing-bundle
-    review-bundle.raw.js   580 KiB   review-bundle  [emitted]  review-bundle
-    root-bundle.raw.js     731 KiB     root-bundle  [emitted]  root-bundle
-    study-bundle.raw.js    497 KiB    study-bundle  [emitted]  study-bundle
+    npm run watch
+
+You should see something like this (files are output to `web/build/dist/`):
+
+    vite v2.5.6 dev server running at:
+
+    > Local:    http://localhost:3000/
+    > Network:  http://172.20.0.3:3000/
+
+    ready in 3495ms.
 
 You should be able to see the homepage: http://localhost/index_dev.php
 

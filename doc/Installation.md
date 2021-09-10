@@ -51,6 +51,10 @@ Pre-requisites:
     cp web/.htaccess_default web/.htaccess
     cp apps/koohii/config/app.example.yml apps/koohii/config/app.yml
     cp apps/koohii/config/settings.example.yml apps/koohii/config/settings.yml
+    
+For the next steps you should be in the vite directory.
+
+    cd vite/
 
 **Install node packages** (ignore warnings about "fsevents" and "ajv"):
 
@@ -67,6 +71,16 @@ Remember to start the **Vite dev server**, otherwise the site will look broken w
 
     cd vite/
     npm run dev
+
+You should see something like this (files are output to `web/build/dist/`):
+
+    vite v2.5.6 dev server running at:
+
+    > Local:    http://localhost:3000/
+    > Network:  http://172.20.0.3:3000/
+
+    ready in 3495ms.
+
 
 Now you should be able to preview the site at (refresh the page if it looks broken):
 

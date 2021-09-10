@@ -9,11 +9,12 @@
       2. [MySQL Workbench](#mysql-workbench)
       3. [Using MySQL from the command line](#using-mysql-from-the-command-line)
       4. [Rebuild / reset the sample database](#rebuild--reset-the-sample-database)
-6. [F.A.Q.](#faq)
+6. [Working with Symfony 1.x](#working-with-symfony-1x)
+   1. [Clearing Symfony's cache](#clearing-symfonys-cache)
+   2. [Debugging & checking for errors](#debugging--checking-for-errors)
+7. [F.A.Q.](#faq)
    1. [Docker](#docker)
-   2. [Developing with Symfony 1.x](#developing-with-symfony-1x)
-   3. [Checking for errors](#checking-for-errors)
-   4. [Generate favicons (optional)](#generate-favicons-optional)
+   2. [Generate favicons (optional)](#generate-favicons-optional)
 
 # First Time Setup
 
@@ -51,14 +52,10 @@ Pre-requisites:
     cp web/.htaccess_default web/.htaccess
     cp apps/koohii/config/app.example.yml apps/koohii/config/app.yml
     cp apps/koohii/config/settings.example.yml apps/koohii/config/settings.yml
-    
-For the next steps you should be in the vite directory.
-
-    cd vite/
 
 **Install node packages** (ignore warnings about "fsevents" and "ajv"):
 
-> :point_right: &nbsp; Note how our package.json, and **npm** scripts are run from the **vite/** subfolder -- which is NOT the Symfony root folder (so to eg. run Symfony's `sf cache:clear --type=config` you'll want to `cd ..` out of the vite/ subfolder).
+> :point_right: &nbsp; Note how **npm** scripts are run from the **vite/** subfolder -- which is NOT the Symfony root folder
 
     cd vite/
     npm install
@@ -80,7 +77,6 @@ You should see something like this (files are output to `web/build/dist/`):
     > Network:  http://172.20.0.3:3000/
 
     ready in 3495ms.
-
 
 Now you should be able to preview the site at (refresh the page if it looks broken):
 
@@ -169,6 +165,33 @@ Then rebuild the MySQL container:
 
     $ dc down ; dc build ; dc up -d
 
+# Working with Symfony 1.x
+
+Kanji Koohii is still running an outdated version fo Symfony. Unfortunately at this point it would take a LOT of work to refactor it. That said, SF 1.x is pretty easy to use.
+
+The [FriendsOfSymfony1](https://github.com/FriendsOfSymfony1/symfony1) community-driven fork has been merged, which provides support for PHP 7.
+
+- [The Definitive Guide (1.2)](https://symfony.com/legacy/doc/book/1_2) is very good for a quick overview
+- [Documentation for Symfony 1.x](https://symfony.com/legacy/doc)
+
+## Clearing Symfony's cache
+
+Most YAML (`.yml`) configuration changes are picked up automatically (for example, adding a javascript asset to one of the `view.yml` files). In some cases such as adding a new php class, Symfony's autoloader may not pick it up. In this case you'll want to manually rebuild the cache. Run the following command from the `web` (php/apache) container:
+
+> :exclamation: &nbsp; Make sure to be in the Symfony root folder `src/`, **not** in the Vite subfolder (`src/vite/`)
+
+    sf cache:clear --type=config
+
+## Debugging & checking for errors
+
+A really simple way to debug on the php side is to use [error_log](https://www.php.net/manual/en/function.error-log) function. Then check the log in real time (from the `web` container):
+
+    tail -f /var/log/apache2/error.log
+
+Or use the bash alias (see .docker/php-apache/root/.bash_aliases):
+
+    phperrlog
+
 # F.A.Q.
 
 ## Docker
@@ -194,24 +217,6 @@ If one container exited (eg. Apache complaining that httpd is already running), 
 You can also check the logs:
 
     dc logs -f
-
-## Developing with Symfony 1.x
-
-[Documentation for Symfony 1.x](https://symfony.com/legacy/doc).
-
-Most `yml` configuration changes are picked up automatically. In some cases such as adding a new php class, the config needs to be rebuilt. From the `web` bash (`dc exec web bash`):
-
-    sf cache:clear --type=config
-
-## Checking for errors
-
-From the `web` container:
-
-    tail -f /var/log/apache2/error.log
-
-Or use the bash alias (see .docker/php-apache/root/.bash_aliases):
-
-    phperrlog
 
 ## Generate favicons (optional)
 

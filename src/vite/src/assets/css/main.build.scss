@@ -27,6 +27,19 @@ h3 {
 
 @import "./_theme.scss";
 
+// --------------------------------------------------------------------
+// These may go in Tailwind config later.
+// --------------------------------------------------------------------
+.text-danger {
+  color: $--clr-danger-text;
+}
+.bg-confirm {
+  background-color: $--clr-bg-gl;
+}
+.text-confirm {
+  color: $--clr-bg-gd;
+}
+
 @import "../sass/_utilities.scss";
 
 /* ---------------------------- */

@@ -62,11 +62,16 @@ Pre-requisites:
 
 # Running the website
 
-Remember to start the **Vite dev server**, otherwise the site will look broken without any stylesheets applied.
-
-> :point_right: &nbsp; Note: if the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead (aliased to `npm run watch`). See `USE_DEV_SERVER` info in [Development.md](./Development.md)
+From the `web` (php/apache) container, cd into the **vite/** subfolder:
 
     cd vite/
+
+Start the **Vite dev server** (otherwise the site will look broken without any stylesheets applied).
+
+> :point_right: &nbsp; If the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead. See `USE_DEV_SERVER` info in [Development.md](./Development.md)
+
+> :point_right: &nbsp; You can also just type `vite` instead of `npm run dev` (a few aliases are setup in `./docker/php-apache/bash/.bash_aliases`).
+
     npm run dev
 
 You should see something like this:

@@ -37,7 +37,7 @@
  *
  * Callback signature:
  *
- *   myCallback(e, matchedEl)
+ *   myCallback(e: Event, matchedEl: HTMLElement)
  *
  *     The callback receives the event object, and the current element in the bubble chain.
  *     Usually matchedEl is the element with the class name that was registered with on().

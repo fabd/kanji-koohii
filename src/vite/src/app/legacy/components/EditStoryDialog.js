@@ -2,6 +2,7 @@
  * Dialog to edit a story, within Flashcard Review or other pages.
  *
  */
+// @ts-check
 
 import AjaxDialog from "@old/ajaxdialog";
 import VueInstance from "@lib/helpers/vue-instance";
@@ -9,15 +10,22 @@ import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 
 const isMobile = window.innerWidth <= 720;
 
-var LOADING_WIDTH = 500;
+const LOADING_WIDTH = 500;
+
+/** @typedef {TVueInstanceOf<typeof KoohiiEditStory>} TVueKoohiiEditStory */
 
 export default class EditStoryDialog {
   // unique id to find when we need to reload the dialog
+  /** @type {number} */
   ucsId = 0;
 
-  /** @type {TVueInstanceOf<typeof KoohiiEditStory>} */
+  /** @type {AjaxDialog} */
+  dialog;
+
+  /** @type {TVueKoohiiEditStory?} */
   editStory = null;
-  /** @type Function */
+
+  /** @type {Function?} */
   editStoryUnmount = null;
 
   /**
@@ -30,7 +38,8 @@ export default class EditStoryDialog {
 
     this.requestUri = url;
 
-    var dlgopts = {
+    /** @type {AjaxDialogOpts} */
+    let dlgopts = {
       requestUri: this.requestUri,
       requestData: { ucsCode: ucsId, reviewMode: true },
       skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
@@ -55,10 +64,8 @@ export default class EditStoryDialog {
     this.dialog = new AjaxDialog(null, dlgopts);
     this.dialog.show();
 
-    // Issue #106
-    if (isMobile) {
-      this.addCloseButton();
-    }
+    // loading state (first load)
+    this.addCloseButton();
   }
 
   // Issue #106 / hacky solution but this will be refactored to Vue anyway
@@ -72,7 +79,7 @@ export default class EditStoryDialog {
     el.innerHTML =
       '<div class="uiBMenu">' +
       '<div class="uiBMenuItem">' +
-      '<a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>' +
+      '<a class="JSDialogHide uiIBtn uiIBtnDefault" href="#"><span>Close</span></a>' +
       "</div>" +
       "</div>";
 
@@ -80,6 +87,7 @@ export default class EditStoryDialog {
     elBody.appendChild(el);
   }
 
+  /** @param {number} ucsId */
   load(ucsId) {
     // Don't load the same kanji twice in a row
     if (this.ucsId === ucsId) {
@@ -89,12 +97,9 @@ export default class EditStoryDialog {
     // cleanup
     this.onDialogDestroy();
 
-    // clear the old html while loading
+    // loading state (clears the previous contents of the dialog body)
     this.dialog.setBodyLoading(LOADING_WIDTH);
-
-    if (isMobile) {
-      this.addCloseButton();
-    }
+    this.addCloseButton();
 
     this.ucsId = ucsId;
 
@@ -122,6 +127,7 @@ export default class EditStoryDialog {
     return false;
   }
 
+  /** @param {import("@/lib/tron").TronInst} tron */
   onDialogResponse(tron) {
     // console.log('ondialogresponse tron %o', tron);
 
@@ -143,7 +149,7 @@ export default class EditStoryDialog {
     let elMount = this.dialog.getBody();
 
     let { vm, unmount } = VueInstance(KoohiiEditStory, elMount, propsData);
-    this.editStory = vm;
+    this.editStory = /** @type {TVueKoohiiEditStory} */ (vm);
     this.editStoryUnmount = unmount;
   }
 

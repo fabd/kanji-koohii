@@ -35,22 +35,28 @@ class Vite
       throw new sfException(sprintf('Error parsing JSON in "%s".', $file));
     }
 
+    $css = [];
     $deps = [];
-    $entries = [];
+    $imported = [];
 
-    $parseChunk = function ($chunkInfo, array &$deps, array &$css) use (&$parseChunk, &$manifest)
+    $parseChunk = function ($chunkInfo) use (&$parseChunk, &$manifest, &$deps, &$css, &$imported)
     {
       // recurse into the dependencies first
       $imports = $chunkInfo['imports'] ?? [];
       foreach ($imports as $importChunk)
       {
-        $deps[] = $parseChunk($manifest[$importChunk], $deps, $css);
+        // avoid circular references between imports
+        if (!isset($imported[$importChunk]))
+        {
+          $imported[$importChunk] = true;
+          $deps[] = $parseChunk($manifest[$importChunk], $deps, $css);
+        }
       }
 
-      // add the chunk's main file
+      // add the chunk's main file (.js)
       $entryFile = $chunkInfo['file'] ?? '-ERROR-';
 
-      // add stylesheets
+      // add the chunk's stylesheet(s)
       $styles = $chunkInfo['css'] ?? [];
       foreach ($styles as $cssFile)
       {
@@ -61,6 +67,10 @@ class Vite
       return $entryFile;
     };
 
+    // generate entries with their css/js dependencies "flattened"
+
+    $entries = [];
+
     foreach ($manifest as $chunkName => $chunkInfo)
     {
       if (0 !== strpos($chunkName, '_'))
@@ -70,9 +80,10 @@ class Vite
         //   'deps' => $deps,
         //   'css' => $manifest[$chunk]['css'],
         // ];
-        $deps = [];
         $css = [];
-        $entryFile = $parseChunk($chunkInfo, $deps, $css);
+        $deps = [];
+        $imported = [];
+        $entryFile = $parseChunk($chunkInfo);
         $entries[$chunkName] = [
           'file' => $entryFile,
           'deps' => array_unique($deps),

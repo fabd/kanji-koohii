@@ -2,7 +2,6 @@
 
 import $$, { stopEvent } from "@lib/dom";
 import * as TRON from "@lib/tron";
-import * as Core from "@old/core";
 import EventCache from "@old/eventcache";
 import AjaxDialog from "@old/ajaxdialog";
 
@@ -16,12 +15,14 @@ type EditKeywordSuccessResponse = {
   next?: boolean;
 };
 
+export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
+
 export default class EditKeywordDialog {
   private options: any;
 
-  private callback: Function;
+  private callback: EditKeywordCallback;
 
-  private dialog: IAjaxDialog | null = null;
+  private dialog: AjaxDialog | null = null;
 
   private evtCache: EventCache | null = null;
 
@@ -37,7 +38,7 @@ export default class EditKeywordDialog {
    * @param {any} options   params (AjaxDialog requestData), context (YUI2 Panel option)
    * @param {function} callback   Callback to insert the updated keyword back into the page
    */
-  constructor(url: string, options: Dictionary, callback: Function) {
+  constructor(url: string, options: Dictionary, callback: EditKeywordCallback) {
     console.log("EditKeywordDialog(%s, %o)", url, options);
 
     this.options = options;
@@ -57,7 +58,7 @@ export default class EditKeywordDialog {
       },
     };
 
-    this.dialog = new (AjaxDialog as IAjaxDialog)(null, dlgopts);
+    this.dialog = new AjaxDialog(null, dlgopts);
     this.dialog.on("JsReset", this.onReset, this);
     this.dialog.show();
   }
@@ -121,7 +122,7 @@ export default class EditKeywordDialog {
     this.callback(props.keyword, props.next);
   }
 
-  onReset(e: Event, el: Element) {
+  onReset() {
     let input = this.getInput();
     input.value = this.props!.orig_keyword;
     input.focus();

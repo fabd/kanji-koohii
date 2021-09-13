@@ -11,31 +11,32 @@
  * @see     http://developer.apple.com/documentation/Cocoa/Conceptual/Notifications/index.html Apple's Cocoa framework
  *
  */
+// @ts-check
 
 import Lang from "@lib/lang";
-import * as Core from "@old/core.js";
 
-let EventDispatcher = Core.make();
+/** @typedef {{fn: Function, scope: any}} ListenerInfo */
 
-EventDispatcher.prototype = {
-  listeners: null,
+export default class EventDispatcher {
+  /** @type {Dictionary<ListenerInfo[]>} */
+  listeners = {};
 
-  init: function () {
+  constructor() {
     this.listeners = {};
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     this.listeners = {};
-  },
+  }
 
   /**
    * Connects a listener to a given event name.
    *
-   * @param {String}    name     The type of event (the event's name)
+   * @param {string}    name     The type of event (the event's name)
    * @param {Function}  fn       A javascript callable
-   * @param {Object}    context  Context (this) for the event. Default value: the window object.
+   * @param {Object=}    context  Context (this) for the event. Default value: the window object.
    */
-  connect: function (name, fn, context) {
+  connect(name, fn, context) {
     if (!this.listeners[name]) {
       this.listeners[name] = [];
     }
@@ -44,61 +45,55 @@ EventDispatcher.prototype = {
       fn: fn,
       scope: context || window,
     });
-  },
+  }
 
   /**
    * Disconnects a listener, or all listeners, for an event.
    *
    * If fn is not specified, then all listeners for this event are unsubscribed.
    *
-   * @param {String}    name   An event name
+   * @param {string}    name   An event name
    * @param {Function=}  fn     A javascript callable (optional)
    *
-   * @return {?number}    Number of listeners unsubscribed, or null the listener is not found
+   * @return {number|null}    Number of listeners unsubscribed, or null the listener is not found
    */
-  disconnect: function (name, fn) {
-    var i, l, callables, s;
-
+  disconnect(name, fn) {
     if (!this.listeners[name]) {
       return null;
     }
 
     // if listener is undefined, delete all listeners
-    if (!fn) {
-      fn = true;
-    }
+    const deleteAll = !fn;
 
-    callables = this.listeners[name];
-    l = callables.length;
+    let callables = this.listeners[name];
+    let l = callables.length;
 
-    for (i = l - 1; i > -1; i--) {
-      s = callables[i];
-      if (true === fn || s.fn === fn) {
-        delete s.fn;
-        delete s.scope;
-        callables.splice(i, 1); // unset array item
+    for (let i = l - 1; i >= 0; i--) {
+      let s = callables[i];
+      if (deleteAll || s.fn === fn) {
+        callables.splice(i, 1);
       }
     }
 
     return l;
-  },
+  }
 
   /**
    * Notifies all listeners of a given event.
    *
    * @param {string} name  An event name
-   * @param {...*} arguments  An arbitrary set of parameters to pass to the handler.
+   * @param {...any=} params  An arbitrary set of parameters to pass to the handler.
+   *
    * @return {boolean|null} false  False if one of the subscribers returned false, true otherwise
    */
-  notify: function (name) {
-    var args = Array.prototype.slice.call(arguments, 0),
+  notify(name, params) {
+    var args = Array.prototype.slice.call(arguments, 1),
       callables,
       i,
       ret,
       subscriber;
 
-    args.shift();
-    callables = this.listeners[name] ? this.listeners[name] : [];
+    callables = this.listeners[name] ?? [];
 
     console.assert(
       args.length !== 1 || !Lang.isArray(args[0]),
@@ -118,7 +113,7 @@ EventDispatcher.prototype = {
     }
 
     return ret !== false;
-  },
+  }
 
   /**
    * Returns true if the given event name has some listeners.
@@ -127,12 +122,10 @@ EventDispatcher.prototype = {
    *
    * @return {boolean} true if some listeners are connected, false otherwise
    */
-  hasListeners: function (name) {
+  hasListeners(name) {
     if (!this.listeners[name]) {
       return false;
     }
     return this.listeners[name].length > 0;
-  },
-};
-
-export default EventDispatcher;
+  }
+}

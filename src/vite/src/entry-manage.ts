@@ -14,12 +14,12 @@ import $$, { domContentLoaded, domGetById } from "@lib/dom";
 import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
-import EditKeywordDialog from "@old/components/EditKeywordDialog";
+import EditKeywordDialog, { EditKeywordCallback } from "@old/components/EditKeywordDialog";
 import SelectionTable from "@old/selectiontable";
 
 class ManagePage {
   private viewDiv?: Element;
-  private viewPanel?: IAjaxPanel;
+  private viewPanel?: AjaxPanel;
   private selectionTable: SelectionTable | null = null;
 
   private editKeywordUri: string = "";
@@ -49,10 +49,10 @@ class ManagePage {
   }
 
   initView(selector: string): Element | undefined {
-    const elView = $$(selector)[0];
+    const elView = $$(selector)[0] as HTMLElement;
 
     if (elView) {
-      this.viewPanel = new (AjaxPanel as IAjaxPanel)(elView, {
+      this.viewPanel = new AjaxPanel(elView, {
         bUseShading: false,
         initContent: true,
         form: ".main-form",
@@ -61,7 +61,7 @@ class ManagePage {
           onContentInit: this.onContentInit.bind(this),
           onContentDestroy: this.onContentDestroy.bind(this),
         },
-      });
+      } as AjaxPanelOpts);
     }
 
     return elView;
@@ -103,9 +103,7 @@ class ManagePage {
    *
    */
   onEditKeyword(e: Event | null, el: HTMLElement): boolean {
-    // @param  {String}   keyword
-    // @param  {Boolean}  next (optional)
-    const callback = (keyword: string, next: boolean) => {
+    const callback: EditKeywordCallback = (keyword, next) => {
       console.log("EditKeywordDialog callback");
 
       // get the custkeyword td

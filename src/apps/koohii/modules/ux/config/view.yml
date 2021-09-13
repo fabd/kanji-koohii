@@ -1,0 +1,6 @@
+all:
+  javascripts:
+    - src/entry-styleguide.ts
+  metas:
+    title: "UX Docs"
+    robots: "noindex, nofollow"

@@ -2,6 +2,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import strip from "@rollup/plugin-strip";
+import importElementPlus from 'vite-plugin-element-plus'
 
 // bundle all node_modules into a vendor chunk
 const ROLLUP_VENDOR_CHUNK = "vendor";
@@ -33,6 +34,7 @@ export default defineConfig({
         "./src/entry-recognition.ts",
         "./src/entry-review.ts",
         "./src/entry-study.ts",
+        "./src/entry-styleguide.ts",
       ],
 
       output: {
@@ -137,6 +139,8 @@ export default defineConfig({
   },
 
   plugins: [
+    importElementPlus({}),
+
     // ---------------------------------------------------------------------------
     // @vitejs/plugin-vue
     // ---------------------------------------------------------------------------

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@types/node": "^16.7.10",
+    "element-plus": "^1.1.0-beta.9",
     "esbuild": "^0.12.20",
     "npm-check-updates": "^11.8.3",
     "vue": "^3.2.x"
@@ -48,7 +49,8 @@
     "tailwindcss": "^2.2.7",
     "typescript": "^4.3.5",
     "vite": "^2.4.4",
+    "vite-plugin-element-plus": "^0.0.12",
     "vite-plugin-md": "^0.10.0",
-    "vue-tsc": "^0.2.2"
+    "vue-tsc": "^0.3.0"
   }
 }

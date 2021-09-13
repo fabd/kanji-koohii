@@ -29,20 +29,18 @@
  *
  * Return some data:
  *
- *   $tron = new JsTron(array('foo' => 'bar'));
+ *   $tron = new JsTron(['foo' => 'bar']);
  *   $tron->setStatus(JsTron::STATUS_SUCCESS);
  *   return $tron->renderJson($this);
  *   
  *   
  * Return a session error to be displayed by client:
  *
- *   $tron = new JsTron(array('login' => true));
+ *   $tron = new JsTron(['login' => true]);
  *   $tron->setError('Session expired. Please log in.');
  *   $tron->setStatus(JsTron::STATUS_FAILED);
  *   return $tron->renderJson($this);
- *   
  *
- * @TODO    Strip \n \r \t and whitespace to reduce output.
  *
  * @author  Fabrice Denis
  */
@@ -58,9 +56,6 @@ class JsTron extends sfParameterHolder
   const STATUS_SUCCESS  = 1;
   // a form submitted succesfully, and continues with another step
   const STATUS_PROGRESS = 2;
- 
-  // must match TRON.CSS_CLASS in app.js, used for html TRON
-  const CSS_CLASS = 'JsTRON';
 
   protected
     $status      = null,
@@ -148,38 +143,19 @@ class JsTron extends sfParameterHolder
 
     return $obj;
   }
-  
+
   /**
-   * Render a JSON response.
-   *
    * Use this as the return statement of a symfony action, eg:
    *
-   *   return $tron->render($this);
+   *   return $tron->renderJson($this);
    * 
-   * @param  mixed $action 
+   * @param  sfAction $action 
    *
-   * @return coreView::NONE
-   */
-  private function render($action)
-  {
-    $json = $this->getJson();
-    $text = coreJson::encode($json);
-    
-    sfContext::getInstance()->getResponse()->setHttpHeader('Content-Type','application/json; charset=utf-8');
-
-    return $action->renderText($text);
-  }
-
-  /**
-   * Proxy for render().
-   * 
-   * @param  coreAction $action 
-   *
-   * @return coreView::NONE
+   * @return sfView::NONE
    */
   public function renderJson($action)
   {
-    return $this->render($action);
+    return $action->renderJson($this->getJson());
   }
   
   /**
@@ -195,7 +171,7 @@ class JsTron extends sfParameterHolder
   {
     $html = $action->getPartial($partialName, $vars);
     $this->setHtml($html);
-    return $this->render($action);
+    return $this->renderJson($action);
   }
   
   /**
@@ -212,6 +188,6 @@ class JsTron extends sfParameterHolder
   {
     $html = $action->getComponent($moduleName, $componentName, $vars);
     $this->setHtml($html);
-    return $this->render($action);
+    return $this->renderJson($action);
   }
 }

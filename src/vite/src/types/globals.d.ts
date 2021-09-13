@@ -7,6 +7,35 @@
  *
  */
 
+// legacy class
+type AjaxPanelOpts = {
+  form?: string | false;
+  events?: {
+    onResponse?: any;
+    onFailure?: any;
+    onContentInit?: any;
+    onContentDestroy?: any;
+    onSubmitForm?: any;
+  };
+  bUseLayer?: boolean;
+  bUseShading?: boolean;
+  initContent?: boolean;
+  [key: string]: any;
+};
+
+// legacy class
+type AjaxDialogOpts = {
+  requestUri: string;
+  requestData?: Dictionary<any>;
+  skin?: string;
+  mobile?: boolean;
+  close: boolean;
+  width: number;
+  scope: any;
+  events: Dictionary<any>;
+  context?: [string, string, string, null, any];
+};
+
 interface Window {
   // cf. kk_globals_put() on the php side
   KK: {

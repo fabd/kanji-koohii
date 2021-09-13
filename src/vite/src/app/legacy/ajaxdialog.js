@@ -178,65 +178,61 @@
 /* OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) */
 /* =require "/dragdrop/dragdrop-min.js" */
 
-import $$, { domGetById, hasClass } from "@lib/dom";
+import $$, { hasClass } from "@lib/dom";
 import * as TRON from "@lib/tron";
-import * as Core from "@old/core";
 import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import EventDelegator from "@old/eventdelegator";
 import EventDispatcher from "@old/eventdispatcher";
+
+/** @typedef {import("@/lib/tron").TronInst} TronInst */
 
 function insertTop(node) {
   var elParent = document.body;
   elParent.insertBefore(node, elParent.firstChild);
 }
 
-/**
- * Constructor.
- *
- * @param {String} srcMarkup   Selector for containing element if using srcMarkup, otherwise set null
- * @param {Object} options
- */
-let AjaxDialog = Core.make();
-
 const INVISIBLE_MASK = "yui-invis-mask";
 
-// dialog status as returned by custom events (bind())
-AjaxDialog.STATUS_FAILED = 0;
-AjaxDialog.STATUS_SUCCESS = 1;
-AjaxDialog.STATUS_PROGRESS = 2;
-
-AjaxDialog.DIALOG_LOADING_CLASS = "JsAjaxDlgLoading";
-
 // markup to use inside YUI Panel body while content is loading, 'style' will be set with width
-AjaxDialog.DIALOG_LOADING_HTML =
-  '<div class="body ' +
-  AjaxDialog.DIALOG_LOADING_CLASS +
-  '" style><i class="fa fa-spinner fa-spin"></i></div>';
+const DIALOG_LOADING_HTML =
+  '<div class="body JsAjaxDlgLoading" style><i class="fa fa-spinner fa-spin"></i></div>';
 
-AjaxDialog.prototype = {
-  options: null,
+export default class AjaxDialog {
+  // dialog status as returned by custom events (bind())
+  static STATUS_FAILED = 0;
+  static STATUS_SUCCESS = 1;
+  static STATUS_PROGRESS = 2;
+
+  static DIALOG_LOADING_CLASS = "JsAjaxDlgLoading";
+
+  options = null;
 
   /** @type {EventDispatcher | null} */
-  eventDispatcher: null,
+  eventDispatcher = null;
 
   /** @type EventDelegator */
-  eventDel: {},
+  eventDel = {};
 
   /** @type YAHOO.widget.Panel */
-  yPanel: null,
+  yPanel = null;
 
   // if loading content
-  ajaxPanel: null,
+  /** @type {AjaxPanel?} */
+  ajaxPanel = null;
 
   // div for ajaxpanel content (optional)
-  contentDiv: null,
+  contentDiv = null;
 
-  init: function (srcMarkup, options) {
-    var elYuiPanel,
-      that = this;
+  /**
+   *
+   * @param {string|null} Selector for containing element (useMarkup option)
+   * @param {Dictonary<any>} options
+   */
+  constructor(srcMarkup, options = null) {
+    let elYuiPanel;
 
-    options = !!options ? options : {};
+    options = options ?? {};
 
     console.log("AjaxDialog.init() Options: %o", options);
 
@@ -340,8 +336,8 @@ AjaxDialog.prototype = {
 
     // Note: the YUI Panel close button *hides* the dialog, it doesn't destroy it
     this.yPanel.hideEvent.subscribe(
-      function () {
-        that.onHideEvent();
+      () => {
+        this.onHideEvent();
       },
       this,
       true
@@ -366,20 +362,20 @@ AjaxDialog.prototype = {
 
     // register default actions
     this.eventDel = new EventDelegator(this.container, "click");
-    this.eventDel.on("JSDialogSuccess", function () {
-      that.handleDialogStatus(AjaxDialog.STATUS_SUCCESS);
+    this.eventDel.on("JSDialogSuccess", () => {
+      this.handleDialogStatus(AjaxDialog.STATUS_SUCCESS);
       return false;
     });
-    this.eventDel.on("JSDialogFail", function () {
-      that.handleDialogStatus(AjaxDialog.STATUS_FAILED);
+    this.eventDel.on("JSDialogFail", () => {
+      this.handleDialogStatus(AjaxDialog.STATUS_FAILED);
       return false;
     });
-    this.eventDel.on("JSDialogClose", function () {
-      that.destroy();
+    this.eventDel.on("JSDialogClose", () => {
+      this.destroy();
       return false;
     });
-    this.eventDel.on("JSDialogHide", function () {
-      that.hide();
+    this.eventDel.on("JSDialogHide", () => {
+      this.hide();
       return false;
     });
 
@@ -396,9 +392,9 @@ AjaxDialog.prototype = {
         }
       }, this);
     }
-  },
+  }
 
-  render: function () {
+  render() {
     if (this.options.useMarkup) {
       // show the static markup that was hidden
       $$(this.container).css("display", "block");
@@ -414,9 +410,9 @@ AjaxDialog.prototype = {
     }
 
     this.rendered = true;
-  },
+  }
 
-  show: function () {
+  show() {
     if (!this.rendered) {
       this.render();
     }
@@ -447,39 +443,39 @@ AjaxDialog.prototype = {
     }
 
     this.yPanel.show();
-  },
+  }
 
   /**
    * Hide the dialog without destroying it. Use show() to display
    * it again.
    *
    */
-  hide: function () {
+  hide() {
     if (this.isVisible()) {
       // this will fire YUI Panel's hideEvent() which in turn will fire our onHideEvent() !
       this.yPanel.hide();
     }
-  },
+  }
 
   /**
    * YUI Panel hideEvent for the close button gets called *after*
    * the Panel is hidden.
    */
-  onHideEvent: function () {
+  onHideEvent() {
     console.log("AjaxDialog::onHideEvent()");
     // destroy the dialog, unless the listener returns false
     if (false !== this.eventDispatcher.notify("onDialogHide")) {
       this.destroy();
     }
-  },
+  }
 
   /**
    *
    * @return {Boolean}    Returns true if the dialog is visible.
    */
-  isVisible: function () {
+  isVisible() {
     return !!this.yPanel.cfg.getProperty("visible");
-  },
+  }
 
   /**
    * Returns the content div to work with the dialog contents.
@@ -490,13 +486,13 @@ AjaxDialog.prototype = {
    * @return {HTMLElement}
    *
    */
-  getBody: function () {
+  getBody() {
     console.assert(
       this.yPanel.body !== null,
       "getBody()  YUI Panel body not available"
     );
     return this.yPanel.body;
-  },
+  }
 
   /**
    * Set the underlying YUI Panel's body inner html to the "LOADING" div.
@@ -505,22 +501,20 @@ AjaxDialog.prototype = {
    *
    * @param {number} iWidth
    */
-  setBodyLoading: function (iWidth) {
+  setBodyLoading(iWidth) {
     var sStyle =
       this.options.mobile || !iWidth ? "" : ' style="width:' + iWidth + 'px"';
-    this.yPanel.setBody(
-      AjaxDialog.DIALOG_LOADING_HTML.replace(/style/, sStyle)
-    );
-  },
+    this.yPanel.setBody(DIALOG_LOADING_HTML.replace(/style/, sStyle));
+  }
 
   /**
    * Returns this dialog's AjaxPanel.
    *
-   * @return {Object}   AjaxPanel instance, or null (eg, if using static dialog).
+   * @return {AjaxPanel} AjaxPanel instance, or null (eg, if using static dialog).
    */
-  getAjaxPanel: function () {
+  getAjaxPanel() {
     return this.ajaxPanel;
-  },
+  }
 
   /**
    * This is a proxy method for the dialog's EventDelegator.
@@ -529,20 +523,22 @@ AjaxDialog.prototype = {
    *
    * @see   See EventDelegator for method signature.
    */
-  on: function () {
+  on() {
     this.eventDel.on.apply(this.eventDel, arguments);
-  },
+  }
 
-  onPanelResponse: function (tron) {
+  /** @param {TronInst} tron */
+  onPanelResponse(tron) {
     //console.log("onPanelResponse(%o)", tron);
 
     this.eventDispatcher.notify("onDialogResponse", tron);
 
     // handle the dialog status events for JSON response
     this.handleTRONStatus(tron);
-  },
+  }
 
-  onPanelInit: function (tron) {
+  /** @param {TronInst} tron */
+  onPanelInit(tron) {
     //console.log('AjaxDialog::onPanelInit()');
 
     // handle dialog progress status
@@ -589,38 +585,38 @@ AjaxDialog.prototype = {
 
     // focus element if the class is found
     this.setElementFocus();
-  },
+  }
 
   /**
    * Sets focus to an element of the dialog that has the required CSS class.
    *
    */
-  setElementFocus: function () {
+  setElementFocus() {
     var el = $$(".JSDialogFocus", this.yPanel.body)[0];
     el && el.focus();
-  },
+  }
 
   /**
    * User's custom handler can use Event.getTarget(e) t get the form
    *
-   * @param  {Object}  YUI Event from the form submit
+   * @param  {Event}  YUI Event from the form submit
    * @return {Boolean}  Return true to proceed with AjaxPanel default behaviour
    */
-  onPanelSubmit: function (e) {
+  onPanelSubmit(e) {
     console.log("AjaxDialog::onPanelSubmit()");
 
     // if the listener returns true, proceed with default ajax submission,
     // otherwise AjaxPanel will cancel the form submit event!
     return this.eventDispatcher.notify("onDialogSubmit", e);
-  },
+  }
 
   /**
    * Handles status from TRON response
    *
-   * @param {TRON.TronInst} tron
+   * @param {TronInst} tron
    * @return {boolean}  True if the dialog is closed
    */
-  handleTRONStatus: function (tron) {
+  handleTRONStatus(tron) {
     var status = tron.getStatus(),
       dialogStatus;
 
@@ -639,18 +635,18 @@ AjaxDialog.prototype = {
         break;
     }
     return this.handleDialogStatus(dialogStatus, tron);
-  },
+  }
 
   /**
    * Handles status response (from bound action or the dialog ajax response).
    *
    * Closes the dialog in the success/fail cases, fires the status-related events.
    *
-   * @param status
-   *
+   * @param {number} dialogStatus
+   * @param {TronInst} tron
    * @return {boolean}  True if the dialog is closed
    */
-  handleDialogStatus: function (dialogStatus, tron) {
+  handleDialogStatus(dialogStatus, tron) {
     console.log("AjaxDialog.handleDialogStatus(%o)", dialogStatus);
 
     if (dialogStatus === AjaxDialog.STATUS_SUCCESS) {
@@ -671,17 +667,17 @@ AjaxDialog.prototype = {
     }
 
     return false;
-  },
+  }
 
   /**
    * Maps to AjaxPanel::onContentDestroy()
    *
    */
-  onPanelDestroy: function () {
+  onPanelDestroy() {
     this.eventDispatcher.notify("onDialogDestroy");
-  },
+  }
 
-  destroy: function () {
+  destroy() {
     console.log("AjaxDialog::destroy()");
 
     // don't run twice
@@ -712,7 +708,5 @@ AjaxDialog.prototype = {
     if (this.options.invisMask) {
       document.body.classList.remove(INVISIBLE_MASK);
     }
-  },
-};
-
-export default AjaxDialog;
+  }
+}

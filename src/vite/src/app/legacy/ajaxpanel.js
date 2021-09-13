@@ -100,55 +100,50 @@
 
 import $$, { domGetById, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
-import * as Core from "@old/core";
 import AjaxIndicator from "@old/ajaxindicator";
 import AjaxRequest from "@old/ajaxrequest";
 import EventCache from "@old/eventcache";
 import EventDelegator from "@old/eventdelegator";
 import EventDispatcher from "@old/eventdispatcher";
-import * as TRON from "@lib/tron";
 
-let AjaxPanel = Core.make();
+/** @typedef {import("@/lib/tron").TronInst} TronInst */
 
-AjaxPanel.prototype = {
-  options: null,
+export default class AjaxPanel {
+  /** @type AjaxPanelOpts */
+  options = null;
 
   /** @type Element */
-  container: null,
+  container = null;
 
   /** @type EventCache */
-  evtCache: null,
+  evtCache = null;
 
   /** @type AjaxRequest*/
-  ajaxRequest: null,
+  ajaxRequest = null;
 
-  /**
-   * @type EventDispatcher
-   */
-  eventDispatcher: null,
+  /** @type EventDispatcher */
+  eventDispatcher = null;
 
   /** @type EventDelegator */
-  eventDel: null,
+  eventDel = null;
 
   // Custom Events instances
-  events: {},
+  events = {};
 
   // Form to serialize with next get() or post() call
-  serializeForm: false,
+  serializeForm = false;
 
   // Set true after at least one succesful html content request
-  contentLoaded: false,
+  contentLoaded = false;
 
   /**
    *
    *
-   * @param {String|HTMLElement} container     Container element where content is loaded
-   * @param {Object} options                   See class doc
+   * @param {string|HTMLElement} container     Container element where content is loaded
+   * @param {AjaxPanelOpts} options                   See class doc
    */
-  init: function(container, options) {
+  constructor(container, options = {}) {
     console.log("AjaxPanel.init() options %o ", options);
-
-    options = !!options ? options : {};
 
     // set defaults
     this.options = {
@@ -195,22 +190,22 @@ AjaxPanel.prototype = {
         this.initContent();
       }
     }
-  },
+  }
 
-  destroy: function() {
+  destroy() {
     if (this.contentLoaded) {
       this.eventDispatcher.notify("onContentDestroy");
     }
 
     this.evtCache.destroy();
     this.eventDispatcher.destroy();
-  },
+  }
 
   /**
    * @param {TRON|undefined}  tron   TRON instance if loaded html, undefined if called
    *                                first time using initContent option!
    */
-  initContent: function(tron) {
+  initContent(tron) {
     //console.log('AjaxPanel.initContent()');
 
     // Attach an event to FORMs that will dispatch a "onSubmit" event.
@@ -227,7 +222,7 @@ AjaxPanel.prototype = {
     if (this.contentLoaded) {
       this.eventDispatcher.notify("onContentInit", tron);
     }
-  },
+  }
 
   /**
    * Replace html content, if provided. Only call destroy/init methods if
@@ -235,7 +230,7 @@ AjaxPanel.prototype = {
    *
    * @param  {Object}  tron   TRON instance.
    */
-  replaceContent: function(tron) {
+  replaceContent(tron) {
     var html = tron.getHtml();
 
     console.log("AjaxPanel.replaceContent(html %s)", html ? "YES" : "NO");
@@ -252,28 +247,28 @@ AjaxPanel.prototype = {
 
       this.initContent(tron);
     }
-  },
+  }
 
   /**
    * Sets form to use with the next request (serialize data & action attribute).
    *
    * @param  {String|HTMLElement}  elForm   Form id or element
    */
-  setForm: function(elForm) {
+  setForm(elForm) {
     elForm = domGetById(elForm);
     if (!elForm.nodeName || elForm.nodeName.toLowerCase() !== "form") {
       throw new Error("setForm() argument 0 is not a form element");
     }
 
     this.serializeForm = elForm;
-  },
+  }
 
   /**
    * Returns the form element that is currently observed.
    *
    * @return mixed  FORM element, or null if none is observed
    */
-  getForm: function() {
+  getForm() {
     if (this.options.form === true) {
       return $$("form", this.container)[0];
     } else if (Lang.isString(this.options.form)) {
@@ -290,13 +285,13 @@ AjaxPanel.prototype = {
     }
 
     return this.options.form;
-  },
+  }
 
   /**
    *
    * @param {Object} e   native event
    */
-  submitFormEvent: function(evt) {
+  submitFormEvent(evt) {
     var form,
       skipSubmit = false;
 
@@ -316,7 +311,7 @@ AjaxPanel.prototype = {
     }
 
     stopEvent(evt);
-  },
+  }
 
   /**
    * EventDelegator handler for mouse clicks on elements styled
@@ -325,13 +320,13 @@ AjaxPanel.prototype = {
    * @param {Object} e
    * @param {Object} el
    */
-  onPanelSubmit: function(e, el) {
+  onPanelSubmit(e, el) {
     if (this.getForm()) {
       // handle onSubmitForm listener, if any is set
       this.submitFormEvent.call(this, e);
     }
     return false;
-  },
+  }
 
   /**
    * Do a GET request with optional parameters to add to the request.
@@ -339,31 +334,31 @@ AjaxPanel.prototype = {
    * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
    * @param {String} sUrl    Request uri (optional), if specifed overrides the form action!
    */
-  get: function(oData, sUrl) {
+  get(oData, sUrl) {
     this.prepareConnect(oData, "get", sUrl);
-  },
+  }
 
   /**
    * Do a POST request with optional parameters to add to the request.
    *
    * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
-   * @param {String} sUrl    Request uri (optional), if specifed overrides the form action!
+   * @param {string=} sUrl    Request uri (optional), if specifed overrides the form action!
    */
-  post: function(oData, sUrl) {
+  post(oData, sUrl) {
     this.prepareConnect(oData, "post", sUrl);
-  },
+  }
 
   /**
    * Do a GET or POST request, using the active form's "method" attribute.
    *
    * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
    */
-  send: function(oData) {
+  send(oData) {
     var form = this.getForm();
     console.assert(form, "AjaxPanel::send()  requires valid form");
     var method = form.getAttribute("method") || "post";
     this.prepareConnect(oData, method);
-  },
+  }
 
   /**
    *
@@ -371,7 +366,7 @@ AjaxPanel.prototype = {
    * @param {string} sMethod  Method name 'post' or 'get'
    * @param {string} sUrl     Request uri (optional), if specifed overrides the form!
    */
-  prepareConnect: function(oData, sMethod, sUrl) {
+  prepareConnect(oData, sMethod, sUrl) {
     var url,
       form = false,
       connectObj = {};
@@ -405,7 +400,7 @@ AjaxPanel.prototype = {
 
     // start connection
     this.connect(connectObj);
-  },
+  }
 
   /**
    * Establish the server connection with the current post() parameters.
@@ -419,7 +414,7 @@ AjaxPanel.prototype = {
    *   form          Form to serialize (optional)
    *   parameters    Extra GET/POST parameters
    */
-  connect: function(oConnect) {
+  connect(oConnect) {
     if (oConnect) {
       this.connection = oConnect;
     }
@@ -448,7 +443,7 @@ AjaxPanel.prototype = {
     };
 
     this.ajaxRequest = new AjaxRequest(this.connection.url, options);
-  },
+  }
 
   /**
    * YUI Connect custom event.
@@ -456,9 +451,9 @@ AjaxPanel.prototype = {
    * @param {String} eventType
    * @param {Object} args
    */
-  ajaxOnStart: function(eventType, args) {
+  ajaxOnStart(eventType, args) {
     //console.log('AjaxPanel.ajaxOnStart(%o)', args);
-  },
+  }
 
   /**
    * YUI Connect custom event.
@@ -466,17 +461,17 @@ AjaxPanel.prototype = {
    * @param {String} eventType
    * @param {Object} args
    */
-  ajaxOnComplete: function(eventType, args) {
+  ajaxOnComplete(eventType, args) {
     //console.log('AjaxPanel.ajaxOnComplete(%o)', args);
     //var response = args[0];
-  },
+  }
 
   /**
    * Success handler.
    *
    * @param {Object} o   YUI Connect response object, augmented by AjaxRequest (responseJSON, ...)
    */
-  ajaxOnSuccess: function(o) {
+  ajaxOnSuccess(o) {
     console.log("AjaxPanel.ajaxOnSuccess(%o)", o);
 
     var html,
@@ -492,14 +487,14 @@ AjaxPanel.prototype = {
 
     // cleanup
     this.ajaxRequest = null;
-  },
+  }
 
   /**
    * Failure handler.
    *
    * @param {Object} oAjaxResponse   YUI Connect response object WITHOUT responseJSON or responseTRON.
    */
-  ajaxOnFailure: function(o) {
+  ajaxOnFailure(o) {
     console.log("AjaxPanel.ajaxOnFailure(%o)", o);
 
     // transaction aborted (timeout)
@@ -516,7 +511,7 @@ AjaxPanel.prototype = {
 
     // cleanup
     this.ajaxRequest = null;
-  },
+  }
 
   /**
    * Display a message in place of the ajax indicator,
@@ -524,7 +519,7 @@ AjaxPanel.prototype = {
    *
    * @param {Object} sMessage
    */
-  showErrorMessage: function(sMessage) {
+  showErrorMessage(sMessage) {
     this.ajaxErrorIndicator = new AjaxIndicator({
       container: this.container,
       message:
@@ -543,19 +538,17 @@ AjaxPanel.prototype = {
     };
 
     $$(elRetryLink).on("click", retry);
-  },
+  }
 
   /**
    * Called if the corresponding option is set, on content init phase.
    *
    * Picks the first INPUT.text element in the form, and focus() it.
    */
-  autoFocus: function() {
+  autoFocus() {
     var input = $$("input.text", this.container)[0];
     if (input && typeof input.focus === "function") {
       input.focus();
     }
-  },
-};
-
-export default AjaxPanel;
+  }
+}

@@ -33,6 +33,7 @@ export default defineConfig({
         "./src/entry-manage.ts",
         "./src/entry-review.ts",
         "./src/entry-study.ts",
+        "./src/entry-styleguide.ts",
       ],
 
       output: {

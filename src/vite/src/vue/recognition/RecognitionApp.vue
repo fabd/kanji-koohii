@@ -156,43 +156,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-.kk-Recognition {
-  &-output {
-    @apply p-4 rounded-lg;
-    font-size: 30px;
-    line-height: 1.5em;
-    background: #e7e1d3;
-  }
-  &-output a {
-    font-style: normal;
-    font-weight: normal;
-    color: blue;
-    text-decoration: none;
-  }
-  &-output a:hover {
-    background: #fff;
-    color: #000;
-  }
-}
-
-// FIXME : obsolete?
-#rtkTooltip {
-  border: 1px solid #aaa;
-  background: #fff;
-  /*border:4px solid rgba(0,0,0,0.5); -moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px; */
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-}
-#rtkTooltip .bd {
-  margin: 0;
-  padding: 5px 10px;
-  /*-moz-box-radius:4px;-webkit-box-radius:4px;box-radius:4px;*/
-  color: #444;
-  font: 18px Georgia, Times New Roman, serif;
-}
-</style>
+<style lang="scss"></style>

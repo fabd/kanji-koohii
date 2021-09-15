@@ -2,76 +2,106 @@
   <div>
     <h2>Kanji Recognition</h2>
 
-    <div v-if="isStateEdit" class="mb-4">
-      <p>
-        Copy and paste japanese text into the form below, then click "Show". The
-        kanji for which you have flashcards will be <u>hyperlinked</u> to the
-        Study pages, and a popup will reveal the Heisig keywords.</p
-      >
+    <div class="flex">
+      <!-- ------------------------------------------------------ -->
+      <!-- MAIN COL -->
+      <!-- ------------------------------------------------------ -->
+      <div class="flex-1">
+        <div v-if="isStateEdit" class="mb-4">
+          <p>
+            Copy and paste japanese text into the form below, then click "Show".
+            The kanji for which you have flashcards will be
+            <u>hyperlinked</u> to the Study pages, and a popup will reveal the
+            Heisig keywords.</p
+          >
 
-      <form class="mb-4">
-        <textarea
-          ref="input"
-          v-model="japaneseText"
-          class="w-full mb-2 p-2 min-h-[100px] border border-[#ddd] rounded-lg text-lg"
-        ></textarea>
-        <input
-          type="submit"
-          class="btn btn-success"
-          value="Show"
-          @click.prevent="isStateEdit = false"
-        />
-      </form>
+          <form class="mb-4">
+            <textarea
+              ref="input"
+              v-model="japaneseText"
+              class="w-full mb-2 p-2 min-h-[100px] border border-[#ddd] rounded-lg text-lg"
+            ></textarea>
+            <input
+              type="submit"
+              class="btn btn-success"
+              value="Show"
+              @click.prevent="isStateEdit = false"
+            />
+          </form>
 
-      <div id="introduction" class="markdown mt-8">
-        <h3>Purpose of this page</h3>
+          <div id="introduction" class="markdown mt-8">
+            <h3>Purpose of this page</h3>
 
-        <p>
-          In <em>Remembering the Kanji</em>, the Japanese characters are studied
-          and reviewed from the keyword to the kanji. In this sight-reading
-          section, you can test your memory the other way round, all the while
-          seeing the characters <em>in context</em>.
-        </p>
+            <p>
+              In <em>Remembering the Kanji</em>, the Japanese characters are
+              studied and reviewed from the keyword to the kanji. In this
+              sight-reading section, you can test your memory the other way
+              round, all the while seeing the characters <em>in context</em>.
+            </p>
 
-        <p
-          >With very basic grammar you can locate compound words made of two or
-          more kanji. You may be able to guess the meaning of some words based
-          on the meaning of the characters.
-        </p>
+            <p
+              >With very basic grammar you can locate compound words made of two
+              or more kanji. You may be able to guess the meaning of some words
+              based on the meaning of the characters.
+            </p>
 
-        <h3>Resources</h3>
+            <h3>Resources</h3>
 
-        <ul>
-          <li>
-            Japanese text:
-            <a href="https://www.aozora.gr.jp/" target="_blank">Aozora Bunko</a>.
-          </li>
-          <li>
-            <a
-              href="https://www.kanji.org/kanji/japanese/writing/outline.htm"
-              target="_blank"
-              >Guide to the Japanese Writing System</a
+            <ul>
+              <li>
+                Japanese text:
+                <a href="https://www.aozora.gr.jp/" target="_blank"
+                  >Aozora Bunko</a
+                >.
+              </li>
+              <li>
+                <a
+                  href="https://www.kanji.org/kanji/japanese/writing/outline.htm"
+                  target="_blank"
+                  >Guide to the Japanese Writing System</a
+                >
+                by Jack Halpern
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div v-if="!isStateEdit">
+          <div class="mb-4 pb-4 border-b border-[#d4cdba]">
+            <button class="btn btn-success" @click="onClickToEdit"
+              >Enter more japanese text</button
             >
-            by Jack Halpern
-          </li>
-        </ul>
-      </div>
-    </div>
+          </div>
+          <p>
+            Point at the colored kanji with the mouse or click/tap to reveal the
+            keyword. To study the character, <strong><em>click</em></strong> (or
+            tap) the kanji, and then click the "Study" link inside the tooltip.
+          </p>
 
-    <div v-if="!isStateEdit">
-      <div class="mb-4 pb-4 border-b border-[#d4cdba]">
-        <button class="btn btn-success" @click="onClickToEdit"
-          >Enter more japanese text</button
-        >
+          <div class="kk-Recognition-output">
+            <cjk-lang-ja :html="transformJapaneseText"></cjk-lang-ja>
+          </div>
+        </div>
+        sqdqsdqs
       </div>
-      <p>
-        Point at the colored kanji with the mouse or click/tap to reveal the
-        keyword. To study the character, <strong><em>click</em></strong> (or
-        tap) the kanji, and then click the "Study" link inside the tooltip.
-      </p>
+      <!-- ------------------------------------------------------ -->
+      <!-- SIDE COL -->
+      <!-- ------------------------------------------------------ -->
+      <div class="w-[400px] ml-4">
+        <div class="bg-[#e7e1d3]">
+          <div class="w-[75px] h-[75px] bg-[#fff] rounded text-[55px]">
+            {{ kanji }}
+          </div>
 
-      <div class="kk-Recognition-output">
-        <cjk-lang-ja :html="transformJapaneseText"></cjk-lang-ja>
+          <h3>Heisig Index</h3>
+          <div>{{ heisigIndex }}</div>
+
+          <h3>Keyword</h3>
+          ...
+
+          <h3>Dictionary</h3>
+        </div>
+        <div class="bg-[#fff]"> DICT HERE </div>
       </div>
     </div>
   </div>
@@ -108,6 +138,9 @@ export default defineComponent({
       japaneseText: DEFAULT_TEXT,
 
       isStateEdit: true,
+
+      kanji: "思",
+      heisigIndex: 651,
     };
   },
 
@@ -128,7 +161,7 @@ export default defineComponent({
         const title = `${kanjiInfo.keyword} (#${kanjiInfo.seq_nr})`;
         const html = `<a href="study/kanji/${ucsId}" data-text="${title}">${kanjiInfo.kanji}</a>`;
 
-        console.log("replace all ", kanjiInfo.kanji);
+        // console.log("replace all ", kanjiInfo.kanji);
 
         text = text.replaceAll(kanjiInfo.kanji, html);
       }

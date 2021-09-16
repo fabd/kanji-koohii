@@ -120,7 +120,25 @@
                 </span>
               </div>
 
-              <div class="ml-5">
+              <div v-if="isCharHiragana(curKanji.kanji)" class="ml-5">
+                <div class="mb-4">
+                  <h3 class="kk-RecognitionPane-h3 mb-0">HIRAGANA - READING</h3>
+                  <div
+                    class="font-serif italic text-body text-[34px] leading-none"
+                  >
+                    shi
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h3 class="kk-RecognitionPane-h3 mb-0">UNICODE POINT</h3>
+                  <div class="text-body text-md leading-none">
+                    <span>{{ curKanji.kanji.charCodeAt(0) }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="isCharKanji(curKanji.kanji)" class="ml-5">
                 <div class="mb-4">
                   <h3 class="kk-RecognitionPane-h3 mb-0">Keyword</h3>
                   <div
@@ -145,8 +163,10 @@
               </div>
             </div>
 
-            <h3 class="kk-RecognitionPane-h3 mb-2">Dictionary</h3>
-            <div class="bg-[#fff] -mx-4"> DICT HERE </div>
+            <div v-if="!isCharHiragana(curKanji.kanji)">
+              <h3 class="kk-RecognitionPane-h3 mb-2">Dictionary</h3>
+              <div class="bg-[#fff] -mx-4"> DICT HERE </div>
+            </div>
           </div>
         </template>
       </div>
@@ -159,6 +179,7 @@ import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import { urlForStudy } from "@/lib/koohii";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
+import { isHiragana, isKanjiChar } from "@/lib/koohii";
 
 const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎとかめは、山の上まで競争しました。誰もが、うさぎの方がかめよりも早くそこに着くと思いました。しかし迂闊にも、うさぎは途中で寝てしまいました。目が覚めた時は、もうあとのまつりでした。かめはすでに山のてっ辺に立っていました。`;
 
@@ -216,6 +237,14 @@ export default defineComponent({
 
     getStudyPageLink(strKanji: string) {
       return urlForStudy(strKanji);
+    },
+
+    // proxy
+    isCharKanji(char: string) {
+      return isKanjiChar(char);
+    },
+    isCharHiragana(char: string) {
+      return isHiragana(char);
     },
 
     onClickCharacter(charData: TRecKanji, index: number) {

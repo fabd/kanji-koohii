@@ -136,7 +136,9 @@
                   </div>
                 </div>
 
-                <a href="" class="block">Go to study page</a>
+                <a :href="getStudyPageLink(curKanji.kanji)" class="block"
+                  >Go to study page</a
+                >
               </div>
             </div>
 
@@ -152,6 +154,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
+import { urlForStudy } from "@/lib/koohii";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 
 const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎとかめは、山の上まで競争しました。誰もが、うさぎの方がかめよりも早くそこに着くと思いました。しかし迂闊にも、うさぎは途中で寝てしまいました。目が覚めた時は、もうあとのまつりでした。かめはすでに山のてっ辺に立っていました。`;
@@ -219,7 +222,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.focusInput();
+    this.isStateEdit && this.focusInput();
   },
 
   beforeMount() {
@@ -231,6 +234,10 @@ export default defineComponent({
   methods: {
     focusInput() {
       (this.$refs.input as HTMLElement).focus();
+    },
+
+    getStudyPageLink(strKanji: string) {
+      return urlForStudy(strKanji);
     },
 
     onClickCharacter(charData: TRecKanji, index: number) {

@@ -1,3 +1,8 @@
+// TODOS
+//   - [ ] mobile (likely sidepane will be a "drawer", with a css transition)
+//   - [ ] finalize design (figma)
+//   - [ ] add postcss-bem-linter ? (SuitCSS conventions)
+
 // consistent corner radius FIXME : make a custom `rounded` tw var?
 $rounded: 0.5rem;
 
@@ -48,7 +53,7 @@ $rounded: 0.5rem;
   border-radius: $rounded;
 
   &-h3 {
-    @apply text-sm font-sans uppercase mb-1;
+    @apply text-sm font-sans uppercase;
     color: #737373;
   }
 

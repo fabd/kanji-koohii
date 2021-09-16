@@ -35,19 +35,16 @@
           <!-- OUTPUT -->
           <!-- ------------------------------------------------------ -->
           <div class="kk-Recognition-output mb-8">
-            <div
-              v-for="(k, i) in jtextarray"
-              :key="i"
-              class="kk-Recognition-c"
-              @click="onClickCharacter(k)"
-            >
-              <span
-                :class="{
-                  'is-known': k.seq_nr,
-                }"
-                >{{ k.kanji }}</span
-              >
-            </div>
+            <template v-for="(k, i) in jtextarray" :key="i">
+              <div class="kk-Recognition-c" @click="onClickCharacter(k)">
+                <span
+                  :class="{
+                    'is-known': k.seq_nr,
+                  }"
+                  >{{ k.kanji }}</span
+                >
+              </div>
+            </template>
           </div>
 
           <p>BLAH</p>
@@ -124,25 +121,30 @@
               </div>
 
               <div class="ml-5">
-                <h3 class="kk-RecognitionPane-h3">Heisig Index</h3>
-                <div
-                  class="font-serif text-[#42413d] text-[34px] leading-none"
-                  >{{ curKanji.seq_nr }}</div
-                >
+                <div class="mb-4">
+                  <h3 class="kk-RecognitionPane-h3 mb-0">Keyword</h3>
+                  <div
+                    class="font-serif text-[#42413d] text-[34px] leading-none"
+                  >
+                    <span>{{ curKanji.keyword }}</span>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h3 class="kk-RecognitionPane-h3 mb-0">Heisig Index</h3>
+                  <div
+                    class="font-serif text-[#42413d] text-[34px] leading-none"
+                  >
+                    <span>{{ curKanji.seq_nr }}</span>
+                  </div>
+                </div>
+
+                <a href="" class="block">Go to study page</a>
               </div>
             </div>
 
-            <div class="mb-4">
-              <h3 class="kk-RecognitionPane-h3 mb-0">Keyword</h3>
-              <div class="font-serif text-[#42413d] text-[34px] leading-none">{{
-                curKanji.keyword
-              }}</div>
-            </div>
-
-            <h3 class="kk-RecognitionPane-h3 !mb-2">Dictionary</h3>
-            <div class="bg-[#fff] -mx-4">
-              DICT HERE
-            </div>
+            <h3 class="kk-RecognitionPane-h3 mb-2">Dictionary</h3>
+            <div class="bg-[#fff] -mx-4"> DICT HERE </div>
           </div>
         </template>
       </div>

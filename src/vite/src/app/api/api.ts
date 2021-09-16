@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { kk_globals_get } from "@app/root-bundle";
+import { baseUrl } from "@/lib/koohii";
 import {
   GetDictListForUCS,
   PostUserStoryResponse,
@@ -160,10 +160,7 @@ export class LegacyApi extends HttpClient {
 }
 
 export function getApi(): KoohiiAPI {
-  const baseUrl = kk_globals_get('BASE_URL') as string;
-
-  // base url to account for dev/test envs, no trailing slash
-  const apiBaseUrl = kk_globals_get('BASE_URL').replace(/\/$/, "");
+  const apiBaseUrl = baseUrl();
 
   return {
     legacy: LegacyApi.getInstance(apiBaseUrl),

@@ -195,32 +195,6 @@ export default defineComponent({
     };
   },
 
-  computed: {
-    transformJapaneseText(): string {
-      const kanjis = READING_KEYWORDS;
-
-      let text: string = this.japaneseText;
-
-      console.log("text ", text);
-
-      for (let ucsId in kanjis) {
-        const kanjiInfo = kanjis[ucsId];
-
-        // convert to html entity
-        // const uniKanji = `&#${ucsId};`
-
-        const title = `${kanjiInfo.keyword} (#${kanjiInfo.seq_nr})`;
-        const html = `<a href="study/kanji/${ucsId}" data-text="${title}">${kanjiInfo.kanji}</a>`;
-
-        // console.log("replace all ", kanjiInfo.kanji);
-
-        text = text.replaceAll(kanjiInfo.kanji, html);
-      }
-
-      return text;
-    },
-  },
-
   mounted() {
     this.isStateEdit && this.focusInput();
   },
@@ -264,7 +238,6 @@ export default defineComponent({
     parseText() {
       const knownKanji = READING_KEYWORDS;
 
-      let arr = this.japaneseText.split("");
       let out: TRecKanji[] = [];
 
       for (let strKanji of this.japaneseText) {

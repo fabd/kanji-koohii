@@ -19,7 +19,7 @@
             <textarea
               ref="input"
               v-model="japaneseText"
-              class="w-full mb-2 p-2 min-h-[100px] border border-[#ddd] rounded-lg text-lg"
+              class="w-full mb-2 p-2 min-h-[300px] border border-[#ddd] rounded-lg text-lg"
             ></textarea>
             <input
               type="submit"
@@ -62,8 +62,8 @@
       <!-- ------------------------------------------------------ -->
       <div class="w-[400px] ml-4">
         <template v-if="isStateEdit">
-          <div class="bg-[#e7e1d3] p-4">
-            <div id="introduction" class="markdown mt-8">
+          <div class="kk-RecognitionPane">
+            <div id="introduction" class="markdown">
               <h3>Instructions</h3>
               <p> Enter Japanese text to the left... </p>
 
@@ -103,8 +103,11 @@
         </template>
 
         <template v-if="!isStateEdit && !curKanji">
-          <div class="bg-[#e7e1d3] p-4">
-            <p> Select a kanji on the left to display more information... </p>
+          <div class="kk-RecognitionPane">
+            <p class="text-md text-body">
+              Select a character on the left to display more information in this
+              pane.
+            </p>
           </div>
         </template>
 
@@ -121,7 +124,7 @@
                 <div class="mb-4">
                   <h3 class="kk-RecognitionPane-h3 mb-0">Keyword</h3>
                   <div
-                    class="font-serif text-[#42413d] text-[34px] leading-none"
+                    class="font-serif italic text-[#42413d] text-[34px] leading-none"
                   >
                     <span>{{ curKanji.keyword }}</span>
                   </div>
@@ -202,7 +205,8 @@ export default defineComponent({
   beforeMount() {
     // testing
     this.onClickShow();
-    this.curKanji = this.jtextarray[10];
+    this.curKanjiIndex = 10;
+    this.curKanji = this.jtextarray[this.curKanjiIndex];
   },
 
   methods: {

@@ -37,10 +37,11 @@
           <div class="kk-Recognition-output mb-8">
             <cjk-lang-ja>
               <template v-for="(k, i) in jtextarray" :key="i">
-                <div class="kk-Recognition-c" @click="onClickCharacter(k)">
+                <div class="kk-Recognition-c" @click="onClickCharacter(k, i)">
                   <span
                     :class="{
                       'is-known': k.seq_nr,
+                      'is-active': i === curKanjiIndex,
                     }"
                     >{{ k.kanji }}</span
                   >
@@ -183,6 +184,7 @@ export default defineComponent({
       isStateEdit: true,
 
       curKanji: null as TRecKanji | null,
+      curKanjiIndex: -1,
 
       kanji: "思",
       heisigIndex: 651,
@@ -231,8 +233,9 @@ export default defineComponent({
       (this.$refs.input as HTMLElement).focus();
     },
 
-    onClickCharacter(charData: TRecKanji) {
+    onClickCharacter(charData: TRecKanji, index: number) {
       this.curKanji = charData;
+      this.curKanjiIndex = index;
     },
 
     onClickShow() {
@@ -243,6 +246,9 @@ export default defineComponent({
 
     onClickToEdit() {
       this.isStateEdit = true;
+      this.curKanji = null;
+      this.curKanjiIndex = -1;
+
       this.$nextTick(() => {
         this.focusInput();
       });

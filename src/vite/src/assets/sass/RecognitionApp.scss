@@ -43,6 +43,12 @@ $rounded: 0.5rem;
   &-c .is-known {
     color: #0000ff;
   }
+
+  &-c .is-active {
+    background-color: #ffca52;
+    border-radius: 4px;
+    color: #5e440a;
+  }
 }
 
 // --------------------------------------------------------------------

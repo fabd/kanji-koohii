@@ -1,9 +1,14 @@
+// consistent corner radius FIXME : make a custom `rounded` tw var?
+$rounded: 0.5rem;
+
 .kk-Recognition {
   &-output {
-    @apply p-4 rounded-lg;
-    font-size: 30px;
-    line-height: 1.5em;
-    background: #e7e1d3;
+    @apply p-4;
+    font-size: 24px;
+    line-height: 1.6em;
+    background: #fff;
+    border-radius: $rounded;
+    color: #4f4f4f;
   }
   &-output a {
     font-style: normal;
@@ -19,24 +24,43 @@
   &-output .cj-k {
     @apply font-sans;
   }
+
+  //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+  &-c {
+    @apply inline-block;
+  }
+  &-c:hover {
+    @apply rounded cursor-pointer;
+    background: #faefc6;
+    color: #000;
+  }
+  &-c .is-known {
+    color: #0000ff;
+  }
 }
 
-// FIXME : obsolete?
-#rtkTooltip {
-  border: 1px solid #aaa;
-  background: #fff;
-  /*border:4px solid rgba(0,0,0,0.5); -moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px; */
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-}
-#rtkTooltip .bd {
-  margin: 0;
-  padding: 5px 10px;
-  /*-moz-box-radius:4px;-webkit-box-radius:4px;box-radius:4px;*/
-  color: #444;
-  font: 18px Georgia, Times New Roman, serif;
+// --------------------------------------------------------------------
+// the side pane
+// --------------------------------------------------------------------
+.kk-RecognitionPane {
+  @apply bg-[#e7e1d3] p-4;
+  border-radius: $rounded;
+
+  &-h3 {
+    @apply text-sm font-sans uppercase mb-1;
+    color: #737373;
+  }
+
+  &-kanji {
+    @apply block bg-[#fff] text-[55px];
+    @apply flex; // flex auto margins trick
+    border-radius: $rounded;
+    font-size: 55px;
+    width: 1.5em;
+    height: 1.5em;
+  }
+  &-kanjiChar {
+    @apply m-auto leading-none;
+  }
 }

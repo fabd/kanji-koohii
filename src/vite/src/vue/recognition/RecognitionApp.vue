@@ -25,61 +25,40 @@
               type="submit"
               class="btn btn-success"
               value="Show"
-              @click.prevent="isStateEdit = false"
+              @click.prevent="onClickShow"
             />
           </form>
-
-          <div id="introduction" class="markdown mt-8">
-            <h3>Purpose of this page</h3>
-
-            <p>
-              In <em>Remembering the Kanji</em>, the Japanese characters are
-              studied and reviewed from the keyword to the kanji. In this
-              sight-reading section, you can test your memory the other way
-              round, all the while seeing the characters <em>in context</em>.
-            </p>
-
-            <p
-              >With very basic grammar you can locate compound words made of two
-              or more kanji. You may be able to guess the meaning of some words
-              based on the meaning of the characters.
-            </p>
-
-            <h3>Resources</h3>
-
-            <ul>
-              <li>
-                Japanese text:
-                <a href="https://www.aozora.gr.jp/" target="_blank"
-                  >Aozora Bunko</a
-                >.
-              </li>
-              <li>
-                <a
-                  href="https://www.kanji.org/kanji/japanese/writing/outline.htm"
-                  target="_blank"
-                  >Guide to the Japanese Writing System</a
-                >
-                by Jack Halpern
-              </li>
-            </ul>
-          </div>
         </div>
 
         <div v-if="!isStateEdit">
-          <div class="mb-4 pb-4 border-b border-[#d4cdba]">
-            <button class="btn btn-success" @click="onClickToEdit"
-              >Enter more japanese text</button
+          <!-- ------------------------------------------------------ -->
+          <!-- OUTPUT -->
+          <!-- ------------------------------------------------------ -->
+          <div class="kk-Recognition-output mb-8">
+            <div
+              v-for="(k, i) in jtextarray"
+              :key="i"
+              class="kk-Recognition-c"
+              @click="onClickCharacter(k)"
             >
+              <span
+                :class="{
+                  'is-known': k.seq_nr,
+                }"
+                >{{ k.kanji }}</span
+              >
+            </div>
           </div>
-          <p>
-            Point at the colored kanji with the mouse or click/tap to reveal the
-            keyword. To study the character, <strong><em>click</em></strong> (or
-            tap) the kanji, and then click the "Study" link inside the tooltip.
-          </p>
 
-          <div class="kk-Recognition-output">
+          <p>BLAH</p>
+          <div class="kk-Recognition-output mb-8">
             <cjk-lang-ja :html="transformJapaneseText"></cjk-lang-ja>
+          </div>
+
+          <div class="mb-4 pb-4 border-b border-[#d4cdba]">
+            <button class="btn btn-success" @click="onClickToEdit">{{
+              "Enter more japanese text"
+            }}</button>
           </div>
         </div>
         sqdqsdqs
@@ -88,20 +67,84 @@
       <!-- SIDE COL -->
       <!-- ------------------------------------------------------ -->
       <div class="w-[400px] ml-4">
-        <div class="bg-[#e7e1d3]">
-          <div class="w-[75px] h-[75px] bg-[#fff] rounded text-[55px]">
-            {{ kanji }}
+        <template v-if="isStateEdit">
+          <div class="bg-[#e7e1d3] p-4">
+            <div id="introduction" class="markdown mt-8">
+              <h3>Instructions</h3>
+              <p> Enter Japanese text to the left... </p>
+
+              <h3>Purpose of this page</h3>
+
+              <p>
+                In this reading section, you can test your memory from the kanji
+                to the keyword, while also seeing kanji in context.
+              </p>
+
+              <p>
+                See if you can recognize simple words made of kanji you already
+                know. You may also be able to guess the meaning of some of these
+                words based on the meaning of the characters.
+              </p>
+
+              <h3>Resources</h3>
+
+              <ul>
+                <li>
+                  Japanese text:
+                  <a href="https://www.aozora.gr.jp/" target="_blank"
+                    >Aozora Bunko</a
+                  >.
+                </li>
+                <li>
+                  <a
+                    href="https://www.kanji.org/kanji/japanese/writing/outline.htm"
+                    target="_blank"
+                    >Guide to the Japanese Writing System</a
+                  >
+                  by Jack Halpern
+                </li>
+              </ul>
+            </div>
           </div>
+        </template>
 
-          <h3>Heisig Index</h3>
-          <div>{{ heisigIndex }}</div>
+        <template v-if="!isStateEdit && !curKanji">
+          <div class="bg-[#e7e1d3] p-4">
+            <p> Select a kanji on the left to display more information... </p>
+          </div>
+        </template>
 
-          <h3>Keyword</h3>
-          ...
+        <template v-if="!isStateEdit && curKanji">
+          <div class="kk-RecognitionPane">
+            <div class="flex mb-6">
+              <div class="kk-RecognitionPane-kanji">
+                <span class="kk-RecognitionPane-kanjiChar">
+                  {{ curKanji.kanji }}
+                </span>
+              </div>
 
-          <h3>Dictionary</h3>
-        </div>
-        <div class="bg-[#fff]"> DICT HERE </div>
+              <div class="ml-5">
+                <h3 class="kk-RecognitionPane-h3">Heisig Index</h3>
+                <div
+                  class="font-serif text-[#42413d] text-[34px] leading-none"
+                  >{{ curKanji.seq_nr }}</div
+                >
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <h3 class="kk-RecognitionPane-h3 mb-0">Keyword</h3>
+              <div class="font-serif text-[#42413d] text-[34px] leading-none">{{
+                curKanji.keyword
+              }}</div>
+            </div>
+
+            <h3 class="kk-RecognitionPane-h3 !mb-2">Dictionary</h3>
+            <div class="bg-[#fff] -mx-4">
+              DICT HERE
+            </div>
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -137,10 +180,15 @@ export default defineComponent({
     return {
       japaneseText: DEFAULT_TEXT,
 
+      jtextarray: [] as TRecKanji[],
+
       isStateEdit: true,
+
+      curKanji: null as TRecKanji | null,
 
       kanji: "思",
       heisigIndex: 651,
+      keyword: "think",
     };
   },
 
@@ -174,9 +222,25 @@ export default defineComponent({
     this.focusInput();
   },
 
+  beforeMount() {
+    // testing
+    this.onClickShow();
+    this.curKanji = this.jtextarray[10];
+  },
+
   methods: {
     focusInput() {
       (this.$refs.input as HTMLElement).focus();
+    },
+
+    onClickCharacter(charData: TRecKanji) {
+      this.curKanji = charData;
+    },
+
+    onClickShow() {
+      this.isStateEdit = false;
+
+      this.parseText();
     },
 
     onClickToEdit() {
@@ -184,6 +248,38 @@ export default defineComponent({
       this.$nextTick(() => {
         this.focusInput();
       });
+    },
+
+    parseText() {
+      const knownKanji = READING_KEYWORDS;
+
+      let arr = this.japaneseText.split("");
+      let out: TRecKanji[] = [];
+
+      for (let strKanji of this.japaneseText) {
+        let ucsId = strKanji.charCodeAt(0);
+        let kanjiInfo = knownKanji[ucsId];
+        let data = kanjiInfo;
+        // console.log(strKanji, kanjiInfo);
+
+        // if (kanjiInfo) {
+        //   data = { url: `study/kanji/${ucsId}`,
+        //   keyword: kanjiInfo.keyword,
+        //    }
+        // }
+
+        if (!kanjiInfo) {
+          data = {
+            kanji: strKanji,
+            seq_nr: 0,
+            keyword: "",
+          } as TRecKanji;
+        }
+
+        out.push(data);
+      }
+
+      this.jtextarray = out;
     },
   },
 });

@@ -35,21 +35,18 @@
           <!-- OUTPUT -->
           <!-- ------------------------------------------------------ -->
           <div class="kk-Recognition-output mb-8">
-            <template v-for="(k, i) in jtextarray" :key="i">
-              <div class="kk-Recognition-c" @click="onClickCharacter(k)">
-                <span
-                  :class="{
-                    'is-known': k.seq_nr,
-                  }"
-                  >{{ k.kanji }}</span
-                >
-              </div>
-            </template>
-          </div>
-
-          <p>BLAH</p>
-          <div class="kk-Recognition-output mb-8">
-            <cjk-lang-ja :html="transformJapaneseText"></cjk-lang-ja>
+            <cjk-lang-ja>
+              <template v-for="(k, i) in jtextarray" :key="i">
+                <div class="kk-Recognition-c" @click="onClickCharacter(k)">
+                  <span
+                    :class="{
+                      'is-known': k.seq_nr,
+                    }"
+                    >{{ k.kanji }}</span
+                  >
+                </div>
+              </template>
+            </cjk-lang-ja>
           </div>
 
           <div class="mb-4 pb-4 border-b border-[#d4cdba]">
@@ -58,7 +55,6 @@
             }}</button>
           </div>
         </div>
-        sqdqsdqs
       </div>
       <!-- ------------------------------------------------------ -->
       <!-- SIDE COL -->

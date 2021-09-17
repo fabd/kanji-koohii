@@ -26,27 +26,3 @@ export const baseUrl = () => baseUrlFor().replace(/\/$/, "");
  */
 export const urlForStudy = (kanji?: string) =>
   `${baseUrl()}/study` + (kanji ? `/kanji/${kanji}` : "");
-
-// ====================================================================
-// Equivalents to CJK.php helpers for frontend
-//
-// FIXME : find a npm package that has simple utilities to handle CJK conversions
-// ====================================================================
-
-// https://stackoverflow.com/questions/15033196/using-javascript-to-check-whether-a-string-contains-japanese-characters-includi
-const CJK_PUNCTUATION = "\\u3000-\\u303f";
-const CJK_HIRAGANA = "\\u3040-\\u309f";
-const CJK_KATAKANA = "\\u30a0-\\u30ff";
-const CJK_FULLWIDTH = "\\uff00-\\uff9f";
-const CJK_KANJI = "\\u4e00-\\u9faf\\u3400-\\u4dbf";
-
-const PREG_IS_HIRAGANA = `[${CJK_HIRAGANA}]`;
-const PREG_IS_KANJI = `[${CJK_KANJI}]`;
-
-export function isKanjiChar(char: string) {
-  return null !== char.match(PREG_IS_KANJI);
-}
-
-export function isHiragana(char: string) {
-  return null !== char.match(PREG_IS_HIRAGANA);
-}

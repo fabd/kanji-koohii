@@ -1,12 +1,16 @@
 <?php
 
-class readingAction extends sfAction
+class miscActions extends sfActions
 {
-  public function execute($request)
+  public function executeIndex($request)
   {
-    // get custom keywords ONLY for existing flashcards
+  }
+
+  public function executeReading($request)
+  {
+    // get the Heisig keywords coalesced with user's customized keywords
     $userId = $this->getContext()->getUser()->getUserId();
-    $keywords = CustkeywordsPeer::getCustomKeywords($userId, true);
+    $keywords = CustkeywordsPeer::getCustomKeywords($userId);
 
     $vueData = [];
 

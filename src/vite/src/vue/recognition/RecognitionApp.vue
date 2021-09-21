@@ -125,9 +125,8 @@
                   <h3 class="kk-RecognitionPane-h3 mb-0">KANA - READING</h3>
                   <div
                     class="font-serif italic text-body text-[34px] leading-none"
-                  >{{
-                    toRomaji(curKanji.kanji)
-                  }}</div>
+                    >{{ toRomaji(curKanji.kanji) }}</div
+                  >
                 </div>
 
                 <div class="mb-4">
@@ -231,26 +230,18 @@ export default defineComponent({
   },
 
   methods: {
+    // proxies
+    isKana: wanakana.isKana,
+    isKanji: wanakana.isKanji,
+    isHiragana: wanakana.isHiragana,
+    toRomaji: wanakana.toRomaji,
+
     focusInput() {
       (this.$refs.input as HTMLElement).focus();
     },
 
     getStudyPageLink(strKanji: string) {
       return urlForStudy(strKanji);
-    },
-
-    // proxy
-    isKana(s: string) {
-      return wanakana.isKana(s);
-    },
-    isKanji(char: string) {
-      return wanakana.isKanji(char);
-    },
-    isHiragana(char: string) {
-      return wanakana.isHiragana(char);
-    },
-    toRomaji(s: string) {
-      return wanakana.toRomaji(s);
     },
 
     onClickCharacter(charData: TRecKanji, index: number) {

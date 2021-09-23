@@ -27,26 +27,34 @@ $rounded: 0.5rem;
   }
 
   &-output .cj-k {
-    @apply font-sans;
+    // @apply font-sans;
+    $tailwind-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    $custom: "Hiragino Sans";
+
+    font-family: $custom, $tailwind-font-sans;
   }
 
   //////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////
-  &-c {
+  &-k,
+  &-u {
     @apply inline-block;
   }
-  &-c:hover {
+  &-k span,
+  &-u span {
+  }
+  &-k:hover span {
     @apply rounded cursor-pointer;
     background: #faefc6;
     color: #000;
   }
-  &-c .is-known {
+  &-k.is-known span {
     color: #0000ff;
   }
 
-  &-c .is-active {
+  &-k.is-active span {
     background-color: #ffca52;
-    border-radius: 4px;
     color: #5e440a;
   }
 }

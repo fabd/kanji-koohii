@@ -11,25 +11,22 @@ class miscActions extends sfActions
     // get the Heisig keywords coalesced with user's customized keywords
     $userId = $this->getContext()->getUser()->getUserId();
     $keywords = CustkeywordsPeer::getCustomKeywords($userId);
+    // DBG::printr($keywords);exit;
 
-    $vueData = [];
-
-    foreach ($keywords as $ucsId => $info)
+    $keywordsMap = [];
+    foreach ($keywords as $ucsId => $data)
     {
-      //$uri = $this->getContext()->getController()->genUrl('@study_edit?id='.$info['seq_nr']);
-      $utfKanji = utf8::fromUnicode($ucsId);
-
-      $vueData[(string) $ucsId] = [
-        'kanji' => $utfKanji,
-        'keyword' => $info['keyword'],
-        'seq_nr' => $info['seq_nr'],
-      ];
+      $keywordsMap[] = [(int) $ucsId, $data['keyword']];
     }
+    // DBG::printr(count($keywordsMap));exit;
+
+    $knownKanji = ReviewsPeer::getKnownKanji($userId);
+
+    $indexMap = rtkIndex::getSequenceMap();
 
     sfProjectConfiguration::getActive()->loadHelpers(['Bootstrap']);
-    kk_globals_put('READING_KEYWORDS', $vueData);
-
-    // assumes lines end with \r\n
-    // $j_text = preg_replace('/[\r\n]+/', '<br/>', $j_text);
+    kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
+    kk_globals_put('USER_KNOWN_KANJI', $knownKanji);
+    kk_globals_put('RTK_INDEX_MAP', $indexMap);
   }
 }

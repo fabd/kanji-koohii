@@ -37,14 +37,19 @@
           <div class="kk-Recognition-output mb-8">
             <cjk-lang-ja>
               <template v-for="(k, i) in jtextarray" :key="i">
-                <div class="kk-Recognition-c" @click="onClickCharacter(k, i)">
-                  <span
-                    :class="{
-                      'is-known': k.seq_nr,
-                      'is-active': i === curKanjiIndex,
-                    }"
-                    >{{ k.kanji }}</span
-                  >
+                <div
+                  v-if="k.seq_nr"
+                  class="kk-Recognition-k"
+                  :class="{
+                    'is-known': k.seq_nr,
+                    'is-active': i === curKanjiIndex,
+                  }"
+                  @click="onClickCharacter(k, i)"
+                >
+                  <span>{{ k.kanji }}</span>
+                </div>
+                <div v-else class="kk-Recognition-u">
+                  <span>{{ k.kanji }}</span>
                 </div>
               </template>
             </cjk-lang-ja>
@@ -184,15 +189,27 @@ const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎ�
 
 type TRecKanji = {
   kanji: string; // single kanji
-  seq_nr: number; // heisig index nr
+  seq_nr: TUcsId; // heisig index nr
   keyword: string;
+  url?: string;
 };
 
-type TRecKanjiArray = {
-  [ucs_id: string]: TRecKanji;
-};
+// --------------------------------------------------------------------
+// hydration
+// --------------------------------------------------------------------
+type TUcsId = number;
+type TKeywordMap = Map<TUcsId, string>; // UCS code, keyword
+type TRtkIndexMap = Map<number, number>; // UCS code, Heisig Index
 
-const READING_KEYWORDS: TRecKanjiArray = kk_globals_get("READING_KEYWORDS");
+const keywordsMap = new Map(kk_globals_get("USER_KEYWORDS_MAP")) as TKeywordMap;
+const getKeywordForUCS = (ucsId: TUcsId) => keywordsMap.get(ucsId) || "";
+
+const knownKanji = kk_globals_get("USER_KNOWN_KANJI") as string;
+const isKnownKanji = (char: string) => knownKanji.indexOf(char) >= 0;
+
+const rtkIndexMap = new Map(kk_globals_get("RTK_INDEX_MAP")) as TRtkIndexMap;
+const getIndexForUCS = (ucsId: TUcsId) => rtkIndexMap.get(ucsId) || 0;
+// --------------------------------------------------------------------
 
 export default defineComponent({
   name: "RecognitionApp",
@@ -266,28 +283,26 @@ export default defineComponent({
     },
 
     parseText() {
-      const knownKanji = READING_KEYWORDS;
-
       let out: TRecKanji[] = [];
 
-      for (let strKanji of this.japaneseText) {
-        let ucsId = strKanji.charCodeAt(0);
-        let kanjiInfo = knownKanji[ucsId];
-        let data = kanjiInfo;
+      for (let char of this.japaneseText) {
+        let ucsId = char.charCodeAt(0);
+        let data: TRecKanji;
         // console.log(strKanji, kanjiInfo);
 
-        // if (kanjiInfo) {
-        //   data = { url: `study/kanji/${ucsId}`,
-        //   keyword: kanjiInfo.keyword,
-        //    }
-        // }
-
-        if (!kanjiInfo) {
+        if (isKnownKanji(char)) {
           data = {
-            kanji: strKanji,
+            kanji: char,
+            seq_nr: getIndexForUCS(ucsId),
+            keyword: getKeywordForUCS(ucsId),
+            url: `study/kanji/${ucsId}`,
+          };
+        } else {
+          data = {
+            kanji: char,
             seq_nr: 0,
             keyword: "",
-          } as TRecKanji;
+          };
         }
 
         out.push(data);

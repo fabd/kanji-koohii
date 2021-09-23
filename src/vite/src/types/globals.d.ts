@@ -57,9 +57,6 @@ interface Window {
     MYSTORIES_SORT_OPTIONS: Dictionary;
 
     ACCOUNT_SRS: Dictionary;
-
-    // Kanji Recognition
-    READING_KEYWORDS: Dictionary;
   };
 
   // 4th/5th edition keywords and kanji, import cf. _SideColumn.php

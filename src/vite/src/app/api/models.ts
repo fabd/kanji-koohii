@@ -11,17 +11,17 @@
 
 export type DictId = number;
 
+/**
+ * A subset of a JMDICT entry as obtained from dict lookup cache.
+ *
+ * @see data/scripts/dict/dict_gen_cache.php
+ */
 export type DictListEntry = {
   id: DictId; // jdict.id
   c: string; // compound
   r: string; // reading
   g: string; // glossary
   pri: number; // jdict.pri (bitfield)
-
-  // FIXME? refactor to use a separate hash for DictList templating
-  known?: boolean; // (client side) true if user knows all kanji in this compound
-  fr?: string; // formatted reading
-  pick?: boolean; // selected state
 };
 
 // cf. KanjisPeer::getKanjiByUCS()

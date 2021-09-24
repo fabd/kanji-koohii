@@ -8,6 +8,7 @@
         <dict-list
           ref="refDictList"
           :items="items"
+          :known-kanji="knownKanji"
           :selected-items="picks"
           :show-selected="!!KanjiReview"
           @click="onVocabSelect($event)"

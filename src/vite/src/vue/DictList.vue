@@ -68,6 +68,11 @@ export default defineComponent({
       type: Array as PropType<DictListEntry[]>,
       required: true,
     },
+    // a string of known kanji, to highlight "known" compounds in the list
+    knownKanji: {
+      type: String,
+      default: "",
+    },
     // a list of entries ids to be shown as selected
     selectedItems: {
       type: Array as PropType<DictId[]>,
@@ -84,8 +89,7 @@ export default defineComponent({
 
   data() {
     return {
-      // a string containing all kanji known by the user
-      knownKanji: "",
+      //
     };
   },
 

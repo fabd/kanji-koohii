@@ -38,10 +38,10 @@
             <cjk-lang-ja>
               <template v-for="(k, i) in jtextarray" :key="i">
                 <div
-                  v-if="k.seq_nr"
+                  v-if="k.heisigNr"
                   class="kk-Recognition-k"
                   :class="{
-                    'is-known': k.seq_nr,
+                    'is-known': k.isKnown,
                     'is-active': i === curKanjiIndex,
                   }"
                   @click="onClickCharacter(k, i)"
@@ -157,7 +157,7 @@
                   <div
                     class="font-serif text-[#42413d] text-[34px] leading-none"
                   >
-                    <span>{{ curKanji.seq_nr }}</span>
+                    <span>{{ curKanji.heisigNr }}</span>
                   </div>
                 </div>
 
@@ -210,9 +210,10 @@ const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎ�
 
 type TRecKanji = {
   kanji: string; // single kanji
-  seq_nr: TUcsId; // heisig index nr
+  heisigNr: TUcsId; // heisig index nr (or UCS for non-Heisig chars)
   keyword: string;
   url?: string;
+  isKnown?: boolean;
 };
 
 // --------------------------------------------------------------------
@@ -314,22 +315,19 @@ export default defineComponent({
 
       for (let char of this.japaneseText) {
         let ucsId = char.charCodeAt(0);
-        let data: TRecKanji;
         // console.log(strKanji, kanjiInfo);
 
+        let data: TRecKanji;
+
+        data = {
+          kanji: char,
+          heisigNr: getIndexForUCS(ucsId),
+          keyword: getKeywordForUCS(ucsId),
+        };
+
         if (isKnownKanji(char)) {
-          data = {
-            kanji: char,
-            seq_nr: getIndexForUCS(ucsId),
-            keyword: getKeywordForUCS(ucsId),
-            url: `study/kanji/${ucsId}`,
-          };
-        } else {
-          data = {
-            kanji: char,
-            seq_nr: 0,
-            keyword: "",
-          };
+          data.isKnown = true;
+          data.url = `study/kanji/${ucsId}`;
         }
 
         out.push(data);

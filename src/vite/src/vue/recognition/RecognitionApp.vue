@@ -170,6 +170,25 @@
             <div v-if="!isHiragana(curKanji.kanji)">
               <h3 class="kk-RecognitionPane-h3 mb-2">Dictionary</h3>
               <div class="bg-[#fff] -mx-4"> DICT HERE </div>
+
+              <!-- ------------------------------------------------------ -->
+              <!-- DICT -->
+              <!-- ------------------------------------------------------ -->
+              <div ref="refLoadingMask" class="dict-panel">
+                <template v-if="dictLoading">
+                  <div style="min-height: 100px"></div>
+                </template>
+                <template v-else-if="dictItems.length">
+                  <dict-list
+                    ref="refDictList"
+                    :items="dictItems"
+                    :known-kanji="knownKanji"
+                  />
+                </template>
+                <template v-else class="dict-list_info">
+                  <p>No results.</p>
+                </template>
+              </div>
             </div>
           </div>
         </template>
@@ -184,6 +203,8 @@ import { kk_globals_get } from "@app/root-bundle";
 import { urlForStudy } from "@/lib/koohii";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 import * as wanakana from "wanakana";
+
+import { DictId, DictListEntry } from "@app/api/models";
 
 const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎとかめは、山の上まで競争しました。誰もが、うさぎの方がかめよりも早くそこに着くと思いました。しかし迂闊にも、うさぎは途中で寝てしまいました。目が覚めた時は、もうあとのまつりでした。かめはすでに山のてっ辺に立っていました。`;
 
@@ -229,9 +250,15 @@ export default defineComponent({
       curKanji: null as TRecKanji | null,
       curKanjiIndex: -1,
 
+      // cur kanji info
       kanji: "思",
       heisigIndex: 651,
       keyword: "think",
+
+      // dictionary
+      dictLoading: false,
+      dictItems: [] as DictListEntry[],
+      knownKanji: "",
     };
   },
 

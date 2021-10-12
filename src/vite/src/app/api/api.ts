@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { baseUrl } from "@/lib/koohii";
 import {
   GetDictListForUCS,
+  GetDictCacheFor,
   PostUserStoryResponse,
   PostVoteStoryRequest,
   PostVoteStoryResponse,
@@ -144,6 +145,13 @@ export class LegacyApi extends HttpClient {
     return this.get<GetDictListForUCS>("/study/dict", {
       ucs: ucsId,
       reqKnownKanji: getKnownKanji,
+    });
+  }
+
+  // return results for multiple kanji (Kanji Recognition, unused)
+  getDictCacheFor(chars: string) {
+    return this.get<GetDictCacheFor>("/study/dictcache", {
+      chars: chars,
     });
   }
 

@@ -37,8 +37,9 @@
  *
  */
 import { defineComponent } from "vue";
-import { DictId, DictListEntry, GetDictListForUCS } from "@app/api/models";
+import { GetDictListForUCS } from "@app/api/models";
 import { getApi } from "@app/api/api";
+// import CacheDictResults from "@/app/dict/CacheDictResults";
 
 import DictList from "@/vue/DictList.vue";
 import KanjiReview from "@app/review/review-kanji";
@@ -196,6 +197,9 @@ export default defineComponent({
         //   The user's known kanji could realistically be 2000 to 3000 utf8 characters. So
         //   even though they are also cached in php session, it's better to avoid returning
         //   several KBs of data with each dictionary lookup request
+
+        // let CDR = CacheDictResults.getInstance();
+        // CDR.cacheResultsFor(ucsId)
 
         getApi()
           .legacy.getDictListForUCS(ucsId, true !== this.isSetKnownKanji)

@@ -9,31 +9,17 @@
  *
  */
 
-export type DictId = number;
-
-/**
- * A subset of a JMDICT entry as obtained from dict lookup cache.
- *
- * @see data/scripts/dict/dict_gen_cache.php
- */
-export type DictListEntry = {
-  id: DictId; // jdict.id
-  c: string; // compound
-  r: string; // reading
-  g: string; // glossary
-  pri: number; // jdict.pri (bitfield)
-};
-
 // cf. KanjisPeer::getKanjiByUCS()
 export type KanjiData = {
   framenum: number;
   kanji: string;
-  ucs_id: number;
+  ucs_id: TUcsId;
   keyword: string;
   onyomi: string;
   strokecount: number;
 };
 
+// TODO : this is 3 api responses combined (dictresults, USER_VOCAB_PICKS, USER_KNOWN_KANJI)
 export type GetDictListForUCS = {
   //
   items: DictListEntry[];
@@ -42,6 +28,12 @@ export type GetDictListForUCS = {
   // string of known kanji (if "reqKnownKanji" is true)
   knownKanji?: string;
 };
+
+// a response when caching dict results
+export type GetDictCacheFor = {
+  //
+  items: DictListEntry[];
+}
 
 export type PostVoteStoryRequest = {
   request: "star" | "report" | "copy";

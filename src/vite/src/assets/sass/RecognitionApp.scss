@@ -28,7 +28,10 @@ $rounded: 0.5rem;
 
   &-output .cj-k {
     // @apply font-sans;
-    $tailwind-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    $tailwind-font-sans: ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+      "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
 
     $custom: "Hiragino Sans";
 
@@ -81,5 +84,11 @@ $rounded: 0.5rem;
   }
   &-kanjiChar {
     @apply m-auto leading-none;
+  }
+
+  &-dict {
+    @apply -mx-4;
+    max-height: 600px;
+    overflow-y: auto;
   }
 }

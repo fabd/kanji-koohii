@@ -33,7 +33,6 @@
  * A dumb component displaying a list of JMDICT entries.
  */
 import { defineComponent, PropType } from "vue";
-import { DictId, DictListEntry } from "@app/api/models";
 import { kkFormatReading } from "@lib/format";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 

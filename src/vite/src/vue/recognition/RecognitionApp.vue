@@ -169,12 +169,11 @@
 
             <div v-if="!isHiragana(curKanji.kanji)">
               <h3 class="kk-RecognitionPane-h3 mb-2">Dictionary</h3>
-              <div class="bg-[#fff] -mx-4"> DICT HERE </div>
 
               <!-- ------------------------------------------------------ -->
               <!-- DICT -->
               <!-- ------------------------------------------------------ -->
-              <div ref="refLoadingMask" class="dict-panel">
+              <div ref="refLoadingMask" class="kk-RecognitionPane-dict">
                 <template v-if="dictLoading">
                   <div style="min-height: 100px"></div>
                 </template>
@@ -201,16 +200,19 @@
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import { urlForStudy } from "@/lib/koohii";
-import CjkLangJa from "@/vue/CjkLangJa.vue";
 import * as wanakana from "wanakana";
+import * as CJK from "@/lib/kanji";
+import CacheDictResults from "@/app/dict/CacheDictResults";
 
-import { DictId, DictListEntry } from "@app/api/models";
+import CjkLangJa from "@/vue/CjkLangJa.vue";
+import DictList from "@/vue/DictList.vue";
 
 const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎとかめは、山の上まで競争しました。誰もが、うさぎの方がかめよりも早くそこに着くと思いました。しかし迂闊にも、うさぎは途中で寝てしまいました。目が覚めた時は、もうあとのまつりでした。かめはすでに山のてっ辺に立っていました。`;
 
 type TRecKanji = {
   kanji: string; // single kanji
-  heisigNr: TUcsId; // heisig index nr (or UCS for non-Heisig chars)
+  ucsId: TUcsId; // ucs code
+  heisigNr: TUcsId; // heisig index nr OR ucs code for non-Heisig chars
   keyword: string;
   url?: string;
   isKnown?: boolean;
@@ -219,7 +221,6 @@ type TRecKanji = {
 // --------------------------------------------------------------------
 // hydration
 // --------------------------------------------------------------------
-type TUcsId = number;
 type TKeywordMap = Map<TUcsId, string>; // UCS code, keyword
 type TRtkIndexMap = Map<number, number>; // UCS code, Heisig Index
 
@@ -238,6 +239,7 @@ export default defineComponent({
 
   components: {
     CjkLangJa,
+    DictList,
   },
 
   data() {
@@ -269,9 +271,12 @@ export default defineComponent({
 
   beforeMount() {
     // testing
-    this.onClickShow();
-    this.curKanjiIndex = 10;
-    this.curKanji = this.jtextarray[this.curKanjiIndex];
+    // this.onClickShow();
+    // this.curKanjiIndex = 10;
+    // this.curKanji = this.jtextarray[this.curKanjiIndex];
+    // let s, ss;
+    // console.log("k", (s = CJK.getKanji(DEFAULT_TEXT)), s.length);
+    // console.log("kk", (ss = CJK.getUniqueKanji(DEFAULT_TEXT)), ss.length);
   },
 
   methods: {
@@ -292,6 +297,34 @@ export default defineComponent({
     onClickCharacter(charData: TRecKanji, index: number) {
       this.curKanji = charData;
       this.curKanjiIndex = index;
+
+      const setDictItems = (items: DictResults) => {
+        console.log("set dict items %o", items);
+        this.dictItems = items;
+
+        // this.dictItems = [
+        //   { id: 19968, c: "@", r: "reading", g: "gloss", pri: 666, },
+        //   { id: 19968, c: "@", r: "reading", g: "gloss", pri: 666, },
+        //   { id: 19968, c: "@", r: "reading", g: "gloss", pri: 666, },
+        //   { id: 19968, c: "@", r: "reading", g: "gloss", pri: 666, },
+        // ] as DictResults;
+      };
+
+      //
+      let CDR = CacheDictResults.getInstance();
+      let ucsId = charData.ucsId;
+      let results = CDR.getResultsForUCS(ucsId);
+      console.log("CDR results", results);
+
+      if (!results) {
+        CDR.cacheResultsFor(charData.kanji, (items) => {
+          let results = CDR.getResultsForUCS(ucsId);
+          console.assert(!!results); // should be cached now, always
+          this.dictItems = results!;
+        });
+      } else {
+        setDictItems(results);
+      }
     },
 
     onClickShow() {
@@ -321,6 +354,7 @@ export default defineComponent({
 
         data = {
           kanji: char,
+          ucsId: char.charCodeAt(0),
           heisigNr: getIndexForUCS(ucsId),
           keyword: getKeywordForUCS(ucsId),
         };
@@ -338,5 +372,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss"></style>

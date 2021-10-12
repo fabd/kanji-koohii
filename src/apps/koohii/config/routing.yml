@@ -73,8 +73,9 @@ rss:
   url:          /rss
   param:        { module: home, action: rssfeed }
 
-sightreading:
-  url:          /sightreading
+# note: unsupported, unfinished feature (pr #204)
+kanjirec:
+  url:          /kanjirec
   param:        { module: misc, action: reading }
 
 study_edit:

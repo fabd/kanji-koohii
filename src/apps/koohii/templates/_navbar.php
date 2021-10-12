@@ -84,7 +84,6 @@ if (!$sf_user->isAuthenticated()) {
   <li><a href="@/study">Browse</a></li>
   <li><a href="@/study/failedlist">Restudy List</a></li>
   <li><a href="@/study/mystories" class="active">My Stories</a></li>
-  <li><a href="@/sightreading">Kanji Recognition</a></li>
 </ul>
 DOM
   );
@@ -174,7 +173,6 @@ if (!$sf_user->isAuthenticated()) {
     nav_m_i('Index',       's-i',  'study/index'),
     nav_m_i('Restudy',     's-r',  'study/failedlist' ),
     nav_m_i('My Stories',  's-ms', 'study/mystories' ),
-    nav_m_i('Recognition', 's-sr', '@sightreading' )
   ]);
     
   $nav_items[] = nav_m_t('Review', 'review', 'fa-signal', [

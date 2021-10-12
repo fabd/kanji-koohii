@@ -1,0 +1,17 @@
+//
+$borderColor: #d8d1c2;
+
+//
+.ux-doc {
+  &Demoblock {
+    border: 1px solid $borderColor;
+    padding: 1.5rem;
+    border-radius: 3px;
+    transition: 0.2s;
+    margin-bottom: 1.5rem;
+
+    &:hover {
+      border: 1px solid #c1b7a2;
+    }
+  }
+}

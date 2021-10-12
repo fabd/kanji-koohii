@@ -5,36 +5,14 @@
         <div style="min-height: 100px"></div>
       </template>
       <template v-else-if="items.length">
-        <div class="dict-list">
-          <template v-for="$item in items" :key="$item.id">
-            <div
-              :class="['dl_item', { 'dl_item--pick': $item.pick }]"
-              @click="onVocabPick($item)"
-            >
-              <div class="dl_t">
-                <div v-if="!!KanjiReview" class="dl_t_menu">
-                  <i v-if="$item.pick === true" class="fa fa-star"></i>
-                  <i v-else class="far fa-star"></i>
-                </div>
-
-                <cjk-lang-ja
-                  class-name="c vocab_c"
-                  :html="$item.c"
-                  :class="{ known: $item.known }"
-                ></cjk-lang-ja>
-                <cjk-lang-ja
-                  class-name="r vocab_r"
-                  :html="$item.fr"
-                ></cjk-lang-ja>
-              </div>
-              <div class="dl_d">
-                {{ $item.g }}
-              </div>
-
-              <div if="isMenu"> </div>
-            </div>
-          </template>
-        </div>
+        <dict-list
+          ref="refDictList"
+          :items="items"
+          :known-kanji="knownKanji"
+          :selected-items="picks"
+          :show-selected="!!KanjiReview"
+          @click="onVocabSelect($event)"
+        />
       </template>
       <template v-else class="dict-list_info">
         <!-- items.length === 0 -->
@@ -55,47 +33,27 @@
 
 <script lang="ts">
 /**
- * The dictionary list as seen in Study pages, and dictionary lookup in flashcard reviews.
- *
- * In the future, this list may allow to toggle bookmarking any individual entry, creating
- * a list of vocabulary for the user.
+ * DictList with on-demand loading of entries as used by Study & Flashcard Review pages.
  *
  */
 import { defineComponent } from "vue";
-import { DictId, DictListEntry, GetDictListForUCS } from "@app/api/models";
+import { GetDictListForUCS } from "@app/api/models";
 import { getApi } from "@app/api/api";
-import { kkFormatReading } from "@lib/format";
+// import CacheDictResults from "@/app/dict/CacheDictResults";
 
+import DictList from "@/vue/DictList.vue";
 import KanjiReview from "@app/review/review-kanji";
-import CjkLangJa from "@/vue/CjkLangJa.vue";
 import KoohiiLoading from "@/vue/KoohiiLoading";
 import KoohiiFlashcardKanji from "./KoohiiFlashcardKanji.vue";
 
-// our simple regexp matching needs this so that vocab with okurigana is considered known
-const HIRAGANA =
-  "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔゕゖ ゙ ゚゛゜ゝゞゟ";
-const KATAKANA =
-  "゠ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺ・ーヽヾヿ";
-const PUNCTUATION =
-  "｟｠｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞ";
-
-// cf. rtkLabs.php (this will go into an include)
-/*
-const PRI_ICHI1 = 0X80
-const PRI_NEWS1 = 0X40
-const PRI_NEWS2 = 0X20
-const PRI_ICHI2 = 0X10
-const PRI_SPEC1 = 8
-const PRI_SPEC2 = 4
-const PRI_GAI1  = 2
-const PRI_GAI2  = 1
-*/
+type TVueDictList = TVueInstanceOf<typeof DictList>;
+type TVueKoohiiFlashcard = TVueInstanceOf<typeof KoohiiFlashcardKanji>;
 
 export default defineComponent({
   name: "KoohiiDictList",
 
   components: {
-    CjkLangJa,
+    DictList,
   },
 
   data() {
@@ -114,6 +72,9 @@ export default defineComponent({
        *
        */
       items: [] as DictListEntry[],
+
+      //
+      picks: [] as DictId[],
 
       // kanji which corresponds to the last retrieved example words (cf load())
       ucsId: 0,
@@ -139,7 +100,6 @@ export default defineComponent({
 
   created() {
     console.log("KoohiiDictList::created(%o)", this.items);
-    this.items;
     this.isLoading = true;
   },
 
@@ -148,32 +108,37 @@ export default defineComponent({
   },
 
   methods: {
+    getDictList(): TVueDictList {
+      return this.$refs.refDictList as TVueDictList;
+    },
+
     // ! CAN NOT be computed because the dictionary is instanced *once*, while flashcard comp is recreated
     //
-    getKanjiCard(): TVueInstanceOf<typeof KoohiiFlashcardKanji> | null {
+    getKanjiCard(): TVueKoohiiFlashcard | null {
       if (!this.KanjiReview) {
         return null;
       }
       let vmFlashcard = this.KanjiReview!.oReview!.getFlashcard();
-      let inst = vmFlashcard.getChild() as TVueInstanceOf<
-        typeof KoohiiFlashcardKanji
-      >;
+      let inst = vmFlashcard.getChild() as TVueKoohiiFlashcard;
       return inst;
     },
 
-    onVocabPick(item: DictListEntry) {
-      console.log('onVocabPick "%s"', item.c);
+    onVocabSelect({
+      item,
+      selected,
+    }: {
+      item: DictListEntry;
+      selected: boolean;
+    }) {
+      console.log("onVocabSelect %o", item);
 
-      if (!this.KanjiReview) {
-        return;
-      }
+      if (!this.KanjiReview) return;
 
-      // add
-      if (item.pick !== true) {
-        KoohiiLoading.show({
-          target: this.$refs.refLoadingMask as HTMLElement,
-        });
+      KoohiiLoading.show({
+        target: this.$refs.refLoadingMask as HTMLElement,
+      });
 
+      if (!selected) {
         getApi()
           .legacy.setVocabForCard(this.ucsId, item.id)
           .then((tron) => {
@@ -181,13 +146,7 @@ export default defineComponent({
             // success:  show vocab onto the flashcard, and close the dictionary
             tron.isSuccess() && this.onVocabPickResponse(item);
           });
-      }
-      // remove
-      else {
-        KoohiiLoading.show({
-          target: this.$refs.refLoadingMask as HTMLElement,
-        });
-
+      } else {
         getApi()
           .legacy.deleteVocabForCard(this.ucsId)
           .then((tron) => {
@@ -197,29 +156,28 @@ export default defineComponent({
       }
     },
 
+    setVocabPick(dictId: DictId, state: boolean) {
+      if (!state) {
+        this.picks = this.picks.filter((id) => id !== dictId);
+      } else {
+        // kiss for now, there is always only one selected vocab per ucsId
+        this.picks = [dictId];
+      }
+    },
+
     onVocabDeleteResponse(item: DictListEntry) {
-      item.pick = false;
+      this.setVocabPick(item.id, false);
       this.getKanjiCard()!.removeVocab(item);
       this.KanjiReview && this.KanjiReview.toggleDictDialog();
     },
 
-    /**
-     * @param item  One of this.items[] which was clicked
-     */
     onVocabPickResponse(item: DictListEntry) {
-      // sets highlighted entry
-      this.items.forEach((o) => {
-        o.pick = false;
-      });
-      item.pick = true;
-
-      const VocabPick = {
+      this.setVocabPick(item.id, true);
+      this.getKanjiCard()!.setVocab({
         compound: item.c,
         reading: item.r,
         gloss: item.g,
-      };
-      this.getKanjiCard()!.setVocab(VocabPick);
-
+      });
       this.KanjiReview && this.KanjiReview.toggleDictDialog();
     },
 
@@ -239,6 +197,9 @@ export default defineComponent({
         //   The user's known kanji could realistically be 2000 to 3000 utf8 characters. So
         //   even though they are also cached in php session, it's better to avoid returning
         //   several KBs of data with each dictionary lookup request
+
+        // let CDR = CacheDictResults.getInstance();
+        // CDR.cacheResultsFor(ucsId)
 
         getApi()
           .legacy.getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
@@ -261,169 +222,11 @@ export default defineComponent({
         this.isSetKnownKanji = true;
       }
 
-      let items = this.setKnownItems(props.items, this.knownKanji);
-
-      this.formatDictEntryArray(items);
-      this.applyVocabPicks(items, props.picks);
-
-      this.items = items;
+      this.items = props.items;
+      this.picks = props.picks;
 
       this.isLoading = false;
     },
-
-    setKnownItems(items: DictListEntry[], knownKanji: string): DictListEntry[] {
-      // if (this.knownKanji !== '') {
-      //   console.log(' knownKanji : ' + this.knownKanji)
-      // }
-      const KNOWN_KANJI = knownKanji + HIRAGANA + KATAKANA + PUNCTUATION;
-
-      // a basic string search could be faster - it's a very small list though
-      const regexp = new RegExp("^[" + KNOWN_KANJI + "]+$");
-      items.forEach((item) => {
-        item.known = regexp.test(item.c);
-      });
-
-      // sort known vocab first
-      let knownItems = items.filter((o) => o.known === true);
-      let unkownItems = items.filter((o) => o.known === false);
-      let sortedItems = knownItems.concat(unkownItems);
-
-      return sortedItems;
-    },
-
-    // assign a "formatted reading" for display, keep DictEntry's reading
-    formatDictEntryArray(items: DictListEntry[]) {
-      items.forEach((o) => {
-        o.fr = kkFormatReading(o.r);
-      });
-    },
-
-    // set selected state, where 'picks' is an array of dictid's
-    applyVocabPicks(items: DictListEntry[], picks: DictId[]) {
-      items.forEach((o) => {
-        o.pick = picks.includes(o.id);
-      });
-    },
-
-    // sortSelectedItems(items)
-    // {
-    //   let picks = items.filter(o => o.pick === true)
-    //   let other = items.filter(o => o.pick !== true)  // undefined
-    //   return picks.concat(other)
-    // }
   },
 });
 </script>
-
-<style>
-/* Dictionary Lookup Component */
-
-.dict-panel {
-  background: #fff;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.dict-list {
-  margin: 0;
-  background: #444;
-}
-
-.dict-list .dl_item {
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  position: relative;
-}
-.dict-list .dl_item:hover {
-  background: #eee;
-  cursor: pointer;
-}
-.dict-list .dl_item:hover .vocab_c {
-  background: #fff;
-}
-
-.dict-list .dl_item .cj-k {
-  line-height: 1em;
-}
-
-.dict-list .dl_t {
-  padding: 12px 15px;
-  font-weight: normal;
-  font-size: 26px;
-}
-.dict-list .dl_t .c {
-  font-size: 1em;
-  padding: 5px 8px 3px;
-}
-.dict-list .dl_t .r {
-  font-size: 0.8em;
-  padding: 0;
-  display: inline-block;
-  margin: 0 0 0 1em;
-  color: #543;
-}
-
-.dict-list .dl_t_menu {
-  position: absolute;
-  right: 10px;
-  top: 15px;
-  font-size: 20px;
-  color: #ccc;
-}
-.dict-list .dl_item:hover .dl_t_menu {
-  color: #888;
-}
-
-/* picked item */
-.dict-list .dl_item--pick .dl_t_menu,
-.dict-list .dl_item--pick:hover .dl_t_menu {
-  color: #e2b437;
-}
-
-/* "known" word (contains known kanji) */
-.dict-list .dl_t .known,
-.dict-list .dl_item:hover .known {
-  background: #e6f2cd;
-  color: #206717;
-}
-
-.dict-list .dl_d {
-  padding: 0 20px 1em;
-  font: 14px/1.3em Arial, sans-serif;
-  color: #444;
-}
-
-/* message when no words are found */
-.dict-list_info {
-  padding: 1em 20px 1px;
-  color: #838279;
-  background: #fff;
-}
-
-/* desktop & wider screens */
-@media screen and (min-width: 701px) {
-  /* Review page only: fix the width inside the dialog from getting too wide */
-  .yui-panel .dict-panel {
-    width: 400px;
-  }
-}
-
-/* ===================================================== */
-/* Visual formatting shared by DictList & FlashcardKanji */
-/* ===================================================== */
-
-/* box-ing the compound for separation */
-.vocab_c {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 8px;
-  background: #efeeed;
-  color: #210;
-}
-
-/* the <em> surrounding tags originate in KoohiiFormat mixin, used by DictEntry.r and VocabPick.reading */
-.vocab_r em {
-  border-bottom: 2px solid #ff4e4e; /*color:#ff4e4e;*/
-  font-style: normal;
-}
-</style>

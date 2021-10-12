@@ -79,10 +79,6 @@ if (!$sf_user->isAuthenticated()) {
 
   echo "<ul>\n";
 
-  /**
-   * REMOVED Jun 29, 20201 / until refactored, if people still want it : 
-   *   <li><a href="@/sightreading">Kanji Recognition</a></li>
-   */
   echo nav_item('study-index', 'Study', 'study/index', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/study">Browse</a></li>
@@ -177,7 +173,6 @@ if (!$sf_user->isAuthenticated()) {
     nav_m_i('Index',       's-i',  'study/index'),
     nav_m_i('Restudy',     's-r',  'study/failedlist' ),
     nav_m_i('My Stories',  's-ms', 'study/mystories' ),
-    nav_m_i('Recognition', 's-sr', '@sightreading' )
   ]);
     
   $nav_items[] = nav_m_t('Review', 'review', 'fa-signal', [

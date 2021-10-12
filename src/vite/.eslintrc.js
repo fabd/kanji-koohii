@@ -24,13 +24,20 @@ module.exports = {
     // we're stripping console.* calls in production build
     "no-console": "off",
 
+    // reduce distractions when editing code
+    "no-empty": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-empty-function": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+
     // this check is already covered by TS (Vetur), complains about types
     // declared in globals.d.ts
     "no-undef": "off",
 
-    "no-unused-vars": "off",
     "vue/max-attributes-per-line": "off",
     "vue/no-v-html": "off",
+    // "vue/require-explicit-emits": "off",
+  
     // legacy js
     "no-this-alias": "off",
     //"no-var": "",

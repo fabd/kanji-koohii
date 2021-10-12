@@ -203,10 +203,11 @@ class CustkeywordsPeer extends coreDatabaseTable
       $select->where('reviews.userid = ?', $userid);
     }
 
-    $select = self::addCustomKeywordJoin($select, $userid);   // add last to avoid "ambiguous" ucs_id column
+    // add last to avoid "ambiguous" ucs_id column
+    $select = self::addCustomKeywordJoin($select, $userid);
 
-    // FIXME for now use a hardcoded limit
-    $select->where('? < ?', [rtkIndex::getSqlCol(), rtkIndex::RTK_UCS]);
+    // FIXME? will need to change this if we want cust.kw for non-Heisig kanji
+    $select->where(rtkIndex::getSqlCol() . ' < ?', rtkIndex::RTK_UCS);  
 
     // NOTE  Implicitly the result is limited to kanjis in the indexes (sequences!)
     $select->query();

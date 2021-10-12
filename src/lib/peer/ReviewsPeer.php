@@ -187,6 +187,8 @@ class ReviewsPeer extends coreDatabaseTable
   /**
    * Returns a string of all kanji known by user. Currently 'known' simply
    * means the user has a flashcard for it.
+   * 
+   * @return string
    */
   public static function getKnownKanji($userId)
   {

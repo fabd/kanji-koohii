@@ -199,6 +199,24 @@ class rtkIndex
   }
 
   /**
+   * Return a key-value pair array fo the user's RTK index (useful for Js Map()).
+   *
+   * @return array
+   */
+  public static function getSequenceMap()
+  {
+    mb_internal_encoding('utf-8');
+    $kanjis = mb_str_split(self::inst()->kanjis);
+    $map = [];
+    $seqNr = 1;
+    foreach ($kanjis as $char) {
+      $ucsId = mb_ord($char);
+      $map[] = [$ucsId, $seqNr++];
+    }
+    return $map;
+  }
+
+  /**
    * Returns the index column to use depending on the user's selected edition.
    * 
    * THIS FUNCTION MUST ENSURE A SAFE COLUMN NAME FOR QUERIES.

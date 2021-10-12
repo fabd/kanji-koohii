@@ -1,7 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { kk_globals_get } from "@app/root-bundle";
+import { baseUrl } from "@/lib/koohii";
 import {
   GetDictListForUCS,
+  GetDictCacheFor,
   PostUserStoryResponse,
   PostVoteStoryRequest,
   PostVoteStoryResponse,
@@ -147,6 +148,13 @@ export class LegacyApi extends HttpClient {
     });
   }
 
+  // return results for multiple kanji (Kanji Recognition, unused)
+  getDictCacheFor(chars: string) {
+    return this.get<GetDictCacheFor>("/study/dictcache", {
+      chars: chars,
+    });
+  }
+
   setVocabForCard(ucs: number, dictid: number) {
     return this.post("/study/vocabpick", {
       ucs: ucs,
@@ -160,10 +168,7 @@ export class LegacyApi extends HttpClient {
 }
 
 export function getApi(): KoohiiAPI {
-  const baseUrl = kk_globals_get('BASE_URL') as string;
-
-  // base url to account for dev/test envs, no trailing slash
-  const apiBaseUrl = kk_globals_get('BASE_URL').replace(/\/$/, "");
+  const apiBaseUrl = baseUrl();
 
   return {
     legacy: LegacyApi.getInstance(apiBaseUrl),

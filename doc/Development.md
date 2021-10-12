@@ -1,12 +1,20 @@
 <h1>Development Notes</h1>
 
-1. [Vite Usage Notes](#vite-usage-notes)
+1. [VSCode Setup](#vscode-setup)
+2. [Vite Usage Notes](#vite-usage-notes)
    1. [USE_DEV_SERVER true / false](#use_dev_server-true--false)
    2. [Static asset handling](#static-asset-handling)
    3. [Versioning of CSS/JS not handled by Vite](#versioning-of-cssjs-not-handled-by-vite)
-2. [Scripts execution](#scripts-execution)
-3. [Refactoring Roadmap](#refactoring-roadmap)
+3. [Scripts execution](#scripts-execution)
+4. [Refactoring Roadmap](#refactoring-roadmap)
       1. [Remove all YUI2 dependencies](#remove-all-yui2-dependencies)
+
+# VSCode Setup
+
+- **Volar**
+  - disable builtin TS/JS Language Support (disable in workspace only)
+    https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669
+
 
 # Vite Usage Notes
 

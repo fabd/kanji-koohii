@@ -1,9 +1,10 @@
-/**
- * Theme configuraton.
- *
- * In the future, maybe we can support a dark/light theme.
- *
- */
+// theme config file
+// 
+// TODO
+//   - use Tailwind config, or go ahead with this file
+//     (if TW, colors can be accessed with @apply in scss, but ... meh)
+//   - use more meaningful names than "1m"
+//   - create a corresponding color palette in FIGMA
 
 $--clr-bg-body: #f4f0e5;
 $--clr-bg-1: #e7e1d3; /* shaded background 1 */
@@ -21,20 +22,3 @@ $--clr-srs-undue: #72c569;
 
 $--clr-danger-text: #9f0e0b;
 $--clr-danger-bg: #d9534f;
-
-// --------------------------------------------------------------------
-// These may go in Tailwind config later.
-//
-//   UNDECIDED
-//   - put all colors in Tailwind, regardless of bg/fg
-//   - put color variables and utilities in Sass
-// --------------------------------------------------------------------
-.text-danger {
-  color: $--clr-danger-text;
-}
-.bg-confirm {
-  background-color: $--clr-bg-gl;
-}
-.text-confirm {
-  color: $--clr-bg-gd;
-}

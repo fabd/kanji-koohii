@@ -161,14 +161,18 @@ EOD;
     //   $this->isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
     // }
 
-  $propsData = [
-    'kanjiData'     => $kanjiData,
-    'custKeyword'   => $custKeyword,
+  // only if EditStory component is displayed
+  if ($kanjiData)
+  {
+    $propsData = [
+      'kanjiData' => $kanjiData,
+      'custKeyword' => $custKeyword,
 
-    // Study page only (not for flashcards "edit story" dialog)
-    'showLearnButton'    => $showLearnButton,
-    'showLearnedMessage' => $showLearnedMessage
-  ];
+      // Study page only (not for flashcards "edit story" dialog)
+      'showLearnButton' => $showLearnButton,
+      'showLearnedMessage' => $showLearnedMessage,
+    ];
 
-  $propsData = array_merge($propsData, $initStoryData);
-  echo kk_globals_put('EDITSTORY_PROPS', $propsData);
+    $propsData = array_merge($propsData, $initStoryData);
+    echo kk_globals_put('EDITSTORY_PROPS', $propsData);
+  }

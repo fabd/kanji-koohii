@@ -5,6 +5,7 @@
  * Misc:
  *
  *   getContentJson()
+ *   getParamsAsJson()
  *
  * 
  * The old symfony error handling that seems to have been refactored into the sfForms:

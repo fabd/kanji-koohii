@@ -1,0 +1,94 @@
+// TODOS
+//   - [ ] mobile (likely sidepane will be a "drawer", with a css transition)
+//   - [ ] finalize design (figma)
+//   - [ ] add postcss-bem-linter ? (SuitCSS conventions)
+
+// consistent corner radius FIXME : make a custom `rounded` tw var?
+$rounded: 0.5rem;
+
+.kk-Recognition {
+  &-output {
+    @apply p-4;
+    font-size: 24px;
+    line-height: 1.6em;
+    background: #fff;
+    border-radius: $rounded;
+    color: #4f4f4f;
+  }
+  &-output a {
+    font-style: normal;
+    font-weight: normal;
+    color: blue;
+    text-decoration: none;
+  }
+  &-output a:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  &-output .cj-k {
+    // @apply font-sans;
+    $tailwind-font-sans: ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+      "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
+
+    $custom: "Hiragino Sans";
+
+    font-family: $custom, $tailwind-font-sans;
+  }
+
+  //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+  &-k,
+  &-u {
+    @apply inline-block;
+  }
+  &-k span,
+  &-u span {
+  }
+  &-k:hover span {
+    @apply rounded cursor-pointer;
+    background: #faefc6;
+    color: #000;
+  }
+  &-k.is-known span {
+    color: #0000ff;
+  }
+
+  &-k.is-active span {
+    background-color: #ffca52;
+    color: #5e440a;
+  }
+}
+
+// --------------------------------------------------------------------
+// the side pane
+// --------------------------------------------------------------------
+.kk-RecognitionPane {
+  @apply bg-[#e7e1d3] p-4;
+  border-radius: $rounded;
+
+  &-h3 {
+    @apply text-sm font-sans uppercase;
+    color: #737373;
+  }
+
+  &-kanji {
+    @apply block bg-[#fff] text-[55px];
+    @apply flex; // flex auto margins trick
+    border-radius: $rounded;
+    font-size: 55px;
+    width: 1.5em;
+    height: 1.5em;
+  }
+  &-kanjiChar {
+    @apply m-auto leading-none;
+  }
+
+  &-dict {
+    @apply -mx-4;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+}

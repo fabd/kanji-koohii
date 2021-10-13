@@ -44,6 +44,31 @@
                   <span v-html="formGetErrors()"></span>
                 </div>
 
+                <div v-if="cantsaveChars.length > 0" class="text-danger mb-4">
+                  <span class="font-bold">
+                    Sorry, the database currently is not able to store unicode
+                    characters above hexadecimal 0xFFFF. Typically, this means
+                    some emojis as well as rare forms of kanji/hanzi (CJK
+                    Unified Ideographs Extension B and above).</span
+                  >&nbsp;
+                  <a
+                    href="https://github.com/fabd/kanji-koohii/issues/169"
+                    target="blank"
+                    >See issue #169 for comments</a
+                  >
+                  <br />
+                  <br />
+                  <span class=""
+                    >Characters which can't be saved in the story:</span
+                  >
+                  <span
+                    v-for="(chr, i) in cantsaveChars"
+                    :key="i"
+                    class="bg-danger bg-opacity-10 mr-1 p-[0.25em] rounded"
+                    >{{ chr }}</span
+                  >
+                </div>
+
                 <textarea
                   id="frmStory"
                   v-model="postStoryEdit"
@@ -157,13 +182,13 @@
 </template>
 
 <script lang="ts">
-// @xts-nocheck (need to fix "read-only props" shenanigans)
 import { defineComponent, nextTick } from "vue";
 
 import $$, { insertAfter, getNode } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import { KanjiData, PostUserStoryResponse } from "@app/api/models";
 import * as TRON from "@lib/tron";
+import { checkForUnsupportedUtf } from "@/lib/kanji";
 
 import VueInstance from "@lib/helpers/vue-instance";
 
@@ -229,6 +254,9 @@ export default defineComponent({
       postStoryView: "",
       postStoryEdit: "",
       postStoryPublic: false,
+
+      // array of chars that can't be saved (see checkForUnsupportedUtf())
+      cantsaveChars: [] as string[],
     };
   },
 
@@ -281,6 +309,14 @@ export default defineComponent({
     },
 
     onSubmit() {
+      // Workaround for #169 "Story information deleted when using 𠂇 character"
+      // (until someday/maybe we upgrade database to utf8mb4)
+      //   https://github.com/fabd/kanji-koohii/issues/169
+      this.cantsaveChars = checkForUnsupportedUtf(this.postStoryEdit);
+      if (this.cantsaveChars.length > 0) {
+        return false;
+      }
+
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
       getApi()

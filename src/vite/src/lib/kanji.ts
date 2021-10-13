@@ -52,3 +52,23 @@ export function toUnicode(text: string) {
   }
   return ucsIds;
 }
+
+/**
+ * Checks if text contains unicode characters above 0xFFFF, which can not
+ * currently be saved to the database (requires `utf8mb4`).
+ *
+ * @param text
+ *
+ * @returns array of unique characters, or empty array
+ */
+export function checkForUnsupportedUtf(text: string) {
+  let badChars: string[] = [];
+  for (let char of text) {
+    if (char.codePointAt(0)! >= 65536) {
+      badChars.push(char);
+    }
+  }
+
+  const uniqueChars = new Set(badChars);
+  return [...uniqueChars.values()];
+}

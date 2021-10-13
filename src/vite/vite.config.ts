@@ -31,7 +31,7 @@ export default defineConfig({
         "./src/entry-common.ts",
         "./src/entry-landing.ts",
         "./src/entry-manage.ts",
-        "./src/entry-recognition.ts",
+        // "./src/entry-recognition.ts",
         "./src/entry-review.ts",
         "./src/entry-study.ts",
         "./src/entry-styleguide.ts",

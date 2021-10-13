@@ -18,6 +18,11 @@ module.exports = {
         // less contrasted body text (mainly headings atm)
         light: "#7f7d85",
       },
+
+      danger: {
+        DEFAULT: "#9f0e0b",
+      },
+
       shaded: {
         DEFAULT: "#e7e1d3",
       },

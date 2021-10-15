@@ -7,9 +7,6 @@ import importElementPlus from 'vite-plugin-element-plus'
 // bundle all node_modules into a vendor chunk
 const ROLLUP_VENDOR_CHUNK = "vendor";
 
-// bundle all shared code with the `common` entry point
-const ROLLUP_COMMON_CHUNK = "entry-common";
-
 export default defineConfig({
   // base: "/build/dist/",
 
@@ -100,7 +97,7 @@ export default defineConfig({
 
           // For multiple entries, we put it into a "shared" chunk
           if (entryPoints.length > 1) {
-            return ROLLUP_COMMON_CHUNK;
+            return ROLLUP_VENDOR_CHUNK;
           }
         },
       },

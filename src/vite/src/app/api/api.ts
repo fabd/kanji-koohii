@@ -60,7 +60,7 @@ abstract class HttpClient {
     return this.axiosInst
       .request(requestConfig)
       .then((res) => {
-        const t = TRON.Inst<T>(res.data);
+        const t = TRON.Inst<T>(res.data as any);
 
         // helps debugging during development
         if (t.getStatus() === TRON.STATUS.FAILED || t.hasErrors()) {

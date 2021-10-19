@@ -1,8 +1,11 @@
 <?php
   use_helper('CJK', 'Form');
   
-  // use versioning file pattern here (cf .htaccess rule) for max-age
-  use_javascript('/revtk/study/keywords-'.CJ_MODE.'-'.$sf_user->getUserSequence().'_v2019.js', 'first', ['defer' => true]);
+  // file hash matches the ones output by Vite build (cf .htaccess rule)
+  $FILEHASH = '20211019';
+  $rtkIndex = $sf_user->getUserSequence(); // 0 = OLD, 1 = NEW
+  $keywordsFile = "/revtk/study/keywords-rtk-{$rtkIndex}.{$FILEHASH}.js";
+  use_javascript($keywordsFile, 'first', ['defer' => true]);
 
   //$restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
 

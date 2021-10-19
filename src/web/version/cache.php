@@ -1,11 +1,14 @@
 <?php
 /**
  * Outputs resource with gzip compression and far future expire headers.
- *
+ * 
  * Query parameters (set by htaccess redirection):
  * 
- *   path   Absolute path from the web root to resource file (starts with leading slash)
- *
+ *   file   Absolute path from the web root to resource file
+ * 
+ * CHANGELOG
+ * 
+ *   Oct 2021 ... updated to match Vite build hashes
  *   
  * @author  Fabrice Denis
  */
@@ -23,7 +26,7 @@ class CacheResource
   
   function execute()
   {
-    $filepath = $this->getParameter('path');
+    $filepath = $this->getParameter('file');
 
     // on web server the path doesn't come with a leading slash, go figure
     if (strpos($filepath, DIRECTORY_SEPARATOR) !== 0) {

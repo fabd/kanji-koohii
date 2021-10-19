@@ -2,7 +2,7 @@
   RewriteEngine On
 
   # php handler for versioning of front end assets
-  RewriteRule ^(.*)_v[0-9.]+(css|js)$   /version/cache.php?env=dev&app=revtk&path=$1.$2 [L]
+  RewriteRule ^(.*)\.[a-z0-9]+\.(css|js)$   /version/cache.php?file=$0 [L]
 
   # we skip all files with .something
   RewriteCond %{REQUEST_URI} \..+$

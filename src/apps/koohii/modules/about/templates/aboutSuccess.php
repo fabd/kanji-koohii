@@ -5,7 +5,7 @@
 <div class="row">
 
   <div class="col-md-2">
-    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', ['style' => 'display:block;margin:0 0 1em', 'size' => '140x140']) ?>
+    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', ['style' => 'display:block;margin:0 0 1em; border-radius:100%;', 'size' => '140x140']) ?>
     <?php //echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block')) ?>
   </div>
 
@@ -14,14 +14,8 @@
     <section>
       <h2>So what is a "koohii" anyway ?</h2>
       <p>
-        It's just a fun and short domain name which can be read as is,
-        and would be pronounced "coo-hee". Most learners of the Japanese language will probably
-        read it as the <a href="http://en.wikipedia.org/wiki/Romaji">romaji</a> transcription of the Japanese word
-        for coffee, which would be pronounced "kohh-hee" (a long "o" vowel). So you may read the
+        "Koohii" is meant to be a fun and short domain name. Most learners of the Japanese language will probably read it as <samp class="cj-k">コーヒー</samp>, the Japanese word for "coffee". So you may read the
         web site's url as "kanji coffee" if you like :)
-      </p>
-      <p>
-        Learn more about <a href="http://en.wikipedia.org/wiki/Hiragana">hiragana</a>, <a href="http://en.wikipedia.org/wiki/Katakana">katakana</a>, and <a href="http://en.wikipedia.org/wiki/Kanji">kanji</a>.
       </p>
     </section>
 
@@ -30,7 +24,7 @@
 
       <p>For icons we currently use <a href="http://fontawesome.io/">FontAwesome 4</a> (free version).</p>
 
-      <p>For misc things, parts of Zend Framework (<a href="http://framework.zend.com/license">New BSD License</a>) and Symfony 1.4 (<a href="http://www.symfony-project.org/license">MIT License</a>).</p>
+      <p>For php, parts of Zend Framework (<a href="http://framework.zend.com/license">New BSD License</a>) and Symfony 1.4 (<a href="http://www.symfony-project.org/license">MIT License</a>).</p>
 
       <p>
         Frame numbers and keywords from <em>Remembering the Kanji</em> Copyright &copy; James W. Heisig and used with permission.

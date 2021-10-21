@@ -15,17 +15,32 @@
         />
       </template>
       <template v-else class="dict-list_info">
-        <!-- items.length === 0 -->
-        <p>There are no common words using this character.</p>
+        <div class="p-4">
+          <p class="mb-4"><strong>No common words found</strong> using this kanji.</p>
+          <ul class="fa-ul mb-0">
+            <li class="mb-2">
+              <span class="fa-li"><i class="fas fa-search"></i></span>
+              <a :href="jishoSearchUrl" target="blank" class="no-underline hover:underline"
+                >Search words using {{ curKanji }} on <strong>jisho.org</strong></a
+              >
+            </li>
+            <li class="mb-2">
+              <span class="fa-li"><i class="fas fa-arrow-right"></i></span>
+              <a href="/learnmore#help-dictionary-data" target="blank" class="no-underline hover:underline"
+                >Learn more about Kanji Koohii’s builtin dictionary</a
+              >
+            </li>
+          </ul>
+        </div>
       </template>
     </div>
 
     <!-- (legacy code) "Close" button for mobile portait will be handled by KoohiiDialog if/when we implement that -->
     <div v-if="isMobile" class="uiBMenu">
       <div class="uiBMenuItem">
-        <a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#"
-          ><span>Close</span></a
-        >
+        <a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#">
+          <span>Close</span>
+        </a>
       </div>
     </div>
   </div>
@@ -96,6 +111,14 @@ export default defineComponent({
       // (legacy code) cf. lib/front/corejs/ui/mobile.js
       return window.innerWidth <= 720;
     },
+
+    curKanji(): string {
+      return String.fromCodePoint(this.ucsId);
+    },
+
+    jishoSearchUrl(): string {
+      return `https://jisho.org/search/${this.curKanji}`;
+    },
   },
 
   created() {
@@ -123,13 +146,7 @@ export default defineComponent({
       return inst;
     },
 
-    onVocabSelect({
-      item,
-      selected,
-    }: {
-      item: DictListEntry;
-      selected: boolean;
-    }) {
+    onVocabSelect({ item, selected }: { item: DictListEntry; selected: boolean }) {
       console.log("onVocabSelect %o", item);
 
       if (!this.KanjiReview) return;

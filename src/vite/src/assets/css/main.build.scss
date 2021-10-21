@@ -1542,16 +1542,14 @@ table.lessons td {
 .rtk-skin-dlg .yui-panel .bd {
   padding: 10px 10px 10px;
   background: none;
-  font-size: 12px;
   line-height: 19px;
-  color: #000;
+  @apply text-body;
 }
 .rtk-skin-dlg .yui-panel .ft {
   padding: 5px 10px 10px;
   background: none;
-  font-size: 12px;
   line-height: 1.2em;
-  color: #000;
+  @apply text-body;
 }
 
 /* dialog body wrapper for extra css styling (.rtk-skin-dlg .yui-panel .bd .body) */

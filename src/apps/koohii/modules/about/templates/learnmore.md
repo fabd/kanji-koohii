@@ -57,10 +57,13 @@ the user has not yet learned 合 which is kanji #269 and will be seen later. Yet
 This works in Flashcard Review too! So as you do reviews over weeks and months, and you open the dictionary you may discover new words which weren't highlighted before.
 
 
-### Technical Information
-Kanji Koohii's dictionary uses Jim Breen's [JMdict/EDICT](http://www.edrdg.org/jmdict/edict_doc.html) Japanese-English dictionary (full acknowlegments in the About page).
+### About Kanji Koohii's Dictionary sources {#help-dictionary-data}
 
-**Koohii's dictionary only shows "priority" entries, approx. 16000 of the most common words**. This is done in order to provide meaningful results for Koohii users. The dictionary would otherwise show rare, archaic and obsolete words as well as place names from a total of 170,000+ entries which you'll likely never use even after being fully fluent in Japanese.
+Kanji Koohii's dictionary uses Jim Breen's [JMdict/EDICT](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) Japanese-English dictionary (see acknowlegments in the [About](/about) page).
+
+**Koohii's dictionary only includes "priority" entries, approx. 16000 of the most common words**. Specifically: <samp>ichi1, news1, spec1, gai1</samp> of JMdict's [word priority markings](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project#Word_Priority_Marking).
+
+This is done in order to provide meaningful results for Koohii users. The dictionary would otherwise show rare, archaic and obsolete words as well as place names from a total of 170,000+ entries which you'll probably never use even after being fluent in Japanese.
 
 As such, Koohii's dictionary is not an exhaustive reference. There are already excellent resources dedicated to this such as jisho.org. The goal for Koohii's dictionary is to help you stay focused while getting through the 2000+ common use kanji.
 

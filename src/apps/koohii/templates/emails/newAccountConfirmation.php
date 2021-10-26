@@ -8,9 +8,6 @@ Sign in from this page:
 Learn more about using the website and its spaced repetition system here:
 <?php echo url_for('@learnmore', true)."\n" ?>
 
-Get help and discuss all things Japanese on our community forum:
-<?php echo sfConfig::get('app_forum_url')."\n" ?>
-
 Need help with your account? Please use the contact page:
 <?php echo url_for('@contact', true)."\n" ?>
 

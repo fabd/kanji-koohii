@@ -1,5 +1,4 @@
 <?php use_helper('Widgets', 'Gadgets', 'CJK', 'Links') ?>
-<?php $sRtKForumUrl = sfConfig::get('app_forum_url') ?>
 
 <?php #DBG::request() ?>
 

@@ -116,31 +116,14 @@
   background: linear-gradient(to bottom, #2aa198 0%, #269189 100%);
 }
 
-/* button layout */
-#uiFcBtnAF {
-  width: 98%;
-} /* flip */
+#uiFcBtnAG {
+  background: linear-gradient(to bottom, #848280 0%, #7f7d7a 100%);
+}
 
 #uiFcButtons .uiIBtn {
-  display: inline-block;
-  margin: 0 1%;
-}
-
-#uiFcButtons1 .uiIBtn {
-  width: 48%;
-} /* 2 buttons */
-
-#uiFcButtons1.three-buttons #uiFcBtnAN {
-  width: 18%;
-} /* 3 buttons */
-#uiFcButtons1.three-buttons #uiFcBtnAH {
-  width: 18%;
-}
-#uiFcButtons1.three-buttons #uiFcBtnAY {
-  width: 38%;
-}
-#uiFcButtons1.three-buttons #uiFcBtnAE {
-  width: 18%;
+  @apply mx-1;
+  font-weight: normal;
+  margin: 0 0.25rem;
 }
 
 /* flashcard answer area */
@@ -156,17 +139,8 @@
   margin: 0;
   padding: 0 0 5px;
 }
-#uiFcButtons a {
-  padding: 0;
-}
-#uiFcButtons a span {
-  width: auto;
-  padding: 0;
-}
 .uiFcButtons a img {
   margin: 0 10px;
-}
-.uiFcButtons u {
 }
 
 /* stats panel */

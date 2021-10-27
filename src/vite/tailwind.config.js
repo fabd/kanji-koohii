@@ -27,6 +27,13 @@ module.exports = {
         DEFAULT: "#e7e1d3",
       },
     },
+
+    extend: {
+      flex: {
+        // can be used with flex-1 to distribute space between smaller/larger items in a row
+        '2-auto': '2 2 auto',
+      },
+    },
   },
 
   variants: {},

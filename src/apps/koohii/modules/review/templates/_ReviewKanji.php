@@ -67,25 +67,47 @@
 
       <div class="uiFcButtons" id="uiFcButtons">
         
-        <div id="uiFcButtons0" style="display:none">
+        <div id="uiFcButtons0" class="-mx-1" style="display:none">
           <h3>Press Spacebar or F to flip card</h3>
-          <?php #echo ui_ibtn('<u>F</u>lip Card', $routename, array('id' => 'uiFcBtnAF', 'class' => 'uiFcAction', 'data-action' => 'flip')) ?>
-          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction" data-action="flip"><span><u>F</u>lip Card</span></a>
+          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
         </div>
     
         <div id="uiFcButtons1"<?= $freemode ? '' : ' class="three-buttons"'; ?> style="display:none">
-          <h3>Do you remember this <?= _CJ('kanji') ?>?</h3>
-          <?php 
-echo ui_ibtn('<u>N</u>o', '', ['id' => 'uiFcBtnAN', 'class' => 'uiIBtnRed uiFcAction', 'data-action' => 'no', 'title' => 'Forgotten']);
-if (!$freemode) {
-echo ui_ibtn('<u>H</u>ard', '', ['id' => 'uiFcBtnAH', 'class' => 'uiIBtnOrange uiFcAction', 'data-action' => 'hard', 'title' => 'Hard']);
-}
-echo ui_ibtn('<u>Y</u>es', '', ['id' => 'uiFcBtnAY', 'class' => 'uiFcAction', 'data-action' => 'yes', 'title' => 'Remembered with some effort']);
-if (!$freemode) {
-  echo ui_ibtn('<u>E</u>asy', '', ['id' => 'uiFcBtnAE', 'class' => 'uiFcAction', 'data-action' => 'easy', 'title' => 'Remembered easily']);
-}
-          ?>
-          <div class="clear"></div>
+          <h3>Do you remember this kanji?</h3>
+
+          <div class="flex items-center justify-between -mx-1">
+<a
+  id="uiFcBtnAN" class="uiIBtn uiIBtnDefault uiIBtnRed uiFcAction flex-auto"
+  data-action="no" title="Forgotten" href="#">
+  <span><u>N</u>o</span>
+</a>
+<?php if (!$freemode): ?>
+<a
+  id="uiFcBtnAG" class="uiIBtn uiIBtnDefault uiFcAction flex-auto"
+  data-action="again" title="Repeat card" href="#">
+  <u>A</u>gain
+</a>
+<?php endif ?>
+
+<?php if (!$freemode): ?>
+<a
+ id="uiFcBtnAH" class="uiIBtnOrange uiFcAction uiIBtn uiIBtnDefault flex-2-auto" 
+ data-action="hard" title="Hard">
+  <span class="px-1"><u>H</u>ard</span>
+</a>
+<?php endif ?>
+<a id="uiFcBtnAY" class="uiFcAction uiIBtn uiIBtnDefault flex-2-auto"
+  data-action="yes" title="Remembered with some effort" href="#">
+  <span class="px-2"><u>Y</u>es</span>
+</a>
+<?php if (!$freemode): ?>
+<a id="uiFcBtnAE" class="uiFcAction uiIBtn uiIBtnDefault flex-2-auto"
+  data-action="easy" title="Remembered easily" href="#">
+  <span class="px-1"><u>E</u>asy</span>
+</a>
+<?php endif ?>
+          </div>
+
         </div>
         
       </div><!-- uiFcButtons -->

@@ -48,7 +48,7 @@
         
         <div id="uiFcButtons0" style="display:none">
           <h3>Press Spacebar to continue</h3>
-          <?= ui_ibtn('<u>F</u>lip Card', '', ['id' => 'uiFcBtnAF', 'class' => 'uiFcAction', 'data-action' => 'flip']) ?>
+          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
         </div>
     
         <div id="uiFcButtons1" style="display:none">

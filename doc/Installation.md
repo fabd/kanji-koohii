@@ -53,12 +53,12 @@ Pre-requisites:
     cp apps/koohii/config/app.example.yml apps/koohii/config/app.yml
     cp apps/koohii/config/settings.example.yml apps/koohii/config/settings.yml
 
-**Install node packages** (ignore warnings about "fsevents" and "ajv"):
+**Install node packages**:
 
 > :point_right: &nbsp; Note how **npm** scripts are run from the **vite/** subfolder -- which is NOT the Symfony root folder
 
     cd vite/
-    npm install
+    npm ci
 
 # Running the website
 

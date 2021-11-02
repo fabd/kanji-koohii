@@ -50,6 +50,7 @@ phpini() { vim /etc/php/7.4/apache2/conf.d/koohii.php.ini ; }
 ###############
 
 alias sass='./node_modules/.bin/node-sass'
+alias stylelint='./node_modules/.bin/stylelint'
 alias vite='./node_modules/.bin/vite'
 alias vue-tsc='./node_modules/.bin/vue-tsc'
 

@@ -1,14 +1,20 @@
 // FIXME: refactor into a single class for srs/free/vocab modes
+// @ts-check
 
-import $$, { DomJS, domGetById, hasClass } from "@lib/dom";
+import $$, { DomJS, asHtmlElement, domGetById, hasClass } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
 
 export default class VocabReview {
   /** @type {Dictionary} */
   options = {};
 
-  /** @type {FlashcardReview | null} */
-  oReview = null;
+  /** @type {FlashcardReview} */
+  oReview;
+
+  /** @type {DomJS<Element>}*/
+  $elStats;
+  /** @type {HTMLElement} */
+  elProgressBar;
 
   /**
    *
@@ -37,7 +43,7 @@ export default class VocabReview {
     // stats panel
     this.$elStats = $$("#uiFcStats");
     this.elsCount = $$("#uiFcProgressBar .count"); //array
-    this.elProgressBar = $$("#review-progress span")[0];
+    this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
   }
 
   /**
@@ -47,6 +53,11 @@ export default class VocabReview {
    */
   getOption(name) {
     return this.options[name];
+  }
+
+  // proxy which *always* returns a valid card
+  getFlashcardData() {
+    return /**@type {TVocabCardData}*/ (this.oReview.getFlashcardData());
   }
 
   onBeginReview() {
@@ -77,11 +88,9 @@ export default class VocabReview {
     this.updateStatsPanel();
 
     // set the google search url
-    let searchTerm = this.oReview.getFlashcardData().compound;
-    let searchUrl =
-      "http://www.google.co.jp/search?hl=ja&q=" +
-      encodeURIComponent(searchTerm);
-    domGetById("search-google-jp").href = searchUrl;
+    let searchTerm = this.getFlashcardData().compound;
+    let searchUrl = "http://www.google.co.jp/search?hl=ja&q=" + encodeURIComponent(searchTerm);
+    /**@type{HTMLAnchorElement}*/($$("#search-google-jp")[0]).href = searchUrl;
   }
 
   /**
@@ -93,14 +102,19 @@ export default class VocabReview {
     $$("#uiFcButtons1").display(false);
   }
 
+  /** @param {number} iState */
   onFlashcardState(iState) {
     $$("#uiFcButtons0").display(iState === 0);
     $$("#uiFcButtons1").display(iState !== 0);
   }
 
+  /**
+   *
+   * @param {string} sActionId cf. eventdispatcher
+   * @param {Event} oEvent ...
+   * @returns
+   */
   onAction(sActionId, oEvent) {
-    var cardAnswer = false;
-
     console.log("VocabReview.onAction(%o)", sActionId);
 
     // flashcard is loading or something..
@@ -137,8 +151,8 @@ export default class VocabReview {
       position = this.oReview.getPosition();
 
     // update review count
-    this.elsCount[0].innerHTML = Math.min(position + 1, num_items);
-    this.elsCount[1].innerHTML = num_items;
+    this.elsCount[0].innerHTML = "" + Math.min(position + 1, num_items);
+    this.elsCount[1].innerHTML = "" + num_items;
 
     // update progress bar
     var pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;
@@ -149,6 +163,8 @@ export default class VocabReview {
   /**
    * Sets buttons (children of element) to default state, or disabled state
    *
+   * @param {HTMLElement} elParent
+   * @param {boolean} bEnabled
    */
   setButtonState(elParent, bEnabled) {
     $$(".uiIBtn", elParent).each((el) => {

@@ -106,10 +106,11 @@ import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 
 export default class FlashcardReview {
   // flashcard selection as an array of flashcard ids
-  items = null;
+  /** @type {TUcsId[]} */
+  items;
 
   // review position, from 0 to items.length-1
-  position = null;
+  position = -1;
 
   // Cache of flashcard data.
   // Associative array using flashcard ids for retrieval.
@@ -134,7 +135,7 @@ export default class FlashcardReview {
   // how many items to preload
   num_prefetch = null;
 
-  // event dispatcher for notifications
+  /** @type EventDispatcher */
   eventDispatcher = null;
 
   // array of answer data for flashcards that is not posted yet
@@ -216,7 +217,7 @@ export default class FlashcardReview {
    */
   updateUnloadEvent() {
     if (this.getPostCount()) {
-      window.onbeforeunload = function() {
+      window.onbeforeunload = function () {
         return (
           "WAIT! You may lose a few flashcard answers if you leave the page now.\r\n" +
           "Select CANCEL to stay on this page, and then click the END button to\r\n" +
@@ -233,17 +234,13 @@ export default class FlashcardReview {
    *
    * Makes sure to stop the mouse click event, to prevent page from jumping.
    *
-   * @param  {Object}      ev   Event object
+   * @param  {Event}      ev   Event object
    * @param  {HTMLElement} el   Matched element
    */
   onActionEvent(ev, el) {
     var data = el.dataset,
       action = data.action;
-    console.assert(
-      !!data.action,
-      'onActionEvent() bad "action" attribute, element %o',
-      el
-    );
+    console.assert(!!data.action, 'onActionEvent() bad "action" attribute, element %o', el);
 
     return false !== this.notify("onAction", action, ev);
   }
@@ -426,10 +423,7 @@ export default class FlashcardReview {
     var oJsonData = {};
 
     // any cards to fetch ?
-    if (
-      this.cacheEnd < this.items.length - 1 &&
-      this.position >= this.prefetchPos
-    ) {
+    if (this.cacheEnd < this.items.length - 1 && this.position >= this.prefetchPos) {
       //
       if (this.cacheNext <= this.cacheEnd) {
         var from = this.cacheEnd + 1;
@@ -450,10 +444,7 @@ export default class FlashcardReview {
       if (bFlushData) {
         aPostData = this.postCache;
       } else {
-        numToPost =
-          this.getPostCount() > this.max_undo
-            ? this.getPostCount() - this.max_undo
-            : 0;
+        numToPost = this.getPostCount() > this.max_undo ? this.getPostCount() - this.max_undo : 0;
         aPostData = [];
         for (i = 0; i < numToPost; i++) {
           aPostData.push(this.postCache[i]);
@@ -509,17 +500,13 @@ export default class FlashcardReview {
       // cache cards if any
       if (oJson.get && oJson.get.length > 0) {
         // assertion
-        console.assert(
-          argument === this.cacheNext,
-          "onAjaxSuccess(): this.cacheNext inconsistency"
-        );
+        console.assert(argument === this.cacheNext, "onAjaxSuccess(): this.cacheNext inconsistency");
 
         // add cards to cache
         this.cacheEnd = this.cacheNext + oJson.get.length - 1;
 
         // next prefetch at based on number of items received
-        this.prefetchPos =
-          this.cacheNext + Math.floor(oJson.get.length / 2) + 1;
+        this.prefetchPos = this.cacheNext + Math.floor(oJson.get.length / 2) + 1;
 
         // cache items
         for (i = 0; i < oJson.get.length; i++) {
@@ -582,7 +569,11 @@ export default class FlashcardReview {
     return this.curCard;
   }
 
-  /** @return {Dictionary | null} */
+  /**
+   * The returned object needs to be cast based on the given Flashcard review mode.
+   *
+   * @return {Dictionary | null}
+   */
   getFlashcardData() {
     var id = this.items[this.position];
     return id ? this.cache[id] : null;
@@ -625,9 +616,7 @@ export default class FlashcardReview {
    */
   addShortcutKey(sKey, sActionId) {
     if (!this.eventDispatcher.hasListeners("onAction")) {
-      console.warn(
-        'FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener'
-      );
+      console.warn('FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener');
     }
 
     this.oKeyboard.addListener(sKey, (event) => {
@@ -639,10 +628,12 @@ export default class FlashcardReview {
    * Store answer and any other custom data for the current card,
    * to be posted on subsequent ajax requests.
    *
+   * @param {TCardAnswer} cardAnswer
+   *
    */
-  answerCard(oData) {
-    // console.log('FlashcardReview::answerCard(%o)', oData);
-    this.postCache.push(oData);
+  answerCard(cardAnswer) {
+    // console.log('FlashcardReview::answerCard(%o)', cardAnswer);
+    this.postCache.push(cardAnswer);
 
     this.updateUnloadEvent();
   }
@@ -653,7 +644,7 @@ export default class FlashcardReview {
    * Must remove item from postCache otherwise when flushing at end of review,
    * the last undo'ed item(s) would be posted whereas the user did not want to.
    *
-   * @return  {Object}   Returns flashcard answer data (cf. answerCard()) that is being cleared
+   * @return  {TCardAnswer}   Returns flashcard answer data (cf. answerCard()) that is being cleared
    */
   unanswerCard() {
     // console.log('FlashcardReview::unanswerCard()');

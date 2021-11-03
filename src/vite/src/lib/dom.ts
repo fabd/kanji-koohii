@@ -5,6 +5,8 @@
  *
  *   (default)                         ... DomJS factory function
  *
+ *   asHtmlElement                     ... always return a HTMLElement (for JSDoc)
+ *
  *   getNode()
  *   getStyle()
  *   insertAfter(newNode, refNode)     ... insert newNode as next sibling of refNode
@@ -114,10 +116,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
   constructor(selector: DomJSSelector, context?: Element) {
     let nodes: ArrayLike<EL>;
 
-    console.assert(
-      !context || isNode(context),
-      "DomJS(): invalid `context` argument"
-    );
+    console.assert(!context || isNode(context), "DomJS(): invalid `context` argument");
 
     if (isString(selector)) {
       nodes = (context || window.document).querySelectorAll(selector);
@@ -220,11 +219,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
     // .off()  (remove all events)
 
     $Events = $Events.filter((e) => {
-      if (
-        e.el === el &&
-        (!callback || callback === e.fn) &&
-        (!events || (events as string[]).includes(e.type))
-      ) {
+      if (e.el === el && (!callback || callback === e.fn) && (!events || (events as string[]).includes(e.type))) {
         e.el.removeEventListener(e.type, e.fn);
         return false;
       }
@@ -318,10 +313,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
   }
 }
 
-const factory = <EL extends Element>(
-  selector: DomJSSelector,
-  context?: Element
-): DomJS<EL> => {
+const factory = <EL extends Element>(selector: DomJSSelector, context?: Element): DomJS<EL> => {
   return new DomJS<EL>(selector, context);
 };
 
@@ -332,18 +324,20 @@ export { factory as default };
 // --------------------------------------------------------------------
 
 /**
+ * Helper mainly to simplify JSDoc type cast, where we
+ * KNOW the element reference is always valid (not null, not undefined).
+ */
+export function asHtmlElement(el: any) {
+  return el as HTMLElement;
+}
+
+/**
  * Inserts the new node as the next sibling of the reference node.
  *
  * @returns The added child node
  */
-export function insertAfter(
-  newNode: Element,
-  refNode: Element
-): Element | null {
-  console.assert(
-    isNode(newNode) && isNode(refNode),
-    "insertAfter() : newNode and/or refNode is invalid"
-  );
+export function insertAfter(newNode: Element, refNode: Element): Element | null {
+  console.assert(isNode(newNode) && isNode(refNode), "insertAfter() : newNode and/or refNode is invalid");
   console.assert(!!refNode.parentNode, "refNode needs a parent element");
   return refNode.insertAdjacentElement("afterend", newNode);
 }
@@ -355,10 +349,7 @@ export function insertAfter(
  * @param refNode target element
  * @returns {Element | null}
  */
-export function insertBefore(
-  newNode: Element,
-  refNode: Element
-): Element | null {
+export function insertBefore(newNode: Element, refNode: Element): Element | null {
   return refNode.insertAdjacentElement("beforebegin", newNode);
 }
 
@@ -367,10 +358,7 @@ export function insertBefore(
  *
  *   styleName    MUST be camelCase form!
  */
-export function getStyle(
-  element: HTMLElement,
-  styleName: string
-): string | null {
+export function getStyle(element: HTMLElement, styleName: string): string | null {
   console.assert(!!(element && styleName), "getStyle() : invalid arguments");
 
   // styleName = camelCase(styleName);
@@ -379,9 +367,7 @@ export function getStyle(
   }
   try {
     const computed = document.defaultView!.getComputedStyle(element, "");
-    return element.style.getPropertyValue(styleName) || computed
-      ? computed.getPropertyValue(styleName)
-      : null;
+    return element.style.getPropertyValue(styleName) || computed ? computed.getPropertyValue(styleName) : null;
   } catch (e) {
     return element.style.getPropertyValue(styleName);
   }
@@ -407,9 +393,7 @@ export const domContentLoaded = (fn: Function) => {
  *
  * @returns HTMLElement
  */
-export const domGetById = <EL extends HTMLElement>(
-  el: string | EL
-): EL | null => {
+export const domGetById = <EL extends HTMLElement>(el: string | EL): EL | null => {
   const node = isString(el) ? (document.querySelector("#" + el) as EL) : el;
   return node;
 };

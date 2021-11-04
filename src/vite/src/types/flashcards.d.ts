@@ -30,3 +30,19 @@ type TCardAnswer = {
   // the flashcard answer, including actions like "skip" and "delete"
   r: TReviewRating;
 };
+
+type TReviewSyncRequest = {
+  // an array of unique flashcard ids, requesting data
+  get?: TUcsId[];
+  //
+  opt?: any;
+  //
+  put?: TCardAnswer[];
+};
+
+type TReviewSyncResponse = {
+  // an array of flashcard data
+  get: TCardData[];
+  // the ids of items that were succesfully updated server side
+  put: TUcsId[];
+};

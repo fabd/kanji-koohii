@@ -40,7 +40,6 @@
  *
  * Methods to get/put information:
  *
- *   getOption()          Returns one of the options as passed to initialize(), TODO: DEPRECATED (bad)
  *   getPosition()        Returns current index into the flashcard items array
  *   getFlashcard()       Returns current uiFlashcard, or null
  *   getFlashcardData()   Returns json data for current flashcard
@@ -95,6 +94,7 @@
  *     Links that trigger an action (answer buttons), calls event "onAction" with "XXXX" as second argument
  *
  */
+// @ts-check
 
 import { getBodyED, kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
@@ -119,31 +119,39 @@ export default class FlashcardReview {
   //
   // cacheStart and cacheEnd indicate the range of valid flashcard data
   // in the cache array.
-  cache = null;
-  cacheStart = null;
-  cacheEnd = null;
+  /** @type {{ [key: number]: TCardData }} */
+  cache;
+
+  cacheStart = 0;
+  cacheEnd = -1;
+  cacheNext = -1;
 
   // the next position at which to prefetch new flashcard data
   // is recalculated on server reply, based on number of items server returned
-  prefetchPos = null;
+  prefetchPos = 0;
 
   // max items to cache for undo
-  max_undo = null;
+  /** @type {number} */
+  max_undo;
+
   // current undo level (number of steps backward)
-  undoLevel = null;
+  /** @type {number} */
+  undoLevel;
 
   // how many items to preload
-  num_prefetch = null;
+  /** @type {number} */
+  num_prefetch;
 
-  /** @type EventDispatcher */
-  eventDispatcher = null;
+  /** @type {EventDispatcher} */
+  eventDispatcher;
 
   // array of answer data for flashcards that is not posted yet
   // the data is freeform, the property id corresponds to a flashcard id
-  postCache = null;
+  /** @type {TCardAnswer[]} */
+  postCache;
 
-  // uiAjaxQueue instance
-  ajaxQueue = null;
+  /** @type {AjaxQueue} */
+  ajaxQueue;
 
   /** @type {TVueInstanceRef?} */
   curCard;
@@ -156,6 +164,8 @@ export default class FlashcardReview {
   constructor(options) {
     console.log("FlashcardReview::init(%o)", options);
 
+    console.assert(options.items && options.items.length, "No flashcard items in this selection.");
+
     // set options and fix defaults
     this.options = options;
     this.options.max_undo = options.max_undo || 3;
@@ -166,12 +176,6 @@ export default class FlashcardReview {
     this.items = this.options.items;
     this.max_undo = this.options.max_undo;
     this.num_prefetch = this.options.num_prefetch;
-
-    //
-    if (!this.items || !this.items.length) {
-      alert("No flashcard items in this selection.");
-      return;
-    }
 
     // register listeners
     this.eventDispatcher = new EventDispatcher();
@@ -197,6 +201,8 @@ export default class FlashcardReview {
     this.oKeyboard = new Keyboard();
 
     //
+    this.cache = {};
+    this.prefetchPos = 0;
     this.postCache = [];
     this.undoLevel = 0;
 
@@ -246,18 +252,32 @@ export default class FlashcardReview {
   /**
    * EventDispatcher proxy.
    *
-   * @see EventDispatcher, scope is optional.
+   * @param {string}    name     The type of event (the event's name)
+   * @param {Function}  fn       A javascript callable
+   * @param {Object=}    context  Context (this) for the event. Default value: the window object.
    */
-  connect(sName, fnEvent, scope) {
-    this.eventDispatcher.connect(sName, fnEvent, scope);
+  connect(name, fn, context) {
+    this.eventDispatcher.connect(name, fn, context);
   }
 
-  disconnect(sName, fnEvent) {
-    this.eventDispatcher.disconnect(sName, fnEvent);
+  /**
+   * EventDispatcher proxy.
+   *
+   * @param {string}    name   An event name
+   * @param {Function=}  fn     A javascript callable (optional)
+   */
+  disconnect(name, fn) {
+    this.eventDispatcher.disconnect(name, fn);
   }
 
-  notify() {
-    return this.eventDispatcher.notify.apply(this.eventDispatcher, arguments);
+  /**
+   * EventDispatcher proxy.
+   *
+   * @param {string} name
+   * @param {...*} params
+   */
+  notify(name, ...params) {
+    return this.eventDispatcher.notify(name, ...params);
   }
 
   beginReview() {
@@ -413,10 +433,11 @@ export default class FlashcardReview {
   /**
    * Check if there are cards to prefetch, and/or answers to post.
    *
-   * @param boolean  bFlushData  At end of review, force flush all remaining items in postCache.
+   * @param {boolean=} bFlushData ... At end of review, force flush all remaining items in postCache.
    */
   sendReceive(bFlushData) {
-    var oJsonData = {};
+    /** @type {TReviewSyncRequest} */
+    let oJsonData = {};
 
     // any cards to fetch ?
     if (this.cacheEnd < this.items.length - 1 && this.position >= this.prefetchPos) {
@@ -433,9 +454,11 @@ export default class FlashcardReview {
     // the postCache
     if (this.options.put_request && (oJsonData.get || bFlushData)) {
       // if flush, post all, otherwise don't post all, leave some cards behind to allow client ot re-answer (undo)
-      var aPostData,
-        i,
-        numToPost = 0;
+      /** @type {TCardAnswer[]} */
+      let aPostData;
+
+      let i;
+      let numToPost = 0;
 
       if (bFlushData) {
         aPostData = this.postCache;
@@ -483,8 +506,8 @@ export default class FlashcardReview {
    * Cache items returned by the server,
    * determine next position to start prefetch based on how many items were received.
    *
-   * @param {Object} o    The YUI Connect object (extended by AjaxRequest)
-   * @param {Number} argument        Index value if prefetching, 'end' if completing review
+   * @param {{responseJSON: TReviewSyncResponse}} o    The YUI Connect object (extended by AjaxRequest)
+   * @param {number | 'end'} argument        Index value if prefetching, 'end' if completing review
    */
   onAjaxSuccess(o, argument) {
     var i,
@@ -532,8 +555,9 @@ export default class FlashcardReview {
     }
   }
 
-  cacheItem(oItem) {
-    this.cache[oItem.id] = oItem;
+  /** @param {TCardData} cardData */
+  cacheItem(cardData) {
+    this.cache[cardData.id] = cardData;
   }
 
   /**
@@ -548,13 +572,6 @@ export default class FlashcardReview {
       delete this.cache[id];
       this.cacheStart++;
     }
-  }
-
-  /**
-   * Getters
-   */
-  getOption(sName) {
-    return this.options[sName];
   }
 
   getPosition() {
@@ -643,36 +660,35 @@ export default class FlashcardReview {
    */
   unanswerCard() {
     // console.log('FlashcardReview::unanswerCard()');
-    var id, oData;
-
-    if (this.getPostCount() <= 0) {
-      throw new Error();
-    }
+    console.assert(this.getPostCount() > 0);
 
     // pop data from the postcache, don't assume order
-    id = this.items[this.position];
-    oData = this.removePostData(id);
+    const id = this.items[this.position];
+
+    // never null
+    const answer = /** @type {TCardAnswer} */ (this.removePostData(id));
 
     this.updateUnloadEvent();
 
-    return oData;
+    return answer;
   }
 
   /**
    * Remove one element of the postCache array, by id.
    *
-   * @return {Object}  Returns the spliced element (flashcard answer data).
+   * @param {TUcsId} id ... flashcard id
+   * @return {TCardAnswer?}  Returns the spliced element (flashcard answer data).
    */
   removePostData(id) {
-    var i;
-    for (i = 0; i < this.postCache.length; i++) {
+    for (let i = 0; i < this.postCache.length; i++) {
       // watchout with === because returned json can have strings for numbers
       if (this.postCache[i].id === id) {
-        var popped = this.postCache.splice(i, 1);
-
-        // return the 'popped' element
-        return popped[0];
+        const item = this.postCache.splice(i, 1)[0];
+        return item;
       }
     }
+
+    // dummy return value, this function should never return an empty
+    return null;
   }
 }

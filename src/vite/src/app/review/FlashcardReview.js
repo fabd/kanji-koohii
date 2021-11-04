@@ -110,7 +110,11 @@ export default class FlashcardReview {
   items;
 
   // review position, from 0 to items.length-1
-  position = -1;
+  position = 0;
+
+  // the next position at which to prefetch new flashcard data
+  // is recalculated on server reply, based on number of items server returned
+  prefetchPos = 0;
 
   // Cache of flashcard data.
   // Associative array using flashcard ids for retrieval.
@@ -120,15 +124,11 @@ export default class FlashcardReview {
   // cacheStart and cacheEnd indicate the range of valid flashcard data
   // in the cache array.
   /** @type {{ [key: number]: TCardData }} */
-  cache;
+  cache = {};
 
   cacheStart = 0;
-  cacheEnd = -1;
-  cacheNext = -1;
-
-  // the next position at which to prefetch new flashcard data
-  // is recalculated on server reply, based on number of items server returned
-  prefetchPos = 0;
+  cacheEnd = 0;
+  cacheFrom = 0;
 
   // max items to cache for undo
   /** @type {number} */
@@ -136,7 +136,7 @@ export default class FlashcardReview {
 
   // current undo level (number of steps backward)
   /** @type {number} */
-  undoLevel;
+  undoLevel = 0;
 
   // how many items to preload
   /** @type {number} */
@@ -148,7 +148,7 @@ export default class FlashcardReview {
   // array of answer data for flashcards that is not posted yet
   // the data is freeform, the property id corresponds to a flashcard id
   /** @type {TCardAnswer[]} */
-  postCache;
+  postCache = [];
 
   /** @type {AjaxQueue} */
   ajaxQueue;
@@ -200,18 +200,29 @@ export default class FlashcardReview {
     // initialize shortcuts and keyboard handler
     this.oKeyboard = new Keyboard();
 
-    //
-    this.cache = {};
-    this.prefetchPos = 0;
-    this.postCache = [];
-    this.undoLevel = 0;
-
     // flashcard as a Vue component (wip)
     this.curCard = null;
 
     //    this.ofs_prefetch = Math.floor(this.num_prefetch);
 
     this.beginReview();
+  }
+
+  beginReview() {
+    this.notify("onBeginReview");
+
+    this.cache = {};
+    this.cacheStart = 0;
+    this.cacheEnd = -1;
+    this.cacheFrom = -1;
+    this.position = -1;
+    this.prefetchPos = 0; // when to prefetch new cards, updated by each ajax response
+
+    //
+    this.postCache = [];
+    this.undoLevel = 0;
+
+    this.forward();
   }
 
   /**
@@ -280,19 +291,6 @@ export default class FlashcardReview {
     return this.eventDispatcher.notify(name, ...params);
   }
 
-  beginReview() {
-    this.notify("onBeginReview");
-
-    this.position = -1;
-    this.cache = {};
-    this.cacheStart = 0;
-    this.cacheEnd = -1;
-    this.cacheNext = -1;
-    this.prefetchPos = 0; // when to prefetch new cards, updated by each ajax response
-
-    this.forward();
-  }
-
   /**
    * Go back to previous page if no cards were answered yet,
    * otherwise flush post cache and notify review end.
@@ -314,7 +312,7 @@ export default class FlashcardReview {
 
     if (this.options.put_request) {
       // flush post cache and will notify end of review on ajax response
-      this.sendReceive(true);
+      this.syncReview(true);
     } else {
       // notify end of review here because there is nothing to post
       this.notify("onEndReview");
@@ -338,16 +336,16 @@ export default class FlashcardReview {
     }
 
     // wait for card data
-    this.connect("onWaitCache", this.cardReady, this);
+    this.connect("onCacheReady", this.cardReady, this);
 
-    this.sendReceive();
+    this.syncReview();
 
     // clear backwards cache
     this.cleanCache();
 
     // if card is already prefetched, handle it!
     if (this.cacheEnd >= this.position) {
-      this.cardReady();
+      this.notify("onCacheReady");
     }
   }
 
@@ -355,16 +353,14 @@ export default class FlashcardReview {
    * Undo (go backwards)
    *
    * To allow undo we always keep a number of answers in the postCache (max_undo).
-   * When sendReceive() does a prefetch, only the answers that are before max_undo items
+   * When syncReview() does a prefetch, only the answers that are before max_undo items
    * backwards are posted. Only at the end of the review are the last answers in the
    * "ungo range" flushed out to the server.
    *
    */
   backward() {
     // assertion
-    if (this.undoLevel >= this.max_undo) {
-      throw new Error("FlashcardReview::backward() undoLevel >= max_undo");
-    }
+    console.assert(this.undoLevel < this.max_undo, "FlashcardReview::backward() undoLevel >= max_undo");
 
     if (this.position <= 0) {
       return;
@@ -395,7 +391,7 @@ export default class FlashcardReview {
    */
   cardReady() {
     // clear event
-    this.disconnect("onWaitCache");
+    this.disconnect("onCacheReady");
 
     // notify BEFORE flashcard is created
     this.notify("onFlashcardCreate");
@@ -435,24 +431,24 @@ export default class FlashcardReview {
    *
    * @param {boolean=} bFlushData ... At end of review, force flush all remaining items in postCache.
    */
-  sendReceive(bFlushData) {
+  syncReview(bFlushData) {
     /** @type {TReviewSyncRequest} */
-    let oJsonData = {};
+    let syncData = {};
 
     // any cards to fetch ?
     if (this.cacheEnd < this.items.length - 1 && this.position >= this.prefetchPos) {
       //
-      if (this.cacheNext <= this.cacheEnd) {
+      if (this.cacheFrom <= this.cacheEnd) {
         var from = this.cacheEnd + 1;
         var to = Math.min(from + this.num_prefetch, this.items.length) - 1;
-        oJsonData.get = this.items.slice(from, to + 1);
-        this.cacheNext = from;
+        syncData.get = this.items.slice(from, to + 1);
+        this.cacheFrom = from;
       }
     }
 
     // post answers along with cards prefetching, or do it immediately if flushing
     // the postCache
-    if (this.options.put_request && (oJsonData.get || bFlushData)) {
+    if (this.options.put_request && (syncData.get || bFlushData)) {
       // if flush, post all, otherwise don't post all, leave some cards behind to allow client ot re-answer (undo)
       /** @type {TCardAnswer[]} */
       let aPostData;
@@ -472,25 +468,25 @@ export default class FlashcardReview {
 
       if (aPostData.length > 0) {
         //console.log('POSTING %d (%o)', numToPost, aPostData);
-        oJsonData.put = aPostData;
+        syncData.put = aPostData;
       }
 
       //simulate a timeout
-      //if (bFlushData && !this.foo ) { this.foo=true; oJsonData.flush = 1; console.log('doing it'); }
+      //if (bFlushData && !this.foo ) { this.foo=true; syncData.flush = 1; console.log('doing it'); }
     }
 
-    console.log("FlashcardReview::sendReceive(%o)...", oJsonData);
+    console.log("FlashcardReview::syncReview(%o)...", syncData);
 
-    if (oJsonData.get || oJsonData.put) {
-      if (oJsonData.get && this.options.params) {
+    if (syncData.get || syncData.put) {
+      if (syncData.get && this.options.params) {
         // pass the flashcard options, if provided
-        oJsonData.opt = this.options.params;
+        syncData.opt = this.options.params;
       }
 
       this.ajaxQueue.add(this.options.ajax_url, {
         method: "post",
-        json: oJsonData,
-        argument: bFlushData ? "end" : this.cacheNext,
+        json: syncData,
+        argument: bFlushData ? "end" : this.cacheFrom,
       });
       this.ajaxQueue.start();
 
@@ -519,20 +515,20 @@ export default class FlashcardReview {
       // cache cards if any
       if (oJson.get && oJson.get.length > 0) {
         // assertion
-        console.assert(argument === this.cacheNext, "onAjaxSuccess(): this.cacheNext inconsistency");
+        console.assert(argument === this.cacheFrom, "onAjaxSuccess(): this.cacheFrom inconsistency");
 
         // add cards to cache
-        this.cacheEnd = this.cacheNext + oJson.get.length - 1;
+        this.cacheEnd = this.cacheFrom + oJson.get.length - 1;
 
         // next prefetch at based on number of items received
-        this.prefetchPos = this.cacheNext + Math.floor(oJson.get.length / 2) + 1;
+        this.prefetchPos = this.cacheFrom + Math.floor(oJson.get.length / 2) + 1;
 
         // cache items
         for (i = 0; i < oJson.get.length; i++) {
           this.cacheItem(oJson.get[i]);
         }
 
-        this.notify("onWaitCache");
+        this.notify("onCacheReady");
       }
 
       // clear answers from cache, that were handled succesfully by the server

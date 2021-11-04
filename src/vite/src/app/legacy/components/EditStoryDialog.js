@@ -22,11 +22,8 @@ export default class EditStoryDialog {
   /** @type {AjaxDialog} */
   dialog;
 
-  /** @type {TVueKoohiiEditStory?} */
+  /** @type {TVueInstanceRef?} */
   editStory = null;
-
-  /** @type {Function?} */
-  editStoryUnmount = null;
 
   /**
    * @param {string} url
@@ -148,15 +145,13 @@ export default class EditStoryDialog {
     // note! mounting the component will also remove (overwrite) our "loading" div
     let elMount = this.dialog.getBody();
 
-    let { vm, unmount } = VueInstance(KoohiiEditStory, elMount, propsData);
-    this.editStory = /** @type {TVueKoohiiEditStory} */ (vm);
-    this.editStoryUnmount = unmount;
+    this.editStory = VueInstance(KoohiiEditStory, elMount, propsData);
   }
 
   onDialogDestroy() {
     // console.log('onDialogDestroy()')
-    if (this.editStoryUnmount) {
-      this.editStoryUnmount();
+    if (this.editStory) {
+      this.editStory.unmount();
       this.editStory = null;
     }
   }

@@ -8,7 +8,7 @@ const fnVueInstance = (
   mount: string | Element,
   props?: TVuePropsData,
   replace = false,
-): { vm: ComponentPublicInstance, unmount: Function } => {
+): TVueInstanceRef => {
   let el = Lang.isString(mount) ? document.querySelectorAll(mount)[0] : mount;
   console.assert(Lang.isNode(el), "VueInstance() : mount is invalid");
 

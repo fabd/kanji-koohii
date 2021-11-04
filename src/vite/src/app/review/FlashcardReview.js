@@ -145,10 +145,8 @@ export default class FlashcardReview {
   // uiAjaxQueue instance
   ajaxQueue = null;
 
-  /** @type {TVueInstanceOf<typeof KoohiiFlashcard>} */
-  curCard = null;
-  /** @type Function */
-  curCardUnmount = null;
+  /** @type {TVueInstanceRef?} */
+  curCard;
 
   /**
    * Initialize the front end Flashcard Review component.
@@ -391,14 +389,12 @@ export default class FlashcardReview {
       reviewMode: kk_globals_get("REVIEW_MODE"),
     };
 
-    let { vm, unmount } = VueInstance(KoohiiFlashcard, "#uiFcMain", propsData);
-    this.curCard = vm;
-    this.curCardUnmount = unmount;
+    this.curCard = VueInstance(KoohiiFlashcard, "#uiFcMain", propsData);
 
     // notifies 'onFlashcardState'
     this.setFlashcardState(0);
 
-    this.curCard.display(true);
+    this.curCard.vm.display(true);
   }
 
   /**
@@ -409,7 +405,7 @@ export default class FlashcardReview {
     if (this.curCard) {
       this.notify("onFlashcardDestroy");
 
-      this.curCardUnmount();
+      this.curCard.unmount();
       this.curCard = null;
     }
   }
@@ -565,8 +561,9 @@ export default class FlashcardReview {
     return this.position;
   }
 
+  /** @return {TVueInstanceOf<typeof KoohiiFlashcard>?} */
   getFlashcard() {
-    return this.curCard;
+    return (this.curCard && this.curCard.vm) || null;
   }
 
   /**
@@ -594,16 +591,14 @@ export default class FlashcardReview {
     return this.items;
   }
 
-  setFlashcardState(iState) {
-    if (this.curCard) {
-      this.curCard.setState(iState);
-    }
-
-    this.notify("onFlashcardState", iState);
+  /** @param {number} state */
+  setFlashcardState(state) {
+    this.curCard && this.curCard.vm.setState(state);
+    this.notify("onFlashcardState", state);
   }
 
   getFlashcardState() {
-    return this.curCard ? this.curCard.getState() : false;
+    return this.curCard ? this.curCard.vm.getState() : false;
   }
 
   /**

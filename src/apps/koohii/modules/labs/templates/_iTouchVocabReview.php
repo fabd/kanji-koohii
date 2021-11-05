@@ -77,10 +77,13 @@
 
 <?php
   $reviewOptions = [
-    // the page to go to when clicking End with 0 reviews
-    'back_url' => url_for($exit_url, true),
+    // props for a (maybe/someday) Vue template
+    'props' => [
+      // the page to go to when clicking End with 0 reviews
+      'back_url' => url_for($exit_url, true),
+    ],
 
-    'fcr_options' => [
+    'fcrOptions' => [
       'max_undo' => 10,
       'ajax_url' => $ajax_url,
       'put_request' => false,

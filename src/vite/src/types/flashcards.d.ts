@@ -14,6 +14,22 @@ type TVocabCardData = {
   id: TUcsId;
 };
 
+// @see FlashcardReview.js
+type TReviewOptions = {
+  items: TUcsId[];
+  ajax_url: string;
+  back_url?: string;
+  params?: Dictionary;
+  max_undo?: number;
+  num_prefetch?: number;
+  events: {
+    /* eslint-disable-next-line @typescript-eslint/ban-types */
+    [name: string]: Function;
+  };
+  scope: any;
+  put_request?: boolean;
+};
+
 // review rating code (client/server)
 type TReviewRating =
   | 1 // No

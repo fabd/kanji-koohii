@@ -20,7 +20,7 @@
  *       max_undo         Maximum undo/backward level
  *       num_prefetch     How many flashcards to fetch ahead
  *       events           An object with events to register (see notifications below)
- *         scope            Scope to use for the events (property, optional)
+ *       scope            Scope to use for the events (property, optional)
  *       put_request      Set to false if not posting any answers to the server. "onEndReview" will be
  *                        notified automatically after forward() has moved past the last item.
  *
@@ -107,6 +107,10 @@ import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 const DEFAULT_PREFETCH = 10;
 
 export default class FlashcardReview {
+
+  /** @type {TReviewOptions} */
+  options;
+
   // flashcard selection as an array of flashcard ids
   /** @type {TUcsId[]} */
   items;
@@ -160,7 +164,7 @@ export default class FlashcardReview {
   /**
    * Initialize the front end Flashcard Review component.
    *
-   * @param {Window["KK"]["REVIEW_OPTIONS"]} options
+   * @param {TReviewOptions} options
    */
   constructor(options) {
     console.log("FlashcardReview::init(%o)", options);
@@ -173,13 +177,13 @@ export default class FlashcardReview {
     this.options.num_prefetch = options.num_prefetch || DEFAULT_PREFETCH;
     this.options.put_request = options.put_request === false ? false : true;
 
-    // set options and make proxies
+    // proxies
     this.items = this.options.items;
     this.max_undo = this.options.max_undo;
 
     // register listeners
     this.eventDispatcher = new EventDispatcher();
-    var scope = options.events.scope;
+    const scope = options.scope;
     for (var sEvent in options.events) {
       this.eventDispatcher.connect(sEvent, options.events[sEvent], scope);
     }

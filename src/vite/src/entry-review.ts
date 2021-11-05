@@ -28,13 +28,13 @@ domContentLoaded(() => {
   // Review page
   if (domGetById("uiFcMain")) {
     const reviewMode = kk_globals_get("REVIEW_MODE");
-    const reviewOptions = kk_globals_get("REVIEW_OPTIONS");
+    const { fcrOptions, props } = kk_globals_get("REVIEW_OPTIONS");
 
     // initialize the correct review mode based on existing `fc_view` option
     if (reviewMode.fc_view === "kanji") {
-      window.Koohii.Refs.KanjiReview = new KanjiReview(reviewOptions);
+      window.Koohii.Refs.KanjiReview = new KanjiReview(fcrOptions, props);
     } else if (reviewMode.fc_view === "vocabshuffle") {
-      new VocabReview(reviewOptions);
+      new VocabReview(fcrOptions, props);
     }
   }
 });

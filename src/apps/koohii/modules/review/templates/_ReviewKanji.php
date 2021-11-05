@@ -158,11 +158,13 @@
 
 <?php
   $reviewOptions = [
-    'end_url' =>  url_for('@review_summary', true),
-    'editstory_url' => url_for('study/editstory'),
+    // props for a (maybe/someday) Vue template
+    'props' => [
+      'end_url' =>  url_for('@review_summary', true),
+      'editstory_url' => url_for('study/editstory'),
+    ],
 
-    'fcr_options' => [
-      //num_prefetch: 10,
+    'fcrOptions' => [
       'ajax_url' => $ajax_url,
       'back_url' => url_for($exit_url, true),
       'items' => $items,

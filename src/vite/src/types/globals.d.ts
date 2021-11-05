@@ -49,7 +49,7 @@ interface Window {
 
     EDITSTORY_PROPS: Dictionary;
 
-    REVIEW_OPTIONS: Dictionary;
+    REVIEW_OPTIONS: { fcrOptions: TReviewOptions, props: Dictionary };
     REVIEW_MODE: Dictionary;
 
     // study > My Stories

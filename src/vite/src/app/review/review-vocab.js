@@ -4,9 +4,11 @@
 import $$, { DomJS, asHtmlElement, domGetById, hasClass } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
 
+/** @typedef {{back_url: string}} TReviewProps */
+
 export default class VocabReview {
-  /** @type {Dictionary} */
-  options = {};
+  /** @type {TReviewProps} */
+  options;
 
   /** @type {FlashcardReview} */
   oReview;
@@ -18,23 +20,24 @@ export default class VocabReview {
 
   /**
    *
-   * @param {Dictionary} options
+   * @param {TReviewOptions} fcrOptions ... options for FlashcardReview instance
+   * @param {TReviewProps} props ... props for Vue component (TBD refactor)
    */
-  constructor(options) {
+  constructor(fcrOptions, props) {
     // set options
-    this.options = options;
+    this.options = props;
 
-    options.fcr_options.events = {
+    fcrOptions.events = {
       onBeginReview: this.onBeginReview,
       onEndReview: this.onEndReview,
       onFlashcardCreate: this.onFlashcardCreate,
       onFlashcardDestroy: this.onFlashcardDestroy,
       onFlashcardState: this.onFlashcardState,
       onAction: this.onAction,
-      scope: this,
     };
+    fcrOptions.scope = this;
 
-    this.oReview = new FlashcardReview(options.fcr_options);
+    this.oReview = new FlashcardReview(fcrOptions);
 
     this.oReview.addShortcutKey("f", "flip");
     this.oReview.addShortcutKey(" ", "flip");
@@ -44,15 +47,6 @@ export default class VocabReview {
     this.$elStats = $$("#uiFcStats");
     this.elsCount = $$("#uiFcProgressBar .count"); //array
     this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
-  }
-
-  /**
-   * Returns an option value
-   *
-   * @param {string} name
-   */
-  getOption(name) {
-    return this.options[name];
   }
 
   // proxy which *always* returns a valid card

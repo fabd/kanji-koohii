@@ -16,9 +16,11 @@ import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
 import FlashcardReview from "@app/review/FlashcardReview";
 
+/** @typedef {{end_url: string, editstory_url: string}} TReviewProps */
+
 export default class KanjiReview {
-  /** @type {Dictionary} */
-  options = {};
+  /** @type {TReviewProps} */
+  options;
 
   /** @type {FlashcardReview} */
   oReview;
@@ -44,12 +46,13 @@ export default class KanjiReview {
 
   /**
    *
-   * @param {Dictionary} options
+   * @param {TReviewOptions} fcrOptions ... options for FlashcardReview instance
+   * @param {TReviewProps} props ... props for Vue component (TBD refactor)
    */
-  constructor(options) {
-    this.options = options;
+  constructor(fcrOptions, props) {
+    this.options = props;
 
-    options.fcr_options.events = {
+    fcrOptions.events = {
       onBeginReview: this.onBeginReview,
       onEndReview: this.onEndReview,
       onFlashcardCreate: this.onFlashcardCreate,
@@ -57,10 +60,10 @@ export default class KanjiReview {
       onFlashcardState: this.onFlashcardState,
       onFlashcardUndo: this.onFlashcardUndo,
       onAction: this.onAction,
-      scope: this,
     };
+    fcrOptions.scope = this;
 
-    this.oReview = new FlashcardReview(options.fcr_options);
+    this.oReview = new FlashcardReview(fcrOptions);
 
     this.oReview.addShortcutKey("f", "flip");
     this.oReview.addShortcutKey(" ", "flip");
@@ -119,7 +122,7 @@ export default class KanjiReview {
   /**
    * Returns an option value
    *
-   * @param {string} name
+   * @param {keyof TReviewProps} name
    */
   getOption(name) {
     return this.options[name];
@@ -250,7 +253,6 @@ export default class KanjiReview {
           // pass through so the link functions
           return true;
         }
-
         if (this.oReview.getFlashcardState() === 0) {
           this.oReview.setFlashcardState(1);
         }

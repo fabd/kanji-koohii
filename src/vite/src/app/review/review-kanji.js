@@ -54,7 +54,6 @@ export default class KanjiReview {
     this.options = props;
 
     fcrOptions.events = {
-      onBeginReview: this.onBeginReview,
       onEndReview: this.onEndReview,
       onFlashcardCreate: this.onFlashcardCreate,
       onFlashcardDestroy: this.onFlashcardDestroy,
@@ -133,10 +132,6 @@ export default class KanjiReview {
   // proxy which typecasts the card data, and *always* returns a valid card
   getFlashcardData() {
     return /**@type {TCardData}*/ (this.oReview.getFlashcardData());
-  }
-
-  onBeginReview() {
-    //console.log('KanjiReview.onBeginReview()');
   }
 
   /**

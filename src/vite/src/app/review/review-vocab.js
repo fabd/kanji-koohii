@@ -29,7 +29,6 @@ export default class VocabReview {
     this.options = props;
 
     fcrOptions.events = {
-      onBeginReview: this.onBeginReview,
       onEndReview: this.onEndReview,
       onFlashcardCreate: this.onFlashcardCreate,
       onFlashcardDestroy: this.onFlashcardDestroy,
@@ -53,10 +52,6 @@ export default class VocabReview {
   // proxy which *always* returns a valid card
   getFlashcardData() {
     return /**@type {TVocabCardData}*/ (this.oReview.getFlashcardData());
-  }
-
-  onBeginReview() {
-    //console.log('VocabReview.onBeginReview()');
   }
 
   /**

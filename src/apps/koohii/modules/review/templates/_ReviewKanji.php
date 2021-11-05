@@ -160,7 +160,6 @@
   $reviewOptions = [
     'end_url' =>  url_for('@review_summary', true),
     'editstory_url' => url_for('study/editstory'),
-    'dictlookup_url' => url_for('study/dict'),
 
     'fcr_options' => [
       //num_prefetch: 10,

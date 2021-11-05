@@ -305,17 +305,21 @@ export default class FlashcardReview {
       return;
     }
 
-    // wait for card data
-    this.connect("onCacheReady", this.cardReady, this);
-
-    this.syncReview();
-
     // clear backwards cache
     this.cleanCache();
 
-    // if card is already prefetched, handle it!
-    if (this.cacheEnd >= this.position) {
-      this.notify("onCacheReady");
+    this.syncReview();
+
+    if (this.cacheEnd < this.position) {
+      // this happens normally only on review start, when cache is empty
+      // OR review catches up with the card pre-fetch (server is very slow to respond)
+      this.connect("onCacheReady", () => {
+        this.disconnect("onCacheReady");
+        this.cardReady();
+      });
+    } else {
+      // if card is already prefetched, handle it!
+      this.cardReady();
     }
   }
 
@@ -329,17 +333,13 @@ export default class FlashcardReview {
    *
    */
   backward() {
-    // assertion
     console.assert(this.undoLevel < this.max_undo, "FlashcardReview::backward() undoLevel >= max_undo");
 
     if (this.position <= 0) {
       return;
     }
 
-    // assertion
-    if (this.cacheStart >= this.position) {
-      throw new Error("FlashcardReview::backward() on empty cache");
-    }
+    console.assert(this.cacheStart < this.position, "FlashcardReview::backward() on empty cache");
 
     this.destroyCurCard();
     this.undoLevel++;
@@ -360,9 +360,6 @@ export default class FlashcardReview {
    * data is available in the cache.
    */
   cardReady() {
-    // clear event
-    this.disconnect("onCacheReady");
-
     // notify BEFORE flashcard is created
     this.notify("onFlashcardCreate");
 
@@ -484,7 +481,6 @@ export default class FlashcardReview {
     if (oJson) {
       // cache cards if any
       if (oJson.get && oJson.get.length > 0) {
-        // assertion
         console.assert(argument === this.cacheFrom, "onAjaxSuccess(): this.cacheFrom inconsistency");
 
         // add cards to cache

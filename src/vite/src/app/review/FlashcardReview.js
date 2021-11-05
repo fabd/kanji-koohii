@@ -28,8 +28,6 @@
  *   disconnect(sName)                  Remove a listener
  *   notify(sName[, args...])           Notify listeners
  *
- *   addShortcutKey(sKey, sActionId)
- *                        Add a keyboard shortcut for an action, the action id is passed to 'onAction' notification
  *
  * Methods to control the review session:
  *
@@ -62,9 +60,6 @@
  *   onFlashcardDestroy   Before the current flashcard is destroyed
  *   onFlashcardUndo(o)   Called when user undo'es flashcard answer. Argument o is the answer data as it was passed
  *                        to answerCard(). Notified only if "put_request" is true (default).
- *   onAction(id, ev)     Called for clicks on elements with "uiFcAction-XYZ" class; where id is "XYZ"; as well as
- *                        keyboard shortcuts set with addShortcutKey(). This listener must explicitly return false
- *                        to stop event from propagating (ev is the event object).
  *
  * Ajax RESPONSE format (in Json):
  *
@@ -90,8 +85,6 @@
  *     => the flashcard state, where N is a number, 0 is the default state, use with css rules to set
  *        visibility of various information on the card depending on state (eg. 0 = question, 1 = answer)
  *
- *   a.uiFcAction-XXXX
- *     Links that trigger an action (answer buttons), calls event "onAction" with "XXXX" as second argument
  *
  */
 // @ts-check
@@ -99,7 +92,6 @@
 import { getBodyED, kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
 import EventDispatcher from "@old/eventdispatcher";
-import Keyboard from "@old/keyboard";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
@@ -107,7 +99,6 @@ import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 const DEFAULT_PREFETCH = 10;
 
 export default class FlashcardReview {
-
   /** @type {TReviewOptions} */
   options;
 
@@ -197,13 +188,6 @@ export default class FlashcardReview {
       },
     });
 
-    // buttons and other custom actions
-    var ed = getBodyED();
-    ed.on("uiFcAction", this.onActionEvent, this);
-
-    // initialize shortcuts and keyboard handler
-    this.oKeyboard = new Keyboard();
-
     // flashcard as a Vue component (wip)
     this.curCard = null;
 
@@ -244,22 +228,6 @@ export default class FlashcardReview {
     } else {
       window.onbeforeunload = null;
     }
-  }
-
-  /**
-   * The event listener bound to html elements that use "uiFcAction-XXX" class names.
-   *
-   * Makes sure to stop the mouse click event, to prevent page from jumping.
-   *
-   * @param  {Event}      ev   Event object
-   * @param  {HTMLElement} el   Matched element
-   */
-  onActionEvent(ev, el) {
-    var data = el.dataset,
-      action = data.action;
-    console.assert(!!data.action, 'onActionEvent() bad "action" attribute, element %o', el);
-
-    return false !== this.notify("onAction", action, ev);
   }
 
   /**
@@ -614,24 +582,6 @@ export default class FlashcardReview {
 
   getFlashcardState() {
     return this.curCard ? this.curCard.vm.getState() : false;
-  }
-
-  /**
-   * Register a shortcut key for an action id. Pressing the given key
-   * will notify 'onAction' with the given action id. Lowercase letters will match
-   * the uppercase letter.
-   *
-   * @param {string | number} sKey  Shortcut key, should be lowercase, or ' ' for spacebar
-   * @param {string} sActionId  Id passed to the 'onAction' event when key is pressed
-   */
-  addShortcutKey(sKey, sActionId) {
-    if (!this.eventDispatcher.hasListeners("onAction")) {
-      console.warn('FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener');
-    }
-
-    this.oKeyboard.addListener(sKey, (event) => {
-      this.notify("onAction", sActionId, event);
-    });
   }
 
   /**

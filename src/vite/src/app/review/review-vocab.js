@@ -3,6 +3,7 @@
 
 import $$, { DomJS, asHtmlElement, domGetById, hasClass } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
+import ReviewPage from "@app/review/ReviewPage";
 
 /** @typedef {{back_url: string}} TReviewProps */
 
@@ -33,15 +34,15 @@ export default class VocabReview {
       onFlashcardCreate: this.onFlashcardCreate,
       onFlashcardDestroy: this.onFlashcardDestroy,
       onFlashcardState: this.onFlashcardState,
-      onAction: this.onAction,
     };
     fcrOptions.scope = this;
 
     this.oReview = new FlashcardReview(fcrOptions);
 
-    this.oReview.addShortcutKey("f", "flip");
-    this.oReview.addShortcutKey(" ", "flip");
-    this.oReview.addShortcutKey("b", "back");
+    this.reviewPage = new ReviewPage(this.onAction.bind(this));
+    this.reviewPage.addShortcutKey("f", "flip");
+    this.reviewPage.addShortcutKey(" ", "flip");
+    this.reviewPage.addShortcutKey("b", "back");
 
     // stats panel
     this.$elStats = $$("#uiFcStats");
@@ -84,7 +85,7 @@ export default class VocabReview {
     // set the google search url
     let searchTerm = this.getFlashcardData().compound;
     let searchUrl = "http://www.google.co.jp/search?hl=ja&q=" + encodeURIComponent(searchTerm);
-    /**@type{HTMLAnchorElement}*/($$("#search-google-jp")[0]).href = searchUrl;
+    /**@type{HTMLAnchorElement}*/ ($$("#search-google-jp")[0]).href = searchUrl;
   }
 
   /**

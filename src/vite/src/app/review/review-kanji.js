@@ -15,6 +15,7 @@ import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
 import FlashcardReview from "@app/review/FlashcardReview";
+import ReviewPage from "@app/review/ReviewPage";
 
 /** @typedef {{end_url: string, editstory_url: string}} TReviewProps */
 
@@ -59,44 +60,45 @@ export default class KanjiReview {
       onFlashcardDestroy: this.onFlashcardDestroy,
       onFlashcardState: this.onFlashcardState,
       onFlashcardUndo: this.onFlashcardUndo,
-      onAction: this.onAction,
     };
     fcrOptions.scope = this;
 
     this.oReview = new FlashcardReview(fcrOptions);
 
-    this.oReview.addShortcutKey("f", "flip");
-    this.oReview.addShortcutKey(" ", "flip");
-    this.oReview.addShortcutKey(96, "flip"); // NUMPAD_0
+    this.reviewPage = new ReviewPage(this.onAction.bind(this));
 
-    this.oReview.addShortcutKey("n", "no");
-    this.oReview.addShortcutKey("g", "again");
-    this.oReview.addShortcutKey("h", "hard");
-    this.oReview.addShortcutKey("y", "yes");
-    this.oReview.addShortcutKey("e", "easy");
+    this.reviewPage.addShortcutKey("f", "flip");
+    this.reviewPage.addShortcutKey(" ", "flip");
+    this.reviewPage.addShortcutKey(96, "flip"); // NUMPAD_0
+
+    this.reviewPage.addShortcutKey("n", "no");
+    this.reviewPage.addShortcutKey("g", "again");
+    this.reviewPage.addShortcutKey("h", "hard");
+    this.reviewPage.addShortcutKey("y", "yes");
+    this.reviewPage.addShortcutKey("e", "easy");
 
     // added number keys to answer with just left hand
-    this.oReview.addShortcutKey("1", "no");
-    this.oReview.addShortcutKey("2", "hard");
-    this.oReview.addShortcutKey("3", "yes");
-    this.oReview.addShortcutKey("4", "easy");
+    this.reviewPage.addShortcutKey("1", "no");
+    this.reviewPage.addShortcutKey("2", "hard");
+    this.reviewPage.addShortcutKey("3", "yes");
+    this.reviewPage.addShortcutKey("4", "easy");
 
     // same for numpad keys
-    this.oReview.addShortcutKey(97, "no"); // NUMPAD_1
-    this.oReview.addShortcutKey(98, "hard"); // NUMPAD_2
-    this.oReview.addShortcutKey(99, "yes"); // NUMPDA_3
-    this.oReview.addShortcutKey(100, "easy"); // NUMPAD_4
+    this.reviewPage.addShortcutKey(97, "no"); // NUMPAD_1
+    this.reviewPage.addShortcutKey(98, "hard"); // NUMPAD_2
+    this.reviewPage.addShortcutKey(99, "yes"); // NUMPDA_3
+    this.reviewPage.addShortcutKey(100, "easy"); // NUMPAD_4
 
-    this.oReview.addShortcutKey("u", "undo");
-    this.oReview.addShortcutKey("s", "story");
-    this.oReview.addShortcutKey("d", "dict");
+    this.reviewPage.addShortcutKey("u", "undo");
+    this.reviewPage.addShortcutKey("s", "story");
+    this.reviewPage.addShortcutKey("d", "dict");
 
     // skip flashcard (110 = comma)
-    this.oReview.addShortcutKey("k", "skip");
-    this.oReview.addShortcutKey(110, "skip"); // NUMPAD_DECIMAL
+    this.reviewPage.addShortcutKey("k", "skip");
+    this.reviewPage.addShortcutKey(110, "skip"); // NUMPAD_DECIMAL
 
     // Disabled because it's next to (F)lip Card
-    //this.oReview.addShortcutKey('d', 'delete');
+    //this.reviewPage.addShortcutKey('d', 'delete');
 
     // flashcad container
     // this.elFlashcard = $$('.uiFcCard')[0];
@@ -430,8 +432,8 @@ export default class KanjiReview {
     const position = this.oReview.getPosition();
 
     // update review count
-    this.elsCount[0].innerHTML = '' + Math.min(position + 1, num_items);
-    this.elsCount[1].innerHTML = '' + num_items;
+    this.elsCount[0].innerHTML = "" + Math.min(position + 1, num_items);
+    this.elsCount[1].innerHTML = "" + num_items;
 
     // update progress bar
     var pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;

@@ -141,8 +141,8 @@ export default defineComponent({
       if (!this.KanjiReview) {
         return null;
       }
-      let vmFlashcard = this.KanjiReview!.oReview!.getFlashcard();
-      let inst = vmFlashcard.getChild() as TVueKoohiiFlashcard;
+      let vm = this.KanjiReview!.oReview!.getFlashcard()!;
+      let inst = vm.getChild() as TVueKoohiiFlashcard;
       return inst;
     },
 

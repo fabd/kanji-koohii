@@ -447,9 +447,9 @@ export default class KanjiReview {
    */
   updateAnswerStats(id, rating, undo) {
     // cf. uiFlashcardReview.php const
-    var yes = rating === 2 || rating === 3 ? 1 : 0,
-      no = rating === 1 || rating === "h" ? 1 : 0,
-      deld = rating === 4 ? 1 : 0;
+    let yes = rating === 2 || rating === 3 ? 1 : 0;
+    let no = rating === 1 || rating === "h" ? 1 : 0;
+    let deld = rating === 4 ? 1 : 0;
 
     if (undo) {
       yes = -yes;

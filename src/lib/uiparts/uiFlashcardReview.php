@@ -59,10 +59,6 @@
  *   Create an instance in the action:
  *   =>  $this->uiFR = new uiFlashcardReview('module/partial', array(...))
  *
- *
- * TODO     Refactor generic, configure peer class for getFlashcardData() and peer class for putFlashcardData()
- *
- * @author  Fabrice Denis
  */
 
 class uiFlashcardReview

@@ -107,10 +107,10 @@ class LeitnerSRS
    * 
    *   expiredate
    * 
-   * @param  Object  $curData  Row data coming from flashcard review storage
-   * @param  Integer $answer   Answer (see uiFlashcardReview.php const)
+   * @param  object  $curData  Row data coming from flashcard review storage
+   * @param  int  $answer   Answer (see uiFlashcardReview.php const)
    * 
-   * @return Array   Row data to store in the flashcard review storage
+   * @return array   Row data to store in the flashcard review storage
    */
   public static function rateCard($curData, $answer)
   {

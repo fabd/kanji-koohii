@@ -104,6 +104,8 @@ import VueInstance from "@lib/helpers/vue-instance";
 
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 
+const DEFAULT_PREFETCH = 10;
+
 export default class FlashcardReview {
   // flashcard selection as an array of flashcard ids
   /** @type {TUcsId[]} */
@@ -139,8 +141,7 @@ export default class FlashcardReview {
   undoLevel = 0;
 
   // how many items to preload
-  /** @type {number} */
-  num_prefetch;
+  num_prefetch = 0;
 
   /** @type {EventDispatcher} */
   eventDispatcher;
@@ -169,13 +170,12 @@ export default class FlashcardReview {
     // set options and fix defaults
     this.options = options;
     this.options.max_undo = options.max_undo || 3;
-    this.options.num_prefetch = options.num_prefetch || 10;
+    this.options.num_prefetch = options.num_prefetch || DEFAULT_PREFETCH;
     this.options.put_request = options.put_request === false ? false : true;
 
     // set options and make proxies
     this.items = this.options.items;
     this.max_undo = this.options.max_undo;
-    this.num_prefetch = this.options.num_prefetch;
 
     // register listeners
     this.eventDispatcher = new EventDispatcher();
@@ -202,8 +202,6 @@ export default class FlashcardReview {
 
     // flashcard as a Vue component (wip)
     this.curCard = null;
-
-    //    this.ofs_prefetch = Math.floor(this.num_prefetch);
 
     this.beginReview();
   }
@@ -440,7 +438,7 @@ export default class FlashcardReview {
       //
       if (this.cacheFrom <= this.cacheEnd) {
         var from = this.cacheEnd + 1;
-        var to = Math.min(from + this.num_prefetch, this.items.length) - 1;
+        var to = Math.min(from + this.options.num_prefetch, this.items.length) - 1;
         syncData.get = this.items.slice(from, to + 1);
         this.cacheFrom = from;
       }

@@ -77,13 +77,13 @@
 
           <div class="flex items-center justify-between -mx-1">
 <a
-  id="uiFcBtnAN" class="uiIBtn uiIBtnDefault uiIBtnRed uiFcAction flex-auto"
+  id="uiFcBtnAN" class="uiIBtn uiIBtnDefault uiIBtnRed uiFcAction flex-1"
   data-action="no" title="Forgotten" href="#">
   <span><u>N</u>o</span>
 </a>
 <?php if (!$freemode): ?>
 <a
-  id="uiFcBtnAG" class="uiIBtn uiIBtnDefault uiFcAction flex-auto"
+  id="uiFcBtnAG" class="uiIBtn uiIBtnDefault uiFcAction flex-1"
   data-action="again" title="Repeat card" href="#">
   <u>A</u>gain
 </a>
@@ -91,17 +91,17 @@
 
 <?php if (!$freemode): ?>
 <a
- id="uiFcBtnAH" class="uiIBtnOrange uiFcAction uiIBtn uiIBtnDefault flex-2-auto" 
+ id="uiFcBtnAH" class="uiIBtnOrange uiFcAction uiIBtn uiIBtnDefault flex-2" 
  data-action="hard" title="Hard">
   <span class="px-1"><u>H</u>ard</span>
 </a>
 <?php endif ?>
-<a id="uiFcBtnAY" class="uiFcAction uiIBtn uiIBtnDefault flex-2-auto"
+<a id="uiFcBtnAY" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
   data-action="yes" title="Remembered with some effort" href="#">
   <span class="px-2"><u>Y</u>es</span>
 </a>
 <?php if (!$freemode): ?>
-<a id="uiFcBtnAE" class="uiFcAction uiIBtn uiIBtnDefault flex-2-auto"
+<a id="uiFcBtnAE" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
   data-action="easy" title="Remembered easily" href="#">
   <span class="px-1"><u>E</u>asy</span>
 </a>

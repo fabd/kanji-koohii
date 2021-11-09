@@ -156,7 +156,7 @@ export default class KanjiReview {
   }
 
   onFlashcardCreate() {
-    console.log("KanjiReview.onFlashcardCreate()");
+    // console.log("KanjiReview.onFlashcardCreate()");
 
     // Show panels when first card is loaded
     if (this.oReview.getPosition() === 0) {
@@ -191,7 +191,7 @@ export default class KanjiReview {
 
   /** @param {number} iState */
   onFlashcardState(iState) {
-    console.log("onFlashcardState(%d)", iState);
+    // console.log("onFlashcardState(%d)", iState);
     $$("#uiFcButtons0").display(iState === 0);
     $$("#uiFcButtons1").display(iState !== 0);
   }

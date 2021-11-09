@@ -172,7 +172,7 @@ export default defineComponent({
       const isFront = this.$parent.getState() === 0;
       const kanji = this.cardData.kanji;
 
-      console.log("formatCompound %s %s %o", str, kanji, isFront);
+      // console.log("formatCompound %s %s %o", str, kanji, isFront);
 
       if (isFront) {
         str = str.replace(

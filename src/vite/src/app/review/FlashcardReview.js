@@ -118,12 +118,10 @@ export default class FlashcardReview {
   // Flashcard data is maintained for prefetched items and max_undo items,
   // other cards are deleted when they are beyond the undo range.
   //
-  // cacheStart and cacheEnd indicate the range of valid flashcard data
-  // in the cache array.
+  // cacheEnd indicate the range of valid flashcard data in the cache array.
   /** @type {{ [key: number]: TCardData }} */
   cache = {};
 
-  cacheStart = 0;
   cacheEnd = 0;
   cacheFrom = 0;
 
@@ -198,7 +196,6 @@ export default class FlashcardReview {
     this.notify("onBeginReview");
 
     this.cache = {};
-    this.cacheStart = 0;
     this.cacheEnd = -1;
     this.cacheFrom = -1;
     this.position = -1;
@@ -305,9 +302,6 @@ export default class FlashcardReview {
       return;
     }
 
-    // clear backwards cache
-    this.cleanCache();
-
     this.syncReview();
 
     if (this.cacheEnd < this.position) {
@@ -338,8 +332,6 @@ export default class FlashcardReview {
     if (this.position <= 0) {
       return;
     }
-
-    console.assert(this.cacheStart < this.position, "FlashcardReview::backward() on empty cache");
 
     this.destroyCurCard();
     this.undoLevel++;
@@ -520,20 +512,6 @@ export default class FlashcardReview {
   /** @param {TCardData} cardData */
   cacheItem(cardData) {
     this.cache[cardData.id] = cardData;
-  }
-
-  /**
-   * Clear flashcard display data for items behind, to free some
-   * resources, we only need as much flashcard data behind as needed
-   * for undo.
-   *
-   */
-  cleanCache() {
-    while (this.cacheStart < this.position - this.max_undo) {
-      var id = this.items[this.cacheStart];
-      delete this.cache[id];
-      this.cacheStart++;
-    }
   }
 
   getPosition() {

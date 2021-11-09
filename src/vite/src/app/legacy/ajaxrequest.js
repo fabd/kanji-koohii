@@ -255,7 +255,7 @@ export default class AjaxRequest {
    * @param  {Object}   YUI Connect object.
    * @param  {String}   HTTP header property wanted in CamelCase
    *
-   * @return {String|Undefined}   Returns the value or undefined.
+   * @return {string|undefined}   Returns the value or undefined.
    */
   getHttpHeader(o, name) {
     return (

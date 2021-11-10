@@ -229,7 +229,7 @@ export default class AjaxQueue {
   onAjaxFailure(o) {
     // console.log('AjaxQueue::onAjaxFailure(%o)', o);
 
-    var sErrorMessage = this.ajaxRequest.getHttpHeader(o, "RTK-Error");
+    let sErrorMessage = this.ajaxRequest.getHttpHeader(o, "RTK-Error");
 
     this.ajaxRequest = null;
 
@@ -239,14 +239,15 @@ export default class AjaxQueue {
       return;
     }
 
-    if (sErrorMessage !== null) {
+    if (sErrorMessage) {
       //alert('Oops! The server returned an error: "'+sErr500Message+'"');
 
       // show neat message from custom server-side ajax exception
       this.setErrorDialog(sErrorMessage);
     } else {
       sErrorMessage = o.status + " " + o.statusText;
-      alert('Oops! The server returned a "' + sErrorMessage + '" error.');
+      // alert('Oops! The server returned a "' + sErrorMessage + '" error.');
+      this.setErrorDialog(`Oops! Server ${o.status} ${o.statusText}.`);
     }
   }
 

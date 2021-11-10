@@ -21,7 +21,6 @@ type TReviewOptions = {
   back_url?: string;
   params?: Dictionary;
   max_undo?: number;
-  num_prefetch?: number;
   events: {
     /* eslint-disable-next-line @typescript-eslint/ban-types */
     [name: string]: Function;

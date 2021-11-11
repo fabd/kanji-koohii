@@ -10,7 +10,7 @@
  *
  *   Restore from the session:
  *     $oFRS = new rtkFreeReviewSession();
- * 
+ *
  * Methods:
  *
  *   getOptions()
@@ -18,13 +18,11 @@
  *   updateFlashcard($ucsId, $answer)
  *   getReviewedCards()
  */
-
 class rtkFreeReviewSession
 {
-  protected
-    $user         = null,
-    $cardstatus   = null,
-    $options      = null;
+  protected $user;
+  protected $cardstatus;
+  protected $options;
 
   /**
    * Session variable which stores flashcard data and answers.
@@ -35,14 +33,14 @@ class rtkFreeReviewSession
    * Instance the flashcard review session, to start it or get access to the
    * stored data.
    *
-   * @param  bool    $start     True to intialize the session
+   * @param bool $start True to intialize the session
    *
    * @constructor
    */
   public function __construct($start = false)
   {
     $this->user = sfContext::getInstance()->getUser();
-    
+
     if ($start)
     {
       $this->cardstatus = [];
@@ -59,9 +57,9 @@ class rtkFreeReviewSession
   /**
    * Create an array of flashcard ids using sequence numbers.
    *
-   * @param   int     $from   Sequence number start
-   * @param   int     $to     Sequence number end
-   * @param   bool    $shuffle      True to randomize the cards
+   * @param int  $from    Sequence number start
+   * @param int  $to      Sequence number end
+   * @param bool $shuffle True to randomize the cards
    *
    * @return array
    */
@@ -70,11 +68,13 @@ class rtkFreeReviewSession
     // create array of UCS ids from sequential Heisig flashcard range
     $numCards = $to - $from + 1;
     $framenums = array_fill(0, $numCards, 1);
-    for ($i = 0; $i < $numCards; $i++) {
+    for ($i = 0; $i < $numCards; ++$i)
+    {
       $framenums[$i] = $from + $i;
     }
 
-    if ($shuffle) {
+    if ($shuffle)
+    {
       // shuffle
       shuffle($framenums);
     }
@@ -87,9 +87,8 @@ class rtkFreeReviewSession
   /**
    * Sets flashcard answer in session.
    *
-   * @param   int     $ucsId    UCS-2 code point
-   * @param   int     $answer
-   *
+   * @param int    $ucsId  UCS-2 code point
+   * @param string $answer
    */
   public function updateFlashcard($ucsId, $answer)
   {

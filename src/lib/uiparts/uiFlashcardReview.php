@@ -67,16 +67,15 @@ class uiFlashcardReview
     $user        = null,
     $options     = null,
     $updated     = null;
-
-  /**
-   * TODO Move somewhere nice.
-   */
-  const UIFR_NO      = 1;
-  const UIFR_HARD    = 'h'; // added later, maintain numbers (for now) for the Android app
-  const UIFR_YES     = 2;
-  const UIFR_EASY    = 3;
-  const UIFR_DELETE  = 4;
-  const UIFR_SKIP    = 5;
+  
+  // card ratings (@see FlashcardReview.js, flashcards.d.ts)
+  const RATE_NO      = 'no';
+  const RATE_HARD    = 'hard';
+  const RATE_YES     = 'yes';
+  const RATE_EASY    = 'easy';
+  const RATE_DELETE  = 'delete';
+  const RATE_SKIP    = 'skip';
+  const RATE_AGAIN   = 'again';
 
   /**
    * Do not allow client to prefetch too many cards at once.
@@ -144,7 +143,7 @@ class uiFlashcardReview
   public function handleRequest(object $fcrData)
   {
     $oResponse = new stdClass;
-    
+
     // get flashcard data
     if (isset($fcrData->get) && is_array($fcrData->get))
     {
@@ -208,6 +207,8 @@ class uiFlashcardReview
    * @param   array   items   An array of flashcard update objects, each object
    *                          MUST have an "id" uniquely identifying this item.
    *                          Eg. (json) [ {id: 1, ... }, { id:2, ... }, ... ]
+   * 
+   * @param bool|object status  If object is provided, adds "ignored" array to it
    *
    * @return  array    An array containing the id of succesfully updated items.
    */
@@ -215,10 +216,10 @@ class uiFlashcardReview
   {
     $putSuccess = [];
 
-    if ($status) {
+    if (is_object($status)) {
       $status->ignored = [];
     }
-
+    
     foreach ($items as $oPutData)
     {
       if (!is_object($oPutData)) {
@@ -232,7 +233,7 @@ class uiFlashcardReview
       // success status so that the client will clear the postCache.
       if (true === $this->getUpdateStatus($cardId))
       {
-        if ($status) {
+        if (is_object($status)) {
           $status->ignored[] = $cardId;
         }
         $putSuccess[] = $cardId;
@@ -254,6 +255,30 @@ class uiFlashcardReview
     $this->cacheUpdateStatus();
 
     return $putSuccess;
+  }
+
+  /**
+   * Map old ratings (pre-Nov 2021) to new ones (for compatiblity with Kanji Ryokucha).
+   * 
+   * @return array
+   */
+  public static function normalizeOldRatings(array $items) {
+    //
+    $oldRatings = [
+      1 => self::RATE_NO,
+      2 => self::RATE_YES,
+      3 => self::RATE_EASY,
+      4 => self::RATE_DELETE,
+      5 => self::RATE_SKIP,
+      'h' => self::RATE_HARD
+    ];
+
+    foreach($items as &$item)
+    {
+      $item->r = $oldRatings[$item->r] ?? $item->r;
+    }
+
+    return $items;
   }
 
   public function cacheUpdateStatus()

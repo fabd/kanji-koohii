@@ -12,6 +12,16 @@ class LeitnerSRS
   const VARIANCE_FACTOR = 0.15;
   const VARIANCE_LIMIT = 30;   // days
 
+  // cf. flashcards.d.ts
+  public static function isValidFreeReviewRating($value)
+  {
+    return in_array($value, [
+      uiFlashcardReview::RATE_NO,
+      uiFlashcardReview::RATE_AGAIN,
+      uiFlashcardReview::RATE_YES
+    ]);
+  }
+
   // returns upper limit for Hard answer (excluding failed&new pile, 1 = 1+ reviews)
   private static function getHardIntervalLimit()
   {
@@ -114,24 +124,24 @@ class LeitnerSRS
    *   expiredate
    *
    * @param object $curData Row data coming from flashcard review storage
-   * @param int    $answer  Answer (see uiFlashcardReview.php const)
+   * @param string $answer  Answer (see uiFlashcardReview.php const)
    *
    * @return array Row data to store in the flashcard review storage
    */
-  public static function rateCard($curData, $answer)
+  public static function rateCard($curData, string $answer)
   {
     // promote or demote card
-    if ($answer === uiFlashcardReview::UIFR_NO)
+    if ($answer === uiFlashcardReview::RATE_NO)
     {
       $card_box = 1; // failed pile
     }
     elseif (
-      $answer === uiFlashcardReview::UIFR_YES
-      || $answer === uiFlashcardReview::UIFR_EASY
+      $answer === uiFlashcardReview::RATE_YES
+      || $answer === uiFlashcardReview::RATE_EASY
     ) {
       $card_box = $curData->leitnerbox + 1;
     }
-    elseif ($answer === uiFlashcardReview::UIFR_HARD)
+    elseif ($answer === uiFlashcardReview::RATE_HARD)
     {
       $card_box = $curData->leitnerbox - 1;
 
@@ -145,7 +155,7 @@ class LeitnerSRS
     // clamp highest box to SRS setting
     $card_box = min($card_box, self::getMaxBox());
 
-    if ($answer === uiFlashcardReview::UIFR_HARD && $curData->leitnerbox <= 2)
+    if ($answer === uiFlashcardReview::RATE_HARD && $curData->leitnerbox <= 2)
     {
       // cards in "1+" box OR the "New" pile with "hard" answer get a fixed 1 day interval
       $card_interval = 1;
@@ -167,7 +177,7 @@ class LeitnerSRS
       $card_interval = self::getNthInterval($card_box - 1);
 
       // easy answers get a higher interval
-      if ($answer === uiFlashcardReview::UIFR_EASY)
+      if ($answer === uiFlashcardReview::RATE_EASY)
       {
         $card_interval = ceil($card_interval * self::EASY_FACTOR);
       }
@@ -176,8 +186,7 @@ class LeitnerSRS
       $card_variance = self::getNthVariance($card_box - 1);
       $card_interval = ($card_interval - $card_variance) + rand(0, $card_variance * 2);
 
-      // $s_rating = [1 => 'No', 'h' => 'Hard', 2 => 'Yes', 3 => 'Easy', 4 => 'Delete', 5 => 'Skip'];
-      // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)', $s_rating[$answer], $curData->leitnerbox, $card_box, $card_interval, $card_variance));
+      // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)', $answer, $curData->leitnerbox, $card_box, $card_interval, $card_variance));
     }
 
     $user = sfContext::getInstance()->getUser(); // for sqlLocalTime()
@@ -192,7 +201,7 @@ class LeitnerSRS
       'expiredate' => new coreDbExpr($sqlExprExpireDate),
     ];
 
-    if ($answer === uiFlashcardReview::UIFR_YES || $answer === uiFlashcardReview::UIFR_EASY)
+    if ($answer === uiFlashcardReview::RATE_YES || $answer === uiFlashcardReview::RATE_EASY)
     {
       $oUpdate['successcount'] = $curData->successcount + 1;
     }

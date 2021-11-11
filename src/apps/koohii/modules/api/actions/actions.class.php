@@ -355,8 +355,11 @@ echo $result;exit;
       'fn_put_flashcard' => ['ReviewsPeer', 'putFlashcardData']
     ]);
 
+    // (Nov 2021) normalize old flashcard ratings to the newer ones
+    $putItems = uiFlashcardReview::normalizeOldRatings($json->sync);
+    
     $putStatus  = new stdClass;
-    $putSuccess = $uiFR->handlePutRequest($json->sync, $putStatus);
+    $putSuccess = $uiFR->handlePutRequest($putItems, $putStatus);
 
     $rsp = new stdClass;
     $rsp->put = $putSuccess;

@@ -229,9 +229,15 @@ class reviewActions extends sfActions
    */
   public static function freeReviewUpdate($id, $oData)
   {
-    if ($id < 1 || !isset($oData->r) || !preg_match('/^[1-3]$/', $oData->r))
+    if ($id < 1 || !isset($oData->r))
     {
-      throw new sfException(__METHOD__." Invalid parameters ($id)");
+      throw new sfException(__METHOD__." Invalid parameters ({$id})");
+    }
+
+    if (!LeitnerSRS::isValidFreeReviewRating($oData->r))
+    {
+      // ignore and mark as *not* handled
+      return false;
     }
 
     // udpate session for the review summary
@@ -254,7 +260,7 @@ class reviewActions extends sfActions
       throw new rtkAjaxException('Empty JSON Request.');
     }
 
-    $flashcardReview = new uiFlashcardReview($options);    
+    $flashcardReview = new uiFlashcardReview($options);
     return $this->renderJson($flashcardReview->handleRequest($fcrData));
   }
 

@@ -28,7 +28,7 @@ class summarySimpleComponent extends sfComponent
           'kanji'    => utf8::fromUnicode($ucsId),
           'framenum' => rtkIndex::getIndexForUCS($ucsId),
           'keyword'  => $keywords[$ucsId]['keyword'],
-          'pass'     => $iAnswer !== uiFlashcardReview::UIFR_NO   /* Yes or Easy = pass */
+          'pass'     => $iAnswer !== uiFlashcardReview::RATE_NO   /* Yes or Easy = pass */
         ];
 
         $this->cards[] = (object) $card;

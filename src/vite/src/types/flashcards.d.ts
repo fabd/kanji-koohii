@@ -29,15 +29,15 @@ type TReviewOptions = {
   put_request?: boolean;
 };
 
-// review rating code (client/server)
+// make sure this matches RATE_* in uiFlashcardReview.php
 type TReviewRating =
-  | 1 // No
-  | 2 // Yes
-  | 3 // Easy
-  | "again" // Again (repeat card)
-  | "h" // Hard
-  | 4 // Delete card
-  | 5; // Skip card
+  | "no"
+  | "again"
+  | "hard"
+  | "yes"
+  | "easy"
+  | "delete"
+  | "skip";
 
 type TCardAnswer = {
   // the kanji id (UCS code) acts as the flashcard's unique id

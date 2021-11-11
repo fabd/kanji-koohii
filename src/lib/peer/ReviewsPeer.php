@@ -793,7 +793,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function putFlashcardData($id, $oData)
   {
-    if ($id < 1 || !isset($oData->r) || !preg_match('/^[1-5h]$/', $oData->r))
+    if ($id < 1 || !isset($oData->r))
     {
       throw new sfException(__METHOD__." Invalid parameters ($id)");
     }
@@ -802,12 +802,12 @@ class ReviewsPeer extends coreDatabaseTable
 
     $userId = sfContext::getInstance()->getUser()->getUserId();
 
-    if ($oData->r === uiFlashcardReview::UIFR_SKIP)
+    if ($oData->r === uiFlashcardReview::RATE_SKIP)
     {
       // skip this flashcard, don't update it
       $result = true;
     }
-    elseif ($oData->r === uiFlashcardReview::UIFR_DELETE)
+    elseif ($oData->r === uiFlashcardReview::RATE_DELETE)
     {
       // delete the flashcard
       $deleted = self::deleteFlashcards($userId, [$id]);
@@ -837,11 +837,11 @@ class ReviewsPeer extends coreDatabaseTable
     // clear relearned kanji if successfull answer
     // NOTE: expected for API
     if ($result && rtkApi::isApiModule()
-        && ($oData->r === uiFlashcardReview::UIFR_HARD ||
-            $oData->r === uiFlashcardReview::UIFR_YES  ||
-            $oData->r === uiFlashcardReview::UIFR_NO   ||
-            $oData->r === uiFlashcardReview::UIFR_EASY ||
-            $oData->r === uiFlashcardReview::UIFR_DELETE))
+        && ($oData->r === uiFlashcardReview::RATE_HARD ||
+            $oData->r === uiFlashcardReview::RATE_YES  ||
+            $oData->r === uiFlashcardReview::RATE_NO   ||
+            $oData->r === uiFlashcardReview::RATE_EASY ||
+            $oData->r === uiFlashcardReview::RATE_DELETE))
     {
       LearnedKanjiPeer::clearKanji($userId, $id);
     }

@@ -158,7 +158,7 @@ class KanjisPeer extends coreDatabaseTable
     }
 
     // API ONLY (apps) : api doesn't return the kanji as a character
-    if (isset($option->api_mode)) { 
+    if (isset($options->api_mode)) { 
       unset($cardData->kanji);
     }
 

@@ -234,11 +234,11 @@ class reviewActions extends sfActions
       throw new sfException(__METHOD__." Invalid parameters ({$id})");
     }
 
-    if (!LeitnerSRS::isValidFreeReviewRating($oData->r))
-    {
-      // ignore and mark as *not* handled
-      return false;
-    }
+    // assert(in_array($oData->r, [
+    //   uiFlashcardReview::RATE_NO,
+    //   uiFlashcardReview::RATE_AGAIN,
+    //   uiFlashcardReview::RATE_YES
+    // ]), __METHOD__." invalid card rating");
 
     // udpate session for the review summary
     $oFRS = new rtkFreeReviewSession();

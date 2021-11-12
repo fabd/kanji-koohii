@@ -76,35 +76,35 @@
           <h3>Do you remember this kanji?</h3>
 
           <div class="flex items-center justify-between -mx-1">
-<a
+<button
   id="uiFcBtnAN" class="uiIBtn uiIBtnDefault uiIBtnRed uiFcAction flex-1"
-  data-action="no" title="Forgotten" href="#">
+  data-action="no" title="Forgotten">
   <span><u>N</u>o</span>
-</a>
-<?php if (!$freemode): ?>
-<a
+</button>
+<?php if (1 /*!$freemode*/): ?>
+<button
   id="uiFcBtnAG" class="uiIBtn uiIBtnDefault uiFcAction flex-1"
-  data-action="again" title="Repeat card" href="#">
+  data-action="again" title="Repeat card">
   <u>A</u>gain
-</a>
+</button>
 <?php endif ?>
 
 <?php if (!$freemode): ?>
-<a
+<button
  id="uiFcBtnAH" class="uiIBtnOrange uiFcAction uiIBtn uiIBtnDefault flex-2" 
  data-action="hard" title="Hard">
   <span class="px-1"><u>H</u>ard</span>
-</a>
+</button>
 <?php endif ?>
-<a id="uiFcBtnAY" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
-  data-action="yes" title="Remembered with some effort" href="#">
+<button id="uiFcBtnAY" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
+  data-action="yes" title="Remembered with some effort">
   <span class="px-2"><u>Y</u>es</span>
-</a>
+</button>
 <?php if (!$freemode): ?>
-<a id="uiFcBtnAE" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
-  data-action="easy" title="Remembered easily" href="#">
+<button id="uiFcBtnAE" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
+  data-action="easy" title="Remembered easily">
   <span class="px-1"><u>E</u>asy</span>
-</a>
+</button>
 <?php endif ?>
           </div>
 

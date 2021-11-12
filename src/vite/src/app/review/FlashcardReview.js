@@ -104,8 +104,15 @@ import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 
 const PREFETCH_CARDS = 10;
 
-/** @type {TReviewRating} */
-export const RATING_AGAIN = "again";
+export const FCRATE = {
+  NO: "no",
+  AGAIN: "again",
+  YES: "yes",
+  EASY: "easy",
+  DELETE: "delete",
+  SKIP: "skip",
+  HARD: "hard",
+};
 
 export default class FlashcardReview {
   /** @type {TReviewOptions} */
@@ -581,7 +588,7 @@ export default class FlashcardReview {
   answerCard(cardAnswer) {
     // we have to handle a special case for "again" here, even though card
     // ratings ideally should be handled in the parent class/components
-    if (cardAnswer.r === RATING_AGAIN) {
+    if (cardAnswer.r === FCRATE.AGAIN) {
       // add a copy of this card to the end of the review pile
       // - progress bar won't move after forward() since the length just increased
       this.items.push(cardAnswer.id);
@@ -614,7 +621,7 @@ export default class FlashcardReview {
     const answer = /** @type {TCardAnswer} */ (this.removePostData(id));
 
     // if undo-ing an "again" rating
-    if (answer.r === RATING_AGAIN) {
+    if (answer.r === FCRATE.AGAIN) {
       this.numAgain--;
     }
 

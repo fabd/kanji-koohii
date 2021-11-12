@@ -14,7 +14,7 @@ import AjaxDialog from "@old/ajaxdialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
-import FlashcardReview from "@app/review/FlashcardReview";
+import FlashcardReview, { FCRATE } from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 
 /** @typedef {{end_url: string, editstory_url: string}} TReviewProps */
@@ -242,7 +242,7 @@ export default class KanjiReview {
         this.flashcardMenu();
         break;
       case "delete":
-        this.answerCard(4);
+        this.answerCard("delete");
         break;
 
       case "flip":
@@ -267,11 +267,11 @@ export default class KanjiReview {
         break;
 
       case "skip":
-        this.answerCard(5);
+        this.answerCard("skip");
         break;
 
       case "no":
-        cardRating = 1;
+        cardRating = "no";
         break;
 
       case "again":
@@ -279,15 +279,15 @@ export default class KanjiReview {
         break;
 
       case "hard":
-        cardRating = "h";
+        cardRating = "hard";
         break;
 
       case "yes":
-        cardRating = 2;
+        cardRating = "yes";
         break;
 
       case "easy":
-        cardRating = 3;
+        cardRating = "easy";
         break;
     }
 
@@ -336,6 +336,7 @@ export default class KanjiReview {
   }
 
   /**
+   * Rate card (or mark action like delete/skip), then forward.
    *
    * @param {TReviewRating} answer
    */
@@ -348,10 +349,6 @@ export default class KanjiReview {
     this.oReview.answerCard(oAnswer);
     this.updateAnswerStats(oAnswer.id, oAnswer.r, false);
     this.oReview.forward();
-  }
-
-  skipFlashcard() {
-    this.answerCard(5);
   }
 
   /**
@@ -377,10 +374,10 @@ export default class KanjiReview {
     const onMenuItem = (menuid) => {
       if (menuid === "confirm-delete") {
         // set flashcard answer that tells server to delete the card
-        this.answerCard(4);
+        this.answerCard("delete");
         return true;
       } else if (menuid === "skip") {
-        this.skipFlashcard();
+        this.answerCard("skip");
         return true;
       }
 
@@ -422,16 +419,17 @@ export default class KanjiReview {
 
   updateStatsPanel() {
     //  console.log('KanjiReview.updateStatsPanel()');
-    const items = this.oReview.getItems();
-    const num_items = items.length;
-    const position = this.oReview.getPosition();
+    const total = this.oReview.numCards;
+    const pos = this.oReview.numRated;
 
-    // update review count
-    this.elsCount[0].innerHTML = "" + Math.min(position + 1, num_items);
-    this.elsCount[1].innerHTML = "" + num_items;
+    // update review count, don't show "4 of 3" after answering last card
+    this.elsCount[0].innerHTML = "" + (total - pos);
+
+    let elCount = $$("#uiFcProgressBar h3")[0];
+    elCount.innerHTML = `Rated: <em>${pos}/${this.oReview.numCards}</em>&nbsp;&nbsp;Again: <em>${this.oReview.numAgain}</em>`;
 
     // update progress bar
-    var pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;
+    let pct = pos > 0 ? Math.ceil((pos * 100) / total) : 0;
     pct = Math.min(pct, 100);
     this.elProgressBar.style.width = (pct > 0 ? pct : 0) + "%";
   }
@@ -440,15 +438,15 @@ export default class KanjiReview {
    *
    * @param  {TUcsId} id ... the card's id (the kanji UCS code)
    * @param {TReviewRating} rating
-   * @param  {boolean} undo
+   * @param  {boolean} isUndo
    */
-  updateAnswerStats(id, rating, undo) {
+  updateAnswerStats(id, rating, isUndo) {
     // cf. uiFlashcardReview.php const
-    let yes = rating === 2 || rating === 3 ? 1 : 0;
-    let no = rating === 1 || rating === "h" ? 1 : 0;
-    let deld = rating === 4 ? 1 : 0;
+    let yes = rating === FCRATE.YES || rating === FCRATE.EASY ? 1 : 0;
+    let no = rating === FCRATE.NO || rating === FCRATE.HARD ? 1 : 0;
+    let deld = rating === FCRATE.DELETE ? 1 : 0;
 
-    if (undo) {
+    if (isUndo) {
       yes = -yes;
       no = -no;
       deld = -deld;

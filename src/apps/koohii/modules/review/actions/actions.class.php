@@ -242,7 +242,7 @@ class reviewActions extends sfActions
 
     // udpate session for the review summary
     $oFRS = new rtkFreeReviewSession();
-    $oFRS->updateFlashcard($id, (int)$oData->r);
+    $oFRS->updateFlashcard($id, $oData->r);
 
     return true;
   }

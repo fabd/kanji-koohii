@@ -53,7 +53,7 @@
         <div class="uiFcPrBarMod">
           <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']) ?>
         </div>
-        <h3>Reviewing: <em class="count">.</em> of <em class="count">.</em></h3>
+        <h3>Cards left: <em class="count">.</em></h3>
       </div>
     </div>
   </div>

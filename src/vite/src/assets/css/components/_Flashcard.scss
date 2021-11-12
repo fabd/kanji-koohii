@@ -67,15 +67,14 @@
   text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  background: #50abeb;
-  background: -webkit-linear-gradient(top, #50abeb 0%, #489ad4 100%);
-  background: linear-gradient(to bottom, #50abeb 0%, #489ad4 100%);
+  background-color: #50abeb;
+  background-image: linear-gradient(to bottom, #50abeb 0%, #489ad4 100%);
 }
 .uiFcOptBtn:hover,
 .uiFcOptBtn:focus {
   color: #e6eefb;
-  background: #007be3;
-  background: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
+  background-color: #007be3;
+  background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
 }
 .uiFcOptBtn u {
   color: #eaf6ff;
@@ -106,18 +105,16 @@
 } /* larger buttons for touch/mobile */
 
 #uiFcBtnAF {
-  background: #268bd2;
-  background: -webkit-linear-gradient(top, #268bd2 0%, #227dbd 100%);
-  background: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
+  background-color: #268bd2;
+  background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
 }
 #uiFcBtnAE {
-  background: #2aa198;
-  background: -webkit-linear-gradient(top, #2aa198 0%, #269189 100%);
-  background: linear-gradient(to bottom, #2aa198 0%, #269189 100%);
+  background-color: #2aa198;
+  background-image: linear-gradient(to bottom, #2aa198 0%, #269189 100%);
 }
 
 #uiFcBtnAG {
-  background: linear-gradient(to bottom, #848280 0%, #7f7d7a 100%);
+  background-image: linear-gradient(to bottom, #ca4a15 0%, #b84314 100%);
 }
 
 #uiFcButtons .uiIBtn {

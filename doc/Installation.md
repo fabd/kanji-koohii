@@ -47,11 +47,19 @@ Pre-requisites:
 
     mkdir -p web/build ; chmod 777 web web/build
 
-**Also init some private config files**:
+**Init private config files**:
 
     cp web/.htaccess_default web/.htaccess
     cp apps/koohii/config/app.example.yml apps/koohii/config/app.yml
     cp apps/koohii/config/settings.example.yml apps/koohii/config/settings.yml
+
+**Install php packages with composer**:
+
+The next step will create and populate the `src/vendor/` subfolder:
+
+> :point_right: &nbsp; Note! Composer's [autoloader optimizations](https://getcomposer.org/doc/articles/autoloader-optimization.md#autoloader-optimization) are enabled, therefore after adding or renaming any PSR-4 class, you'll need to re-run `composer install` for the autoloader to recognize it.
+
+    composer install
 
 **Install node packages**:
 

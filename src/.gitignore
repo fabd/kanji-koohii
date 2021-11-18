@@ -37,6 +37,9 @@ error_log*
 # npm install
 /node_modules
 
+# composer installs
+/vendor
+
 # admin/misc
 /web/*.php
 !/web/index.php

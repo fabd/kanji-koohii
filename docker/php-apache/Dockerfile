@@ -56,7 +56,7 @@ RUN apt-get install -yq --no-install-recommends \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # ======= composer =======
-# RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # ======= nodejs 12.x required for Vite =======
 RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs

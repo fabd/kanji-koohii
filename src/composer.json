@@ -1,0 +1,17 @@
+{
+  "name": "fabd/koohii",
+  "type": "project",
+  "description": "Kanji Koohii web app",
+  "require": {
+    "illuminate/support": "8.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Koohii\\": "lib/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "classmap-authoritative": true
+  }
+}

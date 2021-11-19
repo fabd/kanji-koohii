@@ -18,7 +18,11 @@
       ></a>
     </template>
 
-    <div class="d-keyword" v-html="cardData.keyword"></div>
+    <div class="d-keyword">
+      <a :href="`/study/kanji/${cardData.kanji}`" title="Go to the Study page" target="blank" class="JsKeywordLink">{{
+        cardData.keyword
+      }}</a>
+    </div>
 
     <div class="d-strokec" title="Stroke count">
       <cjk-lang-ja html="&#30011;&#25968;" class-name="kanji"></cjk-lang-ja

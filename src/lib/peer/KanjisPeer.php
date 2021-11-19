@@ -112,9 +112,9 @@ class KanjisPeer extends coreDatabaseTable
    *   
    * @param  int     $ucsId     UCS-2 code value.
    * @param  object  $options   Options for the flashcard format (optional)
-   * @return mixed   Object with flashcard data, or null
+   * @return ?object  Flashcard data, or null
    */
-  public static function getFlashcardData($ucsId, $options = null)
+  public static function getFlashcardData($ucsId, $options = null): ?object
   {
     if (false === ($cardData = self::getKanjiByUCS($ucsId))) {
       return null;
@@ -146,16 +146,9 @@ class KanjisPeer extends coreDatabaseTable
       $cardData->vocab = rtkLabs::getFormattedVocabPicks($userId, $cardData->id);
     }
 
-    // get custom keyword
-    $custom_keyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
-    $keyword = null !== $custom_keyword ? $custom_keyword : $cardData->keyword;
-  
-    if (!isset($options->api_mode)) {
-      $cardData->keyword = link_to_keyword($keyword, $cardData->kanji, ['title' => 'Go to the Study page', 'target' => '_blank']);
-    }
-    else {
-      $cardData->keyword = $keyword;
-    }
+    // coalesce keyword with user's custom keyword
+    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $cardData->keyword = $custKeyword ?? $cardData->keyword;
 
     // API ONLY (apps) : api doesn't return the kanji as a character
     if (isset($options->api_mode)) { 

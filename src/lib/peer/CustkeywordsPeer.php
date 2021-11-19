@@ -25,9 +25,9 @@ class CustkeywordsPeer extends coreDatabaseTable
    * @param  int   $userid 
    * @param  int   $ucsId    UCS-2 code value.
    *
-   * @return mixed   Keyword (string) or null
+   * @return ?string
    */
-  public static function getCustomKeyword($userId, $ucsId)
+  public static function getCustomKeyword($userId, $ucsId): ?string
   {
     $select = self::getInstance()->select('keyword')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
 //DBG::out($select);

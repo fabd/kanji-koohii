@@ -1,0 +1,22 @@
+{
+  "name": "fabd/koohii",
+  "type": "project",
+  "description": "Kanji Koohii web app",
+  "require": {
+    "illuminate/support": "8.*",
+    "erusev/parsedown": "1.8.0-beta-7",
+    "erusev/parsedown-extra": "0.8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Koohii\\": "lib/"
+    },
+    "exclude-from-classmap": [
+      "vendor/erusev/parsedown-extra/test/"
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "classmap-authoritative": true
+  }
+}

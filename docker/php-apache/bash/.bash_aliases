@@ -44,6 +44,11 @@ phperrlog() { tail -f /var/log/apache2/error.log ; }
 # edit the ini file
 phpini() { vim /etc/php/7.4/apache2/conf.d/koohii.php.ini ; }
 
+# misc tools
+# 
+#   psysh       ... install from   https://psysh.org/
+#   
+alias psysh='./psysh'
 
 ###############
 # NPM

@@ -4,6 +4,7 @@ type TCardData = {
   kanji: TKanjiChar;
   keyword: string; // html for <a>
   strokecount: number;
+  isAgain?: boolean; // added during review, whether card is being repeated
 };
 
 type TVocabCardData = {

@@ -384,11 +384,14 @@ export default class FlashcardReview {
     this.notify("onFlashcardCreate");
 
     // we have a cached item for current position
-    var oItem = this.getFlashcardData();
+    let cardData = /** @type TCardData */(this.getFlashcardData());
+
+    // 
+    cardData.isAgain = this.position >= this.numCards;
 
     // (wip, refactor) instance Vue comp
     const propsData = {
-      cardData: oItem,
+      cardData: cardData,
       reviewMode: kk_globals_get("REVIEW_MODE"),
     };
 
@@ -546,7 +549,7 @@ export default class FlashcardReview {
   /**
    * The returned object needs to be cast based on the given Flashcard review mode.
    *
-   * @return {Dictionary | null}
+   * @return {TCardData | null}
    */
   getFlashcardData() {
     var id = this.items[this.position];

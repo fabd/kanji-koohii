@@ -28,10 +28,23 @@ module.exports = {
       },
     },
 
+    // redeclare to remove the baked-in line-height, and add `md` alias
+    fontSize: {
+      xs: "0.75rem",
+      sm: "0.875rem",
+      base: "1rem",
+      md: "1rem", // alias for "base"
+      lg: "1.125rem",
+    },
+
     extend: {
       flex: {
         // can be used with flex-1 to distribute space between smaller/larger items in a row
-        '2': '2 2 0%',
+        2: "2 2 0%",
+      },
+
+      lineHeight: {
+        1: 1, // alias for `leading-none`
       },
     },
   },

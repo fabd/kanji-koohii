@@ -150,11 +150,7 @@ class uiFlashcardReview
       $get_cards = [];
 
       // flashcard options
-      $cardOpts = [];
-      if (isset($fcrData->opt))
-      {
-        $cardOpts = (object)$fcrData->opt;
-      }
+      $cardOpts = $fcrData->opt ?? new stdClass;
 
       // do not accept too large prefetch (tampering with ajax request on client)
       if (count($fcrData->get) > self::MAX_PREFETCH) {
@@ -163,9 +159,9 @@ class uiFlashcardReview
       
       foreach ($fcrData->get as $id)
       {
-        $cardId = (int)$id;
+        assert(is_int($id));
 
-        $cardData = call_user_func($this->options->fn_get_flashcard, $cardId, $cardOpts);
+        $cardData = call_user_func($this->options->fn_get_flashcard, $id, $cardOpts);
         
         if ($cardData === null) {
           throw new rtkAjaxException('Could not fetch item "'.$id.'" in JSON request');
@@ -188,10 +184,8 @@ class uiFlashcardReview
       if (!isset($this->options->fn_put_flashcard)) {
         throw new rtkAjaxException('uiFlashcardReview: fn_put_flashcard is not set');
       }
-      
-      $putSuccess = $this->handlePutRequest($items);
 
-      $oResponse->put = $putSuccess;
+      $oResponse->put = $this->handlePutRequest($items);
     }
 
 // simulate timeout

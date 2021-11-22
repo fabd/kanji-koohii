@@ -104,6 +104,10 @@
   height: 42px;
 } /* larger buttons for touch/mobile */
 
+#uiFcBtnAN {
+  background-image: linear-gradient(to bottom, #b83600 0%, #a53000 100%);
+}
+
 #uiFcBtnAF {
   background-color: #268bd2;
   background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);

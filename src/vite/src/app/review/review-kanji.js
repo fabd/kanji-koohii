@@ -71,7 +71,7 @@ export default class KanjiReview {
     this.reviewPage.addShortcutKey(96, "flip"); // NUMPAD_0
 
     this.reviewPage.addShortcutKey("n", "no");
-    this.reviewPage.addShortcutKey("g", "again");
+    this.reviewPage.addShortcutKey("a", "again");
     this.reviewPage.addShortcutKey("h", "hard");
     this.reviewPage.addShortcutKey("y", "yes");
     this.reviewPage.addShortcutKey("e", "easy");

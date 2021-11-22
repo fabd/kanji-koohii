@@ -202,17 +202,11 @@ class uiFlashcardReview
    *                          MUST have an "id" uniquely identifying this item.
    *                          Eg. (json) [ {id: 1, ... }, { id:2, ... }, ... ]
    * 
-   * @param bool|object status  If object is provided, adds "ignored" array to it
-   *
    * @return  array    An array containing the id of succesfully updated items.
    */
-  public function handlePutRequest(array $items, $status = false)
+  public function handlePutRequest(array $items)
   {
     $putSuccess = [];
-
-    if (is_object($status)) {
-      $status->ignored = [];
-    }
     
     foreach ($items as $oPutData)
     {
@@ -227,9 +221,6 @@ class uiFlashcardReview
       // success status so that the client will clear the postCache.
       if (true === $this->getUpdateStatus($cardId))
       {
-        if (is_object($status)) {
-          $status->ignored[] = $cardId;
-        }
         $putSuccess[] = $cardId;
       }
       // Currently the client does not expect for errors to happen.

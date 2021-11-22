@@ -358,15 +358,10 @@ echo $result;exit;
     // (Nov 2021) normalize old flashcard ratings to the newer ones
     $putItems = uiFlashcardReview::normalizeOldRatings($json->sync);
     
-    $putStatus  = new stdClass;
-    $putSuccess = $uiFR->handlePutRequest($putItems, $putStatus);
+    $putSuccess = $uiFR->handlePutRequest($putItems);
 
     $rsp = new stdClass;
     $rsp->put = $putSuccess;
-
-    if (count($putStatus->ignored)) {
-      $rsp->ignored = $putStatus->ignored;
-    }
 
     return $this->createResponseOk($rsp);
   }

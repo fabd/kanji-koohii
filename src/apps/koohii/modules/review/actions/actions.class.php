@@ -193,8 +193,8 @@ class reviewActions extends sfActions
   public function executeAjaxsrs($request)
   {
     $options = [
-      'fn_get_flashcard' => ['KanjisPeer', 'getFlashcardData'],
-      'fn_put_flashcard' => ['ReviewsPeer', 'putFlashcardData']
+      'fn_get_flashcard' => 'KanjisPeer::getFlashcardData',
+      'fn_put_flashcard' => 'ReviewsPeer::putFlashcardData'
     ];
 
     return $this->handleFlashcardRequest($request, $options);
@@ -207,8 +207,8 @@ class reviewActions extends sfActions
   public function executeAjaxfree($request)
   {
     $options = [
-      'fn_get_flashcard' => ['KanjisPeer', 'getFlashcardData'],
-      'fn_put_flashcard' => ['reviewActions', 'freeReviewUpdate']
+      'fn_get_flashcard' => 'KanjisPeer::getFlashcardData',
+      'fn_put_flashcard' => 'reviewActions::freeReviewUpdate'
     ];
 //debugging
 // sleep(6);

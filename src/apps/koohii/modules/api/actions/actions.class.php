@@ -352,7 +352,7 @@ echo $result;exit;
 // VALIDER LE TIME
 
     $uiFR = new uiFlashcardReview([
-      'fn_put_flashcard' => ['ReviewsPeer', 'putFlashcardData']
+      'fn_put_flashcard' => 'ReviewsPeer::putFlashcardData'
     ]);
 
     // (Nov 2021) normalize old flashcard ratings to the newer ones

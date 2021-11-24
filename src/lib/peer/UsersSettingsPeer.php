@@ -19,6 +19,11 @@
 
 class UsersSettingsPeer extends coreDatabaseTable
 {
+  protected $tableName = 'users_settings';
+
+  // timestamp cols for self::insert/update/replace
+  protected $columns = ['created_on', 'updated_on'];
+
   // array to map settings names to database fields
   public static $map = [
     'OPT_NO_SHUFFLE'   => 'no_shuffle',
@@ -37,10 +42,6 @@ class UsersSettingsPeer extends coreDatabaseTable
     'OPT_SRS_MULT'     => 205,  // 205 means 2.05
     'OPT_SRS_HARD_BOX' => 0     // zero means default behaviour
   ];
-
-  protected
-    $tableName = 'users_settings',
-    $columns   = ['created_on', 'updated_on']; // timestamp columns must be declared for insert/update/replace
 
   public static function getInstance()
   {

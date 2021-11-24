@@ -46,12 +46,11 @@
 
 class ReviewsPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'reviews',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'reviews';
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {

@@ -14,13 +14,12 @@
 
 class ActiveMembersPeer extends coreDatabaseTable
 {
-  const
-    // shortcut for ::getInstance()->getName()
-    TABLE = 'active_members';
+  // shortcut for ::getInstance()->getName()
+  const TABLE = 'active_members';
 
-  protected
-    $tableName = 'active_members',
-    $columns = [
+  protected $tableName = 'active_members';
+
+  protected $columns = [
       'userid',
       'fc_count',
       'last_review',
@@ -31,6 +30,7 @@ class ActiveMembersPeer extends coreDatabaseTable
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {

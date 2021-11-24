@@ -17,8 +17,6 @@
  *
  *
  * @author     Fabrice Denis
- * 
- * 
  */
 
 abstract class coreDatabase
@@ -369,8 +367,8 @@ class coreDatabaseSelect
   /**
    * Initialize the SELECT statement, columns can be a string (single column) or array (multiple columns)
    *
-   * @param $db Object
-   * @param $columns Object
+   * @param coreDatabase $db
+   * @param string|array $columns 
    */
   public function __construct(coreDatabase $db, $columns = null)
   {
@@ -382,6 +380,9 @@ class coreDatabaseSelect
     }
   }
 
+  /**
+   * @return string
+   */
   public function __toString()
   {
     // COLUMNS
@@ -444,6 +445,7 @@ class coreDatabaseSelect
    *
    *
    * @param $part Which part to reset (see class constants)
+   * @return self
    */
   public function reset($part = null)
   {
@@ -483,6 +485,8 @@ class coreDatabaseSelect
   /**
    * Adds to the columns
    *
+   * @param string|array $cols
+   * @return self
    */
   public function columns($cols)
   {
@@ -500,6 +504,8 @@ class coreDatabaseSelect
    * Ex1:   'table1'
    * Ex2:   array('t' => 'table')
    * Ex3:   array('table1', 't2' => 'table2')
+   * 
+   * @return self
    */
   public function from($table)
   {
@@ -511,6 +517,7 @@ class coreDatabaseSelect
    *
    *
    * @param $table Object
+   * @return self
    */
   public function join($table, $condition)
   {
@@ -523,6 +530,7 @@ class coreDatabaseSelect
    *
    * @param string $table    The table to join
    * @param mixed  $columns  Column(s) for the USING clause (string or array)
+   * @return self
    */
   public function joinUsing($table, $columns)
   {
@@ -534,6 +542,7 @@ class coreDatabaseSelect
    *
    *
    * @param $table Object
+   * @return self
    */
   public function joinLeft($table, $condition)
   {
@@ -545,6 +554,7 @@ class coreDatabaseSelect
    *
    * @param string $table    The table to join
    * @param mixed  $columns  Column(s) for the USING clause (string or array)
+   * @return self
    */
   public function joinLeftUsing($table, $columns)
   {
@@ -552,6 +562,10 @@ class coreDatabaseSelect
     return $this;
   }
 
+  /**
+   * 
+   * @return self
+   */
   public function where($criteria, $bindParams = null)
   {
     if (func_num_args()>2) {
@@ -562,12 +576,20 @@ class coreDatabaseSelect
     return $this;
   }
 
+  /**
+   * 
+   * @return self
+   */
   public function group($columns)
   {
     $this->parts[self::GROUP] = (array)$columns;
     return $this;
   }
 
+  /**
+   * 
+   * @return self
+   */
   public function having($criteria, $bindParams = null)
   {
     $this->parts[self::HAVING][] = $this->db->bind($criteria, $bindParams);
@@ -579,6 +601,7 @@ class coreDatabaseSelect
    *
    * Direction can be added simply in the column name eg: ->order('age DESC')
    *
+   * @return self
    */
   public function order($columns)
   {
@@ -586,6 +609,10 @@ class coreDatabaseSelect
     return $this;
   }
 
+  /**
+   * 
+   * @return self
+   */
   public function limit($numrows, $offset = null)
   {
     $this->parts[self::LIMIT_COUNT] = $numrows;
@@ -598,6 +625,7 @@ class coreDatabaseSelect
    *
    * @param int $pageNum zero-based page number
    * @param int $rowsPerPage
+   * @return self
    */
   public function limitPage($pageNum, $rowsPerPage)
   {

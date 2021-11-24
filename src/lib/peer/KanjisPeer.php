@@ -20,12 +20,11 @@
 
 class KanjisPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'kanjis',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'kanjis';
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {
@@ -111,10 +110,10 @@ class KanjisPeer extends coreDatabaseTable
    *   api_mode      (API ONLY) true to return data according to API /review/fetch
    *   
    * @param  int     $ucsId     UCS-2 code value.
-   * @param  object  $options   Options for the flashcard format (optional)
-   * @return ?object  Flashcard data, or null
+   * @param  object|null  $options   Options for the flashcard format (optional)
+   * @return object|null  Flashcard data, or null
    */
-  public static function getFlashcardData($ucsId, $options = null): ?object
+  public static function getFlashcardData($ucsId, $options = null)
   {
     if (false === ($cardData = self::getKanjiByUCS($ucsId))) {
       return null;

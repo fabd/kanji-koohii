@@ -1,12 +1,15 @@
 <?php
 class VocabPicksPeer extends coreDatabaseTable
 {
-  protected
-    $tableName  = 'vocabpicks',
-    $columns    = ['updated_on']; // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'vocabpicks';
+
+  // timestamp cols for self::insert/update/replace
+  protected $columns = ['updated_on'];
 
   /**
    * This function must be copied in each peer class.
+   * 
+   * @return self
    */
   public static function getInstance()
   {

@@ -7,16 +7,10 @@
 # don't automatically add these
 .*
 !.gitignore
-# !.babelrc
-# !.eslintrc.js
-# !.prettierrc.js
-# !.stylelintrc.yml
 !/web/.htaccess_default
 
-# php-cs-fixer
-!.php_cs
-/composer.phar
-/tools/*.phar
+# misc dotfiles
+!.php-cs-fixer.php
 
 # generated / logs
 *.log

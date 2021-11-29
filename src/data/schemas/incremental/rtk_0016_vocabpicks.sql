@@ -29,9 +29,3 @@ CREATE TABLE `vocabpicks` (
   PRIMARY KEY  (`userid`, `ucs_id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
---
---  WE ARE PHASING OUT THIS COLUMN -- can remove from dev -- DO NOT REMOVE FROM LIVE DATABASE
---
--- ALTER TABLE users_settings DROP COLUMN show_onkun;

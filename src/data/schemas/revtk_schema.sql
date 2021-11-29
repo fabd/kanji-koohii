@@ -318,7 +318,6 @@ CREATE TABLE `users` (
 -- code wants one of these values (rt:User::getUserSetting()).
 --
 --  no_shuffle     do not shuffle new cards (blue pile)
---  show_onkun     show example words in flashcard reviews
 --
 --  srs_max_box    Leitner box (typically 5 to 10)
 --  srs_mult       Multiplier float x.xx stored as integer (eg. 205 = 2.05)
@@ -331,7 +330,6 @@ CREATE TABLE `users_settings` (
   `updated_on`   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   `no_shuffle`   TINYINT(1) UNSIGNED NOT NULL,
-  `show_onkun`   TINYINT UNSIGNED NOT NULL,
  
   `srs_max_box`  TINYINT UNSIGNED NOT NULL,
   `srs_mult`     SMALLINT UNSIGNED NOT NULL,

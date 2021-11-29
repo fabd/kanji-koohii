@@ -320,6 +320,9 @@ CREATE TABLE `users` (
 --  no_shuffle     do not shuffle new cards (blue pile)
 --  show_onkun     show example words in flashcard reviews
 --
+--  srs_max_box    Leitner box (typically 5 to 10)
+--  srs_mult       Multiplier float x.xx stored as integer (eg. 205 = 2.05)
+--  srs_hard_box   Leitner box (within srs_max_box range)
 -- ----------------------------------------------------------------------------
 
 CREATE TABLE `users_settings` (
@@ -329,6 +332,10 @@ CREATE TABLE `users_settings` (
 
   `no_shuffle`   TINYINT(1) UNSIGNED NOT NULL,
   `show_onkun`   TINYINT UNSIGNED NOT NULL,
+ 
+  `srs_max_box`  TINYINT UNSIGNED NOT NULL,
+  `srs_mult`     SMALLINT UNSIGNED NOT NULL,
+  `srs_hard_box` TINYINT UNSIGNED NOT NULL,
 
   PRIMARY KEY  (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

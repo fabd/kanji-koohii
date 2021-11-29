@@ -25,10 +25,10 @@ class UsersSettingsPeer extends coreDatabaseTable
 
   // array to map settings names to database fields
   public static $map = [
-    'OPT_NO_SHUFFLE' => 'no_shuffle',
-    'OPT_SRS_MAX_BOX' => 'srs_max_box',
-    'OPT_SRS_MULT' => 'srs_mult',
-    'OPT_SRS_HARD_BOX' => 'srs_hard_box',
+    'no_shuffle' => 'OPT_NO_SHUFFLE',
+    'srs_max_box' => 'OPT_SRS_MAX_BOX',
+    'srs_mult' => 'OPT_SRS_MULT',
+    'srs_hard_box' => 'OPT_SRS_HARD_BOX',
   ];
 
   private static $defaultSettings = [
@@ -44,23 +44,18 @@ class UsersSettingsPeer extends coreDatabaseTable
   }
 
   /**
-   * Convert keys in associative array of settings to column names for database
-   * updates.
+   * Swap keys in $data from SQL column names to settings names, or vice versa.
    *
-   * @param array $settings
-   * @return array array for insert/updates
+   * @param array $settings ... row data (one mor more columns)
+   * @param bool  $reverse
+   *
+   * @return array
    */
-  private static function mapSettingsToCols($settings)
+  private static function mapKeys(array $data, bool $reverse = false)
   {
-    $colData = [];
-    foreach ($settings as $name => $value)
-    {
-      assert(array_key_exists($name, self::$map));
-      $colName = self::$map[$name];
-      $colData[$colName] = $value;
-    }
-
-    return $colData;
+    $map = $reverse ? array_flip(self::$map) : self::$map;
+    $mapped_keys =array_map(fn($k) => $map[$k], array_keys($data)); 
+    return array_combine($mapped_keys, $data);
   }
 
   /**
@@ -82,16 +77,13 @@ class UsersSettingsPeer extends coreDatabaseTable
    */
   public static function getUserSettings($userId)
   {
-    $select = self::getInstance()->select('*')->where('userid = ?', $userId)->query();
+    $select = self::getInstance()
+      ->select(array_keys(self::$map))
+      ->where('userid = ?', $userId)->query();
+
     if ($row = self::$db->fetch())
     {
-      // fab: not worth making more fancy code atm ...
-      $settings = [
-        'OPT_NO_SHUFFLE' => $row['no_shuffle'],
-        'OPT_SRS_MAX_BOX' => $row['srs_max_box'],
-        'OPT_SRS_MULT' => $row['srs_mult'],
-        'OPT_SRS_HARD_BOX' => $row['srs_hard_box'],
-      ];
+      $settings = self::mapKeys($row);
     }
     else
     {
@@ -109,9 +101,7 @@ class UsersSettingsPeer extends coreDatabaseTable
 
   public static function hasUserSettings($userId)
   {
-    $count = self::getInstance()->count('userid = ?', $userId);
-
-    return $count > 0;
+    return self::getInstance()->count('userid = ?', $userId) > 0;
   }
 
   public static function saveUserSettings($userId, array $settings)
@@ -121,14 +111,15 @@ class UsersSettingsPeer extends coreDatabaseTable
     {
       $defaults = self::getDefaultSettings();
       $settings = array_merge($defaults, $settings);
-      $colData = self::mapSettingsToCols($settings);
+      $colData = self::mapKeys($settings, true);
+
       $colData['userid'] = $userId;
 
       return self::getInstance()->insert($colData);
     }
     else
     {
-      $colData = self::mapSettingsToCols($settings);
+      $colData = self::mapKeys($settings, true);
 
       return self::getInstance()->update($colData, 'userid = ?', $userId);
     }

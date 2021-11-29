@@ -5,22 +5,12 @@
  */
 class LeitnerSRS
 {
-  const FAILEDSTACK = 1;
+  public const FAILEDSTACK = 1;
 
-  const EASY_FACTOR = 1.5;
+  public const EASY_FACTOR = 1.5;
 
-  const VARIANCE_FACTOR = 0.15;
-  const VARIANCE_LIMIT = 30;   // days
-
-  // cf. flashcards.d.ts
-  public static function isValidFreeReviewRating($value)
-  {
-    return in_array($value, [
-      uiFlashcardReview::RATE_NO,
-      uiFlashcardReview::RATE_AGAIN,
-      uiFlashcardReview::RATE_YES
-    ]);
-  }
+  public const VARIANCE_FACTOR = 0.15;
+  public const VARIANCE_LIMIT = 30;   // days
 
   // returns upper limit for Hard answer (excluding failed&new pile, 1 = 1+ reviews)
   private static function getHardIntervalLimit()

@@ -50,8 +50,7 @@ class LeitnerSRS
   // multiplier to calculate incremental review intervals
   private float $optMult;
 
-  // intervals in *days* for each review pile (indexed from 0 = 1+ reviews)
-  /** @var int[] */
+  /** @var int[] intervals in *days* for each review pile (indexed from 0 = 1+ reviews) */
   protected array $intervals;
 
   /** @var int[] */
@@ -82,7 +81,7 @@ class LeitnerSRS
     $this->optHardBox = $options['OPT_SRS_HARD_BOX'] ?: $options['OPT_SRS_MAX_BOX'] - 1;
 
     // adjust for the internal logic (1  = Failed&New box)
-    $this->optMaxBox = $options['OPT_SRS_MAX_BOX'] + 1;
+    $this->optMaxBox = $options['OPT_SRS_MAX_BOX'];
 
     $this->intervals = $this->calcIntervals();
 
@@ -120,7 +119,7 @@ class LeitnerSRS
    *
    * @return array Row data to store in the flashcard review storage
    */
-  public function rateCard($curData, string $answer)
+  public function rateCard(object $curData, string $answer)
   {
     $card_interval = 0;
     $card_variance = 0;
@@ -150,7 +149,7 @@ class LeitnerSRS
     }
 
     // clamp highest box to SRS setting
-    $card_box = min($card_box, $this->optMaxBox);
+    $card_box = min($card_box, $this->optMaxBox + 1);
 
     if ($card_box === 2 && $answer === uiFlashcardReview::RATE_HARD)
     {
@@ -222,7 +221,7 @@ class LeitnerSRS
 
     $BASE_INTERVAL = 3.0; // 3 days for the first pile
 
-    for ($reviewPile = 1; $reviewPile <= $this->optMaxBox - 1; ++$reviewPile)
+    for ($reviewPile = 1; $reviewPile <= $this->optMaxBox; ++$reviewPile)
     {
       $intervals[] = (int) ceil($BASE_INTERVAL * pow($this->optMult, $reviewPile - 1));
     }
@@ -243,7 +242,7 @@ class LeitnerSRS
     assert(isset($this->intervals));
     $variance = [0];
 
-    for ($i = 1; $i <= $this->optMaxBox - 1; ++$i)
+    for ($i = 1; $i <= $this->optMaxBox; ++$i)
     {
       $variance[] = (int) min(self::VARIANCE_LIMIT, ceil(self::VARIANCE_FACTOR * $this->intervals[$i]));
     }

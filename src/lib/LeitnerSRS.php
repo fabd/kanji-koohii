@@ -1,7 +1,33 @@
 <?php
 
 /**
- * LeitnerSRS handles the flashcard scheduling system.
+ * Helper function to return the user's SRS settings (only the OPT_SRS_* keys).
+ * 
+ * @return array
+ */
+function koohiiGetUserSettingsSRS()
+{
+  $user = sfContext::getInstance()->getUser();
+
+  $opts = [
+    'OPT_SRS_MULT' => $user->getUserSetting('OPT_SRS_MULT'),
+    'OPT_SRS_HARD_BOX'=> $user->getUserSetting('OPT_SRS_HARD_BOX'),
+    'OPT_SRS_MAX_BOX' => $user->getUserSetting('OPT_SRS_MAX_BOX')
+  ];
+
+  assert(is_int($opts['OPT_SRS_MULT']));
+  assert(is_int($opts['OPT_SRS_HARD_BOX']));
+  assert(is_int($opts['OPT_SRS_MAX_BOX']));
+  assert($opts['OPT_SRS_MULT'] >=  100 && $opts['OPT_SRS_MULT'] <= 500);
+
+  return $opts;
+}
+
+/**
+ * This class handles the SRS scheduling, based on card rating (no/yes/easy/etc).
+ * 
+ * getInstance() should always be used, which injects user's SRS settings automatically.
+ * 
  */
 class LeitnerSRS
 {
@@ -12,89 +38,66 @@ class LeitnerSRS
   public const VARIANCE_FACTOR = 0.15;
   public const VARIANCE_LIMIT = 30;   // days
 
-  // returns upper limit for Hard answer (excluding failed&new pile, 1 = 1+ reviews)
-  private static function getHardIntervalLimit()
+  public const DEFAULT_SRS_MULT = 2.05;
+  public const DEFAULT_SRS_MAX_BOX = 7;
+  public const DEFAULT_SRS_HARD_BOX = 0;
+
+  // max Leitner Box *including* Failed & New as box #1
+  private int $optMaxBox;
+
+  // upper limit for Hard answer (excludes Failed&New box), 1 = 1+ reviews)
+  private int $optHardBox;
+
+  // multiplier to calculate incremental review intervals
+  private float $optMult;
+
+  // intervals in *days* for each review pile (indexed from 0 = 1+ reviews)
+  /** @var int[] */
+  protected array $intervals;
+
+  /** @var int[] */
+  protected array $variance;
+
+  /**
+   * Does NOT handle defaults -- defaults come from UsersSettingsPeer (for now).
+   * 
+   * @param array $options ... array containing the OPT_SRS_* settings
+   */
+  public function __construct($options)
   {
-    static $cached = false;
-    if (false === $cached)
-    {
-      $user = sfContext::getInstance()->getUser();
-      $cached = $user->getUserSetting('OPT_SRS_HARD_BOX');
-
-      // 0 means use default behaviour
-      $cached = $cached > 0 ? $cached : self::getMaxBox() - 1;
-    }
-
-    return $cached;
+    $this->config($options);
+  // DBG::printr($this);
   }
 
-  // return max Leitner Box, including Failed & New as box #1
-  private static function getMaxBox()
+  /**
+   * Useful method for running tests.
+   */
+  protected function config($options)
   {
-    static $cached = false;
-    if (false === $cached)
-    {
-      $user = sfContext::getInstance()->getUser();
-      $cached = $user->getUserSetting('OPT_SRS_MAX_BOX') + 1;
-    }
+    // convert to float (stored user setting 205 means 2.05)
+    $this->optMult = $options['OPT_SRS_MULT'] / 100;
 
-    return $cached;
+    // 0 means default (within the range of OPT_SRS_MAX_BOX)
+    $this->optHardBox = $options['OPT_SRS_HARD_BOX'] ?: $options['OPT_SRS_MAX_BOX'] - 1;
+
+    // adjust for the internal logic (1  = Failed&New box)
+    $this->optMaxBox = $options['OPT_SRS_MAX_BOX'] + 1;
+
+    $this->intervals = $this->calcIntervals();
+
+    $this->variance = $this->calcVariance();
   }
 
-  // return SRS multiplier setting as a float
-  private static function getMultiplier()
+  /**
+   * Convenience method which automatically injects the user's SRS settings.
+   *
+   * @return self
+   */
+  public static function getInstance(): self
   {
-    $user = sfContext::getInstance()->getUser();
-    $mult = (int) $user->getUserSetting('OPT_SRS_MULT');
-    if ($mult < 100 || $mult > 500)
-    {
-      error_log(sprintf('Invalid SRS multiplier: %d (using default value) (uid %d)', $mult, $user->getUserId()));
-      // in case something's wrong with the session? paranoia
-      $mult = 205;
-    }
-    $mult = $mult / 100;
-
-    return $mult;
-  }
-
-  // return interval in days for nth review box (excluding failed&new pile, 1 = 1+ reviews)
-  private static function getNthInterval(int $box)
-  {
-    static $intervals = null;
-
-    assert($box > 0);
-
-    if (null === $intervals)
-    {
-      $max_box = self::getMaxBox() - 1;
-      $mult = self::getMultiplier();
-      $first = 3.0;
-
-      for ($n = 0; $n < $max_box; ++$n)
-      {
-        $intervals[] = ceil($first * pow($mult, $n));
-      }
-      // error_log('getNthInterval() CACHE => '.json_encode($intervals));
-    }
-
-    return $intervals[$box - 1];
-  }
-
-  // return variance in days for nth review box (excluding failed&new pile, 1 = 1+ reviews)
-  private static function getNthVariance(int $box)
-  {
-    static $variance = null;
-    if (null === $variance)
-    {
-      $max_box = self::getMaxBox() - 1;
-      for ($n = 1; $n <= $max_box; ++$n)
-      {
-        $variance[] = min(self::VARIANCE_LIMIT, ceil(self::VARIANCE_FACTOR * self::getNthInterval($n)));
-      }
-      // error_log('getNthVariance() CACHE => '.json_encode($variance));
-    }
-
-    return $variance[$box - 1];
+    static $instance = null;
+    $instance ??= new LeitnerSRS(koohiiGetUserSettingsSRS());
+    return $instance;
   }
 
   /**
@@ -108,30 +111,32 @@ class LeitnerSRS
    *   successcount
    *   lastreview
    *
-   * Returns an array with only the values that have changed, to be saved
-   * in the flashcard reviews storage.
+   * Returns an array with only the values that have changed, plus:
    *
-   *   expiredate
+   *   interval   ... in days, to update the card's `expiredate`
    *
    * @param object $curData Row data coming from flashcard review storage
    * @param string $answer  Answer (see uiFlashcardReview.php const)
    *
    * @return array Row data to store in the flashcard review storage
    */
-  public static function rateCard($curData, string $answer)
+  public function rateCard($curData, string $answer)
   {
-    // promote or demote card
+    $card_interval = 0;
+    $card_variance = 0;
+
     if ($answer === uiFlashcardReview::RATE_NO)
     {
       $card_box = 1; // failed pile
     }
-    elseif (
-      $answer === uiFlashcardReview::RATE_YES
+
+    if ($answer === uiFlashcardReview::RATE_YES
       || $answer === uiFlashcardReview::RATE_EASY
     ) {
       $card_box = $curData->leitnerbox + 1;
     }
-    elseif ($answer === uiFlashcardReview::RATE_HARD)
+
+    if ($answer === uiFlashcardReview::RATE_HARD)
     {
       $card_box = $curData->leitnerbox - 1;
 
@@ -139,32 +144,30 @@ class LeitnerSRS
       $card_box = max(2, $card_box);
 
       // clamp top
-      $card_box = min($card_box, (self::getHardIntervalLimit() + 1));
+      $card_box = min($card_box, $this->optHardBox + 1);
     }
 
     // clamp highest box to SRS setting
-    $card_box = min($card_box, self::getMaxBox());
+    $card_box = min($card_box, $this->optMaxBox);
 
-    if ($answer === uiFlashcardReview::RATE_HARD && $curData->leitnerbox <= 2)
+    if ($card_box === 2 && $answer === uiFlashcardReview::RATE_HARD)
     {
-      // cards in "1+" box OR the "New" pile with "hard" answer get a fixed 1 day interval
+      // cards in NEW or 1+ REVIEW piles with HARD answer get a fixed 1 day interval
       $card_interval = 1;
       $card_variance = 0;
-
-    // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData->leitnerbox, $card_box));
+      // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData->leitnerbox, $card_box));
     }
-    elseif ($card_box === 1)
+    else if ($card_box === 1)
     {
-      // Failed pile
+      // failed pile
       $card_interval = 0;
       $card_variance = 0;
-
-    // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData->leitnerbox));
+      // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData->leitnerbox));
     }
     else
     {
       // in all other cases, the interval is based on the new box + variance
-      $card_interval = self::getNthInterval($card_box - 1);
+      $card_interval = $this->intervals[$card_box - 1];
 
       // easy answers get a higher interval
       if ($answer === uiFlashcardReview::RATE_EASY)
@@ -173,14 +176,13 @@ class LeitnerSRS
       }
 
       // add variance to spread due cards so that they don't all fall onto the same days
-      $card_variance = self::getNthVariance($card_box - 1);
+      $card_variance = $this->variance[$card_box - 1];
       $card_interval = ($card_interval - $card_variance) + rand(0, $card_variance * 2);
 
       // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)', $answer, $curData->leitnerbox, $card_box, $card_interval, $card_variance));
     }
 
     $user = sfContext::getInstance()->getUser(); // for sqlLocalTime()
-
     $sqlLocalTime = UsersPeer::sqlLocalTime();
     $sqlExprExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', $sqlLocalTime, $card_interval);
 
@@ -190,6 +192,7 @@ class LeitnerSRS
       'lastreview' => new coreDbExpr($sqlLocalTime),
       'expiredate' => new coreDbExpr($sqlExprExpireDate),
     ];
+// echo "*** expiredate *** {$card_interval} \n";
 
     if ($answer === uiFlashcardReview::RATE_YES || $answer === uiFlashcardReview::RATE_EASY)
     {
@@ -201,5 +204,49 @@ class LeitnerSRS
     }
 
     return $oUpdate;
+  }
+
+  /**
+   * Return an array of base intervals (prior to adding some variance),
+   * for each review pile.
+   * 
+   * Starts at index 1 for 1+ review pile.
+   * 
+   * @return int[]
+   */
+  private function calcIntervals()
+  {
+    $intervals = [0];
+
+    $BASE_INTERVAL = 3.0; // 3 days for the first pile
+
+    for ($reviewPile = 1; $reviewPile <= $this->optMaxBox - 1; $reviewPile++)
+    {
+      $intervals[] = (int) ceil($BASE_INTERVAL * pow($this->optMult, $reviewPile - 1));
+    }
+
+    return $intervals;
+  }
+
+  /**
+   * Return an array of "variance" -- small intervals used to spread card's due
+   * date so they don't all expire on the same due date.
+   * 
+   * Starts at index 1 for 1+ review pile.
+   * 
+   * @return int[]
+   *
+   */
+  private function calcVariance()
+  {
+    assert(isset($this->intervals));
+    $variance = [0];
+   
+    for ($i = 1; $i <= $this->optMaxBox - 1; $i++)
+    {
+      $variance[] = (int) min(self::VARIANCE_LIMIT, ceil(self::VARIANCE_FACTOR * $this->intervals[$i]));
+    }
+
+    return $variance;
   }
 }

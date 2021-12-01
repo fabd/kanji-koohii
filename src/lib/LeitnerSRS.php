@@ -2,7 +2,7 @@
 
 /**
  * Helper function to return the user's SRS settings (only the OPT_SRS_* keys).
- * 
+ *
  * @return array
  */
 function koohiiGetUserSettingsSRS()
@@ -11,23 +11,22 @@ function koohiiGetUserSettingsSRS()
 
   $opts = [
     'OPT_SRS_MULT' => $user->getUserSetting('OPT_SRS_MULT'),
-    'OPT_SRS_HARD_BOX'=> $user->getUserSetting('OPT_SRS_HARD_BOX'),
-    'OPT_SRS_MAX_BOX' => $user->getUserSetting('OPT_SRS_MAX_BOX')
+    'OPT_SRS_HARD_BOX' => $user->getUserSetting('OPT_SRS_HARD_BOX'),
+    'OPT_SRS_MAX_BOX' => $user->getUserSetting('OPT_SRS_MAX_BOX'),
   ];
 
   assert(is_int($opts['OPT_SRS_MULT']));
   assert(is_int($opts['OPT_SRS_HARD_BOX']));
   assert(is_int($opts['OPT_SRS_MAX_BOX']));
-  assert($opts['OPT_SRS_MULT'] >=  100 && $opts['OPT_SRS_MULT'] <= 500);
+  assert($opts['OPT_SRS_MULT'] >= 100 && $opts['OPT_SRS_MULT'] <= 500);
 
   return $opts;
 }
 
 /**
  * This class handles the SRS scheduling, based on card rating (no/yes/easy/etc).
- * 
+ *
  * getInstance() should always be used, which injects user's SRS settings automatically.
- * 
  */
 class LeitnerSRS
 {
@@ -60,17 +59,19 @@ class LeitnerSRS
 
   /**
    * Does NOT handle defaults -- defaults come from UsersSettingsPeer (for now).
-   * 
+   *
    * @param array $options ... array containing the OPT_SRS_* settings
    */
   public function __construct($options)
   {
     $this->config($options);
-  // DBG::printr($this);
+    // DBG::printr($this);
   }
 
   /**
    * Useful method for running tests.
+   *
+   * @param array $options
    */
   protected function config($options)
   {
@@ -90,13 +91,12 @@ class LeitnerSRS
 
   /**
    * Convenience method which automatically injects the user's SRS settings.
-   *
-   * @return self
    */
   public static function getInstance(): self
   {
     static $instance = null;
     $instance ??= new LeitnerSRS(koohiiGetUserSettingsSRS());
+
     return $instance;
   }
 
@@ -125,26 +125,28 @@ class LeitnerSRS
     $card_interval = 0;
     $card_variance = 0;
 
-    if ($answer === uiFlashcardReview::RATE_NO)
-    {
-      $card_box = 1; // failed pile
-    }
+    switch ($answer) {
+      case uiFlashcardReview::RATE_NO:
+        $card_box = 1; // failed pile
 
-    if ($answer === uiFlashcardReview::RATE_YES
-      || $answer === uiFlashcardReview::RATE_EASY
-    ) {
-      $card_box = $curData->leitnerbox + 1;
-    }
+        break;
 
-    if ($answer === uiFlashcardReview::RATE_HARD)
-    {
-      $card_box = $curData->leitnerbox - 1;
+      case uiFlashcardReview::RATE_YES:
+      case uiFlashcardReview::RATE_EASY:
+        $card_box = $curData->leitnerbox + 1;
 
-      // clamp bottom
-      $card_box = max(2, $card_box);
+        break;
 
-      // clamp top
-      $card_box = min($card_box, $this->optHardBox + 1);
+      case uiFlashcardReview::RATE_HARD:
+        $card_box = $curData->leitnerbox - 1;
+
+        // clamp bottom
+        $card_box = max(2, $card_box);
+
+        // clamp top
+        $card_box = min($card_box, $this->optHardBox + 1);
+
+        break;
     }
 
     // clamp highest box to SRS setting
@@ -155,14 +157,14 @@ class LeitnerSRS
       // cards in NEW or 1+ REVIEW piles with HARD answer get a fixed 1 day interval
       $card_interval = 1;
       $card_variance = 0;
-      // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData->leitnerbox, $card_box));
+    // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData->leitnerbox, $card_box));
     }
-    else if ($card_box === 1)
+    elseif ($card_box === 1)
     {
       // failed pile
       $card_interval = 0;
       $card_variance = 0;
-      // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData->leitnerbox));
+    // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData->leitnerbox));
     }
     else
     {
@@ -192,7 +194,7 @@ class LeitnerSRS
       'lastreview' => new coreDbExpr($sqlLocalTime),
       'expiredate' => new coreDbExpr($sqlExprExpireDate),
     ];
-// echo "*** expiredate *** {$card_interval} \n";
+    // echo "*** expiredate *** {$card_interval} \n";
 
     if ($answer === uiFlashcardReview::RATE_YES || $answer === uiFlashcardReview::RATE_EASY)
     {
@@ -209,9 +211,9 @@ class LeitnerSRS
   /**
    * Return an array of base intervals (prior to adding some variance),
    * for each review pile.
-   * 
+   *
    * Starts at index 1 for 1+ review pile.
-   * 
+   *
    * @return int[]
    */
   private function calcIntervals()
@@ -220,7 +222,7 @@ class LeitnerSRS
 
     $BASE_INTERVAL = 3.0; // 3 days for the first pile
 
-    for ($reviewPile = 1; $reviewPile <= $this->optMaxBox - 1; $reviewPile++)
+    for ($reviewPile = 1; $reviewPile <= $this->optMaxBox - 1; ++$reviewPile)
     {
       $intervals[] = (int) ceil($BASE_INTERVAL * pow($this->optMult, $reviewPile - 1));
     }
@@ -231,18 +233,17 @@ class LeitnerSRS
   /**
    * Return an array of "variance" -- small intervals used to spread card's due
    * date so they don't all expire on the same due date.
-   * 
-   * Starts at index 1 for 1+ review pile.
-   * 
-   * @return int[]
    *
+   * Starts at index 1 for 1+ review pile.
+   *
+   * @return int[]
    */
   private function calcVariance()
   {
     assert(isset($this->intervals));
     $variance = [0];
-   
-    for ($i = 1; $i <= $this->optMaxBox - 1; $i++)
+
+    for ($i = 1; $i <= $this->optMaxBox - 1; ++$i)
     {
       $variance[] = (int) min(self::VARIANCE_LIMIT, ceil(self::VARIANCE_FACTOR * $this->intervals[$i]));
     }

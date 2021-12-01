@@ -183,17 +183,11 @@ class LeitnerSRS
       // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)', $answer, $curData->leitnerbox, $card_box, $card_interval, $card_variance));
     }
 
-    $user = sfContext::getInstance()->getUser(); // for sqlLocalTime()
-    $sqlLocalTime = UsersPeer::sqlLocalTime();
-    $sqlExprExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', $sqlLocalTime, $card_interval);
-
     $oUpdate = [
       'totalreviews' => $curData->totalreviews + 1,
       'leitnerbox' => $card_box,
-      'lastreview' => new coreDbExpr($sqlLocalTime),
-      'expiredate' => new coreDbExpr($sqlExprExpireDate),
+      'interval_days' => $card_interval,
     ];
-    // echo "*** expiredate *** {$card_interval} \n";
 
     if ($answer === uiFlashcardReview::RATE_YES || $answer === uiFlashcardReview::RATE_EASY)
     {

@@ -58,8 +58,7 @@ class advancedAction extends sfAction
 
       $cardData = [
         'leitnerbox'   => $leitnerbox,
-        'expiredate'   => new coreDbExpr(sprintf('ADDDATE(NOW(), INTERVAL %d DAY)', $expiredays)),
-        'lastreview'   => new coreDbExpr(UsersPeer::sqlLocalTime()),
+        'interval_days'=> $expiredays,
         'totalreviews' => $failurecount + $successcount,
         'failurecount' => $failurecount,
         'successcount' => $successcount

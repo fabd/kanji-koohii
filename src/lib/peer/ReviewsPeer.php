@@ -809,9 +809,9 @@ class ReviewsPeer extends coreDatabaseTable
         return true;
       }
 
-      $oUpdateData = LeitnerSRS::rateCard($curData, $oData->r);
+      $update = LeitnerSRS::getInstance()->rateCard($curData, $oData->r);
 
-      $result = self::updateFlashcard($userId, $ucsId, $oUpdateData);
+      $result = self::updateFlashcard($userId, $ucsId, $update);
     }
 
     // clear relearned kanji if successfull answer
@@ -827,11 +827,6 @@ class ReviewsPeer extends coreDatabaseTable
     }
 
     return $result;
-  }
-
-  public static function updateFlashcard($userId, $ucsId, $cardData)
-  {
-    return self::getInstance()->update($cardData, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
 
   /**
@@ -851,9 +846,39 @@ class ReviewsPeer extends coreDatabaseTable
     }
 
     // rate card as "not remembered" (No)
-    $oUpdateData = LeitnerSRS::rateCard($cardData, 1);
+    $update = LeitnerSRS::getInstance()->rateCard($cardData, uiFlashcardReview::RATE_NO);
 
-    return self::updateFlashcard($userId, $ucsId, $oUpdateData);
+    return self::updateFlashcard($userId, $ucsId, $update);
+  }
+
+  /**
+   * Update flashcard row data, plus:
+   * 
+   *   - sets `lastreview` to user's local time
+   *   - IF `interval_days` is provided, sets `expiredate`
+   */
+  public static function updateFlashcard(int $userId, int $ucsId, array $cardUpdate)
+  {
+    $sqlLocalTime = UsersPeer::sqlLocalTime();
+
+// error_log("  UPDATE CARD ($ucsId) :: ".print_r($cardUpdate, true));
+
+    // update "due" timestamp if interval is provided (cf. LeitnerSRS::rateCard())
+    if (isset($cardUpdate['interval_days']))
+    {
+      $interval_days = $cardUpdate['interval_days'];
+      unset($cardUpdate['interval_days']);
+
+      $user = sfContext::getInstance()->getUser();
+      $sqlExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', $sqlLocalTime, $interval_days);
+
+      $cardUpdate['expiredate'] = new coreDbExpr($sqlExpireDate);
+    }
+
+    // always update last review timestamp
+    $cardUpdate['lastreview'] = new coreDbExpr($sqlLocalTime);
+
+    return self::getInstance()->update($cardUpdate, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
 
   /**

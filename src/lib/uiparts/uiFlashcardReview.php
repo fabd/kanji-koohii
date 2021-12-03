@@ -20,8 +20,8 @@
  * 
  *  WHEN HANDLING AJAX REQUESTS FOR CARDS (Post requests)
  *
- *   fn_get_flashcard   Callback  A php callback: function OR array($obj, 'method') OR array('class', 'staticmethod')
- *   fn_put_flashcard   Callback  ... (OPTIONAL)
+ *   fn_get_flashcard   callable
+ *   fn_put_flashcard   callable
  *
  * Callback signatures:
  * 
@@ -63,10 +63,9 @@
 
 class uiFlashcardReview
 {
-  protected
-    $user        = null,
-    $options     = null,
-    $updated     = null;
+  protected sfUser $user;
+  protected object $options;
+  protected array $updated;
   
   // card ratings (@see FlashcardReview.js, flashcards.d.ts)
   const RATE_NO      = 'no';
@@ -119,18 +118,6 @@ class uiFlashcardReview
       // restore flashcard update status from the session
       $this->updated = $this->user->getAttribute(self::SESS_CARD_UPDATED, []);
     }
-
-    //testing
-    /*
-    if (isset($this->options->items))
-    {
-      $x = array();
-      for ($i = 1; $i<=3007; $i++) {
-        $x[] = 3008 - $i;
-      }
-      $this->options->items = $x; //array_slice($this->options->items, 0, 4);
-    }
-    */
   }
 
   /**
@@ -181,10 +168,6 @@ class uiFlashcardReview
       // because the success status is returned only for updated cards
       $items = array_slice($fcrData->put, 0, self::MAX_UPDATE);
 
-      if (!isset($this->options->fn_put_flashcard)) {
-        throw new rtkAjaxException('uiFlashcardReview: fn_put_flashcard is not set');
-      }
-
       $oResponse->put = $this->handlePutRequest($items);
     }
 
@@ -206,6 +189,10 @@ class uiFlashcardReview
    */
   public function handlePutRequest(array $items)
   {
+    if (!isset($this->options->fn_put_flashcard)) {
+      throw new rtkAjaxException('uiFlashcardReview: fn_put_flashcard is not set');
+    }
+
     $putSuccess = [];
     
     foreach ($items as $oPutData)

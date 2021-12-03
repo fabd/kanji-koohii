@@ -54,5 +54,9 @@
     "vite": "^2.6.x",
     "vite-plugin-element-plus": "^0.0.12",
     "vite-plugin-md": "^0.11.1"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "supports es6-module and supports es6-module-dynamic-import"
+  ]
 }

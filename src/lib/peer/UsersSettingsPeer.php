@@ -33,9 +33,9 @@ class UsersSettingsPeer extends coreDatabaseTable
 
   private static $defaultSettings = [
     'OPT_NO_SHUFFLE' => 0,    // do not shuffle new cards (blue pile)
-    'OPT_SRS_MAX_BOX' => 7,    // num intervals (excludes Failed & New box)
-    'OPT_SRS_MULT' => 205,  // 205 means 2.05
-    'OPT_SRS_HARD_BOX' => 0,     // zero means default behaviour
+    'OPT_SRS_MAX_BOX' => 7,   // number of review piles (excludes Failed & New box)
+    'OPT_SRS_MULT' => 205,    // 205 means 2.05
+    'OPT_SRS_HARD_BOX' => 0,  // zero means default behaviour
   ];
 
   public static function getInstance(): self

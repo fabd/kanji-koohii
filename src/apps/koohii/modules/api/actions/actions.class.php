@@ -220,7 +220,7 @@ class apiActions extends sfActions
     foreach ($items as $ucsId)
     {
       $ucsId = (int)$ucsId;
-      $cardData = KanjisPeer::getFlashcardData($ucsId, $cardOpts);
+      $cardData = KanjisPeer::getKanjiCardData($ucsId, $cardOpts);
         
       if ($cardData === null) {
         return $this->createResponseFail(4, sprintf('Could not fetch data for UCS code "%s"', $ucsId));

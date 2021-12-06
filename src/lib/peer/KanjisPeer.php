@@ -8,7 +8,7 @@
  *  getKanjiByCharacter()
  *  getKeyword()
  *  getDisplayKeyword()
- *  getFlashcardData()
+ *  getKanjiCardData()
  *  isHeisigIndexed()
  *
  * Helpers:
@@ -100,7 +100,7 @@ class KanjisPeer extends coreDatabaseTable
   }
 
   /**
-   * Returns flashcard data for the flashcard reviews (both SRS and non-SRS).
+   * Returns presentation data for the kanji flashcards (both SRS and non-SRS).
    *
    * This is a uiFlashcardReview callback, $ucsId must be sanitized!
    *
@@ -113,7 +113,7 @@ class KanjisPeer extends coreDatabaseTable
    * @param  object|null  $options   Options for the flashcard format (optional)
    * @return object|null  Flashcard data, or null
    */
-  public static function getFlashcardData($ucsId, $options = null)
+  public static function getKanjiCardData($ucsId, $options = null)
   {
     if (false === ($cardData = self::getKanjiByUCS($ucsId))) {
       return null;

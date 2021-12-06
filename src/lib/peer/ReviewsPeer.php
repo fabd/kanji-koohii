@@ -62,11 +62,10 @@ class ReviewsPeer extends coreDatabaseTable
    * 
    * @param int $userId
    * @param int $ucsId
-   * @return object|false  Row data
+   * @return array|false  Row data
    */
-  public static function getFlashcardData($userId, $ucsId)
+  public static function getFlashcardData(int $userId, int $ucsId)
   {
-    assert(is_int($ucsId));
     assert($ucsId > 0x3000);
 
     $select = self::getInstance()->select([
@@ -77,9 +76,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::filterByUserId($select, $userId);
     $select->query();
 
-    $cardData = self::$db->fetchObject();
-
-    return $cardData;
+    return self::$db->fetch();
   }
 
   /**
@@ -108,7 +105,11 @@ class ReviewsPeer extends coreDatabaseTable
   {
     $cardData = self::getFlashcardData($userId, $ucsId);
 
-    return (is_object($cardData) && $cardData->leitnerbox == 1 && $cardData->totalreviews > 0);
+    return (
+      is_array($cardData)
+      && $cardData['leitnerbox'] == 1
+      && $cardData['totalreviews'] > 0
+    );
   }
 
   /**
@@ -839,11 +840,9 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function failFlashcard($userId, $ucsId)
   {
-    $cardData = ReviewsPeer::getFlashcardData($userId, $ucsId);
-    if ($cardData === false)
-    {
-      return false;
-    }
+    $cardData = self::getFlashcardData($userId, $ucsId);
+    
+    if ($cardData === false) return false;
 
     // rate card as "not remembered" (No)
     $update = LeitnerSRS::getInstance()->rateCard($cardData, uiFlashcardReview::RATE_NO);

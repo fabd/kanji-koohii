@@ -77,7 +77,7 @@ class advancedAction extends sfAction
         return false;
       }
 
-      $this->cardInfo = ReviewsPeer::getFlashcardData($userId, $ucsId);
+      $this->cardInfo = (object) ReviewsPeer::getFlashcardData($userId, $ucsId);
       unset($this->cardInfo->userid);
       unset($this->cardInfo->ts_lastreview);
 

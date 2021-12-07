@@ -48,7 +48,6 @@
  *   getFlashcard()       Returns current uiFlashcard, or null
  *   getFlashcardData()   Returns json data for current flashcard
  *   getItems()           Returns array of flashcard ids, length of array = number of flashcards in session
- *   getPostCount()       Returns count of flashcard answers that need to be posted to server
  *   getNumUndos()        Returns number of undo levels currently available
  *   getFlashcardState()  Returns the current state (0 = default), or false if no current card is set
  *   setFlashcardState(n) Sets state for current flashcard, this changes the "uiFcState" class name on the flashcard
@@ -76,8 +75,7 @@
  *                        Returned objects must have the property "id" set to the corresponding flashcard id's.
  *
  *   put                  Array of flashcard ids which were succesfully handled.
- *                        The items are cleared from the postCache. If not cleared, these items will
- *                        be posted again during the next prefetchs.
+ *
  *
  * Usage:
  *
@@ -137,7 +135,7 @@ export default class FlashcardReview {
 
   /**
    * Cache of flashcard data. The key is the kanji (UCS code).
-   * 
+   *
    * @type {{ [key: number]: TCardData }}
    */
   cache = {};
@@ -146,6 +144,16 @@ export default class FlashcardReview {
   cacheEnd = 0;
 
   isAwaitingCards = false;
+
+  /**
+   * Flashcard answers in the same order than items[].
+   *
+   * @type {TCardAnswer[]}
+   */
+  postCache = [];
+
+  //
+  postCacheFrom = 0;
 
   // max items to cache for undo
   /** @type {number} */
@@ -157,11 +165,6 @@ export default class FlashcardReview {
 
   /** @type {EventDispatcher} */
   eventDispatcher;
-
-  // array of answer data for flashcards that is not posted yet
-  // the data is freeform, the property id corresponds to a flashcard id
-  /** @type {TCardAnswer[]} */
-  postCache = [];
 
   /** @type {AjaxQueue} */
   ajaxQueue;
@@ -230,8 +233,9 @@ export default class FlashcardReview {
     this.cacheEnd = 0;
     this.position = -1;
 
-    //
     this.postCache = [];
+    this.postCacheFrom = 0;
+
     this.undoLevel = 0;
 
     this.forward();
@@ -243,7 +247,7 @@ export default class FlashcardReview {
    *
    */
   updateUnloadEvent() {
-    if (this.getPostCount()) {
+    if (this.position > 0 && this.postCacheFrom < this.items.length) {
       window.onbeforeunload = function () {
         return (
           "WAIT! You may lose a few flashcard answers if you leave the page now.\r\n" +
@@ -322,6 +326,8 @@ export default class FlashcardReview {
       this.undoLevel--;
     }
 
+    this.updateUnloadEvent();
+
     // destroy previous card, so it doesn't show while loading next card (if not prefetched)
     this.destroyCurCard();
 
@@ -380,7 +386,7 @@ export default class FlashcardReview {
   /**
    * This function is called only when the current flashcard
    * data is available in the cache.
-   * 
+   *
    * FIXME : this code should be handled in review-kanji/vocab
    */
   cardReady() {
@@ -388,9 +394,9 @@ export default class FlashcardReview {
     this.notify("onFlashcardCreate");
 
     // we have a cached item for current position
-    let cardData = /** @type TCardData */(this.getFlashcardData());
+    let cardData = /** @type TCardData */ (this.getFlashcardData());
 
-    // 
+    //
     cardData.isAgain = this.position >= this.numCards;
 
     // (wip, refactor) instance Vue comp
@@ -447,19 +453,15 @@ export default class FlashcardReview {
     }
 
     // POST ANSWERS
-    // - while prefetching next batch of cards (syncNow)
-    // - do it immediately if flushing the postCache at end of review
+    // - post all remaining answers if flushing the postCache at end of review
+    // - always keep some answers to allow for undo levels
     if ((syncNow || bFlushData) && this.options.put_request) {
-      // if flush, post all, otherwise don't post all, leave some cards behind to allow client ot re-answer (undo)
-      /** @type {TCardAnswer[]} */
-      let aPostData;
+      // if flush, post all, otherwise post in small batches, and leave
+      //  some cards behind for the under feature
+      let syncEnd = bFlushData ? this.position : Math.max(0, this.position - this.max_undo);
 
-      if (bFlushData) {
-        aPostData = this.postCache;
-      } else {
-        let numToPost = Math.max(this.getPostCount() - this.max_undo, 0);
-        aPostData = this.postCache.slice(0, numToPost);
-      }
+      let aPostData = this.postCache.slice(this.postCacheFrom, syncEnd);
+      this.postCacheFrom = syncEnd;
 
       if (aPostData.length > 0) {
         syncData.put = aPostData;
@@ -519,13 +521,6 @@ export default class FlashcardReview {
 
       // clear answers from cache, that were handled succesfully by the server
       if (syncResponse.put && syncResponse.put.length > 0) {
-        //console.log("RESPONSE PUT, CLEAR %o", syncResponse.put);
-
-        for (let i = 0; i < syncResponse.put.length; i++) {
-          const id = syncResponse.put[i];
-          this.removePostData(id);
-        }
-
         this.updateUnloadEvent();
       }
 
@@ -560,13 +555,6 @@ export default class FlashcardReview {
     return id ? this.cache[id] : null;
   }
 
-  /**
-   * Count numner of items in postCache.
-   */
-  getPostCount() {
-    return this.postCache.length;
-  }
-
   getNumUndos() {
     return Math.min(this.position, this.max_undo - this.undoLevel);
   }
@@ -599,9 +587,7 @@ export default class FlashcardReview {
       //  (progress bar won't move after forward() since the length just increased)
       this.items.push(answer.id);
       this.againCards.set(answer.id, true);
-    }
-    else
-    {
+    } else {
       this.numRated++;
 
       // if the card was last rated "again", remove it from the "again" count
@@ -611,11 +597,10 @@ export default class FlashcardReview {
 console.log("answerCard %s : %s", String.fromCodePoint(answer.id), answer.r);
 
     // console.log('FlashcardReview::answerCard(%o)', cardAnswer);
-    this.postCacheSet(answer.id, answer);
+    this.postCache[this.position] = answer;
 
-console.table(this.postCache);
-
-    this.updateUnloadEvent();
+    let tt = this.postCache.map((a) => ({ id: a.id, k: String.fromCharCode(a.id), r: a.r }));
+    console.table(tt);
   }
 
   /**
@@ -623,71 +608,34 @@ console.table(this.postCache);
    *
    * Must remove item from postCache otherwise when flushing at end of review,
    * the last undo'ed item(s) would be posted whereas the user did not want to.
-   * 
+   *
    * @return  {TCardAnswer}   Returns flashcard answer data (cf. answerCard()) that is being cleared
    */
   unanswerCard() {
-    // console.log('FlashcardReview::unanswerCard()');
-    console.assert(this.getPostCount() > 0);
+    console.assert(this.postCache.length);
 
     // pop data from the postcache, don't assume order
-    const id = this.items[this.position];
 
-    // never null
-    const answer = /** @type {TCardAnswer} */ (this.removePostData(id));
+    let answer = this.postCache[this.position];
 
     // whether we are seeing the card again, in the same review session
-    const isRepeatCard = this.position >= this.numCards;
+    let isRepeatCard = this.position >= this.numCards;
 
     // keep count of rated (ie. not "again") cards
-    if (!this.againCards.has(id)) {
+    if (!this.againCards.has(answer.id)) {
       this.numRated--;
     }
 
     // keep count of unique "again" cards not yet cleared
     if (isRepeatCard) {
-      this.againCards.set(id, true);
-    }
-    else {
+      this.againCards.set(answer.id, true);
+    } else {
       // in case it was an "again" card...
-      this.againCards.delete(id);
+      this.againCards.delete(answer.id);
     }
 
     this.updateUnloadEvent();
 
     return answer;
-  }
-
-  /**
-   * Sets card answer in cache, replace existing if already set
-   *  (replacement only happens with again answers not yet synced)
-   * 
-   * @param {TUcsId} id flashcard unique id
-   * @param {TCardAnswer} data 
-   */
-  postCacheSet(id, data)
-  {
-    let i = this.postCache.findIndex(item => item.id === id);
-    i = i >= 0 ? i : this.postCache.length;
-    this.postCache[i] = data;
-  }
-
-  /**
-   * Remove one element of the postCache array, by id.
-   *
-   * @param {TUcsId} id ... flashcard id
-   * @return {TCardAnswer?}  Returns the spliced element (flashcard answer data).
-   */
-  removePostData(id) {
-    for (let i = 0; i < this.postCache.length; i++) {
-      // watchout with === because returned json can have strings for numbers
-      if (this.postCache[i].id === id) {
-        const item = this.postCache.splice(i, 1)[0];
-        return item;
-      }
-    }
-
-    // dummy return value, this function should never return an empty
-    return null;
   }
 }

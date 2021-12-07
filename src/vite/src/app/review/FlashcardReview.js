@@ -135,17 +135,15 @@ export default class FlashcardReview {
   // review position, from 0 to items.length-1
   position = 0;
 
-  // Cache of flashcard data.
-  // Associative array using flashcard ids for retrieval.
-  // Flashcard data is maintained for prefetched items and max_undo items,
-  // other cards are deleted when they are beyond the undo range.
-  //
-  // cacheEnd indicate the range of valid flashcard data in the cache array.
-  /** @type {{ [key: number]: TCardData }} */
+  /**
+   * Cache of flashcard data. The key is the kanji (UCS code).
+   * 
+   * @type {{ [key: number]: TCardData }}
+   */
   cache = {};
 
+  // cacheEnd indicate the range of valid flashcard data in the cache array.
   cacheEnd = 0;
-  cacheFrom = 0;
 
   isAwaitingCards = false;
 
@@ -222,15 +220,14 @@ export default class FlashcardReview {
    * Returns true if all cards in the initial items[] array are cached
    */
   get isCacheFull() {
-    return this.cacheEnd >= this.numCards - 1;
+    return this.cacheEnd >= this.numCards;
   }
 
   beginReview() {
     this.notify("onBeginReview");
 
     this.cache = {};
-    this.cacheEnd = -1;
-    this.cacheFrom = -1;
+    this.cacheEnd = 0;
     this.position = -1;
 
     //
@@ -337,7 +334,7 @@ export default class FlashcardReview {
     this.syncReview();
 
     // if the cache is not full yet...
-    if (this.position > this.cacheEnd && !this.isCacheFull) {
+    if (this.position >= this.cacheEnd && !this.isCacheFull) {
       // this happens normally only on review start, when cache is empty
       // OR review catches up with the card pre-fetch (server is very slow to respond)
       this.connect("onCacheReady", () => {
@@ -442,9 +439,9 @@ export default class FlashcardReview {
     if (syncNow && !this.isCacheFull) {
       //
       if (!this.isAwaitingCards) {
-        var from = this.cacheEnd + 1;
-        var to = Math.min(from + PREFETCH_CARDS, this.numCards) - 1;
-        syncData.get = this.items.slice(from, to + 1);
+        let from = this.cacheEnd;
+        let to = Math.min(from + PREFETCH_CARDS, this.numCards);
+        syncData.get = this.items.slice(from, to);
         this.isAwaitingCards = true;
       }
     }

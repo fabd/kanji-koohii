@@ -137,7 +137,8 @@ class reviewActions extends sfActions
     }
     else
     {
-      $oFRS = new rtkFreeReviewSession(true);
+      // start a new review session (reset any prior session)
+      new rtkFreeReviewSession(true);
 
       if ($request->hasParameter('known'))
       {
@@ -161,7 +162,7 @@ class reviewActions extends sfActions
         $this->forward404If(!BaseValidators::validateInteger($reviewTo), 'Invalid card range');
         $this->forward404If($reviewFrom > $reviewTo || $reviewTo > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
 
-        $options['items'] = $oFRS->createFlashcardSet($reviewFrom, $reviewTo, $reviewShuffle);
+        $options['items'] = rtkIndex::createFlashcardSet($reviewFrom, $reviewTo, $reviewShuffle);
 
         // repeat button URL
         $options['fc_rept'] = $this->getController()->genUrl(
@@ -233,12 +234,6 @@ class reviewActions extends sfActions
     {
       throw new sfException(__METHOD__." Invalid parameters ({$id})");
     }
-
-    // assert(in_array($oData->r, [
-    //   uiFlashcardReview::RATE_NO,
-    //   uiFlashcardReview::RATE_AGAIN,
-    //   uiFlashcardReview::RATE_YES
-    // ]), __METHOD__." invalid card rating");
 
     // udpate session for the review summary
     $oFRS = new rtkFreeReviewSession();

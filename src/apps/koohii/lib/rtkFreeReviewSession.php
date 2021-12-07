@@ -14,7 +14,6 @@
  * Methods:
  *
  *   getOptions()
- *   createFlashcardSet($from, $to)
  *   updateFlashcard($ucsId, $answer)
  *   getReviewedCards()
  */
@@ -52,36 +51,6 @@ class rtkFreeReviewSession
       // restore flashcard update status from the session
       $this->cardstatus = $this->user->getAttribute(self::SESS_CARD_ANSWERS, []);
     }
-  }
-
-  /**
-   * Create an array of flashcard ids using sequence numbers.
-   *
-   * @param int  $from    Sequence number start
-   * @param int  $to      Sequence number end
-   * @param bool $shuffle True to randomize the cards
-   *
-   * @return array
-   */
-  public function createFlashcardSet($from, $to, $shuffle = false)
-  {
-    // create array of UCS ids from sequential Heisig flashcard range
-    $numCards = $to - $from + 1;
-    $framenums = array_fill(0, $numCards, 1);
-    for ($i = 0; $i < $numCards; ++$i)
-    {
-      $framenums[$i] = $from + $i;
-    }
-
-    if ($shuffle)
-    {
-      // shuffle
-      shuffle($framenums);
-    }
-
-    $ids = rtkIndex::convertToUCS($framenums);
-
-    return $ids;
   }
 
   /**

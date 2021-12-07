@@ -268,8 +268,10 @@ class apiActions extends sfActions
         return $this->createResponseFail(2, 'Invalid card range (from, to)');
       }
 
-      $oFRS = new rtkFreeReviewSession(true); // only needed to create card ids
-      $rsp->items = $oFRS->createFlashcardSet($from, $to, $shuffle);
+      // start a new review session (reset any prior session)
+      new rtkFreeReviewSession(true);
+
+      $rsp->items = rtkIndex::createFlashcardSet($from, $to, $shuffle);
     }
     else if ('srs' === $mode)
     {

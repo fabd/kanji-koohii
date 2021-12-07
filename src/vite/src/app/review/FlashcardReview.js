@@ -95,7 +95,7 @@
  */
 // @ts-check
 
-import { getBodyED, kk_globals_get } from "@app/root-bundle";
+import { kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
 import EventDispatcher from "@old/eventdispatcher";
 import VueInstance from "@lib/helpers/vue-instance";
@@ -107,6 +107,9 @@ const PREFETCH_CARDS = 10;
 export const FCRATE = {
   NO: "no",
   AGAIN: "again",
+  AGAIN_HARD: "again-hard",
+  AGAIN_YES: "again-yes",
+  AGAIN_EASY: "again-easy",
   YES: "yes",
   EASY: "easy",
   DELETE: "delete",
@@ -124,8 +127,10 @@ export default class FlashcardReview {
 
   // handle unique items vs repeat items
   numCards = 0;
-  /** @public */
-  numAgain = 0;
+  // how many cards are rated (not counting "again" answers)
+  numRated = 0;
+  /** @type {Map<number, true>} */
+  againCards;
 
   // review position, from 0 to items.length-1
   position = 0;
@@ -185,7 +190,8 @@ export default class FlashcardReview {
     //
     this.items = options.items;
     this.numCards = options.items.length;
-    this.numAgain = 0;
+    this.numRated = 0;
+    this.againCards = new Map();
 
     // register listeners
     this.eventDispatcher = new EventDispatcher();
@@ -207,10 +213,9 @@ export default class FlashcardReview {
   }
 
   /** @readonly */
-  get numRated() {
-    let x = this.position - this.numAgain;
-    console.log("numlRated getter ", x);
-    return x;
+  get numAgain() {
+    console.log("numAgain() getter ", [...this.againCards.keys()].join());
+    return this.againCards.size;
   }
 
   /**
@@ -378,6 +383,8 @@ export default class FlashcardReview {
   /**
    * This function is called only when the current flashcard
    * data is available in the cache.
+   * 
+   * FIXME : this code should be handled in review-kanji/vocab
    */
   cardReady() {
     // notify BEFORE flashcard is created
@@ -585,22 +592,31 @@ export default class FlashcardReview {
    * Store answer and any other custom data for the current card,
    * to be posted on the next review sync.
    *
-   * @param {TCardAnswer} cardAnswer
+   * @param {TCardAnswer} answer
    *
    */
-  answerCard(cardAnswer) {
-    // we have to handle a special case for "again" here, even though card
-    // ratings ideally should be handled in the parent class/components
-    if (cardAnswer.r === FCRATE.AGAIN) {
+  answerCard(answer) {
+    // keep track of repeat cards
+    if (answer.r === FCRATE.AGAIN) {
       // add a copy of this card to the end of the review pile
-      // - progress bar won't move after forward() since the length just increased
-      this.items.push(cardAnswer.id);
+      //  (progress bar won't move after forward() since the length just increased)
+      this.items.push(answer.id);
+      this.againCards.set(answer.id, true);
+    }
+    else
+    {
+      this.numRated++;
 
-      this.numAgain++;
+      // if the card was last rated "again", remove it from the "again" count
+      this.againCards.delete(answer.id);
     }
 
+console.log("answerCard %s : %s", String.fromCodePoint(answer.id), answer.r);
+
     // console.log('FlashcardReview::answerCard(%o)', cardAnswer);
-    this.postCache.push(cardAnswer);
+    this.postCacheSet(answer.id, answer);
+
+console.table(this.postCache);
 
     this.updateUnloadEvent();
   }
@@ -610,7 +626,7 @@ export default class FlashcardReview {
    *
    * Must remove item from postCache otherwise when flushing at end of review,
    * the last undo'ed item(s) would be posted whereas the user did not want to.
-   *
+   * 
    * @return  {TCardAnswer}   Returns flashcard answer data (cf. answerCard()) that is being cleared
    */
   unanswerCard() {
@@ -623,14 +639,40 @@ export default class FlashcardReview {
     // never null
     const answer = /** @type {TCardAnswer} */ (this.removePostData(id));
 
-    // if undo-ing an "again" rating
-    if (answer.r === FCRATE.AGAIN) {
-      this.numAgain--;
+    // whether we are seeing the card again, in the same review session
+    const isRepeatCard = this.position >= this.numCards;
+
+    // keep count of rated (ie. not "again") cards
+    if (!this.againCards.has(id)) {
+      this.numRated--;
+    }
+
+    // keep count of unique "again" cards not yet cleared
+    if (isRepeatCard) {
+      this.againCards.set(id, true);
+    }
+    else {
+      // in case it was an "again" card...
+      this.againCards.delete(id);
     }
 
     this.updateUnloadEvent();
 
     return answer;
+  }
+
+  /**
+   * Sets card answer in cache, replace existing if already set
+   *  (replacement only happens with again answers not yet synced)
+   * 
+   * @param {TUcsId} id flashcard unique id
+   * @param {TCardAnswer} data 
+   */
+  postCacheSet(id, data)
+  {
+    let i = this.postCache.findIndex(item => item.id === id);
+    i = i >= 0 ? i : this.postCache.length;
+    this.postCache[i] = data;
   }
 
   /**

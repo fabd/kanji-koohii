@@ -16,21 +16,28 @@
  * is the one that identifies flashcards between the server and client. The id must be
  * numeric!
  * 
+ * 
+ * Methods:
+ * 
+ *   handleRequest()
+ * 
+ * 
+ * 
  * Options (constructor):
  * 
  *  WHEN HANDLING AJAX REQUESTS FOR CARDS (Post requests)
  *
  *   fn_get_flashcard   callable
  *   fn_put_flashcard   callable
- *
- * Callback signatures:
  * 
  *   fn_get_flashcard(int $id, object $options)   
  *                      Returns flashcard data as associative array or object.
  *                      Returns null if the data can not be retrieved (id invalid, ...).
  *                      Returned "id" property must be integer! (cf. uiFlashcardReview.js)
+ * 
  *   fn_put_flashcard(int $id, object $data)
- *                      Update the flashcard status, and anything else based on data received from client.
+ *                      Update the flashcard status, and anything else based on data
+ *                      received from client.
  *                      $id is the same as $data->id, and must be sanitized.
  *                      Returns false if the update was not succesfull.
  *  
@@ -42,22 +49,20 @@
  *
  *   opt                  Options sent with the request, passed to fn_get_flashcard()
  *
- *   put                  An array of flashcard update data as objects, each object has "id" property.
+ *   put                  An array of flashcard update data as objects, each object
+ *                        has "id" property.
  *                        [ {id: 1, ... }, { id:2, ... }, ... ]
  *
  * 
  * Format of response:
  * 
- *   get                  An array of flashcard data as objects, each object has an "id" property that
- *                        matches one of the ids from the JSON request.
- *   put                  If there was a "put" request, returns the ids of items that were succesfully
- *                        handled. On the front end side, any items that were not succesfully handled
- *                        may be sent again.
+ *   get                  An array of flashcard data as objects, each object has an "id"
+ *                        property that matches one of the ids from the JSON request.
+ * 
+ *   put                  If there was a "put" request, returns the ids of items that
+ *                        were succesfully handled. On the front end side, any items
+ *                        that were not succesfully handled may be sent again.
  *
- * Usage:
- *    
- *   Create an instance in the action:
- *   =>  $this->uiFR = new uiFlashcardReview('module/partial', array(...))
  *
  */
 
@@ -75,6 +80,10 @@ class uiFlashcardReview
   const RATE_DELETE  = 'delete';
   const RATE_SKIP    = 'skip';
   const RATE_AGAIN   = 'again';
+  
+  const RATE_AGAIN_HARD = 'again-hard';
+  const RATE_AGAIN_YES  = 'again-yes';
+  const RATE_AGAIN_EASY = 'again-easy';
 
   /**
    * Do not allow client to prefetch too many cards at once.
@@ -181,9 +190,8 @@ class uiFlashcardReview
    * Update flashcards based on an array of update data, maintains the status
    * array that flags card that have already been updated this session.
    *
-   * @param   array   items   An array of flashcard update objects, each object
-   *                          MUST have an "id" uniquely identifying this item.
-   *                          Eg. (json) [ {id: 1, ... }, { id:2, ... }, ... ]
+   * @param   array   items   An array of flashcard answers from client in the form
+   *                        { id: number, ... } (cf. TCardAnswer)
    * 
    * @return  array    An array containing the id of succesfully updated items.
    */
@@ -195,13 +203,13 @@ class uiFlashcardReview
 
     $putSuccess = [];
     
-    foreach ($items as $oPutData)
+    foreach ($items as $answer)
     {
-      if (!is_object($oPutData)) {
+      if (!is_object($answer)) {
         continue;
       }
 
-      $cardId = (int)$oPutData->id;
+      $cardId = (int)$answer->id;
 
       // If the card is already updated, that means the client did not receive
       // the last response. Don't update the same card twice, but do return the
@@ -213,14 +221,20 @@ class uiFlashcardReview
       // Currently the client does not expect for errors to happen.
       // If an error happens, assume it is a temporary hiccup and ignore the
       // flashcard, so that the client will send another put request.
-      else if (true === call_user_func($this->options->fn_put_flashcard, $cardId, $oPutData))
+      else if (true === call_user_func($this->options->fn_put_flashcard, $cardId, $answer))
       {
         $putSuccess[] = $cardId;
 
-        // Flag the card as updated. Sometimes the client does not receive the response.
-        // When that happens the client will send duplicate "put" requests, we set a 
-        // flag to avoid updating a card twice.
-        $this->setUpdateStatus($cardId);
+        // Flag the card as updated, in case the server response times out for the
+        //  client, and the client re-sends the same card answers, avoid rating a card twice.
+        //
+        // Ignore AGAIN rating, because they may be followed by AGAIN_HARD/YES/EASY,
+        //  which we need to handle.
+        //
+        if ($answer->r !== uiFlashcardReview::RATE_AGAIN)
+        {
+          $this->setUpdateStatus($cardId);
+        }
       }
     }
 

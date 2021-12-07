@@ -28,6 +28,9 @@ class summarySimpleComponent extends sfComponent
           uiFlashcardReview::RATE_HARD,
           uiFlashcardReview::RATE_YES,
           uiFlashcardReview::RATE_EASY,
+          uiFlashcardReview::RATE_AGAIN_HARD,
+          uiFlashcardReview::RATE_AGAIN_YES,
+          uiFlashcardReview::RATE_AGAIN_EASY,
         ]);
 
         $card = [

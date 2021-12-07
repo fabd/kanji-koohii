@@ -222,10 +222,12 @@ export default class KanjiReview {
       return false;
     }
 
+    const cardData = this.oReview.getFlashcardData();
+
     // flashcard is loading
-    if (!this.oReview.getFlashcard()) {
-      return false;
-    }
+    if (!cardData) return false;
+
+    const isAgain = cardData.isAgain;
 
     if (sActionId === "story") {
       this.toggleEditStory();
@@ -279,21 +281,21 @@ export default class KanjiReview {
         break;
 
       case "hard":
-        cardRating = "hard";
+        cardRating = isAgain ? "again-hard" : "hard";
         break;
 
       case "yes":
-        cardRating = "yes";
+        cardRating = isAgain ? "again-yes" : "yes";
         break;
 
       case "easy":
-        cardRating = "easy";
+        cardRating = isAgain ? "again-easy" : "easy";
         break;
     }
 
     if (cardRating) {
       // "No" answer doesn't require flipping the card first (issue #163)
-      if (sActionId === "no" || this.oReview.getFlashcardState() > 0) {
+      if (this.oReview.getFlashcardState() > 0 || sActionId === "no") {
         this.answerCard(cardRating);
       }
     }
@@ -420,13 +422,15 @@ export default class KanjiReview {
   updateStatsPanel() {
     //  console.log('KanjiReview.updateStatsPanel()');
     const total = this.oReview.numCards;
-    const pos = this.oReview.numRated;
 
-    // update review count, don't show "4 of 3" after answering last card
-    this.elsCount[0].innerHTML = "" + (total - pos);
+    // review progress (don't show "4 of 3" after answering last card)
+    const pos = Math.min(this.oReview.numRated + 1, this.oReview.numCards);
 
     let elCount = $$("#uiFcProgressBar h3")[0];
-    elCount.innerHTML = `Rated: <em>${pos}/${this.oReview.numCards}</em>&nbsp;&nbsp;Again: <em>${this.oReview.numAgain}</em>`;
+    let text =
+      `Card <em>${pos}&nbsp;of&nbsp;${this.oReview.numCards}</em>` +
+      (this.oReview.numAgain ? `&nbsp;&nbsp;(Again <em>${this.oReview.numAgain}</em>)` : "");
+    elCount.innerHTML = text;
 
     // update progress bar
     let pct = pos > 0 ? Math.ceil((pos * 100) / total) : 0;
@@ -442,8 +446,8 @@ export default class KanjiReview {
    */
   updateAnswerStats(id, rating, isUndo) {
     // cf. uiFlashcardReview.php const
-    let yes = rating === FCRATE.YES || rating === FCRATE.EASY ? 1 : 0;
-    let no = rating === FCRATE.NO || rating === FCRATE.HARD ? 1 : 0;
+    let yes = [FCRATE.YES, FCRATE.EASY].includes(rating) ? 1 : 0;
+    let no = [FCRATE.NO, FCRATE.HARD].includes(rating) ? 1 : 0;
     let deld = rating === FCRATE.DELETE ? 1 : 0;
 
     if (isUndo) {

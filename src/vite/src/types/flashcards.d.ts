@@ -34,6 +34,9 @@ type TReviewOptions = {
 type TReviewRating =
   | "no"
   | "again"
+  | "again-hard"
+  | "again-yes"
+  | "again-easy"
   | "hard"
   | "yes"
   | "easy"

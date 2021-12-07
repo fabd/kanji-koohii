@@ -114,15 +114,35 @@ class LeitnerSRS
    *
    *   interval   ... in days, to update the card's `expiredate`
    *
-   * @param object $curData Row data coming from flashcard review storage
+   * @param array  $curData Row data coming from flashcard review storage
    * @param string $answer  Answer (see uiFlashcardReview.php const)
    *
    * @return array Row data to store in the flashcard review storage
    */
-  public function rateCard(object $curData, string $answer)
+  public function rateCard(array $curData, string $answer)
   {
     $card_interval = 0;
     $card_variance = 0;
+
+    $lapseCard = function (&$answer, $rating) use (&$curData)
+    {
+      $curData['leitnerbox'] = 1; // failed pile
+      $answer = $rating;
+    };
+
+    // handle again-* ratings (again followed by hard/yes/easy during review)
+    if ($answer === uiFlashcardReview::RATE_AGAIN_HARD)
+    {
+      $lapseCard($answer, uiFlashcardReview::RATE_HARD);
+    }
+    if ($answer === uiFlashcardReview::RATE_AGAIN_YES)
+    {
+      $lapseCard($answer, uiFlashcardReview::RATE_YES);
+    }
+    if ($answer === uiFlashcardReview::RATE_AGAIN_EASY)
+    {
+      $lapseCard($answer, uiFlashcardReview::RATE_EASY);
+    }
 
     switch ($answer) {
       case uiFlashcardReview::RATE_NO:
@@ -130,14 +150,20 @@ class LeitnerSRS
 
         break;
 
+      case uiFlashcardReview::RATE_AGAIN:
+        // "again" cards pre-emptively go to the fail pile
+        $card_box = 1;
+
+        break;
+
       case uiFlashcardReview::RATE_YES:
       case uiFlashcardReview::RATE_EASY:
-        $card_box = $curData->leitnerbox + 1;
+        $card_box = $curData['leitnerbox'] + 1;
 
         break;
 
       case uiFlashcardReview::RATE_HARD:
-        $card_box = $curData->leitnerbox - 1;
+        $card_box = $curData['leitnerbox'] - 1;
 
         // clamp bottom
         $card_box = max(2, $card_box);
@@ -156,14 +182,14 @@ class LeitnerSRS
       // cards in NEW or 1+ REVIEW piles with HARD answer get a fixed 1 day interval
       $card_interval = 1;
       $card_variance = 0;
-    // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData->leitnerbox, $card_box));
+    // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData['leitnerbox'], $card_box));
     }
     elseif ($card_box === 1)
     {
       // failed pile
       $card_interval = 0;
       $card_variance = 0;
-    // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData->leitnerbox));
+    // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData['leitnerbox']));
     }
     else
     {
@@ -180,22 +206,22 @@ class LeitnerSRS
       $card_variance = $this->variance[$card_box - 1];
       $card_interval = ($card_interval - $card_variance) + rand(0, $card_variance * 2);
 
-      // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)', $answer, $curData->leitnerbox, $card_box, $card_interval, $card_variance));
+      // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)', $answer, $curData['leitnerbox'], $card_box, $card_interval, $card_variance));
     }
 
     $oUpdate = [
-      'totalreviews' => $curData->totalreviews + 1,
+      'totalreviews' => $curData['totalreviews'] + 1,
       'leitnerbox' => $card_box,
       'interval_days' => $card_interval,
     ];
 
     if ($answer === uiFlashcardReview::RATE_YES || $answer === uiFlashcardReview::RATE_EASY)
     {
-      $oUpdate['successcount'] = $curData->successcount + 1;
+      $oUpdate['successcount'] = $curData['successcount'] + 1;
     }
     else
     {
-      $oUpdate['failurecount'] = $curData->failurecount + 1;
+      $oUpdate['failurecount'] = $curData['failurecount'] + 1;
     }
 
     return $oUpdate;

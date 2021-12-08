@@ -1,14 +1,12 @@
 // FIXME: refactor into a single class for srs/free/vocab modes
 // @ts-check
 
-import $$, { DomJS, asHtmlElement, domGetById, hasClass } from "@lib/dom";
+import $$, { DomJS, asHtmlElement } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 
-/** @typedef {{back_url: string}} TReviewProps */
-
 export default class VocabReview {
-  /** @type {TReviewProps} */
+  /** @type {TVocabReviewProps} */
   options;
 
   /** @type {FlashcardReview} */
@@ -22,7 +20,7 @@ export default class VocabReview {
   /**
    *
    * @param {TReviewOptions} fcrOptions ... options for FlashcardReview instance
-   * @param {TReviewProps} props ... props for Vue component (TBD refactor)
+   * @param {TVocabReviewProps} props ... props for Vue component (TBD refactor)
    */
   constructor(fcrOptions, props) {
     // set options
@@ -49,6 +47,15 @@ export default class VocabReview {
     this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
   }
 
+  /**
+   * Returns an option value
+   *
+   * @param {keyof TVocabReviewProps} name
+   */
+  getOption(name) {
+    return this.options[name];
+  }
+
   // proxy which *always* returns a valid card
   getFlashcardData() {
     return /**@type {TVocabCardData}*/ (this.oReview.getFlashcardData());
@@ -61,7 +68,7 @@ export default class VocabReview {
    */
   onEndReview() {
     //console.log('VocabReview.onEndReview()');
-    window.location.href = this.options.back_url;
+    window.location.href = this.getOption("back_url");
   }
 
   onFlashcardCreate() {

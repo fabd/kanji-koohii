@@ -158,12 +158,14 @@
 
 <?php
   $reviewOptions = [
-    // props for a (maybe/someday) Vue template
+    // @see TReviewProps
     'props' => [
       'end_url' =>  url_for('@review_summary', true),
       'editstory_url' => url_for('study/editstory'),
+      'freemode' => $freemode,
     ],
 
+    // options for `FlashcardReview` instance
     'fcrOptions' => [
       'ajax_url' => $ajax_url,
       'back_url' => url_for($exit_url, true),
@@ -171,7 +173,7 @@
     ]
   ];
 
-  // (wip) Vue refactoring
+  // props for KoohiiFlashcard Vue component
   $reviewMode = [
     'freemode' => $freemode,
     'fc_reverse' => $fc_reverse,

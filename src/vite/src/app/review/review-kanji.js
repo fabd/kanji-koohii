@@ -17,10 +17,8 @@ import EditStoryDialog from "@old/components/EditStoryDialog";
 import FlashcardReview, { FCRATE } from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 
-/** @typedef {{end_url: string, editstory_url: string}} TReviewProps */
-
 export default class KanjiReview {
-  /** @type {TReviewProps} */
+  /** @type {TKanjiReviewProps} */
   options;
 
   /** @type {FlashcardReview} */
@@ -48,7 +46,7 @@ export default class KanjiReview {
   /**
    *
    * @param {TReviewOptions} fcrOptions ... options for FlashcardReview instance
-   * @param {TReviewProps} props ... props for Vue component (TBD refactor)
+   * @param {TKanjiReviewProps} props ... props for Vue component (TBD refactor)
    */
   constructor(fcrOptions, props) {
     this.options = props;
@@ -72,15 +70,19 @@ export default class KanjiReview {
 
     this.reviewPage.addShortcutKey("n", "no");
     this.reviewPage.addShortcutKey("a", "again");
-    this.reviewPage.addShortcutKey("h", "hard");
     this.reviewPage.addShortcutKey("y", "yes");
-    this.reviewPage.addShortcutKey("e", "easy");
+    if (!this.getOption("freemode")) {
+      this.reviewPage.addShortcutKey("h", "hard");
+      this.reviewPage.addShortcutKey("e", "easy");
+    }
 
     // added number keys to answer with just left hand
     this.reviewPage.addShortcutKey("1", "no");
-    this.reviewPage.addShortcutKey("2", "hard");
     this.reviewPage.addShortcutKey("3", "yes");
-    this.reviewPage.addShortcutKey("4", "easy");
+    if (!this.getOption("freemode")) {
+      this.reviewPage.addShortcutKey("2", "hard");
+      this.reviewPage.addShortcutKey("4", "easy");
+    }
 
     // same for numpad keys
     this.reviewPage.addShortcutKey(97, "no"); // NUMPAD_1
@@ -123,7 +125,7 @@ export default class KanjiReview {
   /**
    * Returns an option value
    *
-   * @param {keyof TReviewProps} name
+   * @param {keyof TKanjiReviewProps} name
    */
   getOption(name) {
     return this.options[name];

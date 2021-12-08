@@ -15,6 +15,16 @@ type TVocabCardData = {
   id: TUcsId;
 };
 
+// props for KanjiReview/VocabReview instance (to be a Vue component)
+type TKanjiReviewProps = {
+  end_url: string;
+  editstory_url: string;
+  freemode: boolean;
+};
+type TVocabReviewProps = {
+  back_url: string;
+};
+
 // @see FlashcardReview.js
 type TReviewOptions = {
   items: TUcsId[];

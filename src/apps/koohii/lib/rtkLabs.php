@@ -369,7 +369,8 @@ class rtkLabs
     $items = [];
 
     while ($row = $db->fetchObject()) {
-      $items[] = $row->dictid;
+      // make sure the flashcard ids are ints, for uiFlashardReview
+      $items[] = (int) $row->dictid;
     }
 
 //DBG::printr($items);exit;
@@ -380,7 +381,7 @@ class rtkLabs
   /**
    * iVocabShuffle "only known kanji".
    *
-   * @return array   Array of flashcard ids for uiFlashcardReview frontend
+   * @return int[]   Array of unique ids for flashcard review session
    */
   public static function getVocabShuffleMode2Items()
   {
@@ -403,7 +404,7 @@ class rtkLabs
       ->having('c = numkanji AND pri & ?', self::EDICT_PRI_SHUFFLE)
       ->order('rand()')
       ->limit(self::VOCABSHUFFLE_LENGTH);
-                
+
 //echo $select;exit;
     
     // grab the id column
@@ -411,7 +412,8 @@ class rtkLabs
 
     $select->query();
     while ($row = $db->fetch()) {
-      $items[] = $row['dictid'];
+      // make sure the flashcard ids are ints, for uiFlashardReview
+      $items[] = (int) $row['dictid'];
     }
 
     return $items;

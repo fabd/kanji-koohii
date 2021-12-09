@@ -266,6 +266,14 @@ export default class FlashcardReview {
   }
 
   /**
+   * Check if there are answers, and if they are not all yet synced to server.
+   *
+   */
+  isPostCacheDirty() {
+    return this.postCache.length && this.postCacheFrom < this.position;
+  }
+
+  /**
    * Add or remove onbeforeunload event to warn user of loosing
    * flashcard answers.
    *
@@ -275,8 +283,7 @@ export default class FlashcardReview {
     // console.table(this.postCache.map((a) => ({ id: a.id, k: String.fromCharCode(a.id), r: a.r })));
     // console.log("ITEMS ", this.items.join("-"));
     // console.log("AGAIN ", [...this.againCards.keys()].join());
-
-    if (this.position > 0 && this.postCacheFrom < this.items.length) {
+    if (this.isPostCacheDirty()) {
       window.onbeforeunload = function () {
         return (
           "WAIT! You may lose a few flashcard answers if you leave the page now.\r\n" +

@@ -131,7 +131,19 @@ export default class KanjiReview {
     return this.options[name];
   }
 
-  // proxy which typecasts the card data, and *always* returns a valid card
+  /**
+   *
+   * @param {keyof TKanjiReviewProps} name
+   */
+  getOptionAsStr(name) {
+    return /** @type {string}*/ (this.options[name]);
+  }
+
+  //
+  /**
+   * proxy which typecasts the card data, and *always* returns a valid card
+   *
+   */
   getFlashcardData() {
     return /**@type {TCardData}*/ (this.oReview.getFlashcardData());
   }
@@ -150,7 +162,7 @@ export default class KanjiReview {
 
     // set form data and redirect to summary with POST
     elFrm.method = "post";
-    elFrm.action = this.getOption("end_url");
+    elFrm.action = this.getOptionAsStr("end_url");
     /**@type{HTMLInputElement}*/ (elFrm.elements.namedItem("fc_pass")).value = "" + this.countYes;
     /**@type{HTMLInputElement}*/ (elFrm.elements.namedItem("fc_fail")).value = "" + this.countNo;
     /**@type{HTMLInputElement}*/ (elFrm.elements.namedItem("fc_deld")).value = this.deletedCards.join(",");
@@ -182,13 +194,10 @@ export default class KanjiReview {
 
   /**
    *
-   * @param {TCardAnswer} oAnswer
+   * @param {TCardAnswer} answer
    */
-  onFlashcardUndo(oAnswer) {
-    //  console.log('onFlashcardUndo(%o)', oAnswer);
-
-    // correct the Yes / No totals
-    this.updateAnswerStats(oAnswer.id, oAnswer.r, true);
+  onFlashcardUndo(answer) {
+    this.updateAnswerStats(answer.id, answer.r, true);
   }
 
   /** @param {number} iState */
@@ -202,7 +211,6 @@ export default class KanjiReview {
    *
    * @param {string} sActionId cf. eventdispatcher
    * @param {Event} oEvent ...
-   * @returns
    */
   onAction(sActionId, oEvent) {
     /** @type {TReviewRating=} */
@@ -246,7 +254,7 @@ export default class KanjiReview {
         this.flashcardMenu();
         break;
       case "delete":
-        this.answerCard("delete");
+        this.rateCard("delete");
         break;
 
       case "flip":
@@ -271,7 +279,7 @@ export default class KanjiReview {
         break;
 
       case "skip":
-        this.answerCard("skip");
+        this.rateCard("skip");
         break;
 
       case "no":
@@ -298,7 +306,7 @@ export default class KanjiReview {
     if (cardRating) {
       // "No" answer doesn't require flipping the card first (issue #163)
       if (this.oReview.getFlashcardState() > 0 || sActionId === "no") {
-        this.answerCard(cardRating);
+        this.rateCard(cardRating);
       }
     }
 
@@ -315,7 +323,7 @@ export default class KanjiReview {
         // initialize Story Window and its position
         //var left = this.elFlashcard.offsetLeft + (this.elFlashcard.offsetWidth /2) - (520/2);
         //var top = this.elFlashcard.offsetTop + 61;
-        this.editStoryDialog = new EditStoryDialog(this.getOption("editstory_url"), oCardData.id);
+        this.editStoryDialog = new EditStoryDialog(this.getOptionAsStr("editstory_url"), oCardData.id);
       } else {
         this.editStoryDialog.load(oCardData.id);
         this.editStoryDialog.show();
@@ -342,16 +350,17 @@ export default class KanjiReview {
   /**
    * Rate card (or mark action like delete/skip), then forward.
    *
-   * @param {TReviewRating} answer
+   * @param {TReviewRating} rating
    */
-  answerCard(answer) {
-    const oCardData = this.getFlashcardData();
+  rateCard(rating) {
+    const cardData = this.getFlashcardData();
 
     /** @type {TCardAnswer} */
-    let oAnswer = { id: oCardData.id, r: answer };
+    let answer = { id: cardData.id, r: rating };
 
-    this.oReview.answerCard(oAnswer);
-    this.updateAnswerStats(oAnswer.id, oAnswer.r, false);
+    this.oReview.answerCard(answer);
+    this.updateAnswerStats(answer.id, rating, false);
+
     this.oReview.forward();
   }
 
@@ -378,10 +387,10 @@ export default class KanjiReview {
     const onMenuItem = (menuid) => {
       if (menuid === "confirm-delete") {
         // set flashcard answer that tells server to delete the card
-        this.answerCard("delete");
+        this.rateCard("delete");
         return true;
       } else if (menuid === "skip") {
-        this.answerCard("skip");
+        this.rateCard("skip");
         return true;
       }
 
@@ -448,8 +457,8 @@ export default class KanjiReview {
    */
   updateAnswerStats(id, rating, isUndo) {
     // cf. uiFlashcardReview.php const
-    let yes = [FCRATE.YES, FCRATE.EASY].includes(rating) ? 1 : 0;
-    let no = [FCRATE.NO, FCRATE.HARD].includes(rating) ? 1 : 0;
+    let yes = [FCRATE.YES, FCRATE.AGAIN_YES, FCRATE.EASY, FCRATE.AGAIN_EASY].includes(rating) ? 1 : 0;
+    let no = [FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD].includes(rating) ? 1 : 0;
     let deld = rating === FCRATE.DELETE ? 1 : 0;
 
     if (isUndo) {

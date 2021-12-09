@@ -56,9 +56,13 @@ export default class VocabReview {
     return this.options[name];
   }
 
-  // proxy which *always* returns a valid card
+  /**
+   * proxy which *always* returns a valid card
+   *
+   * @return {TVocabCardData}
+   */
   getFlashcardData() {
-    return /**@type {TVocabCardData}*/ (this.oReview.getFlashcardData());
+    return /**@type {any}*/ (this.oReview.getFlashcardData());
   }
 
   /**
@@ -109,7 +113,6 @@ export default class VocabReview {
    *
    * @param {string} sActionId cf. eventdispatcher
    * @param {Event} oEvent ...
-   * @returns
    */
   onAction(sActionId, oEvent) {
     console.log("VocabReview.onAction(%o)", sActionId);

@@ -84,7 +84,6 @@
     ],
 
     'fcrOptions' => [
-      'max_undo' => 10,
       'ajax_url' => $ajax_url,
       'put_request' => false,
       'items' => $items,

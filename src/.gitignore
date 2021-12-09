@@ -31,6 +31,9 @@ error_log*
 # npm install
 /node_modules
 
+# tests
+/test
+
 # composer installs
 /vendor
 

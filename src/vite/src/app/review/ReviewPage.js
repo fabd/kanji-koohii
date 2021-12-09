@@ -20,12 +20,12 @@ import { getBodyED } from "@app/root-bundle";
 import Keyboard from "@old/keyboard";
 
 export default class ReviewPage {
-  /** @type {Function} */
+  /** @type {TReviewPageActionFn} */
   onActionCallback;
 
   /**
    *
-   * @param {Function} onActionCallback
+   * @param {TReviewPageActionFn} onActionCallback
    */
   constructor(onActionCallback) {
     this.onActionCallback = onActionCallback;

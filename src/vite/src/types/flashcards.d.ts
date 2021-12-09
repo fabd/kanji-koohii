@@ -15,6 +15,9 @@ type TVocabCardData = {
   id: TUcsId;
 };
 
+// callback signature for action handler
+type TReviewPageActionFn = (actionId: string, event: Event) => boolean;
+
 // props for KanjiReview/VocabReview instance (to be a Vue component)
 type TKanjiReviewProps = {
   end_url: string;

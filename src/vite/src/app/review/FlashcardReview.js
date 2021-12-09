@@ -1,10 +1,27 @@
 /**
- * FlashcardReview is a reusable flashcard review component. It handles communication
- * with the server (ajax), caching and prefetching of flashcard data, and the state of
- * the review session (forward, backward (undo), end). Also handles shortcut keys.
+ * FlashcardReview handles
  *
- * Presentation logic is handled by the "child" class, through events that are notified
- * by FlashcardReview's event dispatcher.
+ * - caching and prefetching of flashcard data
+ * - syncing answers with the server (using AjaxQueue)
+ * - the state of the review session (forward, backward & undo, end)
+ *
+ * For SRS/stateful review modes:
+ *
+ *   TO ADVANCE
+ *     answerCard(answer)             to rate a card
+ *     forward()
+ *
+ *   TO GO BACK
+ *     undo()                         to undo answer & go backwards
+ *
+ *
+ * For free reviews where undo is not needed:
+ *
+ *   TO ADVANCE
+ *     forward()
+ *
+ *   TO GO BACK
+ *     backward()
  *
  *
  * Public methods:
@@ -31,9 +48,17 @@
  * Methods to control the review session:
  *
  *   beginReview()        Called automatically when FlashcardReview is instanced.
- *   endReview()          Ends review: flushes postCache to server, then notifies "onEndReview".
- *   forward()            Advance to next flashcard
- *   backward()           Go back one card (undo), notifies "onFlashcardUndo" event, with the last flashcard answer.
+ *
+ *   forward()            Advance to next flashcard.
+ *   backward()           Go back to previous card.
+ *
+ *   endReview()          Ends review: flushes postCache to server, then notifies
+ *                         "onEndReview".
+ *
+ *   answerCard(answer)   Rate the current card, add any optional data to be synced
+ *
+ *   undo()               Undo the last card answer, then go backward().
+ *                        Notifies "onFlashcardUndo" event, with the undo-ed answer.
  *
  *
  * Properties
@@ -215,7 +240,6 @@ export default class FlashcardReview {
 
   /** @readonly */
   get numAgain() {
-    console.log("numAgain() getter ", [...this.againCards.keys()].join());
     return this.againCards.size;
   }
 
@@ -247,6 +271,11 @@ export default class FlashcardReview {
    *
    */
   updateUnloadEvent() {
+    // debug
+    // console.table(this.postCache.map((a) => ({ id: a.id, k: String.fromCharCode(a.id), r: a.r })));
+    // console.log("ITEMS ", this.items.join("-"));
+    // console.log("AGAIN ", [...this.againCards.keys()].join());
+
     if (this.position > 0 && this.postCacheFrom < this.items.length) {
       window.onbeforeunload = function () {
         return (
@@ -353,34 +382,37 @@ export default class FlashcardReview {
     }
   }
 
-  /**
-   * Undo (go backwards)
-   *
-   * To allow undo we always keep a number of answers in the postCache (max_undo).
-   * When syncReview() does a prefetch, only the answers that are before max_undo items
-   * backwards are posted. Only at the end of the review are the last answers in the
-   * "ungo range" flushed out to the server.
-   *
-   */
   backward() {
-    console.assert(this.undoLevel < this.max_undo, "FlashcardReview::backward() undoLevel >= max_undo");
-
     if (this.position <= 0) {
       return;
     }
 
     this.destroyCurCard();
-    this.undoLevel++;
 
     // go back one step and clear postCache at that position
     this.position--;
 
-    // clear the last flashcard answer from the postCache
-    if (this.options.put_request) {
-      this.notify("onFlashcardUndo", this.unanswerCard());
+    this.cardReady();
+  }
+
+  /**
+   * Undo : unanswer the last card, and go backwards.
+   *
+   * To allow undo we always keep a number of answers in the postCache (max_undo).
+   * When syncReview() does a prefetch, only the answers that are before max_undo items
+   * backwards are posted. Only at the end of the review are the last answers in the
+   * "ungo range" flushed out to the server.
+   */
+  undo() {
+    console.assert(this.undoLevel < this.max_undo, "FlashcardReview::backward() undoLevel >= max_undo");
+    if (this.undoLevel >= this.max_undo) {
+      return;
     }
 
-    this.cardReady();
+    this.undoLevel++;
+
+    this.backward();
+    this.notify("onFlashcardUndo", this.unanswerCard());
   }
 
   /**
@@ -574,11 +606,13 @@ export default class FlashcardReview {
   }
 
   /**
-   * Store answer and any other custom data for the current card,
-   * to be posted on the next review sync.
+   * Keep track of answers, to be synced later with server.
+   *
+   * - update counts of rated & again cards
+   * - append answer at end of postCache[]
+   * - append a copy of the card at end of items[], if using "again"
    *
    * @param {TCardAnswer} answer
-   *
    */
   answerCard(answer) {
     // keep track of repeat cards
@@ -594,43 +628,41 @@ export default class FlashcardReview {
       this.againCards.delete(answer.id);
     }
 
-console.log("answerCard %s : %s", String.fromCodePoint(answer.id), answer.r);
-
-    // console.log('FlashcardReview::answerCard(%o)', cardAnswer);
     this.postCache[this.position] = answer;
-
-    let tt = this.postCache.map((a) => ({ id: a.id, k: String.fromCharCode(a.id), r: a.r }));
-    console.table(tt);
   }
 
   /**
-   * Cleans up the answer of current flashcard (when going backwards).
+   * Update the state of the review when undo-ing an answer.
    *
-   * Must remove item from postCache otherwise when flushing at end of review,
-   * the last undo'ed item(s) would be posted whereas the user did not want to.
+   * - update counts of rated & again cards
+   * - remove the answer from postCache[]
+   * - remove duplicate cards from the end of items[], added previously by "again"
    *
-   * @return  {TCardAnswer}   Returns flashcard answer data (cf. answerCard()) that is being cleared
+   * @return {TCardAnswer} Flashcard answer (cf. answerCard()) that is "undone"
    */
   unanswerCard() {
     console.assert(this.postCache.length);
 
-    // pop data from the postcache, don't assume order
+    let answer = /** @type {TCardAnswer}*/ (this.postCache.pop());
 
-    let answer = this.postCache[this.position];
-
-    // whether we are seeing the card again, in the same review session
-    let isRepeatCard = this.position >= this.numCards;
+    // if it was a "again" card, remove its duplicata from the end of items[]
+    if (answer.r === FCRATE.AGAIN) {
+      this.items.pop();
+    }
 
     // keep count of rated (ie. not "again") cards
     if (!this.againCards.has(answer.id)) {
       this.numRated--;
     }
 
-    // keep count of unique "again" cards not yet cleared
+    // whether we are seeing the card again, in the same review session
+    let isRepeatCard = this.position >= this.numCards;
+
+    // if undo-ing an "again >> hard/yes/easy/etc" card, re-count it as "again" answer
     if (isRepeatCard) {
       this.againCards.set(answer.id, true);
     } else {
-      // in case it was an "again" card...
+      // a non-repeat card, always clear from "again" count
       this.againCards.delete(answer.id);
     }
 

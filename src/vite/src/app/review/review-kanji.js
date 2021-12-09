@@ -261,7 +261,7 @@ export default class KanjiReview {
 
       case "undo":
         if (this.oReview.getNumUndos() > 0) {
-          this.oReview.backward();
+          this.oReview.undo();
         }
         break;
 

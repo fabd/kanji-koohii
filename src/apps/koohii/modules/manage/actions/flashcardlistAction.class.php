@@ -22,6 +22,7 @@ class flashcardlistAction extends sfAction
     $this->table = new uiSelectTable(new FlashcardListBinding(), $this->pager->getSelect(), $request->getParameterHolder());
     $this->table->configure([
       'sortColumn' => $queryParams[uiSelectTable::QUERY_SORTCOLUMN],
+      'sortColumnTwo' => 'seq_nr',
       'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER]
     ]);
     

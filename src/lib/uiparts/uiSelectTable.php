@@ -6,8 +6,9 @@
  * in each column head.
  * 
  * Methods that can be used in view template:
- *  getTableHead()     Return HTML for the <thead> section
- *  getTableBody()     Return HTML for the <tbody> section
+ * 
+ *   getTableHead()       Return HTML for the <thead> section
+ *   getTableBody()       Return HTML for the <tbody> section
  *  
  * TODO
  * - Only print 7 chars of the checksum for row id validation purposes,
@@ -70,6 +71,9 @@ class uiSelectTable
       
       // default sort column (null will be set to first defined column)
       'sortColumn' => null,
+
+      // use a secondary sort to solve duplicate entries when paging results
+      'sortColumnTwo' => null,
       
       // default sort order
       'sortOrder' => 0,
@@ -430,8 +434,16 @@ class uiSelectTable
     $this->sortOrder = intval($this->request->get(self::QUERY_SORTORDER, $this->settings['sortOrder']));
     $this->sortOrder = $this->sortOrder % count($this->sortOrders);
     
-    // there is only one column so we quote here, ideally should be quoted in coreDatabaseSelect
-    return $select->order('`'.$this->sortColumn.'` '.$this->sortOrders[$this->sortOrder]);
+    // make sure to quote sort columns, as they can come from url query params
+    $orderCols = "`{$this->sortColumn}` {$this->sortOrders[$this->sortOrder]}";
+
+    // secondary sort order
+    $sortColumnTwo = $this->settings['sortColumnTwo'];
+    if ($sortColumnTwo && $sortColumnTwo !== $this->sortColumn) {
+      $orderCols .= ", `{$sortColumnTwo}`";
+    }
+
+    return $select->order($orderCols);
   }
 
   /**

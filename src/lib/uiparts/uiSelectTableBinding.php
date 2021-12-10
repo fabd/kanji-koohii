@@ -2,30 +2,32 @@
 /**
  * uiSelectTableBinding configures the uiSelectTable component.
  * 
- * Configuration (properties of the configuration object returned by getConfig():
+ * Configuration object returned by getConfig():
  * 
- * 'settings':
- *   editable:      <boolean>    Output html structure for editable data (uiforms, unfinished)
- *   primaryKey:    <string|array>  One or multiple primary keys, very important for editable data
- *   sortColumn:    <string>     Initial sort column
- *   sortOrder:     <0|1>        Initial sort order
- *   rows_per_page: <int>        Defaults to 10 (cf. uiSelectTable)
+ * settings:
  * 
- * 'columns':
+ *   editable       <boolean>    Output html structure for editable data (uiforms, unfinished)
+ *   primaryKey     <string|array>  One or multiple primary keys, very important for editable data
+ *   sortColumn     <string>     Initial sort column
+ *   sortColumnTwo  <string>     Secondary sort column, defaults to ASC
+ *   sortOrder      <0|1>        Initial sort order
+ *   rows_per_page  <int>        Defaults to 10 (cf. uiSelectTable)
  * 
- *   An array of column definitions:
+ * columns:
  * 
- *   caption:       <string>     Column head title
- *   width:          <int>        Html width attribute (percent)
- *   cssClass:      <string>     Css class to apply on this column's cells
- *   colData:        <string>     Column used for display, sort and updates by default.
+ *   (An array of column definitions)
+ * 
+ *   caption        <string>     Column head title
+ *   width          <int>        Html width attribute (percent)
+ *   cssClass       <string>     Css class to apply on this column's cells
+ *   colData        <string>     Column used for display, sort and updates by default.
  *                               colData is escaped for display!
  *                               If not set, colDisplay may be used, and the column is not sortable.
- *   colDisplay:    <string>     If set, this will be the display value, while colData is used for sorting.
+ *   colDisplay     <string>     If set, this will be the display value, while colData is used for sorting.
  *                               The display value is NOT escaped!
- *   colSort:        <string>     If set, column to use for sorting.
- *   editable:      <boolean>    If true, editable and sent with post data. Default false.
- *   default:       <string>     Default value for new rows
+ *   colSort        <string>     If set, column to use for sorting.
+ *   editable       <boolean>    If true, editable and sent with post data. Default false.
+ *   default        <string>     Default value for new rows
  * 
  *  
  * @package    UiParts

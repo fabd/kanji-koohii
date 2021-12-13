@@ -1,9 +1,5 @@
 <?php
-/**
- * Provides a simple grid/list view for the free review mode.
- *
- * @author  Fabrice Denis
- */
+
 class summarySimpleComponent extends sfComponent
 {
   /**

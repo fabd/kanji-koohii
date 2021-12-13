@@ -11,8 +11,7 @@ class summarySimpleComponent extends sfComponent
    */
   public function execute($request)
   {
-    $oFRS = new rtkFreeReviewSession();
-    $answers = $oFRS->getReviewedCards();
+    $answers = (new uiFlashcardReview())->getCachedAnswers();
 
     $this->cards = [];
 
@@ -20,11 +19,11 @@ class summarySimpleComponent extends sfComponent
     {
       $keywords = CustkeywordsPeer::getCustomKeywords($this->getUser()->getUserId());
 
-      foreach ($answers as $ucsId => $iAnswer)
+      foreach ($answers as $ucsId => $answer)
       {
         // FIXME : free mode should not handle ratings other than YES/NO/AGAIN
         //         (fix keyboard shortcuts)
-        $isPass = in_array($iAnswer, [
+        $isPass = in_array($answer, [
           uiFlashcardReview::RATE_HARD,
           uiFlashcardReview::RATE_YES,
           uiFlashcardReview::RATE_EASY,

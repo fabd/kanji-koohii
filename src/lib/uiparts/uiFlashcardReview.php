@@ -68,9 +68,9 @@
 
 class uiFlashcardReview
 {
-  protected sfUser $user;
-  protected object $options;
-  protected array $updated;
+  private sfUser $user;
+  private object $options;
+  private array $cardStatus;
   
   // card ratings (@see FlashcardReview.js, flashcards.d.ts)
   const RATE_NO      = 'no';
@@ -101,7 +101,7 @@ class uiFlashcardReview
    * for those times when the client doesn't get a response, and sends
    * flashcard answers more than once.
    */
-  const SESS_CARD_UPDATED = 'uifr_cards_status';
+  const SESS_ATTR_NAME = 'uifr_card_answers';
 
   /**
    * 
@@ -110,22 +110,21 @@ class uiFlashcardReview
    * 
    * @return 
    */  
-  public function __construct(array $options, $start = false)
+  public function __construct(array $options = [], $start = false)
   {
     $this->options = (object) $options;
 
     $this->user = sfContext::getInstance()->getUser();
 
-    // start a new review session, do some cleanup
+    // start a new review session, or restore state from session
     if ($start)
     {
-      $this->updated = [];
-      $this->cacheUpdateStatus();
+      $this->cardStatus = [];
+      $this->saveToSession();
     }
     else
     {
-      // restore flashcard update status from the session
-      $this->updated = $this->user->getAttribute(self::SESS_CARD_UPDATED, []);
+      $this->cardStatus = $this->user->getAttribute(self::SESS_ATTR_NAME, []);
     }
   }
 
@@ -210,11 +209,15 @@ class uiFlashcardReview
       }
 
       $cardId = (int)$answer->id;
+      $cardStatus = $this->getCardStatus($cardId);
+      
 
-      // If the card is already updated, that means the client did not receive
-      // the last response. Don't update the same card twice, but do return the
-      // success status so that the client will clear the postCache.
-      if (true === $this->getUpdateStatus($cardId))
+      // if a card is rated AGAIN, it may be rated again in the same session.
+      // 
+      // Otherwise, avoid duplicate ratings in case the server somehow timed out
+      //  but did process, and the client resends the answers.
+      //
+      if ($cardStatus && $cardStatus !== uiFlashcardReview::RATE_AGAIN)
       {
         $putSuccess[] = $cardId;
       }
@@ -228,17 +231,10 @@ class uiFlashcardReview
         // Flag the card as updated, in case the server response times out for the
         //  client, and the client re-sends the same card answers, avoid rating a card twice.
         //
-        // Ignore AGAIN rating, because they may be followed by AGAIN_HARD/YES/EASY,
-        //  which we need to handle.
-        //
-        if ($answer->r !== uiFlashcardReview::RATE_AGAIN)
-        {
-          $this->setUpdateStatus($cardId);
-        }
+        $this->updateCard($cardId, $answer->r);
       }
     }
 
-    $this->cacheUpdateStatus();
 
     return $putSuccess;
   }
@@ -267,28 +263,36 @@ class uiFlashcardReview
     return $items;
   }
 
-  public function cacheUpdateStatus()
+  private function saveToSession()
   {
-    $this->user->setAttribute(self::SESS_CARD_UPDATED, $this->updated);
+    $this->user->setAttribute(self::SESS_ATTR_NAME, $this->cardStatus);
   }
 
   /**
-   * Returns true if the flashcard answer has already been handled.
-   *
+   * Returns answer for this flashcard in this review session.
+   * 
    * @param int   $id   Flashcard id.
+   * 
+   * @return string|false
    */
-  protected function getUpdateStatus($id)
+  private function getCardStatus(int $id)
   {
-    return isset($this->updated[$id]);
+    return $this->cardStatus[$id] ?? false;
   }
 
   /**
-   * Sets flag to makr that flashcard answer has been handled.
+   * Store flashcard answers.
    *
-   * @param int   $id   Flashcard id.
+   * @param int $id   Flashcard id (UCS code for kanjis).
    */
-  protected function setUpdateStatus($id)
+  public function updateCard(int $id, string $rating)
   {
-    $this->updated[$id] = true;
+    $this->cardStatus[$id] = $rating;
+    $this->saveToSession();
+  }
+
+  public function getCachedAnswers()
+  {
+    return $this->cardStatus;
   }
 }

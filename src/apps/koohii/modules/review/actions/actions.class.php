@@ -137,9 +137,6 @@ class reviewActions extends sfActions
     }
     else
     {
-      // start a new review session (reset any prior session)
-      new rtkFreeReviewSession(true);
-
       if ($request->hasParameter('known'))
       {
         // free review :: known cards
@@ -209,7 +206,7 @@ class reviewActions extends sfActions
   {
     $options = [
       'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
-      'fn_put_flashcard' => 'reviewActions::freeReviewUpdate'
+      'fn_put_flashcard' => 'reviewActions::dummyUpdate'
     ];
 //debugging
 // sleep(6);
@@ -222,23 +219,17 @@ class reviewActions extends sfActions
   /**
    * fn_put_flashcard handler for flashcard answers from the free review mode.
    * 
+   * THIS IS A DUMMY HANDLER  for  uiFlashcardReview to cache answers.
+   * 
    * @param  int      $id     Flashcard id (UCS-2 code value)
    * @param  object   $oData  Flashcard answer data
    *
    * @return boolean  Returns true if update went succesfully
    * 
    */
-  public static function freeReviewUpdate($id, $oData)
+  public static function dummyUpdate($id, $oData)
   {
-    if ($id < 1 || !isset($oData->r))
-    {
-      throw new sfException(__METHOD__." Invalid parameters ({$id})");
-    }
-
-    // udpate session for the review summary
-    $oFRS = new rtkFreeReviewSession();
-    $oFRS->updateFlashcard($id, $oData->r);
-
+    assert(!empty($id) && isset($oData->r));
     return true;
   }
 

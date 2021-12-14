@@ -102,7 +102,7 @@ class KanjisPeer extends coreDatabaseTable
   /**
    * Returns presentation data for the kanji flashcards (both SRS and non-SRS).
    *
-   * This is a uiFlashcardReview callback, $ucsId must be sanitized!
+   * This is a FlashcardReview callback, $ucsId must be sanitized!
    *
    * Options:
    * 

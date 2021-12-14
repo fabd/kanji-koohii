@@ -776,14 +776,14 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
-   * uiFlashcardReview callback for the review page.
+   * FlashcardReview callback for the review page.
    * 
    * Note: must sanitize data!
    * 
    * Flashcard answer data is set by the front end code (review.js):
    * 
    *    id     Flashcard id = UCS-2 code value
-   *    r      Answer (cf. uiFlashcardReview.php const)
+   *    r      Answer (cf. FlashcardReview.php const)
    *    
    * @param  int      $ucsId     Flashcard id (UCS-2 code value)
    * @param  object   $oData  Flashcard answer data
@@ -798,12 +798,12 @@ class ReviewsPeer extends coreDatabaseTable
 
     $userId = sfContext::getInstance()->getUser()->getUserId();
 
-    if ($oData->r === uiFlashcardReview::RATE_SKIP)
+    if ($oData->r === FlashcardReview::RATE_SKIP)
     {
       // skip flashcard : just ignore it (pretend it's been handled)
       $result = true;
     }
-    elseif ($oData->r === uiFlashcardReview::RATE_DELETE)
+    elseif ($oData->r === FlashcardReview::RATE_DELETE)
     {
       $result = self::deleteFlashcards($userId, [$ucsId]) > 0;
       
@@ -826,11 +826,11 @@ class ReviewsPeer extends coreDatabaseTable
     // clear relearned kanji if successfull answer
     // NOTE: expected for API
     if ($result && rtkApi::isApiModule()
-        && ($oData->r === uiFlashcardReview::RATE_HARD ||
-            $oData->r === uiFlashcardReview::RATE_YES  ||
-            $oData->r === uiFlashcardReview::RATE_NO   ||
-            $oData->r === uiFlashcardReview::RATE_EASY ||
-            $oData->r === uiFlashcardReview::RATE_DELETE))
+        && ($oData->r === FlashcardReview::RATE_HARD ||
+            $oData->r === FlashcardReview::RATE_YES  ||
+            $oData->r === FlashcardReview::RATE_NO   ||
+            $oData->r === FlashcardReview::RATE_EASY ||
+            $oData->r === FlashcardReview::RATE_DELETE))
     {
       LearnedKanjiPeer::clearKanji($userId, $ucsId);
     }
@@ -853,7 +853,7 @@ class ReviewsPeer extends coreDatabaseTable
     if ($cardData === false) return false;
 
     // rate card as "not remembered" (No)
-    $update = LeitnerSRS::getInstance()->rateCard($cardData, uiFlashcardReview::RATE_NO);
+    $update = LeitnerSRS::getInstance()->rateCard($cardData, FlashcardReview::RATE_NO);
 
     return self::updateFlashcard($userId, $ucsId, $update);
   }

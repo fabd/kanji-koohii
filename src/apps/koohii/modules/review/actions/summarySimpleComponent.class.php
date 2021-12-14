@@ -7,7 +7,7 @@ class summarySimpleComponent extends sfComponent
    */
   public function execute($request)
   {
-    $answers = uiFlashcardReview::getInstance()->getCachedAnswers();
+    $answers = FlashcardReview::getInstance()->getCachedAnswers();
 
     $this->cards = [];
 
@@ -20,12 +20,12 @@ class summarySimpleComponent extends sfComponent
         // FIXME : free mode should not handle ratings other than YES/NO/AGAIN
         //         (fix keyboard shortcuts)
         $isPass = in_array($answer, [
-          uiFlashcardReview::RATE_HARD,
-          uiFlashcardReview::RATE_YES,
-          uiFlashcardReview::RATE_EASY,
-          uiFlashcardReview::RATE_AGAIN_HARD,
-          uiFlashcardReview::RATE_AGAIN_YES,
-          uiFlashcardReview::RATE_AGAIN_EASY,
+          FlashcardReview::RATE_HARD,
+          FlashcardReview::RATE_YES,
+          FlashcardReview::RATE_EASY,
+          FlashcardReview::RATE_AGAIN_HARD,
+          FlashcardReview::RATE_AGAIN_YES,
+          FlashcardReview::RATE_AGAIN_EASY,
         ]);
 
         $card = [

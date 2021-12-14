@@ -1,6 +1,6 @@
 <?php
 /**
- * uiFlashcardReview.
+ * FlashcardReview.
  *
  * This is a generic class that handles JSON requests to return flashcard data to the client,
  * and to update the database with data coming from the client.
@@ -33,7 +33,7 @@
  *   fn_get_flashcard(int $id, object $options)
  *                      Returns flashcard data as associative array or object.
  *                      Returns null if the data can not be retrieved (id invalid, ...).
- *                      Returned "id" property must be integer! (cf. uiFlashcardReview.js)
+ *                      Returned "id" property must be integer! (cf. FlashcardReview.js)
  *
  *   fn_put_flashcard(int $id, object $data)
  *                      Update the flashcard status, and anything else based on data
@@ -63,7 +63,7 @@
  *                        were succesfully handled. On the front end side, any items
  *                        that were not succesfully handled may be sent again.
  */
-class uiFlashcardReview
+class FlashcardReview
 {
   private sfUser $user;
   private object $options;
@@ -204,7 +204,7 @@ class uiFlashcardReview
   {
     if (!isset($this->options->fn_put_flashcard))
     {
-      throw new rtkAjaxException('uiFlashcardReview: fn_put_flashcard is not set');
+      throw new rtkAjaxException('FlashcardReview: fn_put_flashcard is not set');
     }
 
     $putSuccess = [];
@@ -224,7 +224,7 @@ class uiFlashcardReview
       // Otherwise, avoid duplicate ratings in case the server somehow timed out
       //  but did process, and the client resends the answers.
       //
-      if ($cardStatus && $cardStatus !== uiFlashcardReview::RATE_AGAIN)
+      if ($cardStatus && $cardStatus !== FlashcardReview::RATE_AGAIN)
       {
         $putSuccess[] = $cardId;
       }
@@ -318,28 +318,28 @@ class uiFlashcardReview
     foreach ($answers as $rating)
     {
       if (in_array($rating, [
-        uiFlashcardReview::RATE_HARD,
-        uiFlashcardReview::RATE_YES,
-        uiFlashcardReview::RATE_EASY,
+        FlashcardReview::RATE_HARD,
+        FlashcardReview::RATE_YES,
+        FlashcardReview::RATE_EASY,
       ]))
       {
         ++$fcr_pass;
       }
 
       if (in_array($rating, [
-        uiFlashcardReview::RATE_AGAIN,
-        uiFlashcardReview::RATE_AGAIN_HARD,
-        uiFlashcardReview::RATE_AGAIN_YES,
-        uiFlashcardReview::RATE_AGAIN_EASY,
-        uiFlashcardReview::RATE_NO,
+        FlashcardReview::RATE_AGAIN,
+        FlashcardReview::RATE_AGAIN_HARD,
+        FlashcardReview::RATE_AGAIN_YES,
+        FlashcardReview::RATE_AGAIN_EASY,
+        FlashcardReview::RATE_NO,
       ]))
       {
         ++$fcr_fail;
       }
 
       if (!in_array($rating, [
-        uiFlashcardReview::RATE_DELETE,
-        uiFlashcardReview::RATE_SKIP,
+        FlashcardReview::RATE_DELETE,
+        FlashcardReview::RATE_SKIP,
       ]))
       {
         ++$fcr_total;

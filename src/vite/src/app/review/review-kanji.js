@@ -3,7 +3,7 @@
  *
  * Options:
  *
- *   fcr_options   Options to setup uiFlashcardReview
+ *   fcr_options   Options to setup FlashcardReview
  *   end_url       Url to redirect to at the end of the review
  *
  */
@@ -454,7 +454,7 @@ export default class KanjiReview {
    * @param  {boolean} isUndo
    */
   updateAnswerStats(id, rating, isUndo) {
-    // cf. uiFlashcardReview.php const
+    // cf. FlashcardReview.php const
     let yes = [FCRATE.YES, FCRATE.AGAIN_YES, FCRATE.EASY, FCRATE.AGAIN_EASY].includes(rating) ? 1 : 0;
     let no = [FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD].includes(rating) ? 1 : 0;
     let deld = rating === FCRATE.DELETE ? 1 : 0;

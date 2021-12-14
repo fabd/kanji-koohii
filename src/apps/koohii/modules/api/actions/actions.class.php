@@ -261,7 +261,7 @@ class apiActions extends sfActions
 
     $rsp->card_count = 0;
 
-    uiFlashcardReview::getInstance()->start();
+    FlashcardReview::getInstance()->start();
 
     if ('free' === $mode)
     {
@@ -378,12 +378,12 @@ class apiActions extends sfActions
 
     // VALIDER LE TIME
 
-    $uiFR = uiFlashcardReview::getInstance()->config([
+    $uiFR = FlashcardReview::getInstance()->config([
       'fn_put_flashcard' => 'ReviewsPeer::putFlashcardData',
     ]);
 
     // (Nov 2021) normalize old flashcard ratings to the newer ones
-    $putItems = uiFlashcardReview::normalizeOldRatings($json->sync);
+    $putItems = FlashcardReview::normalizeOldRatings($json->sync);
 
     $putSuccess = $uiFR->handlePutRequest($putItems);
 

@@ -348,7 +348,7 @@ class rtkLabs
   /**
    * iVocabShuffle "Heisig index" mode.
    * 
-   * @return array  Array of flashcard ids for uiFlashcardReview frontend
+   * @return array  Array of flashcard ids for FlashcardReview frontend
    */
   public static function getVocabShuffleMode1Items($max_framenum = 20)
   {
@@ -453,7 +453,7 @@ class rtkLabs
    * OBSOLETE?
    *
    * Sets array data into the session for retrieving later with the
-   * uiFlashcardReview callback.
+   * FlashcardReview callback.
    *
    * See getFlashcardData()
    * 
@@ -466,7 +466,7 @@ class rtkLabs
    */
 
   /**
-   * uiFlashcardReview callback for VocabShuffle mode.
+   * FlashcardReview callback for VocabShuffle mode.
    * 
    * Returns flashcard data that was already loaded into the session,
    * given a unique flashcard id, which was used as the key for the
@@ -480,7 +480,7 @@ class rtkLabs
   {
     $cardData = self::getVocabFlashcard($dictId);
 
-    // required by uiFlashcardReview frontend
+    // required by FlashcardReview frontend
     $cardData->id = $dictId;
     
     // goes into flashcard template .fcData-dispword element
@@ -528,7 +528,7 @@ class rtkLabs
   }
 
   /**
-   * uiFlashcardReview callback for the free review mode when example readings
+   * FlashcardReview callback for the free review mode when example readings
    * are enabled.
    *
    * Try to get ONE example On, and ONE example Kun words for the given kanji,

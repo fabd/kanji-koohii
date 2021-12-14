@@ -2,16 +2,16 @@
 
 const RATING_LABELS = [
   '' => '-',
-  uiFlashcardReview::RATE_NO => 'No',
-  uiFlashcardReview::RATE_HARD => 'Hard',
-  uiFlashcardReview::RATE_YES => 'Yes',
-  uiFlashcardReview::RATE_EASY => 'Easy',
-  uiFlashcardReview::RATE_DELETE => 'Delete',
-  uiFlashcardReview::RATE_SKIP => '(skipped)',
-  uiFlashcardReview::RATE_AGAIN => 'Again',
-  uiFlashcardReview::RATE_AGAIN_HARD => 'Again > Hard',
-  uiFlashcardReview::RATE_AGAIN_YES => 'Again > Yes',
-  uiFlashcardReview::RATE_AGAIN_EASY => 'Again > Easy',
+  FlashcardReview::RATE_NO => 'No',
+  FlashcardReview::RATE_HARD => 'Hard',
+  FlashcardReview::RATE_YES => 'Yes',
+  FlashcardReview::RATE_EASY => 'Easy',
+  FlashcardReview::RATE_DELETE => 'Delete',
+  FlashcardReview::RATE_SKIP => '(skipped)',
+  FlashcardReview::RATE_AGAIN => 'Again',
+  FlashcardReview::RATE_AGAIN_HARD => 'Again > Hard',
+  FlashcardReview::RATE_AGAIN_YES => 'Again > Yes',
+  FlashcardReview::RATE_AGAIN_EASY => 'Again > Easy',
 ];
 
 class summaryTableComponent extends sfComponent
@@ -59,7 +59,7 @@ class FlashcardListBinding implements uiSelectTableBinding
 
   public function getConfig()
   {
-    $this->ratings = uiFlashcardReview::getInstance()->getCachedAnswers();
+    $this->ratings = FlashcardReview::getInstance()->getCachedAnswers();
 
     // MUST BE VALID JSON! ! !
     return <<<EOD

@@ -43,7 +43,7 @@ type TReviewOptions = {
   put_request?: boolean;
 };
 
-// make sure this matches RATE_* in uiFlashcardReview.php
+// make sure this matches RATE_* in FlashcardReview.php
 type TReviewRating =
   | "no"
   | "again"

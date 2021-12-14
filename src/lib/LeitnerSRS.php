@@ -115,7 +115,7 @@ class LeitnerSRS
    *   interval   ... in days, to update the card's `expiredate`
    *
    * @param array  $curData Row data coming from flashcard review storage
-   * @param string $answer  Answer (see uiFlashcardReview.php const)
+   * @param string $answer  Answer (see FlashcardReview.php const)
    *
    * @return array Row data to store in the flashcard review storage
    */
@@ -131,38 +131,38 @@ class LeitnerSRS
     };
 
     // handle again-* ratings (again followed by hard/yes/easy during review)
-    if ($answer === uiFlashcardReview::RATE_AGAIN_HARD)
+    if ($answer === FlashcardReview::RATE_AGAIN_HARD)
     {
-      $lapseCard($answer, uiFlashcardReview::RATE_HARD);
+      $lapseCard($answer, FlashcardReview::RATE_HARD);
     }
-    if ($answer === uiFlashcardReview::RATE_AGAIN_YES)
+    if ($answer === FlashcardReview::RATE_AGAIN_YES)
     {
-      $lapseCard($answer, uiFlashcardReview::RATE_YES);
+      $lapseCard($answer, FlashcardReview::RATE_YES);
     }
-    if ($answer === uiFlashcardReview::RATE_AGAIN_EASY)
+    if ($answer === FlashcardReview::RATE_AGAIN_EASY)
     {
-      $lapseCard($answer, uiFlashcardReview::RATE_EASY);
+      $lapseCard($answer, FlashcardReview::RATE_EASY);
     }
 
     switch ($answer) {
-      case uiFlashcardReview::RATE_NO:
+      case FlashcardReview::RATE_NO:
         $card_box = 1; // failed pile
 
         break;
 
-      case uiFlashcardReview::RATE_AGAIN:
+      case FlashcardReview::RATE_AGAIN:
         // "again" cards pre-emptively go to the fail pile
         $card_box = 1;
 
         break;
 
-      case uiFlashcardReview::RATE_YES:
-      case uiFlashcardReview::RATE_EASY:
+      case FlashcardReview::RATE_YES:
+      case FlashcardReview::RATE_EASY:
         $card_box = $curData['leitnerbox'] + 1;
 
         break;
 
-      case uiFlashcardReview::RATE_HARD:
+      case FlashcardReview::RATE_HARD:
         $card_box = $curData['leitnerbox'] - 1;
 
         // clamp bottom
@@ -177,7 +177,7 @@ class LeitnerSRS
     // clamp highest box to SRS setting
     $card_box = min($card_box, $this->optMaxBox + 1);
 
-    if ($card_box === 2 && $answer === uiFlashcardReview::RATE_HARD)
+    if ($card_box === 2 && $answer === FlashcardReview::RATE_HARD)
     {
       // cards in NEW or 1+ REVIEW piles with HARD answer get a fixed 1 day interval
       $card_interval = 1;
@@ -197,7 +197,7 @@ class LeitnerSRS
       $card_interval = $this->intervals[$card_box - 1];
 
       // easy answers get a higher interval
-      if ($answer === uiFlashcardReview::RATE_EASY)
+      if ($answer === FlashcardReview::RATE_EASY)
       {
         $card_interval = ceil($card_interval * self::EASY_FACTOR);
       }

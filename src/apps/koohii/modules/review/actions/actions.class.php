@@ -75,7 +75,7 @@ class reviewActions extends sfActions
   }
 
   /**
-   * Kanji Flashcard review page with uiFlashcardReview.
+   * Kanji Flashcard review page with FlashcardReview.
    *
    * Free Review Mode (Labs page):
    *
@@ -188,7 +188,7 @@ class reviewActions extends sfActions
     // route for Exit button and 'empty' review url
     $options['exit_url'] = $options['freemode'] ? 'review/custom' : '@overview';
 
-    uiFlashcardReview::getInstance()->start();
+    FlashcardReview::getInstance()->start();
 
     // these will be variables in the review template partial
     $this->reviewOptions = $options;
@@ -231,7 +231,7 @@ class reviewActions extends sfActions
   /**
    * fn_put_flashcard handler for flashcard answers from the free review mode.
    *
-   * THIS IS A DUMMY HANDLER  for  uiFlashcardReview to cache answers.
+   * THIS IS A DUMMY HANDLER  for  FlashcardReview to cache answers.
    *
    * @param int    $id    Flashcard id (UCS-2 code value)
    * @param object $oData Flashcard answer data
@@ -248,7 +248,7 @@ class reviewActions extends sfActions
   /**
    * handleFlashcardRequest.
    *
-   * @see  uiFlashcardReview.php for POST request parameters.
+   * @see  FlashcardReview.php for POST request parameters.
    *
    * @param sfRequest $request
    * @param mixed     $options
@@ -262,7 +262,7 @@ class reviewActions extends sfActions
       throw new rtkAjaxException('Empty JSON Request.');
     }
 
-    $flashcardReview = uiFlashcardReview::getInstance()->config($options);
+    $flashcardReview = FlashcardReview::getInstance()->config($options);
 
     return $this->renderJson($flashcardReview->handleRequest($fcrData));
   }

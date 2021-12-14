@@ -2,7 +2,7 @@
 /**
  * summary validation.
  * 
- * Checks required post variables sent by the uiFlashcardReview component
+ * Checks required post variables sent by the FlashcardReview component
  * at the end of a review session.
  * 
  */

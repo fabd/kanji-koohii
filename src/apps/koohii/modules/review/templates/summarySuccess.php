@@ -99,5 +99,7 @@
 </div>
 
 <?php koohii_onload_slot(); ?>
-  new Koohii.UX.AjaxTable('summaryTable');
+  if (document.getElementById('summaryTable')) {
+    new Koohii.UX.AjaxTable('summaryTable');
+  }
 <?php end_slot(); ?>

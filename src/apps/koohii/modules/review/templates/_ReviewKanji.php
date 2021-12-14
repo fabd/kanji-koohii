@@ -143,12 +143,9 @@
 
 <?php # Form to redirect to Review Summary with POST ?>
 <form method="post" id="uiFcRedirectForm" action="<?= url_for('@review_summary') ?>" style="display:none">
-  <?php # Custom data to pass to the Review Summary (review.js onEndReview()) ?>
   <?= input_hidden_tag('ts_start', $ts_start) ?>
-  <input type="hidden" name="fc_pass" value="0" />
-  <input type="hidden" name="fc_fail" value="0" />
-  <input type="hidden" name="fc_deld" value="0" />
-  <input type="hidden" name="fc_free" value="<?= (int)$freemode ?>" />
+  <?= input_hidden_tag('fc_deld', 0) ?>
+  <?= input_hidden_tag('fc_free', (int)$freemode) ?>
 <?php if ($freemode): ?>
   <input type="hidden" name="fc_rept" value="<?= $fc_rept ?>" />
 <?php endif ?>

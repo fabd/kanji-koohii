@@ -19,26 +19,6 @@ return [
       ]
     ],
 
-    'fc_pass' => [
-      'required'        => [
-        'msg'           => 'Error'
-      ],
-      'CallbackValidator' => [
-        'callback'        => ['BaseValidators', 'validateInteger'],
-        'invalid_error'   => 'Validation failed'
-      ]
-    ],
-
-    'fc_fail' => [
-      'required'        => [
-        'msg'           => 'Error'
-      ],
-      'CallbackValidator' => [
-        'callback'        => ['BaseValidators', 'validateInteger'],
-        'invalid_error'   => 'Validation failed'
-      ]
-    ],
-
     // free mode review flag
     'fc_free' => [
       'required'        => [

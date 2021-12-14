@@ -61,9 +61,6 @@ CREATE TABLE `active_members` (
   `userid`       MEDIUMINT(4) UNSIGNED NOT NULL,
   `fc_count`     SMALLINT NOT NULL DEFAULT 0,
   `last_review`  DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `lastrs_start` INT(10) UNSIGNED NOT NULL,
-  `lastrs_pass`  SMALLINT(5) UNSIGNED NOT NULL,
-  `lastrs_fail`  SMALLINT(6) UNSIGNED NOT NULL,
   PRIMARY KEY  (`userid`),
   KEY `last_review` (`last_review`),
   KEY `fc_count` (`fc_count`)

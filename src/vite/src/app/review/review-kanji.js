@@ -163,8 +163,6 @@ export default class KanjiReview {
     // set form data and redirect to summary with POST
     elFrm.method = "post";
     elFrm.action = this.getOptionAsStr("end_url");
-    /**@type{HTMLInputElement}*/ (elFrm.elements.namedItem("fc_pass")).value = "" + this.countYes;
-    /**@type{HTMLInputElement}*/ (elFrm.elements.namedItem("fc_fail")).value = "" + this.countNo;
     /**@type{HTMLInputElement}*/ (elFrm.elements.namedItem("fc_deld")).value = this.deletedCards.join(",");
     elFrm.submit();
   }

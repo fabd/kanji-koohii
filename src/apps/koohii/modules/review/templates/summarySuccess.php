@@ -1,6 +1,28 @@
-<?php use_helper('Widgets', 'Gadgets', 'CJK', 'Links') ?>
+<?php
+  use_helper('Widgets', 'Gadgets', 'CJK', 'Links');
 
-<?php #DBG::request() ?>
+  // unix timestamp recorded at start of last review to match updated flashcards
+  $ts_start = $sf_params->get('ts_start', 0);
+
+  $stats = (new uiFlashcardReview())->getStats();
+  extract($stats);
+
+  if ($fcr_pass === $fcr_total) {
+    $title = 'Hurrah! All remembered!';
+  }
+  elseif ($fcr_fail === $fcr_total && $fcr_total > 1) {
+    $title = 'Eek! All forgotten!';
+  }
+  else {
+    $title = "Remembered {$fcr_pass} of {$fcr_total} kanji.";
+  }
+
+  // deleted cards
+  $deletedCards = $sf_params->get('fc_deld', '');
+  $deletedCards = $deletedCards ? explode(',', $deletedCards) : [];
+
+  //DBG::request();
+?>
 
   <h2>Review Summary</h2>
 
@@ -25,13 +47,13 @@
   </div>
   
   <div class="col-md-6">
-<?php if ($numTotal > 0): ?>
+<?php if ($fcr_total > 0): ?>
     <div class="padded-box rounded">
 
       <?php echo ui_chart_vs([
-        'valueLeft' => $numRemembered,
+        'valueLeft' => $fcr_pass,
         'labelLeft' => 'Remembered',
-        'valueRight' => $numForgotten,
+        'valueRight' => $fcr_fail,
         'labelRight' => 'Forgotten'
       ]) ?>
 
@@ -50,13 +72,21 @@
 
 <div style="margin-top:2em;">
 
-<?php if ($numTotal > 0): ?>
+<?php if ($fcr_total > 0): ?>
   <div id="summaryTable<?php echo $fc_free ? ' fcfree' : '' ?>">
-    <?php if (!$fc_free) {
-      include_component('review', 'summaryTable', ['ts_start' => $ts_start]);
-    } else {
-      include_component('review', 'summarySimple');
-    } ?>
+    <?php
+      /**
+       * FIXME? Instead of using ts_start to match the last updated cards, we
+       *        could use the cached answers + WHERE ucs_id IN (id1, id2, etc)
+       *        to select all cards from the last review session.
+       * 
+       */
+      if (!$fc_free && $ts_start > 0) {
+        include_component('review', 'summaryTable', ['ts_start' => $ts_start]);
+      } else if ($fc_free) {
+        include_component('review', 'summarySimple');
+      }
+    ?>
   </div>
 <?php endif ?>
 

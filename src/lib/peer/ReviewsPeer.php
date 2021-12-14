@@ -628,8 +628,16 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getReviewSummaryListSelect($userId, $ts_start)
   {
     $select = self::getInstance()->select([
-      'seq_nr' => rtkIndex::getSqlCol(), 'failurecount', 'successcount', 'leitnerbox', 'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
-      'kanji', 'onyomi', 'strokecount']);
+      'reviews.ucs_id',
+      'seq_nr' => rtkIndex::getSqlCol(),
+      'failurecount',
+      'successcount',
+      'leitnerbox',
+      'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
+      'kanji',
+      'onyomi',
+      'strokecount'
+    ]);
     $select->where('UNIX_TIMESTAMP(lastreview) >= ?', $ts_start);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = self::filterByUserId($select, $userId);

@@ -294,4 +294,55 @@ class uiFlashcardReview
   {
     return $this->cardStatus;
   }
+
+  /**
+   * Return stats for flashcard review summaey based on cached answers.
+   *
+   * @return array
+   */
+  public function getStats()
+  {
+    $answers = $this->getCachedAnswers();
+
+    $fcr_pass = 0;
+    $fcr_fail = 0;
+    $fcr_total = 0;
+
+    foreach ($answers as $rating)
+    {
+      if (in_array($rating, [
+        uiFlashcardReview::RATE_HARD,
+        uiFlashcardReview::RATE_YES,
+        uiFlashcardReview::RATE_EASY,
+      ]))
+      {
+        ++$fcr_pass;
+      }
+
+      if (in_array($rating, [
+        uiFlashcardReview::RATE_AGAIN,
+        uiFlashcardReview::RATE_AGAIN_HARD,
+        uiFlashcardReview::RATE_AGAIN_YES,
+        uiFlashcardReview::RATE_AGAIN_EASY,
+        uiFlashcardReview::RATE_NO,
+      ]))
+      {
+        ++$fcr_fail;
+      }
+
+      if (!in_array($rating, [
+        uiFlashcardReview::RATE_DELETE,
+        uiFlashcardReview::RATE_SKIP,
+      ]))
+      {
+        ++$fcr_total;
+      }
+    }
+
+    return [
+      'fcr_pass' => $fcr_pass,
+      'fcr_fail' => $fcr_fail,
+      'fcr_total' => $fcr_total,
+    ];
+  }
 }

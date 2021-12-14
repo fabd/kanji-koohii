@@ -98,50 +98,6 @@ class ActiveMembersPeer extends coreDatabaseTable
   }
 
   /**
-   * Save information about the last flashcard review session.
-   * 
-   * $data:
-   * 
-   *   ts_start  Timestamp begin of last flashcard review session
-   *   fc_pass   Count of flashcards passed
-   *   fc_fail   Count of flashcards failed
-   * 
-   * @param  int    $userId
-   * @param  array  $data
-   * 
-   * @return
-   */
-  public static function saveReviewSummaryInfo($userId, $data)
-  {
-    $data = [
-      'lastrs_start' => $data['ts_start'],
-      'lastrs_pass'  => $data['fc_pass'],
-      'lastrs_fail'  => $data['fc_fail']
-    ];
-    self::getInstance()->updateCols($userId, $data);
-    return;
-  }
-
-  /**
-   * Retrieve last review summary information, or false if not available.
-   * 
-   * @param  int    $userId
-   * 
-   * @return array  Parameters or FALSE
-   */
-  public static function getReviewSummaryInfo($userId)
-  {
-    self::getInstance()->select([
-      'ts_start' => 'lastrs_start',
-      'fc_pass'  => 'lastrs_pass',
-      'fc_fail'  => 'lastrs_fail'])
-      ->where('userid = ?', $userId)->query();
-    $params = self::$db->fetch();
-    
-    return ($params!==false) && ($params['ts_start']>0) ? $params : false;
-  }
-
-  /**
    * Create or update information for active member.
    * 
    * Insert the user into the active users table if it is not present yet.

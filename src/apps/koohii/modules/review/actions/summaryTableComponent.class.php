@@ -46,6 +46,9 @@ class summaryTableComponent extends sfComponent
     // data table
     $this->table = new uiSelectTable(new FlashcardListBinding(), $this->pager->getSelect(), $request->getParameterHolder());
 
+    // fixes duplicates between pages, when sorting by non-unique col
+    $this->table->configure(['sortColumnTwo' => 'seq_nr']);
+
     return sfView::SUCCESS;
   }
 }

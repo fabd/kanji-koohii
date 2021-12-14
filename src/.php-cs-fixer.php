@@ -33,6 +33,8 @@ return (new PhpCsFixer\Config())
     // *don't* prematurely rewrite my code
     'return_assignment' => false,
 
+    'echo_tag_syntax' => ['format' => 'short', 'shorten_simple_statements_only' => true],
+
     // for ($i = 0;; ++$i)  ==>  for ($i = 0; ; ++$i)
     'space_after_semicolon' => ['remove_in_empty_for_expressions' => false],
 

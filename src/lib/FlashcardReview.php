@@ -19,8 +19,14 @@
  *
  * Methods:
  *
- *   handleRequest()
- *
+ *   getInstance()
+ *   config($options)             optional get/put handlers (cf. below)
+ *   start()                      clear the cached answers at start of review
+ * 
+ *   handleRequest($request)      handle request object sent by FlashcardReview.js
+ * 
+ *   getCachedAnswers()
+ *   getStats()
  *
  *
  * Options (constructor):
@@ -211,34 +217,42 @@ class FlashcardReview
 
     foreach ($items as $answer)
     {
-      if (!is_object($answer))
-      {
-        continue;
-      }
+      assert(is_object($answer));
 
       $cardId = (int) $answer->id;
       $cardStatus = $this->getCardStatus($cardId);
 
-      // if a card is rated AGAIN, it may be rated again in the same session.
-      //
-      // Otherwise, avoid duplicate ratings in case the server somehow timed out
-      //  but did process, and the client resends the answers.
-      //
-      if ($cardStatus && $cardStatus !== FlashcardReview::RATE_AGAIN)
+      // Avoid rating a card twice, and mark it as handled for the client.
+      if ($cardStatus)
       {
         $putSuccess[] = $cardId;
       }
-      // Currently the client does not expect for errors to happen.
-      // If an error happens, assume it is a temporary hiccup and ignore the
-      // flashcard, so that the client will send another put request.
-      elseif (true === call_user_func($this->options->fn_put_flashcard, $cardId, $answer))
-      {
-        $putSuccess[] = $cardId;
 
-        // Flag the card as updated, in case the server response times out for the
-        //  client, and the client re-sends the same card answers, avoid rating a card twice.
-        //
-        $this->updateCard($cardId, $answer->r);
+      // FIXME
+      //   Someday/maybe we could store the answers in a separate "review
+      //   session" table, and apply all answers at once at end of review.
+      //   In this case we don't care if the client sends some duplicates,
+      //   (eg. if the server response timed out, and AjaxQueue resends it)
+      //   because we will only store one answer per unique id, and only
+      //   apply them once at the end.
+      //
+      //   Until then, since the ratings happen while the review progresses
+      //   (client "sync" requests), we mark cards that have been rated to
+      //   avoid rating them twice -- in the rare case the server handled
+      //   the sync request, but somehow the client re-sends it.
+      //
+      if (!$cardStatus || $cardStatus === FlashcardReview::RATE_AGAIN)
+      {
+        // Currently the client does not expect for errors to happen.
+        // If an error happens, assume it is a temporary hiccup and ignore the
+        // flashcard, so that the client will send another put request.
+        if (true === call_user_func($this->options->fn_put_flashcard, $cardId, $answer))
+        {
+          $putSuccess[] = $cardId;
+
+          // mark the card as rated (and cache the answers for the review summary)
+          $this->updateCard($cardId, $answer->r);
+        }
       }
     }
 

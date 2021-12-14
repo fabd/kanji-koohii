@@ -844,7 +844,7 @@ class ReviewsPeer extends coreDatabaseTable
    * @param int   $userId 
    * @param int   $ucsId
    *
-   * @return bool   Returns false if SQL operation failed.
+   * @return bool   Whether SQL update was successful
    */
   public static function failFlashcard($userId, $ucsId)
   {
@@ -863,6 +863,8 @@ class ReviewsPeer extends coreDatabaseTable
    * 
    *   - sets `lastreview` to user's local time
    *   - IF `interval_days` is provided, sets `expiredate`
+   * 
+   * @return bool   Whether SQL update was successful
    */
   public static function updateFlashcard(int $userId, int $ucsId, array $cardUpdate)
   {

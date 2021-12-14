@@ -27,7 +27,7 @@ class labsActions extends sfActions
     // these will be variables in the review template partial
     $this->reviewOptions = $reviewOptions;
 
-    $uiFR = new uiFlashcardReview([], true);
+    uiFlashcardReview::getInstance()->start();
   }
 
   /**
@@ -45,7 +45,7 @@ class labsActions extends sfActions
     // these will be variables in the review template partial
     $this->reviewOptions = $reviewOptions;
 
-    $uiFR = new uiFlashcardReview([], true);
+    uiFlashcardReview::getInstance()->start();
   }
 
   /**
@@ -62,7 +62,7 @@ class labsActions extends sfActions
       throw new rtkAjaxException('Empty JSON Request.');
     }
 
-    $flashcardReview = new uiFlashcardReview([
+    $flashcardReview = uiFlashcardReview::getInstance()->config([
       'fn_get_flashcard' => ['rtkLabs', 'getVocabShuffleCardData']
     ]);
 

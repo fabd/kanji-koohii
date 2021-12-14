@@ -188,7 +188,7 @@ class reviewActions extends sfActions
     // route for Exit button and 'empty' review url
     $options['exit_url'] = $options['freemode'] ? 'review/custom' : '@overview';
 
-    $uiFR = new uiFlashcardReview([], true);
+    uiFlashcardReview::getInstance()->start();
 
     // these will be variables in the review template partial
     $this->reviewOptions = $options;
@@ -251,7 +251,7 @@ class reviewActions extends sfActions
    * @see  uiFlashcardReview.php for POST request parameters.
    *
    * @param sfRequest $request
-   * @param mixed $options
+   * @param mixed     $options
    */
   private function handleFlashcardRequest($request, $options)
   {
@@ -262,7 +262,7 @@ class reviewActions extends sfActions
       throw new rtkAjaxException('Empty JSON Request.');
     }
 
-    $flashcardReview = new uiFlashcardReview($options);
+    $flashcardReview = uiFlashcardReview::getInstance()->config($options);
 
     return $this->renderJson($flashcardReview->handleRequest($fcrData));
   }

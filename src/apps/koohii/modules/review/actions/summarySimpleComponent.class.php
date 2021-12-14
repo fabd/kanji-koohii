@@ -7,7 +7,7 @@ class summarySimpleComponent extends sfComponent
    */
   public function execute($request)
   {
-    $answers = (new uiFlashcardReview())->getCachedAnswers();
+    $answers = uiFlashcardReview::getInstance()->getCachedAnswers();
 
     $this->cards = [];
 

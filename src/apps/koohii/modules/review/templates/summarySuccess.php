@@ -4,7 +4,7 @@
   // unix timestamp recorded at start of last review to match updated flashcards
   $ts_start = $sf_params->get('ts_start', 0);
 
-  $stats = (new uiFlashcardReview())->getStats();
+  $stats = uiFlashcardReview::getInstance()->getStats();
   extract($stats);
 
   if ($fcr_pass === $fcr_total)

@@ -261,8 +261,7 @@ class apiActions extends sfActions
 
     $rsp->card_count = 0;
 
-    // make sure to reset SESS_CARD_UPDATED
-    $uiFR = new uiFlashcardReview([], true);
+    uiFlashcardReview::getInstance()->start();
 
     if ('free' === $mode)
     {
@@ -379,7 +378,7 @@ class apiActions extends sfActions
 
     // VALIDER LE TIME
 
-    $uiFR = new uiFlashcardReview([
+    $uiFR = uiFlashcardReview::getInstance()->config([
       'fn_put_flashcard' => 'ReviewsPeer::putFlashcardData',
     ]);
 

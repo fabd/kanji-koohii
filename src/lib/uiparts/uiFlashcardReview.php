@@ -100,28 +100,35 @@ class uiFlashcardReview
    */
   public const SESS_ATTR_NAME = 'uifr_card_answers';
 
+  public function __construct()
+  {
+    $this->user = sfContext::getInstance()->getUser();
+
+    $this->cardStatus = $this->user->getAttribute(self::SESS_ATTR_NAME, []);
+  }
+
+  public static function getInstance(): self
+  {
+    static $instance = null;
+    $instance ??= new self();
+
+    return $instance;
+  }
+
   /**
    * @param array $options See documentation
-   * @param bool  $start   Must be true when instancing at beginning of review session
-   *
-   * @return
    */
-  public function __construct(array $options = [], $start = false)
+  public function config(array $options = []): self
   {
     $this->options = (object) $options;
 
-    $this->user = sfContext::getInstance()->getUser();
+    return $this;
+  }
 
-    // start a new review session, or restore state from session
-    if ($start)
-    {
-      $this->cardStatus = [];
-      $this->saveToSession();
-    }
-    else
-    {
-      $this->cardStatus = $this->user->getAttribute(self::SESS_ATTR_NAME, []);
-    }
+  public function start()
+  {
+    $this->cardStatus = [];
+    $this->saveToSession();
   }
 
   /**

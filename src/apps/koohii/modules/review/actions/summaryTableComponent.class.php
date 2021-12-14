@@ -59,7 +59,7 @@ class FlashcardListBinding implements uiSelectTableBinding
 
   public function getConfig()
   {
-    $this->ratings = (new uiFlashcardReview())->getCachedAnswers();
+    $this->ratings = uiFlashcardReview::getInstance()->getCachedAnswers();
 
     // MUST BE VALID JSON! ! !
     return <<<EOD

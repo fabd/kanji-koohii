@@ -14,9 +14,5 @@
     "exclude-from-classmap": [
       "vendor/erusev/parsedown-extra/test/"
     ]
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "classmap-authoritative": true
   }
 }

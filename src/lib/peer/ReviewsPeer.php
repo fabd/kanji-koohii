@@ -820,6 +820,7 @@ class ReviewsPeer extends coreDatabaseTable
 
       $update = LeitnerSRS::getInstance()->rateCard($curData, $oData->r);
 
+// LOG::info("rate {$oData->r}", json_encode($curData));
       $result = self::updateFlashcard($userId, $ucsId, $update);
     }
 
@@ -862,15 +863,17 @@ class ReviewsPeer extends coreDatabaseTable
    * Update flashcard row data, plus:
    * 
    *   - sets `lastreview` to user's local time
-   *   - IF `interval_days` is provided, sets `expiredate`
+   *   - if `interval_days` is provided, converts it to `expiredate`
+   * 
+   * @param int $userId
+   * @param int $ucsId
+   * @param array $cardUpdate  Row data to update, +optional value "interval_days"
    * 
    * @return bool   Whether SQL update was successful
    */
   public static function updateFlashcard(int $userId, int $ucsId, array $cardUpdate)
   {
     $sqlLocalTime = UsersPeer::sqlLocalTime();
-
-// error_log("  UPDATE CARD ($ucsId) :: ".print_r($cardUpdate, true));
 
     // update "due" timestamp if interval is provided (cf. LeitnerSRS::rateCard())
     if (isset($cardUpdate['interval_days']))
@@ -886,6 +889,8 @@ class ReviewsPeer extends coreDatabaseTable
 
     // always update last review timestamp
     $cardUpdate['lastreview'] = new coreDbExpr($sqlLocalTime);
+
+// LOG::info("updateFlashcard() ", $cardUpdate);
 
     return self::getInstance()->update($cardUpdate, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }

@@ -207,21 +207,49 @@ class LeitnerSRS
     }
 
     $oUpdate = [
-      'totalreviews' => $curData['totalreviews'] + 1,
       'leitnerbox' => $card_box,
       'interval_days' => $card_interval,
     ];
 
-    if ($answer === uiFlashcardReview::RATE_YES || $answer === uiFlashcardReview::RATE_EASY)
+    // FIXME for now it can be that a card can get multiple AGAIN ratings during
+    //       a session while syncing to server, so just ignore AGAIN although the
+    //       card moves to the failed pile.
+    //
+    //       This is to avoid multiple failure/totalreview increases as an AGAIN
+    //       card could realistically be synced 2+ times in a review.
+    //
+    if ($answer !== FlashcardReview::RATE_AGAIN)
     {
-      $oUpdate['successcount'] = $curData['successcount'] + 1;
-    }
-    else
-    {
-      $oUpdate['failurecount'] = $curData['failurecount'] + 1;
+      $oUpdate['totalreviews'] = $curData['totalreviews'] + 1;
+
+      if ($this->isSuccessCount($answer))
+      {
+        $oUpdate['successcount'] = $curData['successcount'] + 1;
+      }
+      else
+      {
+        $oUpdate['failurecount'] = $curData['failurecount'] + 1;
+      }
     }
 
     return $oUpdate;
+  }
+
+  /**
+   * Returns true if the rating is considered a "success" review
+   * (for now this only for the displayed stats in the Review Summary / Flashcard List).
+   *
+   *   HARD is considered difficult recall, but still recalled.
+   *
+   *   AGAIN_(HARD|YES|EASY) is a lapsed review (forgotten).
+   */
+  private function isSuccessCount(string $answer): bool
+  {
+    return in_array($answer, [
+      FlashcardReview::RATE_HARD,
+      FlashcardReview::RATE_YES,
+      FlashcardReview::RATE_EASY,
+    ]);
   }
 
   /**

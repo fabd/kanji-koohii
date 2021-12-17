@@ -41,10 +41,10 @@ class LeitnerSRS
   public const DEFAULT_SRS_MAX_BOX = 7;
   public const DEFAULT_SRS_HARD_BOX = 0;
 
-  // max Leitner Box *including* Failed & New as box #1
+  // max Leitner Box (excludes Fail & New box, 1 = 1+ reviews)
   private int $optMaxBox;
 
-  // upper limit for Hard answer (excludes Failed&New box), 1 = 1+ reviews)
+  // upper limit for Hard answer (excludes Fail & New box, 1 = 1+ reviews)
   private int $optHardBox;
 
   // multiplier to calculate incremental review intervals
@@ -86,6 +86,7 @@ class LeitnerSRS
     $this->intervals = $this->calcIntervals();
 
     $this->variance = $this->calcVariance();
+    // LOG::info(__CLASS__, $this);
   }
 
   /**
@@ -182,14 +183,12 @@ class LeitnerSRS
       // cards in NEW or 1+ REVIEW piles with HARD answer get a fixed 1 day interval
       $card_interval = 1;
       $card_variance = 0;
-    // error_log(sprintf('RATING [ Hard ] box %d > %d, scheduled in 1 day', $curData['leitnerbox'], $card_box));
     }
     elseif ($card_box === 1)
     {
       // failed pile
       $card_interval = 0;
       $card_variance = 0;
-    // error_log(sprintf('RATING [ Fail ] box %d > 1', $curData['leitnerbox']));
     }
     else
     {
@@ -205,8 +204,6 @@ class LeitnerSRS
       // add variance to spread due cards so that they don't all fall onto the same days
       $card_variance = $this->variance[$card_box - 1];
       $card_interval = ($card_interval - $card_variance) + rand(0, $card_variance * 2);
-
-      // error_log(sprintf('RATING [ %s ] box %d => %d, scheduled in %d days (f %d)', $answer, $curData['leitnerbox'], $card_box, $card_interval, $card_variance));
     }
 
     $oUpdate = [

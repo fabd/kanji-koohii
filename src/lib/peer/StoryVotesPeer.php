@@ -8,16 +8,13 @@
 
 class StoryVotesPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'storyvotes',
-    $columns   = [];   // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'storyvotes';
 
-  const
-    ERROR_SELF_VOTE  = -1;   // "vote" value returned to client
-
+  const ERROR_SELF_VOTE  = -1;   // "vote" value returned to client
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {

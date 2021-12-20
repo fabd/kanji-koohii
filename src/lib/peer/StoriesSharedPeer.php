@@ -24,12 +24,11 @@
 
 class StoriesSharedPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'stories_shared',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'stories_shared';
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {

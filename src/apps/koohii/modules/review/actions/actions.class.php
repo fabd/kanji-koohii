@@ -1,10 +1,13 @@
 <?php
+
 class reviewActions extends sfActions
 {
   /**
    * Review graph page.
-   * 
-   * @return 
+   *
+   * @param sfRequest $request
+   *
+   * @return
    */
   public function executeIndex($request)
   {
@@ -14,14 +17,14 @@ class reviewActions extends sfActions
     {
       $this->filter = 'all';
     }
-  
+
     $this->flashcard_count = ReviewsPeer::getFlashcardCount($this->getUser()->getUserId());
   }
-  
+
   public function executeCustom($request)
   {
     $userId = sfContext::getInstance()->getUser()->getUserId();
-    $this->knowncount   = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
+    $this->knowncount = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
     $this->knowndefault = max($this->knowncount, 1);
   }
 
@@ -33,8 +36,10 @@ class reviewActions extends sfActions
 
   /**
    * Review graph filter actions.
-   * 
-   * @return 
+   *
+   * @param sfRequest $request
+   *
+   * @return
    */
   public function executeAjaxLeitnerGraph($request)
   {
@@ -44,14 +49,16 @@ class reviewActions extends sfActions
       throw new rtkAjaxException('Invalid parameters.');
     }
 
-    if ($filter=='all') {
+    if ($filter == 'all')
+    {
       $filter = '';
     }
-    
+
     // remember last filter selected
     $this->getUser()->getLocalPrefs()->sync('review.graph.filter', $filter, '');
 
     $tron = new JsTron();
+
     return $tron->renderComponent($this, 'review', 'LeitnerChart');
   }
 
@@ -59,6 +66,8 @@ class reviewActions extends sfActions
    * Kanji Flashcard review WITHOUT SRS (no flashcard updates in database).
    *
    * See executeReview for parameters.
+   *
+   * @param sfRequest $request
    */
   public function executeFree($request)
   {
@@ -66,8 +75,8 @@ class reviewActions extends sfActions
   }
 
   /**
-   * Kanji Flashcard review page with uiFlashcardReview
-   * 
+   * Kanji Flashcard review page with FlashcardReview.
+   *
    * Free Review Mode (Labs page):
    *
    *   from, to     Range of Heisig numbers (1-xxxx)
@@ -75,16 +84,16 @@ class reviewActions extends sfActions
    *   known        N cards to review from known kanji.
    *
    * Options:
-   * 
+   *
    *   shuffle      Shuffle cards (with from, to)
    *   reverse      Kanki to Keyword
    *
    * SRS mode:
-   * 
+   *
    *   type = 'expired'|'untested'|'relearned'|'fresh'
    *   box  = 'all'|[1-5]
    *   filt = ''|'rtk1'|'rtk3'
-   *   
+   *
    * @param object $request
    */
   public function executeReview($request)
@@ -92,23 +101,23 @@ class reviewActions extends sfActions
     $this->setLayout('fullscreenLayout');
 
     // if 'from' is not specified, then it is assumed to be a SRS review
-    $reviewFrom   = $request->getParameter('from', 0);
-    $reviewTo     = $request->getParameter('to',   0);
-    $reviewKnown  = $request->getParameter('known', 0);
-    $reviewShuffle= $request->getParameter('shuffle', 0) > 0;
-// DBG::request();exit;
+    $reviewFrom = $request->getParameter('from', 0);
+    $reviewTo = $request->getParameter('to', 0);
+    $reviewKnown = $request->getParameter('known', 0);
+    $reviewShuffle = $request->getParameter('shuffle', 0) > 0;
+    // DBG::request();exit;
 
     if ($lesson = $request->getParameter('lesson', 0))
     {
-      $lessonInfo = rtkIndex::getLessonInfo((int)$lesson);
+      $lessonInfo = rtkIndex::getLessonInfo((int) $lesson);
       $this->forward404If($lessonInfo === null);
       $reviewFrom = $lessonInfo['from'];
-      $reviewTo   = $lessonInfo['from'] + $lessonInfo['count'] - 1;
+      $reviewTo = $lessonInfo['from'] + $lessonInfo['count'] - 1;
     }
 
     // kanji > keyword
     $options['fc_reverse'] = $request->getParameter('reverse') ? true : false;
-    
+
     // flag to indentify free review mode
     $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0;
 
@@ -117,15 +126,15 @@ class reviewActions extends sfActions
     if (false === $options['freemode'])
     {
       // SRS review
-      $reviewBox  = $request->getParameter('box', 'all');
+      $reviewBox = $request->getParameter('box', 'all');
       $reviewType = $request->getParameter('type', 'expired');
       $reviewFilt = $request->getParameter('filt', '');
-      $reviewMerge= $request->getParameter('merge') ? true : false;
+      $reviewMerge = $request->getParameter('merge') ? true : false;
 
       // validate
-      $this->forward404Unless( preg_match('/^(all|[0-9]+)$/', $reviewBox) );
-      $this->forward404Unless( preg_match('/^(expired|untested|relearned|fresh|known)$/', $reviewType) );
-      $this->forward404Unless( $reviewFilt=='' || preg_match('/(rtk1|rtk3)/', $reviewFilt) );
+      $this->forward404Unless(preg_match('/^(all|[0-9]+)$/', $reviewBox));
+      $this->forward404Unless(preg_match('/^(expired|untested|relearned|fresh|known)$/', $reviewType));
+      $this->forward404Unless($reviewFilt == '' || preg_match('/(rtk1|rtk3)/', $reviewFilt));
 
       // pick title
       //$this->setReviewTitle($reviewType, $reviewFilt);
@@ -137,18 +146,16 @@ class reviewActions extends sfActions
     }
     else
     {
-      $oFRS = new rtkFreeReviewSession(true);
-
       if ($request->hasParameter('known'))
       {
         // free review :: known cards
 
-        $this->forward404If(!BaseValidators::validateInteger($reviewKnown) ||
-                            !BaseValidators::validateNotEmpty($reviewKnown) ||
-                            $reviewKnown <= 0, 'Invalid card range');
+        $this->forward404If(!BaseValidators::validateInteger($reviewKnown)
+                            || !BaseValidators::validateNotEmpty($reviewKnown)
+                            || $reviewKnown <= 0, 'Invalid card range');
         $cards = ReviewsPeer::getFlashcardsForReview('all', 'known', '');
         $options['items'] = array_slice($cards, 0, $reviewKnown);
-//DBG::printr($options['items']);exit;
+        //DBG::printr($options['items']);exit;
 
         // repeat button URL disable because the randomized card set can change
         $options['fc_rept'] = '';
@@ -161,16 +168,17 @@ class reviewActions extends sfActions
         $this->forward404If(!BaseValidators::validateInteger($reviewTo), 'Invalid card range');
         $this->forward404If($reviewFrom > $reviewTo || $reviewTo > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
 
-        $options['items'] = $oFRS->createFlashcardSet($reviewFrom, $reviewTo, $reviewShuffle);
+        $options['items'] = rtkIndex::createFlashcardSet($reviewFrom, $reviewTo, $reviewShuffle);
 
         // repeat button URL
         $options['fc_rept'] = $this->getController()->genUrl(
-          implode('&',[
-          'review/free?from='.$reviewFrom,
-          'to='.$reviewTo,
-          'shuffle='.intval($reviewShuffle),
-          'reverse='.intval($options['fc_reverse'])
-          ]), true
+          implode('&', [
+            'review/free?from='.$reviewFrom,
+            'to='.$reviewTo,
+            'shuffle='.intval($reviewShuffle),
+            'reverse='.intval($options['fc_reverse']),
+          ]),
+          true
         );
       }
 
@@ -180,8 +188,8 @@ class reviewActions extends sfActions
     // route for Exit button and 'empty' review url
     $options['exit_url'] = $options['freemode'] ? 'review/custom' : '@overview';
 
-    $uiFR = new uiFlashcardReview([], true);
-    
+    FlashcardReview::getInstance()->start();
+
     // these will be variables in the review template partial
     $this->reviewOptions = $options;
   }
@@ -189,12 +197,13 @@ class reviewActions extends sfActions
   /**
    * Ajax handler for SRS flashcard reviews.
    *
+   * @param sfRequest $request
    */
   public function executeAjaxsrs($request)
   {
     $options = [
-      'fn_get_flashcard' => ['KanjisPeer', 'getFlashcardData'],
-      'fn_put_flashcard' => ['ReviewsPeer', 'putFlashcardData']
+      'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
+      'fn_put_flashcard' => 'ReviewsPeer::putFlashcardData',
     ];
 
     return $this->handleFlashcardRequest($request, $options);
@@ -203,86 +212,89 @@ class reviewActions extends sfActions
   /**
    * Ajax handler for Free mode reviews.
    *
+   * @param sfRequest $request
    */
   public function executeAjaxfree($request)
   {
     $options = [
-      'fn_get_flashcard' => ['KanjisPeer', 'getFlashcardData'],
-      'fn_put_flashcard' => ['reviewActions', 'freeReviewUpdate']
+      'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
+      'fn_put_flashcard' => 'reviewActions::dummyUpdate',
     ];
-//debugging
-// sleep(6);
-// $response = sfContext::getInstance()->getResponse();
-// $response->setStatusCode(500);
+    //debugging
+    // sleep(6);
+    // $response = sfContext::getInstance()->getResponse();
+    // $response->setStatusCode(500);
 
     return $this->handleFlashcardRequest($request, $options);
   }
 
   /**
    * fn_put_flashcard handler for flashcard answers from the free review mode.
-   * 
-   * @param  int      $id     Flashcard id (UCS-2 code value)
-   * @param  object   $oData  Flashcard answer data
    *
-   * @return boolean  Returns true if update went succesfully
-   * 
+   * THIS IS A DUMMY HANDLER  for  FlashcardReview to cache answers.
+   *
+   * @param int    $id    Flashcard id (UCS-2 code value)
+   * @param object $oData Flashcard answer data
+   *
+   * @return bool Returns true if update went succesfully
    */
-  public static function freeReviewUpdate($id, $oData)
+  public static function dummyUpdate($id, $oData)
   {
-    if ($id < 1 || !isset($oData->r) || !preg_match('/^[1-3]$/', $oData->r))
-    {
-      throw new sfException(__METHOD__." Invalid parameters ($id)");
-    }
-
-    // udpate session for the review summary
-    $oFRS = new rtkFreeReviewSession();
-    $oFRS->updateFlashcard($id, (int)$oData->r);
+    assert(!empty($id) && isset($oData->r));
 
     return true;
   }
 
   /**
-   * handleFlashcardRequest
-   * 
-   * @see  uiFlashcardReview.php for POST request parameters.
+   * handleFlashcardRequest.
+   *
+   * @see  FlashcardReview.php for POST request parameters.
+   *
+   * @param sfRequest $request
+   * @param mixed     $options
    */
   private function handleFlashcardRequest($request, $options)
   {
     $fcrData = json_decode($request->getParameter('json', '{}'));
 
-    if (empty($fcrData)) {
+    if (empty($fcrData))
+    {
       throw new rtkAjaxException('Empty JSON Request.');
     }
 
-    $flashcardReview = new uiFlashcardReview($options);    
+    $flashcardReview = FlashcardReview::getInstance()->config($options);
+
     return $this->renderJson($flashcardReview->handleRequest($fcrData));
   }
 
   /**
-   * Sets template variable for the Review session title
-   * 
-  protected function setReviewTitle($reviewType, $reviewFilt)
-  {
-    $titles = array(
-      'expired'   => 'Due flashcards',
-      'untested'  => 'New flashcards',
-      'relearned' => 'Relearned flashcards',
-      'fresh'     => 'Undue flashcards'
-    );
-    $this->title = isset($titles[$reviewType]) ? $titles[$reviewType] : 'Flashcards';
-  }
+   * Sets template variable for the Review session title.
+   *
+   * protected function setReviewTitle($reviewType, $reviewFilt)
+   * {
+   * $titles = array(
+   * 'expired'   => 'Due flashcards',
+   * 'untested'  => 'New flashcards',
+   * 'relearned' => 'Relearned flashcards',
+   * 'fresh'     => 'Undue flashcards'
+   * );
+   * $this->title = isset($titles[$reviewType]) ? $titles[$reviewType] : 'Flashcards';
+   * }
+   *
+   * @param sfRequest $request
    */
 
   /**
-   * Summary Table ajax
-   * 
-   * @return 
+   * Summary Table ajax.
+   *
+   * @return
    */
   public function executeSummaryTable($request)
   {
     $ts_start = $request->getParameter('ts_start', 0);
     $this->forward404Unless(BaseValidators::validateInteger($ts_start));
     $tron = new JsTron();
+
     return $tron->renderComponent($this, 'review', 'summaryTable', ['ts_start' => $ts_start]);
   }
 }

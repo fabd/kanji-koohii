@@ -36,6 +36,8 @@
  *  getLessonTitleForIndex($frameNr)
  *  getProgressSummary($cur_framenum)
  * 
+ *  createFlashcardSet($from, $to, $shuffle)
+ * 
  */
 
 class rtkIndex
@@ -107,28 +109,22 @@ class rtkIndex
     1 => ['classId' => 'Simplified',  'sqlId' => 1, 'sqlCol' => 'idx_simp']
   ];
 
-  // Instantiation is used to load the correct class for the user's active sequence.
-  /** @var self */
-  protected static $instance = null;
-
+  // require extending class based on the user's RTK sequence (5th vs 6th edition)
   public static function createInstance()
   {
     // load class that represents the unique index selected by the user
     $userSeq = rtkIndex::getSequenceInfo();
     $fileName = sfConfig::get('sf_app_lib_dir').'/model/'.CJ_MODE.'Index'.$userSeq['classId'].'.php';
     require($fileName);
-
-    self::$instance = new rtkIndexMeta();
+    
+    return new rtkIndexMeta();
   }
 
   public static function inst()
   {
-    if (!isset(self::$instance))
-    {
-      self::createInstance();
-    }
-
-    return self::$instance;
+    static $instance = null;
+    $instance ??= self::createInstance();
+    return $instance;
   }
 
   /**
@@ -551,4 +547,35 @@ class rtkIndex
 
     return $o;
   }
+
+  /**
+   * Create an array of flashcard ids using sequence numbers.
+   *
+   * @param int  $from    Sequence number start
+   * @param int  $to      Sequence number end
+   * @param bool $shuffle True to randomize the cards
+   *
+   * @return int[]
+   */
+  public static function createFlashcardSet($from, $to, $shuffle = false)
+  {
+    // create array of UCS ids from sequential Heisig flashcard range
+    $numCards = $to - $from + 1;
+    $framenums = array_fill(0, $numCards, 1);
+    for ($i = 0; $i < $numCards; ++$i)
+    {
+      $framenums[$i] = $from + $i;
+    }
+
+    if ($shuffle)
+    {
+      // shuffle
+      shuffle($framenums);
+    }
+
+    $ids = rtkIndex::convertToUCS($framenums);
+
+    return $ids;
+  }
+
 }

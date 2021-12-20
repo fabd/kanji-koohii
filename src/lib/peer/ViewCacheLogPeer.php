@@ -22,17 +22,16 @@ CREATE TABLE `log_viewcache`
 
 class ViewCacheLogPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'log_viewcache',
+  protected $tableName = 'log_viewcache';
 
-    // timestamp columns must be declared for insert/update/replace
-    $columns   = [
-      'created_on'
-    ];
+  // timestamp cols for self::insert/update/replace
+  protected $columns = ['created_on'];
 
-  private static
-    $viewIds = [];
+  private static $viewIds = [];
 
+  /**
+   * @return self
+   */
   public static function getInstance()
   {
     return coreDatabaseTable::_getInstance(__CLASS__);

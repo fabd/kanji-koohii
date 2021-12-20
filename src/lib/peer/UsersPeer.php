@@ -24,12 +24,9 @@
 class UsersPeer extends coreDatabaseTable
 {
   // shortcut for ::getInstance()->getName()
-  const
-    TABLE = 'users';
+  const TABLE = 'users';
 
-  protected
-    $tableName = 'users',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'users';
 
   /**
    * Credential values as stored in `userlevel`.
@@ -40,6 +37,7 @@ class UsersPeer extends coreDatabaseTable
   /**
    * Get this peer instance to access the base methods.
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {

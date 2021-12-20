@@ -8,7 +8,7 @@
  *  getKanjiByCharacter()
  *  getKeyword()
  *  getDisplayKeyword()
- *  getFlashcardData()
+ *  getKanjiCardData()
  *  isHeisigIndexed()
  *
  * Helpers:
@@ -20,12 +20,11 @@
 
 class KanjisPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'kanjis',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'kanjis';
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {
@@ -101,9 +100,9 @@ class KanjisPeer extends coreDatabaseTable
   }
 
   /**
-   * Returns flashcard data for the flashcard reviews (both SRS and non-SRS).
+   * Returns presentation data for the kanji flashcards (both SRS and non-SRS).
    *
-   * This is a uiFlashcardReview callback, $ucsId must be sanitized!
+   * This is a FlashcardReview callback, $ucsId must be sanitized!
    *
    * Options:
    * 
@@ -111,10 +110,10 @@ class KanjisPeer extends coreDatabaseTable
    *   api_mode      (API ONLY) true to return data according to API /review/fetch
    *   
    * @param  int     $ucsId     UCS-2 code value.
-   * @param  object  $options   Options for the flashcard format (optional)
-   * @return mixed   Object with flashcard data, or null
+   * @param  object|null  $options   Options for the flashcard format (optional)
+   * @return object|null  Flashcard data, or null
    */
-  public static function getFlashcardData($ucsId, $options = null)
+  public static function getKanjiCardData($ucsId, $options = null)
   {
     if (false === ($cardData = self::getKanjiByUCS($ucsId))) {
       return null;
@@ -146,19 +145,12 @@ class KanjisPeer extends coreDatabaseTable
       $cardData->vocab = rtkLabs::getFormattedVocabPicks($userId, $cardData->id);
     }
 
-    // get custom keyword
-    $custom_keyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
-    $keyword = null !== $custom_keyword ? $custom_keyword : $cardData->keyword;
-  
-    if (!isset($options->api_mode)) {
-      $cardData->keyword = link_to_keyword($keyword, $cardData->kanji, ['title' => 'Go to the Study page', 'target' => '_blank']);
-    }
-    else {
-      $cardData->keyword = $keyword;
-    }
+    // coalesce keyword with user's custom keyword
+    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $cardData->keyword = $custKeyword ?? $cardData->keyword;
 
     // API ONLY (apps) : api doesn't return the kanji as a character
-    if (isset($option->api_mode)) { 
+    if (isset($options->api_mode)) { 
       unset($cardData->kanji);
     }
 

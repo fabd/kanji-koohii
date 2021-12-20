@@ -10,8 +10,13 @@
  *
  *   printr()    Debug the contents of a variable, prints output of print_r inside a PRE tag.
  * 
- *
- * The next 3 are handy for debugging http requests:
+ * 
+ * Debugging autoloading:
+ * 
+ *   files()     Outputs PHP's get_included_files() (see what is autoloaded)
+ * 
+ * 
+ * Debugging requests:
  * 
  *   cookies()
  *   user()
@@ -24,18 +29,20 @@
 class DBG
 {
   const DBG_PRINTR = 1;
-  const DBG_PHPDATA = 2;
-  const DBG_PHPDATA2 = 3;
 
   private static function begin($status = 0)
   {
     switch ($status) {
-      case self::DBG_PRINTR: $bg = '#208020'; $fg = 'white'; break;
-      case self::DBG_PHPDATA:  $bg = '#204080'; $fg = 'white'; break;
-      case self::DBG_PHPDATA2: $bg = '#305090'; $fg = 'white'; break;
-      default: $bg = '#808080'; $fg = 'white'; break;
+      case self::DBG_PRINTR: [$bg, $fg] = ['#208020', '#fff']; break;
+      default: [$bg, $fg] = ['#808080', '#fff']; break;
     }
-    echo "<div class=\"dbg\" style=\"margin:0; padding:2px 5px; border:1px solid $bg; background:$bg; font:12px Arial; color:$fg;\">\n";
+    echo <<<HTML
+      <div class="dbg" style="
+        padding:4px 8px; border-radius: 4px;
+        background:{$bg}; color:{$fg};
+        font:14px 'Courier New', sans-serif;
+      ">
+      HTML;
   }
   
   private static function end()
@@ -47,6 +54,11 @@ class DBG
   public static function error($msg)
   {
     trigger_error($msg, E_USER_ERROR);
+  }
+
+  public static function files()
+  {
+    self::printr(get_included_files());
   }
   
   //  Debug output and continue
@@ -60,7 +72,9 @@ class DBG
   //  Debug output and continue
   public static function warn($msg)
   {
+    self::begin();
     trigger_error($msg, E_USER_WARNING);
+    self::end();
   }
 
   //  Inspect a variable contents
@@ -104,7 +118,7 @@ class DBG
     
         $info = [
         'attributes'  => $user->getAttributeHolder()->getAll(),
-        'credentials' => $user->listCredentials()
+        'credentials' => $user->getCredentials()
       ];
     
       print_r($info);

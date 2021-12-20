@@ -1,28 +1,28 @@
-<?php use_helper('CJK', 'Form', 'Widgets', 'Gadgets') ?>
+<?php use_helper('CJK', 'Form', 'Widgets', 'Gadgets'); ?>
 
-<?php # Ajax loading indicator ?>
+<?php // Ajax loading indicator?>
 <div id="uiFcAjaxLoading" style="display:none"><i class="fa fa-spinner fa-spin"></i><span>Loading</span></div>
 
-<?php # Connection timeout message ?>
+<?php // Connection timeout message?>
 <div id="uiFcAjaxError" style="display:none">
   <span class="uiFcAjaxError_msg">Oops!</span>&nbsp;&nbsp;<a href="#">Reconnect</a>
 </div>
 
-<?php # Fixes: Change Koohii Font script -- http://userscripts.org/scripts/show/6896 ?>
-<div class="signin" style="display:none"><div class="m"><strong><?= $sf_user->getUsername() ?></strong></div></div>
+<?php // Fixes: Change Koohii Font script -- http://userscripts.org/scripts/show/6896?>
+<div class="signin" style="display:none"><div class="m"><strong><?= $sf_user->getUsername(); ?></strong></div></div>
 
 <div id="uiFcOptions" class="uiFcOptions">
-  <?= link_to('<span>Exit</span>', $exit_url, ['absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review']) ?>
+  <?= link_to('<span>Exit</span>', $exit_url, ['absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review']); ?>
   <a href="#" id="JsBtnHelp" class="uiFcOptBtn uiFcOptBtnHelp uiFcAction" data-action="help" title="Shows help dialog."><span>Help</span></a>
   <a href="#" class="uiFcOptBtn uiFcOptBtnStory uiFcAction" data-action="story" title="View/Edit story for this flashcard"><span><u>S</u>tory</span></a>
   <a href="#" id="JsBtnDict" class="uiFcOptBtn uiFcOptBtnDict uiFcAction" data-action="dict" title="Dictionary lookup"><span><u>D</u>ict</span></a>
   
   <?= link_to('<span><u>U</u>ndo</span>', '', ['absolute' => 'true',
-    'id'    => 'JsBtnUndo',
-    'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction', 
+    'id' => 'JsBtnUndo',
+    'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction',
     'title' => 'Go back one flashcard',
     'style' => 'display:none',
-    'data-action' => 'undo']) ?>
+    'data-action' => 'undo', ]); ?>
 
   <div class="clear"></div>
 </div>
@@ -51,9 +51,9 @@
     <div id="uiFcProgressBar">
       <div class="uiFcStBox">
         <div class="uiFcPrBarMod">
-          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']) ?>
+          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']); ?>
         </div>
-        <h3>Reviewing: <em class="count">.</em> of <em class="count">.</em></h3>
+        <h3>Cards left: <em class="count">.</em></h3>
       </div>
     </div>
   </div>
@@ -67,25 +67,47 @@
 
       <div class="uiFcButtons" id="uiFcButtons">
         
-        <div id="uiFcButtons0" style="display:none">
+        <div id="uiFcButtons0" class="-mx-1" style="display:none">
           <h3>Press Spacebar or F to flip card</h3>
-          <?php #echo ui_ibtn('<u>F</u>lip Card', $routename, array('id' => 'uiFcBtnAF', 'class' => 'uiFcAction', 'data-action' => 'flip')) ?>
-          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction" data-action="flip"><span><u>F</u>lip Card</span></a>
+          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
         </div>
     
         <div id="uiFcButtons1"<?= $freemode ? '' : ' class="three-buttons"'; ?> style="display:none">
-          <h3>Do you remember this <?= _CJ('kanji') ?>?</h3>
-          <?php 
-echo ui_ibtn('<u>N</u>o', '', ['id' => 'uiFcBtnAN', 'class' => 'uiIBtnRed uiFcAction', 'data-action' => 'no', 'title' => 'Forgotten']);
-if (!$freemode) {
-echo ui_ibtn('<u>H</u>ard', '', ['id' => 'uiFcBtnAH', 'class' => 'uiIBtnOrange uiFcAction', 'data-action' => 'hard', 'title' => 'Hard']);
-}
-echo ui_ibtn('<u>Y</u>es', '', ['id' => 'uiFcBtnAY', 'class' => 'uiFcAction', 'data-action' => 'yes', 'title' => 'Remembered with some effort']);
-if (!$freemode) {
-  echo ui_ibtn('<u>E</u>asy', '', ['id' => 'uiFcBtnAE', 'class' => 'uiFcAction', 'data-action' => 'easy', 'title' => 'Remembered easily']);
-}
-          ?>
-          <div class="clear"></div>
+          <h3>Do you remember this kanji?</h3>
+
+          <div class="flex items-center justify-between -mx-1">
+<button
+  id="uiFcBtnAN" class="uiIBtn uiIBtnDefault uiIBtnRed uiFcAction flex-1"
+  data-action="no" title="Forgotten">
+  <span><u>N</u>o</span>
+</button>
+<?php if (1 /*!$freemode*/) { ?>
+<button
+  id="uiFcBtnAG" class="uiIBtn uiIBtnDefault uiFcAction flex-1"
+  data-action="again" title="Repeat card">
+  <u>A</u>gain
+</button>
+<?php } ?>
+
+<?php if (!$freemode) { ?>
+<button
+ id="uiFcBtnAH" class="uiIBtnOrange uiFcAction uiIBtn uiIBtnDefault flex-2" 
+ data-action="hard" title="Hard">
+  <span class="px-1"><u>H</u>ard</span>
+</button>
+<?php } ?>
+<button id="uiFcBtnAY" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
+  data-action="yes" title="Remembered with some effort">
+  <span class="px-2"><u>Y</u>es</span>
+</button>
+<?php if (!$freemode) { ?>
+<button id="uiFcBtnAE" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
+  data-action="easy" title="Remembered easily">
+  <span class="px-1"><u>E</u>asy</span>
+</button>
+<?php } ?>
+          </div>
+
         </div>
         
       </div><!-- uiFcButtons -->
@@ -93,7 +115,7 @@ if (!$freemode) {
   </div><!-- rd-main -->
 
 
-  <?php # Stats panel (displays when first card is loaded) ?>
+  <?php // Stats panel (displays when first card is loaded)?>
   <div id="rd-side">
     <div id="uiFcStats" class="uiFcStats" style="display:none">
 
@@ -110,7 +132,7 @@ if (!$freemode) {
 
       <div id="uiFcStDeld" class="uiFcStBox" style="display:none">
         <h3>Deleted: <em class="count">0</em></h3>
-        <p id="uiFcStDeldK"><?= cjk_lang_ja('&nbsp;') ?></p>
+        <p id="uiFcStDeldK"><?= cjk_lang_ja('&nbsp;'); ?></p>
       </div>
 
     </div><!-- uiFcStats -->    
@@ -119,36 +141,36 @@ if (!$freemode) {
   <div class="clear"></div>
 </div><!-- fr-body -->
 
-<?php # Form to redirect to Review Summary with POST ?>
-<form method="post" id="uiFcRedirectForm" action="<?= url_for('@review_summary') ?>" style="display:none">
-  <?php # Custom data to pass to the Review Summary (review.js onEndReview()) ?>
-  <?= input_hidden_tag('ts_start', $ts_start) ?>
-  <input type="hidden" name="fc_pass" value="0" />
-  <input type="hidden" name="fc_fail" value="0" />
-  <input type="hidden" name="fc_deld" value="0" />
-  <input type="hidden" name="fc_free" value="<?= (int)$freemode ?>" />
-<?php if ($freemode): ?>
-  <input type="hidden" name="fc_rept" value="<?= $fc_rept ?>" />
-<?php endif ?>
+<?php // Form to redirect to Review Summary with POST?>
+<form method="post" id="uiFcRedirectForm" action="<?= url_for('@review_summary'); ?>" style="display:none">
+  <?= input_hidden_tag('ts_start', $ts_start); ?>
+  <?= input_hidden_tag('fc_deld', 0); ?>
+  <?= input_hidden_tag('fc_free', (int) $freemode); ?>
+<?php if ($freemode) { ?>
+  <input type="hidden" name="fc_rept" value="<?= $fc_rept; ?>" />
+<?php } ?>
 </form>
 
 <div id="mobile-debug" style="padding:20px 0 0;"></div>
 
 <?php
   $reviewOptions = [
-    'end_url' =>  url_for('@review_summary', true),
-    'editstory_url' => url_for('study/editstory'),
-    'dictlookup_url' => url_for('study/dict'),
+    // @see TReviewProps
+    'props' => [
+      'end_url' => url_for('@review_summary', true),
+      'editstory_url' => url_for('study/editstory'),
+      'freemode' => $freemode,
+    ],
 
-    'fcr_options' => [
-      //num_prefetch: 10,
+    // options for `FlashcardReview` instance
+    'fcrOptions' => [
       'ajax_url' => $ajax_url,
       'back_url' => url_for($exit_url, true),
       'items' => $items,
-    ]
+    ],
   ];
 
-  // (wip) Vue refactoring
+  // props for KoohiiFlashcard Vue component
   $reviewMode = [
     'freemode' => $freemode,
     'fc_reverse' => $fc_reverse,
@@ -159,9 +181,8 @@ if (!$freemode) {
     // (NOT freemode) edit flashcard menu
     'fc_edit_uri' => $sf_context->getController()->genUrl('flashcards/dialog'),
     // Edit Flashcard menu, data-param (json)
-    'fc_edit_params' => '{"review": 1}'
+    'fc_edit_params' => '{"review": 1}',
   ];
 
   kk_globals_put('REVIEW_OPTIONS', $reviewOptions);
   kk_globals_put('REVIEW_MODE', $reviewMode);
-

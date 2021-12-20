@@ -5,9 +5,9 @@ class Swift { }
 
 class koohiiConfiguration extends sfApplicationConfiguration
 {
-  private
-    $core_db,
-    $profile_time = null;
+  private coreDatabaseMySQL $core_db;
+
+  private $profile_time = null;
 
   public function configure()
   {
@@ -43,9 +43,7 @@ class koohiiConfiguration extends sfApplicationConfiguration
   /**
    * Retrieve a single instance of the MySQL database (old code).
    *
-   * FIXME  Short of refactoring everything... uses my old Zend_Db like API.
-   *
-   * @return coreDatabase
+   * @return coreDatabaseMySQL
    */
   public function getDatabase()
   {
@@ -57,7 +55,7 @@ class koohiiConfiguration extends sfApplicationConfiguration
       $this->core_db = $db;
     }
     
-    return isset($this->core_db) ? $this->core_db : null;
+    return $this->core_db ?? null;
   }
 
   public function profileStart()

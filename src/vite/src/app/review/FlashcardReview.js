@@ -1,10 +1,27 @@
 /**
- * FlashcardReview is a reusable flashcard review component. It handles communication
- * with the server (ajax), caching and prefetching of flashcard data, and the state of
- * the review session (forward, backward (undo), end). Also handles shortcut keys.
+ * FlashcardReview handles
  *
- * Presentation logic is handled by the "child" class, through events that are notified
- * by FlashcardReview's event dispatcher.
+ * - caching and prefetching of flashcard data
+ * - syncing answers with the server (using AjaxQueue)
+ * - the state of the review session (forward, backward & undo, end)
+ *
+ * For SRS/stateful review modes:
+ *
+ *   TO ADVANCE
+ *     answerCard(answer)             to rate a card
+ *     forward()
+ *
+ *   TO GO BACK
+ *     undo()                         to undo answer & go backwards
+ *
+ *
+ * For free reviews where undo is not needed:
+ *
+ *   TO ADVANCE
+ *     forward()
+ *
+ *   TO GO BACK
+ *     backward()
  *
  *
  * Public methods:
@@ -18,9 +35,8 @@
  *       params           Parameters sent with every request (maintains state of review options) (OPTIONAL)
  *
  *       max_undo         Maximum undo/backward level
- *       num_prefetch     How many flashcards to fetch ahead
  *       events           An object with events to register (see notifications below)
- *         scope            Scope to use for the events (property, optional)
+ *       scope            Scope to use for the events (property, optional)
  *       put_request      Set to false if not posting any answers to the server. "onEndReview" will be
  *                        notified automatically after forward() has moved past the last item.
  *
@@ -28,24 +44,35 @@
  *   disconnect(sName)                  Remove a listener
  *   notify(sName[, args...])           Notify listeners
  *
- *   addShortcutKey(sKey, sActionId)
- *                        Add a keyboard shortcut for an action, the action id is passed to 'onAction' notification
  *
  * Methods to control the review session:
  *
  *   beginReview()        Called automatically when FlashcardReview is instanced.
- *   endReview()          Ends review: flushes postCache to server, then notifies "onEndReview".
- *   forward()            Advance to next flashcard
- *   backward()           Go back one card (undo), notifies "onFlashcardUndo" event, with the last flashcard answer.
+ *
+ *   forward()            Advance to next flashcard.
+ *   backward()           Go back to previous card.
+ *
+ *   endReview()          Ends review: flushes postCache to server, then notifies
+ *                         "onEndReview".
+ *
+ *   answerCard(answer)   Rate the current card, add any optional data to be synced
+ *
+ *   undo()               Undo the last card answer, then go backward().
+ *                        Notifies "onFlashcardUndo" event, with the undo-ed answer.
+ *
+ *
+ * Properties
+ *
+ *   numRated
+ *   numAgain
+ *
  *
  * Methods to get/put information:
  *
- *   getOption()          Returns one of the options as passed to initialize(), TODO: DEPRECATED (bad)
  *   getPosition()        Returns current index into the flashcard items array
  *   getFlashcard()       Returns current uiFlashcard, or null
  *   getFlashcardData()   Returns json data for current flashcard
  *   getItems()           Returns array of flashcard ids, length of array = number of flashcards in session
- *   getPostCount()       Returns count of flashcard answers that need to be posted to server
  *   getNumUndos()        Returns number of undo levels currently available
  *   getFlashcardState()  Returns the current state (0 = default), or false if no current card is set
  *   setFlashcardState(n) Sets state for current flashcard, this changes the "uiFcState" class name on the flashcard
@@ -63,9 +90,6 @@
  *   onFlashcardDestroy   Before the current flashcard is destroyed
  *   onFlashcardUndo(o)   Called when user undo'es flashcard answer. Argument o is the answer data as it was passed
  *                        to answerCard(). Notified only if "put_request" is true (default).
- *   onAction(id, ev)     Called for clicks on elements with "uiFcAction-XYZ" class; where id is "XYZ"; as well as
- *                        keyboard shortcuts set with addShortcutKey(). This listener must explicitly return false
- *                        to stop event from propagating (ev is the event object).
  *
  * Ajax RESPONSE format (in Json):
  *
@@ -76,8 +100,7 @@
  *                        Returned objects must have the property "id" set to the corresponding flashcard id's.
  *
  *   put                  Array of flashcard ids which were succesfully handled.
- *                        The items are cleared from the postCache. If not cleared, these items will
- *                        be posted again during the next prefetchs.
+ *
  *
  * Usage:
  *
@@ -91,92 +114,114 @@
  *     => the flashcard state, where N is a number, 0 is the default state, use with css rules to set
  *        visibility of various information on the card depending on state (eg. 0 = question, 1 = answer)
  *
- *   a.uiFcAction-XXXX
- *     Links that trigger an action (answer buttons), calls event "onAction" with "XXXX" as second argument
  *
  */
+// @ts-check
 
-import { getBodyED, kk_globals_get } from "@app/root-bundle";
+import { kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
 import EventDispatcher from "@old/eventdispatcher";
-import Keyboard from "@old/keyboard";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 
+const PREFETCH_CARDS = 10;
+
+export const FCRATE = {
+  NO: "no",
+  AGAIN: "again",
+  AGAIN_HARD: "again-hard",
+  AGAIN_YES: "again-yes",
+  AGAIN_EASY: "again-easy",
+  YES: "yes",
+  EASY: "easy",
+  DELETE: "delete",
+  SKIP: "skip",
+  HARD: "hard",
+};
+
 export default class FlashcardReview {
+  /** @type {TReviewOptions} */
+  options;
+
   // flashcard selection as an array of flashcard ids
-  items = null;
+  /** @type {TUcsId[]} */
+  items;
+
+  // handle unique items vs repeat items
+  numCards = 0;
+  // how many cards are rated (not counting "again" answers)
+  numRated = 0;
+  /** @type {Map<number, true>} */
+  againCards;
 
   // review position, from 0 to items.length-1
-  position = null;
+  position = 0;
 
-  // Cache of flashcard data.
-  // Associative array using flashcard ids for retrieval.
-  // Flashcard data is maintained for prefetched items and max_undo items,
-  // other cards are deleted when they are beyond the undo range.
+  /**
+   * Cache of flashcard data. The key is the kanji (UCS code).
+   *
+   * @type {{ [key: number]: TCardData }}
+   */
+  cache = {};
+
+  // cacheEnd indicate the range of valid flashcard data in the cache array.
+  cacheEnd = 0;
+
+  isAwaitingCards = false;
+
+  /**
+   * Flashcard answers in the same order than items[].
+   *
+   * @type {TCardAnswer[]}
+   */
+  postCache = [];
+
   //
-  // cacheStart and cacheEnd indicate the range of valid flashcard data
-  // in the cache array.
-  cache = null;
-  cacheStart = null;
-  cacheEnd = null;
-
-  // the next position at which to prefetch new flashcard data
-  // is recalculated on server reply, based on number of items server returned
-  prefetchPos = null;
+  postCacheFrom = 0;
 
   // max items to cache for undo
-  max_undo = null;
+  /** @type {number} */
+  max_undo;
+
   // current undo level (number of steps backward)
-  undoLevel = null;
+  /** @type {number} */
+  undoLevel = 0;
 
-  // how many items to preload
-  num_prefetch = null;
+  /** @type {EventDispatcher} */
+  eventDispatcher;
 
-  // event dispatcher for notifications
-  eventDispatcher = null;
+  /** @type {AjaxQueue} */
+  ajaxQueue;
 
-  // array of answer data for flashcards that is not posted yet
-  // the data is freeform, the property id corresponds to a flashcard id
-  postCache = null;
-
-  // uiAjaxQueue instance
-  ajaxQueue = null;
-
-  /** @type {TVueInstanceOf<typeof KoohiiFlashcard>} */
+  /** @type {TVueInstanceRef?} */
   curCard = null;
-  /** @type Function */
-  curCardUnmount = null;
 
   /**
    * Initialize the front end Flashcard Review component.
    *
-   * @param {Window["KK"]["REVIEW_OPTIONS"]} options
+   * @param {TReviewOptions} options
    */
   constructor(options) {
     console.log("FlashcardReview::init(%o)", options);
 
-    // set options and fix defaults
-    this.options = options;
-    this.options.max_undo = options.max_undo || 3;
-    this.options.num_prefetch = options.num_prefetch || 10;
-    this.options.put_request = options.put_request === false ? false : true;
+    console.assert(options.items && options.items.length, "No flashcard items in this selection.");
 
-    // set options and make proxies
-    this.items = this.options.items;
-    this.max_undo = this.options.max_undo;
-    this.num_prefetch = this.options.num_prefetch;
+    // set options and fix defaults
+    options.put_request = options.put_request === false ? false : true;
+    this.options = options;
+
+    this.max_undo = options.max_undo || 3;
 
     //
-    if (!this.items || !this.items.length) {
-      alert("No flashcard items in this selection.");
-      return;
-    }
+    this.items = options.items;
+    this.numCards = options.items.length;
+    this.numRated = 0;
+    this.againCards = new Map();
 
     // register listeners
     this.eventDispatcher = new EventDispatcher();
-    var scope = options.events.scope;
+    const scope = options.scope;
     for (var sEvent in options.events) {
       this.eventDispatcher.connect(sEvent, options.events[sEvent], scope);
     }
@@ -190,23 +235,42 @@ export default class FlashcardReview {
       },
     });
 
-    // buttons and other custom actions
-    var ed = getBodyED();
-    ed.on("uiFcAction", this.onActionEvent, this);
+    this.beginReview();
+  }
 
-    // initialize shortcuts and keyboard handler
-    this.oKeyboard = new Keyboard();
+  /** @readonly */
+  get numAgain() {
+    return this.againCards.size;
+  }
 
-    //
+  /**
+   * Returns true if all cards in the initial items[] array are cached
+   */
+  get isCacheFull() {
+    return this.cacheEnd >= this.numCards;
+  }
+
+  beginReview() {
+    this.notify("onBeginReview");
+
+    this.cache = {};
+    this.cacheEnd = 0;
+    this.position = -1;
+
     this.postCache = [];
+    this.postCacheFrom = 0;
+
     this.undoLevel = 0;
 
-    // flashcard as a Vue component (wip)
-    this.curCard = null;
+    this.forward();
+  }
 
-    //    this.ofs_prefetch = Math.floor(this.num_prefetch);
-
-    this.beginReview();
+  /**
+   * Check if there are answers, and if they are not all yet synced to server.
+   *
+   */
+  isPostCacheDirty() {
+    return this.postCache.length && this.postCacheFrom < this.position;
   }
 
   /**
@@ -215,8 +279,12 @@ export default class FlashcardReview {
    *
    */
   updateUnloadEvent() {
-    if (this.getPostCount()) {
-      window.onbeforeunload = function() {
+    // debug
+    // console.table(this.postCache.map((a) => ({ id: a.id, k: String.fromCharCode(a.id), r: a.r })));
+    // console.log("ITEMS ", this.items.join("-"));
+    // console.log("AGAIN ", [...this.againCards.keys()].join());
+    if (this.isPostCacheDirty()) {
+      window.onbeforeunload = function () {
         return (
           "WAIT! You may lose a few flashcard answers if you leave the page now.\r\n" +
           "Select CANCEL to stay on this page, and then click the END button to\r\n" +
@@ -229,53 +297,34 @@ export default class FlashcardReview {
   }
 
   /**
-   * The event listener bound to html elements that use "uiFcAction-XXX" class names.
+   * EventDispatcher proxy.
    *
-   * Makes sure to stop the mouse click event, to prevent page from jumping.
-   *
-   * @param  {Object}      ev   Event object
-   * @param  {HTMLElement} el   Matched element
+   * @param {string}    name     The type of event (the event's name)
+   * @param {Function}  fn       A javascript callable
+   * @param {Object=}    context  Context (this) for the event. Default value: the window object.
    */
-  onActionEvent(ev, el) {
-    var data = el.dataset,
-      action = data.action;
-    console.assert(
-      !!data.action,
-      'onActionEvent() bad "action" attribute, element %o',
-      el
-    );
-
-    return false !== this.notify("onAction", action, ev);
+  connect(name, fn, context) {
+    this.eventDispatcher.connect(name, fn, context);
   }
 
   /**
    * EventDispatcher proxy.
    *
-   * @see EventDispatcher, scope is optional.
+   * @param {string}    name   An event name
+   * @param {Function=}  fn     A javascript callable (optional)
    */
-  connect(sName, fnEvent, scope) {
-    this.eventDispatcher.connect(sName, fnEvent, scope);
+  disconnect(name, fn) {
+    this.eventDispatcher.disconnect(name, fn);
   }
 
-  disconnect(sName, fnEvent) {
-    this.eventDispatcher.disconnect(sName, fnEvent);
-  }
-
-  notify() {
-    return this.eventDispatcher.notify.apply(this.eventDispatcher, arguments);
-  }
-
-  beginReview() {
-    this.notify("onBeginReview");
-
-    this.position = -1;
-    this.cache = {};
-    this.cacheStart = 0;
-    this.cacheEnd = -1;
-    this.cacheNext = -1;
-    this.prefetchPos = 0; // when to prefetch new cards, updated by each ajax response
-
-    this.forward();
+  /**
+   * EventDispatcher proxy.
+   *
+   * @param {string} name
+   * @param {...*} params
+   */
+  notify(name, ...params) {
+    return this.eventDispatcher.notify(name, ...params);
   }
 
   /**
@@ -299,7 +348,7 @@ export default class FlashcardReview {
 
     if (this.options.put_request) {
       // flush post cache and will notify end of review on ajax response
-      this.sendReceive(true);
+      this.syncReview(true);
     } else {
       // notify end of review here because there is nothing to post
       this.notify("onEndReview");
@@ -313,6 +362,8 @@ export default class FlashcardReview {
       this.undoLevel--;
     }
 
+    this.updateUnloadEvent();
+
     // destroy previous card, so it doesn't show while loading next card (if not prefetched)
     this.destroyCurCard();
 
@@ -322,86 +373,83 @@ export default class FlashcardReview {
       return;
     }
 
-    // wait for card data
-    this.connect("onWaitCache", this.cardReady, this);
+    this.syncReview();
 
-    this.sendReceive();
-
-    // clear backwards cache
-    this.cleanCache();
-
-    // if card is already prefetched, handle it!
-    if (this.cacheEnd >= this.position) {
+    // if the cache is not full yet...
+    if (this.position >= this.cacheEnd && !this.isCacheFull) {
+      // this happens normally only on review start, when cache is empty
+      // OR review catches up with the card pre-fetch (server is very slow to respond)
+      this.connect("onCacheReady", () => {
+        this.disconnect("onCacheReady");
+        this.cardReady();
+      });
+    } else {
+      // if card is already prefetched, handle it!
       this.cardReady();
     }
   }
 
-  /**
-   * Undo (go backwards)
-   *
-   * To allow undo we always keep a number of answers in the postCache (max_undo).
-   * When sendReceive() does a prefetch, only the answers that are before max_undo items
-   * backwards are posted. Only at the end of the review are the last answers in the
-   * "ungo range" flushed out to the server.
-   *
-   */
   backward() {
-    // assertion
-    if (this.undoLevel >= this.max_undo) {
-      throw new Error("FlashcardReview::backward() undoLevel >= max_undo");
-    }
-
     if (this.position <= 0) {
       return;
     }
 
-    // assertion
-    if (this.cacheStart >= this.position) {
-      throw new Error("FlashcardReview::backward() on empty cache");
-    }
-
     this.destroyCurCard();
-    this.undoLevel++;
 
     // go back one step and clear postCache at that position
     this.position--;
-
-    // clear the last flashcard answer from the postCache
-    if (this.options.put_request) {
-      this.notify("onFlashcardUndo", this.unanswerCard());
-    }
 
     this.cardReady();
   }
 
   /**
+   * Undo : unanswer the last card, and go backwards.
+   *
+   * To allow undo we always keep a number of answers in the postCache (max_undo).
+   * When syncReview() does a prefetch, only the answers that are before max_undo items
+   * backwards are posted. Only at the end of the review are the last answers in the
+   * "ungo range" flushed out to the server.
+   */
+  undo() {
+    console.assert(this.undoLevel < this.max_undo, "FlashcardReview::backward() undoLevel >= max_undo");
+    if (this.undoLevel >= this.max_undo) {
+      return;
+    }
+
+    this.undoLevel++;
+
+    this.backward();
+    this.notify("onFlashcardUndo", this.unanswerCard());
+  }
+
+  /**
    * This function is called only when the current flashcard
    * data is available in the cache.
+   *
+   * FIXME : this code should be handled in review-kanji/vocab
    */
   cardReady() {
-    // clear event
-    this.disconnect("onWaitCache");
-
     // notify BEFORE flashcard is created
     this.notify("onFlashcardCreate");
 
     // we have a cached item for current position
-    var oItem = this.getFlashcardData();
+    let cardData = /** @type TCardData */ (this.getFlashcardData());
+
+    //
+    cardData.isAgain = this.position >= this.numCards;
 
     // (wip, refactor) instance Vue comp
     const propsData = {
-      cardData: oItem,
+      cardData: cardData,
       reviewMode: kk_globals_get("REVIEW_MODE"),
     };
 
-    let { vm, unmount } = VueInstance(KoohiiFlashcard, "#uiFcMain", propsData);
-    this.curCard = vm;
-    this.curCardUnmount = unmount;
+    this.curCard = VueInstance(KoohiiFlashcard, "#uiFcMain", propsData);
 
     // notifies 'onFlashcardState'
     this.setFlashcardState(0);
 
-    this.curCard.display(true);
+    this.curCard.vm.display(true);
   }
 
   /**
@@ -412,7 +460,7 @@ export default class FlashcardReview {
     if (this.curCard) {
       this.notify("onFlashcardDestroy");
 
-      this.curCardUnmount();
+      this.curCard.unmount();
       this.curCard = null;
     }
   }
@@ -420,67 +468,57 @@ export default class FlashcardReview {
   /**
    * Check if there are cards to prefetch, and/or answers to post.
    *
-   * @param boolean  bFlushData  At end of review, force flush all remaining items in postCache.
+   * @param {boolean=} bFlushData ... At end of review, force flush all remaining items in postCache.
    */
-  sendReceive(bFlushData) {
-    var oJsonData = {};
+  syncReview(bFlushData) {
+    /** @type {TReviewSyncRequest} */
+    let syncData = {};
 
-    // any cards to fetch ?
-    if (
-      this.cacheEnd < this.items.length - 1 &&
-      this.position >= this.prefetchPos
-    ) {
+    const syncNow =
+      // start of review
+      this.position === 0 ||
+      // ... or every N cards
+      this.position % PREFETCH_CARDS === Math.floor(PREFETCH_CARDS / 2);
+
+    // FETCH CARDS
+    if (syncNow && !this.isCacheFull) {
       //
-      if (this.cacheNext <= this.cacheEnd) {
-        var from = this.cacheEnd + 1;
-        var to = Math.min(from + this.num_prefetch, this.items.length) - 1;
-        oJsonData.get = this.items.slice(from, to + 1);
-        this.cacheNext = from;
+      if (!this.isAwaitingCards) {
+        let from = this.cacheEnd;
+        let to = Math.min(from + PREFETCH_CARDS, this.numCards);
+        syncData.get = this.items.slice(from, to);
+        this.isAwaitingCards = true;
       }
     }
 
-    // post answers along with cards prefetching, or do it immediately if flushing
-    // the postCache
-    if (this.options.put_request && (oJsonData.get || bFlushData)) {
-      // if flush, post all, otherwise don't post all, leave some cards behind to allow client ot re-answer (undo)
-      var aPostData,
-        i,
-        numToPost = 0;
+    // POST ANSWERS
+    // - post all remaining answers if flushing the postCache at end of review
+    // - always keep some answers to allow for undo levels
+    if ((syncNow || bFlushData) && this.options.put_request) {
+      // if flush, post all, otherwise post in small batches, and leave
+      //  some cards behind for the under feature
+      let syncEnd = bFlushData ? this.position : Math.max(0, this.position - this.max_undo);
 
-      if (bFlushData) {
-        aPostData = this.postCache;
-      } else {
-        numToPost =
-          this.getPostCount() > this.max_undo
-            ? this.getPostCount() - this.max_undo
-            : 0;
-        aPostData = [];
-        for (i = 0; i < numToPost; i++) {
-          aPostData.push(this.postCache[i]);
-        }
-      }
+      let aPostData = this.postCache.slice(this.postCacheFrom, syncEnd);
+      this.postCacheFrom = syncEnd;
 
       if (aPostData.length > 0) {
-        //console.log('POSTING %d (%o)', numToPost, aPostData);
-        oJsonData.put = aPostData;
+        syncData.put = aPostData;
       }
-
-      //simulate a timeout
-      //if (bFlushData && !this.foo ) { this.foo=true; oJsonData.flush = 1; console.log('doing it'); }
     }
 
-    console.log("FlashcardReview::sendReceive(%o)...", oJsonData);
+    console.log("FlashcardReview::syncReview(%o)...", syncData);
 
-    if (oJsonData.get || oJsonData.put) {
-      if (oJsonData.get && this.options.params) {
+    if (syncData.get || syncData.put) {
+      if (syncData.get && this.options.params) {
         // pass the flashcard options, if provided
-        oJsonData.opt = this.options.params;
+        syncData.opt = this.options.params;
       }
 
       this.ajaxQueue.add(this.options.ajax_url, {
         method: "post",
-        json: oJsonData,
-        argument: bFlushData ? "end" : this.cacheNext,
+        json: syncData,
+        argument: bFlushData ? "end" : "continue",
       });
       this.ajaxQueue.start();
 
@@ -496,49 +534,32 @@ export default class FlashcardReview {
    * Cache items returned by the server,
    * determine next position to start prefetch based on how many items were received.
    *
-   * @param {Object} o    The YUI Connect object (extended by AjaxRequest)
-   * @param {Number} argument        Index value if prefetching, 'end' if completing review
+   * @param {{responseJSON: TReviewSyncResponse}} o ... The YUI Connect object (extended by AjaxRequest)
+   * @param {number | 'end'} argument ... 'end' if completing review
    */
   onAjaxSuccess(o, argument) {
-    var i,
-      oJson = o.responseJSON;
+    let syncResponse = o.responseJSON;
 
     console.log("FlashcardReview::onAjaxSuccess(%o)", o);
 
-    if (oJson) {
+    if (syncResponse) {
+      const cardsData = syncResponse.get;
+
       // cache cards if any
-      if (oJson.get && oJson.get.length > 0) {
-        // assertion
-        console.assert(
-          argument === this.cacheNext,
-          "onAjaxSuccess(): this.cacheNext inconsistency"
-        );
-
-        // add cards to cache
-        this.cacheEnd = this.cacheNext + oJson.get.length - 1;
-
-        // next prefetch at based on number of items received
-        this.prefetchPos =
-          this.cacheNext + Math.floor(oJson.get.length / 2) + 1;
+      if (cardsData && cardsData.length) {
+        // increase pointer to last cached card data
+        this.cacheEnd += cardsData.length;
 
         // cache items
-        for (i = 0; i < oJson.get.length; i++) {
-          this.cacheItem(oJson.get[i]);
-        }
+        cardsData.forEach((item) => this.cacheItem(item));
 
-        this.notify("onWaitCache");
+        this.isAwaitingCards = false;
+
+        this.notify("onCacheReady");
       }
 
       // clear answers from cache, that were handled succesfully by the server
-      if (oJson.put && oJson.put.length > 0) {
-        // clear items from the postCache that were succesfully handled
-        //console.log("RESPONSE PUT, CLEAR %o", oJson.put);
-
-        for (i = 0; i < oJson.put.length; i++) {
-          var id = oJson.put[i];
-          this.removePostData(id);
-        }
-
+      if (syncResponse.put && syncResponse.put.length > 0) {
         this.updateUnloadEvent();
       }
 
@@ -549,50 +570,28 @@ export default class FlashcardReview {
     }
   }
 
-  cacheItem(oItem) {
-    this.cache[oItem.id] = oItem;
-  }
-
-  /**
-   * Clear flashcard display data for items behind, to free some
-   * resources, we only need as much flashcard data behind as needed
-   * for undo.
-   *
-   */
-  cleanCache() {
-    while (this.cacheStart < this.position - this.max_undo) {
-      var id = this.items[this.cacheStart];
-      delete this.cache[id];
-      this.cacheStart++;
-    }
-  }
-
-  /**
-   * Getters
-   */
-  getOption(sName) {
-    return this.options[sName];
+  /** @param {TCardData} cardData */
+  cacheItem(cardData) {
+    this.cache[cardData.id] = cardData;
   }
 
   getPosition() {
     return this.position;
   }
 
+  /** @return {TVueInstanceOf<typeof KoohiiFlashcard>?} */
   getFlashcard() {
-    return this.curCard;
-  }
-
-  /** @return {Dictionary | null} */
-  getFlashcardData() {
-    var id = this.items[this.position];
-    return id ? this.cache[id] : null;
+    return (this.curCard && this.curCard.vm) || null;
   }
 
   /**
-   * Count numner of items in postCache.
+   * The returned object needs to be cast based on the given Flashcard review mode.
+   *
+   * @return {TCardData | null}
    */
-  getPostCount() {
-    return this.postCache.length;
+  getFlashcardData() {
+    var id = this.items[this.position];
+    return id ? this.cache[id] : null;
   }
 
   getNumUndos() {
@@ -603,90 +602,79 @@ export default class FlashcardReview {
     return this.items;
   }
 
-  setFlashcardState(iState) {
-    if (this.curCard) {
-      this.curCard.setState(iState);
-    }
-
-    this.notify("onFlashcardState", iState);
+  /** @param {number} state */
+  setFlashcardState(state) {
+    this.curCard && this.curCard.vm.setState(state);
+    this.notify("onFlashcardState", state);
   }
 
   getFlashcardState() {
-    return this.curCard ? this.curCard.getState() : false;
+    return this.curCard ? this.curCard.vm.getState() : false;
   }
 
   /**
-   * Register a shortcut key for an action id. Pressing the given key
-   * will notify 'onAction' with the given action id. Lowercase letters will match
-   * the uppercase letter.
+   * Keep track of answers, to be synced later with server.
    *
-   * @param {string | number} sKey  Shortcut key, should be lowercase, or ' ' for spacebar
-   * @param {string} sActionId  Id passed to the 'onAction' event when key is pressed
+   * - update counts of rated & again cards
+   * - append answer at end of postCache[]
+   * - append a copy of the card at end of items[], if using "again"
+   *
+   * @param {TCardAnswer} answer
    */
-  addShortcutKey(sKey, sActionId) {
-    if (!this.eventDispatcher.hasListeners("onAction")) {
-      console.warn(
-        'FlashcardReview::addShortcutKey() Adding shortcut key without "onAction" listener'
-      );
+  answerCard(answer) {
+    // keep track of repeat cards
+    if (answer.r === FCRATE.AGAIN) {
+      // add a copy of this card to the end of the review pile
+      //  (progress bar won't move after forward() since the length just increased)
+      this.items.push(answer.id);
+      this.againCards.set(answer.id, true);
+    } else {
+      this.numRated++;
+
+      // if the card was last rated "again", remove it from the "again" count
+      this.againCards.delete(answer.id);
     }
 
-    this.oKeyboard.addListener(sKey, (event) => {
-      this.notify("onAction", sActionId, event);
-    });
+    this.postCache[this.position] = answer;
   }
 
   /**
-   * Store answer and any other custom data for the current card,
-   * to be posted on subsequent ajax requests.
+   * Update the state of the review when undo-ing an answer.
    *
-   */
-  answerCard(oData) {
-    // console.log('FlashcardReview::answerCard(%o)', oData);
-    this.postCache.push(oData);
-
-    this.updateUnloadEvent();
-  }
-
-  /**
-   * Cleans up the answer of current flashcard (when going backwards).
+   * - update counts of rated & again cards
+   * - remove the answer from postCache[]
+   * - remove duplicate cards from the end of items[], added previously by "again"
    *
-   * Must remove item from postCache otherwise when flushing at end of review,
-   * the last undo'ed item(s) would be posted whereas the user did not want to.
-   *
-   * @return  {Object}   Returns flashcard answer data (cf. answerCard()) that is being cleared
+   * @return {TCardAnswer} Flashcard answer (cf. answerCard()) that is "undone"
    */
   unanswerCard() {
-    // console.log('FlashcardReview::unanswerCard()');
-    var id, oData;
+    console.assert(this.postCache.length);
 
-    if (this.getPostCount() <= 0) {
-      throw new Error();
+    let answer = /** @type {TCardAnswer}*/ (this.postCache.pop());
+
+    // if it was a "again" card, remove its duplicata from the end of items[]
+    if (answer.r === FCRATE.AGAIN) {
+      this.items.pop();
     }
 
-    // pop data from the postcache, don't assume order
-    id = this.items[this.position];
-    oData = this.removePostData(id);
+    // keep count of rated (ie. not "again") cards
+    if (!this.againCards.has(answer.id)) {
+      this.numRated--;
+    }
+
+    // whether we are seeing the card again, in the same review session
+    let isRepeatCard = this.position >= this.numCards;
+
+    // if undo-ing an "again >> hard/yes/easy/etc" card, re-count it as "again" answer
+    if (isRepeatCard) {
+      this.againCards.set(answer.id, true);
+    } else {
+      // a non-repeat card, always clear from "again" count
+      this.againCards.delete(answer.id);
+    }
 
     this.updateUnloadEvent();
 
-    return oData;
-  }
-
-  /**
-   * Remove one element of the postCache array, by id.
-   *
-   * @return {Object}  Returns the spliced element (flashcard answer data).
-   */
-  removePostData(id) {
-    var i;
-    for (i = 0; i < this.postCache.length; i++) {
-      // watchout with === because returned json can have strings for numbers
-      if (this.postCache[i].id === id) {
-        var popped = this.postCache.splice(i, 1);
-
-        // return the 'popped' element
-        return popped[0];
-      }
-    }
+    return answer;
   }
 }

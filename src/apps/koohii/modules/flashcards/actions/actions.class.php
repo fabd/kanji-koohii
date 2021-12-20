@@ -90,7 +90,7 @@ class flashcardsActions extends sfActions
 //sleep( 3);
     return $tron->renderPartial($this, 'EditFlashcard', [
       'charData'     => $charData,
-      'cardData'     => $cardData,
+      'cardData'     => (object) $cardData,
       'message'      => $message,
       'confirm'      => $confirm           
     ]);

@@ -3,8 +3,10 @@
 class CacheDictLookupPeer extends coreDatabaseTable
 {
   protected $tableName = 'cache_dict_lookup';
-  protected $columns = []; // timestamp columns must be declared for insert/update/replace
 
+  /**
+   * @return self
+   */
   public static function getInstance()
   {
     return coreDatabaseTable::_getInstance(__CLASS__);

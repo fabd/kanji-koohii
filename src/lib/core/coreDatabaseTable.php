@@ -46,22 +46,31 @@ abstract class coreDatabaseTable
 
   /**
    * coreDatabase reference is static for convenience in peer methods.
+   * 
+   * @var coreDatabaseMySQL
    */
-  protected static
-    $db        = null;
+  protected static $db;
 
   /**
+   * Name of the table in the database (may be different than the class name).
+   * 
    * These should be redefined in the extending class.
    * 
-   * Static variables can not be overridden so these are protected, and an instance
-   * of the class is created on autoloading.
+   * Returned by $this->getName()
    * 
-   * @var $tableName  Name of the table in the database (may be different than the class name).
-   * @var $columns    An array of column names.
+   * @var string
    */
-  protected
-    $tableName   = null,
-    $columns     = null;
+  protected $tableName;
+
+  /**
+   * An array of column names, insert() and update() checks for presence
+   * of CREATED_ON, UPDATED_ON in this array, and handles updating those timestamps.
+   * 
+   * No other uses.
+   * 
+   * @var string[]
+   */
+  protected $columns = [];
 
   /**
    * 
@@ -86,9 +95,7 @@ abstract class coreDatabaseTable
    * The only reason we instantiate the class is that static variables
    * can not be overriden in the extending class as of Php 5.2.
    * 
-   * @param coreDatabase $db    coreDatabase instance.
    * @param string $tableName   Table name obtained from the class name without 'Peer' suffix
-   * @return 
    */
   public function __construct($peerclass)
   {
@@ -108,9 +115,7 @@ abstract class coreDatabaseTable
     }
 
     // columns check
-    if (!is_array($this->columns)) {
-      throw new sfException('coreDatabaseTable table '.$this->getName().' columns not set.');
-    }
+    assert(is_array($this->columns));
 
     $this->initialize();
   }
@@ -145,9 +150,10 @@ abstract class coreDatabaseTable
   /**
    * Build a select query using this table as FROM clause.
    * 
-   * @return object  coreDatabaseSelect instance (automatically converts to string).
+   * @param string|array $columns
+   * @return coreDatabaseSelect
    */
-  public function select($columns = null)
+  public function select($columns = [])
   {
     return self::$db->select($columns)->from($this->getName());
   }

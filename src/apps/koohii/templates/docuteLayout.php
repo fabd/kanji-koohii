@@ -2,11 +2,9 @@
 <html>
 <head>
 <?php include_http_metas() ?>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-<?php include_metas() ?>
-<?php include_title() ?>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php include_metas(); ?>
+<?php include_title(); ?>
   <!-- the docute client styles -->
 <?php 
   // $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
@@ -14,10 +12,11 @@
   // reset default app css/js
   $sf_response->clearStylesheets();
   $sf_response->clearJavascripts();
+  
+  include_stylesheets();
 ?>
-<?php include_stylesheets() ?>
-  <link rel="stylesheet" href="https://unpkg.com/docute/dist/docute.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/docute@3.4.12/dist/docute.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
 
   <!-- thx realfavicongenerator.net -->
   <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=20170121b">
@@ -55,16 +54,18 @@ h4 { color:#42b983; }
 
 .markdown-body code { color:#fa3d60;  }
 .markdown-body pre code { color:#444; }
-
-
-<?php if(has_slot('inline_styles')): ?>
-<?php include_slot('inline_styles') ?>
-<?php endif ?>
   </style>
+
+<?php if (has_slot('inline_styles')) { ?>
+  <style type="text/css">
+<?php include_slot('inline_styles'); ?>
+  </style>
+<?php } ?>
+
 </head>
 <body>
 
-<?php echo $sf_content ?>
+<?php echo $sf_content; ?>
 
 <div id="app"></div>
 

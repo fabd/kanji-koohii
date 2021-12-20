@@ -36,7 +36,7 @@ alias l='ls -lha'
 alias sf='php lib/vendor/symfony/data/bin/symfony'
 
 # watch error log
-phperrlog() { tail -f /var/log/apache2/error.log ; }
+errlog() { tail -f /var/log/apache2/error.log ; }
 
 # watch two logs?
 #tail -F /var/log/apache2/other_vhosts_access.log /var/log/apache2/error.log
@@ -44,9 +44,15 @@ phperrlog() { tail -f /var/log/apache2/error.log ; }
 # edit the ini file
 phpini() { vim /etc/php/7.4/apache2/conf.d/koohii.php.ini ; }
 
-# misc tools
+# php-cs-fixer
 # 
-#   psysh       ... install from   https://psysh.org/
+#   Install : https://cs.symfony.com/#installation
+# 
+alias phpcs='tools/php-cs-fixer/vendor/bin/php-cs-fixer'
+
+# psysh
+# 
+#   Install : https://psysh.org/
 #   
 alias psysh='./psysh'
 
@@ -66,9 +72,6 @@ alias ncu='./node_modules/.bin/ncu'
 ###############
 # KOOHII DEV
 ###############
-
-# build / production
-alias kkbuild='php batch/build_app.php -w web --vite web/build/dist/manifest.json -o config/vite-build.inc.php'
 
 # build / alias for favicon generator (see src/web/favicons/README.md)
 alias real-favicon=./node_modules/.bin/real-favicon

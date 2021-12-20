@@ -18,7 +18,12 @@
       ></a>
     </template>
 
-    <div class="d-keyword" v-html="cardData.keyword"></div>
+    <div class="d-keyword flex items-center">
+      <div v-if="cardData.isAgain" class="text-[#aeaeae] text-md leading-1"><i class="fa fa-redo mr-2"></i></div>
+      <a :href="`/study/kanji/${cardData.kanji}`" title="Go to the Study page" target="blank" class="JsKeywordLink mr-2">{{
+        cardData.keyword
+      }}</a>
+    </div>
 
     <div class="d-strokec" title="Stroke count">
       <cjk-lang-ja html="&#30011;&#25968;" class-name="kanji"></cjk-lang-ja
@@ -172,7 +177,7 @@ export default defineComponent({
       const isFront = this.$parent.getState() === 0;
       const kanji = this.cardData.kanji;
 
-      console.log("formatCompound %s %s %o", str, kanji, isFront);
+      // console.log("formatCompound %s %s %o", str, kanji, isFront);
 
       if (isFront) {
         str = str.replace(

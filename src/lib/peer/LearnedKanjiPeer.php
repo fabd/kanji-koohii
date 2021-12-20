@@ -22,12 +22,11 @@
 
 class LearnedKanjiPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'learnedkanji',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'learnedkanji';
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {

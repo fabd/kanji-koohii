@@ -12,9 +12,7 @@
 
 class PatreonPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'patreon',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'patreon';
 
   // this may be incorrect, no idea what a inactive patron looks like in the API output
   // we will assume for now that non zero amount is an active patron
@@ -23,6 +21,10 @@ class PatreonPeer extends coreDatabaseTable
   // min. pledge amount (cents) for the reward that includes perks
   const PLEDGE_AMOUNT_PERKS = 500;
 
+  /**
+   * This function must be copied in each peer class.
+   * @return self
+   */
   public static function getInstance()
   {
     return coreDatabaseTable::_getInstance(__CLASS__);

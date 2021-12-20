@@ -46,12 +46,11 @@
 
 class ReviewsPeer extends coreDatabaseTable
 {
-  protected
-    $tableName = 'reviews',
-    $columns   = [];  // timestamp columns must be declared for insert/update/replace
+  protected $tableName = 'reviews';
 
   /**
    * This function must be copied in each peer class.
+   * @return self
    */
   public static function getInstance()
   {
@@ -60,36 +59,24 @@ class ReviewsPeer extends coreDatabaseTable
 
   /**
    * Returns flashcard status for given user and character id.
-   *
-   * The results are cached, so that the function can be used freely by
-   * helpers.
    * 
-   * @return mixed   Row data as object, or false.
+   * @param int $userId
+   * @param int $ucsId
+   * @return array|false  Row data
    */
-  public static function getFlashcardData($userId, $ucsId)
+  public static function getFlashcardData(int $userId, int $ucsId)
   {
-    // debug: make sure it's not a (obsolete) frame number
-    assert((int)$ucsId > 0x3000);
+    assert($ucsId > 0x3000);
 
-    $context = sfContext::getInstance();
-    $key = 'fc-data-'.$ucsId;
-
-    // return the cached data if it has already been fetched
-    if ($context->has($key))
-    {
-      $cardData = $context->get($key);
-    }
-    else
-    {
-      self::getInstance()->select([
+    $select = self::getInstance()->select([
         '*',
         'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)'
-      ])->where('ucs_id = ? AND userid = ?', [$ucsId, $userId])->query();
-      $cardData = self::$db->fetchObject();
-      $context->set($key, $cardData);
-    }
+      ])
+      ->where('ucs_id = ?', $ucsId);
+    $select = self::filterByUserId($select, $userId);
+    $select->query();
 
-    return $cardData;
+    return self::$db->fetch();
   }
 
   /**
@@ -118,7 +105,11 @@ class ReviewsPeer extends coreDatabaseTable
   {
     $cardData = self::getFlashcardData($userId, $ucsId);
 
-    return (is_object($cardData) && $cardData->leitnerbox == 1 && $cardData->totalreviews > 0);
+    return (
+      is_array($cardData)
+      && $cardData['leitnerbox'] == 1
+      && $cardData['totalreviews'] > 0
+    );
   }
 
   /**
@@ -637,8 +628,16 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getReviewSummaryListSelect($userId, $ts_start)
   {
     $select = self::getInstance()->select([
-      'seq_nr' => rtkIndex::getSqlCol(), 'failurecount', 'successcount', 'leitnerbox', 'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
-      'kanji', 'onyomi', 'strokecount']);
+      'reviews.ucs_id',
+      'seq_nr' => rtkIndex::getSqlCol(),
+      'failurecount',
+      'successcount',
+      'leitnerbox',
+      'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
+      'kanji',
+      'onyomi',
+      'strokecount'
+    ]);
     $select->where('UNIX_TIMESTAMP(lastreview) >= ?', $ts_start);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = self::filterByUserId($select, $userId);
@@ -777,81 +776,67 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
-   * uiFlashcardReview callback for the review page.
+   * FlashcardReview callback for the review page.
    * 
    * Note: must sanitize data!
    * 
    * Flashcard answer data is set by the front end code (review.js):
    * 
    *    id     Flashcard id = UCS-2 code value
-   *    r      Answer (cf. uiFlashcardReview.php const)
+   *    r      Answer (cf. FlashcardReview.php const)
    *    
-   * @param  int      $id     Flashcard id (UCS-2 code value)
+   * @param  int      $ucsId     Flashcard id (UCS-2 code value)
    * @param  object   $oData  Flashcard answer data
    *
    * @return boolean   True if update/skip/delete went succesfully
    */
-  public static function putFlashcardData($id, $oData)
+  public static function putFlashcardData($ucsId, $oData)
   {
-    if ($id < 1 || !isset($oData->r) || !preg_match('/^[1-5h]$/', $oData->r))
-    {
-      throw new sfException(__METHOD__." Invalid parameters ($id)");
-    }
-
+    assert($ucsId > 0);
+    assert(isset($oData->r));
 //DBG::printr($oData);
 
     $userId = sfContext::getInstance()->getUser()->getUserId();
 
-    if ($oData->r === uiFlashcardReview::UIFR_SKIP)
+    if ($oData->r === FlashcardReview::RATE_SKIP)
     {
-      // skip this flashcard, don't update it
+      // skip flashcard : just ignore it (pretend it's been handled)
       $result = true;
     }
-    elseif ($oData->r === uiFlashcardReview::UIFR_DELETE)
+    elseif ($oData->r === FlashcardReview::RATE_DELETE)
     {
-      // delete the flashcard
-      $deleted = self::deleteFlashcards($userId, [$id]);
-      $result = count($deleted) > 0;
+      $result = self::deleteFlashcards($userId, [$ucsId]) > 0;
       
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', []));
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update'));
     }
     else
     {
-      // get current review status
-      $select = self::getInstance()
-        ->select(['totalreviews','leitnerbox','failurecount','successcount','lastreview'])
-        ->where('ucs_id = ?', $id);
-      $select = self::filterByUserId($select, $userId);
-      $select->query();
-      $curData = self::$db->fetchObject();
+      $curData = self::getFlashcardData($userId, $ucsId);
+  
       if (!$curData) {
         // if the card was somehow deleted, return true so the client can clear the card from sync buffer
         return true;
       }
 
-      $oUpdateData = LeitnerSRS::rateCard($curData, $oData->r);
+      $update = LeitnerSRS::getInstance()->rateCard($curData, $oData->r);
 
-      $result = self::updateFlashcard($userId, $id, $oUpdateData);
+// LOG::info("rate {$oData->r}", json_encode($curData));
+      $result = self::updateFlashcard($userId, $ucsId, $update);
     }
 
     // clear relearned kanji if successfull answer
     // NOTE: expected for API
     if ($result && rtkApi::isApiModule()
-        && ($oData->r === uiFlashcardReview::UIFR_HARD ||
-            $oData->r === uiFlashcardReview::UIFR_YES  ||
-            $oData->r === uiFlashcardReview::UIFR_NO   ||
-            $oData->r === uiFlashcardReview::UIFR_EASY ||
-            $oData->r === uiFlashcardReview::UIFR_DELETE))
+        && ($oData->r === FlashcardReview::RATE_HARD ||
+            $oData->r === FlashcardReview::RATE_YES  ||
+            $oData->r === FlashcardReview::RATE_NO   ||
+            $oData->r === FlashcardReview::RATE_EASY ||
+            $oData->r === FlashcardReview::RATE_DELETE))
     {
-      LearnedKanjiPeer::clearKanji($userId, $id);
+      LearnedKanjiPeer::clearKanji($userId, $ucsId);
     }
 
     return $result;
-  }
-
-  public static function updateFlashcard($userId, $ucsId, $cardData)
-  {
-    return self::getInstance()->update($cardData, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
 
   /**
@@ -860,20 +845,54 @@ class ReviewsPeer extends coreDatabaseTable
    * @param int   $userId 
    * @param int   $ucsId
    *
-   * @return bool   Returns false if SQL operation failed.
+   * @return bool   Whether SQL update was successful
    */
   public static function failFlashcard($userId, $ucsId)
   {
-    $cardData = ReviewsPeer::getFlashcardData($userId, $ucsId);
-    if ($cardData === false)
-    {
-      return false;
-    }
+    $cardData = self::getFlashcardData($userId, $ucsId);
+    
+    if ($cardData === false) return false;
 
     // rate card as "not remembered" (No)
-    $oUpdateData = LeitnerSRS::rateCard($cardData, 1);
+    $update = LeitnerSRS::getInstance()->rateCard($cardData, FlashcardReview::RATE_NO);
 
-    return self::updateFlashcard($userId, $ucsId, $oUpdateData);
+    return self::updateFlashcard($userId, $ucsId, $update);
+  }
+
+  /**
+   * Update flashcard row data, plus:
+   * 
+   *   - sets `lastreview` to user's local time
+   *   - if `interval_days` is provided, converts it to `expiredate`
+   * 
+   * @param int $userId
+   * @param int $ucsId
+   * @param array $cardUpdate  Row data to update, +optional value "interval_days"
+   * 
+   * @return bool   Whether SQL update was successful
+   */
+  public static function updateFlashcard(int $userId, int $ucsId, array $cardUpdate)
+  {
+    $sqlLocalTime = UsersPeer::sqlLocalTime();
+
+    // update "due" timestamp if interval is provided (cf. LeitnerSRS::rateCard())
+    if (isset($cardUpdate['interval_days']))
+    {
+      $interval_days = $cardUpdate['interval_days'];
+      unset($cardUpdate['interval_days']);
+
+      $user = sfContext::getInstance()->getUser();
+      $sqlExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', $sqlLocalTime, $interval_days);
+
+      $cardUpdate['expiredate'] = new coreDbExpr($sqlExpireDate);
+    }
+
+    // always update last review timestamp
+    $cardUpdate['lastreview'] = new coreDbExpr($sqlLocalTime);
+
+// LOG::info("updateFlashcard() ", $cardUpdate);
+
+    return self::getInstance()->update($cardUpdate, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
 
   /**
@@ -894,7 +913,7 @@ class ReviewsPeer extends coreDatabaseTable
     {
       ActiveMembersPeer::updateFlashcardCount($userId);
 
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', []));
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update'));
 
     }
     return $cards;
@@ -916,7 +935,7 @@ class ReviewsPeer extends coreDatabaseTable
     {
       ActiveMembersPeer::updateFlashcardCount($userId);
 
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update', []));
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update'));
     }
     return $cards;
   }

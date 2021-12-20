@@ -31,7 +31,7 @@ export default class Keyboard {
   oKeys;
 
   /**
-   * @param {{ bDisableInInput?: boolean}} options
+   * @param {{ bDisableInInput?: boolean}=} options
    */
   constructor(options) {
     // set options and defaults

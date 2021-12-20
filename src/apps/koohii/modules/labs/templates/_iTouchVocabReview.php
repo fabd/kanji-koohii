@@ -48,7 +48,7 @@
         
         <div id="uiFcButtons0" style="display:none">
           <h3>Press Spacebar to continue</h3>
-          <?= ui_ibtn('<u>F</u>lip Card', '', ['id' => 'uiFcBtnAF', 'class' => 'uiFcAction', 'data-action' => 'flip']) ?>
+          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
         </div>
     
         <div id="uiFcButtons1" style="display:none">
@@ -77,11 +77,13 @@
 
 <?php
   $reviewOptions = [
-    // the page to go to when clicking End with 0 reviews
-    'back_url' => url_for($exit_url, true),
+    // props for a (maybe/someday) Vue template
+    'props' => [
+      // the page to go to when clicking End with 0 reviews
+      'back_url' => url_for($exit_url, true),
+    ],
 
-    'fcr_options' => [
-      'max_undo' => 10,
+    'fcrOptions' => [
       'ajax_url' => $ajax_url,
       'put_request' => false,
       'items' => $items,

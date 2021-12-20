@@ -12,7 +12,7 @@
 // cf. KanjisPeer::getKanjiByUCS()
 export type KanjiData = {
   framenum: number;
-  kanji: string;
+  kanji: TKanjiChar;
   ucs_id: TUcsId;
   keyword: string;
   onyomi: string;

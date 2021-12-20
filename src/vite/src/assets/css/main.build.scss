@@ -1655,6 +1655,40 @@ table.lessons td {
 }
 
 // --------------------------------------------------------------------
+// Flashcard Review Summary
+// --------------------------------------------------------------------
+.SummaryTableRating {
+  @apply px-[.5em] py-[.35em] rounded;
+  --bg: #ccc;
+  --fg: #fff;
+  
+  // No and Again cards are both in the failed pile
+  &.is-no,
+  &.is-again {
+    --bg: #a53000;
+  }
+
+  // Again-* cards are lapsed (forgotten), slightly different shade of red
+  &.is-again-hard,
+  &.is-again-yes,
+  &.is-again-easy {
+    --bg: #b84314;
+    //--bg: #b8146a;
+  }
+
+  &.is-hard,
+  &.is-yes,
+  &.is-easy {
+    //--bg: #ea8212;   orange hard
+    --bg: #5aa107;
+    //--bg: #269189;  easy
+  }
+
+  color: var(--fg);
+  background: var(--bg);
+}
+
+// --------------------------------------------------------------------
 // (last) tailwind utilities
 // --------------------------------------------------------------------
 @import "tailwindcss/utilities";

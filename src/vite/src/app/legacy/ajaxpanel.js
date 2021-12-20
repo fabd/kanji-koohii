@@ -256,9 +256,10 @@ export default class AjaxPanel {
    */
   setForm(elForm) {
     elForm = domGetById(elForm);
-    if (!elForm.nodeName || elForm.nodeName.toLowerCase() !== "form") {
-      throw new Error("setForm() argument 0 is not a form element");
-    }
+    console.assert(
+      elForm.nodeName && elForm.nodeName.toLowerCase() === "form",
+      "setForm() argument 0 is not a form element"
+    );
 
     this.serializeForm = elForm;
   }
@@ -275,11 +276,7 @@ export default class AjaxPanel {
       // return the first form that matches the class name
       var form = $$(this.options.form, this.container)[0];
 
-      console.assert(
-        form,
-        "AjaxPanel::getForm() form not found: `%s`",
-        this.options.form
-      );
+      console.assert(form, "AjaxPanel::getForm() form not found: `%s`", this.options.form);
 
       return form;
     }
@@ -382,10 +379,7 @@ export default class AjaxPanel {
     }
 
     url = sUrl || (form ? form.action : false);
-    console.assert(
-      url,
-      "AjaxPanel::prepareConnect() No url argument and no FORM specified."
-    );
+    console.assert(url, "AjaxPanel::prepareConnect() No url argument and no FORM specified.");
 
     // dont send multiple requests at the same time
     if (this.ajaxRequest && this.ajaxRequest.isCallInProgress()) {
@@ -419,10 +413,7 @@ export default class AjaxPanel {
       this.connection = oConnect;
     }
 
-    console.assert(
-      this.connection,
-      "AjaxPanel::connect() No connection object."
-    );
+    console.assert(this.connection, "AjaxPanel::connect() No connection object.");
 
     //console.log("connect ",this.options,oConnect);
     var options = {
@@ -522,9 +513,7 @@ export default class AjaxPanel {
   showErrorMessage(sMessage) {
     this.ajaxErrorIndicator = new AjaxIndicator({
       container: this.container,
-      message:
-        sMessage +
-        ' <a href="#" style="font-weight:bold;color:yellow;">Retry</a>',
+      message: sMessage + ' <a href="#" style="font-weight:bold;color:yellow;">Retry</a>',
     });
     this.ajaxErrorIndicator.show();
 

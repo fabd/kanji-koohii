@@ -6,8 +6,11 @@ type Dictionary<T = any> = { [key: string]: T };
 // --------------------------------------------------------------------
 // Basic data types
 // --------------------------------------------------------------------
-// a UCS code ( most kanji references in the database are UCS-2 codes )
+// a kanji as a UCS code ( note! database currently stores as UCS-2 )
 type TUcsId = number;
+
+// a kanji as a single character string (utf)
+type TKanjiChar = string;
 
 // --------------------------------------------------------------------
 // Dictionary Lookup

@@ -1,56 +1,68 @@
 // FIXME: refactor into a single class for srs/free/vocab modes
+// @ts-check
 
-import $$, { DomJS, domGetById, hasClass } from "@lib/dom";
+import $$, { DomJS, asHtmlElement } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
+import ReviewPage from "@app/review/ReviewPage";
 
 export default class VocabReview {
-  /** @type {Dictionary} */
-  options = {};
+  /** @type {TVocabReviewProps} */
+  options;
 
-  /** @type {FlashcardReview | null} */
-  oReview = null;
+  /** @type {FlashcardReview} */
+  oReview;
+
+  /** @type {DomJS<Element>}*/
+  $elStats;
+  /** @type {HTMLElement} */
+  elProgressBar;
 
   /**
    *
-   * @param {Dictionary} options
+   * @param {TReviewOptions} fcrOptions ... options for FlashcardReview instance
+   * @param {TVocabReviewProps} props ... props for Vue component (TBD refactor)
    */
-  constructor(options) {
+  constructor(fcrOptions, props) {
     // set options
-    this.options = options;
+    this.options = props;
 
-    options.fcr_options.events = {
-      onBeginReview: this.onBeginReview,
+    fcrOptions.events = {
       onEndReview: this.onEndReview,
       onFlashcardCreate: this.onFlashcardCreate,
       onFlashcardDestroy: this.onFlashcardDestroy,
       onFlashcardState: this.onFlashcardState,
-      onAction: this.onAction,
-      scope: this,
     };
+    fcrOptions.scope = this;
 
-    this.oReview = new FlashcardReview(options.fcr_options);
+    this.oReview = new FlashcardReview(fcrOptions);
 
-    this.oReview.addShortcutKey("f", "flip");
-    this.oReview.addShortcutKey(" ", "flip");
-    this.oReview.addShortcutKey("b", "back");
+    this.reviewPage = new ReviewPage(this.onAction.bind(this));
+    this.reviewPage.addShortcutKey("f", "flip");
+    this.reviewPage.addShortcutKey(" ", "flip");
+    this.reviewPage.addShortcutKey("b", "back");
 
     // stats panel
     this.$elStats = $$("#uiFcStats");
     this.elsCount = $$("#uiFcProgressBar .count"); //array
-    this.elProgressBar = $$("#review-progress span")[0];
+    this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
   }
 
   /**
    * Returns an option value
    *
-   * @param {string} name
+   * @param {keyof TVocabReviewProps} name
    */
   getOption(name) {
     return this.options[name];
   }
 
-  onBeginReview() {
-    //console.log('VocabReview.onBeginReview()');
+  /**
+   * proxy which *always* returns a valid card
+   *
+   * @return {TVocabCardData}
+   */
+  getFlashcardData() {
+    return /**@type {any}*/ (this.oReview.getFlashcardData());
   }
 
   /**
@@ -60,7 +72,7 @@ export default class VocabReview {
    */
   onEndReview() {
     //console.log('VocabReview.onEndReview()');
-    window.location.href = this.options.back_url;
+    window.location.href = this.getOption("back_url");
   }
 
   onFlashcardCreate() {
@@ -77,11 +89,9 @@ export default class VocabReview {
     this.updateStatsPanel();
 
     // set the google search url
-    let searchTerm = this.oReview.getFlashcardData().compound;
-    let searchUrl =
-      "http://www.google.co.jp/search?hl=ja&q=" +
-      encodeURIComponent(searchTerm);
-    domGetById("search-google-jp").href = searchUrl;
+    let searchTerm = this.getFlashcardData().compound;
+    let searchUrl = "http://www.google.co.jp/search?hl=ja&q=" + encodeURIComponent(searchTerm);
+    /**@type{HTMLAnchorElement}*/ ($$("#search-google-jp")[0]).href = searchUrl;
   }
 
   /**
@@ -93,14 +103,18 @@ export default class VocabReview {
     $$("#uiFcButtons1").display(false);
   }
 
+  /** @param {number} iState */
   onFlashcardState(iState) {
     $$("#uiFcButtons0").display(iState === 0);
     $$("#uiFcButtons1").display(iState !== 0);
   }
 
+  /**
+   *
+   * @param {string} sActionId cf. eventdispatcher
+   * @param {Event} oEvent ...
+   */
   onAction(sActionId, oEvent) {
-    var cardAnswer = false;
-
     console.log("VocabReview.onAction(%o)", sActionId);
 
     // flashcard is loading or something..
@@ -137,8 +151,8 @@ export default class VocabReview {
       position = this.oReview.getPosition();
 
     // update review count
-    this.elsCount[0].innerHTML = Math.min(position + 1, num_items);
-    this.elsCount[1].innerHTML = num_items;
+    this.elsCount[0].innerHTML = "" + Math.min(position + 1, num_items);
+    this.elsCount[1].innerHTML = "" + num_items;
 
     // update progress bar
     var pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;
@@ -149,6 +163,8 @@ export default class VocabReview {
   /**
    * Sets buttons (children of element) to default state, or disabled state
    *
+   * @param {HTMLElement} elParent
+   * @param {boolean} bEnabled
    */
   setButtonState(elParent, bEnabled) {
     $$(".uiIBtn", elParent).each((el) => {

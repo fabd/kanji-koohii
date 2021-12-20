@@ -117,6 +117,9 @@ class coreDatabaseMySQL extends coreDatabase
     return $obj;
   }
   
+  /**
+   * @param string|array $columns
+   */
   public function select($columns = null)
   {
     return new coreDatabaseSelect($this, $columns);

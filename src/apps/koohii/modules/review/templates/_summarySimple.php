@@ -1,6 +1,6 @@
-<?php use_helper('Widgets', 'SimpleDate', 'Form', 'CJK', 'Links') ?>
+<?php use_helper('Widgets', 'SimpleDate', 'Form', 'CJK', 'Links'); ?>
 
-<?php slot('inline_styles') ?>
+<?php slot('inline_styles'); ?>
 #fm-summary { margin:10px 0 5px; overflow:auto; color:#716e57; }
 #fm-summary p { margin:0 0 20px; }
 #fm-summary ul { margin:0 -6px; list-style:none; padding:0; }
@@ -22,28 +22,30 @@
 #fm-summary .inf em { display:block; font-family:Georgia, serif; font-size:15px; padding:6px 0 0; }
 
 /*#fm-summary li.card:hover { background-color:blue; }*/
-<?php end_slot() ?>
+<?php end_slot(); ?>
 
-<?php #DBG::request() ?>
+<?php //DBG::request()?>
 
-<?php #echo DBG::printr($cards); ?>
+<?php //echo DBG::printr($cards);?>
 
 <div id="fm-summary" class="padded-box rounded">
-<?php if (count($cards) > 0): ?>
+<?php if (count($cards) > 0) { ?>
 
-  <p><strong>Hint!</strong>  Click the <?php echo _CJ('kanji') ?> to open the Study page</p>
+  <p><strong>Hint!</strong>  Click the <?= _CJ('kanji'); ?> to open the Study page</p>
   <ul>
-  <?php foreach ($cards as $c): ?>
-    <li class="card<?php echo $c->pass ? '':' fail' ?>">
+  <?php foreach ($cards as $c) { ?>
+    <li class="card<?= $c->pass ? '' : ' fail'; ?>">
       <div class="rbn"></div>
-      <div class="chr"><?php echo link_to(cjk_lang_ja($c->kanji), '@study_edit?id='.$c->framenum, ['target' => '_blank']) ?></div>
-      <div class="inf">#<?php echo $c->framenum.'<em>'.$c->keyword ?></em></div>
+      <div class="chr"><?= link_to(cjk_lang_ja($c->kanji), '@study_edit?id='.$c->framenum, ['target' => '_blank']); ?></div>
+      <div class="inf">#<?= $c->framenum.'<em>'.$c->keyword; ?></em></div>
     </li>
-  <?php endforeach ?>
+  <?php } ?>
   </ul>
 
-<?php else: ?>
+<?php }
+else
+{ ?>
   <p style="color:red;">Woops, the session may have expired. The review summary is no longer available.</p>
-<?php endif ?>
+<?php } ?>
 </div>
 

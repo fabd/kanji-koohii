@@ -348,7 +348,7 @@ class rtkLabs
   /**
    * iVocabShuffle "Heisig index" mode.
    * 
-   * @return array  Array of flashcard ids for uiFlashcardReview frontend
+   * @return array  Array of flashcard ids for FlashcardReview frontend
    */
   public static function getVocabShuffleMode1Items($max_framenum = 20)
   {
@@ -369,7 +369,8 @@ class rtkLabs
     $items = [];
 
     while ($row = $db->fetchObject()) {
-      $items[] = $row->dictid;
+      // make sure the flashcard ids are ints, for uiFlashardReview
+      $items[] = (int) $row->dictid;
     }
 
 //DBG::printr($items);exit;
@@ -380,7 +381,7 @@ class rtkLabs
   /**
    * iVocabShuffle "only known kanji".
    *
-   * @return array   Array of flashcard ids for uiFlashcardReview frontend
+   * @return int[]   Array of unique ids for flashcard review session
    */
   public static function getVocabShuffleMode2Items()
   {
@@ -403,7 +404,7 @@ class rtkLabs
       ->having('c = numkanji AND pri & ?', self::EDICT_PRI_SHUFFLE)
       ->order('rand()')
       ->limit(self::VOCABSHUFFLE_LENGTH);
-                
+
 //echo $select;exit;
     
     // grab the id column
@@ -411,7 +412,8 @@ class rtkLabs
 
     $select->query();
     while ($row = $db->fetch()) {
-      $items[] = $row['dictid'];
+      // make sure the flashcard ids are ints, for uiFlashardReview
+      $items[] = (int) $row['dictid'];
     }
 
     return $items;
@@ -451,7 +453,7 @@ class rtkLabs
    * OBSOLETE?
    *
    * Sets array data into the session for retrieving later with the
-   * uiFlashcardReview callback.
+   * FlashcardReview callback.
    *
    * See getFlashcardData()
    * 
@@ -464,7 +466,7 @@ class rtkLabs
    */
 
   /**
-   * uiFlashcardReview callback for VocabShuffle mode.
+   * FlashcardReview callback for VocabShuffle mode.
    * 
    * Returns flashcard data that was already loaded into the session,
    * given a unique flashcard id, which was used as the key for the
@@ -478,7 +480,7 @@ class rtkLabs
   {
     $cardData = self::getVocabFlashcard($dictId);
 
-    // required by uiFlashcardReview frontend
+    // required by FlashcardReview frontend
     $cardData->id = $dictId;
     
     // goes into flashcard template .fcData-dispword element
@@ -526,7 +528,7 @@ class rtkLabs
   }
 
   /**
-   * uiFlashcardReview callback for the free review mode when example readings
+   * FlashcardReview callback for the free review mode when example readings
    * are enabled.
    *
    * Try to get ONE example On, and ONE example Kun words for the given kanji,

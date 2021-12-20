@@ -229,7 +229,7 @@ function koohii_onload_slot()
   $prevContent = get_slot($name);
   slot($name);
   echo $prevContent;
-  echo "console.log('koohii_onload_slot()')\n";
+  // echo "console.log('koohii_onload_slot()')\n";
 }
 
 function koohii_onload_slots_out()

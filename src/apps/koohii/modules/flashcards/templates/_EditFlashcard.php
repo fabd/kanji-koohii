@@ -20,22 +20,22 @@ $bReviewMode = $sf_params->has('review');
 function flashcard_stats($cardData)
 {
   // prepare flashcard stats    
-  if ($cardData->leitnerbox == 1)
+  if ($cardData['leitnerbox'] == 1)
   {
-    $whichBox = esc_specialchars($cardData->totalreviews == 0 ? 'New cards (blue pile)' : 'Restudy cards (red pile)');
+    $whichBox = esc_specialchars($cardData['totalreviews'] == 0 ? 'New cards (blue pile)' : 'Restudy cards (red pile)');
   }
   else
   {
-    $whichBox = esc_specialchars(/*'Stack '.*/$cardData->leitnerbox);
+    $whichBox = esc_specialchars(/*'Stack '.*/$cardData['leitnerbox']);
   }
   
-  $lastReview = esc_specialchars($cardData->ts_lastreview > 0 ? simple_format_date((int)$cardData->ts_lastreview, rtkLocale::DATE_SHORT) : 'Not tested yet.');
+  $lastReview = esc_specialchars($cardData['ts_lastreview'] > 0 ? simple_format_date((int)$cardData['ts_lastreview'], rtkLocale::DATE_SHORT) : 'Not tested yet.');
 
   $html = <<<EOD
 <table class="stats" cellspacing="0">
 <tr><th>Box</th><td>{$whichBox}</td></tr>
-<tr><th>Passed</th><td><strong>{$cardData->successcount}</strong> time(s)</td></tr>
-<tr><th>Failed</th><td><strong>{$cardData->failurecount}</strong> time(s)</td></tr>
+<tr><th>Passed</th><td><strong>{$cardData['successcount']}</strong> time(s)</td></tr>
+<tr><th>Failed</th><td><strong>{$cardData['failurecount']}</strong> time(s)</td></tr>
 <tr><th>Last review</th><td>{$lastReview}</td></tr>
 </tr>
 </table>
@@ -131,7 +131,7 @@ function get_dialog_menu($menu)
     if ($cardData)
     {
       // Study : "fail" a card
-      if (!$bReviewMode && $cardData->leitnerbox > 1 && $cardData->totalreviews > 0)
+      if (!$bReviewMode && $cardData['leitnerbox'] > 1 && $cardData['totalreviews'] > 0)
       {
         add_menu_item($menu, 'Move card to restudy pile', 'fail');
       }

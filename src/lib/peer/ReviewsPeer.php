@@ -899,6 +899,17 @@ class ReviewsPeer extends coreDatabaseTable
 
 // LOG::info("updateFlashcard() ", $cardUpdate);
 
+    // foolproof check : leitnerbox should NEVER be zero or NULL
+    if (array_key_exists('leitnerbox', $cardUpdate)
+      && (
+        !ctype_digit((string)$cardUpdate['leitnerbox'])
+        || $cardUpdate['leitnerbox'] <= 0
+      )
+    ) {
+      error_log("updateFlashcard() INVALID! ".json_encode($cardUpdate));
+      return false;
+    }
+
     return self::getInstance()->update($cardUpdate, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
 

@@ -31,7 +31,6 @@
  *  getPreviousPage()
  *  getNextPage()
  *  getSelect()                  Returns Select object with paging applied (if pagenum is >= 1)
- *  getResults($fetchMode)
  *  getLinks()                   Return an array of page numbers to be displayed in the pager.
  *  getPageLink($page, $label)   Returns html link for given page, using internal_uri and query_params
  *  getMaxPerPageLinks()         Returns values to display as rows per page options
@@ -215,24 +214,6 @@ class uiSelectPager
     }
 
     return $select;
-  }
-
-  /**
-   * Query the Select object, return results according to $fetchMode
-   * 
-   * @return 
-   * @param object $fetchMode
-   */
-  public function getResults($fetchMode)
-  {
-    // apply paging
-    $pagedSelect = $this->getSelect();
-
-    $prevmode = $this->db->setFetchMode($fetchMode);
-    $pagedSelect->query();
-    $rows = $this->db->fetchAll();
-    $this->db->setFetchMode($prevmode);
-    return $rows;
   }
 
   /**

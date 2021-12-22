@@ -159,7 +159,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     $select->columns(['count' => 'COUNT(*)']);
     $select = self::filterByUserId($select, $userId);
-//DBG::printr($select->__toString());
+// DBG::printr($select->__toString());exit;
     $select->query();
     $result = self::$db->fetchObject();
     return (int) $result->count;
@@ -269,6 +269,7 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getLeitnerBoxCounts($filter = '')
   {
     $user = sfContext::getInstance()->getUser();
+    $userId = $user->getUserId();
 
     $select = self::getInstance()->select([
         'box'   => 'leitnerbox',
@@ -278,7 +279,7 @@ class ReviewsPeer extends coreDatabaseTable
       ->where('totalreviews > 0')
       ->group(['leitnerbox', 'due ASC']);
     
-    $select = self::filterByUserId($select, $user->getUserId());
+    $select = self::filterByUserId($select, $userId);
     $select = self::filterByRtk($select, $filter); // FIXME  we don't strictly need sequences JOIN here
     $rows   = self::$db->fetchAll($select);
 
@@ -292,9 +293,15 @@ class ReviewsPeer extends coreDatabaseTable
 
     // set due & undue counts
     foreach ($rows as $row) {
-      $i    = intval($row['box'] - 1);
+      $boxNr = (int) ($row['box'] - 1);
+
+      assert($boxNr >= 0, "LeitnerBox number is invalid!");
+      if ($boxNr < 0) {
+        throw new sfException("Invalid LeitnerBox number: {$row['box']} for user {$userId}");
+      }
+
       $pile = $row['due'] ? 'expired_cards' : 'fresh_cards';
-      $boxes[$i][$pile] += $row['count'];
+      $boxes[$boxNr][$pile] += $row['count'];
     }
 
     // set totals per box

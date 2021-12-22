@@ -27,15 +27,6 @@ class MyStoriesTableComponent extends sfComponent
         uiSelectPager::QUERY_ROWSPERPAGE => 10
       ]);
 
-    // order by
-    $order_by = [
-      'seq_nr'   => 'seq_nr ASC',
-      'keyword'  => 'keyword ASC',
-      'lastedit' => 'updated_on DESC',
-      'votes'    => 'stars DESC',
-      'reports'  => 'kicks DESC',
-      'public'   => 'public DESC'
-    ];
 
     $sortkey = $request->getParameter('sort', 'lastedit');
 
@@ -44,9 +35,21 @@ class MyStoriesTableComponent extends sfComponent
     }
 
     $action->forward404Unless(!$sortkey || preg_match('/^[a-z_]+$/', $sortkey));
-    $orderClause = isset($order_by[$sortkey]) ? $order_by[$sortkey] : $order_by['seq_nr'];
 
-    // Stories select
+    define('SORT_COLS', [
+      'seq_nr'   => 'seq_nr ASC',
+      'keyword'  => 'keyword ASC',
+      'lastedit' => 'updated_on DESC',
+      'votes'    => 'stars DESC',
+      'reports'  => 'kicks DESC',
+      'public'   => 'public DESC'
+    ]);
+    $orderBy = SORT_COLS[$sortkey] ?? SORT_COLS['seq_nr'];
+    if ($sortkey !== 'seq_nr') {
+      // add a secondary sort to fix duplicates when paging
+      $orderBy = [$orderBy, 'seq_nr'];
+    }
+
     $storiesSelect = StoriesPeer::getMyStoriesSelect($userId);
 
     // filter out private stories
@@ -55,8 +58,7 @@ class MyStoriesTableComponent extends sfComponent
       $storiesSelect->where('public = 1');
     }
 
-    // pager
-    $this->pager = new uiSelectPager([
+    $pager = new uiSelectPager([
       'select'       => $storiesSelect,
       'internal_uri' => 'study/mystories',
       'query_params' => [
@@ -67,13 +69,14 @@ class MyStoriesTableComponent extends sfComponent
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
     ]);
-    $this->pager->init();
+    $pager->init();
 
     // get row data
-    $get_select = clone($this->pager->getSelect());
-    $get_select->order($orderClause);
+    $get_select = clone($pager->getSelect());
+    $get_select->order($orderBy);
+
     $rows = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($get_select);
-//DBG::out($get_select);
+// LOG::info('', (string)$get_select);
     foreach ($rows as &$R)
     {
       // public/private icon
@@ -82,6 +85,8 @@ class MyStoriesTableComponent extends sfComponent
       $R['story'] = StoriesPeer::getFormattedStory($R['story'], $R['keyword'], false);
     }
 
+    // template vars
+    $this->pager = $pager;
     $this->rows = $rows;
 
     return sfView::SUCCESS;

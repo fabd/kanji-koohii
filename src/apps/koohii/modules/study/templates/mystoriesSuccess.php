@@ -5,23 +5,33 @@
 
 <h2>My Stories</h2>
 
-<div class="mystories-stats text-xl mb-6">
-  <strong><?php echo $num_stories->private ?></strong> private</li>, 
-  <strong><?php echo $num_stories->public ?></strong> public</li>
-  (<?php echo $num_stories->total ?> total)
-</div>
+<?php if ($num_stories->total === 0): ?>
+  <p>
+    This page will let you browse all the kanji stories you have edited in the <?= link_to('Study page', 'study/index'); ?>.
+  </p>
+<?php else: ?>
 
-<div class="mb-6 relative">
-  <div class="absolute right-0 top-0">
-    <?php echo _bs_button_with_icon('Export to CSV', 'study/export', ['icon' => 'fa-file']) ?>
+  <div class="mystories-stats text-xl mb-6">
+    <strong><?= $num_stories->private; ?></strong> private</li>, 
+    <strong><?= $num_stories->public; ?></strong> public</li>
+    (<?= $num_stories->total; ?> total)
   </div>
 
-  <div id="MyStoriesSelect" class="mb-3"><!-- vue --></div>
-</div>
+  <div class="mb-6 relative">
+    <div class="absolute right-0 top-0">
+      <?= _bs_button_with_icon('Export to CSV', 'study/export', ['icon' => 'fa-file']); ?>
+    </div>
 
-<div id="MyStoriesComponent">
-  <?php include_component('study', 'MyStoriesTable', ['stories_uid' => $sf_user->getUserId(), 'profile_page' => false]) ?>
-</div>
+    <div id="MyStoriesSelect" class="mb-3"><!-- vue --></div>
+  </div>
+
+  <div id="MyStoriesComponent">
+    <?php include_component('study', 'MyStoriesTable', [
+      'stories_uid' => $sf_user->getUserId(),
+      'profile_page' => false,
+    ]); ?>
+  </div>
+<?php endif; ?>
 
 <?php
   kk_globals_put('MYSTORIES_SORT_ACTIVE', $sort_active);

@@ -31,7 +31,7 @@
 
       <?php echo form_tag('review/free', ['method' => 'get']) ?>
       
-      <h4>Review a range of kanji</h4>
+      <h3 class="mb-4">Review a range of kanji</h3>
 
       <div class="form-group">
         RTK Index
@@ -66,7 +66,7 @@
 
     <div class="padded-box rounded labs-review-box">
 
-      <h4>Review from learned kanji</h4>
+      <h3 class="mb-4">Review from learned kanji</h3>
 
       <p>You have <strong><?php echo $knowncount ?></strong> learned kanji (<strong class="clr-srs-due">due</strong> and <strong class="clr-srs-undue">scheduled</strong> cards).</p>
 

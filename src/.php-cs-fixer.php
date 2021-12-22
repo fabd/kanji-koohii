@@ -19,6 +19,12 @@ return (new PhpCsFixer\Config())
     // always use heredoc
     'heredoc_to_nowdoc' => false,
 
+    // allow cleaner one-line conditionals in php templates :
+    //   <!php if (expr): !> ... <!php else: !> ... <!php endif; !>
+    'no_alternative_syntax' => [
+      'fix_non_monolithic_code' => false,
+    ],
+
     // *don't* prematurely remove else's
     'no_useless_else' => false,
 

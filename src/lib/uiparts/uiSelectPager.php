@@ -192,7 +192,7 @@ class uiSelectPager
    * 
    * If page number is 0, no paging is applied.
    * 
-   * @return 
+   * @return coreDatabaseSelect
    */
   public function getSelect()
   {

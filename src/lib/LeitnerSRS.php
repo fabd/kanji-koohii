@@ -122,32 +122,30 @@ class LeitnerSRS
    */
   public function rateCard(array $curData, string $answer)
   {
+    $card_box = $curData['leitnerbox'];
     $card_interval = 0;
     $card_variance = 0;
-
-    $lapseCard = function (&$answer, $rating) use (&$curData)
-    {
-      $curData['leitnerbox'] = 1; // failed pile
-      $answer = $rating;
-    };
 
     // handle again-* ratings (again followed by hard/yes/easy during review)
     if ($answer === FlashcardReview::RATE_AGAIN_HARD)
     {
-      $lapseCard($answer, FlashcardReview::RATE_HARD);
+      $answer = FlashcardReview::RATE_HARD;
+      $card_box = 1;
     }
     if ($answer === FlashcardReview::RATE_AGAIN_YES)
     {
-      $lapseCard($answer, FlashcardReview::RATE_YES);
+      $answer = FlashcardReview::RATE_YES;
+      $card_box = 1;
     }
     if ($answer === FlashcardReview::RATE_AGAIN_EASY)
     {
-      $lapseCard($answer, FlashcardReview::RATE_EASY);
+      $answer = FlashcardReview::RATE_EASY;
+      $card_box = 1;
     }
 
     switch ($answer) {
       case FlashcardReview::RATE_NO:
-        $card_box = 1; // failed pile
+        $card_box = 1;
 
         break;
 
@@ -159,17 +157,17 @@ class LeitnerSRS
 
       case FlashcardReview::RATE_YES:
       case FlashcardReview::RATE_EASY:
-        $card_box = $curData['leitnerbox'] + 1;
+        $card_box = $card_box + 1;
 
         break;
 
       case FlashcardReview::RATE_HARD:
-        $card_box = $curData['leitnerbox'] - 1;
+        $card_box = $card_box - 1;
 
-        // clamp bottom
+        // HARD answers can not fall back into the failed pile
         $card_box = max(2, $card_box);
 
-        // clamp top
+        // apply “Max Box for Hard Answer" setting
         $card_box = min($card_box, $this->optHardBox + 1);
 
         break;

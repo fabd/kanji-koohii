@@ -824,11 +824,11 @@ class ReviewsPeer extends coreDatabaseTable
         // if the card was somehow deleted, return true so the client can clear the card from sync buffer
         return true;
       }
+// LOG::info("rate {$oData->r}", json_encode($curData));
 
       $update = LeitnerSRS::getInstance()->rateCard($curData, $oData->r);
 
-// LOG::info("rate {$oData->r}", json_encode($curData));
-      $result = self::updateFlashcard($userId, $ucsId, $update);
+      $result = $update && self::updateFlashcard($userId, $ucsId, $update);
     }
 
     // clear relearned kanji if successfull answer
@@ -863,7 +863,7 @@ class ReviewsPeer extends coreDatabaseTable
     // rate card as "not remembered" (No)
     $update = LeitnerSRS::getInstance()->rateCard($cardData, LeitnerSRS::RATE_NO);
 
-    return self::updateFlashcard($userId, $ucsId, $update);
+    return $update && self::updateFlashcard($userId, $ucsId, $update);
   }
 
   /**

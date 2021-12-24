@@ -26,7 +26,9 @@ function koohiiGetUserSettingsSRS()
 /**
  * This class handles the SRS scheduling, based on card rating (no/yes/easy/etc).
  *
- * getInstance() should always be used, which injects user's SRS settings automatically.
+ * Always use getInstance() to inject the user's SRS settings automatically.
+ *
+ *   LeitnerSRS::getInstance()->rateCard()
  */
 class LeitnerSRS
 {
@@ -130,13 +132,18 @@ class LeitnerSRS
    * @param array  $curData Row data coming from flashcard review storage
    * @param string $answer  Answer (see FlashcardReview.php const)
    *
-   * @return array Row data to store in the flashcard review storage
+   * @return array|false Row data to store in the flashcard review storage
    */
   public function rateCard(array $curData, string $answer)
   {
     $card_box = $curData['leitnerbox'];
     $card_interval = 0;
     $card_variance = 0;
+
+    if (!$this->isValidRating($answer))
+    {
+      return false;
+    }
 
     // handle again-* ratings (again followed by hard/yes/easy during review)
     if ($answer === LeitnerSRS::RATE_AGAIN_HARD)
@@ -260,6 +267,25 @@ class LeitnerSRS
       LeitnerSRS::RATE_YES,
       LeitnerSRS::RATE_EASY,
     ]);
+  }
+
+  /**
+   * Check that the rating is known and valid.
+   *
+   * Note: we don't check for eg. SKIP, DELETE which are not handled here.
+   */
+  public function isValidRating(string $rating): bool
+  {
+    return in_array($rating, [
+      LeitnerSRS::RATE_NO,
+      LeitnerSRS::RATE_HARD,
+      LeitnerSRS::RATE_YES,
+      LeitnerSRS::RATE_EASY,
+      LeitnerSRS::RATE_AGAIN,
+      LeitnerSRS::RATE_AGAIN_HARD,
+      LeitnerSRS::RATE_AGAIN_YES,
+      LeitnerSRS::RATE_AGAIN_EASY,
+    ], /* strict check*/ true);
   }
 
   /**

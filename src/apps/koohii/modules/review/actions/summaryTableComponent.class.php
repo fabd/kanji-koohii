@@ -2,16 +2,16 @@
 
 const RATING_LABELS = [
   '' => '-',
-  FlashcardReview::RATE_NO => 'No',
-  FlashcardReview::RATE_HARD => 'Hard',
-  FlashcardReview::RATE_YES => 'Yes',
-  FlashcardReview::RATE_EASY => 'Easy',
-  FlashcardReview::RATE_DELETE => 'Delete',
-  FlashcardReview::RATE_SKIP => '(skipped)',
-  FlashcardReview::RATE_AGAIN => 'Again',
-  FlashcardReview::RATE_AGAIN_HARD => 'Again > Hard',
-  FlashcardReview::RATE_AGAIN_YES => 'Again > Yes',
-  FlashcardReview::RATE_AGAIN_EASY => 'Again > Easy',
+  LeitnerSRS::RATE_NO => 'No',
+  LeitnerSRS::RATE_HARD => 'Hard',
+  LeitnerSRS::RATE_YES => 'Yes',
+  LeitnerSRS::RATE_EASY => 'Easy',
+  LeitnerSRS::RATE_DELETE => 'Delete',
+  LeitnerSRS::RATE_SKIP => '(skipped)',
+  LeitnerSRS::RATE_AGAIN => 'Again',
+  LeitnerSRS::RATE_AGAIN_HARD => 'Again > Hard',
+  LeitnerSRS::RATE_AGAIN_YES => 'Again > Yes',
+  LeitnerSRS::RATE_AGAIN_EASY => 'Again > Easy',
 ];
 
 class summaryTableComponent extends sfComponent

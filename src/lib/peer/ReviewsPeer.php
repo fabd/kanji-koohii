@@ -805,12 +805,12 @@ class ReviewsPeer extends coreDatabaseTable
 
     $userId = sfContext::getInstance()->getUser()->getUserId();
 
-    if ($oData->r === FlashcardReview::RATE_SKIP)
+    if ($oData->r === LeitnerSRS::RATE_SKIP)
     {
       // skip flashcard : just ignore it (pretend it's been handled)
       $result = true;
     }
-    elseif ($oData->r === FlashcardReview::RATE_DELETE)
+    elseif ($oData->r === LeitnerSRS::RATE_DELETE)
     {
       $result = self::deleteFlashcards($userId, [$ucsId]) > 0;
       
@@ -834,11 +834,11 @@ class ReviewsPeer extends coreDatabaseTable
     // clear relearned kanji if successfull answer
     // NOTE: expected for API
     if ($result && rtkApi::isApiModule()
-        && ($oData->r === FlashcardReview::RATE_HARD ||
-            $oData->r === FlashcardReview::RATE_YES  ||
-            $oData->r === FlashcardReview::RATE_NO   ||
-            $oData->r === FlashcardReview::RATE_EASY ||
-            $oData->r === FlashcardReview::RATE_DELETE))
+        && ($oData->r === LeitnerSRS::RATE_HARD ||
+            $oData->r === LeitnerSRS::RATE_YES  ||
+            $oData->r === LeitnerSRS::RATE_NO   ||
+            $oData->r === LeitnerSRS::RATE_EASY ||
+            $oData->r === LeitnerSRS::RATE_DELETE))
     {
       LearnedKanjiPeer::clearKanji($userId, $ucsId);
     }
@@ -861,7 +861,7 @@ class ReviewsPeer extends coreDatabaseTable
     if ($cardData === false) return false;
 
     // rate card as "not remembered" (No)
-    $update = LeitnerSRS::getInstance()->rateCard($cardData, FlashcardReview::RATE_NO);
+    $update = LeitnerSRS::getInstance()->rateCard($cardData, LeitnerSRS::RATE_NO);
 
     return self::updateFlashcard($userId, $ucsId, $update);
   }

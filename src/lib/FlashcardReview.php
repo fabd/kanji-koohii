@@ -75,18 +75,6 @@ class FlashcardReview
   private object $options;
   private array $cardStatus;
 
-  // card ratings (@see FlashcardReview.js, flashcards.d.ts)
-  public const RATE_NO = 'no';
-  public const RATE_HARD = 'hard';
-  public const RATE_YES = 'yes';
-  public const RATE_EASY = 'easy';
-  public const RATE_DELETE = 'delete';
-  public const RATE_SKIP = 'skip';
-  public const RATE_AGAIN = 'again';
-
-  public const RATE_AGAIN_HARD = 'again-hard';
-  public const RATE_AGAIN_YES = 'again-yes';
-  public const RATE_AGAIN_EASY = 'again-easy';
 
   /**
    * Do not allow client to prefetch too many cards at once.
@@ -241,7 +229,7 @@ class FlashcardReview
       //   avoid rating them twice -- in the rare case the server handled
       //   the sync request, but somehow the client re-sends it.
       //
-      if (!$cardStatus || $cardStatus === FlashcardReview::RATE_AGAIN)
+      if (!$cardStatus || $cardStatus === LeitnerSRS::RATE_AGAIN)
       {
         // Currently the client does not expect for errors to happen.
         // If an error happens, assume it is a temporary hiccup and ignore the
@@ -267,12 +255,12 @@ class FlashcardReview
   public static function normalizeOldRatings(array $items)
   {
     $oldRatings = [
-      1 => self::RATE_NO,
-      2 => self::RATE_YES,
-      3 => self::RATE_EASY,
-      4 => self::RATE_DELETE,
-      5 => self::RATE_SKIP,
-      'h' => self::RATE_HARD,
+      1 => LeitnerSRS::RATE_NO,
+      2 => LeitnerSRS::RATE_YES,
+      3 => LeitnerSRS::RATE_EASY,
+      4 => LeitnerSRS::RATE_DELETE,
+      5 => LeitnerSRS::RATE_SKIP,
+      'h' => LeitnerSRS::RATE_HARD,
     ];
 
     foreach ($items as &$item)
@@ -332,28 +320,28 @@ class FlashcardReview
     foreach ($answers as $rating)
     {
       if (in_array($rating, [
-        FlashcardReview::RATE_HARD,
-        FlashcardReview::RATE_YES,
-        FlashcardReview::RATE_EASY,
+        LeitnerSRS::RATE_HARD,
+        LeitnerSRS::RATE_YES,
+        LeitnerSRS::RATE_EASY,
       ]))
       {
         ++$fcr_pass;
       }
 
       if (in_array($rating, [
-        FlashcardReview::RATE_AGAIN,
-        FlashcardReview::RATE_AGAIN_HARD,
-        FlashcardReview::RATE_AGAIN_YES,
-        FlashcardReview::RATE_AGAIN_EASY,
-        FlashcardReview::RATE_NO,
+        LeitnerSRS::RATE_AGAIN,
+        LeitnerSRS::RATE_AGAIN_HARD,
+        LeitnerSRS::RATE_AGAIN_YES,
+        LeitnerSRS::RATE_AGAIN_EASY,
+        LeitnerSRS::RATE_NO,
       ]))
       {
         ++$fcr_fail;
       }
 
       if (!in_array($rating, [
-        FlashcardReview::RATE_DELETE,
-        FlashcardReview::RATE_SKIP,
+        LeitnerSRS::RATE_DELETE,
+        LeitnerSRS::RATE_SKIP,
       ]))
       {
         ++$fcr_total;

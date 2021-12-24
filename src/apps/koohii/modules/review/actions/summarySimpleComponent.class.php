@@ -20,12 +20,12 @@ class summarySimpleComponent extends sfComponent
         // FIXME : free mode should not handle ratings other than YES/NO/AGAIN
         //         (fix keyboard shortcuts)
         $isPass = in_array($answer, [
-          FlashcardReview::RATE_HARD,
-          FlashcardReview::RATE_YES,
-          FlashcardReview::RATE_EASY,
-          FlashcardReview::RATE_AGAIN_HARD,
-          FlashcardReview::RATE_AGAIN_YES,
-          FlashcardReview::RATE_AGAIN_EASY,
+          LeitnerSRS::RATE_HARD,
+          LeitnerSRS::RATE_YES,
+          LeitnerSRS::RATE_EASY,
+          LeitnerSRS::RATE_AGAIN_HARD,
+          LeitnerSRS::RATE_AGAIN_YES,
+          LeitnerSRS::RATE_AGAIN_EASY,
         ]);
 
         $card = [

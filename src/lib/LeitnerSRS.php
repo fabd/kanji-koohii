@@ -26,7 +26,9 @@ function koohiiGetUserSettingsSRS()
 /**
  * This class handles the SRS scheduling, based on card rating (no/yes/easy/etc).
  *
- * getInstance() should always be used, which injects user's SRS settings automatically.
+ * Always use getInstance() to inject the user's SRS settings automatically.
+ *
+ *   LeitnerSRS::getInstance()->rateCard()
  */
 class LeitnerSRS
 {
@@ -40,6 +42,18 @@ class LeitnerSRS
   public const DEFAULT_SRS_MULT = 2.05;
   public const DEFAULT_SRS_MAX_BOX = 7;
   public const DEFAULT_SRS_HARD_BOX = 0;
+
+  // flashcard ratings (@see FlashcardReview.js, flashcards.d.ts)
+  public const RATE_NO = 'no';
+  public const RATE_HARD = 'hard';
+  public const RATE_YES = 'yes';
+  public const RATE_EASY = 'easy';
+  public const RATE_DELETE = 'delete';
+  public const RATE_SKIP = 'skip';
+  public const RATE_AGAIN = 'again';
+  public const RATE_AGAIN_HARD = 'again-hard';
+  public const RATE_AGAIN_YES = 'again-yes';
+  public const RATE_AGAIN_EASY = 'again-easy';
 
   // max Leitner Box (excludes Fail & New box, 1 = 1+ reviews)
   private int $optMaxBox;
@@ -118,58 +132,61 @@ class LeitnerSRS
    * @param array  $curData Row data coming from flashcard review storage
    * @param string $answer  Answer (see FlashcardReview.php const)
    *
-   * @return array Row data to store in the flashcard review storage
+   * @return array|false Row data to store in the flashcard review storage
    */
   public function rateCard(array $curData, string $answer)
   {
+    $card_box = $curData['leitnerbox'];
     $card_interval = 0;
     $card_variance = 0;
 
-    $lapseCard = function (&$answer, $rating) use (&$curData)
+    if (!$this->isValidRating($answer))
     {
-      $curData['leitnerbox'] = 1; // failed pile
-      $answer = $rating;
-    };
+      return false;
+    }
 
     // handle again-* ratings (again followed by hard/yes/easy during review)
-    if ($answer === FlashcardReview::RATE_AGAIN_HARD)
+    if ($answer === LeitnerSRS::RATE_AGAIN_HARD)
     {
-      $lapseCard($answer, FlashcardReview::RATE_HARD);
+      $answer = LeitnerSRS::RATE_HARD;
+      $card_box = 1;
     }
-    if ($answer === FlashcardReview::RATE_AGAIN_YES)
+    if ($answer === LeitnerSRS::RATE_AGAIN_YES)
     {
-      $lapseCard($answer, FlashcardReview::RATE_YES);
+      $answer = LeitnerSRS::RATE_YES;
+      $card_box = 1;
     }
-    if ($answer === FlashcardReview::RATE_AGAIN_EASY)
+    if ($answer === LeitnerSRS::RATE_AGAIN_EASY)
     {
-      $lapseCard($answer, FlashcardReview::RATE_EASY);
+      $answer = LeitnerSRS::RATE_EASY;
+      $card_box = 1;
     }
 
     switch ($answer) {
-      case FlashcardReview::RATE_NO:
-        $card_box = 1; // failed pile
+      case LeitnerSRS::RATE_NO:
+        $card_box = 1;
 
         break;
 
-      case FlashcardReview::RATE_AGAIN:
+      case LeitnerSRS::RATE_AGAIN:
         // "again" cards pre-emptively go to the fail pile
         $card_box = 1;
 
         break;
 
-      case FlashcardReview::RATE_YES:
-      case FlashcardReview::RATE_EASY:
-        $card_box = $curData['leitnerbox'] + 1;
+      case LeitnerSRS::RATE_YES:
+      case LeitnerSRS::RATE_EASY:
+        $card_box = $card_box + 1;
 
         break;
 
-      case FlashcardReview::RATE_HARD:
-        $card_box = $curData['leitnerbox'] - 1;
+      case LeitnerSRS::RATE_HARD:
+        $card_box = $card_box - 1;
 
-        // clamp bottom
+        // HARD answers can not fall back into the failed pile
         $card_box = max(2, $card_box);
 
-        // clamp top
+        // apply “Max Box for Hard Answer" setting
         $card_box = min($card_box, $this->optHardBox + 1);
 
         break;
@@ -178,7 +195,7 @@ class LeitnerSRS
     // clamp highest box to SRS setting
     $card_box = min($card_box, $this->optMaxBox + 1);
 
-    if ($card_box === 2 && $answer === FlashcardReview::RATE_HARD)
+    if ($card_box === 2 && $answer === LeitnerSRS::RATE_HARD)
     {
       // cards in NEW or 1+ REVIEW piles with HARD answer get a fixed 1 day interval
       $card_interval = 1;
@@ -196,7 +213,7 @@ class LeitnerSRS
       $card_interval = $this->intervals[$card_box - 1];
 
       // easy answers get a higher interval
-      if ($answer === FlashcardReview::RATE_EASY)
+      if ($answer === LeitnerSRS::RATE_EASY)
       {
         $card_interval = (int) ceil($card_interval * self::EASY_FACTOR);
       }
@@ -218,7 +235,7 @@ class LeitnerSRS
     //       This is to avoid multiple failure/totalreview increases as an AGAIN
     //       card could realistically be synced 2+ times in a review.
     //
-    if ($answer !== FlashcardReview::RATE_AGAIN)
+    if ($answer !== LeitnerSRS::RATE_AGAIN)
     {
       $oUpdate['totalreviews'] = $curData['totalreviews'] + 1;
 
@@ -246,10 +263,29 @@ class LeitnerSRS
   private function isSuccessCount(string $answer): bool
   {
     return in_array($answer, [
-      FlashcardReview::RATE_HARD,
-      FlashcardReview::RATE_YES,
-      FlashcardReview::RATE_EASY,
+      LeitnerSRS::RATE_HARD,
+      LeitnerSRS::RATE_YES,
+      LeitnerSRS::RATE_EASY,
     ]);
+  }
+
+  /**
+   * Check that the rating is known and valid.
+   *
+   * Note: we don't check for eg. SKIP, DELETE which are not handled here.
+   */
+  public function isValidRating(string $rating): bool
+  {
+    return in_array($rating, [
+      LeitnerSRS::RATE_NO,
+      LeitnerSRS::RATE_HARD,
+      LeitnerSRS::RATE_YES,
+      LeitnerSRS::RATE_EASY,
+      LeitnerSRS::RATE_AGAIN,
+      LeitnerSRS::RATE_AGAIN_HARD,
+      LeitnerSRS::RATE_AGAIN_YES,
+      LeitnerSRS::RATE_AGAIN_EASY,
+    ], /* strict check*/ true);
   }
 
   /**

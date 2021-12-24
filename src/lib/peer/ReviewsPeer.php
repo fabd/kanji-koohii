@@ -159,7 +159,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     $select->columns(['count' => 'COUNT(*)']);
     $select = self::filterByUserId($select, $userId);
-//DBG::printr($select->__toString());
+// DBG::printr($select->__toString());exit;
     $select->query();
     $result = self::$db->fetchObject();
     return (int) $result->count;
@@ -269,6 +269,7 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getLeitnerBoxCounts($filter = '')
   {
     $user = sfContext::getInstance()->getUser();
+    $userId = $user->getUserId();
 
     $select = self::getInstance()->select([
         'box'   => 'leitnerbox',
@@ -278,7 +279,7 @@ class ReviewsPeer extends coreDatabaseTable
       ->where('totalreviews > 0')
       ->group(['leitnerbox', 'due ASC']);
     
-    $select = self::filterByUserId($select, $user->getUserId());
+    $select = self::filterByUserId($select, $userId);
     $select = self::filterByRtk($select, $filter); // FIXME  we don't strictly need sequences JOIN here
     $rows   = self::$db->fetchAll($select);
 
@@ -292,9 +293,15 @@ class ReviewsPeer extends coreDatabaseTable
 
     // set due & undue counts
     foreach ($rows as $row) {
-      $i    = intval($row['box'] - 1);
+      $boxNr = (int) ($row['box'] - 1);
+
+      assert($boxNr >= 0, "LeitnerBox number is invalid!");
+      if ($boxNr < 0) {
+        throw new sfException("Invalid LeitnerBox number: {$row['box']} for user {$userId}");
+      }
+
       $pile = $row['due'] ? 'expired_cards' : 'fresh_cards';
-      $boxes[$i][$pile] += $row['count'];
+      $boxes[$boxNr][$pile] += $row['count'];
     }
 
     // set totals per box
@@ -798,12 +805,12 @@ class ReviewsPeer extends coreDatabaseTable
 
     $userId = sfContext::getInstance()->getUser()->getUserId();
 
-    if ($oData->r === FlashcardReview::RATE_SKIP)
+    if ($oData->r === LeitnerSRS::RATE_SKIP)
     {
       // skip flashcard : just ignore it (pretend it's been handled)
       $result = true;
     }
-    elseif ($oData->r === FlashcardReview::RATE_DELETE)
+    elseif ($oData->r === LeitnerSRS::RATE_DELETE)
     {
       $result = self::deleteFlashcards($userId, [$ucsId]) > 0;
       
@@ -817,21 +824,21 @@ class ReviewsPeer extends coreDatabaseTable
         // if the card was somehow deleted, return true so the client can clear the card from sync buffer
         return true;
       }
+// LOG::info("rate {$oData->r}", json_encode($curData));
 
       $update = LeitnerSRS::getInstance()->rateCard($curData, $oData->r);
 
-// LOG::info("rate {$oData->r}", json_encode($curData));
-      $result = self::updateFlashcard($userId, $ucsId, $update);
+      $result = $update && self::updateFlashcard($userId, $ucsId, $update);
     }
 
     // clear relearned kanji if successfull answer
     // NOTE: expected for API
     if ($result && rtkApi::isApiModule()
-        && ($oData->r === FlashcardReview::RATE_HARD ||
-            $oData->r === FlashcardReview::RATE_YES  ||
-            $oData->r === FlashcardReview::RATE_NO   ||
-            $oData->r === FlashcardReview::RATE_EASY ||
-            $oData->r === FlashcardReview::RATE_DELETE))
+        && ($oData->r === LeitnerSRS::RATE_HARD ||
+            $oData->r === LeitnerSRS::RATE_YES  ||
+            $oData->r === LeitnerSRS::RATE_NO   ||
+            $oData->r === LeitnerSRS::RATE_EASY ||
+            $oData->r === LeitnerSRS::RATE_DELETE))
     {
       LearnedKanjiPeer::clearKanji($userId, $ucsId);
     }
@@ -854,9 +861,9 @@ class ReviewsPeer extends coreDatabaseTable
     if ($cardData === false) return false;
 
     // rate card as "not remembered" (No)
-    $update = LeitnerSRS::getInstance()->rateCard($cardData, FlashcardReview::RATE_NO);
+    $update = LeitnerSRS::getInstance()->rateCard($cardData, LeitnerSRS::RATE_NO);
 
-    return self::updateFlashcard($userId, $ucsId, $update);
+    return $update && self::updateFlashcard($userId, $ucsId, $update);
   }
 
   /**
@@ -891,6 +898,17 @@ class ReviewsPeer extends coreDatabaseTable
     $cardUpdate['lastreview'] = new coreDbExpr($sqlLocalTime);
 
 // LOG::info("updateFlashcard() ", $cardUpdate);
+
+    // foolproof check : leitnerbox should NEVER be zero or NULL
+    if (array_key_exists('leitnerbox', $cardUpdate)
+      && (
+        !ctype_digit((string)$cardUpdate['leitnerbox'])
+        || $cardUpdate['leitnerbox'] <= 0
+      )
+    ) {
+      error_log("updateFlashcard() INVALID! ".json_encode($cardUpdate));
+      return false;
+    }
 
     return self::getInstance()->update($cardUpdate, 'userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }

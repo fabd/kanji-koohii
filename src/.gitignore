@@ -15,6 +15,7 @@
 # generated / logs
 *.log
 error_log*
+koohii-log.txt
 
 # generated / misc files
 /cache

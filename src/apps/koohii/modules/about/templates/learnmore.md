@@ -34,13 +34,16 @@ The Study area is where you begin your kanji journey! Start with the character [
 
 If you choose to publicly share your story, it will appear in the list below. You can vote for stories that work well, copy a story from another member (you can use it as is, or you may want to edit it).
 
-If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
-
 **Hints**
 
 * If you don't edit a story, the first one that you **star** will be shown during flashcard reviews when you use the Story shortcut
 * Select the keyword to customize it.
 * Select the red pile in the SRS to go to the list of failed (forgotten) kanji.
+
+### Working with the Restudy List {#restudy-list}
+
+If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
+
 
 
 ## The Dictionary {#help-dictionary}
@@ -145,17 +148,29 @@ long term memory, therefore it is not possible to select the green piles. Often 
 
 </div>
 
-### Rating Flashcards
+### Rating Flashcards {#rating-flashcards}
 
-* **No** : send card back to the restudy pile.
-* **Hard** : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
+* <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnRed uiFcBtnAN"><span>No</span></div></span> : send card back to the restudy pile. You can work through your failed kanji later by using the [restudy feature](#restudy-list). Or, you can also directly review the Restudy pile at a later time, by clicking the red button in the [Restudy List](/study/failedlist).
+
+* <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAG"><span>Again</span></div></span> : moves the card to the end of the review pile, and lets you repeat it _in the same review session_. Use _Again_ rating the same way you would use No : you were not able to recall the kanji. However instead of sending the card to the Restudy pile, you will review it again at the end of this session.
+
+  The result is the same as answering No, followed by Hard/Yes/Easy : the card will be "reset" to the 1+ review box with 1-6 days interval depending if you used Hard, Yes or Easy.
+
+  If there are any cards you rated _Again_ that are left in the pile, and you End the review prematurely (End button) these cards will go to the Restudy pile (rated as a No).
+
+  _Again_ is best used as a kind of **learning stage** when you are reviewing the New or Restudy piles, effectively allowing you to repeat initial reviews as many times as you want while tweaking your kanji story/mnemonic.
+  
+  Keep in mind using _Again_ a lot, even for new cards, can make your reviews feel very long! Try to use **the Hard rating** with New & Restudy cards for a fixed 1 day interval without increasing the length of your review, and be careful of over-using rote  memorization as that defeats the purpose of the RTK method.
+
+* <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnOrange"><span>Hard</span></div></span> : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
 
   The "Hard" answer is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
 
   Cards that are in box 2 (one review) and rated "Hard" stay in box 2, but they always come for review the next day (instead of using the default of ~3 days).
 
-* **Yes** : this is the recommended rating for new cards, using the default interval.
-* **Easy** : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that you have reviewed a few times. Use "Easy" whenever you can to reduce the amount of due cards over time.
+* <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAY"><span>Yes</span></div></span> : this is the recommended rating for new cards, using the default interval.
+
+* <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAE"><span>Easy</span></div></span> : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that you have reviewed a few times. Use "Easy" whenever you can to reduce the amount of due cards over time.
 
 
 **When a card is not answered correctly it will move back to the first compartment!** This is why you can gauge your current level of knowledge just by looking at the count of cards in each compartment : cards in the last compartment have not only been tested four times or more, they also have passed the test at least four times _in a row_. Thus, the cards in the last compartments correspond to the kanji you know best.

@@ -104,23 +104,6 @@
   height: 42px;
 } /* larger buttons for touch/mobile */
 
-#uiFcBtnAN {
-  background-image: linear-gradient(to bottom, #b83600 0%, #a53000 100%);
-}
-
-#uiFcBtnAF {
-  background-color: #268bd2;
-  background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
-}
-#uiFcBtnAE {
-  background-color: #2aa198;
-  background-image: linear-gradient(to bottom, #2aa198 0%, #269189 100%);
-}
-
-#uiFcBtnAG {
-  background-image: linear-gradient(to bottom, #ca4a15 0%, #b84314 100%);
-}
-
 #uiFcButtons .uiIBtn {
   @apply mx-1;
   font-weight: normal;

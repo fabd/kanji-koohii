@@ -48,12 +48,12 @@
         
         <div id="uiFcButtons0" style="display:none">
           <h3>Press Spacebar to continue</h3>
-          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
+          <a href="#" class="uiIBtn uiIBtnDefault uiFcBtnAF uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
         </div>
     
         <div id="uiFcButtons1" style="display:none">
           <h3>Press Spacebar to continue</h3>
-          <?= ui_ibtn('Continue', '', ['id' => 'uiFcBtnAC', 'class' => 'uiFcAction', 'data-action' => 'flip']) ?>
+          <?= ui_ibtn('Continue', '', ['class' => 'uiFcBtnAC uiFcAction', 'data-action' => 'flip']) ?>
         </div>
       
       </div><!-- uiFcButtons -->

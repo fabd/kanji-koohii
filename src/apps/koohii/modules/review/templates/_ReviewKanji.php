@@ -69,7 +69,7 @@
         
         <div id="uiFcButtons0" class="-mx-1" style="display:none">
           <h3>Press Spacebar or F to flip card</h3>
-          <a href="#" id="uiFcBtnAF" class="uiIBtn uiIBtnDefault uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
+          <a href="#" class="uiIBtn uiIBtnDefault uiFcBtnAF uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
         </div>
     
         <div id="uiFcButtons1"<?= $freemode ? '' : ' class="three-buttons"'; ?> style="display:none">
@@ -77,13 +77,13 @@
 
           <div class="flex items-center justify-between -mx-1">
 <button
-  id="uiFcBtnAN" class="uiIBtn uiIBtnDefault uiIBtnRed uiFcAction flex-1"
+  class="uiIBtn uiIBtnDefault uiIBtnRed uiFcBtnAN uiFcAction flex-1"
   data-action="no" title="Forgotten">
   <span><u>N</u>o</span>
 </button>
 <?php if (1 /*!$freemode*/) { ?>
 <button
-  id="uiFcBtnAG" class="uiIBtn uiIBtnDefault uiFcAction flex-1"
+  class="uiIBtn uiIBtnDefault uiFcAction uiFcBtnAG flex-1"
   data-action="again" title="Repeat card">
   <u>A</u>gain
 </button>
@@ -91,17 +91,17 @@
 
 <?php if (!$freemode) { ?>
 <button
- id="uiFcBtnAH" class="uiIBtnOrange uiFcAction uiIBtn uiIBtnDefault flex-2" 
+ class="uiFcAction uiIBtn uiIBtnDefault uiIBtnOrange flex-2" 
  data-action="hard" title="Hard">
   <span class="px-1"><u>H</u>ard</span>
 </button>
 <?php } ?>
-<button id="uiFcBtnAY" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
+<button class="uiFcAction uiIBtn uiIBtnDefault uiFcBtnAY flex-2"
   data-action="yes" title="Remembered with some effort">
   <span class="px-2"><u>Y</u>es</span>
 </button>
 <?php if (!$freemode) { ?>
-<button id="uiFcBtnAE" class="uiFcAction uiIBtn uiIBtnDefault flex-2"
+<button class="uiFcAction uiIBtn uiIBtnDefault uiFcBtnAE flex-2"
   data-action="easy" title="Remembered easily">
   <span class="px-1"><u>E</u>asy</span>
 </button>

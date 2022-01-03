@@ -7,10 +7,11 @@
     @apply fixed min-w-[218px];
   }
 
+  // base font size, use em downwards
+  font-size: 1rem;
+
   // defaults
   ul {
-    // base font size, use em downwards
-    font-size: calc(15 / 16 * 1rem);
 
     a {
       @apply block py-1;
@@ -25,7 +26,7 @@
     @apply px-0;
 
     li {
-      font-size: calc(14 / 15 * 1em);
+      font-size: .95em;
       font-weight: bold;
     }
 
@@ -34,7 +35,18 @@
       @apply ml-[1em];
 
       li {
-        font-size: 0.95em;
+        // font-size: 0.95em;
+      }
+
+      ul {
+        @apply ml-0;
+        li {
+          // font-size: 0.9em;
+        }
+        a {
+          @apply pl-[2em];
+
+        }
       }
 
       a {
@@ -52,7 +64,10 @@
 .kk-DocMain {
   // fix the title positioning when clicking the sidebar links (#anchors)
   h2,
-  h3 {
+  h3,
+  h4,
+  h5,
+  h6 {
     margin-top: -4rem;
     padding-top: 4.5rem;
   }

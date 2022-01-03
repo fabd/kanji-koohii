@@ -1,4 +1,4 @@
-## Kanji Koohii helps you remember the kanji
+## Introduction
 
 **Kanji Koohii** is a website and community dedicated to help you complete the kanji learning method called _Remembering the Kanji_.
 
@@ -7,7 +7,7 @@
 - **Track your progress** to stay motivated
 - Learn words based on your kanji knowledge with the **smart dictionary**
 
-## About Remembering the Kanji {#help-rtk}
+## About the RTK book {#help-rtk}
 
 <div class="kk-DocMain-whatisrtk padded-box rounded no-gutter-xs-sm mb-8" markdown="1">
 
@@ -15,15 +15,15 @@
     <img src="/images/3.0/help/rtk-book-cover.gif" width="137" height="205" class="css3-ssh" />
   </div>
 
-Remembering the Kanji (RTK) teaches you how to break down the complex kanji in smaller, simple parts that can be memorized with a _mnemonic_ system (we call it _stories_).
+**Remembering the Kanji** (RTK) teaches you how to break down the complex kanji in smaller, simple parts that can be memorized with a _mnemonic_ system (we call it _stories_).
 
-[**Start with the free sample chapter**](https://nirc.nanzan-u.ac.jp/en/files/2012/12/RK-1-6th-edition-sample.pdf) from the publisher (PDF). It covers 294 kanji and 12 lessons.
+You can already start studying 294 kanji in 12 lessons with [**the free sample chapter**](https://nirc.nanzan-u.ac.jp/en/files/2012/12/RK-1-6th-edition-sample.pdf) made available by the publisher.
 
 You can buy the book on [Amazon](https://www.amazon.com/Remembering-Kanji-Complete-Japanese-Characters/dp/0824835921) as well as [publisher](https://nirc.nanzan-u.ac.jp/en/publications/miscellaneous-publications/remembering-the-kanji/) in paper or ebook format. [Here is a good review](https://www.kanjiclinic.com/reviewheisigwiig.htm) from KanjiClinic.
 
 </div>
 
-## Study And Share Stories {#help-study}
+## Studying {#help-study}
 
 The Study area is where you begin your kanji journey! Start with the character ["one"](/study/kanji/1). Edit your mnemonic (also called a "story") or use one shared by the community. Then add a flashcard with the button in the top right. When you are done studying a few characters go to the [Spaced Repetition System (SRS)](/main) and click the blue pile to review new cards.
 
@@ -37,11 +37,11 @@ If you choose to publicly share your story, it will appear in the list below. Yo
 - Select the keyword to customize it.
 - Select the red pile in the SRS to go to the list of failed (forgotten) kanji.
 
-### Working with the Restudy List {#restudy-list}
+### The Restudy List {#restudy-list}
 
 If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
 
-## The Dictionary {#help-dictionary}
+### The Dictionary {#help-dictionary}
 
 **Kanji Koohii features a simple, yet smart dictionary. The Koohii dictionary is aware of your kanji knowledge: as you progress and add flashcards the dictionary will highlight vocabulary entries that are made of only those known kanji.**
 
@@ -54,7 +54,7 @@ the user has not yet learned 合 which is kanji #269 and will be seen later. Yet
 
 This works in Flashcard Review too! So as you do reviews over weeks and months, and you open the dictionary you may discover new words which weren't highlighted before.
 
-### About Kanji Koohii's Dictionary sources {#help-dictionary-data}
+#### Dictionary Sources {#dictionary-data}
 
 Kanji Koohii's dictionary uses Jim Breen's [JMdict/EDICT](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) Japanese-English dictionary (see acknowlegments in the [About](/about) page).
 
@@ -64,7 +64,10 @@ This is done in order to provide meaningful results for Koohii users. The dictio
 
 As such, Koohii's dictionary is not an exhaustive reference. There are already excellent resources dedicated to this such as jisho.org. The goal for Koohii's dictionary is to help you stay focused while getting through the 2000+ common use kanji.
 
-## Adding Flashcards {#help-manage-cards}
+
+## Using Flashcards {#using-flashcards}
+
+### Adding Flashcards {#adding-flashcards}
 
 Flashcards are added in **Flashcards > Manage Cards**.
 
@@ -76,11 +79,11 @@ If you are not studying the kanji in the RTK sequence (say, JLPT), or you want t
 
 <img class="img-block img-responsive" src="/koohii/help/help-add-custom.png" />
 
-## The Spaced Repetition System (SRS) {#help-srs}
+## Reviewing {#reviewing}
 
-### What is Spaced Repetition?
+### What is a SRS? {#srs}
 
-Kanji Koohii uses a _spaced repetition system_ (also known as "SRS") based on the popular [Leitner System](http://en.wikipedia.org/wiki/Leitner_system):
+Kanji Koohii uses a **Spaced Repetition System** (also known as "SRS") based on the popular [Leitner System](http://en.wikipedia.org/wiki/Leitner_system):
 
 > In the Leitner system, flashcards are sorted into groups according to how well you know each one in the Leitner's learning box. This is how it works: you try to recall the solution written on a flashcard. If you succeed, you send the card to the next group. But if you fail, you send it back to the first group. Each succeeding group has a longer period of time before you are required to revisit the cards.
 
@@ -90,7 +93,7 @@ The Leitner System helps you to:
 - Review at increasingly longer intervals to stimulate long term memory.
 - Review more of the difficult flashcards, and less of those that you know well.
 
-### The SRS Bar Chart
+### The SRS Bar Chart {#srs-bar-chart}
 
 The SRS bar chart represents stacks of flashcards. Stacks are shown from left to right. Stacks on the left side are relatively new. With each review, a card will move towards the right, representing a better knowledge.
 
@@ -102,7 +105,7 @@ The following boxes represent a level of knowledge: cards have been reviewed one
 
 <div class="kk-DocMain-stacks" markdown="1">
 
-### Stacks in the first compartment
+  **Cards in the first box (labelled "Fail & New")**
 
   <dl>
   <dt class="failed">&nbsp;</dt>
@@ -120,7 +123,7 @@ The following boxes represent a level of knowledge: cards have been reviewed one
   </dd>
   </dl>
 
-### Stacks in the other compartments
+  **Cards in the review boxes**
 
   <dl>
   <dt class="expired">&nbsp;</dt>
@@ -141,55 +144,7 @@ long term memory, therefore it is not possible to select the green piles. Often 
 
 </div>
 
-### Rating Flashcards {#rating-flashcards}
-
-- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnRed uiFcBtnAN"><span>No</span></div></span> : send card back to the restudy pile. You can work through your failed kanji later by using the [restudy feature](#restudy-list). Or, you can also directly review the Restudy pile at a later time, by clicking the red button in the [Restudy List](/study/failedlist).
-
-- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAG"><span>Again</span></div></span> : moves the card to the end of the review pile, and lets you repeat it _in the same review session_. Use _Again_ rating the same way you would use No : you were not able to recall the kanji. However instead of sending the card to the Restudy pile, you will review it again at the end of this session.
-
-  The result is the same as answering No, followed by Hard/Yes/Easy : the card will be "reset" to the 1+ review box with 1-6 days interval depending if you used Hard, Yes or Easy.
-
-  If there are any cards you rated _Again_ that are left in the pile, and you End the review prematurely (End button) these cards will go to the Restudy pile (rated as a No).
-
-  _Again_ is best used as a kind of **learning stage** when you are reviewing the New or Restudy piles, effectively allowing you to repeat initial reviews as many times as you want while tweaking your kanji story/mnemonic.
-
-  Keep in mind using _Again_ a lot, even for new cards, can make your reviews feel very long! Try to use **the Hard rating** with New & Restudy cards for a fixed 1 day interval without increasing the length of your review, and be careful of over-using rote memorization as that defeats the purpose of the RTK method.
-
-- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnOrange"><span>Hard</span></div></span> : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
-
-  The "Hard" answer is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
-
-  Cards that are in box 2 (one review) and rated "Hard" stay in box 2, but they always come for review the next day (instead of using the default of ~3 days).
-
-- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAY"><span>Yes</span></div></span> : this is the recommended rating for new cards, using the default interval.
-
-- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAE"><span>Easy</span></div></span> : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that you have reviewed a few times. Use "Easy" whenever you can to reduce the amount of due cards over time.
-
-**When a card is not answered correctly it will move back to the first compartment!** This is why you can gauge your current level of knowledge just by looking at the count of cards in each compartment : cards in the last compartment have not only been tested four times or more, they also have passed the test at least four times _in a row_. Thus, the cards in the last compartments correspond to the kanji you know best.
-
-## Scheduling {#help-scheduling}
-
-You can customize the Spaced Repetition scheduling in _Account Settings_ menu:
-
-- **Number of boxes** for successive reviews corresponds to the intervals for positive reviews and what the _maximum_ interval will be
-- **Review interval multiplier** determines the spacing between reviews (in days). Consider using a smaller multiplier when you start out, if you'd like to get more reviews. When you complete RTK, consider increasing the multiplier to reduce the review load over time
-- **Maximum box for cards marked 'Hard'** determines the maximum interval for a Hard answer
-
-Here is a screenshot of the default options:
-
-<img class="img-block img-responsive" src="/koohii/help/help-srs-options-defaults.png" />
-
-### Cards in the last box (maximum interval)
-
-Cards answered "Yes" or "Easy" in the last box remain in the last box and are scheduled again at the last box's interval. To increase the maximum interval you can either increase the number of boxes, or the multiplier, or use a combination of both.
-
-### Variance
-
-There is also an amount of **variance**, which adds a little "fuzziness" to the interval by moving the date a little bit backward or forward. This helps spread due cards over time, so that they don't come in big batches on the same date.
-
-The variance factor is currently `0.15` of the interval, and there is a limit of `30` days. For example, a card scheduled in 26 days with a variance of 4 days will be scheduled anywhere from 22 to 30 days.
-
-## Reviewing {#help-reviewing}
+### The Review Session {#review-session}
 
 Clicking any of the stacks in the Leitner graph will take you to the reviewing screen :
 
@@ -219,7 +174,35 @@ Correctly answered cards will be promoted to the next card box, incorrectly answ
 
 The "Stats" panel shows you how many kanji you have been testing in this session so far, how many were answered correctly, and how many were answered incorrectly.
 
-At the end of the session, or when you click the "Skip to summary" button, you will be taken to the **Review Summary** screen :
+#### Rating Cards {#rating-flashcards}
+
+- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnRed uiFcBtnAN"><span>No</span></div></span> : send card back to the restudy pile. You can work through your failed kanji later by using the [restudy feature](#restudy-list). Or, you can also directly review the Restudy pile at a later time, by clicking the red button in the [Restudy List](/study/failedlist).
+
+- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAG"><span>Again</span></div></span> : moves the card to the end of the review pile, and lets you repeat it _in the same review session_. Use _Again_ rating the same way you would use No : you were not able to recall the kanji. However instead of sending the card to the Restudy pile, you will review it again at the end of this session.
+
+  The result is the same as answering No, followed by Hard/Yes/Easy : the card will be "reset" to the 1+ review box with 1-6 days interval depending if you used Hard, Yes or Easy.
+
+  If there are any cards you rated _Again_ that are left in the pile, and you End the review prematurely (End button) these cards will go to the Restudy pile (rated as a No).
+
+  _Again_ is best used as a kind of **learning stage** when you are reviewing the New or Restudy piles, effectively allowing you to repeat initial reviews as many times as you want while tweaking your kanji story/mnemonic.
+
+  Keep in mind using _Again_ a lot, even for new cards, can make your reviews feel very long! Try to use **the Hard rating** with New & Restudy cards for a fixed 1 day interval without increasing the length of your review, and be careful of over-using rote memorization as that defeats the purpose of the RTK method.
+
+- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnOrange"><span>Hard</span></div></span> : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
+
+  The "Hard" answer is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
+
+  Cards that are in box 2 (one review) and rated "Hard" stay in box 2, but they always come for review the next day (instead of using the default of ~3 days).
+
+- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAY"><span>Yes</span></div></span> : this is the recommended rating for new cards, using the default interval.
+
+- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAE"><span>Easy</span></div></span> : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that you have reviewed a few times. Use "Easy" whenever you can to reduce the amount of due cards over time.
+
+**When a card is not answered correctly it will move back to the first compartment!** This is why you can gauge your current level of knowledge just by looking at the count of cards in each compartment : cards in the last compartment have not only been tested four times or more, they also have passed the test at least four times _in a row_. Thus, the cards in the last compartments correspond to the kanji you know best.
+
+#### The Review Summary {#review-summary}
+
+Once you have completed a review (or when you click the "End" button), you will be taken to the **Review Summary** screen :
 
 <img class="img-block img-responsive" src="/koohii/help/help-review-summary-cards.png" />
 
@@ -229,21 +212,42 @@ The table can be sorted on any column by clicking on the column headers. In the 
 
 Clicking any of the keywords will take you to the corresponding character in the Study area, where you can check your mnemonics, adapt them, or maybe use a mnemonic shared by another member if yours wasn't working so well.
 
+
+## Account Settings {#account-settings}
+
+### Spaced Repetition {#help-srs}
+
+You can customize the Spaced Repetition scheduling in _Account Settings_ menu:
+
+- **Number of boxes** for successive reviews corresponds to the intervals for positive reviews and what the _maximum_ interval will be
+- **Review interval multiplier** determines the spacing between reviews (in days). Consider using a smaller multiplier when you start out, if you'd like to get more reviews. When you complete RTK, consider increasing the multiplier to reduce the review load over time
+- **Maximum box for cards marked 'Hard'** determines the maximum interval for a Hard answer
+
+Here is a screenshot of the default options:
+
+<img class="img-block img-responsive" src="/koohii/help/help-srs-options-defaults.png" />
+
+#### Maximum interval
+
+Cards answered "Yes" or "Easy" in the last box remain in the last box and are scheduled again at the last box's interval. To increase the maximum interval you can either increase the number of boxes, or the multiplier, or use a combination of both.
+
+#### Variance
+
+There is also an amount of **variance**, which adds a little "fuzziness" to the interval by moving the date a little bit backward or forward. This helps spread due cards over time, so that they don't come in big batches on the same date.
+
+The variance factor is currently `0.15` of the interval, and there is a limit of `30` days. For example, a card scheduled in 26 days with a variance of 4 days will be scheduled anywhere from 22 to 30 days.
+
 ## FAQ {#help-faq}
 
-### Tips for rating cards with the SRS
+### Tips for Rating Cards {#faq-rating-cards}
 
 - Use the **Hard** answer instead of "No" **to skip** the <span class="clr-srs-fail">Restudy pile</span> (cards rated _Hard_ never fall below the 1+ review pile)
 - Use the **Hard** answer for <span class="clr-srs-new">New</span> cards if you want a fixed **1 day** interval ( instead of the default 2-4 days)
 
-### How do I reset my flashcards?
+### Resetting Flashcards {#faq-reset-cards} 
 
 First, note that _stories and kanji flashcards are separate_. With that in mind, you can simply delete all the flashcards, your stories won't be affected.
 
 1. Go to [Remove Custom Flashcard Selection](/manage/removecustom) (from the Flashcards > Manage Flashcards menu)
 2. Enter `1-3000` and click _Remove Flashcards_, then confirm
 3. Now you can add cards back as you see fit, either one by one advancing through the Study pages (top right _Add Card_ buton), or add in small batches via _Manage Flashcards_ menu
-
-### I can not see Japanese characters in my browser.
-
-In old versions of Windows and some OS'es you may have to enable "East Asian languages support", or add the language support for Japanese specifically. Most Linux / Windows / OS X desktops these days already have Japanese and Chinese fonts included. You may also want to look into enabling the _input method editor_ (IME) to input kanji.

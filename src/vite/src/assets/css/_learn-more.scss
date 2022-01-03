@@ -1,0 +1,104 @@
+// ====================================================================
+// Learn More page & markdown output formatting
+// ====================================================================
+
+.kk-DocNav {
+  @screen lg {
+    @apply fixed min-w-[218px];
+  }
+
+  // defaults
+  ul {
+    // base font size, use em downwards
+    font-size: calc(15 / 16 * 1rem);
+
+    a {
+      @apply block py-1;
+      @apply no-underline hover:underline;
+      @apply font-bold text-[#7f7d85];
+    }
+  }
+
+  // level 1
+  ul {
+    @apply font-semibold;
+    @apply px-0;
+
+    li {
+      font-size: calc(14 / 15 * 1em);
+      font-weight: bold;
+    }
+
+    // level 2
+    ul {
+      @apply ml-[1em];
+
+      li {
+        font-size: 0.95em;
+      }
+
+      a {
+        @apply pl-[1em] border-l-[1px] border-shaded;
+        // @apply py-[0.25em];
+        @apply text-body font-normal;
+      }
+      a:hover {
+        // @apply border-[#005cb1];
+      }
+    }
+  }
+}
+
+.kk-DocMain {
+  // fix the title positioning when clicking the sidebar links (#anchors)
+  h2,
+  h3 {
+    margin-top: -4rem;
+    padding-top: 4.5rem;
+  }
+
+  &-whatisrtk {
+    padding-top: 1.5em;
+    font-size: 16px;
+    line-height: 1.5em;
+
+    a {
+      @apply whitespace-nowrap;
+    }
+
+    .book {
+      float: left;
+      margin: 0 1em 1.5em 0;
+      @apply md:px-4;
+    }
+  }
+
+  &-stacks {
+    margin: 0 0 1.5em 0;
+    padding: 1.5em;
+    background-color: $--clr-bg-nav;
+
+    dl dt {
+      float: left;
+      width: 43px;
+      height: 48px;
+      clear: left;
+      margin-bottom: 1em;
+    }
+    dl dd {
+      margin: 0 0 1em 60px;
+    }
+    dt.failed {
+      background: url(/images/1.0/doc/stackfailed.gif) no-repeat 0 0;
+    }
+    dt.untested {
+      background: url(/images/1.0/doc/stackuntested.gif) no-repeat 0 0;
+    }
+    dt.expired {
+      background: url(/images/1.0/doc/stackexpired.gif) no-repeat 0 0;
+    }
+    dt.unexpired {
+      background: url(/images/1.0/doc/stackunexpired.gif) no-repeat 0 0;
+    }
+  }
+}

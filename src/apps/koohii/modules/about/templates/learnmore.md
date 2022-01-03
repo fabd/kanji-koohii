@@ -9,7 +9,7 @@
 
 ## About Remembering the Kanji {#help-rtk}
 
-<div id="whatisrtk_box" class="padded-box rounded no-gutter-xs-sm mb-8" markdown="1">
+<div class="kk-DocMain-whatisrtk padded-box rounded no-gutter-xs-sm mb-8" markdown="1">
 
   <div class="book">
     <img src="/images/3.0/help/rtk-book-cover.gif" width="137" height="205" class="css3-ssh" />
@@ -100,7 +100,7 @@ The first box contains <span class="clr-srs-fail">**forgotten cards**</span> in 
 
 The following boxes represent a level of knowledge: cards have been reviewed one or more times succesfully. Each box comes with two piles of cards: <span class="clr-srs-due">**due cards**</span> in orange, and <span class="clr-srs-undue">**scheduled cards**</span> in green.
 
-<div class="stacks_legend" markdown="1">
+<div class="kk-DocMain-stacks" markdown="1">
 
 ### Stacks in the first compartment
 

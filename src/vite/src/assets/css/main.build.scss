@@ -1241,81 +1241,11 @@ table.lessons td {
 /* ---------------------------- */
 /* Learn More */
 /* ---------------------------- */
-
-#learn-more p.intro {
-  font: 20px/1.3em "Georgia", serif;
-}
-
-#whatisrtk_box {
-  padding-top: 1.5em;
-  font-size: 16px;
-  line-height: 1.5em;
-}
-#whatisrtk_box a {
-  white-space: nowrap;
-}
-#whatisrtk_box .book {
-  float: left;
-  margin: 0 1em 1.5em 0;
-}
-/*#whatisrtk_box .break { clear:both; }*/
-
-.stacks_legend {
-  margin: 0 0 1.5em 0;
-  padding: 1.5em;
-  background-color: $--clr-bg-nav;
-}
-.stacks_legend dl dt {
-  float: left;
-  width: 43px;
-  height: 48px;
-  clear: left;
-  margin-bottom: 1em;
-}
-.stacks_legend dl dd {
-  margin: 0 0 1em 60px;
-}
-.stacks_legend dt.failed {
-  background: url(/images/1.0/doc/stackfailed.gif) no-repeat 0 0;
-}
-.stacks_legend dt.untested {
-  background: url(/images/1.0/doc/stackuntested.gif) no-repeat 0 0;
-}
-.stacks_legend dt.expired {
-  background: url(/images/1.0/doc/stackexpired.gif) no-repeat 0 0;
-}
-.stacks_legend dt.unexpired {
-  background: url(/images/1.0/doc/stackunexpired.gif) no-repeat 0 0;
-}
-
-/* bootstrap sm-md-lg */
-@media (min-width: 768px) {
-  .mb-d-1 {
-    margin-bottom: 1em;
-  }
-  .mb-d-p50 {
-    margin-bottom: 0.5em;
-  }
-
-  #whatisrtk_box .book {
-    padding: 0 2em;
-  }
-  /*#whatisrtk_box .break { clear:none; }*/
-}
-
-/* bootstrap-md-lg */
-@media (min-width: 992px) {
-  /* position:fixed, width = col-md-3 (25%) of min "md" (992px) = 248px - padding (2x15px) */
-  #learn-more-menu {
-    position: fixed;
-    min-width: 218px;
-  }
-}
+@import "./learn-more.scss";
 
 /* ---------------------------- */
 /* SRS Chart page */
 /* ---------------------------- */
-
 @import "./_review-home.scss";
 
 /* ---------------------------- */

@@ -14,10 +14,11 @@ function markdown_parsedown_extra($filename)
 
   $Parsedown = new ParsedownExtra();
 
+  // do not escape custom html in the markdown text
   $Parsedown->setMarkupEscaped(false);
 
   // prevents automatic linking of URLs
-  // ->setUrlsLinked(false) 
+  // $Parsedown->setUrlsLinked(false);
 
   $html = $Parsedown->text($contents);
 

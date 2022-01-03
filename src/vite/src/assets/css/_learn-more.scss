@@ -62,6 +62,9 @@
 }
 
 .kk-DocMain {
+  // vertical separator & guiding line
+  @apply pl-[2rem] border-l-[1px] border-shaded;
+
   // fix the title positioning when clicking the sidebar links (#anchors)
   h2,
   h3,

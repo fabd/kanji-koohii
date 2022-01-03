@@ -7,6 +7,7 @@ module.exports = {
     "../apps/koohii/templates/*.php",
 
     // Symfony's per module/action templates
+    "../apps/koohii/modules/**/templates/*.md",
     "../apps/koohii/modules/**/templates/*.php",
   ],
 

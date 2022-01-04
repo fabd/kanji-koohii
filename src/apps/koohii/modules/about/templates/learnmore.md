@@ -101,18 +101,26 @@ The SRS bar chart represents stacks of flashcards. Stacks are shown from left to
 
 The first box contains <span class="clr-srs-fail">**forgotten cards**</span> in red, and <span class="clr-srs-new">**new cards**</span> in blue. You can select the blue pile or use the button above, both will take you to a review of new cards.
 
-The following boxes represent a level of knowledge: cards have been reviewed one or more times succesfully. Each box comes with two piles of cards: <span class="clr-srs-due">**due cards**</span> in orange, and <span class="clr-srs-undue">**scheduled cards**</span> in green.
+The boxes labelled "1", "2", etc. represents cards that have been reviewed succesfully that many times _in a row_. Therefore the higher boxes represent better knowledge!
+
+Each of the review boxes comes in two piles of cards: <span class="clr-srs-due">**due cards**</span> in orange (ready to review), and <span class="clr-srs-undue">**undue cards**</span> in green (scheduled for review later).
+
+#### The Bar Chart Colors
 
 <div class="kk-DocMain-stacks" markdown="1">
 
   **Cards in the first box (labelled "Fail & New")**
 
   <dl>
-  <dt class="failed">&nbsp;</dt>
+  <dt>
+    <div class="kk-DocIso is-fail"><em class="is-top"></em><em class="is-side"></em></div>
+  </dt>
   <dd><strong>Failed cards.</strong> The red stack shows cards which have not been answered correctly.
       The kanji in this stack likely needs more work on the stories/mnemonics.
   </dd>
-  <dt class="untested">&nbsp;</dt>
+  <dt>
+    <div class="kk-DocIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
+  </dt>
   <dd><strong>Untested cards.</strong>
     The blue stack shows cards that have not been tested yet.
     Below the graph there is a blue link, clicking the blue link is the same as clicking the blue stack.
@@ -126,11 +134,15 @@ The following boxes represent a level of knowledge: cards have been reviewed one
   **Cards in the review boxes**
 
   <dl>
-  <dt class="expired">&nbsp;</dt>
+  <dt>
+    <div class="kk-DocIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
+  </dt>
   <dd><strong>Due cards.</strong>
     (orange piles) are cards that are ready for review and need your attention. You should generally use the main button above the graph to review all due cards. However some people prefer to review from the right to the left, by selecting the orange piles directly. This lets you focus first on cards you know well, working your way down to the cards you added more recently and may be more difficult to remember. Use whichever system you prefer but we recommend to avoid this method until you are experienced with the SRS. Keep in mind all orange cards are sorted by due date, so you will always get the more "urgent" reviews first (with a small amount of shuffling).
   </dd>
-  <dt class="unexpired">&nbsp;</dt>
+  <dt>
+    <div class="kk-DocIso is-undue"><em class="is-top"></em><em class="is-side"></em></div>
+  </dt>
   <dd markdown="1">**Scheduled cards**
 (green piles) are scheduled for review, but have not expired yet.
 In other words, they are still 'fresh' in your memory, and the SRS estimates that these don't need

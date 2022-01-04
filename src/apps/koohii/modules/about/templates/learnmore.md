@@ -191,7 +191,7 @@ Correctly answered cards will be promoted to the next card box, incorrectly answ
 
 The "Stats" panel shows you how many kanji you have been testing in this session so far, how many were answered correctly, and how many were answered incorrectly.
 
-#### Rating Cards {#rating}
+#### Card Ratings {#rating}
 
 - <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnRed uiFcBtnAN"><span>No</span></div></span> : send card back to the restudy pile. You can work through your failed kanji later by using the [restudy feature](#restudy-list). Or, you can also directly review the Restudy pile at a later time, by clicking the red button in the [Restudy List](/study/failedlist).
 
@@ -207,17 +207,19 @@ The "Stats" panel shows you how many kanji you have been testing in this session
 
 - <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnOrange"><span>Hard</span></div></span> : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
 
-  The "Hard" answer is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
+  The "Hard" rating is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
 
-  Cards that are in box 2 (one review) and rated "Hard" stay in box 2, but they always come for review the next day (instead of using the default of ~3 days).
+  **Tip #1**! The "Hard" rating has a _special behaviour for the first review_ (typically, cards from the blue and red piles): a "Hard" rating will _always_ set a fixed +1 day interval (whereas "Yes" would be 2-4 days). Use this when you are learning new cards, if you'd like to do additional reviews on consecutive days. Once you are more confident, rate "Yes" or "Easy".
 
-- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAY"><span>Yes</span></div></span> : this is the recommended rating for new cards, using the default interval.
+  **Tip #2**! You can set _"Maximum box for cards marked 'Hard'"_ in Account Settings > Spaced Repetition. You can make sure for example that Hard Rating will never have an interval of more than a month. Alternatively you can set it to "1". This will cause a Hard answer to "reset" the card to the first review box, _and_ ; because of the special behaviour described above ; you will also get a review in +1 day always. You may prefer this over using "Again", if you do not want to make the review longer (instead of repeating the card, it will be scheduled tomorrow, for as long as you rate this card "Hard").
 
-- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAE"><span>Easy</span></div></span> : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that you have reviewed a few times. Use "Easy" whenever you can to reduce the amount of due cards over time.
+- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAY"><span>Yes</span></div></span> : use "Yes" to promote a card to the next box, it will be scheduled for review at a longer interval. _Only use this rating if you completely remember the kanji, otherwise you should use "Hard" or "No"._
+
+- <span markdown="true"><div class="uiIBtn uiIBtnDefault uiFcBtnAE"><span>Easy</span></div></span> : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that are easy to remember, such as very common kanji. Using "Easy" on the long run will reduce the amount of daily reviews.
 
 **When a card is not answered correctly it will move back to the first compartment!** This is why you can gauge your current level of knowledge just by looking at the count of cards in each compartment : cards in the last compartment have not only been tested four times or more, they also have passed the test at least four times _in a row_. Thus, the cards in the last compartments correspond to the kanji you know best.
 
-#### The Review Summary
+### The Review Summary
 
 Once you have completed a review (or when you click the "End" button), you will be taken to the **Review Summary** screen :
 
@@ -255,11 +257,6 @@ There is also an amount of **variance**, which adds a little "fuzziness" to the 
 The variance factor is currently `0.15` of the interval, and there is a limit of `30` days. For example, a card scheduled in 26 days with a variance of 4 days will be scheduled anywhere from 22 to 30 days.
 
 ## FAQ
-
-### Tips for Rating Cards
-
-- Use the **Hard** answer instead of "No" **to skip** the <span class="clr-srs-fail">Restudy pile</span> (cards rated _Hard_ never fall below the 1+ review pile)
-- Use the **Hard** answer for <span class="clr-srs-new">New</span> cards if you want a fixed **1 day** interval ( instead of the default 2-4 days)
 
 ### Resetting Flashcards
 

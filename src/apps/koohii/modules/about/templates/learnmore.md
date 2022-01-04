@@ -112,7 +112,7 @@ Each of the review boxes comes in two piles of cards: <span class="clr-srs-due">
 
 #### The Bar Chart Colors
 
-<div class="kk-DocMain-stacks" markdown="1">
+<div class="kk-DocMain-stacks no-gutter-xs-sm" markdown="1">
 
   **Cards in the first box (labelled "Fail & New")**
 

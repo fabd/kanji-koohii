@@ -26,7 +26,7 @@
             </li>
             <li class="mb-2">
               <span class="fa-li"><i class="fas fa-arrow-right"></i></span>
-              <a href="/learnmore#help-dictionary-data" target="blank" class="no-underline hover:underline"
+              <a href="/learnmore#dictionary-sources" target="blank" class="no-underline hover:underline"
                 >Learn more about Kanji Koohii’s builtin dictionary</a
               >
             </li>

@@ -84,15 +84,12 @@ class aboutActions extends sfActions
     // ignore h1, make h2 the first level in the TOC
     $minLevel = 2;
 
-    // counter to generate missing fragment urls
-    $uniqueId = 0;
-
     $tocList = [];
 
     // match any lines with `## heading text {#optional-fragment-url)`
     $markdown = preg_replace_callback(
       '/^ *(#+)\s+(.+?) *(\{#.+\})? *$/m',
-      function ($matches) use (&$tocList, $minLevel, &$uniqueId)
+      function ($matches) use (&$tocList, $minLevel)
       {
         // LOG::info($matches);
 
@@ -107,7 +104,7 @@ class aboutActions extends sfActions
         }
         else
         {
-          $fragment = '#p'.$uniqueId++;
+          $fragment = '#'.$this->slugify($title);
           $fragmentMd = ' {'.$fragment.'}';
         }
 
@@ -131,5 +128,13 @@ class aboutActions extends sfActions
     // LOG::info($tocList);
 
     return implode("\n", $tocList);
+  }
+
+  private function slugify(string $text)
+  {
+    $text = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $text)));
+
+    // remove trailing dashes
+    return trim($text, '-');
   }
 }

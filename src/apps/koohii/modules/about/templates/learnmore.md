@@ -1,3 +1,8 @@
+<!-- 
+  NOTE : explicitly set fragments in the markdown titles may be linked
+         from other places in the app (search for `learnmore#` in the code).
+-->
+
 ## Introduction
 
 **Kanji Koohii** is a website and community dedicated to help you complete the kanji learning method called _Remembering the Kanji_.
@@ -7,7 +12,7 @@
 - **Track your progress** to stay motivated
 - Learn words based on your kanji knowledge with the **smart dictionary**
 
-## About the RTK book {#help-rtk}
+## About the RTK book {#rtk}
 
 <div class="kk-DocMain-whatisrtk padded-box rounded no-gutter-xs-sm mb-8" markdown="1">
 
@@ -23,7 +28,7 @@ You can buy the book on [Amazon](https://www.amazon.com/Remembering-Kanji-Comple
 
 </div>
 
-## Studying {#help-study}
+## Studying
 
 The Study area is where you begin your kanji journey! Start with the character ["one"](/study/kanji/1). Edit your mnemonic (also called a "story") or use one shared by the community. Then add a flashcard with the button in the top right. When you are done studying a few characters go to the [Spaced Repetition System (SRS)](/main) and click the blue pile to review new cards.
 
@@ -37,11 +42,11 @@ If you choose to publicly share your story, it will appear in the list below. Yo
 - Select the keyword to customize it.
 - Select the red pile in the SRS to go to the list of failed (forgotten) kanji.
 
-### The Restudy List {#restudy-list}
+### The Restudy List
 
 If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
 
-### The Dictionary {#help-dictionary}
+### The Dictionary {#dictionary}
 
 **Kanji Koohii features a simple, yet smart dictionary. The Koohii dictionary is aware of your kanji knowledge: as you progress and add flashcards the dictionary will highlight vocabulary entries that are made of only those known kanji.**
 
@@ -54,7 +59,7 @@ the user has not yet learned 合 which is kanji #269 and will be seen later. Yet
 
 This works in Flashcard Review too! So as you do reviews over weeks and months, and you open the dictionary you may discover new words which weren't highlighted before.
 
-#### Dictionary Sources {#dictionary-data}
+#### Dictionary Sources {#dictionary-sources}
 
 Kanji Koohii's dictionary uses Jim Breen's [JMdict/EDICT](https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project) Japanese-English dictionary (see acknowlegments in the [About](/about) page).
 
@@ -65,9 +70,9 @@ This is done in order to provide meaningful results for Koohii users. The dictio
 As such, Koohii's dictionary is not an exhaustive reference. There are already excellent resources dedicated to this such as jisho.org. The goal for Koohii's dictionary is to help you stay focused while getting through the 2000+ common use kanji.
 
 
-## Using Flashcards {#using-flashcards}
+## Using Flashcards
 
-### Adding Flashcards {#adding-flashcards}
+### Adding Flashcards
 
 Flashcards are added in **Flashcards > Manage Cards**.
 
@@ -79,7 +84,7 @@ If you are not studying the kanji in the RTK sequence (say, JLPT), or you want t
 
 <img class="img-block img-responsive" src="/koohii/help/help-add-custom.png" />
 
-## Reviewing {#reviewing}
+## Reviewing
 
 ### What is a SRS? {#srs}
 
@@ -93,7 +98,7 @@ The Leitner System helps you to:
 - Review at increasingly longer intervals to stimulate long term memory.
 - Review more of the difficult flashcards, and less of those that you know well.
 
-### The SRS Bar Chart {#srs-bar-chart}
+### The SRS Bar Chart
 
 The SRS bar chart represents stacks of flashcards. Stacks are shown from left to right. Stacks on the left side are relatively new. With each review, a card will move towards the right, representing a better knowledge.
 
@@ -156,7 +161,7 @@ long term memory, therefore it is not possible to select the green piles. Often 
 
 </div>
 
-### The Review Session {#review-session}
+### The Review Session
 
 Clicking any of the stacks in the Leitner graph will take you to the reviewing screen :
 
@@ -186,7 +191,7 @@ Correctly answered cards will be promoted to the next card box, incorrectly answ
 
 The "Stats" panel shows you how many kanji you have been testing in this session so far, how many were answered correctly, and how many were answered incorrectly.
 
-#### Rating Cards {#rating-flashcards}
+#### Rating Cards {#rating}
 
 - <span markdown="true"><div class="uiIBtn uiIBtnDefault uiIBtnRed uiFcBtnAN"><span>No</span></div></span> : send card back to the restudy pile. You can work through your failed kanji later by using the [restudy feature](#restudy-list). Or, you can also directly review the Restudy pile at a later time, by clicking the red button in the [Restudy List](/study/failedlist).
 
@@ -212,7 +217,7 @@ The "Stats" panel shows you how many kanji you have been testing in this session
 
 **When a card is not answered correctly it will move back to the first compartment!** This is why you can gauge your current level of knowledge just by looking at the count of cards in each compartment : cards in the last compartment have not only been tested four times or more, they also have passed the test at least four times _in a row_. Thus, the cards in the last compartments correspond to the kanji you know best.
 
-#### The Review Summary {#review-summary}
+#### The Review Summary
 
 Once you have completed a review (or when you click the "End" button), you will be taken to the **Review Summary** screen :
 
@@ -225,9 +230,9 @@ The table can be sorted on any column by clicking on the column headers. In the 
 Clicking any of the keywords will take you to the corresponding character in the Study area, where you can check your mnemonics, adapt them, or maybe use a mnemonic shared by another member if yours wasn't working so well.
 
 
-## Account Settings {#account-settings}
+## Account Settings
 
-### Spaced Repetition {#help-srs}
+### Spaced Repetition
 
 You can customize the Spaced Repetition scheduling in _Account Settings_ menu:
 
@@ -249,14 +254,14 @@ There is also an amount of **variance**, which adds a little "fuzziness" to the 
 
 The variance factor is currently `0.15` of the interval, and there is a limit of `30` days. For example, a card scheduled in 26 days with a variance of 4 days will be scheduled anywhere from 22 to 30 days.
 
-## FAQ {#help-faq}
+## FAQ
 
-### Tips for Rating Cards {#faq-rating-cards}
+### Tips for Rating Cards
 
 - Use the **Hard** answer instead of "No" **to skip** the <span class="clr-srs-fail">Restudy pile</span> (cards rated _Hard_ never fall below the 1+ review pile)
 - Use the **Hard** answer for <span class="clr-srs-new">New</span> cards if you want a fixed **1 day** interval ( instead of the default 2-4 days)
 
-### Resetting Flashcards {#faq-reset-cards} 
+### Resetting Flashcards
 
 First, note that _stories and kanji flashcards are separate_. With that in mind, you can simply delete all the flashcards, your stories won't be affected.
 

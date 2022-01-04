@@ -12,11 +12,10 @@
 
   // defaults
   ul {
-
     a {
       @apply block py-1;
       @apply no-underline hover:underline;
-      @apply font-bold text-[#7f7d85];
+      @apply font-bold text-[#564e44];
     }
   }
 
@@ -26,7 +25,7 @@
     @apply px-0;
 
     li {
-      font-size: .95em;
+      font-size: 0.95em;
       font-weight: bold;
     }
 
@@ -45,7 +44,6 @@
         }
         a {
           @apply pl-[2em];
-
         }
       }
 
@@ -73,6 +71,12 @@
   h6 {
     margin-top: -4rem;
     padding-top: 4.5rem;
+  }
+
+  // improve vertical separation
+  h2 {
+    border-bottom: 1px solid #d8d3ce;
+    padding-bottom: 0.3em;
   }
 
   &-whatisrtk {

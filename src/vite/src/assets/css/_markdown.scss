@@ -30,6 +30,7 @@
   line-height: var(--vunit);
 }
 
+.markdown blockquote,
 .markdown h2,
 .markdown h3,
 .markdown p,
@@ -48,6 +49,11 @@
 .markdown ul {
   margin: 0 0 calc(var(--vunit) * 1.5);
   padding-left: 2em;
+}
+
+// blockquote
+.markdown blockquote {
+  @apply text-body-light pl-[2em] italic;
 }
 
 /* lists */

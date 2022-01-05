@@ -40,9 +40,6 @@ If you choose to publicly share your story, it will appear in the list below. Yo
 
 - If you don't edit a story, the first one that you **star** will be shown during flashcard reviews when you use the Story shortcut
 
-### The Restudy List
-
-If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
 ### Edit Stories
 
 #### Formatting Stories
@@ -107,7 +104,7 @@ If you are not studying the kanji in the RTK sequence (say, JLPT), or you want t
 
 ## Reviewing
 
-### What is a SRS? {#srs}
+### Spaced Repetition {#srs}
 
 Kanji Koohii uses a **Spaced Repetition System** (also known as "SRS") based on the popular [Leitner System](http://en.wikipedia.org/wiki/Leitner_system):
 
@@ -119,7 +116,7 @@ The Leitner System helps you to:
 - Review at increasingly longer intervals to stimulate long term memory.
 - Review more of the difficult flashcards, and less of those that you know well.
 
-### The SRS Bar Chart
+### Review Bar Chart
 
 The SRS bar chart represents stacks of flashcards. Stacks are shown from left to right. Stacks on the left side are relatively new. With each review, a card will move towards the right, representing a better knowledge.
 
@@ -131,7 +128,7 @@ The boxes labelled "1", "2", etc. represents cards that have been reviewed succe
 
 Each of the review boxes comes in two piles of cards: <span class="clr-srs-due">**due cards**</span> in orange (ready to review), and <span class="clr-srs-undue">**undue cards**</span> in green (scheduled for review later).
 
-#### The Bar Chart Colors
+#### Review Chart Colors
 
 <div class="kk-DocMain-stacks no-gutter-xs-sm" markdown="1">
 
@@ -245,7 +242,7 @@ The "Stats" panel shows you how many kanji you have been testing in this session
 
 **When a card is not answered correctly it will move back to the first compartment!** This is why you can gauge your current level of knowledge just by looking at the count of cards in each compartment : cards in the last compartment have not only been tested four times or more, they also have passed the test at least four times _in a row_. Thus, the cards in the last compartments correspond to the kanji you know best.
 
-### The Review Summary
+### Review Summary
 
 Once you have completed a review (or when you click the "End" button), you will be taken to the **Review Summary** screen :
 
@@ -260,7 +257,7 @@ Clicking any of the keywords will take you to the corresponding character in the
 
 ## Account Settings
 
-### Spaced Repetition
+### Spaced Repetition {#settings-srs}
 
 You can customize the Spaced Repetition scheduling in _Account Settings_ menu:
 

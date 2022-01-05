@@ -39,8 +39,6 @@ If you choose to publicly share your story, it will appear in the list below. Yo
 **Hints**
 
 - If you don't edit a story, the first one that you **star** will be shown during flashcard reviews when you use the Story shortcut
-- Select the keyword to customize it.
-- Select the red pile in the SRS to go to the list of failed (forgotten) kanji.
 
 ### The Restudy List
 
@@ -58,6 +56,16 @@ If you have previously forgotten kanji from SRS reviews, select **Restudy > Star
 #### Note About Copyright
 
 Please remember that the original stories appearing in the RTK book are copyrighted, and **SHOULD NOT BE REPRODUCED** on the website! (you can of course enter them for your own use, as long as they are private).
+
+### Edit Keywords
+
+Sometimes you may want to customize one of Heisig's keywords. You may want to translate them into a non-english language.
+
+You can do so by clicking the keyword above your story to customize it!
+
+_Please note at this time the Study page search box is basic, and will not match custom keywords._
+
+You can edit many keywords ate once, and review your changes in **Manage Flashcards > Edit Keywords**.
 
 ### The Dictionary {#dictionary}
 

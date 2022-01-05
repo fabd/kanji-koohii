@@ -7,6 +7,7 @@ module.exports = {
     "../apps/koohii/templates/*.php",
 
     // Symfony's per module/action templates
+    "../apps/koohii/modules/**/templates/*.md",
     "../apps/koohii/modules/**/templates/*.php",
   ],
 
@@ -16,7 +17,7 @@ module.exports = {
         // default body text (not all black)
         DEFAULT: "#42413d",
         // less contrasted body text (mainly headings atm)
-        light: "#7f7d85",
+        light: "#7f7d75",
       },
 
       danger: {

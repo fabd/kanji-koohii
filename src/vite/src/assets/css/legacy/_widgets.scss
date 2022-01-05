@@ -65,7 +65,34 @@
   background: linear-gradient(to bottom,  #e68f06 0%,#bb7404 100%);
 }
 
-
+// --------------------------------------------------------------------
+// Colours used by Flashcard Review buttons (also in documentation)
+// --------------------------------------------------------------------
+// No
+.uiFcBtnAN {
+  background-image: linear-gradient(to bottom, #b83600 0%, #a53000 100%);
+}
+// Again
+.uiFcBtnAG {
+  background-image: linear-gradient(to bottom, #ca4a15 0%, #b84314 100%);
+}
+// Flip Card
+.uiFcBtnAF {
+  background-color: #268bd2;
+  background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
+}
+// "Continue" button (Vocab Shuffle)
+.uiFcBtnAC {
+  width: 100%;
+  background: #6fa300;
+  background: -webkit-linear-gradient(top, #6fa300 0%, #649300 100%);
+  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
+}
+// Easy
+.uiFcBtnAE {
+  background-color: #2aa198;
+  background-image: linear-gradient(to bottom, #2aa198 0%, #269189 100%);
+}
 
 /* uiIBtn :: default disabled (30px) */
 .uiIBtnDisabled {}

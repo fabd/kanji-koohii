@@ -59,14 +59,6 @@ export default defineComponent({
   font-weight: normal;
 }
 
-/* "Continue" button */
-#uiFcBtnAC {
-  width: 100%;
-  background: #6fa300;
-  background: -webkit-linear-gradient(top, #6fa300 0%, #649300 100%);
-  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
-}
-
 /* =============================== */
 /* component styles */
 /* =============================== */

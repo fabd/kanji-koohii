@@ -45,6 +45,19 @@ If you choose to publicly share your story, it will appear in the list below. Yo
 ### The Restudy List
 
 If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
+### Edit Stories
+
+#### Formatting Stories
+
+**Keywords** are automatically formatted if the text in your story matches the keyword. If the keyword is spelled in a different way, or you use a custom keyword, surround the keyword with hashes `#like this#`.
+
+**Primitives** can be _italicized_ in your stories by enclosing them with the star character `*like this*`.
+
+**Links between kanji** can be created in stories by enclosing a frame number or kanji with braces. For example `{113}` or `{山}`. The decimal unicode value of a kanji can also be used for example `{40701}` will substitute into [黽](/study/kanji/黽).
+
+#### Note About Copyright
+
+Please remember that the original stories appearing in the RTK book are copyrighted, and **SHOULD NOT BE REPRODUCED** on the website! (you can of course enter them for your own use, as long as they are private).
 
 ### The Dictionary {#dictionary}
 
@@ -161,7 +174,12 @@ long term memory, therefore it is not possible to select the green piles. Often 
 
 </div>
 
-### The Review Session
+### Restudy List
+
+If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
+
+
+### Review Session
 
 Clicking any of the stacks in the Leitner graph will take you to the reviewing screen :
 

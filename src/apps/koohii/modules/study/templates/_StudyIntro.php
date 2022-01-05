@@ -35,20 +35,3 @@
     image and/or a series of events. Stories do not have to make any sense! However it is
     important for a good story, that it captures the particular meaning of the keyword.
   </p>
-
-<h3>Special Formatting</h3>
-  <p> <strong>Keywords</strong> are automatically highlighted in stories and displayed in a <strong>bold</strong> type.
-    If the keyword is spelled differently, enclose the keyword with hashes, <span class="fmt">#like this#</span>.
-  </p>
-  <p> <strong>Primitives</strong> can be formatted in your stories by enclosing them with the star character
-    <span class="fmt">*like this*</span>. They will then appear <i>italicized</i>.
-  </p>
-  <p> <strong>Links to characters</strong> can be used in stories by enclosing a frame number or character
-    with braces. For example <span class="fmt">{113}</span> or <span class="fmt">{山}</span>. A decimal unicode value can also be used
-    for example <span class="fmt">{40701}</span> will substitute into <?php echo link_to('黽', 'study/edit?id=黽') ?>.
-  </p>
-
-<h3>Note about copyright</h3>
-  <p> Please remember that the original stories appearing in <?php echo _CJ('Remembering the Kanji') ?> are copyrighted, and <strong>SHOULD NOT BE REPRODUCED</strong> on the website!
-     (you can of course enter them for your own use, as long as they are private)
-  </p>

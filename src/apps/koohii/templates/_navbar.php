@@ -65,9 +65,6 @@ function staging_marker() {
     echo link_to('&nbsp;', '@homepage', ['class' => 'k-nav_brand']);
 
 if (!$sf_user->isAuthenticated()) {
-  // echo nav_item('about-learnmore', 'Learn More', 'about/learnmore');
-  // echo nav_item('the-forum', '<strong>FORUM</strong>', 'http://forum.koohii.com');
-  // echo nav_item('account-create', 'SIGN UP', 'account/create', array('_class' => 'sign-up align-right'));
       
   echo "<ul class=\"k-nav_right\">\n";
 
@@ -195,8 +192,7 @@ if (!$sf_user->isAuthenticated()) {
   $nav_items[] = nav_m_t('More', 'more', 'fa-ellipsis-h', [
     nav_m_i('Help',    'h-a',  '@learnmore'),
     nav_m_i('Contact', 'h-b',  '@contact'),
-    nav_m_i('Donate',  'h-c',  'about/support' ),
-    nav_m_i('Forum',   'h-d',  'http://forum.koohii.com' )
+    nav_m_i('Donate',  'h-c',  'about/support' )
   ]);
 }
 

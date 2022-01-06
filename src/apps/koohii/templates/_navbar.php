@@ -1,16 +1,25 @@
 <?php 
-function get_page_id() {
-  $_request = sfContext::getInstance()->getRequest();
-  return $_request->getParameter('module').'-'; //.$_request->getParameter('action');
+function get_page_id(): string
+{
+  static $pageId =  null;
+
+  if (!$pageId) {
+    $request = sfContext::getInstance()->getRequest();
+    $pageId = $request->getParameter('module').'-'.$request->getParameter('action');
+  }
+
+  return $pageId;
 }
 
-function nav_active($nav_id) {
-  $_page_id = get_page_id();
+function nav_active(string $nav_id)
+{
+  $pageId = get_page_id();
   // use strpos() so we can match all actions in a module, eg. 'module-'
-  return (strpos($nav_id, $_page_id) === 0);
+LOG::info("IS $nav_id  IN  $pageId  ?");
+  return (strpos($pageId, $nav_id) === 0);
 }
 
-function nav_item($nav_id, $text, $internal_uri, $options = [], $dropdown = false)
+function nav_item(string $nav_id, string $text, string $internal_uri, $options = [], $dropdown = false)
 {
   $li_class = [];
 
@@ -76,7 +85,7 @@ if (!$sf_user->isAuthenticated()) {
 
   echo "<ul>\n";
 
-  echo nav_item('study-index', 'Study', 'study/index', [], <<<DOM
+  echo nav_item('study-', 'Study', 'study/index', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/study">Browse</a></li>
   <li><a href="@/study/failedlist">Restudy List</a></li>
@@ -86,7 +95,7 @@ DOM
   );
   
 
-  echo nav_item('review-index', 'Review', '@overview', [], <<<DOM
+  echo nav_item('review-', 'Review', '@overview', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/main">Spaced Repetition</a></li>
   <li><a href="@/review/custom">Kanji Review</a></li>
@@ -104,10 +113,10 @@ DOM
 DOM
   );
 
-  echo nav_item('more-index', '<i class="fa fa-bars"></i>', '@homepage', [], <<<DOM
+  echo nav_item('more-', 'More', '@homepage', [], <<<DOM
 <ul class="k-nav_dropdown">
-  <li><a href="@/learnmore">Help</a></li>
-  <li><a href="@/contact">Contact</a></li>
+  <li><a href="@/contact">Contact & Support</a></li>
+  <li><a href="https://github.com/fabd/kanji-koohii/discussions/categories/1-general">Discussions</a></li>
   <li><a href="@/about/support">Donate</a></li>
 </ul>
 DOM
@@ -115,6 +124,8 @@ DOM
   echo "</ul>\n";
 
   echo "<ul class=\"k-nav_right\">\n";
+
+  echo nav_item('about-learnmore', 'Help', '@learnmore');
 
   echo nav_item('about-support', '<span class="fa fa-heart"></span>', 'about/support', ['_class' => 'donate']);
 
@@ -126,10 +137,6 @@ DOM
 </ul>
 DOM
   );
-
-  /*if (1 && $sf_user->isAdministrator() && (null !== ($backend_url = sfConfig::get('app_backend_url')))) {
-      echo '<li style="background:#11364B;"><a href="'. $backend_url .'"><i class="fa fa-lock" style="color:#eee;"></i></a>';
-    } */
 
   echo "</ul>\n";
 } ?>
@@ -196,7 +203,6 @@ if (!$sf_user->isAuthenticated()) {
   ]);
 }
 
-// default opened
 $defaultOpen = 'study';
 
 $pageToMenu = [

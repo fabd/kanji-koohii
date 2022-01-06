@@ -113,7 +113,7 @@ DOM
 DOM
   );
 
-  echo nav_item('more-', '<i class="fa fa-bars"></i>', '@homepage', [], <<<DOM
+  echo nav_item('more-', 'More', '@homepage', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/contact">Contact</a></li>
   <li><a href="@/about/support">Donate</a></li>

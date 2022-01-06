@@ -115,7 +115,8 @@ DOM
 
   echo nav_item('more-', 'More', '@homepage', [], <<<DOM
 <ul class="k-nav_dropdown">
-  <li><a href="@/contact">Contact</a></li>
+  <li><a href="@/contact">Contact & Support</a></li>
+  <li><a href="https://github.com/fabd/kanji-koohii/discussions/categories/1-general">Discussions</a></li>
   <li><a href="@/about/support">Donate</a></li>
 </ul>
 DOM

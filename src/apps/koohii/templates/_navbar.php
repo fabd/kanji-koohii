@@ -15,7 +15,6 @@ function nav_active(string $nav_id)
 {
   $pageId = get_page_id();
   // use strpos() so we can match all actions in a module, eg. 'module-'
-LOG::info("IS $nav_id  IN  $pageId  ?");
   return (strpos($pageId, $nav_id) === 0);
 }
 

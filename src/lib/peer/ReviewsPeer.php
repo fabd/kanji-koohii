@@ -339,12 +339,17 @@ class ReviewsPeer extends coreDatabaseTable
     // get the flashcard count in the RTK1 range
     $select = self::getInstance()->select()->where(rtkIndex::getSqlCol().' <= ?', rtkIndex::inst()->getNumCharactersVol1());
     $select = KanjisPeer::joinLeftUsingUCS($select);
-    $flashcardCount = self::_getFlashcardCount($userId, $select);
+    $select = self::filterByUserId($select, $userId);
     
-    // compare the count to the max in that range
-    $select->columns(['max' => 'MAX('.rtkIndex::getSqlCol().')'])->query();
-    $result = self::$db->fetchObject();
-    $maxRtkSeqNr = (int) $result->max;
+    $select
+      ->columns(['count' => 'COUNT(*)'])
+      ->columns(['max' => 'MAX('.rtkIndex::getSqlCol().')']);
+    
+    $select->query();
+
+    $result = self::$db->fetch();
+    $flashcardCount = (int) $result['count'];
+    $maxRtkSeqNr = (int) $result['max'];
 
     if ($flashcardCount !== $maxRtkSeqNr)
     {

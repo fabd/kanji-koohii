@@ -162,77 +162,6 @@ function ui_data_table($table)
 }
 
 /**
- * Return html structure (to echo) for tabs in the manner of "sliding doors".
- *
- * SPANs are used because they can be styled on the :hover state in IE6
- * ( a:hover span {...} ).
- * 
- * Structure:
- * 
- *   <div class="ui-tabs" id="custom-id">
- *     <ul>
- *       <li><a href="#"><span>Link text</span></a></li>
- *       ...
- *     </ul>
- *     <div class="clear"></div>
- *   </div>
- * 
- * 
- * The $links argument is declared like this:
- * 
- *   array(
- *     array($name, $internal_uri, $options),
- *     array($name, $internal_uri, $options),
- *     ...
- *   )
- *   
- * The tab definitions are identical to the link_to() helper:
- *   
- *   $name          Label for the tab
- *   $internal_uri  Internal uri, or absolute url, defaults to '#' if empty (optional)
- *   $options       Html attribute options (optional)
- *   
- * By default the first tab is set active (class "active" on the LI tag). Specify the
- * index of the tab to be active, or FALSE to not add an "active" class.
- * 
- * @see    http://www.alistapart.com/articles/slidingdoors/
- * 
- * @param  array   $links    An array of tab definitions (see above).
- * @param  mixed   $active   Index of the active tab, defaults to the first tab.
- *                           Use FALSE to explicitly set no active tab (or use your own class).
- * @param  array   $options  Options for the container DIV element. By default the class "ui-tabs"
- *                           is added. Add "uiTabs" class for defaults styles, id for the javascript component.
- * 
- * @return string  Html code
- */
-function ui_tabs($tabs, $active = 0, $options = [])
-{
-  ob_start();
-
-  // add the "ui-tabs" class name
-  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : [], ['ui-tabs']);
-  echo tag('div', $options, true) . "\n<ul>\n";
-
-  $tab_index = 0;
-  foreach ($tabs as $tab)
-  {
-    $name = '<span>'.$tab[0].'</span>';
-    $internal_uri = isset($tab[1]) ? $tab[1] : '#';
-    $options = isset($tab[2]) ? $tab[2] : [];
-
-    $class_active = (is_int($active) && $active===$tab_index) ? ' class="active"' : '';
-    echo '<li'.$class_active.'>'.link_to($name, $internal_uri, $options).'</li>'."\n";
-    
-    $tab_index++;
-  }
-  
-  echo "</ul>\n<div class=\"clear\"></div>\n</div>\n";
-  
-  return ob_get_clean();
-}
-
-
-/**
  * Helper to set the display property inline stlye in html templates.
  * 
  * Example:
@@ -244,7 +173,6 @@ function ui_display($bDisplay)
 {
   echo $bDisplay ? 'display:block;' : 'display:none;';
 }
-
 
 /**
  * Returns a uiIBtn element.

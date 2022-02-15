@@ -54,10 +54,7 @@ EOD;
 
 <?php if (!$kanjiData): ?>
   
-  <div class="app-header">
-    <h2>Search : No results</h2>
-    <div class="clear"></div>
-  </div>
+  <h2>Search : No results</h2>
   
   <?php $oRTK = rtkIndex::inst() ?>
 

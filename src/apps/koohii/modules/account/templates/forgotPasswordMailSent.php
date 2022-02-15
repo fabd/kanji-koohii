@@ -1,4 +1,4 @@
-<div class="layout-home">
+<div class="">
 
 <?php include_partial('home/homeSide') ?>
 

@@ -20,7 +20,7 @@
     'title' => 'Go back one flashcard',
     'style' => 'display:none',
     'data-action' => 'back']) ?>
-  <div class="clear"></div>
+  <div class="clear-both"></div>
 </div>
 
 <div id="fr-body" class="fr-mode-vshuffle">
@@ -72,7 +72,7 @@
     </div><!-- uiFcStats -->    
   </div>
 
-  <div class="clear"></div>
+  <div class="clear-both"></div>
 </div><!-- fr-body -->
 
 <?php

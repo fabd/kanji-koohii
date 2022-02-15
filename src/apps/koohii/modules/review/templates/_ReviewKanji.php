@@ -24,7 +24,7 @@
     'style' => 'display:none',
     'data-action' => 'undo', ]); ?>
 
-  <div class="clear"></div>
+  <div class="clear-both"></div>
 </div>
 
 <div id="JsFcHelpDlg" style="display:none">
@@ -128,7 +128,7 @@
         <a href="#" class="uiFcStBox JsFinish uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
       </div>
 
-  <div class="clear"></div>
+  <div class="clear-both"></div>
 
       <div id="uiFcStDeld" class="uiFcStBox" style="display:none">
         <h3>Deleted: <em class="count">0</em></h3>
@@ -138,7 +138,7 @@
     </div><!-- uiFcStats -->    
   </div>
 
-  <div class="clear"></div>
+  <div class="clear-both"></div>
 </div><!-- fr-body -->
 
 <?php // Form to redirect to Review Summary with POST?>

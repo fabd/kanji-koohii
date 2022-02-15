@@ -24,10 +24,7 @@
     ]);
   }
 ?>
-    <div class="clear"></div>
   </div>
-
-  <div class="clear"></div>
 
   <div id="leitner-chart_pane" class="min-h-[268px] md:min-h-[298px] p-4 bg-[#e7e1d3] no-gutter-xs-sm">
     <!-- Vue goes here -->

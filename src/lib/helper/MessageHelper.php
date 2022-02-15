@@ -45,7 +45,7 @@ function form_confirmations()
     $s = implode("<br/>\n", array_values($request->getConfirmations()));
     $s = content_tag('p', $s);
     $s = content_tag('div', $s, ['class' => 'messagebox msgbox-success']);
-    $s .= '<div class="clear"></div>';
+    $s .= '<div class="clear-both"></div>';
   }
   return $s;
 }

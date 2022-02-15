@@ -21,5 +21,5 @@
       }
     ?></span>
   </span>
-  <div class="clear"></div>
+  <div class="clear-both"></div>
 </div>

@@ -1,14 +1,15 @@
 <div class="pt-8">
 
-  <div class="col-side">
-    <?php echo image_tag('/images/1.0/nav/about_photo.gif', 'size=138x138') ?>
-    <div style="padding-left:8px">
+  <div class="col-md-2">
+    <div class="text-center">
+
+    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', ['class' => 'block mb-4 rounded-full', 'size' => '140x140']) ?>
       <?php echo link_to('Contact', '@contact') ?>
     </div>
   </div>
 
-  <div class="markdown">
-    <div class="col-box learn-more">
+  <div class="col-md-8 markdown">
+    <div class="">
 
       <section class="mb-8">
         <h2>License Information</h2>

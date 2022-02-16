@@ -5,9 +5,9 @@
       <input :value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
 
       <div id="my-story" lang="ja">
-        <div ref="maskArea" class="padding rtkframe">
+        <div ref="maskArea" class="padding rtkframe flex">
           <!-- left -->
-          <div class="left">
+          <div class="w-[68px] mr-4 text-center">
             <div class="framenum" title="Frame number">{{
               kanjiData.framenum
             }}</div>
@@ -26,7 +26,7 @@
           <!-- /left -->
 
           <!-- right -->
-          <div class="right">
+          <div class="flex-1">
             <div class="keyword">
               <span
                 class="JSEditKeyword"
@@ -160,7 +160,6 @@
             <!-- /storybox -->
           </div>
           <!-- /right -->
-          <div class="clear"></div>
         </div>
         <!-- /rtkframe -->
 

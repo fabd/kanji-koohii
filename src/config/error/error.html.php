@@ -28,10 +28,7 @@ p, ul { margin:0 0 1em; }
 
 	<div class="main">
 
-		<div class="app-header">
-			<h2>Woops! An Error Occured.</h2>
-			<div class="clear"></div>
-		</div>
+		<h2>Woops! An Error Occured.</h2>
 
 		<p> Looks like the website encountered an unfortunate scenario also known as the HTTP 500 Error page!<br/>
 		    <br/>

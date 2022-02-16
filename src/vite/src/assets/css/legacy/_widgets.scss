@@ -103,36 +103,6 @@
 .uiBMenuItem .uiIBtnDefault { font-size:16px; line-height:41px; height:42px; } /* larger buttons for touch/mobile */
 
 /**
- * uiTabs - base styles to use with ui_tabs() helper.
- * 
- * Simple tabs with enough markup to style image corners, and a hover state
- * also in IE6 (a:hover span {...}).
- *
- */
-.uiTabs {}
-.uiTabs ul {
-  float:left; width:100%;
-  margin:0; padding:0 0;
-  font-size:12px; line-height:1em;
-}
-.uiTabs li {
-  float:left; display:inline; margin:0 7px 0 0;
-  border:1px solid #ccc; border-bottom:none;
-}
-.uiTabs li a {
-  float:left; padding:0 0 0 12px; background:#ccc;
-  color:#444; font:bold 14px/1.1em Arial, sans-serif; text-decoration:none;
-  outline: none;
-}
-.uiTabs li span {
-  float:left; padding:7px 12px 6px 0;
-}
-.uiTabs a:hover,
-.uiTabs a:hover span { background:#fff; color:#000; text-decoration:underline; }
-.uiTabs .active a { background:#fff; color:#000; }
-
-
-/**
  * uiTabbedView - base styles.
  * 
  */

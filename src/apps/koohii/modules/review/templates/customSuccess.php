@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-md-12">
 
-    <div class="section">
+    <div class="mb-8">
       <div class="p-notice">
         <i class="far fa-question-circle"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
       </div>

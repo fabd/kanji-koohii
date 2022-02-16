@@ -139,7 +139,7 @@ DOM
 
   echo "</ul>\n";
 } ?>
-      <div class="clear"></div>
+      <div class="clear-both"></div>
     </div><!-- /container -->
   </nav>
 </div>

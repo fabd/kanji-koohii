@@ -1,22 +1,24 @@
-<div class="layout-home">
+<div class="pt-8">
 
-  <div class="col-side">
-    <?php echo image_tag('/images/1.0/nav/about_photo.gif', 'size=138x138') ?>
-    <div style="padding-left:8px">
+  <div class="col-md-2">
+    <div class="text-center">
+
+    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', ['class' => 'block mb-4 rounded-full', 'size' => '140x140']) ?>
       <?php echo link_to('Contact', '@contact') ?>
     </div>
   </div>
 
-  <div class="markdown">
-    <div class="col-box learn-more">
+  <div class="col-md-8 markdown">
+    <div class="">
 
-      <div class="section">
+      <section class="mb-8">
         <h2>License Information</h2>
         <p>
           All user-contributed content on this website is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons BY-NC-SA</a>.
         </p>
-      </div>  
-      <div class="section">
+      </section>  
+
+      <section class="mb-8">
         <h2>Attribution Requirements</h2>
         <p>
           Please note the attribution clause in the license:
@@ -57,7 +59,7 @@ Links must not use the “nofollow” attribute.
 Thank you!
         </p>
 
-      </div>
+      </section>
       
     </div>
   </div>

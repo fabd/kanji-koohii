@@ -17,18 +17,3 @@
 
   </div>
 </div>
-
-
-<?php /*
-  <div class="frame">
-    <ul>
-<?php foreach(ReviewsPeer::getRestudyQuickList($sf_user->getUserId()) as $R): ?>
-      <li<?php echo $R['seq_nr']==$framenum ? ' class="selected"' : '' ?>>
-        <span><?php echo $R['seq_nr'] ?></span>
-        <?php $kw = preg_replace('/\//', '<br/>', $R['keyword']); echo link_to($kw, 'study/edit?id='.$R['seq_nr']) ?>
-      </li>
-<?php endforeach ?>
-    </ul>
-    <div class="clear"></div>
-  </div>
-*/

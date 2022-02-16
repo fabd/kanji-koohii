@@ -9,7 +9,6 @@
       <h2><span class="newsdate"><?php echo date('j F Y', $post->date) ?></span><?php
         echo link_to($post->subject, '@news_by_id?id='.$post->id)
       ?></h2>
-      <div class="clear"></div>
       <div class="bd content markdown<?php if ($i === 0) { echo ' is-first'; } ?>">
 <?php echo $post->text ?>
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * The User Settings table stores various settings/options related to the
- * application features (rather than the user profile).
+ * application features (not the user profile, which is table `users`).
  *
  * The settings are cached in the user attributes the first time one is
  * accessed via rtkUser::getUserSetting().
@@ -9,6 +9,7 @@
  *
  * Methods:
  *  getDefaultSettings()
+ *
  *  getUserSettings($userId)
  *  hasUserSettings($userId)
  *  saveUserSettings($userId, $settings)
@@ -44,22 +45,33 @@ class UsersSettingsPeer extends coreDatabaseTable
   }
 
   /**
-   * Swap keys in $data from SQL column names to settings names, or vice versa.
-   *
-   * @param array $settings ... row data (one mor more columns)
-   * @param bool  $reverse
+   * Map the key names from SQL cols to user settings names (cf. rtkUser).
    *
    * @return array
    */
-  private static function mapKeys(array $data, bool $reverse = false)
+  private static function mapColsToOpts(array $data)
   {
-    $map = $reverse ? array_flip(self::$map) : self::$map;
-    $mapped_keys =array_map(fn($k) => $map[$k], array_keys($data)); 
+    $map = self::$map;
+    $mapped_keys = array_map(fn ($k) => $map[$k], array_keys($data));
+
     return array_combine($mapped_keys, $data);
   }
 
   /**
+   * Map the key names from user settings names (cf. rtkUser) to SQL cols.
+   *
    * @return array
+   */
+  private static function mapOptsToCols(array $data)
+  {
+    $map = array_flip(self::$map);
+    $mapped_keys = array_map(fn ($k) => $map[$k], array_keys($data));
+
+    return array_combine($mapped_keys, $data);
+  }
+
+  /**
+   * @return int[]
    */
   public static function getDefaultSettings()
   {
@@ -70,8 +82,7 @@ class UsersSettingsPeer extends coreDatabaseTable
    * Get user settings as an associative array. This function normalizes the
    * settings (numbers as integers).
    *
-   * @param   int     user id
-   * @param mixed $userId
+   * @param int $userId
    *
    * @return array Associative array (col => value) with normalized types
    */
@@ -83,7 +94,7 @@ class UsersSettingsPeer extends coreDatabaseTable
 
     if ($row = self::$db->fetch())
     {
-      $settings = self::mapKeys($row);
+      $settings = self::mapColsToOpts($row);
     }
     else
     {
@@ -111,7 +122,7 @@ class UsersSettingsPeer extends coreDatabaseTable
     {
       $defaults = self::getDefaultSettings();
       $settings = array_merge($defaults, $settings);
-      $colData = self::mapKeys($settings, true);
+      $colData = self::mapOptsToCols($settings);
 
       $colData['userid'] = $userId;
 
@@ -119,7 +130,7 @@ class UsersSettingsPeer extends coreDatabaseTable
     }
     else
     {
-      $colData = self::mapKeys($settings, true);
+      $colData = self::mapOptsToCols($settings);
 
       return self::getInstance()->update($colData, 'userid = ?', $userId);
     }

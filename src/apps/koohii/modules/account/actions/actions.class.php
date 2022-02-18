@@ -465,7 +465,7 @@ class accountActions extends sfActions
       ];
 
       UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);
-      $user->cacheUserSettings($settings);
+      $user->addUserSettings($settings);
     }
   }
 
@@ -499,7 +499,7 @@ class accountActions extends sfActions
         ];
 
         UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);
-        $user->cacheUserSettings($settings);
+        $user->addUserSettings($settings);
       }
     }
 

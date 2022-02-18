@@ -11,7 +11,7 @@
  *
  *   getUserSetting()           Proxy and cache for UsersSettingsPeer (account settings)
  *   setUserSetting()
- *   cacheUserSettings()        Cache application setting(s) (cf. UserSettingsPeer)
+ *   addUserSettings()        Cache application setting(s) (cf. UserSettingsPeer)
  *
  *   getUserDetails()           Get UsersPeer record for the authorized user
  *   getLocalPrefs()
@@ -125,16 +125,17 @@ class rtkUser extends sfBasicSecurityUser
   }
 
   /**
-   * Get a user setting. If not found in the session, cache all settings from
-   * UsersSettingsPeer table.
+   * Get a user setting from the user session. Cache them if not done yet.
    *
-   * @param string $setting Setting name (UsersSettingsPeer::OPT_xxx)
+   * @see UsersSettingsPeer
    *
-   * @return mixed Normalized settings (numbers and booleans as integer)
+   * @param string $name Setting name (see OPT_xxx in UsersSettingsPeer)
+   *
+   * @return mixed Normalized setting value (numbers and booleans as integer)
    */
-  public function getUserSetting($setting)
+  public function getUserSetting(string $name)
   {
-    $attrName = $this->getUserSettingName($setting);
+    $attrName = $this->getUserSettingName($name);
 
     // return setting if already in session
     if (null !== ($value = $this->getAttribute($attrName)))
@@ -144,7 +145,7 @@ class rtkUser extends sfBasicSecurityUser
 
     // otherwise get all settings and cache them
     $settings = UsersSettingsPeer::getUserSettings($this->getUserId());
-    $this->cacheUserSettings($settings);
+    $this->addUserSettings($settings);
 
     return $this->getAttribute($attrName);
   }
@@ -152,16 +153,23 @@ class rtkUser extends sfBasicSecurityUser
   /**
    * Sets the cached (session) value of a user setting.
    *
+   * @see UsersSettingsPeer
+   *
    * @param string $name  Setting name (UserSettingsPeer constant)
-   * @param string $value
+   * @param mixed  $value
    */
-  public function setUserSetting($name, $value)
+  public function setUserSetting(string $name, $value)
   {
     $attrName = $this->getUserSettingName($name);
     $this->setAttribute($attrName, $value);
   }
 
-  public function cacheUserSettings(array $settings)
+  /**
+   * Sets an array of settings at once.
+   *
+   * @see UsersSettingsPeer
+   */
+  public function addUserSettings(array $settings)
   {
     foreach ($settings as $name => $value)
     {

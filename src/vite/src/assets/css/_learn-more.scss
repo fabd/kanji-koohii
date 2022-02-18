@@ -59,6 +59,15 @@
   }
 }
 
+// note: this will be used also on dashboard "Welcome" section
+.kk-RtkBook {
+  // this selector overrides `.markdown img` when appearing in the Help page
+  img {
+    @apply border-none p-0;
+    box-shadow: 7px 7px 0px 0px #c39a5cbd;
+  }
+}
+
 .kk-DocMain {
   @screen lg {
     // vertical separator & guiding line
@@ -88,12 +97,6 @@
 
     a {
       @apply whitespace-nowrap;
-    }
-
-    .book {
-      float: left;
-      margin: 0 1em 1.5em 0;
-      @apply md:px-4;
     }
   }
 

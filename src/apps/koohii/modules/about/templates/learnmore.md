@@ -16,8 +16,8 @@
 
 <div class="kk-DocMain-whatisrtk padded-box rounded no-gutter-xs-sm mb-8" markdown="1">
 
-  <div class="book">
-    <img src="/images/3.0/help/rtk-book-cover.gif" width="137" height="205" class="css3-ssh" />
+  <div class="kk-RtkBook float-left mr-6 mb-4 md:px-4">
+    <img src="/images/3.0/help/rtk-book-cover.gif" width="137" height="205" />
   </div>
 
 **Remembering the Kanji** (RTK) teaches you how to break down the complex kanji in smaller, simple parts that can be memorized with a _mnemonic_ system (we call it _stories_).

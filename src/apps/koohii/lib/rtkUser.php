@@ -7,33 +7,35 @@
  *   getUserName()
  *   getUserTimeZone()
  *   getUserSequence()
+ *   getUserKnownKanji()        Cache a string of all the kanji known by user.
  *
- *   getUserSetting()                Proxy and cache for UsersSettingsPeer (account settings)
+ *   getUserSetting()           Proxy and cache for UsersSettingsPeer (account settings)
  *   setUserSetting()
- *   cacheUserSettings($settings)    Cache application setting(s) (cf. UserSettingsPeer)
+ *   cacheUserSettings()        Cache application setting(s) (cf. UserSettingsPeer)
  *
- *   getUserDetails()                Get UsersPeer record for an authorized user
+ *   getUserDetails()           Get UsersPeer record for the authorized user
  *   getLocalPrefs()
  *
+ *   signIn()
+ *   signOutAndClearCookie()
  *   isAdministrator()
  *
- *   signIn()
- *   signOut()
+ *   setRememberMeCookie()
+ *   clearRememberMeCookie()
  *
- *   changePassword($username, $raw_password)
- *   getSaltyHashedPassword($raw_password)
+ *   changePassword()
+ *   getSaltyHashedPassword()
  *
- *   redirectToLogin($options = array())      Redirect unauthenticated user to login page
+ *   redirectToLogin()          Redirect unauthenticated user to login page
  *
  * @author     Fabrice Denis
  */
 class rtkUser extends sfBasicSecurityUser
 {
-  /** @var LocalPrefs */
-  protected $localPrefs;
+  protected LocalPrefs $localPrefs;
 
-  // The "Remember me" cookie name and lifetime in seconds.
-  public const COOKIE_EXPIRE = 31536000; // 60*60*24*365
+  // The "Remember me" cookie lifetime in seconds
+  public const COOKIE_EXPIRE = 60 * 60 * 24 * 365; // 1 year
 
   public const CREDENTIAL_ADMIN = 'admin';
   public const CREDENTIAL_MEMBER = 'member';
@@ -84,14 +86,14 @@ class rtkUser extends sfBasicSecurityUser
   // returns int | null
   public function getUserId()
   {
-    $uid = $this->getAttribute('userid', null);
+    $uid = $this->getAttribute('userid');
 
     return null !== $uid ? (int) $uid : null;
   }
 
   public function getUserTimeZone()
   {
-    return $this->getAttribute('usertimezone', null);
+    return $this->getAttribute('usertimezone');
   }
 
   public function getUserSequence()
@@ -100,19 +102,17 @@ class rtkUser extends sfBasicSecurityUser
   }
 
   /**
-   * Known kanji: cache a string of al the kanji known by user.
+   * Known kanji: cache a string of all the kanji known by user.
    *
    * @param bool $refresh set true to refresh the cache
    */
   public function getUserKnownKanji($refresh = false)
   {
-    if (!$refresh && null !== ($knownKanji = $this->getAttribute(self::KNOWN_KANJI, null)))
+    if ($refresh || null === ($knownKanji = $this->getAttribute(self::KNOWN_KANJI)))
     {
-      return $knownKanji;
+      $knownKanji = ReviewsPeer::getKnownKanji($this->getUserId());
+      $this->setAttribute(self::KNOWN_KANJI, $knownKanji);
     }
-
-    $knownKanji = ReviewsPeer::getKnownKanji($this->getUserId());
-    $this->setAttribute(self::KNOWN_KANJI, $knownKanji);
 
     return $knownKanji;
   }
@@ -161,17 +161,17 @@ class rtkUser extends sfBasicSecurityUser
     $this->setAttribute($attrName, $value);
   }
 
-  private function getUserSettingName($setting)
-  {
-    return 'usersetting.'.$setting;
-  }
-
   public function cacheUserSettings(array $settings)
   {
     foreach ($settings as $name => $value)
     {
       $this->setUserSetting($name, $value);
     }
+  }
+
+  private function getUserSettingName($setting)
+  {
+    return 'usersetting.'.$setting;
   }
 
   /**

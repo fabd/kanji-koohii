@@ -183,22 +183,11 @@ class rtkUser extends sfBasicSecurityUser
   }
 
   /**
-   * Proxy method to set one or more attributes.
-   *
-   * @param array $attrs
+   * Proxy method to set multiple attributes.
    */
-  public function setAttributes($attrs)
+  public function setAttributes(array $attrs)
   {
-    $valid_attributes = ['userid', 'username', 'usertimezone', 'usersequence'];
-    if (!rtkValidators::validateArrayKeys($attrs, $valid_attributes))
-    {
-      throw new sfException('Invalid attribute passed to '.__METHOD__);
-    }
-
-    foreach ($attrs as $key => $value)
-    {
-      $this->setAttribute($key, $value);
-    }
+    $this->getAttributeHolder()->add($attrs);
   }
 
   /**

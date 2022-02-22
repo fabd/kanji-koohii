@@ -1,14 +1,12 @@
 module.exports = {
-  mode: "jit",
-  purge: [
+  content: [
     "./src/**/*.{js,ts,vue}",
 
     // Symfony's global templates (including global layout)
     "../apps/koohii/templates/*.php",
 
     // Symfony's per module/action templates
-    "../apps/koohii/modules/**/templates/*.md",
-    "../apps/koohii/modules/**/templates/*.php",
+    "../apps/koohii/modules/**/templates/*.{md,php}",
   ],
 
   theme: {

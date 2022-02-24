@@ -21,8 +21,8 @@ $GRID_GUTTER_X: 15px;
   padding-left: $GRID_GUTTER_X;
   padding-right: $GRID_GUTTER_X;
 
-  @include screen(md) {
-    width: $--bp-md-tablet;
+  @include breakpoint-up(lg) {
+    width: 970px;
   }
 }
 

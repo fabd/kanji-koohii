@@ -47,7 +47,7 @@ h3 {
 /* RESPONSIVE utilities */
 /* ---------------------------- */
 
-@media (max-width: 767px) {
+@include breakpoint-down(md) {
   /* cancel the column gutter from Bootstrap grid, removes margins like .row does
      but this class is more semantic, as we use it to remove gutter for edge to edge
      content on small screens (needs to match Bootstrap gutter dimensions) */
@@ -57,13 +57,13 @@ h3 {
   }
 }
 
-@media (min-width: 992px) {
+@include breakpoint-up(lg) {
   .visible-xs-sm {
     display: none;
   } /* visible-xs, visible-sm (ideally "phone & tablet portrait) */
 }
 
-@media (max-width: 991px) {
+@include breakpoint-down(lg) {
   .no-gutter-xs-sm {
     margin-left: -15px;
     margin-right: -15px;
@@ -292,8 +292,7 @@ blockquote {
   flex: 0 0 100%;
 }
 
-/* bootstrap-md-lg */
-@media (min-width: 992px) {
+@include breakpoint-up(lg) {
   .col-d-2 {
     flex: 0 0 16.666667%;
   }
@@ -1054,8 +1053,7 @@ $--color-blog-heading: #fa3d60;
   color: #454545;
 }
 
-/* bootstrap xs */
-@media (max-width: 767px) {
+@include breakpoint-down(md) {
   #sitenews_jpod img {
     border-radius: 0;
   }

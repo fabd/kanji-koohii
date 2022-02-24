@@ -16,8 +16,7 @@
   line-height: 34px; /* align to the button*/
 }
 
-/* bootstrap-xs-sm */
-@media (max-width: 991px) {
+@include breakpoint-down(lg) {
   .study-index #main_container,
   .study-edit #main_container {
     padding-top: 0;
@@ -295,8 +294,7 @@
   }
 }
 
-/* bootstrap-md-lg */
-@media (min-width: 992px) {
+@include breakpoint-up(lg) {
   /* less contrating themes for desktop sidebar */
   #browse {
     border-radius: 4px;
@@ -472,8 +470,7 @@ table.failed-kanji td {
   border-top: 1px solid #eee;
 }
 
-/* bootstrap-md-lg */
-@media (min-width: 992px) {
+@include breakpoint-up(lg) {
   /* less contrating themes for desktop sidebar */
   #browse {
     border-radius: 4px;

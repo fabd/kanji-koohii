@@ -307,7 +307,7 @@ section p {
 
 /* Extra small devices (phones, less than 768px) */
 
-@media (max-width: 767px) {
+@include breakpoint-down(md) {
   /* nav */
   #k_nav .navbar-brand {
     margin-left: 14px;
@@ -338,7 +338,7 @@ section p {
 
 /* Small devices (tablets, 768px and up) */
 
-@media (min-width: 768px) {
+@include breakpoint-up(md) {
   #k_nav .navbar-brand {
     width: 97px;
   }
@@ -351,7 +351,7 @@ section p {
 
 /* Medium devices (desktops, 992px and up) */
 
-@media (min-width: 992px) {
+@include breakpoint-up(lg) {
   #header h1 {
     font-size: 36px;
   }

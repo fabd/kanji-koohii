@@ -1,6 +1,6 @@
 // Landing page ONLY (Nov 2016)
 
-@import "./legacy/vendor/bootstrap.css";
+@import "./legacy/_bootstrap-fix.scss";
 
 /* BOOTSTRAP OVERRIDES ( todo: sass truc machin? ) */
 @media (min-width: 1200px) {

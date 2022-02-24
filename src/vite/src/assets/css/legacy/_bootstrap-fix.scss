@@ -1,0 +1,52 @@
+//
+// Temporary fix for getting rid of bootstrap.css which is causing more
+//  and more issues.
+//
+//   1. stop importing bootstrap.css
+//   2. create a "fix" stylesheet to plug the missing css (here)
+//   3. refactor the fixed css into the other stylesheets over time
+
+.btn {
+  background: red;
+}
+
+// --------------------------------------------------------------------
+// Patch Bootstrap v3's grid system
+// --------------------------------------------------------------------
+$GRID_GUTTER_X: 15px;
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: $GRID_GUTTER_X;
+  padding-right: $GRID_GUTTER_X;
+
+  @include screen(md) {
+    width: $--bp-md-tablet;
+  }
+}
+
+.row {
+  @apply flex;
+  margin-left: -$GRID_GUTTER_X;
+  margin-right: -$GRID_GUTTER_X;
+}
+
+.col-md-3,
+.col-md-6,
+.col-md-9 {
+  @apply grow-0 w-full;
+  padding-left: $GRID_GUTTER_X;
+  padding-right: $GRID_GUTTER_X;
+}
+
+.col-md-3 {
+  @apply md:w-1/4;
+}
+.col-md-9 {
+  @apply md:w-3/4;
+}
+
+.col-md-6 {
+  @apply md:w-1/2;
+}

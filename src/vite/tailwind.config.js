@@ -40,8 +40,8 @@ module.exports = {
     //  (MUST be kept in sync with screen() mixin in _mixins.scss)
     screens: {
       'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
+      'lg': '992px',
+      'xl': '1200px',
     },
 
     extend: {

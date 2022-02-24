@@ -1,12 +1,16 @@
 // --------------------------------------------------------------------
-// layout / breakpoints (used by `screen()` mixin!)
+// layout / breakpoints (used by breakpoint mixins)
+//
+//   References:
+//   https://getbootstrap.com/docs/5.0/layout/breakpoints/#available-breakpoints
+//
 // --------------------------------------------------------------------
 
-// tablets (portrait)
-$--bp-md-tablet: 768px; // 768px = 48rem
+// "Medium" : tablets (portrait)
+$--bp-md: 768px; // 768px = 48rem
 
-// tablets (landscape), laptops and desktops in unmaximized browser windows
-$--bp-lg-laptop: 1024px; // 1024px = 64rem
+// "Large" : tablets (landscape), laptops and desktops in unmaximized browser windows
+$--bp-lg: 992px; // 992px = 62rem
 
-// wide laptop & desktop browser windows
-$--bp-xl-desktop: 1280px; // 1280px = 80rem
+// "Extra large" : wide laptop & desktop browser windows
+$--bp-xl: 1280px; // 1280px = 80rem

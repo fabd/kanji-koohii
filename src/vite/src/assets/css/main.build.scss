@@ -1,10 +1,17 @@
+// ====================================================================
 // LEGACY main.build.scss stylesheet
+// ====================================================================
+
 // --------------------------------------------------------------------
 // 1. tailwind's "preflight" and opiniated resets
 // --------------------------------------------------------------------
 @import "tailwindcss/base";
 
 @import "./legacy/_bootstrap-fix.scss";
+
+@import "./_theme.scss";
+@import "../sass/abstracts/_mixins.scss";
+@import "../sass/_utilities.scss";
 
 // --------------------------------------------------------------------
 // FIXES
@@ -25,7 +32,6 @@ h3 {
   color: purple;
 }
 
-@import "./_theme.scss";
 
 // --------------------------------------------------------------------
 // These may go in Tailwind config later.
@@ -36,8 +42,6 @@ h3 {
 .text-confirm {
   color: $--clr-bg-gd;
 }
-
-@import "../sass/_utilities.scss";
 
 /* ---------------------------- */
 /* RESPONSIVE utilities */
@@ -87,12 +91,6 @@ h3 {
 /* ---------------------------- */
 /* BOOTSTRAP hacks */
 /* ---------------------------- */
-
-@media (min-width: 1200px) {
-  .container {
-    width: 970px;
-  } /* same as min-width 992px */
-}
 
 /* cf. BootstrapHelper */
 

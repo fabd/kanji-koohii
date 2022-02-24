@@ -1,0 +1,45 @@
+// ====================================================================
+// MIXINS
+//
+//   Responsive & Media Queries:
+//
+//     screen()
+//
+// ====================================================================
+
+// --------------------------------------------------------------------
+// BREAKPOINTS
+//
+//   Tailwind breakpoints (keep in sync with tailwind config!)
+//
+//     md        ... matches tailwind `md`
+//     lg        ... matches tailwind `lg`
+//     xl        ... matches tailwind `xl`
+//
+//   Examples:
+//
+//      @include screen(md) { ... }
+//
+// --------------------------------------------------------------------
+@mixin screen($size) {
+  // cf. tailwind.config.js
+  @if $size == "md" {
+    @media only screen and (min-width: $--bp-md-tablet) {
+      @content;
+    }
+  }
+
+  // cf. tailwind.config.js
+  @if $size == "lg" {
+    @media only screen and (min-width: $--bp-lg-laptop) {
+      @content;
+    }
+  }
+
+  // cf. tailwind.config.js
+  @if $size == "xl" {
+    @media only screen and (min-width: $--bp-xl-desktop) {
+      @content;
+    }
+  }
+}

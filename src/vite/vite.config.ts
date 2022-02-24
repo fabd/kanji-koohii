@@ -135,6 +135,20 @@ export default defineConfig({
     ],
   },
 
+  css: {
+    // ---------------------------------------------------------------------------
+    // https://vitejs.dev/config/#css-preprocessoroptions
+    // ---------------------------------------------------------------------------
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @import "@/assets/sass/abstracts/_mixins.scss";
+          @import "@/assets/sass/abstracts/_variables.scss";
+        `,
+      },
+    },
+  },
+
   plugins: [
     importElementPlus({}),
 

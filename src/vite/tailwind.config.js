@@ -36,6 +36,14 @@ module.exports = {
       lg: "1.125rem",
     },
 
+    // responsive breakpoints
+    //  (MUST be kept in sync with screen() mixin in _mixins.scss)
+    screens: {
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+    },
+
     extend: {
       flex: {
         // can be used with flex-1 to distribute space between smaller/larger items in a row

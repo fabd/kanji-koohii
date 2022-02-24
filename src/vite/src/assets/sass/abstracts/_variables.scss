@@ -1,0 +1,12 @@
+// --------------------------------------------------------------------
+// layout / breakpoints (used by `screen()` mixin!)
+// --------------------------------------------------------------------
+
+// tablets (portrait)
+$--bp-md-tablet: 768px; // 768px = 48rem
+
+// tablets (landscape), laptops and desktops in unmaximized browser windows
+$--bp-lg-laptop: 1024px; // 1024px = 64rem
+
+// wide laptop & desktop browser windows
+$--bp-xl-desktop: 1280px; // 1280px = 80rem

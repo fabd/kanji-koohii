@@ -1,0 +1,41 @@
+.kk-PatronsList {
+  margin-top: -0.5em;
+  padding: 1em 0 0;
+  list-style: none;
+  border-top: 1px solid #e7e1d3;
+
+  &-item {
+    list-style: none;
+    display: inline-block;
+    width: 33.33%;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5em;
+
+    @include breakpoint-down(md) {
+      width: 50%;
+      font-size: 14px;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a.is-patron {
+    /*background:#d6f6b7;*/
+    color: #159815;
+    font-weight: bold;
+    padding: 0.2em 0.8em;
+  }
+}
+
+.btn-patreon {
+  color: #fff;
+  background: #eb491d;
+}
+
+.btn-paypal {
+  color: #fff;
+  background: #40acda;
+}

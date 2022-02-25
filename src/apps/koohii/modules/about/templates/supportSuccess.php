@@ -2,33 +2,6 @@
   use_helper('Links');
   $sf_request->setParameter('_homeFooter', true);
 ?>
-<?php slot('inline_styles') ?>
-/* highlight <style> */
-
-#support-koohii .padded-box { border:1px solid #ebe5d8; border-bottom:2px solid #e0dace; }
-
-#support-koohii .support-logo { margin:0 0 1em; }
-
-#patreon-patrons { margin-top:-0.5em; padding:1em 0 0; list-style:none; border-top:1px solid #e7e1d3; }
-#patreon-patrons li { list-style:none; display:inline-block; width:33.33%; text-align:center; font-size:16px; line-height:1.5em; }
-
-#support-koohii .btn { color:#fff; -webkit-appearance:none; }
-#support-koohii .btn-patreon { background:#eb491d; }
-#support-koohii .btn-paypal  { background:#40acda; }
-
-/*.become-a-patron { margin-left:3em;color:#e6461a; } */
-
-#patreon-patrons a { text-decoration:none; }
-#patreon-patrons a.is-patron { /*background:#d6f6b7;*/ color:#159815; font-weight:bold; padding:0.2em 0.8em; }
-
- /* bootstrap-xs-sm */
-@media (max-width: 991px) {
-  #patreon-patrons li { width:50%; font-size:14px; }
-  .become-a-patron { display:block; margin:0.3em 0 0; }
-}
-
-<?php end_slot() ?>
-
 <div class="row">
  <div id="support-koohii" class="col-md-8 col-md-offset-2">
 

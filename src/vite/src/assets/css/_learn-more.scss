@@ -3,7 +3,7 @@
 // ====================================================================
 
 .kk-DocNav {
-  @screen lg {
+  @include breakpoint-up(lg) {
     @apply fixed min-w-[218px];
   }
 
@@ -69,9 +69,12 @@
 }
 
 .kk-DocMain {
-  @screen lg {
+  @include breakpoint-up(md) {
     // vertical separator & guiding line
-    @apply pl-[2rem] border-l-[1px] border-shaded;
+    @apply pl-4 border-l-[1px] border-shaded;
+  }
+  @include breakpoint-up(lg) {
+    @apply pl-8;
   }
 
   // fix the title positioning when clicking the sidebar links (#anchors)

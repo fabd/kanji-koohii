@@ -29,7 +29,7 @@ $GRID_GUTTER_X: 15px;
   padding-right: $GRID_GUTTER_X;
 
   @include breakpoint-up(md) {
-    width: 750px;
+    width: $--bp-md;
   }
 
   @include breakpoint-up(lg) {

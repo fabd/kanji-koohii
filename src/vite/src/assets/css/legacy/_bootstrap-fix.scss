@@ -1,10 +1,13 @@
+// ====================================================================
 //
-// Temporary fix for getting rid of bootstrap.css which is causing more
+// Temporary fix for removal of bootstrap.css which is causing more
 //  and more issues.
 //
-//   1. stop importing bootstrap.css
-//   2. create a "fix" stylesheet to plug the missing css (here)
-//   3. refactor the fixed css into the other stylesheets over time
+//   1. remove bootstrap.css
+//   2. create a "patch" stylesheet to plug the missing css (here)
+//   3. refactor this css into the other stylesheets over time
+//
+// ====================================================================
 
 .btn {
   background: red;
@@ -12,6 +15,10 @@
 
 // --------------------------------------------------------------------
 // Patch Bootstrap v3's grid system
+//
+//   - use flex instead of floats (more flexible)
+//   - use tailwind `order-{x}` to push/pull columns
+//   - for a single centered, smaller col, use eg. `col-lg-10 mx-auto`
 // --------------------------------------------------------------------
 $GRID_GUTTER_X: 15px;
 
@@ -20,6 +27,10 @@ $GRID_GUTTER_X: 15px;
   margin-left: auto;
   padding-left: $GRID_GUTTER_X;
   padding-right: $GRID_GUTTER_X;
+
+  @include breakpoint-up(md) {
+    width: 750px;
+  }
 
   @include breakpoint-up(lg) {
     width: 970px;
@@ -32,21 +43,28 @@ $GRID_GUTTER_X: 15px;
   margin-right: -$GRID_GUTTER_X;
 }
 
-.col-md-3,
-.col-md-6,
-.col-md-9 {
+.col-lg-3,
+.col-lg-4,
+.col-lg-6,
+.col-lg-9,
+.col-lg-10 {
   @apply grow-0 w-full;
   padding-left: $GRID_GUTTER_X;
   padding-right: $GRID_GUTTER_X;
 }
 
-.col-md-3 {
-  @apply md:w-1/4;
+.col-lg-3 {
+  @apply lg:w-3/12;
 }
-.col-md-9 {
-  @apply md:w-3/4;
+.col-lg-4 {
+  @apply lg:w-4/12;
 }
-
-.col-md-6 {
-  @apply md:w-1/2;
+.col-lg-6 {
+  @apply lg:w-6/12;
+}
+.col-lg-9 {
+  @apply lg:w-9/12;
+}
+.col-lg-10 {
+  @apply lg:w-10/12;
 }

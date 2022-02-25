@@ -1,5 +1,4 @@
 <?php
-  use_helper('Widgets');
   $sf_request->setParameter('_homeFooter', true);
 ?>
 <div class="row pt-4">

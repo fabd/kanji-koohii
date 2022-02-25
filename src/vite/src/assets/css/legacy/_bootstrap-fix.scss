@@ -85,3 +85,19 @@ $GRID_GUTTER_X: 15px;
 .col-lg-10 {
   @apply lg:w-10/12;
 }
+
+// --------------------------------------------------------------------
+// A few places can afford columns in tablet portrait mode (md)
+// --------------------------------------------------------------------
+.col-md-3,
+.col-md-9 {
+  @apply grow-0 w-full;
+  padding-left: $GRID_GUTTER_X;
+  padding-right: $GRID_GUTTER_X;
+}
+.col-md-3 {
+  @apply md:w-3/12;
+}
+.col-md-9 {
+  @apply md:w-9/12;
+}

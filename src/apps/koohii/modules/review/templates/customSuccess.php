@@ -5,8 +5,7 @@
 
 <h2>Kanji Review</h2>
       
-<div class="row">
-  <div class="col-md-12">
+<section>
 
     <div class="mb-8">
       <div class="p-notice">
@@ -22,10 +21,10 @@
       </p>
     </div>
 
-  </div><!-- /col -->
-</div><!-- /row -->
+</section>
+
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-lg-6">
 
     <div class="padded-box rounded labs-review-box">
 
@@ -62,7 +61,7 @@
     </div>
         
   </div><!-- /col -->
-  <div class="col-md-6">
+  <div class="col-lg-6">
 
     <div class="padded-box rounded labs-review-box">
 

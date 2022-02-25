@@ -47,37 +47,16 @@ h3 {
 /* RESPONSIVE utilities */
 /* ---------------------------- */
 
-@include breakpoint-down(md) {
-  /* cancel the column gutter from Bootstrap grid, removes margins like .row does
-     but this class is more semantic, as we use it to remove gutter for edge to edge
-     content on small screens (needs to match Bootstrap gutter dimensions) */
-  .no-gutter-xs {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-}
-
 @include breakpoint-up(lg) {
   .visible-xs-sm {
     display: none;
-  } /* visible-xs, visible-sm (ideally "phone & tablet portrait) */
+  }
 }
 
 @include breakpoint-down(lg) {
-  .no-gutter-xs-sm {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-
-  /* re-apply margins for content set inside a .no-gutter-xs-sm container */
-  .re-gutter-xs-sm {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-
   .visible-md-lg {
     display: none;
-  } /* visible-md, visible-lg (ideally "tablet landscape & desktop) */
+  }
 }
 
 /* ajax table container div (cf. ./legacy/_widgets.scss) */

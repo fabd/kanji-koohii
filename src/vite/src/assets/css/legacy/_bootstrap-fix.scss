@@ -43,6 +43,23 @@ $GRID_GUTTER_X: 15px;
   margin-right: -$GRID_GUTTER_X;
 }
 
+// --------------------------------------------------------------------
+// CANCEL GUTTERS
+//   Cancel the column gutter on small screens only.
+//
+//   Ideal for sections of content with a full width image or table,
+//   to gain extra space, spanning from edge to edge of the device.
+// --------------------------------------------------------------------
+@include breakpoint-down(md) {
+  .no-gutter-xs-sm {
+    margin-left: -$GRID_GUTTER_X;
+    margin-right: -$GRID_GUTTER_X;
+  }
+}
+
+// --------------------------------------------------------------------
+// Bootstrap 3's column utilities
+// --------------------------------------------------------------------
 .col-lg-3,
 .col-lg-4,
 .col-lg-6,

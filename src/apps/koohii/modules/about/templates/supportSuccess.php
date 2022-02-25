@@ -59,7 +59,7 @@ Maintaining and developing new features takes a considerable amount of time. You
   </div>
  
 
-  <h3>Current patrons</h3>
+  <h3>Patrons (past &amp; present)</h3>
 
   <p class="mb-2"><strong>Thank you for supporting Kanji Koohii!</strong></p>
 

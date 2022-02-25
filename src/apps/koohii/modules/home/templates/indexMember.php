@@ -2,17 +2,16 @@
   use_helper('Widgets');
   $sf_request->setParameter('_homeFooter', true);
 ?>
-  
 
 <div id="home-qs" class="row mt-3 mb-8">
  
  <!-- temp fix for wide blog posts until redesign of home screen -->
- <div class="col-md-10 col-md-push-1">
-  <h2>Welcome back, <?php echo $sf_user->getUserName() ?>!</h2>
+ <div class="col-lg-10 mx-auto">
+  <h2>Welcome back, <?= $sf_user->getUserName(); ?>!</h2>
   <div class="row">
 
 
-  <div class="col-md-4">
+  <div class="col-lg-4">
     <div class="box padded-box rounded mb-2">
     <div class="hd">
 <?php 
@@ -29,7 +28,7 @@
     </div>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-lg-4">
     <div class="box padded-box rounded mb-2">
     <div class="hd">
 <?php 
@@ -46,7 +45,7 @@
     </div>
   </div>
   
-  <div class="col-md-4">
+  <div class="col-lg-4">
     <div class="box padded-box rounded mb-2">
     <div class="hd">
 <?php 
@@ -69,7 +68,8 @@
     </div>
   </div>
 
- </div></div><!-- /col-md-10 fix -->
+ </div>
+</div><!-- /col-lg-10 fix -->
 
 </div>
 

@@ -1,11 +1,11 @@
 <div id="manage-cards">
   <div class="row">
 
-    <div class="col-md-3">
+    <div class="col-lg-3">
       <?php include_partial('SideNav', ['active' => $active]) ?>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-lg-9">
       <div class="views">
         <div id="manage-view" class="manage-view">
   <?php echo $decorator_content; ?>

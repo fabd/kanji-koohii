@@ -50,7 +50,7 @@ EOD;
 
 <?php include_partial('SideColumn', ['kanjiData' => $kanjiData, 'intro' => false ]) ?>
 
-  <div class="col-md-9">
+  <div class="col-lg-9">
 
 <?php if (!$kanjiData): ?>
   

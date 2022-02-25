@@ -30,7 +30,7 @@
   <h2>Review Summary</h2>
 
 <div class="row">
-  <div class="col-md-6 mb-8">
+  <div class="col-lg-6 mb-8">
     <h3><?= $title; ?></h3>
 
     <p>Below is the list of flashcards from your last review session.
@@ -50,7 +50,7 @@
 ?>
   </div>
   
-  <div class="col-md-6">
+  <div class="col-lg-6">
 <?php if ($fcr_total > 0) { ?>
     <div class="padded-box rounded">
 

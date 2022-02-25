@@ -1,7 +1,7 @@
 <?php use_helper('Widgets', 'CJK', 'SimpleDate', 'Links') ?>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-6">
 
       <h2>Flashcard List</h2>
       <p>
@@ -12,7 +12,7 @@
       </p>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-lg-6">
       <div class="padded-box rounded" style="margin:0 0 1.5em;">
         <strong>Statistics</strong><br />
         <?php echo ReviewsPeer::getFlashcardCount($sf_user->getUserId()) ?> flashcards.<br />

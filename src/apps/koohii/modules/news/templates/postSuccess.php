@@ -5,7 +5,7 @@
 ?>
 <div class="row">
 
-  <div class="col-md-9">
+  <div class="col-lg-9">
 
 <?php if ($posts !== false): ?>
 
@@ -30,16 +30,16 @@
 
 
     <div class="form-group">
-      <div class="flex flex-g-s">
-        <div class="col-m col-g">
+      <div class="flex flex-nowrap -mx-1">
+        <div class="w-[136px] mx-1">
           <label for="name">Id</label><br>
           <?php echo input_tag('post_id', 0, ['class' => 'form-control']) ?>
         </div>
-        <div class="col-m-9 col-g">
+        <div class="w-9/12 mx-1">
           <label for="name">Title</label>
           <?php echo input_tag('post_title', '', ['class' => 'form-control']) ?>
         </div>
-        <div class="col-m-2 col-g">
+        <div class="w-2/12 mx-1">
           <label for="name">Published</label>
           <?php echo input_tag('post_date', '', ['class' => 'form-control']) ?>
         </div>
@@ -63,7 +63,7 @@
 
   </div><!-- /col -->
 
-  <div class="col-md-3">
+  <div class="col-lg-3">
     <?php include_partial('archiveList') ?>
   </div>
 

@@ -13,7 +13,7 @@
 <div class="k_bg_odd">
   <div class="container">
 <section class="row m_top_x">
-  <div class="col-md-6 col-md-push-6">
+  <div class="col-lg-6 order-1 bg-[red]">
     <div class="f_text" style="margin-bottom:2.5em">
       <h2>Kanji mnemonics</h2>
       <p>
@@ -23,7 +23,7 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
       </p>
     </div>
   </div>
-  <div class="col-md-6 col-md-pull-6">
+  <div class="col-lg-6">
     <div class="f_box f_stories">
       <div class="f_stories_clip">
         <!-- yeah, it's blurry on mobile, this will do for now... -->
@@ -38,7 +38,7 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
 <div class="k_bg_even">
   <div class="container">
 <section class="row">
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="f_text">
       <h2>Smart dictionary</h2>
       <p>
@@ -48,7 +48,7 @@ gradually, building from your previous knowledge.
       </p>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="f_box f_dict f_shadow">
       <div class="f_dict_clip">
         <!-- img src="/koohii/landing/f_dict.png" /></div -->
@@ -61,7 +61,7 @@ gradually, building from your previous knowledge.
 <div class="k_bg_odd">
   <div class="container">
 <section class="row">
-  <div class="col-md-6 col-md-push-6">
+  <div class="col-lg-6 col-lg-push-6">
     <div class="f_text">
 <h2>Beautiful kanji flashcards</h2>
 <p>
@@ -69,7 +69,7 @@ gradually, building from your previous knowledge.
 </p>
     </div>
   </div>
-  <div class="col-md-6 col-md-pull-6">
+  <div class="col-lg-6 col-lg-pull-6">
     <div class="f_box">
       <div class="f_fc_layers">
         <img class="f_fc_desktop" src="/koohii/landing/f_flashcard_desktop.png" />
@@ -84,7 +84,7 @@ gradually, building from your previous knowledge.
 <div class="k_bg_even">
   <div class="container">
 <section class="row">
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="f_text">
       <h2>Spaced repetition</h2>
       <p>
@@ -92,7 +92,7 @@ Kanji Koohii uses a friendly spaced repetition system: flashcard reviews are sch
       </p>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="f_box f_srs"><img src="/koohii/landing/f_srs.png" /></div>
   </div
 </section>
@@ -110,10 +110,10 @@ Kanji Koohii uses a friendly spaced repetition system: flashcard reviews are sch
   <p>The website is supported by <?php echo link_to('donations', 'about/support') ?>, and affiliate <a href="http://www.japanesepod101.com/member/go.php?r=12933&amp;i=b3">JapanesePod101.com</a>.</p>
 <?php endif ?>
   <div class="action row">
-    <div class="col-md-6 col-l">
+    <div class="col-lg-6 col-l">
       <?php echo _bs_button('Register', 'account/create', ['class' => 'btn btn-signup']) ?>
     </div>
-    <div class="col-md-6 col-r">
+    <div class="col-lg-6 col-r">
       <?php echo link_to('Learn more', '@learnmore', ['class' => 'learnmore']) ?>
     </div>
   </div>

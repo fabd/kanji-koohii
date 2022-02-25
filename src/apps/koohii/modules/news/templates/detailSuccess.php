@@ -3,7 +3,7 @@
 ?>
 <div class="row">
 
-  <div class="col-md-9">
+  <div class="col-lg-9">
 
 <?php if ($posts): ?>
 
@@ -28,7 +28,7 @@
 
   </div><!-- /col -->
 
-  <div class="col-md-3">
+  <div class="col-lg-3">
     <?php include_partial('archiveList') ?>
   </div>
 

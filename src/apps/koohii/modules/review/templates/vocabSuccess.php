@@ -5,8 +5,7 @@
 
 <h2>Vocab Shuffle</h2>
 
-<div class="row mb-3">
-  <div class="col-md-12">
+<div class="mb-3">
 
     <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
 
@@ -15,11 +14,11 @@
 
     <?php #echo link_to('<span>Start Vocab Shuffle!</span>', 'labs/review', array('class' => 'uiIBtn uiIBtnDefault')) ?>
 
-  </div><!-- /col -->
-</div><!-- /row -->    
+
+</div>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-lg-6">
 
     <div class="padded-box rounded labs-review-box">
     
@@ -49,7 +48,7 @@
     </div><!-- /box -->
 
   </div><!-- /col -->       
-  <div class="col-md-6">
+  <div class="col-lg-6">
 
     <div class="padded-box rounded labs-review-box">
       

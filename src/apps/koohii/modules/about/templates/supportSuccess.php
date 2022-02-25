@@ -3,7 +3,7 @@
   $sf_request->setParameter('_homeFooter', true);
 ?>
 <div class="row">
-  <div class="col-lg-8 mx-auto">
+  <div class="col-lg-9 mx-auto">
 
     <h2>Support Kanji Koohii<span class="visible-md-lg"> Development</span></h2>
 

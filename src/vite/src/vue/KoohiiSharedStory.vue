@@ -7,12 +7,12 @@
         <div class="story" v-html="story"></div>
       </div>
 
-      <div class="sharedstory_meta flex">
-        <div class="lastmodified col-m-1 self-center"
+      <div class="sharedstory_meta">
+        <div class="lastmodified"
           ><i class="far fa-clock"></i> NEW</div
         >
 
-        <div :id="divId" class="actions col-m ta-r JsAction">&nbsp;</div>
+        <div :id="divId" class="sharedstory-actions JsAction">&nbsp;</div>
       </div>
     </div>
   </transition>

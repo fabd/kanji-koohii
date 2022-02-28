@@ -72,3 +72,22 @@
     }
   }
 }
+
+// --------------------------------------------------------------------
+// CUSTOM RANGES (match custom bp's in tailwind config)
+//
+// --------------------------------------------------------------------
+@mixin screen($size) {
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "mbl" {
+    @media only screen and (max-width: 991px) {
+      @content;
+    }
+  }
+
+  @if $size == "dsk" {
+    @media only screen and (min-width: 992px) {
+      @content;
+    }
+  }
+}

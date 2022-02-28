@@ -39,9 +39,13 @@ module.exports = {
     // responsive breakpoints
     //  (MUST be kept in sync with screen() mixin in _mixins.scss)
     screens: {
-      'md': '768px',
-      'lg': '992px',
-      'xl': '1200px',
+      md: "768px",
+      lg: "992px",
+      xl: "1200px",
+
+      // mobile/desktop switches
+      mbl: { max: "991px" },
+      dsk: "992px",
     },
 
     extend: {

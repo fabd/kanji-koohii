@@ -213,17 +213,6 @@ blockquote {
  *  
  */
 
-/* refactor later with BS4 .row ? */
-.flex {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-/* item alignment */
-.flex-a-c {
-  align-self: center;
-}
-
 /* small gutter */
 .flex-g-s {
   margin-left: -5px;

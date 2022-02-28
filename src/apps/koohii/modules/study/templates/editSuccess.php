@@ -116,7 +116,7 @@ EOD;
         </div>
 
         <div class="sharedstory_meta flex">
-          <div class="lastmodified col-m-1 flex-a-c"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
+          <div class="lastmodified col-m-1 self-center"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
 
           <div class="actions col-m text-right JsAction" data-uid="<?php echo $o->authorid ?>" data-cid="<?php echo $ucsId ?>" appv1="<?php echo $o->stars ?>" appv2="<?php echo $o->kicks ?>">
             <span class="JsMsg"></span>

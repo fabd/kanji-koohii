@@ -8,7 +8,7 @@
 
   <div class="flex flex-g-s">
 
-    <div class="col-m col-d-12 col-g flex-a-c">
+    <div class="col-m col-d-12 col-g self-center">
       <h3>Learned <span><?php echo $learnedCount ?></span><?php echo $ofTotal ?></h3>
     </div>
 

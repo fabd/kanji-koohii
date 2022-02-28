@@ -8,7 +8,7 @@
       </div>
 
       <div class="sharedstory_meta flex">
-        <div class="lastmodified col-m-1 flex-a-c"
+        <div class="lastmodified col-m-1 self-center"
           ><i class="far fa-clock"></i> NEW</div
         >
 

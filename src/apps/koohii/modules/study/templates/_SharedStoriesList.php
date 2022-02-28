@@ -29,7 +29,7 @@
       </div>
 
       <div class="sharedstory_meta flex">
-        <div class="lastmodified col-m flex-a-c"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
+        <div class="lastmodified col-m self-center"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
 
         <div class="actions col-m text-right JsAction" id="<?php echo "story-{$o->userid}-${ucsId}" ?>" data-uid="<?php echo $o->userid ?>" data-cid="<?php echo $ucsId ?>" appv1="<?php echo $o->stars ?>" appv2="<?php echo $o->kicks ?>">
           <span class="JsMsg"></span>

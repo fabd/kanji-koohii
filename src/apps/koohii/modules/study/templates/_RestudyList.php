@@ -7,7 +7,7 @@
 <div id="study-restudy" class="study-action-comp no-gutter-xs-sm md:mb-4">
   <div class="flex flex-g-s">
 
-    <div class="col-m col-d-12 col-g flex-a-c">
+    <div class="col-m col-d-12 col-g self-center">
       <h3>Restudy <span><?php echo $restudy_count ?></span></h3>
     </div>
 

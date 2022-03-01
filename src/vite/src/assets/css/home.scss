@@ -1,44 +1,32 @@
+// ====================================================================
 // Landing page ONLY (Nov 2016)
+// ====================================================================
+
+// --------------------------------------------------------------------
+// 1. tailwind's "preflight" and opiniated resets
+// --------------------------------------------------------------------
+@import "tailwindcss/base";
 
 @import "./legacy/_bootstrap-fix.scss";
 
-/* BOOTSTRAP OVERRIDES ( todo: sass truc machin? ) */
-@media (min-width: 1200px) {
-  .container {
-    width: 970px;
-  } /* same as min-width 992px */
-}
+// utilities
+@import "./_theme.scss";
+@import "../sass/abstracts/_mixins.scss";
+@import "../sass/_utilities.scss";
+
+// components
+@import "./_navbar.scss";
+
 
 body,
 button {
   font-family: "Open Sans", Arial, freesans, sans-serif;
 }
 
-/* BODY */
-
 body {
   background: #ece9e2;
   color: #393733;
 }
-
-/* LAYOUT */
-
-.clear {
-  clear: both;
-  overflow: hidden;
-  height: 0;
-}
-
-.m_top_x {
-  margin-top: 10px;
-}
-
-/* ---------------------------- */
-/* UI */
-/* ---------------------------- */
-
-@import "./_theme.scss";
-@import "./_navbar.scss";
 
 /* ---------------------------- */
 /* SECTIONS */
@@ -80,30 +68,11 @@ body {
 }
 
 .f_text {
+  @apply mt-8 mb-8;
 }
-
-/*.col-md-pull-6 .f_box { text-align:right; }*/
 
 .f_shadow {
   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-/* imgHeight / imgWidth * divWidth */
-/*.f_box.f_stories { 
-  width:100%; height:269px;
-  background:url('../koohii/landing/f_stories2.png') no-repeat 0 0 / 100% auto;
-}*/
-
-.f_stories {
-  margin: -25px auto 0;
-  max-width: 400px;
-  overflow: visible;
-}
-.f_stories_clip {
-  /*display:block; width:100%; height:334px; background:url('../koohii/landing/f_stories3.png') no-repeat 50% 0 / 100% auto;*/
-}
-.f_stories_clip img {
-  width: 100%;
 }
 
 .f_dict {
@@ -153,49 +122,55 @@ body {
 section {
   text-align: center;
   font-size: 16px;
-  margin: 0;
   padding: 10px 0 40px;
-}
-section h2 {
-  font-size: 1.61em;
-  line-height: 1em;
-}
-section p {
-  font-size: 1em;
-  line-height: 1.8em;
-  margin-bottom: 1.5em;
+
+  h2 {
+    @apply font-bold;
+    font-size: 1.61em;
+    line-height: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    font-size: 1em;
+    line-height: 1.8em;
+    margin-bottom: 1.5em;
+  }
 }
 
 /* ---------------------------- */
 /* HERO (big intro, desktop) */
 /* ---------------------------- */
 
-#hero {
-  text-align: center;
-}
 #hero h1 {
-  margin: 1.5em 0.5em 1.2em;
+  padding: 1.5em 0.5em 1.2em;
   font-weight: bold;
-  font-size: 3.8em;
   line-height: 1.1em;
   color: #3c3c3c;
+
+  font-size: 40px;
+
+  @include breakpoint-up(md) {
+    font-size: 53px;
+  }
+  @include breakpoint-up(lg) {
+    font-size: 53px;
+  }
 }
 
 #hero_display {
   width: 777px;
   height: 454px;
-  margin: 0 auto;
-  padding: 1px 0 0;
   background: url("/koohii/landing/hero_display.png") no-repeat 0 0;
-}
-#hero_display img {
-  display: block;
-  margin: 45px 0 0 45px;
-  padding: 0;
-}
 
-@media all and (max-width: 799px) {
-  #hero_display {
+  @apply pt-px; // prevent children margin collapse
+
+  img {
+    display: block;
+    @apply mt-[45px] ml-[45px];
+  }
+
+  @media screen and (max-width: 799px) {
     display: none;
   }
 }
@@ -214,7 +189,7 @@ section p {
   line-height: 1.2em;
 }
 #its-free p {
-  font-size: 1.3em;
+  font-size: calc(18 / 16 * 1rem);
   line-height: 1.5em;
   margin: 0 0 0.9em;
 }
@@ -236,12 +211,6 @@ section p {
   text-decoration: none;
 }
 
-#its-free .col-md-6 {
-  text-align: center;
-}
-#its-free .action {
-  margin: 2em 0 0;
-}
 #its-free .btn-signup {
   background-color: #a4156c;
   padding: 21px 82px;
@@ -297,32 +266,9 @@ section p {
   }
 }
 
-/*li#tweet-button { margin-left:2em; }
-#tweet-button a {
-  padding:4px 8px; color:#fff; text-decoration:none; 
-  background:#1191dc; border-radius:3px;
-}*/
-
 /* RESPONSIVE LAYOUT */
 
-/* Extra small devices (phones, less than 768px) */
-
 @include breakpoint-down(md) {
-  /* nav */
-  #k_nav .navbar-brand {
-    margin-left: 14px;
-  }
-
-  /* typo */
-  #hero h1 {
-    font-size: 2.9em;
-  }
-  h1 span/*, .break*/ {
-    display: block;
-  }
-  section {
-  }
-
   #footer a {
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -336,26 +282,9 @@ section p {
   }
 }
 
-/* Small devices (tablets, 768px and up) */
-
-@include breakpoint-up(md) {
-  #k_nav .navbar-brand {
-    width: 97px;
-  }
-
-  /* dropdown on hover */
-  .nav li.dropdown:hover > ul.dropdown-menu {
-    display: block;
-  }
-}
-
 /* Medium devices (desktops, 992px and up) */
 
 @include breakpoint-up(lg) {
-  #header h1 {
-    font-size: 36px;
-  }
-
   section {
     text-align: left;
     font-size: 21px;
@@ -364,17 +293,9 @@ section p {
   section p {
     margin-bottom: 1em;
   }
-
-  #its-free section {
-    text-align: center;
-  }
-  #its-free .col-l {
-    text-align: right;
-  }
-  #its-free .col-r {
-    text-align: left;
-  }
-  #its-free .learnmore {
-    margin-left: 80px;
-  }
 }
+
+// --------------------------------------------------------------------
+// (last) tailwind utilities
+// --------------------------------------------------------------------
+@import "tailwindcss/utilities";

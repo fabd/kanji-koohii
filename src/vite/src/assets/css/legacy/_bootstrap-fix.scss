@@ -1,5 +1,7 @@
 // ====================================================================
 //
+// FIXME - this will become a `layout` utilities SCSS
+//
 // Temporary fix for removal of bootstrap.css which is causing more
 //  and more issues.
 //
@@ -10,15 +12,16 @@
 // ====================================================================
 
 .btn {
-  background: red;
+  background: red; // debug
 }
 
 // --------------------------------------------------------------------
-// Patch Bootstrap v3's grid system
+// Patch for Bootstrap v3's grid system
 //
 //   - use flex instead of floats (more flexible)
 //   - use tailwind `order-{x}` to push/pull columns
-//   - for a single centered, smaller col, use eg. `col-lg-10 mx-auto`
+//   - for a single centered, smaller col, use eg. `col-lg-10 mx-auto`\
+//
 // --------------------------------------------------------------------
 $GRID_GUTTER_X: 15px;
 
@@ -38,7 +41,7 @@ $GRID_GUTTER_X: 15px;
 }
 
 .row {
-  @apply flex;
+  @apply flex flex-wrap;
   margin-left: -$GRID_GUTTER_X;
   margin-right: -$GRID_GUTTER_X;
 }
@@ -58,7 +61,10 @@ $GRID_GUTTER_X: 15px;
 }
 
 // --------------------------------------------------------------------
-// Bootstrap 3's column utilities
+// Bootstrap 3 style column utilities, used for main layout
+//
+//   NOTE! how `col-lg-*` breakpoints match `mbl/dsk` in tailwind config
+//
 // --------------------------------------------------------------------
 .col-lg-3,
 .col-lg-4,
@@ -70,20 +76,22 @@ $GRID_GUTTER_X: 15px;
   padding-right: $GRID_GUTTER_X;
 }
 
-.col-lg-3 {
-  @apply lg:w-3/12;
-}
-.col-lg-4 {
-  @apply lg:w-4/12;
-}
-.col-lg-6 {
-  @apply lg:w-6/12;
-}
-.col-lg-9 {
-  @apply lg:w-9/12;
-}
-.col-lg-10 {
-  @apply lg:w-10/12;
+@include screen(dsk) {
+  .col-lg-3 {
+    @apply w-3/12;
+  }
+  .col-lg-4 {
+    @apply w-4/12;
+  }
+  .col-lg-6 {
+    @apply w-6/12;
+  }
+  .col-lg-9 {
+    @apply w-9/12;
+  }
+  .col-lg-10 {
+    @apply w-10/12;
+  }
 }
 
 // --------------------------------------------------------------------
@@ -95,9 +103,11 @@ $GRID_GUTTER_X: 15px;
   padding-left: $GRID_GUTTER_X;
   padding-right: $GRID_GUTTER_X;
 }
-.col-md-3 {
-  @apply md:w-3/12;
-}
-.col-md-9 {
-  @apply md:w-9/12;
+@include breakpoint-up(md) {
+  .col-md-3 {
+    @apply w-3/12;
+  }
+  .col-md-9 {
+    @apply w-9/12;
+  }
 }

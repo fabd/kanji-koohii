@@ -14,26 +14,24 @@
 
 <?php 
   echo _bs_form_group(
-    _bs_input_text('txtSelection', ['class' => 'form-control-i', 'style' => 'width:80px;margin-right:1em;']),
+    _bs_input_text('txtSelection', ['class' => 'form-control-i w-[80px] mr-4']),
     _bs_submit_tag('Add Cards')
   );
 ?>
 
-  <div class="padded-box rounded" style="color:#000;padding:5px 10px; font-size:11px;">
-    Note: adding flashcards here will always fill in the gaps if there are any
+  <div class="padded-box rounded text-body text-sm italic mb-4">
+    Note! Adding flashcards here will always fill in the gaps if there are any
     missing cards.<br/>
     Use <?php echo link_to('Custom selection', 'manage/addcustom') ?> if you do not plan to add all <?php echo _CJ('RTK') ?> flashcards in order.
   </div>
 
-<?php if (!CJ_HANZI): ?>
-  <div class="padded-box rounded" style="margin:1em 0 0">
-    <p>
+  <div class="padded-box rounded">
+
       23 new characters from the
       <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">RTK Supplement</a>
       (PDF document, ~490kb) can be added through the <?php echo link_to('Custom selection', 'manage/addcustom') ?> page.
       &nbsp;See <?php echo link_to('update notes','@news_by_id?id=154'/*, array('class' => 'link-article')*/) ?>.
-    </p>
+
   </div>
-<?php endif ?>
 
 </form>

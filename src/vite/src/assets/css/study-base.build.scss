@@ -178,18 +178,25 @@
   margin: 0 8px 0 0;
 }
 
-.sharedstory_meta {
-  min-height: 30px;
-  margin: 0.5em -0.5em 0 0;
-  font-size: 14px;
-  line-height: 1em;
-  clear: both; /* clear big kanji (desktop) just in case */
+.sharedstory {
+  &_meta {
+    min-height: 30px;
+    margin: 0.5em -0.5em 0 0;
+    font-size: 14px;
+    line-height: 1em;
+    
+    @apply flex items-center;
+
+    .lastmodified,
+    .sharedstory_btn {
+      color: #b2b2b2;
+    } 
+  }
+
+  &-actions {
+    @apply ml-auto; // push flex item to the right end
+  }
 }
-.sharedstory_meta .lastmodified,
-.sharedstory_meta .sharedstory_btn {
-  color: #b2b2b2;
-}
-/*.sharedstory_meta .lastmodified { padding:0.5em 0; font-size:14px; }*/
 
 .sharedstory_btn {
   display: inline-block;
@@ -351,7 +358,7 @@
 /* unlike search box, these blocks do not extend to edges, so they are distinct
     from the search bar, and appear as part of the main content */
 .study-action-comp {
-  padding: 6px 15px;
+  @apply py-2 px-4;
 }
 .study-action-comp h3,
 .study-action-comp .btn {
@@ -360,10 +367,6 @@
 .study-action-comp h3 {
   font-weight: normal;
   line-height: 34px;
-  margin: 0;
-}
-.study-action-comp h3 span {
-  font-weight: bold;
 }
 
 /* tighten buttons a bit*/

@@ -9,12 +9,20 @@
 
 @import "./legacy/_bootstrap-fix.scss";
 
+// utilities
 @import "./_theme.scss";
 @import "../sass/abstracts/_mixins.scss";
 @import "../sass/_utilities.scss";
 
-// PAGES
+// components
+@import "./legacy/_widgets.scss";
+@import "./_navbar.scss";
+@import "./_markdown.scss";
+
+// pages misc.
 @import "../sass/pages/about-support.scss";
+@import "./learn-more.scss";
+@import "./_review-home.scss";
 
 // --------------------------------------------------------------------
 // FIXES
@@ -187,116 +195,6 @@ blockquote {
 }
 .btn-lg.btn-go {
   padding: 12px 16px 10px;
-}
-
-/**
- * Flex layout (minimal) (refactor later maybe with BS4)
- *
- *  .flex          ... the container (.row)
- *  .flex-i        ... one item (for setting gutters)
- *
- *  .col-m (mobile)   => combines Bootstrap xs / sm 
- *  .col-d (desktop)  => combines Bootstrap md / lg ( >= 992px )
- *
- * The rest is like BS4 alpha flex:
- *
- *  .col-m/d       ... alone for equal spacing 
- *  .col-m/d-<n>   ... set a width, can combine with col-m/d to fill the rest
- *
- * Examples
- *
- *   Input followed by a small button, let the input box fill the space
- *   | .col-m | .col-m2 |
- *   
- *   ... And on desktop, input fills 100%, wrap the following content
- *   | .col-m .col-d-12 | ...
- *  
- */
-
-/* small gutter */
-.flex-g-s {
-  margin-left: -5px;
-  margin-right: -5px;
-}
-.flex-g-s .col-g {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-/* equal width columns */
-.col-m {
-  flex: 1 0 0;
-}
-/*.col-m-1 { flex:0 0 8.3333333%; }*/
-
-.col-m-2 {
-  flex: 0 0 16.666667%;
-}
-.col-m-3 {
-  flex: 0 0 25%;
-}
-.col-m-4 {
-  flex: 0 0 33.333333%;
-}
-.col-m-5 {
-  flex: 0 0 41.666667%;
-}
-.col-m-6 {
-  flex: 0 0 50%;
-}
-.col-m-7 {
-  flex: 0 0 58.333333%;
-}
-.col-m-8 {
-  flex: 0 0 66.666667%;
-}
-.col-m-9 {
-  flex: 0 0 75%;
-}
-.col-m-10 {
-  flex: 0 0 83.333333%;
-}
-.col-m-11 {
-  flex: 0 0 91.666667%;
-}
-.col-m-12 {
-  flex: 0 0 100%;
-}
-
-@include breakpoint-up(lg) {
-  .col-d-2 {
-    flex: 0 0 16.666667%;
-  }
-  .col-d-3 {
-    flex: 0 0 25%;
-  }
-  .col-d-4 {
-    flex: 0 0 33.333333%;
-  }
-  .col-d-5 {
-    flex: 0 0 41.666667%;
-  }
-  .col-d-6 {
-    flex: 0 0 50%;
-  }
-  .col-d-7 {
-    flex: 0 0 58.333333%;
-  }
-  .col-d-8 {
-    flex: 0 0 66.666667%;
-  }
-  .col-d-9 {
-    flex: 0 0 75%;
-  }
-  .col-d-10 {
-    flex: 0 0 83.333333%;
-  }
-  .col-d-11 {
-    flex: 0 0 91.666667%;
-  }
-  .col-d-12 {
-    flex: 0 0 100%;
-  }
 }
 
 /* ---------------------------- */
@@ -486,8 +384,6 @@ a.admin-edit {
 /* UI */
 /* ---------------------------- */
 
-@import "./legacy/_widgets.scss";
-@import "./_navbar.scss";
 
 /* disable selection for GUI items */
 .uiGUI {
@@ -894,7 +790,6 @@ div.col-box-bis {
 
 $--color-blog-heading: #fa3d60;
 
-@import "./_markdown.scss";
 
 /* Site news (posts using markdown) */
 #sitenews .markdown h2,
@@ -1190,15 +1085,6 @@ table.lessons td {
   font-weight: bold;
 }
 
-/* ---------------------------- */
-/* Learn More */
-/* ---------------------------- */
-@import "./learn-more.scss";
-
-/* ---------------------------- */
-/* SRS Chart page */
-/* ---------------------------- */
-@import "./_review-home.scss";
 
 /* ---------------------------- */
 /* Review Summary */

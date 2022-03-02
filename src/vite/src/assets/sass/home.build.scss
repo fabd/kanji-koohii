@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------
 @import "tailwindcss/base";
 
-@import "./legacy/_bootstrap-fix.scss";
+@import "./vendor/_bootstrap-fix.scss";
 
 // utilities
 @import "./_theme.scss";

@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------
 // @import "tailwindcss/base";
 @import "./vendor/_bootstrap.scss";
-@import "./legacy/_bootstrap-fix.scss";
+@import "./vendor/_bootstrap-fix.scss";
 
 // koohii specific resets (*after* Bootstrap/tailwind resets)
 @import "./_theme.scss";

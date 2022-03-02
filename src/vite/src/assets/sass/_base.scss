@@ -1,0 +1,86 @@
+// ====================================================================
+// Koohii's own "reset" - *after* tailwind/Bootstrap resets
+//
+//   FIXME
+//     Lots of old css in here that can probably be removed.
+//
+// ====================================================================
+
+html {
+  font-family: Helvetica, Arial, freesans, clean, sans-serif;
+}
+
+body {
+  background: $--clr-bg-body;
+  color: #42413d;
+}
+
+blockquote {
+  font-size: inherit;
+  border-left: none;
+  color: #7f7d75;
+}
+
+/* links */
+a {
+  color: #005cb1;
+  font-weight: normal;
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* type */
+p,
+ul {
+  margin: 0 0 1.5em;
+}
+abbr,
+acronym {
+  border-bottom: 1px dotted #dad8bd;
+  cursor: help;
+}
+
+/* headings */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0 0 1em;
+  color: #7f7d85;
+}
+
+h1 {
+  font-size: 13px;
+  font-family: Verdana, sans-serif;
+}
+h2 {
+  font-weight: normal;
+  margin: 0 0 0.5em;
+}
+h3 {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0 0 0.5em;
+}
+
+/* misc. effects */
+kbd {
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
+  background: #ddd;
+  color: #333;
+  font: 100%/1em "Andale Mono", "Consolas", monospace;
+  margin: 2px 1px 2px 0;
+  min-width: 1em;
+  padding: 2px 5px;
+  text-align: center;
+  text-shadow: none;
+  white-space: nowrap;
+}

@@ -1,0 +1,100 @@
+// ====================================================================
+// Selective import of Bootstrap 5 * FORMS *.
+//
+//   - we just want the forms, since styling forms is a PITA
+//
+//   - we want to avoid most everything else in Bootstrap since it
+//     does not mix well with the atomic css approach of BEM/tailwind
+//
+//   - we also need default styles to all form elements, since they are
+//     reset by tailwind's included `normalize`
+//
+//   - we DONT want Bootstrap's "reboot" since it is a fork of normalize,
+//     which is already included in tailwind
+//
+//   - design wise, Bootstrap's rounded input styles fits well on Koohii.
+//
+//   @see https://getbootstrap.com/docs/5.0/customize/sass/
+//
+// ====================================================================
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+$form-text-margin-top: 5px;
+$form-text-color: #7f7d75;
+$form-text-font-size: 15px;
+
+$input-font-size: 15px;
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+// 4. Include any optional Bootstrap components as you like
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/forms";
+
+// --------------------------------------------------------------------
+// Additions
+// --------------------------------------------------------------------
+
+.form-label {
+  @apply font-bold;
+}
+
+/* style an '(Optional)' <span> next to label of optional inputs
+   <label ..>Location</label><span class="form-optional">(optional)</span>
+*/
+.form-optional {
+  @apply text-body-light ml-4;
+}
+
+// space out sections of a form
+.form-group {
+  @apply mb-4;
+}
+
+/* ---------------------------- */
+/* BOOTSTRAP hacks              */
+/* cf. BootstrapHelper          */
+/* ---------------------------- */
+
+/* we don't use Boostrap's structure here, see BootstrapHelper.php :: _bs_input_checkbox() */
+/*.form-group label { font-weight: normal; }*/
+.form-group input[type="checkbox"] {
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+.form-group input[type="checkbox"] + span {
+  vertical-align: middle;
+  padding-left: 0.5em;
+  font-weight: normal;
+}
+
+/* make this similar to the input */
+.form-control-static {
+  border: 1px solid #d4cdba;
+  border-radius: 4px;
+  display: block;
+  font-size: 14px;
+  height: 34px;
+  line-height: 1.42857;
+  padding: 6px 12px;
+  width: 100%;
+}
+
+/* we use .form-group > .form-control.form-control-i for inline-block regardless of @media */
+.form-control-i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* form errors are added by BootstrapHelper methods, after the input */
+.has-error-msg {
+  /*background:#ffc4bc;*/
+  color: #913535;
+  padding: 4px 0 0 6px;
+}

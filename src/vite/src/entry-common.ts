@@ -5,7 +5,7 @@
  */
 
 // common stylesheets we want across the site
-import "@css/main.build.scss";
+import "./assets/sass/main.build.scss";
 
 console.log("@entry-common");
 

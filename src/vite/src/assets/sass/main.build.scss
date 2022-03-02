@@ -3,14 +3,18 @@
 // ====================================================================
 
 // --------------------------------------------------------------------
-// 1. tailwind's "preflight" and opiniated resets
+// 1. tailwind's "Preflight" and opiniated resets
+//    @see https://unpkg.com/tailwindcss@3.0.23/src/css/preflight.css
 // --------------------------------------------------------------------
-@import "tailwindcss/base";
+// @import "tailwindcss/base";
+@import "./vendor/_bootstrap.scss";
+@import "./vendor/_bootstrap-fix.scss";
 
-@import "./legacy/_bootstrap-fix.scss";
+// koohii specific resets (*after* Bootstrap/tailwind resets)
+@import "./_theme.scss";
+@import "../sass/_base.scss";
 
 // utilities
-@import "./_theme.scss";
 @import "../sass/abstracts/_mixins.scss";
 @import "../sass/_utilities.scss";
 
@@ -20,28 +24,9 @@
 @import "./_markdown.scss";
 
 // pages misc.
-@import "../sass/pages/about-support.scss";
-@import "./learn-more.scss";
-@import "./_review-home.scss";
-
-// --------------------------------------------------------------------
-// FIXES
-//
-//   Undo Bootstrap styles setting html font-size to 10px.
-//   Legacy stylesheets almost never used rems so this shouldn't break anything.
-// --------------------------------------------------------------------
-html {
-  font-size: 16px; // make sure 1rem = 16px
-}
-
-// fix. headings, until we remove Bootstrap
-h2 {
-  font-size: 30px;
-}
-h3 {
-  // font-size: 18px;
-  color: purple;
-}
+@import "./pages/about-support.scss";
+@import "./pages/learn-more.scss";
+@import "./pages/review-home.scss";
 
 
 // --------------------------------------------------------------------
@@ -129,14 +114,6 @@ h3 {
 }
 /*.form-group.has-error .form-control { background:#ffd; }*/
 
-/* ---------------------------- */
-/* BOOTSTRAP theme (TODO : incorporer dans le build sass truc) */
-/* ---------------------------- */
-
-body {
-  background: $--clr-bg-body;
-  color: #42413d;
-}
 
 /* when footer gradient is used */
 body.with-footer {
@@ -144,13 +121,6 @@ body.with-footer {
 }
 body.with-footer #main {
   background: $--clr-bg-body;
-}
-
-/* typography */
-blockquote {
-  font-size: inherit;
-  border-left: none;
-  color: #7f7d75;
 }
 
 /* buttons */
@@ -197,54 +167,7 @@ blockquote {
   padding: 12px 16px 10px;
 }
 
-/* ---------------------------- */
-/* Original Koohii common styles ... TODO cleanup ) */
-/* ---------------------------- */
 
-/* fonts 
- When setting the primary font stack, apply it to the Pure grid units along
- with `html`, `button`, `input`, `select`, and `textarea`. Pure Grids use
- specific font stacks to ensure the greatest OS/browser compatibility.
-*/
-html,
-button,
-input,
-select,
-textarea,
-.pure-g [class*="pure-u"] {
-  /* Set your content font stack here: */
-  font-family: Helvetica, Arial, freesans, clean, sans-serif;
-}
-
-/* links */
-a {
-  color: #005cb1;
-  font-weight: normal;
-  text-decoration: underline;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-/* images */
-a img {
-  border: none;
-}
-p img {
-  display: inline;
-  vertical-align: middle;
-}
-
-/* type */
-p,
-ul {
-  margin: 0 0 1.5em;
-}
-abbr,
-acronym {
-  border-bottom: 1px dotted #dad8bd;
-  cursor: help;
-}
 
 p.intro {
   margin-top: 0;
@@ -254,31 +177,6 @@ p.small {
   color: #666;
 }
 
-/* headings */
-h1,
-h2,
-h3,
-h4,
-h5 {
-  margin: 0 0 1em;
-  color: #7f7d85;
-}
-
-/*h3 { color:#fa3d60; }*/
-
-h1 {
-  font-size: 13px;
-  font-family: Verdana, sans-serif;
-}
-h2 {
-  font-weight: normal;
-  margin: 0 0 0.5em;
-}
-h3 {
-  font-size: 18px;
-  font-weight: normal;
-  margin: 0 0 0.5em;
-}
 
 /* css3 fixes */
 .border-box {
@@ -300,24 +198,6 @@ h3 {
   color: #1c90d4;
 }
 
-/* misc. effects */
-kbd {
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  background: #ddd;
-  color: #333;
-  font: 100%/1em "Andale Mono", "Consolas", monospace;
-  margin: 2px 1px 2px 0;
-  min-width: 1em;
-  padding: 2px 5px;
-  text-align: center;
-  text-shadow: none;
-  white-space: nowrap;
-}
 
 /* gradients */
 .gdt-ocean-blue {
@@ -384,7 +264,6 @@ a.admin-edit {
 /* UI */
 /* ---------------------------- */
 
-
 /* disable selection for GUI items */
 .uiGUI {
   outline: none;
@@ -436,10 +315,6 @@ table.shaded td {
 /* Forms */
 /* ---------------------------- */
 
-.form-legend {
-  font-size: 90%;
-}
-
 .panel-body .form-section {
   padding: 1em 15px;
   margin: 0 -15px 1em;
@@ -448,36 +323,11 @@ table.shaded td {
 }
 
 /* OLD CSS */
-
 form .valign input,
 form .valign span {
   vertical-align: middle;
 }
-/*form .valign input.checkbox { margin-right:4px; } */
 
-/*form.block { background:$--clr-bg-1m; margin:0 0 2em; }*/
-
-/* OBSOLETE
-form.block fieldset { border:0; padding:0; margin:0; width:100%; }
-form.block label { }
-form.block ul { padding:14px 18px; margin:0; }
-form.block li { margin:0 0 4px; padding:0; width:100%; background:none; list-style:none; }
-form.block li .lbl { float:left; width:135px; padding-right:10px; }
-form.block li .fld { display:block; margin-left:145px; }
-form.block li .fld .legend { padding-left:4px; color:#666666; font-size:10px; line-height:20px; }
-form.block li .fld .no-edit { color:#666; font-weight:bold; padding:3px 5px; }
-form.block li .btn { display:block; margin-left:145px; padding-top:1em; }
-form.block span.req, .required-legend { padding-left:6px; font-weight:bold; color:red; }
-.required-legend { padding:0; padding-right:6px; }
-form.block .short input.textfield { width:105px; }
-form.block .medium input.textfield { width:135px; }
-form.block .medium select { width:145px; }
-form.block .long input.textfield { width:194px; }
-form.block input.checkbox { vertical-align:middle; margin-right:4px; }
-
-form.block li.section { padding-top:8px; }
-form.block li.ft p    { padding:8px 0 0 145px; color:#665; font-size:11px; }
-*/
 
 /* ---------------------------- */
 /* Gadgets */
@@ -626,27 +476,6 @@ div.col-box-bis {
 /* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
 .kkSymfonyCache {
   border: 1px solid #f00;
-}
-
-/* ---------------------------- */
-/* Pure Grid                    */
-/* ---------------------------- */
-.pad-u {
-  padding: 0 10px;
-}
-
-/* mettre sur pure-g element pour enlever les marges extra à gauche et à droite */
-.grid-g {
-  margin-left: -10px;
-  margin-right: -10px;
-}
-
-/* active gutter (si nécessaire), à mettre sur les pure-u-* elements */
-.grid-u {
-  padding-left: 10px;
-  padding-right: 10px;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 /* ---------------------------- */

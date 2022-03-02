@@ -1,13 +1,13 @@
 // old css for components not using Vue
-@import "@css/components/_EditKeywordDialog.scss";
-@import "@css/components/_EditFlashcardDialog.scss";
-@import "@css/components/_EditStory.scss";
+@import "./components/_EditKeywordDialog.scss";
+@import "./components/_EditFlashcardDialog.scss";
+@import "./components/_EditStory.scss";
 
 // old css for the "Flashcard Review" page
-@import "@css/components/_Flashcard.scss";
+@import "./components/_Flashcard.scss";
 
 // old css for the "Kanji Flashcard" layout
-@import "@css/components/_FlashcardKanji.scss";
+@import "./components/_FlashcardKanji.scss";
 
 body {
   padding-top: 0;

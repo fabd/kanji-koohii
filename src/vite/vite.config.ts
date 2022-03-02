@@ -111,10 +111,6 @@ export default defineConfig({
     alias: [
       { find: "@", replacement: path.resolve(__dirname, "./src") },
       {
-        find: "@css",
-        replacement: path.resolve(__dirname, "./src/assets/css"),
-      },
-      {
         find: "@img",
         replacement: path.resolve(__dirname, "./src/assets/img"),
       },
@@ -124,14 +120,6 @@ export default defineConfig({
         find: "@old",
         replacement: path.resolve(__dirname, "./src/app/legacy"),
       },
-      // {
-      //   find: "@assets",
-      //   replacement: path.resolve(__dirname, "./src/assets"),
-      // },
-      // {
-      //   find: "@styles",
-      //   replacement: path.resolve(__dirname, "./src/assets/styles"),
-      // },
     ],
   },
 

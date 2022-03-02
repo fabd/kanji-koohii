@@ -7,7 +7,7 @@
 //    @see https://unpkg.com/tailwindcss@3.0.23/src/css/preflight.css
 // --------------------------------------------------------------------
 // @import "tailwindcss/base";
-@import "../sass/vendor/_bootstrap-custom.scss";
+@import "./vendor/_bootstrap.scss";
 @import "./legacy/_bootstrap-fix.scss";
 
 // koohii specific resets (*after* Bootstrap/tailwind resets)

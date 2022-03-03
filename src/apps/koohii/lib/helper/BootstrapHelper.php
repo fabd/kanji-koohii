@@ -7,37 +7,49 @@
  *
  * COMMON OPTIONS
  *
- *   'class', 'style', etc.        Options array is passed to the Symfony tag helpers to handle
- *                                 any attributes
+ *   All helpers pass the $options array to the Symfony tag helpers,
+ *   so you can add any custom attributes, eg:
+ * 
+ *     ['class' => 'max-w-[100px] text-sm', 'data-userid' => '1007']
  *
  *
  * INPUT OPTIONS
  *
- *   'helptext' => 'message'       To add a Bootstrap .form-text element after the input
- *   'label'                       Adds label  NOTE! input name = id
- *   'optional'                    Add an (Optional) text next to the label
- *
+ *   'helptext' => 'message'     To add a Bootstrap .form-text element after the input
+ *   'label'                     Adds label  NOTE! input name = id
+ *   'optional'                  Add an (Optional) text next to the label
+ * 
  * 
  * COMMON HELPERS
  *
- *  _bs_button()                   MUST add Bootstrap css as option 'class' => 'btn btn-success ...'
- *  _bs_button_with_icon()         DONT add 'btn btn-success' ... MUST add 'icon' => 'fa-icon-id'
+ *   _bs_button()                  MUST add Bootstrap css as option 'class' => 'btn btn-success ...'
+ *   _bs_button_with_icon()         DONT add 'btn btn-success' ... MUST add 'icon' => 'fa-icon-id'
  *
  *
  * FORM HELPERS
  *  
  *  _bs_formgroup([array $options], ...)
  *  
- *      OPTIONAL attributes as per Symfony tag helpers, must be an array as first argument.
+ *    $options (optional) ... passed to Symfony tag helpers
  *      
- *      Set 'validate' to input name to add "has-error" class to the form-group if matching error in Request.
+ *      'validate'        ... add "has-error" class to the form-group if
+ *                            this input has a matching error in Symfony Request
  *
- *        _bs_formgroup(['validate' => 'username'], ...)
+ *    Example:
+ *      _bs_formgroup(['validate' => 'username'], ...)
  *
- *  _bs_input_checkbox($name, $options = array())      ALWAYS: value="1" ... OPTIONAL: 'label' => 'Label text'
- *  _bs_input_text    ($name, $options = array())      ...
- *  _bs_input_email   ($name, $options = array())      ...
- *  _bs_input_password($name, $options = array())      ...
+ *  _bs_input_checkbox($name, $options = array())
+ * 
+ *      OPTIONAL  'label' => 'Label text'
+ *      NOTE!     The input's `value` is ALWAYS "1"
+ * 
+ *  _bs_input_text    ($name, $options = array())
+ * 
+ *  _bs_input_textarea($name, $options = array())
+ * 
+ *  _bs_input_email   ($name, $options = array())
+ * 
+ *  _bs_input_password($name, $options = array())
  *
  *  _bs_submit_tag    ($label, $options = array())
  *
@@ -45,7 +57,7 @@
  *
  * FORM LAYOUT
  *
- *  Inline: add class "form-control-i" to children of _bs_formgroup()
+ *   Inline: add class "form-control-i" to children of _bs_formgroup()
  *
  *
  * SEE
@@ -171,6 +183,9 @@ function _bs_input($type, $name, $options = []) {
   elseif ($type === 'password') {
     $html[] = "\n  ".input_password_tag($name, null, $options);
   }
+  elseif ($type === 'textarea') {
+    $html[] = "\n  ".textarea_tag($name, null, $options);
+  }
   else {
     throw new sfException('Unsupported input type in _bs_input()');
   }
@@ -217,6 +232,10 @@ function _bs_input_password($name, $options = []) {
 
 function _bs_input_text($name, $options = []) {
   return _bs_input('text', $name, $options);
+}
+
+function _bs_input_textarea($name, $options = []) {
+  return _bs_input('textarea', $name, $options);
 }
 
 function _bs_submit_tag($label, $options = []) {

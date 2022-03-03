@@ -968,19 +968,10 @@ table.lessons td {
  * Flashcard Review
  * ---------------------------- */
 
-/* TODO move me */
-.p-notice {
-  margin: 0 0 1em;
-  color: #cc2d7a; /*background:$--clr-bg-gl; padding:0.5em 1em;*/
-}
-.p-notice i {
-  display: inline-block;
-  padding: 0 0.5em 0 0;
-}
-
 .labs-review-box {
   min-height: 120px;
   margin-bottom: 1em;
+  font-size: 14px;
 }
 .labs-review-box p {
   margin-bottom: 1em;

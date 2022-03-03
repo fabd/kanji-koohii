@@ -8,9 +8,9 @@
 <section>
 
     <div class="mb-8">
-      <div class="p-notice">
-        <i class="far fa-question-circle"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
-      </div>
+      <p class="text-[#cc2d7a] mb-4">
+        <i class="far fa-question-circle mr-2"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
+      </p>
 
       <p class="mb-2">
         Your progress here will not be stored, but you can <strong>repeat</strong> those reviews as many times as you want.

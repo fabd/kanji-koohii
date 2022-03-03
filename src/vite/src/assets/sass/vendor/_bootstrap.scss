@@ -30,7 +30,9 @@ $form-text-color: #7f7d75;
 $form-text-font-size: 15px;
 
 $input-disabled-bg: transparent;
-$input-disabled-border-color: #d4cdba;
+$input-disabled-border-color: $--clr-bg-1s;
+
+$input-border-color: $--clr-bg-1s;
 
 $input-font-size: 15px;
 

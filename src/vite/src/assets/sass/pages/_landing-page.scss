@@ -6,21 +6,49 @@
 //
 // ====================================================================
 
-body,
-button {
-  font-family: "Open Sans", Arial, freesans, sans-serif;
-}
-
 body {
   background: #ece9e2;
-  color: #393733;
+  color: #42413d;
 }
 
 /* ---------------------------- */
-/* SECTIONS */
+/* Common :: typography */
 /* ---------------------------- */
+section {
+  text-align: center;
+  font-size: 16px;
+  padding: 10px 0 40px;
 
+  h2 {
+    @apply font-bold;
+    font-size: 1.61em;
+    line-height: 1em;
+    margin-bottom: 0.5em;
+    color: #434241;
+  }
+
+  p {
+    font-size: 1em;
+    line-height: 1.8em;
+    margin-bottom: 1.5em;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@include breakpoint-up(lg) {
+  section {
+    text-align: left;
+    font-size: 21px;
+    padding: 50px 0 40px;
+  }
+  section p {
+    margin-bottom: 1em;
+  }
+}
+
+/* ---------------------------- */
 /* backgrounds */
+/* ---------------------------- */
 .k_bg_head {
   background: #eae6db; /* Old browsers */
   background: linear-gradient(
@@ -73,9 +101,6 @@ body {
   background: url("/koohii/landing/f_dict-20171010.png") no-repeat 0 0;
   height: 306px;
 }
-.f_srs {
-  /*max-width:464px; height:304px;*/
-}
 
 .f_fc_layers {
   display: inline-block;
@@ -100,30 +125,6 @@ body {
     position: relative;
     left: 0;
     top: 0;
-  }
-}
-
-/* ---------------------------- */
-/* Common :: typography */
-/* ---------------------------- */
-
-section {
-  text-align: center;
-  font-size: 16px;
-  padding: 10px 0 40px;
-
-  h2 {
-    @apply font-bold;
-    font-size: 1.61em;
-    line-height: 1em;
-    margin-bottom: 0.5em;
-    color: #434241;
-  }
-
-  p {
-    font-size: 1em;
-    line-height: 1.8em;
-    margin-bottom: 1.5em;
   }
 }
 
@@ -264,22 +265,5 @@ section {
   }
   #footer .ne {
     display: none;
-  } /* non essential links */
-  li#tweet-button {
-    display: block;
-    margin-top: 1.5em;
-  }
-}
-
-/* Medium devices (desktops, 992px and up) */
-
-@include breakpoint-up(lg) {
-  section {
-    text-align: left;
-    font-size: 21px;
-    padding: 50px 0 40px;
-  }
-  section p {
-    margin-bottom: 1em;
   }
 }

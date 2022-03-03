@@ -29,6 +29,9 @@ $form-text-margin-top: 5px;
 $form-text-color: #7f7d75;
 $form-text-font-size: 15px;
 
+$input-disabled-bg: transparent;
+$input-disabled-border-color: #d4cdba;
+
 $input-font-size: 15px;
 
 // 3. Include remainder of required Bootstrap stylesheets
@@ -71,18 +74,6 @@ $input-font-size: 15px;
   vertical-align: middle;
   padding-left: 0.5em;
   font-weight: normal;
-}
-
-/* make this similar to the input */
-.form-control-static {
-  border: 1px solid #d4cdba;
-  border-radius: 4px;
-  display: block;
-  font-size: 14px;
-  height: 34px;
-  line-height: 1.42857;
-  padding: 6px 12px;
-  width: 100%;
 }
 
 /* we use .form-group > .form-control.form-control-i for inline-block regardless of @media */

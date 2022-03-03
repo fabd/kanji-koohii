@@ -42,20 +42,24 @@ $input-font-size: 15px;
 @import "bootstrap/scss/forms";
 
 // --------------------------------------------------------------------
-// Additions
+// Overrides
 // --------------------------------------------------------------------
 
-/* style an '(Optional)' <span> next to label of optional inputs
-   <label ..>Location</label><span class="form-optional">(optional)</span>
-*/
-.form-optional {
-  @apply text-body-light ml-4;
-  font-size: $form-label-font-size;
-}
+
+// --------------------------------------------------------------------
+// Additions
+// --------------------------------------------------------------------
 
 // space out sections of a form
 .form-group {
   @apply mb-4;
+}
+
+// next to label of optional inputs:
+//  <label for=...>Location</label><span class="form-optional">(optional)</span>
+.form-optional {
+  @apply text-body-light ml-4;
+  font-size: $form-label-font-size;
 }
 
 /* ---------------------------- */

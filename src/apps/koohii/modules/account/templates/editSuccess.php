@@ -12,8 +12,10 @@
     echo form_tag('account/edit', ['class'=>'block']);
 
     echo _bs_form_group(
-      '<label>Username</label>'
-    . '<p class="form-control-static">'.$sf_user->getUserName().'</p>'
+      _bs_input_text('username', [
+        'label' => 'Username',
+        'disabled' => true,
+      ])
     );
 
     echo _bs_form_group(

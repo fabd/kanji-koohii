@@ -22,6 +22,9 @@
 @import "bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
+$form-label-font-size: 14px;
+$form-label-font-weight: bold;
+
 $form-text-margin-top: 5px;
 $form-text-color: #7f7d75;
 $form-text-font-size: 15px;
@@ -33,22 +36,18 @@ $input-font-size: 15px;
 @import "bootstrap/scss/mixins";
 
 // 4. Include any optional Bootstrap components as you like
-@import "bootstrap/scss/reboot";
 @import "bootstrap/scss/forms";
 
 // --------------------------------------------------------------------
 // Additions
 // --------------------------------------------------------------------
 
-.form-label {
-  @apply font-bold;
-}
-
 /* style an '(Optional)' <span> next to label of optional inputs
    <label ..>Location</label><span class="form-optional">(optional)</span>
 */
 .form-optional {
   @apply text-body-light ml-4;
+  font-size: $form-label-font-size;
 }
 
 // space out sections of a form

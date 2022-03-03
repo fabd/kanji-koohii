@@ -169,23 +169,6 @@ body.with-footer #main {
   padding: 12px 16px 10px;
 }
 
-
-
-p.intro {
-  margin-top: 0;
-}
-p.small {
-  line-height: 1.2em;
-  color: #666;
-}
-
-
-/* css3 fixes */
-.border-box {
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 /* SRS color coding used for text */
 .clr-srs-due {
   color: $--clr-srs-due;
@@ -199,7 +182,6 @@ p.small {
 .clr-srs-new {
   color: #1c90d4;
 }
-
 
 /* gradients */
 .gdt-ocean-blue {
@@ -1054,17 +1036,6 @@ table.lessons td {
 }
 .labs-review-box p {
   margin-bottom: 1em;
-}
-.labs-review-box label {
-  display: block;
-  margin: 0 0 0.5em;
-}
-.labs-review-framenr {
-  width: 40px;
-  text-align: center;
-}
-.labs-review-box label input {
-  vertical-align: middle;
 }
 
 /* ----------------------------

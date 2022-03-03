@@ -1,6 +1,8 @@
 <?php
 /**
- * Helpers to output Bootstrap 3 css/components.
+ * Helpers to output form tags with Bootstrap 5 classes.
+ * 
+ * Reference:  https://getbootstrap.com/docs/5.0/forms/overview/
  *
  *
  * COMMON OPTIONS
@@ -11,7 +13,7 @@
  *
  * INPUT OPTIONS
  *
- *   'helptext' => 'message'       To add a Bootstrap .help-block element after the input
+ *   'helptext' => 'message'       To add a Bootstrap .form-text element after the input
  *   'label'                       Adds label  NOTE! input name = id
  *   'optional'                    Add an (Optional) text next to the label
  *
@@ -149,7 +151,7 @@ function _bs_input($type, $name, $options = []) {
   $html = [];
 
   if (null !== ($label = _get_option($options, 'label'))) {
-    $html[] = "\n  ".label_for($name /* id */, $label, ['class' => 'control-label']);
+    $html[] = "\n  ".label_for($name /* id */, $label, ['class' => 'form-label']);
   }
 
   if (null !== ($optional = _get_option($options, 'optional'))) {
@@ -175,7 +177,7 @@ function _bs_input($type, $name, $options = []) {
 
   // help text
   if (null !== ($helptext = _get_option($options, 'helptext'))) {
-    $html[] = "\n  ".'<span class="help-block">'.$helptext.'</span>';
+    $html[] = "\n  ".'<span class="form-text">'.$helptext.'</span>';
   }
 
   return implode($html);

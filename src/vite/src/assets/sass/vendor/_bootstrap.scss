@@ -21,20 +21,20 @@
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "bootstrap/scss/functions";
 
-// 2. Include any default variable overrides here
+// 2. Include any default variable overrides here (alpha sort!)
 $form-label-font-size: 14px;
 $form-label-font-weight: bold;
+$form-label-margin-bottom: 5px;
 
 $form-text-margin-top: 5px;
 $form-text-color: #7f7d75;
 $form-text-font-size: 15px;
 
+$input-border-color: $--clr-bg-1s;
 $input-disabled-bg: transparent;
 $input-disabled-border-color: $--clr-bg-1s;
-
-$input-border-color: $--clr-bg-1s;
-
 $input-font-size: 15px;
+$input-placeholder-color: #9b9b9b;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/scss/variables";
@@ -46,7 +46,9 @@ $input-font-size: 15px;
 // --------------------------------------------------------------------
 // Overrides
 // --------------------------------------------------------------------
-
+.form-label {
+  @apply inline-block;
+}
 
 // --------------------------------------------------------------------
 // Additions

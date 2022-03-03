@@ -22,6 +22,7 @@
   "dependencies": {
     "@types/node": "^16.11.0",
     "@types/wanakana": "^4.0.3",
+    "bootstrap": "^5.1.3",
     "element-plus": "^1.2.0-beta.1",
     "esbuild": "^0.14.23",
     "npm-check-updates": "^11.8.5",

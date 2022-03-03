@@ -2,7 +2,7 @@
   <div>
     <div class="form-group mb-8">
       <label for="srs_max_box">Number of boxes</label>
-      <span class="help-block">
+      <span class="form-text">
         How many boxes in total,
         <em>excluding</em> the leftmost box which contains New and Failed cards.
       </span>
@@ -21,7 +21,7 @@
 
     <div class="form-group mb-8">
       <label for="srs_mult">Review interval multiplier</label>
-      <span class="help-block">
+      <span class="form-text">
         The multiplier determines the spacing between each successive review.
         The first interval is always 3 days.
       </span>
@@ -57,7 +57,7 @@
 
     <div class="form-group mb-8" :class="{ 'has-error': !isValidHardBox }">
       <label for="srs_hard_box">Maximum box for cards marked 'Hard'</label>
-      <span class="help-block">
+      <span class="form-text">
         Here, you can chose the maximum interval for a Hard answer by limiting
         the upper box. So for example if you chose to use 10 boxes and a Hard
         answer limit of 5 then a card in box 6,7,8,9 and 10 will always drop

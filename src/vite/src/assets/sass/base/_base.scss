@@ -1,13 +1,22 @@
 // ====================================================================
-// Koohii's own "reset" - *after* tailwind/Bootstrap resets
+// KOOHII BASE CSS
 //
-//   FIXME
-//     Lots of old css in here that can probably be removed.
+//   Koohii-specific resets - include *after* tailwind/Bootstrap resets.
+//
+//   The value of these resets is to set good defaults to simplify
+//   templates.
+// 
+//   These resets DO NOT use class selectors, so they can be overridden
+//   in any template by other custom css and/or tailwind.
+//
+//       <p>Use default margin</p>
+//
+//       <p class="mb-4">Overrides default margin</p>
 //
 // ====================================================================
 
 html {
-  font-family: Helvetica, Arial, freesans, clean, sans-serif;
+  // font-family: Helvetica, Arial, freesans, clean, sans-serif;
 }
 
 body {
@@ -48,22 +57,21 @@ h2,
 h3,
 h4,
 h5 {
-  margin: 0 0 1em;
   color: #7f7d85;
+  font-weight: normal;
+  margin: 0 0 0.5em;
 }
 
 h1 {
-  font-size: 13px;
-  font-family: Verdana, sans-serif;
+  //
 }
+
 h2 {
-  font-weight: normal;
-  margin: 0 0 0.5em;
+  font-size: 30px;
 }
+
 h3 {
   font-size: 18px;
-  font-weight: normal;
-  margin: 0 0 0.5em;
 }
 
 /* misc. effects */

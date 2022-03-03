@@ -1,0 +1,285 @@
+// ====================================================================
+// THE LANDING PAGE (guest visitors)
+//
+//   ! This stylesheet is ONLY included on the landing page, so generic
+//   CSS won't cascade to other pages.
+//
+// ====================================================================
+
+body,
+button {
+  font-family: "Open Sans", Arial, freesans, sans-serif;
+}
+
+body {
+  background: #ece9e2;
+  color: #393733;
+}
+
+/* ---------------------------- */
+/* SECTIONS */
+/* ---------------------------- */
+
+/* backgrounds */
+.k_bg_head {
+  background: #eae6db; /* Old browsers */
+  background: linear-gradient(
+    to bottom,
+    #eae6db 0%,
+    #dfdbce 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+.k_bg_even {
+  background: #ece9e2;
+}
+.k_bg_odd {
+  background: #f5f2ec;
+}
+.k_bg_free {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
+  background: #f8c5e4; /* Old browsers */
+  background: linear-gradient(
+    to bottom,
+    #f8c5e4 0%,
+    #f0ddd4 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+/* illustrations */
+.f_box {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+}
+.f_box img {
+  display: inline-block;
+}
+
+.f_text {
+  @apply mt-8 mb-8;
+}
+
+.f_shadow {
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.f_dict {
+  margin: 0 auto;
+  max-width: 413px;
+  overflow: visible; /*dont clip shadow*/
+}
+.f_dict_clip {
+  width: 100%;
+  background: url("/koohii/landing/f_dict-20171010.png") no-repeat 0 0;
+  height: 306px;
+}
+.f_srs {
+  /*max-width:464px; height:304px;*/
+}
+
+.f_fc_layers {
+  display: inline-block;
+  position: relative;
+  max-width: 426px;
+  padding-bottom: 29px;
+}
+.f_fc_desktop {
+}
+.f_fc_mobile {
+  position: absolute;
+  left: 61%;
+  top: 29px;
+}
+
+@media (max-width: 460px) {
+  .f_box .f_fc_desktop {
+    display: none;
+  }
+  .f_fc_mobile {
+    display: inline-block;
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+}
+
+/* ---------------------------- */
+/* Common :: typography */
+/* ---------------------------- */
+
+section {
+  text-align: center;
+  font-size: 16px;
+  padding: 10px 0 40px;
+
+  h2 {
+    @apply font-bold;
+    font-size: 1.61em;
+    line-height: 1em;
+    margin-bottom: 0.5em;
+    color: #434241;
+  }
+
+  p {
+    font-size: 1em;
+    line-height: 1.8em;
+    margin-bottom: 1.5em;
+  }
+}
+
+/* ---------------------------- */
+/* HERO (big intro, desktop) */
+/* ---------------------------- */
+
+#hero h1 {
+  padding: 1.5em 0.5em 1.2em;
+  font-weight: bold;
+  line-height: 1.1em;
+  color: #3c3c3c;
+
+  font-size: 40px;
+
+  @include breakpoint-up(md) {
+    font-size: 53px;
+  }
+  @include breakpoint-up(lg) {
+    font-size: 53px;
+  }
+}
+
+#hero_display {
+  width: 777px;
+  height: 454px;
+  background: url("/koohii/landing/hero_display.png") no-repeat 0 0;
+
+  @apply pt-px; // prevent children margin collapse
+
+  img {
+    display: block;
+    @apply mt-[45px] ml-[45px];
+  }
+
+  @media screen and (max-width: 799px) {
+    display: none;
+  }
+}
+
+/* ---------------------------- */
+/* Its free */
+/* ---------------------------- */
+
+#its-free {
+  text-align: center;
+}
+#its-free h2 {
+  margin: 0 0 0.4em;
+  font-weight: bold;
+  font-size: 2.3em;
+  line-height: 1.2em;
+}
+#its-free p {
+  font-size: calc(18 / 16 * 1rem);
+  line-height: 1.5em;
+  margin: 0 0 0.9em;
+}
+#its-free .transition {
+  width: 100%;
+  height: 29px;
+  background: url("/koohii/landing/bubbles_gdt.png") repeat-x 0 0;
+}
+#its-free section {
+  font-size: inherit;
+  padding-top: 41px;
+}
+#its-free,
+#its-free h2 {
+  color: #8b1566;
+}
+#its-free a {
+  color: #e400b1;
+  text-decoration: none;
+}
+
+#its-free .btn-signup {
+  background-color: #a4156c;
+  padding: 21px 82px;
+  color: #fff;
+  font-size: 21px;
+  line-height: 1em;
+  margin-bottom: 1em;
+  text-decoration: none;
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+#its-free .learnmore {
+  display: inline-block;
+  color: #b10081;
+  font-size: 21px;
+  line-height: 3em;
+  text-decoration: underline;
+}
+
+/* ---------------------------- */
+/* Footer */
+/* ---------------------------- */
+#footer-landing {
+  background: #232323;
+  padding: 2em 0 5em;
+  text-align: center;
+  font-size: 17px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: inline-block;
+    margin: 0;
+    font-weight: normal;
+  }
+  a {
+    padding: 0 0.8em; /*tap target*/
+    color: #a4a19b;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:hover .fa {
+    color: #fff;
+  }
+
+  /* fontawesome icons */
+  .fa {
+    margin-right: 0.5em;
+  }
+}
+
+/* RESPONSIVE LAYOUT */
+
+@include breakpoint-down(md) {
+  #footer a {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  #footer .ne {
+    display: none;
+  } /* non essential links */
+  li#tweet-button {
+    display: block;
+    margin-top: 1.5em;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+
+@include breakpoint-up(lg) {
+  section {
+    text-align: left;
+    font-size: 21px;
+    padding: 50px 0 40px;
+  }
+  section p {
+    margin-bottom: 1em;
+  }
+}

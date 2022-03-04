@@ -6,6 +6,6 @@ domContentLoaded(() => {
   console.log("@entry-account");
 
   // Account > Spaced Repetition
-  const elMount = $$("#srs-form")[0];
+  const elMount = $$("#JsVueMountSrsForm")[0];
   elMount && VueInstance(SpacedRepetitionForm, elMount);
 });

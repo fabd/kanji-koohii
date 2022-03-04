@@ -44,7 +44,7 @@
     );
 
     echo _bs_form_group(
-      _bs_submit_tag('Send message', ['class' => 'btn-lg'])
+      _bs_submit_tag('Send message')
     );
 ?>
 

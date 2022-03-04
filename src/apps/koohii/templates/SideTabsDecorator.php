@@ -1,4 +1,4 @@
-<div id="manage-cards">
+<div id="manage-cards" class="mb-8">
   <div class="row">
 
     <div class="col-lg-3">

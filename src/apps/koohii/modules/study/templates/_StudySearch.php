@@ -2,7 +2,7 @@
 <div id="browse" class="no-gutter-xs-sm md:mb-4">
   <div class="mbl:flex items-center">
 
-    <div class="study-search_input mbl:grow dsk:mb-2 bg-danger">
+    <div class="study-search_input mbl:grow dsk:mb-2">
         <?php echo input_tag('search', '', [
           'class'       => 'form-control',
           'maxlength'   => 32,

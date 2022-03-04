@@ -451,24 +451,13 @@ div.col-box-bis {
 /* Footer & Support (Nov 2016) */
 /* ---------------------------- */
 .k_bg_free {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
+  // http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100
   background: #f8c5e4; /* Old browsers */
-  background: -moz-linear-gradient(
-    top,
-    #f8c5e4 0%,
-    #f0ddd4 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    top,
-    #f8c5e4 0%,
-    #f0ddd4 100%
-  ); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(
     to bottom,
     #f8c5e4 0%,
     #f0ddd4 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8c5e4', endColorstr='#f0ddd4',GradientType=0 ); /* IE6-9 */
+  );
 }
 
 .with-footer #main {

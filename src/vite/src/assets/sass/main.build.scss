@@ -90,19 +90,7 @@ body.with-footer #main {
 /* gradients */
 .gdt-ocean-blue {
   background: #deeef8; /* Old browsers */
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0%, #deeef8),
-    color-stop(100%, #c4e7ff)
-  ); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(
-    top,
-    #deeef8 0%,
-    #c4e7ff 100%
-  ); /* Chrome10+,Safari5.1+ */
-  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%); /* W3C */
+  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%);
 }
 
 /* ---------------------------- */
@@ -401,11 +389,7 @@ div.col-box-bis {
 .k_bg_free {
   // http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100
   background: #f8c5e4; /* Old browsers */
-  background: linear-gradient(
-    to bottom,
-    #f8c5e4 0%,
-    #f0ddd4 100%
-  );
+  background: linear-gradient(to bottom, #f8c5e4 0%, #f0ddd4 100%);
 }
 
 .with-footer #main {
@@ -487,7 +471,6 @@ div.col-box-bis {
 /* ---------------------------- */
 
 $--color-blog-heading: #fa3d60;
-
 
 /* Site news (posts using markdown) */
 #sitenews .markdown h2,
@@ -782,7 +765,6 @@ table.lessons td {
   color: #19108f;
   font-weight: bold;
 }
-
 
 /* ---------------------------- */
 /* Review Summary */
@@ -1091,16 +1073,14 @@ table.lessons td {
 
 /* class names output by cjk_lang_ja() helper (changes depending on Kanji/Hanzi mode) */
 .cj-k {
-  font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝",
-    "ＭＳ Ｐ明朝", serif;
+  font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝", serif;
 }
 .cj-s {
-  font-family: "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei",
-    "Heiti SC", sans-serif;
+  font-family: "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC", sans-serif;
 }
 .cj-t {
-  font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai",
-    "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC", serif;
+  font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC",
+    serif;
 }
 
 // --------------------------------------------------------------------
@@ -1110,7 +1090,7 @@ table.lessons td {
   @apply px-[.5em] py-[.35em] rounded;
   --bg: #ccc;
   --fg: #fff;
-  
+
   // No and Again cards are both in the failed pile
   &.is-no,
   &.is-again {

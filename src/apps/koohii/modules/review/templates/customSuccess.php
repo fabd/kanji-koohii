@@ -26,7 +26,7 @@
 <div class="row">
   <div class="col-lg-6">
 
-    <div class="padded-box rounded labs-review-box">
+    <div class="ko-CustomReviewForm">
 
       <?php echo form_tag('review/free', ['method' => 'get']) ?>
       
@@ -63,7 +63,7 @@
   </div><!-- /col -->
   <div class="col-lg-6">
 
-    <div class="padded-box rounded labs-review-box">
+    <div class="ko-CustomReviewForm">
 
       <h3 class="mb-4">Review from learned kanji</h3>
 

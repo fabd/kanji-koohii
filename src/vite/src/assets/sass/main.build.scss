@@ -968,13 +968,16 @@ table.lessons td {
  * Flashcard Review
  * ---------------------------- */
 
-.labs-review-box {
+.ko-CustomReviewForm {
+  @extend .padded-box;
+  @apply rounded;
+  font-size: 14px;
   min-height: 120px;
   margin-bottom: 1em;
-  font-size: 14px;
-}
-.labs-review-box p {
-  margin-bottom: 1em;
+
+  p {
+    margin-bottom: 1em;
+  }
 }
 
 /* ----------------------------

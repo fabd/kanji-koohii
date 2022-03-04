@@ -34,14 +34,14 @@
 
       <div class="form-group">
         RTK Index
-        <?php echo input_tag('from', 1, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
+        <?php echo input_tag('from', 1, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
         to
-        <?php echo input_tag('to', 10, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
+        <?php echo input_tag('to', 10, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
       </div>
 
       <div class="form-group">
       <?php $options_lessons = array_merge([0 => '---'], rtkIndex::getLessonsDropdown()) ?>
-        RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-control form-control-i', 'style' => 'width:14em;margin:0 0.3em;']); ?>
+        RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-select form-control-i w-[14em] mx-2']); ?>
       </div>
 
 <?php 
@@ -78,7 +78,7 @@
 ?>
       <div class="form-group">
         Review
-        <?php echo input_tag('known', $knowndefault, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
+        <?php echo input_tag('known', $knowndefault, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
         of <?php echo $knowncount ?> learned kanji.
       </div>
 <?php

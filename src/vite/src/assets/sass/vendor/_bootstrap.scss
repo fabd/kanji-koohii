@@ -36,11 +36,21 @@ $input-disabled-border-color: $--clr-bg-1s;
 $input-font-size: 15px;
 $input-placeholder-color: #9b9b9b;
 
+// set Bootstrap theme colors (mainly for buttons)
+// $primary: #337ab7;
+// $success: #5cb85c;
+// $danger: #d9534f;
+
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
 
 // 4. Include any optional Bootstrap components as you like
+$btn-border-radius: 0.25rem;
+$btn-font-size: 14px;
+$btn-transition: none;
+@import "bootstrap/scss/buttons";
+
 @import "bootstrap/scss/forms";
 
 // --------------------------------------------------------------------

@@ -8,12 +8,12 @@
       </span>
 
       <select
-        name="opt_srs_max_box"
-        v-model="srs_max_box"
-        class="form-control max-w-[10em]"
         id="srs_max_box"
+        v-model="srs_max_box"
+        name="opt_srs_max_box"
+        class="form-select max-w-[10em]"
       >
-        <option v-for="o in srs_max_box_values" :value="o[0]" :key="o[0]">{{
+        <option v-for="(o, i) in srs_max_box_values" :key="i" :value="o[0]" >{{
           o[1]
         }}</option>
       </select>
@@ -41,14 +41,14 @@
       </div>
 
       <select
-        name="opt_srs_mult"
-        v-model="srs_mult"
-        class="form-control max-w-[10em]"
         id="srs_mult"
+        v-model="srs_mult"
+        name="opt_srs_mult"
+        class="form-select max-w-[10em]"
       >
         <option
-          v-for="(o, index) in srs_mult_values"
-          :key="index"
+          v-for="(o, i) in srs_mult_values"
+          :key="i"
           :value="o[0]"
           >{{ o[1] || o[0] }}</option
         >
@@ -76,10 +76,10 @@
       </div>
 
       <select
-        name="opt_srs_hard_box"
-        v-model="srs_hard_box"
-        class="form-control max-w-[10em]"
         id="srs_hard_box"
+        v-model="srs_hard_box"
+        name="opt_srs_hard_box"
+        class="form-select max-w-[10em]"
       >
         <option
           v-for="(o, index) in srs_hard_box_values"

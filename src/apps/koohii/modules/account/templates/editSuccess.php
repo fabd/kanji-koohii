@@ -38,7 +38,7 @@
     echo _bs_form_group(
       ['validate' => 'timezone'],
       '<label for="form[timezone]" class="form-label">Timezone</label>'
-    .select_tag('timezone', options_for_select(rtkTimezones::$timezones, $sf_request->getParameter('timezone')), ['class' => 'form-control'])
+    .select_tag('timezone', options_for_select(rtkTimezones::$timezones, $sf_request->getParameter('timezone')), ['class' => 'form-select max-w-[10rem]'])
     .'<span class="form-text">'
     .'Due flashcards appear each day at midnight local time. Adjust the timezone'
     .' to your local time, or move it forward/backward if you\'d like for due cards'

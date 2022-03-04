@@ -31,7 +31,6 @@
 @import "./pages/learn-more.scss";
 @import "./pages/review-home.scss";
 
-
 // --------------------------------------------------------------------
 // These may go in Tailwind config later.
 // --------------------------------------------------------------------
@@ -217,7 +216,6 @@ form .valign span {
   vertical-align: middle;
 }
 
-
 /* ---------------------------- */
 /* Gadgets */
 /* ---------------------------- */
@@ -308,34 +306,27 @@ table.sortable td.f,
 }
 
 /* 'blocky' tables */
-table.blocky {
+.blocky {
+  font-size: 14px;
+  line-height: 1.2;
   width: 100%;
-  margin: 0.5em 0 1em 0;
   border-left: 1px solid $--clr-bg-1m;
   border-collapse: collapse;
-}
-table.blocky th {
-  background-color: $--clr-bg-1;
-  border-top-width: 0;
-  color: #4f4e45;
-}
-table.blocky th,
-table.blocky td {
-  border-top: 1px solid #e8e5ca;
-  border-right: 1px solid #e8e5ca;
-  padding: 5px 10px;
   text-align: left;
-}
-table.blocky td {
-  background: $--clr-bg-nav;
-}
-table.blocky td a:link,
-table.blocky td a:visited,
-table.blocky td a:active {
-  font-weight: normal;
-}
-table.blocky th a {
-  font-weight: bold;
+
+  th {
+    background-color: $--clr-bg-1;
+    border-top-width: 0;
+  }
+  th,
+  td {
+    border-top: 1px solid $--clr-bg-1;
+    border-right: 1px solid $--clr-bg-1;
+    padding: 0.7em 0.8em;
+  }
+  td {
+    background: $--clr-bg-nav;
+  }
 }
 
 /* bulleted links */

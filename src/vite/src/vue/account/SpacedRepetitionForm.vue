@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form-group mb-8">
-      <label for="srs_max_box">Number of boxes</label>
+      <label for="srs_max_box" class="form-label block text-md">Number of boxes</label>
       <span class="form-text">
         How many boxes in total,
         <em>excluding</em> the leftmost box which contains New and Failed cards.
@@ -22,7 +22,7 @@
     </div>
 
     <div class="form-group mb-8">
-      <label for="srs_mult">Review interval multiplier</label>
+      <label for="srs_mult" class="form-label text-md">Review interval multiplier</label>
       <span class="form-text">
         The multiplier determines the spacing between each successive review.
         The first interval is always 3 days.
@@ -43,7 +43,7 @@
     </div>
 
     <div class="form-group mb-8" :class="{ 'has-error': !isValidHardBox }">
-      <label for="srs_hard_box">Maximum box for cards marked 'Hard'</label>
+      <label for="srs_hard_box" class="form-label text-md">Maximum box for cards marked 'Hard'</label>
       <span class="form-text">
         Here, you can chose the maximum interval for a Hard answer by limiting
         the upper box. So for example if you chose to use 10 boxes and a Hard

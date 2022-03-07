@@ -67,6 +67,9 @@
         v-model="srs_hard_box"
         name="opt_srs_hard_box"
         class="form-select max-w-[10em]"
+        :class="{
+          'is-invalid': !isValidHardBox
+        }"
       >
         <option
           v-for="(o, index) in srs_hard_box_values"
@@ -75,8 +78,8 @@
         >{{ o[1] || o[0] }}</option>
       </select>
 
-      <span v-if="!isValidHardBox" class="has-error-msg">
-        <strong>Max Hard Box must be lower than the number of boxes total.</strong>
+      <span v-if="!isValidHardBox" class="invalid-feedback">
+        ^ Max Hard Box must be lower than the number of boxes total.
       </span>
     </div>
   </div>

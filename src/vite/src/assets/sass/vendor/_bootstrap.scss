@@ -103,6 +103,12 @@ $form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.o
   display: block;
 }
 
+// <textarea> : no invalid icon, and don't add unnecessary extra padding
+textarea.form-control.is-invalid {
+  padding-right: 0.75rem; // remove extra padding for the invalid icon
+  background-image: none; // remove the invalid icon
+}
+
 /* ---------------------------- */
 /* BOOTSTRAP hacks              */
 /* cf. BootstrapHelper          */

@@ -337,9 +337,7 @@ function _check_field_error($name, &$options)
 {
   if (sfContext::getInstance()->getRequest()->hasError($name))
   {
-    $css_class = array_key_exists('class', $options) ? $options['class'].' ' : '';
-    $css_class = $css_class . 'error';
-    $options['class'] = $css_class;
+    $options['class'] = ($options['class'] ?? '') . ' is-invalid';    
   }
 }
 

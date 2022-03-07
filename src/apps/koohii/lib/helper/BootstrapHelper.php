@@ -156,8 +156,7 @@ function _bs_form_group()
     $request = sfContext::getInstance()->getRequest();
     if ($request->hasError($input_name))
     {
-      $merge_class .= ' has-error';
-      $hasErrorMsg = '<div class="has-error-msg">^ '.$request->getError($input_name).'</div>';
+      $hasErrorMsg = '<div class="invalid-feedback">^ '.$request->getError($input_name).'</div>';
     }
   }
 

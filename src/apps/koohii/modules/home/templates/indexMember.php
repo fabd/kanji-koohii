@@ -3,7 +3,7 @@
   $sf_request->setParameter('_homeFooter', true);
 ?>
 
-<div class="row mt-3 mb-8">
+<div id="home-qs" class="row mt-3 mb-8">
 
   <div class="col-lg-10 mx-auto">
     <h2>Welcome back, <?= $sf_user->getUserName(); ?>!</h2>

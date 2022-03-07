@@ -841,15 +841,13 @@ table.lessons td {
 /* ... */
 /* ---------------------------- */
 
-/*#home-qs { border-bottom:1px solid #e7e1d3; }*/
-
 #home-qs .box {
   text-align: center;
 }
 #home-qs .hd {
   padding: 0 0 0.5em;
   color: #3c3c3c;
-  font-size: 130%;
+  font-size: 18px;
   line-height: 1.2em;
 }
 #home-qs .bd {
@@ -857,6 +855,7 @@ table.lessons td {
 }
 
 #home-qs .btn-go {
+  font-size: 18px;
   min-width: 150px;
 }
 

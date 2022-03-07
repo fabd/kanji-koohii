@@ -30,6 +30,12 @@ blockquote {
   color: #7f7d75;
 }
 
+// tailwind fix - `bolder` doesn't look good, no idea
+b,
+strong {
+  font-weight: bold;
+}
+
 /* links */
 a {
   color: #005cb1;

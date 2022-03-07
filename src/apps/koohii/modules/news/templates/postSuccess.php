@@ -32,22 +32,22 @@
     <div class="form-group">
       <div class="flex flex-nowrap -mx-1">
         <div class="w-[136px] mx-1">
-          <label for="name">Id</label><br>
+          <label class="form-label" for="name">Id</label><br>
           <?php echo input_tag('post_id', 0, ['class' => 'form-control']) ?>
         </div>
         <div class="w-9/12 mx-1">
-          <label for="name">Title</label>
+          <label class="form-label" for="name">Title</label>
           <?php echo input_tag('post_title', '', ['class' => 'form-control']) ?>
         </div>
         <div class="w-2/12 mx-1">
-          <label for="name">Published</label>
+          <label class="form-label" for="name">Published</label>
           <?php echo input_tag('post_date', '', ['class' => 'form-control']) ?>
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="message">Body</label>
+      <label class="form-label" for="message">Body</label>
       <?php echo textarea_tag('post_body', '', ['style' => 'min-height:600px', 'class' => 'form-control']) ?>
     </div>
 

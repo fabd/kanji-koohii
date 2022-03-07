@@ -29,11 +29,9 @@ $danger: #d9534f;
 
 $form-label-font-size: 14px;
 $form-label-font-weight: bold;
-$form-label-margin-bottom: 5px;
 
-$form-text-margin-top: 5px;
 $form-text-color: #7f7d75;
-$form-text-font-size: 15px;
+$form-text-font-size: 14px;
 
 $input-border-color: $--clr-bg-1s;
 $input-disabled-bg: transparent;
@@ -69,9 +67,19 @@ $form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.o
 
 // --------------------------------------------------------------------
 // Overrides
+//   - prefer to set Bootstrap vars above for font styles/colors
+//   - prefer to put layout stuff in overrides below for more control
 // --------------------------------------------------------------------
 .form-label {
   @apply inline-block;
+  margin-bottom: 5px;
+}
+
+// help text under a form field - remember these are defaults, override with tailwind's
+.form-text {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 // space out sections of a form

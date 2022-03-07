@@ -132,6 +132,9 @@ function _bs_class_merge(array &$options, $classnames)
  *     '<span>Hello</span>',
  *     _bs_input_text('Label', 'name_and_id')
  *   )
+ *
+ * @param array|string $options Options (array), or html to wrap inside form-group
+ * @param string       ...$html One or more html to append inside form-group
  */
 function _bs_form_group()
 {

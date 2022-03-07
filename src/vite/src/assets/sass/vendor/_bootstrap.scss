@@ -22,6 +22,11 @@
 @import "bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here (alpha sort!)
+
+$primary: #337ab7;
+$success: #5cb85c;
+$danger: #d9534f;
+
 $form-label-font-size: 14px;
 $form-label-font-weight: bold;
 $form-label-margin-bottom: 5px;
@@ -36,21 +41,30 @@ $input-disabled-border-color: $--clr-bg-1s;
 $input-font-size: 15px;
 $input-placeholder-color: #9b9b9b;
 
-// set Bootstrap theme colors (mainly for buttons)
-// $primary: #337ab7;
-// $success: #5cb85c;
-// $danger: #d9534f;
+$btn-border-radius: 0.25rem;
+$btn-font-size: 14px;
+$btn-transition: none;
+
+$form-feedback-invalid-color: #a94442;
+// generated with icones.js <3
+$form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="#e68683" d="M10 3h4v11h-4V3m0 18v-4h4v4h-4Z"></path></svg>');
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
 
 // 4. Include any optional Bootstrap components as you like
-$btn-border-radius: 0.25rem;
-$btn-font-size: 14px;
-$btn-transition: none;
+
+// --------------------------------------------------------------------
+// Bootstrap 5 BUTTONS
+//   https://getbootstrap.com/docs/5.0/components/buttons/#variables
+// --------------------------------------------------------------------
 @import "bootstrap/scss/buttons";
 
+// --------------------------------------------------------------------
+// Bootstrap 5 FORMS
+//   https://getbootstrap.com/docs/5.0/forms/validation/#map
+// --------------------------------------------------------------------
 @import "bootstrap/scss/forms";
 
 // --------------------------------------------------------------------

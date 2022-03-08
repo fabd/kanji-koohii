@@ -7,7 +7,8 @@
 // --------------------------------------------------------------------
 // fix the hover styles
 // --------------------------------------------------------------------
-.btn, .btn:hover {
+.btn,
+.btn:hover {
   text-decoration: none;
 }
 
@@ -16,31 +17,41 @@
 }
 
 // --------------------------------------------------------------------
-// fix the colors from BS3 - the BS mixins dont create nice hovers
+// override the button colors - the BS mixins dont create nice hovers
 // --------------------------------------------------------------------
 // NOTE! because the php helper auto-adds `btn-success`, declare other colors *after*
 .btn-success {
   color: #fff;
   background-color: #5cb85c;
   border-color: #4cae4c;
-}
-.btn-success:hover {
-  color: #fff;
-  background-color: #449d44;
-  border-color: #398439;
+
+  &:hover {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+  }
 }
 
 .btn-danger {
   color: #fff;
   background-color: #d9534f;
   border-color: #d43f3a;
-}
-.btn-danger:hover {
-  color: #fff;
-  background-color: #c9302c;
-  border-color: #ac2925;
+
+  &:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+  }
 }
 
+// set :focus text color (override Bootstrap's selector created by their mixin)
+.btn-success,
+.btn-danger {
+  .btn-check:focus + &,
+  &:focus {
+    color: #fff;
+  }
+}
 
 // --------------------------------------------------------------------
 // GHOST BUTTON

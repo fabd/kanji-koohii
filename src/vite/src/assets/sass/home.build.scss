@@ -1,0 +1,31 @@
+// ====================================================================
+// Landing page (master stylesheet bundle for the landing page ONLY)
+// ====================================================================
+
+// --------------------------------------------------------------------
+// 1. tailwind's "preflight" and opiniated resets
+// --------------------------------------------------------------------
+@import "tailwindcss/base";
+
+// Bootstrap 5 minimal build (forms)
+@import "./vendor/_bootstrap.scss";
+
+// koohii specific resets (*after* Bootstrap/tailwind resets)
+@import "./base/_base.scss";
+
+// utilities
+// _variables.scss ( <-- imported in vite.config.ts )
+@import "./abstracts/_mixins.scss";
+@import "./_utilities.scss";
+@import "./layout/_layout.scss";
+
+// components
+@import "./_navbar.scss";
+
+// pages
+@import "./pages/landing-page.scss";
+
+// --------------------------------------------------------------------
+// (last) tailwind utilities
+// --------------------------------------------------------------------
+@import "tailwindcss/utilities";

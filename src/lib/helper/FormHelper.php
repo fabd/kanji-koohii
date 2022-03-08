@@ -192,6 +192,7 @@ function input_hidden_tag($name, $value = null, $options = [])
  */
 function input_password_tag($name, $value = null, $options = [])
 {
+  // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
   $value = $_request->getParameter($name, $value);
 
@@ -212,9 +213,8 @@ function input_password_tag($name, $value = null, $options = [])
  */
 function textarea_tag($name, $content = null, $options = [])
 {
-  $_request = sfContext::getInstance()->getRequest();
-
   // repopulate with get/post data
+  $_request = sfContext::getInstance()->getRequest();
   $content = $_request->getParameter($name, $content);
 
   // add css class
@@ -337,9 +337,7 @@ function _check_field_error($name, &$options)
 {
   if (sfContext::getInstance()->getRequest()->hasError($name))
   {
-    $css_class = array_key_exists('class', $options) ? $options['class'].' ' : '';
-    $css_class = $css_class . 'error';
-    $options['class'] = $css_class;
+    $options['class'] = ($options['class'] ?? '') . ' is-invalid';    
   }
 }
 

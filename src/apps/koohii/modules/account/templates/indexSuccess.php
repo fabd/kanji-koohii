@@ -2,10 +2,6 @@
   use_helper('Date', 'SimpleDate', 'Widgets', 'Decorator');
   $sf_request->setParameter('_homeFooter', true);
 ?>
-<?php slot('inline_styles') ?>
-.profile-actions .uiIBtn { margin-right:1em; }
-<?php end_slot() ?>
-
 <?php decorate_start('SideTabs', ['active' => 'overview']) ?>
 
   <h2>My Account</h2>

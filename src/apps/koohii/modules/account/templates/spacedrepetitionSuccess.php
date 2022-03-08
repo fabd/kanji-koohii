@@ -13,7 +13,7 @@
 
   <?php echo form_errors() ?>
   <?php echo form_tag('account/spacedrepetition') ?>
-    <div id="srs-form"></div>
+    <div id="JsVueMountSrsForm"></div>
     <p>
       <?php echo submit_tag('Save changes', ['class' => 'btn btn-success']) ?>
     </p>

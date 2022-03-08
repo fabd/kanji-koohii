@@ -5,7 +5,7 @@
   <h2>Restudy List</h2>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-6">
       <p>Pick a kanji from the list to restudy or go straight to review.</p> 
 
 <?php if ($restudyCount > 20): ?>
@@ -17,7 +17,7 @@
 <?php endif ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-lg-6">
       <div class="" style="margin:0 0 1.5em;">
 
 <?php if ($restudyCount > 0): ?>

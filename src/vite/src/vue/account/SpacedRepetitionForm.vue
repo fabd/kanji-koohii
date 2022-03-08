@@ -1,27 +1,29 @@
 <template>
   <div>
     <div class="form-group mb-8">
-      <label for="srs_max_box">Number of boxes</label>
-      <span class="help-block">
+      <label for="srs_max_box" class="form-label block text-md">Number of boxes</label>
+      <span class="form-text">
         How many boxes in total,
         <em>excluding</em> the leftmost box which contains New and Failed cards.
       </span>
 
       <select
-        name="opt_srs_max_box"
-        v-model="srs_max_box"
-        class="form-control max-w-[10em]"
         id="srs_max_box"
+        v-model="srs_max_box"
+        name="opt_srs_max_box"
+        class="form-select max-w-[10em]"
       >
-        <option v-for="o in srs_max_box_values" :value="o[0]" :key="o[0]">{{
-          o[1]
-        }}</option>
+        <option v-for="(o, i) in srs_max_box_values" :key="i" :value="o[0]">
+          {{
+            o[1]
+          }}
+        </option>
       </select>
     </div>
 
     <div class="form-group mb-8">
-      <label for="srs_mult">Review interval multiplier</label>
-      <span class="help-block">
+      <label for="srs_mult" class="form-label text-md">Review interval multiplier</label>
+      <span class="form-text">
         The multiplier determines the spacing between each successive review.
         The first interval is always 3 days.
       </span>
@@ -31,33 +33,18 @@
         <span
           v-for="(i, k) in intervals"
           :key="k"
-          class="
-            inline-block mr-2 pt-1 px-2 pb-[0.15rem]
-            font-mono
-            bg-[#d7e0b5] text-[#485f27] border-b border-[#aab38a] rounded-md
-          "
-          >{{ i.days }}</span
-        >
+          class="inline-block mr-2 pt-1 px-2 pb-[0.15rem] font-mono bg-[#d7e0b5] text-[#485f27] border-b border-[#aab38a] rounded-md"
+        >{{ i.days }}</span>
       </div>
 
-      <select
-        name="opt_srs_mult"
-        v-model="srs_mult"
-        class="form-control max-w-[10em]"
-        id="srs_mult"
-      >
-        <option
-          v-for="(o, index) in srs_mult_values"
-          :key="index"
-          :value="o[0]"
-          >{{ o[1] || o[0] }}</option
-        >
+      <select id="srs_mult" v-model="srs_mult" name="opt_srs_mult" class="form-select max-w-[10em]">
+        <option v-for="(o, i) in srs_mult_values" :key="i" :value="o[0]">{{ o[1] || o[0] }}</option>
       </select>
     </div>
 
     <div class="form-group mb-8" :class="{ 'has-error': !isValidHardBox }">
-      <label for="srs_hard_box">Maximum box for cards marked 'Hard'</label>
-      <span class="help-block">
+      <label for="srs_hard_box" class="form-label text-md">Maximum box for cards marked 'Hard'</label>
+      <span class="form-text">
         Here, you can chose the maximum interval for a Hard answer by limiting
         the upper box. So for example if you chose to use 10 boxes and a Hard
         answer limit of 5 then a card in box 6,7,8,9 and 10 will always drop
@@ -76,23 +63,23 @@
       </div>
 
       <select
-        name="opt_srs_hard_box"
-        v-model="srs_hard_box"
-        class="form-control max-w-[10em]"
         id="srs_hard_box"
+        v-model="srs_hard_box"
+        name="opt_srs_hard_box"
+        class="form-select max-w-[10em]"
+        :class="{
+          'is-invalid': !isValidHardBox
+        }"
       >
         <option
           v-for="(o, index) in srs_hard_box_values"
           :key="index"
           :value="o[0]"
-          >{{ o[1] || o[0] }}</option
-        >
+        >{{ o[1] || o[0] }}</option>
       </select>
 
-      <span class="has-error-msg" v-if="!isValidHardBox">
-        <strong
-          >Max Hard Box must be lower than the number of boxes total.</strong
-        >
+      <span v-if="!isValidHardBox" class="invalid-feedback">
+        ^ Max Hard Box must be lower than the number of boxes total.
       </span>
     </div>
   </div>
@@ -105,7 +92,7 @@ import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 
 export default defineComponent({
-  name: "spaced-repetition-form",
+  name: "SpacedRepetitionForm",
 
   data() {
     return {
@@ -136,14 +123,6 @@ export default defineComponent({
         [9],
       ],
     };
-  },
-
-  methods: {
-    nthInterval(n) {
-      let first = 3;
-      let mult = 1.0 * Number(this.srs_mult / 100).toFixed(2); // 205 => 2.05
-      return Math.ceil(first * Math.pow(mult, n - 1));
-    },
   },
 
   computed: {
@@ -181,6 +160,14 @@ export default defineComponent({
     this.srs_max_box = srsSettings.max_box;
     this.srs_mult = srsSettings.mult;
     this.srs_hard_box = srsSettings.hard_box;
+  },
+
+  methods: {
+    nthInterval(n) {
+      let first = 3;
+      let mult = 1.0 * Number(this.srs_mult / 100).toFixed(2); // 205 => 2.05
+      return Math.ceil(first * Math.pow(mult, n - 1));
+    },
   },
 });
 </script>

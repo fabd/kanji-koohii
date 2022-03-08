@@ -1,31 +1,35 @@
+// ====================================================================
 // LEGACY main.build.scss stylesheet
+// ====================================================================
+
 // --------------------------------------------------------------------
-// 1. tailwind's "preflight" and opiniated resets
+// 1. tailwind's "Preflight" and opiniated resets
+//    @see https://unpkg.com/tailwindcss@3.0.23/src/css/preflight.css
 // --------------------------------------------------------------------
 @import "tailwindcss/base";
 
-@import "./legacy/vendor/bootstrap.css";
+// Bootstrap 5 minimal build (forms)
+@import "./vendor/_bootstrap.scss";
 
-// --------------------------------------------------------------------
-// FIXES
-//
-//   Undo Bootstrap styles setting html font-size to 10px.
-//   Legacy stylesheets almost never used rems so this shouldn't break anything.
-// --------------------------------------------------------------------
-html {
-  font-size: 16px; // make sure 1rem = 16px
-}
+// koohii specific resets (*after* Bootstrap/tailwind resets)
+@import "./base/_base.scss";
 
-// fix. headings, until we remove Bootstrap
-h2 {
-  font-size: 30px;
-}
-h3 {
-  // font-size: 18px;
-  color: purple;
-}
+// utilities
+// _variables.scss ( <-- imported in vite.config.ts )
+@import "./abstracts/_mixins.scss";
+@import "./_utilities.scss";
+@import "./layout/_layout.scss";
 
-@import "./_theme.scss";
+// components
+@import "./components/_buttons.scss";
+@import "./legacy/_widgets.scss";
+@import "./_navbar.scss";
+@import "./_markdown.scss";
+
+// pages
+@import "./pages/about-support.scss";
+@import "./pages/learn-more.scss";
+@import "./pages/review-home.scss";
 
 // --------------------------------------------------------------------
 // These may go in Tailwind config later.
@@ -37,43 +41,20 @@ h3 {
   color: $--clr-bg-gd;
 }
 
-@import "../sass/_utilities.scss";
-
 /* ---------------------------- */
 /* RESPONSIVE utilities */
 /* ---------------------------- */
 
-@media (max-width: 767px) {
-  /* cancel the column gutter from Bootstrap grid, removes margins like .row does
-     but this class is more semantic, as we use it to remove gutter for edge to edge
-     content on small screens (needs to match Bootstrap gutter dimensions) */
-  .no-gutter-xs {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-}
-
-@media (min-width: 992px) {
+@include breakpoint-up(lg) {
   .visible-xs-sm {
     display: none;
-  } /* visible-xs, visible-sm (ideally "phone & tablet portrait) */
+  }
 }
 
-@media (max-width: 991px) {
-  .no-gutter-xs-sm {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-
-  /* re-apply margins for content set inside a .no-gutter-xs-sm container */
-  .re-gutter-xs-sm {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-
+@include breakpoint-down(lg) {
   .visible-md-lg {
     display: none;
-  } /* visible-md, visible-lg (ideally "tablet landscape & desktop) */
+  }
 }
 
 /* ajax table container div (cf. ./legacy/_widgets.scss) */
@@ -84,340 +65,12 @@ h3 {
   border-right: 1px dotted #bdbcaa;
 }
 
-/* ---------------------------- */
-/* BOOTSTRAP hacks */
-/* ---------------------------- */
-
-@media (min-width: 1200px) {
-  .container {
-    width: 970px;
-  } /* same as min-width 992px */
-}
-
-/* cf. BootstrapHelper */
-
-/* we don't use Boostrap's structure here, see BootstrapHelper.php :: _bs_input_checkbox() */
-/*.form-group label { font-weight: normal; }*/
-.form-group input[type="checkbox"] {
-  vertical-align: middle;
-  margin: 0;
-  padding: 0;
-}
-.form-group input[type="checkbox"] + span {
-  vertical-align: middle;
-  padding-left: 0.5em;
-  font-weight: normal;
-}
-
-/* make this similar to the input */
-.form-control-static {
-  border: 1px solid $--clr-bg-1s;
-  border-radius: 4px;
-  display: block;
-  font-size: 14px;
-  height: 34px;
-  line-height: 1.42857;
-  padding: 6px 12px;
-  width: 100%;
-}
-
-/* we use .form-group > .form-control.form-control-i for inline-block regardless of @media */
-.form-control-i {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-/* style an '(Optional)' <span> next to label of optional inputs */
-.form-optional {
-  color: #716c5c;
-  margin-left: 0.5em;
-}
-
-/* form errors are added by BootstrapHelper methods, after the input */
-.has-error-msg {
-  /*background:#ffc4bc;*/
-  color: #913535;
-  padding: 4px 0 0 6px;
-}
-/*.form-group.has-error .form-control { background:#ffd; }*/
-
-/* ---------------------------- */
-/* BOOTSTRAP theme (TODO : incorporer dans le build sass truc) */
-/* ---------------------------- */
-
-body {
-  background: $--clr-bg-body;
-  color: #42413d;
-}
-
 /* when footer gradient is used */
 body.with-footer {
   background: #f0ddd4;
 }
 body.with-footer #main {
   background: $--clr-bg-body;
-}
-
-/* typography */
-blockquote {
-  font-size: inherit;
-  border-left: none;
-  color: #7f7d75;
-}
-
-/* buttons */
-.btn {
-  text-decoration: none;
-}
-
-.btn-link {
-  text-decoration: underline;
-}
-
-/* default non-colored, subdued */
-.btn-ghost {
-  color: #6f6961;
-  background-color: inherit;
-  border-color: $--clr-bg-1s;
-}
-
-.btn-default {
-  background-color: $--clr-bg-1;
-  color: #444;
-  border-color: $--clr-bg-1s;
-}
-
-/* cf. BootstrapHelper :: _bs_button_with_icon()  .fa .far .fas */
-.btn i {
-  margin-right: 0.5em; /*vertical-align:middle;*/
-}
-
-/* push buttons (note :hover & :active same style due to touch :active -> :hover */
-.btn-go {
-  color: #fff;
-  background-color: #5cb85c;
-  border: none;
-  border-bottom: 3px solid #318a31;
-}
-.btn-go:active,
-.btn-go:hover {
-  color: #fff;
-  border-bottom-width: 1px;
-  margin-top: 2px;
-}
-.btn-lg.btn-go {
-  padding: 12px 16px 10px;
-}
-
-/**
- * Flex layout (minimal) (refactor later maybe with BS4)
- *
- *  .flex          ... the container (.row)
- *  .flex-i        ... one item (for setting gutters)
- *
- *  .col-m (mobile)   => combines Bootstrap xs / sm 
- *  .col-d (desktop)  => combines Bootstrap md / lg ( >= 992px )
- *
- * The rest is like BS4 alpha flex:
- *
- *  .col-m/d       ... alone for equal spacing 
- *  .col-m/d-<n>   ... set a width, can combine with col-m/d to fill the rest
- *
- * Examples
- *
- *   Input followed by a small button, let the input box fill the space
- *   | .col-m | .col-m2 |
- *   
- *   ... And on desktop, input fills 100%, wrap the following content
- *   | .col-m .col-d-12 | ...
- *  
- */
-
-/* refactor later with BS4 .row ? */
-.flex {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-/* item alignment */
-.flex-a-c {
-  align-self: center;
-}
-
-/* small gutter */
-.flex-g-s {
-  margin-left: -5px;
-  margin-right: -5px;
-}
-.flex-g-s .col-g {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-/* equal width columns */
-.col-m {
-  flex: 1 0 0;
-}
-/*.col-m-1 { flex:0 0 8.3333333%; }*/
-
-.col-m-2 {
-  flex: 0 0 16.666667%;
-}
-.col-m-3 {
-  flex: 0 0 25%;
-}
-.col-m-4 {
-  flex: 0 0 33.333333%;
-}
-.col-m-5 {
-  flex: 0 0 41.666667%;
-}
-.col-m-6 {
-  flex: 0 0 50%;
-}
-.col-m-7 {
-  flex: 0 0 58.333333%;
-}
-.col-m-8 {
-  flex: 0 0 66.666667%;
-}
-.col-m-9 {
-  flex: 0 0 75%;
-}
-.col-m-10 {
-  flex: 0 0 83.333333%;
-}
-.col-m-11 {
-  flex: 0 0 91.666667%;
-}
-.col-m-12 {
-  flex: 0 0 100%;
-}
-
-/* bootstrap-md-lg */
-@media (min-width: 992px) {
-  .col-d-2 {
-    flex: 0 0 16.666667%;
-  }
-  .col-d-3 {
-    flex: 0 0 25%;
-  }
-  .col-d-4 {
-    flex: 0 0 33.333333%;
-  }
-  .col-d-5 {
-    flex: 0 0 41.666667%;
-  }
-  .col-d-6 {
-    flex: 0 0 50%;
-  }
-  .col-d-7 {
-    flex: 0 0 58.333333%;
-  }
-  .col-d-8 {
-    flex: 0 0 66.666667%;
-  }
-  .col-d-9 {
-    flex: 0 0 75%;
-  }
-  .col-d-10 {
-    flex: 0 0 83.333333%;
-  }
-  .col-d-11 {
-    flex: 0 0 91.666667%;
-  }
-  .col-d-12 {
-    flex: 0 0 100%;
-  }
-}
-
-/* ---------------------------- */
-/* Original Koohii common styles ... TODO cleanup ) */
-/* ---------------------------- */
-
-/* fonts 
- When setting the primary font stack, apply it to the Pure grid units along
- with `html`, `button`, `input`, `select`, and `textarea`. Pure Grids use
- specific font stacks to ensure the greatest OS/browser compatibility.
-*/
-html,
-button,
-input,
-select,
-textarea,
-.pure-g [class*="pure-u"] {
-  /* Set your content font stack here: */
-  font-family: Helvetica, Arial, freesans, clean, sans-serif;
-}
-
-/* links */
-a {
-  color: #005cb1;
-  font-weight: normal;
-  text-decoration: underline;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-/* images */
-a img {
-  border: none;
-}
-p img {
-  display: inline;
-  vertical-align: middle;
-}
-
-/* type */
-p,
-ul {
-  margin: 0 0 1.5em;
-}
-abbr,
-acronym {
-  border-bottom: 1px dotted #dad8bd;
-  cursor: help;
-}
-
-p.intro {
-  margin-top: 0;
-}
-p.small {
-  line-height: 1.2em;
-  color: #666;
-}
-
-/* headings */
-h1,
-h2,
-h3,
-h4,
-h5 {
-  margin: 0 0 1em;
-  color: #7f7d85;
-}
-
-/*h3 { color:#fa3d60; }*/
-
-h1 {
-  font-size: 13px;
-  font-family: Verdana, sans-serif;
-}
-h2 {
-  font-weight: normal;
-  margin: 0 0 0.5em;
-}
-h3 {
-  font-size: 18px;
-  font-weight: normal;
-  margin: 0 0 0.5em;
-}
-
-/* css3 fixes */
-.border-box {
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 /* SRS color coding used for text */
@@ -434,41 +87,10 @@ h3 {
   color: #1c90d4;
 }
 
-/* misc. effects */
-kbd {
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  background: #ddd;
-  color: #333;
-  font: 100%/1em "Andale Mono", "Consolas", monospace;
-  margin: 2px 1px 2px 0;
-  min-width: 1em;
-  padding: 2px 5px;
-  text-align: center;
-  text-shadow: none;
-  white-space: nowrap;
-}
-
 /* gradients */
 .gdt-ocean-blue {
   background: #deeef8; /* Old browsers */
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0%, #deeef8),
-    color-stop(100%, #c4e7ff)
-  ); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(
-    top,
-    #deeef8 0%,
-    #c4e7ff 100%
-  ); /* Chrome10+,Safari5.1+ */
-  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%); /* W3C */
+  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%);
 }
 
 /* ---------------------------- */
@@ -517,9 +139,6 @@ a.admin-edit {
 /* ---------------------------- */
 /* UI */
 /* ---------------------------- */
-
-@import "./legacy/_widgets.scss";
-@import "./_navbar.scss";
 
 /* disable selection for GUI items */
 .uiGUI {
@@ -572,10 +191,6 @@ table.shaded td {
 /* Forms */
 /* ---------------------------- */
 
-.form-legend {
-  font-size: 90%;
-}
-
 .panel-body .form-section {
   padding: 1em 15px;
   margin: 0 -15px 1em;
@@ -584,36 +199,10 @@ table.shaded td {
 }
 
 /* OLD CSS */
-
 form .valign input,
 form .valign span {
   vertical-align: middle;
 }
-/*form .valign input.checkbox { margin-right:4px; } */
-
-/*form.block { background:$--clr-bg-1m; margin:0 0 2em; }*/
-
-/* OBSOLETE
-form.block fieldset { border:0; padding:0; margin:0; width:100%; }
-form.block label { }
-form.block ul { padding:14px 18px; margin:0; }
-form.block li { margin:0 0 4px; padding:0; width:100%; background:none; list-style:none; }
-form.block li .lbl { float:left; width:135px; padding-right:10px; }
-form.block li .fld { display:block; margin-left:145px; }
-form.block li .fld .legend { padding-left:4px; color:#666666; font-size:10px; line-height:20px; }
-form.block li .fld .no-edit { color:#666; font-weight:bold; padding:3px 5px; }
-form.block li .btn { display:block; margin-left:145px; padding-top:1em; }
-form.block span.req, .required-legend { padding-left:6px; font-weight:bold; color:red; }
-.required-legend { padding:0; padding-right:6px; }
-form.block .short input.textfield { width:105px; }
-form.block .medium input.textfield { width:135px; }
-form.block .medium select { width:145px; }
-form.block .long input.textfield { width:194px; }
-form.block input.checkbox { vertical-align:middle; margin-right:4px; }
-
-form.block li.section { padding-top:8px; }
-form.block li.ft p    { padding:8px 0 0 145px; color:#665; font-size:11px; }
-*/
 
 /* ---------------------------- */
 /* Gadgets */
@@ -705,34 +294,27 @@ table.sortable td.f,
 }
 
 /* 'blocky' tables */
-table.blocky {
+.blocky {
+  font-size: 14px;
+  line-height: 1.2;
   width: 100%;
-  margin: 0.5em 0 1em 0;
   border-left: 1px solid $--clr-bg-1m;
   border-collapse: collapse;
-}
-table.blocky th {
-  background-color: $--clr-bg-1;
-  border-top-width: 0;
-  color: #4f4e45;
-}
-table.blocky th,
-table.blocky td {
-  border-top: 1px solid #e8e5ca;
-  border-right: 1px solid #e8e5ca;
-  padding: 5px 10px;
   text-align: left;
-}
-table.blocky td {
-  background: $--clr-bg-nav;
-}
-table.blocky td a:link,
-table.blocky td a:visited,
-table.blocky td a:active {
-  font-weight: normal;
-}
-table.blocky th a {
-  font-weight: bold;
+
+  th {
+    background-color: $--clr-bg-1;
+    border-top-width: 0;
+  }
+  th,
+  td {
+    border-top: 1px solid $--clr-bg-1;
+    border-right: 1px solid $--clr-bg-1;
+    padding: 0.7em 0.8em;
+  }
+  td {
+    background: $--clr-bg-nav;
+  }
 }
 
 /* bulleted links */
@@ -762,27 +344,6 @@ div.col-box-bis {
 /* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
 .kkSymfonyCache {
   border: 1px solid #f00;
-}
-
-/* ---------------------------- */
-/* Pure Grid                    */
-/* ---------------------------- */
-.pad-u {
-  padding: 0 10px;
-}
-
-/* mettre sur pure-g element pour enlever les marges extra à gauche et à droite */
-.grid-g {
-  margin-left: -10px;
-  margin-right: -10px;
-}
-
-/* active gutter (si nécessaire), à mettre sur les pure-u-* elements */
-.grid-u {
-  padding-left: 10px;
-  padding-right: 10px;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 /* ---------------------------- */
@@ -826,24 +387,9 @@ div.col-box-bis {
 /* Footer & Support (Nov 2016) */
 /* ---------------------------- */
 .k_bg_free {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
+  // http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100
   background: #f8c5e4; /* Old browsers */
-  background: -moz-linear-gradient(
-    top,
-    #f8c5e4 0%,
-    #f0ddd4 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    top,
-    #f8c5e4 0%,
-    #f0ddd4 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #f8c5e4 0%,
-    #f0ddd4 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8c5e4', endColorstr='#f0ddd4',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(to bottom, #f8c5e4 0%, #f0ddd4 100%);
 }
 
 .with-footer #main {
@@ -925,8 +471,6 @@ div.col-box-bis {
 /* ---------------------------- */
 
 $--color-blog-heading: #fa3d60;
-
-@import "./_markdown.scss";
 
 /* Site news (posts using markdown) */
 #sitenews .markdown h2,
@@ -1056,8 +600,7 @@ $--color-blog-heading: #fa3d60;
   color: #454545;
 }
 
-/* bootstrap xs */
-@media (max-width: 767px) {
+@include breakpoint-down(md) {
   #sitenews_jpod img {
     border-radius: 0;
   }
@@ -1224,16 +767,6 @@ table.lessons td {
 }
 
 /* ---------------------------- */
-/* Learn More */
-/* ---------------------------- */
-@import "./learn-more.scss";
-
-/* ---------------------------- */
-/* SRS Chart page */
-/* ---------------------------- */
-@import "./_review-home.scss";
-
-/* ---------------------------- */
 /* Review Summary */
 /* ---------------------------- */
 
@@ -1308,15 +841,13 @@ table.lessons td {
 /* ... */
 /* ---------------------------- */
 
-/*#home-qs { border-bottom:1px solid #e7e1d3; }*/
-
 #home-qs .box {
   text-align: center;
 }
 #home-qs .hd {
   padding: 0 0 0.5em;
   color: #3c3c3c;
-  font-size: 130%;
+  font-size: 18px;
   line-height: 1.2em;
 }
 #home-qs .bd {
@@ -1324,6 +855,7 @@ table.lessons td {
 }
 
 #home-qs .btn-go {
+  font-size: 18px;
   min-width: 150px;
 }
 
@@ -1354,33 +886,16 @@ table.lessons td {
  * Flashcard Review
  * ---------------------------- */
 
-/* TODO move me */
-.p-notice {
-  margin: 0 0 1em;
-  color: #cc2d7a; /*background:$--clr-bg-gl; padding:0.5em 1em;*/
-}
-.p-notice i {
-  display: inline-block;
-  padding: 0 0.5em 0 0;
-}
-
-.labs-review-box {
+.ko-CustomReviewForm {
+  @extend .padded-box;
+  @apply rounded;
+  font-size: 14px;
   min-height: 120px;
   margin-bottom: 1em;
-}
-.labs-review-box p {
-  margin-bottom: 1em;
-}
-.labs-review-box label {
-  display: block;
-  margin: 0 0 0.5em;
-}
-.labs-review-framenr {
-  width: 40px;
-  text-align: center;
-}
-.labs-review-box label input {
-  vertical-align: middle;
+
+  p {
+    margin-bottom: 1em;
+  }
 }
 
 /* ----------------------------
@@ -1557,16 +1072,14 @@ table.lessons td {
 
 /* class names output by cjk_lang_ja() helper (changes depending on Kanji/Hanzi mode) */
 .cj-k {
-  font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝",
-    "ＭＳ Ｐ明朝", serif;
+  font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝", serif;
 }
 .cj-s {
-  font-family: "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei",
-    "Heiti SC", sans-serif;
+  font-family: "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC", sans-serif;
 }
 .cj-t {
-  font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai",
-    "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC", serif;
+  font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC",
+    serif;
 }
 
 // --------------------------------------------------------------------
@@ -1576,7 +1089,7 @@ table.lessons td {
   @apply px-[.5em] py-[.35em] rounded;
   --bg: #ccc;
   --fg: #fff;
-  
+
   // No and Again cards are both in the failed pile
   &.is-no,
   &.is-again {

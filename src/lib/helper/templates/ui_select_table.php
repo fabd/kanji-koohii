@@ -1,4 +1,4 @@
-<div class="no-gutter-xs">
+<div class="no-gutter-xs-sm">
   <div class="uiTable">
     <table cellspacing="0" class="uiTabular">
     <thead>

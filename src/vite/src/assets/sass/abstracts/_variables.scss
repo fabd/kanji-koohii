@@ -1,0 +1,36 @@
+// ====================================================================
+// VARIABLES
+// ====================================================================
+
+// --------------------------------------------------------------------
+// layout / breakpoints (used by breakpoint mixins)
+//
+//   References:
+//   https://getbootstrap.com/docs/5.0/layout/breakpoints/#available-breakpoints
+//
+// --------------------------------------------------------------------
+// "Medium" : tablets (portrait)
+$--bp-md: 768px; // 768px = 48rem
+// "Large" : tablets (landscape), laptops and desktops in unmaximized browser windows
+$--bp-lg: 992px; // 992px = 62rem
+// "Extra large" : wide laptop & desktop browser windows
+$--bp-xl: 1280px; // 1280px = 80rem
+
+// --------------------------------------------------------------------
+// colors
+// --------------------------------------------------------------------
+$--clr-bg-body: #f4f0e5;
+$--clr-bg-1: #e7e1d3; /* shaded background 1 */
+$--clr-bg-nav: #ede8de; /* top nav background color */
+
+$--clr-bg-1m: #ede8de; /* subdued background 1 (lighter) */
+$--clr-bg-1s: #d4cdba; /* subdued background 1 : border */
+
+$--clr-bg-gl: #d7ebb4; /* green backgrounds & text */
+$--clr-bg-gd: #4c7424;
+$--clr-tbl-bg: #f8f6ef; /* widgets: table row (slightly brighter than CSS_BG_1) */
+
+$--clr-srs-due: #f7a247; /* text color for due/undue cards */
+$--clr-srs-undue: #72c569;
+
+$--clr-danger-bg: #d9534f;

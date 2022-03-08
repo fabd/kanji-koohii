@@ -4,14 +4,12 @@
   // $next_uri = 'study/edit?id='.$kanji->kanji;
  ?>
 
-<div id="study-restudy" class="study-action-comp no-gutter-xs-sm md:mb-4">
-  <div class="flex flex-g-s">
+<div id="study-restudy" class="study-action-comp no-gutter-xs-sm dsk:mb-4">
+  <div class="mbl:flex items-center">
 
-    <div class="col-m col-d-12 col-g flex-a-c">
-      <h3>Restudy <span><?php echo $restudy_count ?></span></h3>
-    </div>
+    <h3 class="">Restudy <strong><?php echo $restudy_count ?></strong></h3>
 
-    <div class="col-m-1 col-d-6 col-g">
+    <div class="mbl:ml-auto">
       <?php echo link_to('Start', 'study/edit', ['query_string' => "restudy", 'class' => 'btn btn-primary']) ?>
     </div>
 

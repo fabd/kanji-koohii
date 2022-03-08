@@ -1,15 +1,14 @@
-<div class="pt-8">
+<?php
+  $sf_request->setParameter('_homeFooter', true);
+?>
+<div class="row pt-8">
 
-  <div class="col-md-2">
-    <div class="text-center">
-
-    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', ['class' => 'block mb-4 rounded-full', 'size' => '140x140']) ?>
-      <?php echo link_to('Contact', '@contact') ?>
-    </div>
+  <div class="col-lg-3 mb-8">
+    <?= image_tag('/images/1.0/nav/about_photo2.gif', ['class' => 'block mx-auto rounded-full', 'size' => '140x140']); ?>
+    <?php //echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block'))?>
   </div>
 
-  <div class="col-md-8 markdown">
-    <div class="">
+  <div class="col-lg-9 markdown">
 
       <section class="mb-8">
         <h2>License Information</h2>
@@ -61,7 +60,6 @@ Thank you!
 
       </section>
       
-    </div>
   </div>
 
 </div>

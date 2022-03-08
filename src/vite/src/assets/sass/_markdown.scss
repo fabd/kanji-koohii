@@ -25,9 +25,9 @@
 /* ---------------------------- */
 
 .markdown {
-  --vunit: 24px;
+  --vunit: 1.25rem;
   font-size: 16px;
-  line-height: var(--vunit);
+  line-height: calc(var(--vunit) * 1.25);
 }
 
 .markdown blockquote,
@@ -63,7 +63,6 @@
 
 /* images */
 .markdown img {
-  box-sizing: content-box;
   padding: 3px;
   border: 1px solid #c9c7b5;
   display: block;

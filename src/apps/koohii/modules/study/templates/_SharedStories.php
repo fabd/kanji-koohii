@@ -22,10 +22,10 @@
         <div class="story"><?php echo $o->text ?></div>
       </div>
 
-      <div class="sharedstory_meta flex">
-        <div class="lastmodified col-m-1 flex-a-c"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
+      <div class="sharedstory_meta">
+        <div class="lastmodified"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
 
-        <div class="actions col-m text-right JsAction" id="story-<?php echo $o->authorid ?>-<?php echo $ucsId ?>" data-uid="<?php echo $o->authorid ?>" data-cid="<?php echo $ucsId ?>" appv1="<?php echo $o->stars ?>" appv2="<?php echo $o->kicks ?>">
+        <div class="sharedstory-actions JsAction" id="story-<?php echo $o->authorid ?>-<?php echo $ucsId ?>" data-uid="<?php echo $o->authorid ?>" data-cid="<?php echo $ucsId ?>" appv1="<?php echo $o->stars ?>" appv2="<?php echo $o->kicks ?>">
           <span class="JsMsg"></span>
 
           <a href="#" class="sharedstory_btn JsTip JsReport"><i class="fa fa-fw fa-lg fa-exclamation"></i><span><?php echo $o->kicks ?></span></a>

@@ -272,23 +272,15 @@
 /* MEDIA RULES (*must* match Bootstrap grid !) */
 /* ---------------------------- */
 
-/* for phone ONLY */
-@media (max-width: 767px) {
-}
-
-/* for tablet portrait UP */
-@media (min-width: 768px) {
-}
-
 /* for phone and tablet portrait ONLY */
-@media (max-width: 991px) {
+@include breakpoint-down(lg) {
   #k-nav_d {
     display: none;
   }
 }
 
 /* for tablet landscape UP */
-@media (min-width: 992px) {
+@include breakpoint-up(lg) {
   #k-nav_m {
     display: none;
   }

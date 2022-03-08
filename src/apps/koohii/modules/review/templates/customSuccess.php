@@ -5,13 +5,12 @@
 
 <h2>Kanji Review</h2>
       
-<div class="row">
-  <div class="col-md-12">
+<section>
 
     <div class="mb-8">
-      <div class="p-notice">
-        <i class="far fa-question-circle"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
-      </div>
+      <p class="text-[#cc2d7a] mb-4">
+        <i class="far fa-question-circle mr-2"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
+      </p>
 
       <p class="mb-2">
         Your progress here will not be stored, but you can <strong>repeat</strong> those reviews as many times as you want.
@@ -22,12 +21,12 @@
       </p>
     </div>
 
-  </div><!-- /col -->
-</div><!-- /row -->
-<div class="row">
-  <div class="col-md-6">
+</section>
 
-    <div class="padded-box rounded labs-review-box">
+<div class="row">
+  <div class="col-lg-6">
+
+    <div class="ko-CustomReviewForm">
 
       <?php echo form_tag('review/free', ['method' => 'get']) ?>
       
@@ -35,14 +34,14 @@
 
       <div class="form-group">
         RTK Index
-        <?php echo input_tag('from', 1, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
+        <?php echo input_tag('from', 1, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
         to
-        <?php echo input_tag('to', 10, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
+        <?php echo input_tag('to', 10, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
       </div>
 
       <div class="form-group">
       <?php $options_lessons = array_merge([0 => '---'], rtkIndex::getLessonsDropdown()) ?>
-        RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-control form-control-i', 'style' => 'width:14em;margin:0 0.3em;']); ?>
+        RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-select form-control-i w-[14em] mx-2']); ?>
       </div>
 
 <?php 
@@ -62,9 +61,9 @@
     </div>
         
   </div><!-- /col -->
-  <div class="col-md-6">
+  <div class="col-lg-6">
 
-    <div class="padded-box rounded labs-review-box">
+    <div class="ko-CustomReviewForm">
 
       <h3 class="mb-4">Review from learned kanji</h3>
 
@@ -79,7 +78,7 @@
 ?>
       <div class="form-group">
         Review
-        <?php echo input_tag('known', $knowndefault, ['style' => 'width:4.5em;margin:0 0.3em;', 'class' => 'form-control form-control-i']) ?>
+        <?php echo input_tag('known', $knowndefault, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
         of <?php echo $knowncount ?> learned kanji.
       </div>
 <?php

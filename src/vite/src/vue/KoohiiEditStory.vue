@@ -76,15 +76,14 @@
                 ></textarea>
 
                 <div class="flex justify-between items-center">
-                  <div class="align-middle">
+                  <div class="flex items-center">
                     <input
                       id="storyedit_public"
                       v-model="postStoryPublic"
                       type="checkbox"
                       name="chkPublic"
                     />
-                    <label for="storyedit_public" class="ml-2"
-                      >Share this story</label
+                    <label for="storyedit_public" class="form-label mb-0 ml-2">Share this story</label
                     >
                   </div>
                   <div class="">

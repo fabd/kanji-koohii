@@ -15,27 +15,38 @@
 
     <div class="padded-box rounded mb-3 max-w-[600px]">
 
-      <?php echo form_errors() ?>
-      <?php echo form_tag('home/contact', ['class'=>'block']) ?>
+<?php
+    echo form_tag('home/contact', ['class'=>'block']);
 
-      <div class="form-group">
-        <label for="name">Name</label>
-        <?php echo input_tag('name', '', ['class' => 'form-control JsFocusOnLoadInput', 'id' => 'name', 'style' => 'max-width:300px']) ?>
-      </div>
+    echo _bs_form_group(
+      ['validate' => 'name'],
+      _bs_input_email('name', [
+        'label' => 'Name',
+        'class' => 'JsFocusOnLoadInput max-w-[300px]',
+      ])
+    );
 
-      <div class="form-group">
-        <label for="email_address">Email *</label>
-        <input type="text" name="email" class="form-control" id="email_address" placeholder="Email" style="max-width:300px" />
-      </div>
+    echo _bs_form_group(
+      ['validate' => 'email'],
+      _bs_input_email('email', [
+        'label' => 'Email *',
+        'placeholder' => 'Email',
+        'class' => 'max-w-[300px]',
+      ])
+    );
 
-      <div class="form-group">
-        <label for="message">Message</label>
-        <?php echo textarea_tag('message', '', ['rows' => 8, 'class' => 'form-control']) ?>
-      </div>
+    echo _bs_form_group(
+      ['validate' => 'message'],
+      _bs_input_textarea('message', [
+        'label' => 'Message',
+        'rows' => 8
+      ])
+    );
 
-      <div class="form-group">
-        <?php echo submit_tag('Send', ['class' => 'btn btn-lg btn-success']) ?>
-      </div>
+    echo _bs_form_group(
+      _bs_submit_tag('Send message')
+    );
+?>
 
     </form>
   </div>

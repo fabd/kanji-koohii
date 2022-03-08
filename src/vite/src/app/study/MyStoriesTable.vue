@@ -2,8 +2,8 @@
   <div class="flex items-center">
     <div class="mr-2">Sort</div>
     <div class="">
-      <select v-model="selected" class="form-control w-[140px]">
-        <option v-for="option in options" v-bind:value="option.value">
+      <select v-model="selected" class="form-select w-[140px]">
+        <option v-for="(option, i) in options" :key="i" :value="option.value">
           {{ option.text }}
         </option>
       </select>

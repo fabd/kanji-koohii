@@ -1,0 +1,91 @@
+// ====================================================================
+// BUTTONS
+//
+//   For now, Bootstrap buttons tweaks/overrides
+// ====================================================================
+
+// --------------------------------------------------------------------
+// fix the hover styles
+// --------------------------------------------------------------------
+.btn,
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn-link {
+  text-decoration: underline;
+}
+
+// --------------------------------------------------------------------
+// override the button colors - the BS mixins dont create nice hovers
+// --------------------------------------------------------------------
+// NOTE! because the php helper auto-adds `btn-success`, declare other colors *after*
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+
+  &:hover {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+  }
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+
+  &:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+  }
+}
+
+// set :focus text color (override Bootstrap's selector created by their mixin)
+.btn-success,
+.btn-danger {
+  .btn-check:focus + &,
+  &:focus {
+    color: #fff;
+  }
+}
+
+// --------------------------------------------------------------------
+// GHOST BUTTON
+// --------------------------------------------------------------------
+.btn-ghost {
+  color: #6f6961;
+  background-color: inherit;
+  border-color: $--clr-bg-1s;
+}
+
+.btn-default {
+  background-color: $--clr-bg-1;
+  color: #444;
+  border-color: $--clr-bg-1s;
+}
+
+/* cf. BootstrapHelper :: _bs_button_with_icon()  .fa .far .fas */
+.btn i {
+  margin-right: 0.5em;
+}
+
+/* push buttons (note :hover & :active same style due to touch :active -> :hover */
+.btn-go {
+  color: #fff;
+  background-color: #5cb85c;
+  border: none;
+  border-bottom: 3px solid #318a31;
+}
+.btn-go:active,
+.btn-go:hover {
+  color: #fff;
+  border-bottom-width: 1px;
+  margin-top: 2px;
+}
+.btn-lg.btn-go {
+  padding: 12px 16px 10px;
+}

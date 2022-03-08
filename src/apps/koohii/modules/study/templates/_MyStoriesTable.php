@@ -30,11 +30,11 @@
           <div class="story"><?php echo $S['story'] ?></div>
         </div>
 
-        <div class="sharedstory_meta flex">
-          <div class="lastmodified flex-a-c" title="Last edited"><i class="far fa-clock"></i> <?php echo time_ago_in_words($S['ts_dispdate']) ?> ago</div>
+        <div class="sharedstory_meta">
+          <div class="lastmodified" title="Last edited"><i class="far fa-clock"></i> <?php echo time_ago_in_words($S['ts_dispdate']) ?> ago</div>
 
 <?php if ($S['share']): ?>
-          <div class="actions col-m text-right">
+          <div class="sharedstory-actions">
 <?php if ($S['kicks'] > 0): ?>
             <div class="sharedstory_btn"><i class="fa fa-exclamation"></i><span><?php echo $S['kicks'] ?></span></div>
 <?php endif ?>
@@ -43,7 +43,7 @@
 <?php endif ?>            
           </div>
 <?php else: ?>
-          <div class="col-m flex-a-c text-right">
+          <div class="sharedstory-actions">
             <div class="sharedstory_btn"><i class="fa fa-lock"></i><span>PRIVATE</span></div>
           </div>
 <?php endif ?>

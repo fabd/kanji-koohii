@@ -7,19 +7,20 @@
 
 /* dialog body */
 #edit-keyword {
-  width: 367px;
-}
-#edit-keyword p {
-  margin: 0 0 8px;
-}
-#edit-keyword .txt-ckw {
-  display: block;
-  width: 100%;
-  padding: 3px 4px;
-  margin: 0;
-  border: 1px solid #e0e0e0;
-  background: #fffde7;
-  font: 19px/1em Georgia, serif;
+  min-width: 367px;
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  .JsEditKeywordTxt {
+    background: #fffde7;
+    font: 19px/1em Georgia, serif;
+  }
+
+  @media screen and (max-width: 700px) {
+    width: auto;
+  }
 }
 
 /* Editable keyword highlight */

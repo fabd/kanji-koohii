@@ -1,0 +1,93 @@
+// ====================================================================
+// MIXINS
+//
+//   Responsive & Media Queries:
+//
+//     screen()
+//
+// ====================================================================
+
+// --------------------------------------------------------------------
+// BREAKPOINT-UP (min-width)
+//
+//   Tailwind breakpoints (keep in sync with tailwind config!)
+//
+//     md        ... matches tailwind `md`
+//     lg        ... matches tailwind `lg`
+//     xl        ... matches tailwind `xl`
+//
+//   Examples:
+//
+//      @include breakpoint-up(md) { ... }
+//
+// --------------------------------------------------------------------
+@mixin breakpoint-up($size) {
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "md" {
+    @media only screen and (min-width: $--bp-md) {
+      @content;
+    }
+  }
+
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "lg" {
+    @media only screen and (min-width: $--bp-lg) {
+      @content;
+    }
+  }
+
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "xl" {
+    @media only screen and (min-width: $--bp-xl) {
+      @content;
+    }
+  }
+}
+
+// --------------------------------------------------------------------
+// BREAKPOINT-DOWN (max-width)
+//
+//   Similar to Bootstrap's `breakpoint-down()`.
+//   https://getbootstrap.com/docs/5.0/layout/breakpoints/#max-width
+// --------------------------------------------------------------------
+@mixin breakpoint-down($size) {
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "md" {
+    @media only screen and (max-width: $--bp-md - 0.02px) {
+      @content;
+    }
+  }
+
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "lg" {
+    @media only screen and (max-width: $--bp-lg - 0.02px) {
+      @content;
+    }
+  }
+
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "xl" {
+    @media only screen and (max-width: $--bp-xl - 0.02px) {
+      @content;
+    }
+  }
+}
+
+// --------------------------------------------------------------------
+// CUSTOM RANGES (match custom bp's in tailwind config)
+//
+// --------------------------------------------------------------------
+@mixin screen($size) {
+  // MUST match the same named breakpoint in tailwind.config.js!
+  @if $size == "mbl" {
+    @media only screen and (max-width: 991px) {
+      @content;
+    }
+  }
+
+  @if $size == "dsk" {
+    @media only screen and (min-width: 992px) {
+      @content;
+    }
+  }
+}

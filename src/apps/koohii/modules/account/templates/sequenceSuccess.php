@@ -45,7 +45,7 @@ td input { vertical-align:middle; }
   <p>Select the <strong><?php echo _CJ('Remembering the Kanji') ?></strong> book editions you are studying with.</p>
 
   <?php $sequences = rtkIndex::getSequences(); ?>
-  <table class="blocky">
+  <table class="blocky mb-8">
     <thead>
       <tr><th>Edition</th><th>Description</th><th>Count</th></tr>
     </thead>

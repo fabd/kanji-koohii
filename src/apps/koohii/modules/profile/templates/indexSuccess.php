@@ -11,8 +11,8 @@
 
   <h3>Activity</h3>
 
-  <table cellspacing="0" class="blocky">
-    <tr><th>Stories</th>
+  <table cellspacing="0" class="blocky mb-8">
+    <tr><th style="width: 170px">Stories</th>
         <td><strong><?php echo $num_stories->total ?></strong> (<?php echo $num_stories->public ?> public,
         <?php echo $num_stories->private ?> private)</td>
     </tr>
@@ -23,7 +23,6 @@
     <tr><th>Last Login</th><td><?php echo time_ago_in_words($profile_user->ts_lastlogin, true) ?> ago</td></tr>
   </table>
 
-  <br/>
   <h3>Shared Stories</h3>
 
 <?php if ($num_stories->public <= 0): ?>

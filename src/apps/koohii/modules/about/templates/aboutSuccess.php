@@ -1,15 +1,14 @@
 <?php
-  use_helper('Widgets');
   $sf_request->setParameter('_homeFooter', true);
 ?>
-<div class="row">
+<div class="row pt-4">
 
-  <div class="col-md-2">
-    <?php echo image_tag('/images/1.0/nav/about_photo2.gif', ['style' => 'display:block;margin:0 0 1em; border-radius:100%;', 'size' => '140x140']) ?>
-    <?php //echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block')) ?>
+  <div class="col-lg-3 mb-8">
+    <?= image_tag('/images/1.0/nav/about_photo2.gif', ['class' => 'block mx-auto rounded-full', 'size' => '140x140']); ?>
+    <?php //echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block'))?>
   </div>
 
-  <div class="col-md-8">
+  <div class="col-lg-9">
 
     <section>
       <h2>So what is a "koohii" anyway ?</h2>

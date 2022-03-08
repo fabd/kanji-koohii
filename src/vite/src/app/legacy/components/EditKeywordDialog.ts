@@ -130,6 +130,6 @@ export default class EditKeywordDialog {
   }
 
   getInput(): HTMLInputElement {
-    return $$(".txt-ckw", this.dialog!.getBody())[0] as HTMLInputElement;
+    return $$(".JsEditKeywordTxt", this.dialog!.getBody())[0] as HTMLInputElement;
   }
 }

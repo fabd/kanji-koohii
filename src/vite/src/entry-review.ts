@@ -6,7 +6,7 @@
  */
 
 // import legacy stylesheets
-import "@css/kanji-review.build.scss";
+import "./assets/sass/kanji-review.build.scss";
 
 import { domGetById, domContentLoaded } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";

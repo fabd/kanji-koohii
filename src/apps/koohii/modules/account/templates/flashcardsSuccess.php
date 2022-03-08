@@ -1,8 +1,4 @@
 <?php use_helper('Form', 'Validation', 'Widgets', 'Decorator') ?>
-<?php slot('inline_styles') ?>
-label { font-weight:bold; }
-p.info { margin:0.5em 0 1em 1.3em; }
-<?php end_slot() ?>
 
 <?php decorate_start('SideTabs', ['active' => 'flashcards']) ?>
 
@@ -14,7 +10,7 @@ p.info { margin:0.5em 0 1em 1.3em; }
     <p></p>
 
     <label><?php echo checkbox_tag('opt_no_shuffle', '1', 0) ?> Review <strong>new flashcards</strong> (blue pile) in RTK order.</label>
-    <p class="info">Check this option to disable shuffling the kanji from your new flashcards pile. Reviewing new cards in 
+    <p class="ml-4 mt-2 mb-4">Check this option to disable shuffling the kanji from your new flashcards pile. Reviewing new cards in 
     RTK order provides additional cues that can make the first review easier, but can also help build more associations
     for memorizing.</p>
 

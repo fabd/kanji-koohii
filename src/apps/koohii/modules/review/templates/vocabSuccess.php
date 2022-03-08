@@ -5,8 +5,7 @@
 
 <h2>Vocab Shuffle</h2>
 
-<div class="row mb-3">
-  <div class="col-md-12">
+<div class="mb-3">
 
     <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
 
@@ -15,15 +14,15 @@
 
     <?php #echo link_to('<span>Start Vocab Shuffle!</span>', 'labs/review', array('class' => 'uiIBtn uiIBtnDefault')) ?>
 
-  </div><!-- /col -->
-</div><!-- /row -->    
+
+</div>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-lg-6">
 
-    <div class="padded-box rounded labs-review-box">
+    <div class="ko-CustomReviewForm">
     
-      <h4>Discover words based on RTK index</h4>
+      <h3>Discover words based on RTK index</h3>
 
       <p>Start a vocab session with words selected based on RTK index.</p>
 
@@ -49,11 +48,11 @@
     </div><!-- /box -->
 
   </div><!-- /col -->       
-  <div class="col-md-6">
+  <div class="col-lg-6">
 
-    <div class="padded-box rounded labs-review-box">
+    <div class="ko-CustomReviewForm">
       
-      <h4>Discover words made only of learned kanji</h4>
+      <h3>Discover words made only of learned kanji</h3>
 
 <?php if ($learnedcount > 0): ?>
       <p><strong><?php echo $learnedcount ?></strong> learned kanji (one or more succesful reviews).</p>

@@ -8,8 +8,8 @@ module.exports = {
 
   ignoreFiles: [
     // ignore legacy stylesheets (see README in that folder)
-    "src/assets/css/**/*.css",
-    "src/assets/css/**/*.scss",
+    "src/assets/sass/legacy/**/*.css",
+    "src/assets/sass/legacy/**/*.scss",
   ],
 
   rules: {

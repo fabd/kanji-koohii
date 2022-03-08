@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-10 col-md-push-1">
+  <div class="col-lg-10 mx-auto">
 
 <?php
   if (null === sfConfig::get('app_fork')) {

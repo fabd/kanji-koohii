@@ -30,6 +30,14 @@
   }
 }
 
+.kk-PaypalForm {
+  // this fixes a vertical gap when paypal's `pixel.gif` is not yet loaded
+  form > img[height="1"] {
+    width: 1px;
+    height: 1px;
+  }
+}
+
 .btn-patreon {
   color: #fff;
   background: #eb491d;

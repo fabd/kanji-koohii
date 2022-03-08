@@ -25,12 +25,16 @@
     <img class="block mb-8" style="width:126px" src="/images/3.0/support/paypal.png" />
 
     <div class="padded-box rounded-lg no-gutter-xs-sm mb-8">
-      <p>PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).</p>
+      <p>
+        PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).
+      </p>
+      <div class="kk-PaypalForm">
 <?php if (null === sfConfig::get('app_fork'))
 {
   include_partial('_paypalDonateButton');
 }
 ?>
+      </div>
     </div>
  
     <h3>Patrons (past &amp; present)</h3>

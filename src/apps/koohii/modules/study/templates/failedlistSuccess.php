@@ -39,8 +39,3 @@
   <div id="FailedListTable">
     <?php include_component('study', 'FailedListTable') ?>
   </div>
-
-<?php koohii_onload_slot() ?>
-  new Koohii.UX.AjaxTable('FailedListTable');
-<?php end_slot() ?>
-

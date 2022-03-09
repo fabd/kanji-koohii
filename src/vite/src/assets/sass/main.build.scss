@@ -1117,6 +1117,17 @@ table.lessons td {
 }
 
 // --------------------------------------------------------------------
+// Restudy List
+// --------------------------------------------------------------------
+.ko-RestudyList {
+  // small "learned" tag in the Restudy List
+  &-learned {
+    @apply px-[.4em] py-[.3em] rounded;
+    @apply bg-[#6cbe6b] text-[#fff];
+  }
+}
+
+// --------------------------------------------------------------------
 // (last) tailwind utilities
 // --------------------------------------------------------------------
 @import "tailwindcss/utilities";

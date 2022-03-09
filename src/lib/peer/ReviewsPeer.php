@@ -21,6 +21,9 @@
  *  getSelectForDetailedList()
  *  getSelectForExport()
  *  getFlashcardsForReview()
+ * 
+ *  getRestudyKanjiCount($userId)
+ *  getRestudyKanjiListSelect($userId)
  *
  *  hasFlashcard($userId, $ucsId)
  *  isFailedCard($userId, $ucsId)
@@ -672,18 +675,29 @@ class ReviewsPeer extends coreDatabaseTable
   /**
    * Return select object for the Restudy Kanji list.
    * 
-   * @param  integer   $userId
+   * @param  int   $userId
    * 
    * @return coreDatabaseSelect
    */
   public static function getRestudyKanjiListSelect($userId)
   {
     $select = self::getInstance()
-      ->select(['seq_nr' => rtkIndex::getSqlCol(), 'kanji', 'successcount', 'failurecount', 'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)']);
+      ->select([
+        'kanji',
+        'seq_nr' => rtkIndex::getSqlCol(),
+        'successcount',
+        'failurecount',
+        'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
+        'is_learned' => new coreDbExpr('(lk.ucs_id IS NOT NULL)')
+      ]);
+
+    $select->joinLeftUsing(LearnedKanjiPeer::getInstance()->getName().' lk', 'userid,ucs_id');
+
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
     $select->where('leitnerbox=1 AND totalreviews>0');
     $select = self::filterByUserId($select, $userId);
+
     return $select;
   }
 

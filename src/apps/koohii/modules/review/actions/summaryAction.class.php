@@ -31,9 +31,6 @@ class summaryAction extends sfAction
 
       if (!$this->fc_free)
       {
-        // clear remaining items from the Learned list so user can Restudy again
-        LearnedKanjiPeer::clearAll($this->getUser()->getUserId());
-
         // update last review timestamp and total reviews count
         ActiveMembersPeer::updateFlashcardInfo($this->getUser()->getUserId());
       }

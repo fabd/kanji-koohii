@@ -851,8 +851,7 @@ class ReviewsPeer extends coreDatabaseTable
     }
 
     // clear relearned kanji if successfull answer
-    // NOTE: expected for API
-    if ($result && rtkApi::isApiModule()
+    if ($result
         && ($oData->r === LeitnerSRS::RATE_HARD ||
             $oData->r === LeitnerSRS::RATE_YES  ||
             $oData->r === LeitnerSRS::RATE_NO   ||

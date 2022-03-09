@@ -466,12 +466,6 @@
   color: #444;
 } /* small images in dropdown */
 
-/* failed kanji */
-table.failed-kanji td {
-  background-color: #fff;
-  border-top: 1px solid #eee;
-}
-
 @include breakpoint-up(lg) {
   /* less contrating themes for desktop sidebar */
   #browse {

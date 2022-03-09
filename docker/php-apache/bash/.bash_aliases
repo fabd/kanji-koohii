@@ -73,6 +73,9 @@ alias ncu='./node_modules/.bin/ncu'
 # KOOHII DEV
 ###############
 
+# watch custom error log with colored output (see lib/ColorizedLogger.php)
+alias kklog='tail -f koohii-log.txt'
+
 # build / alias for favicon generator (see src/web/favicons/README.md)
 alias real-favicon=./node_modules/.bin/real-favicon
 

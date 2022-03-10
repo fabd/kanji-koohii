@@ -57,14 +57,6 @@
   }
 }
 
-/* ajax table container div (cf. ./legacy/_widgets.scss) */
-.uiTable {
-  overflow-y: auto;
-  _overflow: auto;
-  margin: 0 0 1em;
-  border-right: 1px dotted #bdbcaa;
-}
-
 /* when footer gradient is used */
 body.with-footer {
   background: #f0ddd4;

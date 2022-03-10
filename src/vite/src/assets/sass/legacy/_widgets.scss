@@ -148,8 +148,10 @@
 
 .uiTable {
   // crude solution for horizontal scrolling on small screens
-  overflow-y: auto; _overflow: auto; margin: 0 0 1em; border-right:1px dotted #bdbcaa;
-}
+  overflow-y: auto;
+  _overflow: auto;
+  margin: 0 0 1em;
+ }
 
 .uiTabular { border:1px solid #BDBCAA; border-top:1px solid #D9D8CE; width:100%; }
 /* thead */

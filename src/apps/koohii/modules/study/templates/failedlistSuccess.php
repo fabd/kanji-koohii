@@ -56,7 +56,16 @@
 
       </div>
     </div>
+<?php if (!$restudyCount): ?>
 
+  <div class="ko-StrokeBox ko-StrokeBox--subdued min-h-[336px] flex mb-8">
+    <p class="text-warm m-auto">
+      Hooray, your forgotten kanji list is empty!
+    </p>
   </div>
 
+<?php else: ?>
+
   <?php include_component('study', 'FailedListTable'); ?>
+
+<?php endif; ?>

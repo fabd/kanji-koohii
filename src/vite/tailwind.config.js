@@ -32,6 +32,11 @@ module.exports = {
       },
 
       transparent: "transparent",
+
+      warm: {
+        DEFAULT: "#87847D",
+        light: "#A9A396",
+      },
     },
 
     // redeclare to remove the baked-in line-height, and add `md` alias

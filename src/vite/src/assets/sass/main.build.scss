@@ -128,6 +128,20 @@ a.admin-edit {
   background-color: $--clr-bg-1;
 }
 
+// a style of bordered box, clear filling
+.ko-StrokeBox {
+  @apply border-2 border-transparent rounded-md;
+  padding: 1rem;
+
+  &--danger {
+    border-color: #E579797a; // 48%
+  }
+
+  &--success {
+    border-color: #6CA02A7a; // 48%
+  }
+}
+
 /* ---------------------------- */
 /* UI */
 /* ---------------------------- */

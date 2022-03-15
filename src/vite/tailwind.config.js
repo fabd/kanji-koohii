@@ -20,11 +20,18 @@ module.exports = {
 
       danger: {
         DEFAULT: "#9f0e0b",
+        dark: "#D23C3C",
       },
 
       shaded: {
         DEFAULT: "#e7e1d3",
       },
+
+      success: {
+        darker: "#2C892C",
+      },
+
+      transparent: "transparent",
     },
 
     // redeclare to remove the baked-in line-height, and add `md` alias

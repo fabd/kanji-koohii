@@ -1,35 +1,58 @@
 <?php
-  $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
+  $userId = $sf_user->getUserId();
+  $restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
+  $learnedCount = LearnedKanjiPeer::getCount($userId);
 ?>
 
   <h2>Restudy List</h2>
 
-  <div class="row">
-    <div class="col-lg-6">
-      <p>Pick a kanji from the list to restudy or go straight to review.</p> 
+  <div class="row mb-8">
+    <div class="col-md-6">
+  <?php if ($restudyCount): ?>
+      <div class="ko-StrokeBox ko-StrokeBox--danger">
+        <h3 class="text-md font-bold text-danger-dark"><?= $restudyCount; ?> Kanji to Restudy</h3>
+  <?php else: ?>
+      <div class="ko-StrokeBox ko-StrokeBox--success">
+        <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji !</h3>
+  <?php endif; ?>
 
-<?php if ($restudyCount > 20): ?>
-      <h3>Using the "learned" pile</h3>
-      <p>If you have a lot of failed cards, you might want to review it in small batches as you work on them.
-       
-        To do this, use the "Learned" button on the Study pages, then review the learned pile from there.
-         </p>
-<?php endif ?>
+        <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#yaya', ['class' => 'whitespace-nowrap']); ?>
+
+        <div class="flex items-center">
+          <button type="button" class="btn btn-success" disabled="disabled">
+            Begin Restudy <i class="fa fa-book-open"></i>
+          </button>
+
+          <?php if ($restudyCount): ?>
+          <?= _bs_button(
+  'Review All Forgotten Kanji',
+  '@review',
+  ['query_string' => 'box=1', 'class' => 'btn btn-lg btn-outline-danger']
+);
+          ?>
+          <?php endif; ?>
+        </div>
+      </div>
     </div>
 
-    <div class="col-lg-6">
-      <div class="" style="margin:0 0 1.5em;">
+    <div class="col-md-6">
+      <div class="min-w-300px ml-auto padded-box rounded-md">
+        <h3 class="text-md font-bold text-body">Learned Kanji</h3>
 
-<?php if ($restudyCount > 0): ?>
 
-        <?php //echo _bs_button_with_icon('Review forgotten cards', '@review', array('query_string' => 'box=1', 'icon' => 'fa-play')) ?>
-        <?php echo _bs_button("<strong>$restudyCount</strong> failed cards (review)", '@review', ['query_string' => 'box=1',
-          'class' => 'btn btn-lg btn-srs btn-failed', 'icon' => 'fa-play']) ?>
-<?php else: ?>
+        
+        <?php if ($learnedCount): ?>
+          <p><strong><?= $learnedCount; ?></strong> learned kanji are ready for review.</p>
 
-        <button type="button" class="btn btn-success" disabled="disabled">You have no failed kanji cards!</button>
-
-<?php endif ?>
+  <?= _bs_button(
+            'Review Learned Kanji <i class="fa fa-arrow-right"></i>',
+            '@review',
+            [
+              'query_string' => 'box=1',
+              'class' => 'btn btn-lg btn-srs btn-learned',
+            ]
+          ); ?>
+        <?php endif; ?>
 
       </div>
     </div>
@@ -37,5 +60,5 @@
   </div>
 
   <div id="FailedListTable">
-    <?php include_component('study', 'FailedListTable') ?>
+    <?php include_component('study', 'FailedListTable'); ?>
   </div>

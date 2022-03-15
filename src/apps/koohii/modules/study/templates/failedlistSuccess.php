@@ -59,6 +59,4 @@
 
   </div>
 
-  <div id="FailedListTable">
-    <?php include_component('study', 'FailedListTable'); ?>
-  </div>
+  <?php include_component('study', 'FailedListTable'); ?>

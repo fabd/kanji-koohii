@@ -1,79 +1,84 @@
 // ====================================================================
-// BUTTONS
+// KOOHII BUTTONS
 //
-//   For now, Bootstrap buttons tweaks/overrides
+//  Base:
+//
+//    ko-Btn            Adds drop-shadow, handles :focus, :hover etc
+//
+//  Colors:
+//
 // ====================================================================
 
 // --------------------------------------------------------------------
-// fix the hover styles
+// Base class
 // --------------------------------------------------------------------
-.btn,
-.btn:hover {
+.ko-Btn {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  text-align: center;
   text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: none;
+
+  border-radius: $--border-radius-md;
+  padding: 0.375rem 0.75rem;
 }
 
-.btn-link {
-  text-decoration: underline;
-}
-
-// --------------------------------------------------------------------
-// override the button colors - the BS mixins dont create nice hovers
-// --------------------------------------------------------------------
-// NOTE! because the php helper auto-adds `btn-success`, declare other colors *after*
-.btn-success {
-  color: #fff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
-
-  &:hover {
-    color: #fff;
-    background-color: #449d44;
-    border-color: #398439;
-  }
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
-
-  &:hover {
-    color: #fff;
-    background-color: #c9302c;
-    border-color: #ac2925;
-  }
-}
-
-// set :focus text color (override Bootstrap's selector created by their mixin)
-.btn-success,
-.btn-danger {
-  .btn-check:focus + &,
-  &:focus {
-    color: #fff;
-  }
+.ko-Btn {
+  @include button-color($bg: #f1f1f1, $text: $--color-text-body, $shadow: none);
 }
 
 // --------------------------------------------------------------------
-// GHOST BUTTON
+// Colors
 // --------------------------------------------------------------------
-.btn-ghost {
-  color: #6f6961;
-  background-color: inherit;
-  border-color: $--clr-bg-1s;
+.ko-Btn {
+  @include button-color($bg: $--color-btn-default);
+}
+.ko-Btn--primary {
+  @include button-color($bg: $--color-btn-primary);
+}
+.ko-Btn--danger {
+  @include button-color($bg: $--color-btn-danger);
+}
+.ko-Btn--success {
+  @include button-color($bg: $--color-btn-success);
 }
 
-.btn-default {
-  background-color: $--clr-bg-1;
-  color: #444;
-  border-color: $--clr-bg-1s;
+// --------------------------------------------------------------------
+// Sizes
+//
+//   Note selector specificity required due to element's `.el-button.is-round`
+// --------------------------------------------------------------------
+.ko-Btn {
+  @include font($--button-font-size-md);
+  padding: 7px 14px; // ~36px height
+  border-radius: $--border-radius-lg;
 }
 
-/* cf. BootstrapHelper :: _bs_button_with_icon()  .fa .far .fas */
-.btn i {
-  margin-right: 0.5em;
+.ko-Btn--small {
+  @include font($--button-font-size-sm);
+  padding: 4px 8px; // ~31 px height
+  border-radius: $--border-radius-lg;
 }
 
-/* push buttons (note :hover & :active same style due to touch :active -> :hover */
+.ko-Btn--large {
+  @include font($--button-font-size-lg);
+  padding: 8px 14px; // ~42px height
+  border-radius: $--border-radius-lg;
+}
+
+// --------------------------------------------------------------------
+// Misc. special styles
+// --------------------------------------------------------------------
+// push buttons (note :hover & :active same style due to touch :active -> :hover)
 .btn-go {
   color: #fff;
   background-color: #5cb85c;

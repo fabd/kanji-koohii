@@ -4,9 +4,7 @@
 
     <h2>Buttons</h2>
 
-    <h3>Vanilla element-ui buttons</h3>
-
-    <p>Vanilla element-ui buttons using <code>type="primary"</code> (etc).</p>
+    <p>element-ui buttons using <code>type="primary"</code> (etc).</p>
 
     <section class="ux-docSection ux-docDemoblock">
       <div class="mb-2">
@@ -25,6 +23,35 @@
         <el-button type="info" round>Info</el-button>
         <el-button type="warning" round>Warning</el-button>
         <el-button type="danger" round>Danger</el-button>
+      </div>
+    </section>
+   
+
+    <p>Vanilla html buttons (eg. used in php templates)</p>
+
+    <section class="ux-docSection ux-docDemoblock">
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">Size: small</span>
+        <button class="ko-Btn ko-Btn--small">Default</button>
+        <button class="ko-Btn ko-Btn--small ko-Btn--primary">Primary</button>
+        <button class="ko-Btn ko-Btn--small ko-Btn--success">Success</button>
+        <button class="ko-Btn ko-Btn--small ko-Btn--danger">Danger</button>
+      </div>
+
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">Size: default</span>
+        <button class="ko-Btn">Default</button>
+        <button class="ko-Btn ko-Btn--primary">Primary</button>
+        <button class="ko-Btn ko-Btn--success">Success</button>
+        <button class="ko-Btn ko-Btn--danger">Danger</button>
+      </div>
+      
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">Size: large</span>
+        <button class="ko-Btn ko-Btn--large">Default</button>
+        <button class="ko-Btn ko-Btn--large ko-Btn--primary">Primary</button>
+        <button class="ko-Btn ko-Btn--large ko-Btn--success">Success</button>
+        <button class="ko-Btn ko-Btn--large ko-Btn--danger">Danger</button>
       </div>
     </section>
   </div>

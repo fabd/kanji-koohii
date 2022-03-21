@@ -11,7 +11,7 @@
 
     <div class="flex items-center -mx-1 mbl:w-[182px] mbl:ml-auto dsk:mb-2">
       <div class="w-1/2 mx-1">
-        <?= link_to('Clear', 'study/clear?goto='.$kanji, ['class' => 'btn btn-danger']); ?>
+        <?= link_to('Clear', 'study/clear?goto='.$kanji, ['class' => 'ko-Btn ko-Btn--danger']); ?>
       </div>
   
       <div class="w-1/2 mx-1 mbl:ml-4">

@@ -19,7 +19,11 @@
 <?php echo form_tag('manage/removeListConfirm', ['class' => 'main-form']) ?>
 <?php
     echo _bs_submit_tag('Remove Cards') . '<em class="note">Note: there will be a confirmation step.</em>';
-    echo link_to('Clear selection', 'manage/removelist', ['class' => 'btn btn-danger', 'style' => 'margin-left:2em']);
+    echo _bs_button(
+      'Clear selection',
+      'manage/removelist',
+      ['class' => 'ko-Btn ko-Btn--danger ml-4']
+    );
 ?>
 </form>
 </div>

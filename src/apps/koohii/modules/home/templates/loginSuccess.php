@@ -33,7 +33,7 @@
     */
 
     echo _bs_form_group(
-      _bs_submit_tag('Sign In', ['class' => 'btn-lg'])
+      _bs_submit_tag('Sign In', ['class' => 'ko-Btn ko-Btn--success ko-Btn--large'])
     );
 ?>
    

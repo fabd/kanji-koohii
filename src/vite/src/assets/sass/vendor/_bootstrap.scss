@@ -137,35 +137,8 @@ textarea.form-control.is-invalid {
 // BOOTSTRAP BUTTONS tweaks/overrides
 // --------------------------------------------------------------------
 
-// fix the hover styles
-.btn,
-.btn:hover {
-  text-decoration: none;
-}
-
 .btn-link {
   text-decoration: underline;
-}
-
-
-.btn-danger {
-  color: #fff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
-
-  &:hover {
-    color: #fff;
-    background-color: #c9302c;
-    border-color: #ac2925;
-  }
-}
-
-// set :focus text color (override Bootstrap's selector created by their mixin)
-.btn-danger {
-  .btn-check:focus + &,
-  &:focus {
-    color: #fff;
-  }
 }
 
 .btn-ghost {

@@ -33,7 +33,7 @@
   </p>
   <?php
   echo _bs_form_group(
-    _bs_submit_tag('Delete this account', ['class' => 'btn-danger'])
+    _bs_submit_tag('Delete this account', ['class' => 'ko-Btn ko-Btn--danger'])
   );
   ?>
   </form>

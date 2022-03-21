@@ -20,7 +20,7 @@
       _bs_input_email('email_address', ['label' => 'Email address', 'placeholder' => 'Email', 'class' => 'JsFocusOnLoadInput'])
     );
     echo _bs_form_group(
-      _bs_submit_tag('Send password instructions', ['class' => ''])
+      _bs_submit_tag('Send password instructions')
     );
   ?>
   </form>

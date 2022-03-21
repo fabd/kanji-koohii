@@ -27,7 +27,7 @@
  *
  * FORM HELPERS
  *
- *  _bs_formgroup([array $options], ...)
+ *   _bs_formgroup([array $options], ...)
  *
  *    $options (optional) ... passed to Symfony tag helpers
  *
@@ -37,21 +37,17 @@
  *    Example:
  *      _bs_formgroup(['validate' => 'username'], ...)
  *
- *  _bs_input_checkbox($name, $options = array())
+ *   _bs_input_checkbox($name, $options = array())
  *
  *      OPTIONAL  'label' => 'Label text'
  *      NOTE!     The input's `value` is ALWAYS "1"
  *
- *  _bs_input_text    ($name, $options = array())
- *
- *  _bs_input_textarea($name, $options = array())
- *
- *  _bs_input_email   ($name, $options = array())
- *
- *  _bs_input_password($name, $options = array())
- *
- *  _bs_submit_tag    ($label, $options = array())
- *
+ *   _bs_input_email   ($name, $options = array())
+ *   _bs_input_password($name, $options = array())
+ *   _bs_input_text    ($name, $options = array())
+ *   _bs_input_textarea($name, $options = array())
+ * 
+ *   _bs_submit_tag    ($label, $options = array())
  *
  *
  * FORM LAYOUT
@@ -246,9 +242,21 @@ function _bs_input_textarea($name, $options = [])
   return _bs_input('textarea', $name, $options);
 }
 
+/**
+ * Returns <input type=submit" ...> - adds 'success' button styles by
+ * default unless a `ko-Btn` class is used in the `class` option.
+ *
+ * @param string $label
+ * @param array $options Symfony tag helper options
+ * @return string
+ */
 function _bs_submit_tag($label, $options = [])
 {
-  _bs_class_merge($options, 'ko-Btn ko-Btn--success');
+  // default to adding `success` style - unless a button class is used
+  $classnames = $options['class'] ?? '';
+  if (false === strstr($classnames, 'ko-Btn')) {
+    _bs_class_merge($options, 'ko-Btn ko-Btn--success');
+  }
 
   return submit_tag($label, $options);
 }

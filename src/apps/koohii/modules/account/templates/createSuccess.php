@@ -75,8 +75,13 @@
 <div class="padded-box rounded mb-3" style="max-width:380px">
 <?php
     echo _bs_form_group(
-  _bs_submit_tag('Create Account', ['class' => 'btn-lg'])
-);
+      _bs_submit_tag(
+        'Create Account',
+        [
+          'class' => 'ko-Btn ko-Btn--success ko-Btn--large'
+        ]
+      )
+    );
 ?>
 </div><!-- /padded-box -->
 

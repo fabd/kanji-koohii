@@ -10,7 +10,7 @@
     <h3 class="">Restudy <strong><?php echo $restudy_count ?></strong></h3>
 
     <div class="mbl:ml-auto">
-      <?php echo link_to('Start', 'study/edit', ['query_string' => "restudy", 'class' => 'btn btn-primary']) ?>
+      <?php echo link_to('Start', 'study/edit', ['query_string' => "restudy", 'class' => 'ko-Btn is-ghost']) ?>
     </div>
 
   </div>

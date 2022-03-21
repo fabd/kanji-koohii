@@ -75,7 +75,7 @@
                   name="txtStory"
                 ></textarea>
 
-                <div class="flex justify-between items-center">
+                <div class="flex flex-wrap items-center">
                   <div class="flex items-center">
                     <input
                       id="storyedit_public"
@@ -86,7 +86,7 @@
                     <label for="storyedit_public" class="form-label mb-0 ml-2">Share this story</label
                     >
                   </div>
-                  <div class="">
+                  <div class="ml-auto">
                     <koohii-chars-left
                       :text="postStoryEdit"
                       :max-length="512"
@@ -104,7 +104,7 @@
                       value="Cancel"
                       name="cancel"
                       title="Cancel changes"
-                      class="btn btn-default inline-block w-auto"
+                      class="ko-Btn is-ghost"
                       @click="onCancel"
                     />
                   </div>

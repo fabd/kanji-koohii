@@ -24,6 +24,6 @@
 
 <?php endif; ?>
 
-  <p><a href="#" class="btn btn-primary JSManageReset">Remove more cards</a></p>
+  <p><a href="#" class="ko-Btn is-ghost JSManageReset">Remove more cards</a></p>
 
 </form>

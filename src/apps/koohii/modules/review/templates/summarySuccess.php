@@ -41,7 +41,7 @@
 
 <?php
     $go_back = $fc_free ? 'review/custom' : 'review/index';
-    echo _bs_button('Back', $go_back, ['class' => 'btn btn-primary']);
+    echo _bs_button('Back', $go_back, ['class' => 'ko-Btn is-ghost']);
 
     if ($fc_rept !== '')
     {

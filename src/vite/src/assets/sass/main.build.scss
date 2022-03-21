@@ -134,7 +134,7 @@ a.admin-edit {
   padding: 1rem;
 
   &--danger {
-    border-color: #E579797a; // 48%
+    border-color: #e579797a; // 48%
   }
 
   &--subdued {
@@ -142,7 +142,7 @@ a.admin-edit {
   }
 
   &--success {
-    border-color: #6CA02A7a; // 48%
+    border-color: #6ca02a7a; // 48%
   }
 }
 
@@ -361,36 +361,6 @@ div.col-box-bis {
 /* ---------------------------- */
 #main_container {
   padding-top: 24px;
-}
-
-/* ---------------------------- */
-/* Site wide elements           */
-/* ---------------------------- */
-
-/* Study and SRS */
-.btn-srs strong {
-  color: #fff;
-  font-size: 120%;
-}
-.btn-srs.btn-failed {
-  color: #601008;
-  background-color: #f86464;
-  border-bottom: 3px solid rgb(210, 99, 63);
-}
-.btn-srs.btn-due {
-  color: #502a00;
-  background-color: #f7a247;
-  border-bottom: 3px solid rgb(210, 99, 63);
-}
-.btn-srs.btn-new {
-  color: #0c2b5a;
-  background-color: #79b8e9;
-  border-bottom: 3px solid rgb(61, 131, 172);
-}
-
-.btn-srs:active {
-  border-bottom: 0;
-  margin-top: 3px;
 }
 
 /* ---------------------------- */
@@ -862,11 +832,6 @@ table.lessons td {
 }
 #home-qs .bd {
   min-height: 3em;
-}
-
-#home-qs .btn-go {
-  font-size: 18px;
-  min-width: 150px;
 }
 
 #home-qs a {

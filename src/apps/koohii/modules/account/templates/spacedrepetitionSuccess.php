@@ -15,7 +15,7 @@
   <?php echo form_tag('account/spacedrepetition') ?>
     <div id="JsVueMountSrsForm"></div>
     <p>
-      <?php echo submit_tag('Save changes', ['class' => 'btn btn-success']) ?>
+      <?php echo submit_tag('Save changes', ['class' => 'ko-Btn ko-Btn--success']) ?>
     </p>
   </form>
 

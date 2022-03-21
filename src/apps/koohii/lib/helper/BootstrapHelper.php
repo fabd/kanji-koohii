@@ -22,8 +22,7 @@
  *
  * COMMON HELPERS
  *
- *   _bs_button()                  MUST add Bootstrap css as option 'class' => 'btn btn-success ...'
- *   _bs_button_with_icon()         DONT add 'btn btn-success' ... MUST add 'icon' => 'fa-icon-id'
+ *   _bs_button()
  *
  *
  * FORM HELPERS
@@ -69,8 +68,6 @@
 /**
  * Returns html for a Bootstrap button.
  *
- * Uses 'btn btn-default' unless btn-success, btn-warning, etc specified.
- *
  * Additional options as per Symfony's link_to() helper: 'absolute', 'query_string', 'anchor', etc.
  *
  * @param string $name
@@ -79,27 +76,6 @@
 function _bs_button($name, $internal_uri, array $options = [])
 {
   // TODO
-
-  return link_to($name, $internal_uri, $options);
-}
-
-/**
- * another helper to help refactoring later.
- *
- * Options:
- *   icon    fontawesome icon id (eg. fa-file-o)
- *
- * @param mixed $name
- * @param mixed $internal_uri
- */
-function _bs_button_with_icon($name, $internal_uri, array $options = [])
-{
-  $iconId = _get_option($options, 'icon');
-  assert($iconId !== null);
-
-  _bs_class_merge($options, 'btn btn-success');
-
-  $name = "<i class=\"far {$iconId}\"></i>{$name}";
 
   return link_to($name, $internal_uri, $options);
 }
@@ -272,7 +248,7 @@ function _bs_input_textarea($name, $options = [])
 
 function _bs_submit_tag($label, $options = [])
 {
-  _bs_class_merge($options, 'btn btn-success');
+  _bs_class_merge($options, 'ko-Btn ko-Btn--success');
 
   return submit_tag($label, $options);
 }

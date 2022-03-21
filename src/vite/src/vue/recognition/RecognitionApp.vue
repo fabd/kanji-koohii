@@ -23,7 +23,7 @@
             ></textarea>
             <input
               type="submit"
-              class="btn btn-success"
+              class="ko-Btn ko-Btn--success"
               value="Show"
               @click.prevent="onClickShow"
             />
@@ -56,7 +56,7 @@
           </div>
 
           <div class="mb-4 pb-4 border-b border-[#d4cdba]">
-            <button class="btn btn-success" @click="onClickToEdit">{{
+            <button class="ko-Btn ko-Btn--success" @click="onClickToEdit">{{
               "Enter more japanese text"
             }}</button>
           </div>

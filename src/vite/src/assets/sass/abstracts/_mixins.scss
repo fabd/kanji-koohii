@@ -15,48 +15,6 @@
 // ====================================================================
 
 // --------------------------------------------------------------------
-// Apply fg/bg colors, as well as :hover/:focus states to an element.
-//
-//   $child     If specified, applies the :hover/:focus styles to a
-//              child element.
-//
-// --------------------------------------------------------------------
-@mixin button-color($bg: blue, $text: #fff, $mix: $--color-mix-white, $shadow: none, $child: "") {
-  @if $child == "" {
-    background-color: $bg;
-    border-color: $bg;
-    color: $text;
-  } @else {
-    #{$child} {
-      background-color: $bg;
-      border-color: $bg;
-      color: $text;
-    }
-  }
-
-  /* postcss-bem-linter: ignore */
-  &:hover #{$child},
-  &:focus #{$child} {
-    color: $text;
-
-    @if $mix != "none" {
-      // wip (saturation / darken / lighten ? -- check with designer)
-      background-color: darken(saturate($bg, 5), 10); //mix($mix, $bg, 30%);
-      border-color: darken(saturate($bg, 5), 10); //mix($mix, $bg, 30%);
-    } @else {
-      // override element-ui's default
-      background-color: $bg;
-      border-color: $bg;
-    }
-
-    // maybe we'll add 'medium', 'strong'
-    @if $shadow == "small" {
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-  }
-}
-
-// --------------------------------------------------------------------
 // FONT
 //
 //   Examples:

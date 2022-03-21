@@ -2,25 +2,25 @@
   use_helper('Widgets');
 ?>
 
-  <div id="srs-home_actions">
+  <div id="srs-home_actions" class="ux-flexButtonRow mb-4">
 <?php
   if ($untested_cards > 0) {
     echo _bs_button("<strong>$untested_cards</strong> new", '@review', [
-      'class' => 'btn btn-lg btn-srs btn-new',
+      'class' => 'ko-Btn ko-Btn--srs is-srs-new',
       'query_string' => $me->getQueryString(['type' => 'untested'])
     ]);
   }
 
   if ($expired_total > 0) {
     echo _bs_button("<strong>$expired_total</strong> due", '@review', [
-      'class' => 'btn btn-lg btn-srs btn-due',
+      'class' => 'ko-Btn ko-Btn--srs is-srs-due',
       'query_string' => $me->getQueryString(['type' => 'expired'])
     ]);
   }
 
   if ($restudy_cards > 0) {
     echo _bs_button("<strong>$restudy_cards</strong> restudy", 'study/failedlist', [
-      'class' => 'btn btn-lg btn-srs btn-failed'
+      'class' => 'ko-Btn ko-Btn--srs is-srs-failed'
     ]);
   }
 ?>

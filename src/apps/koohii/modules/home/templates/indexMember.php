@@ -24,7 +24,7 @@ else
 ?>
           </div>
           <div class="bd">
-            <?= _bs_button('Study', 'study/index', ['class' => 'btn btn-lg btn-go']); ?>
+            <?= _bs_button('Study', 'study/index', ['class' => 'ko-Btn ko-Btn--push ko-Btn--xl min-w-[150px]']); ?>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@ else
 ?>
           </div>
           <div class="bd">
-            <?= _bs_button('Review', '@overview', ['class' => 'btn btn-lg btn-go']); ?>
+            <?= _bs_button('Review', '@overview', ['class' => 'ko-Btn ko-Btn--push ko-Btn--xl min-w-[150px]']); ?>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@ else
 ?>
           </div>
           <div class="bd">
-            <?= _bs_button('Progress chart', '@progress', ['class' => 'btn btn-lg btn-go']); ?>
+            <?= _bs_button('Progress chart', '@progress', ['class' => 'ko-Btn ko-Btn--push ko-Btn--xl min-w-[150px]']); ?>
           </div>
         </div>
       </div>

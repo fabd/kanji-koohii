@@ -45,7 +45,14 @@
 
     if ($fc_rept !== '')
     {
-      echo '&nbsp;&nbsp;'._bs_button('Repeat Review', $fc_rept, ['absolute' => true, 'class' => 'btn btn-success']);
+      echo '&nbsp;&nbsp;'._bs_button(
+        '<i class="fa fa-redo mr-2"></i>Repeat Review',
+        $fc_rept,
+        [
+          'absolute' => true,
+          'class' => 'ko-Btn ko-Btn--success'
+        ]
+      );
     }
 ?>
   </div>

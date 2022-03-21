@@ -19,7 +19,7 @@
 <?php endif ?>
 
     <div id="sitenews_back">
-      <?php echo _bs_button('&laquo; Back', '@homepage', ['class' => 'btn btn-success']) ?>
+      <?php echo _bs_button('&laquo; Back', '@homepage', ['class' => 'ko-Btn ko-Btn--success']) ?>
       <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()): ?>
         <?php echo '&nbsp;&nbsp;'.link_to('<i class="fa fa-edit"></i> Edit Post', "news/post?post_id=$post_id", ['class' => 'btn btn-ghost']) ?>
       <?php endif; ?>

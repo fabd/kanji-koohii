@@ -17,28 +17,12 @@
   margin: 2px 0 0;
 }
 
-/* due/new/failed review buttons */
-#srs-home_actions {
-  margin: 0 0 1em;
-}
-#srs-home_actions .btn {
-  margin-right: 0.5em;
-  margin-bottom: 0.4em;
-}
-#srs-home_actions .btn-lg {
-  padding: 10px 15px;
-  font-size: 16px;
-} /* helps fit new/due/restudy in there */
-
 @media (max-width: 374px) {
-  #srs-home_actions .btn-lg {
+  #srs-home_actions .ko-Btn--srs {
     font-size: 13px;
     margin-right: 5px;
   } /* iPhone 5 */
 }
-
-/*#srs-home_actions .fa-cog { font-size:120%; }
-#srs-home_actions .btn-align-right { float:right; }*/
 
 /* ---------------------------- */
 /* Due cards graph */

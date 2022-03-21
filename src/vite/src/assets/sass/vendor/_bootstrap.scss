@@ -120,12 +120,8 @@ textarea.form-control.is-invalid {
   background-image: none; // remove the invalid icon
 }
 
-/* ---------------------------- */
-/* BOOTSTRAP hacks              */
-/* cf. BootstrapHelper          */
-/* ---------------------------- */
-
-// we don't use Boostrap's structure here, see BootstrapHelper.php :: _bs_input_checkbox()
+// we don't use Boostrap's structure here,
+//  @see BootstrapHelper.php :: _bs_input_checkbox()
 .form-group input[type="checkbox"] {
   vertical-align: middle;
   margin: 0;
@@ -135,4 +131,51 @@ textarea.form-control.is-invalid {
   vertical-align: middle;
   padding-left: 0.5em;
   font-weight: normal;
+}
+
+// --------------------------------------------------------------------
+// BOOTSTRAP BUTTONS tweaks/overrides
+// --------------------------------------------------------------------
+
+// fix the hover styles
+.btn,
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn-link {
+  text-decoration: underline;
+}
+
+
+.btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+
+  &:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+  }
+}
+
+// set :focus text color (override Bootstrap's selector created by their mixin)
+.btn-danger {
+  .btn-check:focus + &,
+  &:focus {
+    color: #fff;
+  }
+}
+
+.btn-ghost {
+  color: #6f6961;
+  background-color: inherit;
+  border-color: $--clr-bg-1s;
+}
+
+.btn-default {
+  background-color: $--clr-bg-1;
+  color: #444;
+  border-color: $--clr-bg-1s;
 }

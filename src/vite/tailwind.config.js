@@ -21,6 +21,7 @@ module.exports = {
       danger: {
         DEFAULT: "#9f0e0b",
         dark: "#D23C3C",
+        darker: "#BD2420",
       },
 
       shaded: {
@@ -28,6 +29,7 @@ module.exports = {
       },
 
       success: {
+        dark: "#479947",
         darker: "#2C892C",
       },
 

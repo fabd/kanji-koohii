@@ -20,7 +20,7 @@
 
     <div class="mt-4 flex items-center justify-end">
       <a href="#" class="JsReset inline-block text-[#f37200] hover:text-[#f37200] mr-4" data-reset="<?php echo $orig_keyword; ?>">Reset</a>
-      <?php echo submit_tag('Save', ['class' => 'btn btn-success btn-sm']); ?>
+      <?php echo submit_tag('Save', ['class' => 'ko-Btn ko-Btn--success ko-Btn--small']); ?>
     </div>
 
   </form>

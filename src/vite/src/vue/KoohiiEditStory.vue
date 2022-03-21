@@ -96,7 +96,7 @@
                       type="button"
                       value="Save changes"
                       title="Save/Update story"
-                      class="btn btn-success inline-block w-auto mr-1"
+                      class="ko-Btn ko-Btn--success inline-block w-auto mr-1"
                       @click.prevent="onSubmit"
                     />
                     <input
@@ -141,7 +141,7 @@
                       type="submit"
                       name="doLearned"
                       value="Add to learned list"
-                      class="btn btn-success"
+                      class="ko-Btn ko-Btn--success ko-Btn--small"
                     />
                   </div>
 

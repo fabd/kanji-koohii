@@ -16,7 +16,7 @@
   
       <div class="w-1/2 mx-1 mbl:ml-4">
 <?php if ($learnedCount > 0): ?>
-        <?= link_to('Review', '@review', ['query_string' => 'type=relearned', 'class' => 'btn btn-success']); ?>
+        <?= link_to('Review', '@review', ['query_string' => 'type=relearned', 'class' => 'ko-Btn ko-Btn--success']); ?>
 <?php endif; ?>
       </div>
 

@@ -37,10 +37,10 @@ function get_flashcard_button($userId, $context, $ucsId) {
 
   return <<<EOD
 <div id="EditFlashcard" class="is-toggle-$has_flashcard">
-  <a href="#" class="uiGUI btn btn-success JsEditFlashcard is-0" title="Add  Card" data-uri="$dialogUri" data-param="$params"
-><i class="fa fa-plus"></i>Add Card</a>
-  <a href="#" class="uiGUI btn btn-ghost JsEditFlashcard is-1" title="Edit Card" data-uri="$dialogUri" data-param="$params"
-><i class="fa fa-edit"></i>Edit Card</a>
+  <a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard is-0" title="Add  Card" data-uri="$dialogUri" data-param="$params"
+><i class="fa fa-plus mr-2"></i>Add Card</a>
+  <a href="#" class="uiGUI ko-Btn ko-Btn--editcard rounded JsEditFlashcard is-1" title="Edit Card" data-uri="$dialogUri" data-param="$params"
+><i class="fa fa-edit mr-2"></i>Edit Card</a>
 </div>
 EOD;
 }

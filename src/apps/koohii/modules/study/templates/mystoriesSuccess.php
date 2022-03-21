@@ -19,7 +19,14 @@
 
   <div class="mb-6 relative">
     <div class="absolute right-0 top-0">
-      <?= _bs_button_with_icon('Export to CSV', 'study/export', ['icon' => 'fa-file']); ?>
+      <?= _bs_button(
+          'Export to CSV<i class="fa fa-arrow-down ml-2"></i>',
+          'study/export',
+          [
+            'class' => 'ko-Btn ko-Btn--success',
+          ]
+          );
+      ?>
     </div>
 
     <div id="MyStoriesSelect" class="mb-3"><!-- vue --></div>

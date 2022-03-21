@@ -85,7 +85,7 @@
 
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">&lt;a&gt;</span>
-        <a href="#" class="ko-Btn ko-Btn--editcard rounded">
+        <a href="#" class="ko-Btn is-ghost rounded">
           <i class="fa fa-edit mr-2"></i>Edit Card
         </a>
       </div>

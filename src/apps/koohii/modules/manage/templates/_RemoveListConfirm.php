@@ -15,7 +15,7 @@
   <?php endif ?>
 
   <p>
-    <?php if ($count) { echo _bs_submit_tag('Delete Cards') . '&nbsp;&nbsp;'; } ?><a href="#" class="btn btn-ghost JSManageCancel">Go back</a>
+    <?php if ($count) { echo _bs_submit_tag('Delete Cards') . '&nbsp;&nbsp;'; } ?><a href="#" class="ko-Btn is-ghost JSManageCancel">Go back</a>
   </p>
 
 

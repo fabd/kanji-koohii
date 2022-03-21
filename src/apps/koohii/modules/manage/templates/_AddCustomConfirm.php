@@ -16,7 +16,7 @@
   <?php endif ?>
 
   <p>
-    <?php if ($countNewCards > 0) { echo _bs_submit_tag('Add Cards') . '&nbsp;&nbsp;'; } ?><a href="#" class="btn btn-ghost JSManageCancel">Go back</a>
+    <?php if ($countNewCards > 0) { echo _bs_submit_tag('Add Cards') . '&nbsp;&nbsp;'; } ?><a href="#" class="ko-Btn is-ghost JSManageCancel">Go back</a>
   </p>
 
 

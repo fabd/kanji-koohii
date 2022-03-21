@@ -42,13 +42,6 @@
   // :hover colors
   --ko-btn-hover-text: #{$text};
 
-  // .is-disabled
-  $--disabled-bg: #{lighten(desaturate($bg, 15), 0)};
-  $--disabled-bg: #cdcdcd; // #{color.scale($bg, $saturation: -80%)};
-  --ko-btn-disabled-bg: #{$--disabled-bg};
-  --ko-btn-disabled-border: #{$--disabled-bg};
-  --ko-btn-disabled-text: #757575;
-
   @if $mix {
     // $mix: $--color-mix-white;
     --ko-btn-hover-bg: #{darken(saturate($bg, 5), 10)}; //mix($mix, $bg, 30%);
@@ -59,6 +52,23 @@
   } @else {
     --ko-btn-hover-bg: #{$bg};
     --ko-btn-hover-border: #{$bg};
+  }
+
+  // .is-disabled
+  $--disabled-bg: #{lighten(desaturate($bg, 15), 0)};
+  $--disabled-bg: #cdcdcd; // #{color.scale($bg, $saturation: -80%)};
+  --ko-btn-disabled-bg: #{$--disabled-bg};
+  --ko-btn-disabled-border: #{$--disabled-bg};
+  --ko-btn-disabled-text: #757575;
+
+  // outline aka "ghost" buttons
+  &.is-ghost {
+    --ko-btn-bg: transparent;
+    --ko-btn-border: #{$bg};
+    --ko-btn-text: var(--ko-btn-bg-darker);
+    --ko-btn-hover-bg: transparent;
+    --ko-btn-hover-border: var(--ko-btn-bg-darker);
+    --ko-btn-hover-text: #{darken(saturate($bg, 10), 20)};
   }
 }
 
@@ -109,14 +119,6 @@
       color: var(--ko-btn-disabled-text);
     }
   }
-
-  // outline aka "ghost" buttons
-  &.is-ghost {
-    background-color: transparent;
-    --ko-btn-border: var(--ko-btn-bg);
-    --ko-btn-text: var(--ko-btn-bg-darker);
-    --ko-btn-hover-text: var(--ko-btn-bg-darker);
-  }
 }
 
 // --------------------------------------------------------------------
@@ -124,7 +126,16 @@
 // --------------------------------------------------------------------
 .ko-Btn {
   @include button-color($bg: $--color-btn-default);
+
+  // (override) warm color for the default outline button
+  &.is-ghost {
+    --ko-btn-border: #d4cdba;
+    --ko-btn-text: #6f6961;
+    --ko-btn-hover-text: #3f3931;
+    --ko-btn-hover-border: #928c7d;
+  }
 }
+
 .ko-Btn--primary {
   @include button-color($bg: $--color-btn-primary);
 }
@@ -161,21 +172,6 @@
 // --------------------------------------------------------------------
 // Shapes
 // --------------------------------------------------------------------
-
-// button style currently only used in Study > Edit Card
-.ko-Btn--editcard {
-  --ko-btn-bg: transparent;
-  --ko-btn-border: #{$--clr-bg-1s};
-  --ko-btn-text: #6f6961;
-
-  --ko-btn-hover-bg: transparent;
-  --ko-btn-hover-border: #{$--clr-bg-1s};
-  --ko-btn-hover-text: #333;
-
-  &:focus {
-    --ko-btn-hover-border: #323130;
-  }
-}
 
 // --------------------------------------------------------------------
 // Misc. special styles

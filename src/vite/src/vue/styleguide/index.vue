@@ -1,10 +1,44 @@
 <template>
   <div class="p-8">
-    <h1><a href="/index_dev.php">Koohii</a> / UX Docs</h1>
+    <h1>
+      <a href="/index_dev.php">Koohii</a> / UX Docs
+    </h1>
+
+    <h2>PaddedBox</h2>
+
+    <section class="ux-docSection ux-docDemoblock">
+      <div class="flex mb-4">
+        <span class="self-center font-bold min-w-[100px]">plain</span>
+        <div class="min-w-[200px] ml-4 ko-Box">
+          <h3 class="text-md font-bold text-body">Card Title</h3>
+          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="flex mb-0">
+        <span class="self-center font-bold min-w-[100px]">stroke</span>
+        <div class="min-w-[200px] ml-4 ko-Box ko-Box--stroke">
+          <h3 class="text-md font-bold">Card Title</h3>
+          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="min-w-[200px] ml-4 ko-Box ko-Box--stroke ko-Box--danger">
+          <h3 class="text-md font-bold text-danger-dark">Card Title</h3>
+          <p class="mb-0 text-danger">Lorem ipsum dolor sit amet, consectetur adipiscing elit!</p>
+        </div>
+        <div class="min-w-[200px] ml-4 ko-Box ko-Box--stroke ko-Box--success">
+          <h3 class="text-md font-bold text-success-dark">Card Title</h3>
+          <p
+            class="mb-0 text-success-darker"
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+    </section>
 
     <h2>Buttons</h2>
 
-    <p>element-ui buttons using <code>type="primary"</code> (etc).</p>
+    <p>
+      element-ui buttons using
+      <code>type="primary"</code> (etc).
+    </p>
 
     <section class="ux-docSection ux-docDemoblock">
       <div class="mb-2">
@@ -25,7 +59,6 @@
         <el-button type="danger" round>Danger</el-button>
       </div>
     </section>
-   
 
     <p>Vanilla html buttons (eg. used in php templates)</p>
 
@@ -45,7 +78,7 @@
         <button class="ko-Btn ko-Btn--success">Success</button>
         <button class="ko-Btn ko-Btn--danger">Danger</button>
       </div>
-      
+
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">Size: large</span>
         <button class="ko-Btn ko-Btn--large">Default</button>
@@ -53,7 +86,7 @@
         <button class="ko-Btn ko-Btn--large ko-Btn--success">Success</button>
         <button class="ko-Btn ko-Btn--large ko-Btn--danger">Danger</button>
       </div>
-      
+
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">is-ghost</span>
         <button class="ko-Btn is-ghost ko-Btn--large">Default</button>
@@ -61,7 +94,7 @@
         <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--success">Success</button>
         <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--danger">Danger</button>
       </div>
-      
+
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">is-disabled</span>
         <button class="ko-Btn is-disabled ko-Btn--large" disabled>Default</button>
@@ -70,16 +103,23 @@
         <button class="ko-Btn is-disabled ko-Btn--large ko-Btn--danger" disabled>Danger</button>
       </div>
     </section>
-      
+
     <p>Example buttons with icons</p>
 
     <section class="ux-docSection ux-docDemoblock">
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">&lt;button&gt;</span>
-        <button class="ko-Btn ko-Btn--large ko-Btn--primary">Spaced Repetition<i class="fa fa-arrow-right ml-2"></i></button>
-        <button class="ko-Btn ko-Btn--large ko-Btn--success is-disabled" disabled>Start Review<i class="fa fa-arrow-right ml-2"></i></button>        
+        <button class="ko-Btn ko-Btn--large ko-Btn--primary">
+          Spaced Repetition
+          <i class="fa fa-arrow-right ml-2"></i>
+        </button>
+        <button class="ko-Btn ko-Btn--large ko-Btn--success is-disabled" disabled>
+          Start Review
+          <i class="fa fa-arrow-right ml-2"></i>
+        </button>
         <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary">
-          Show Kanji<i class="fa fa-chevron-down ml-2"></i>
+          Show Kanji
+          <i class="fa fa-chevron-down ml-2"></i>
         </button>
       </div>
 
@@ -89,10 +129,7 @@
           <i class="fa fa-edit mr-2"></i>Edit Card
         </a>
       </div>
-
     </section>
-
-
   </div>
 </template>
 

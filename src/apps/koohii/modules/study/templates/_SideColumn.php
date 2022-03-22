@@ -31,7 +31,7 @@
 
 ?>
 
-  <div class="visible-md-lg padded-box rounded mb-3">
+  <div class="visible-md-lg ko-Box mb-3">
     <h3>Links</h3>
     <div class="mb-2"><?php echo link_to('My stories','study/mystories') ?></div>
   </div>

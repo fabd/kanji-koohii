@@ -122,27 +122,31 @@ a.admin-edit {
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* content boxes */
-.padded-box {
-  @apply px-4 py-4;
-  background-color: $--clr-bg-1;
-}
+.ko-Box {
+  --ko-box-px: 14px;
+  --ko-box-py: 14px;
+  --ko-box-bg: #e7e1d3;
 
-// a style of bordered box, clear filling
-.ko-StrokeBox {
-  @apply border-2 border-transparent rounded-md;
-  padding: 1rem;
+  background-color: var(--ko-box-bg);
+  border-color: var(--ko-box-bg);
+  border-width: 2px;
+  border-radius: $--border-radius-lg;
+  @include px(var(--ko-box-px));
+  @include py(var(--ko-box-py));
 
+  // a style of bordered box, clear filling
+  &--stroke {
+    background: transparent;
+    border-width: 2px;
+    border-color: var(--ko-box-bg, transparent);
+  }
+
+  // colors
   &--danger {
-    border-color: #e579797a; // 48%
+    --ko-box-bg: #ff636399;
   }
-
-  &--subdued {
-    border-color: #e7e1d3;
-  }
-
   &--success {
-    border-color: #6ca02a7a; // 48%
+    --ko-box-bg: #6ca02a7a;
   }
 }
 
@@ -862,7 +866,7 @@ table.lessons td {
  * ---------------------------- */
 
 .ko-CustomReviewForm {
-  @extend .padded-box;
+  @extend .ko-Box;
   @apply rounded;
   font-size: 14px;
   min-height: 120px;

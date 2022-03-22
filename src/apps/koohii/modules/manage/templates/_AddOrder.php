@@ -18,13 +18,13 @@
   );
 ?>
 
-  <div class="padded-box rounded text-body text-sm italic mb-4">
+  <div class="ko-Box text-body text-sm italic mb-4">
     Note! Adding flashcards here will always fill in the gaps if there are any
     missing cards.<br/>
     Use <?= link_to('Custom selection', 'manage/addcustom'); ?> if you do not plan to add all <?= _CJ('RTK'); ?> flashcards in order.
   </div>
 
-  <div class="padded-box rounded">
+  <div class="ko-Box">
 
       23 new characters from the
       <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">RTK Supplement</a>

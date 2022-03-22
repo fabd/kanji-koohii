@@ -13,7 +13,7 @@
 
     <img class="block mb-8" style="width:126px" src="https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png" />
 
-    <div class="padded-box rounded-lg no-gutter-xs-sm mb-8">
+    <div class="ko-Box no-gutter-xs-sm mb-8">
     
     <p>Patreon is a great way to support this website on an ongoing basis.</p>
 
@@ -24,7 +24,7 @@
 
     <img class="block mb-8" style="width:126px" src="/images/3.0/support/paypal.png" />
 
-    <div class="padded-box rounded-lg no-gutter-xs-sm mb-8">
+    <div class="ko-Box no-gutter-xs-sm mb-8">
       <p>
         PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).
       </p>
@@ -43,7 +43,7 @@
 
     <?php $patrons = PatreonPeer::getPatronsList(); ?>
   
-    <div class="padded-box rounded-lg no-gutter-xs-sm">
+    <div class="ko-Box no-gutter-xs-sm">
       <ul class="kk-PatronsList">
 <?php //DBG::printr($patrons);?>
 <?php

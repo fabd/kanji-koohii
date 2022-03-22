@@ -11,7 +11,7 @@
     <div class="row">
 
       <div class="col-lg-4">
-        <div class="box padded-box rounded mb-2">
+        <div class="box ko-Box mb-2">
           <div class="hd">
 <?php if ($countFailed <= 0)
 {
@@ -30,7 +30,7 @@ else
       </div>
 
       <div class="col-lg-4">
-        <div class="box padded-box rounded mb-2">
+        <div class="box ko-Box mb-2">
           <div class="hd">
 <?php if ($countExpired <= 0)
 {
@@ -49,7 +49,7 @@ else
       </div>
   
       <div class="col-lg-4">
-        <div class="box padded-box rounded mb-2">
+        <div class="box ko-Box mb-2">
           <div class="hd">
 <?php if ($progress->heisignum === false)
 {

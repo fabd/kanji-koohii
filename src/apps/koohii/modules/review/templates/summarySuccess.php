@@ -31,7 +31,7 @@
 
 <div class="row">
   <div class="col-lg-6 mb-8">
-    <h3><?= $title; ?></h3>
+    <h3 class="font-bold"><?= $title; ?></h3>
 
     <p>Below is the list of flashcards from your last review session.
     <?php if (!$fc_free) { ?>Click the column titles to sort on frame number, keyword, etc.<?php } ?></p>
@@ -59,7 +59,7 @@
   
   <div class="col-lg-6">
 <?php if ($fcr_total > 0) { ?>
-    <div class="padded-box rounded">
+    <div class="ko-Box">
 
       <?= ui_chart_vs([
         'valueLeft' => $fcr_pass,
@@ -72,7 +72,7 @@
 <?php } ?>
 
 <?php if (count($deletedCards)) { ?>
-    <div id="FcSummaryDeld" class="padded-box rounded">
+    <div id="FcSummaryDeld" class="ko-Box">
       <h3>Deleted flashcards <span>(<?= count($deletedCards); ?>)</span></h3>
       <p><?= cjk_lang_ja('&#'.implode(';&#', $deletedCards)); ?></p>
     </div>

@@ -7,7 +7,7 @@
 
 <?php /* <p>What did you think of the website? <?= link_to('Your feedback', '@contact', ['target' => '_blank']) ?> may help improve the site.</p> */ ?>
 
-<div class="padded-box rounded mb-8 ux-maxWidth360">
+<div class="ko-Box mb-8 ux-maxWidth360">
 
   <?php
   echo form_tag('account/delete', ['class' => '', 'autocomplete' => 'off']);

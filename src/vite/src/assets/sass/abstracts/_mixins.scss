@@ -5,6 +5,8 @@
 //
 //     button-color()
 //     font()
+//     px()
+//     py()
 //
 //   Responsive & Media Queries:
 //
@@ -18,7 +20,7 @@
 
 // --------------------------------------------------------------------
 // BUTTONS
-// 
+//
 //   Helper to create CSS vars & handle states for each button style.
 // --------------------------------------------------------------------
 @mixin button-color($bg: blue, $text: #fff, $mix: true) {
@@ -94,6 +96,21 @@
   @if $family != null {
     font-family: unquote($family);
   }
+}
+
+// --------------------------------------------------------------------
+// PX / PY
+//
+//   Shorthand to set horizontal / vertical padding only.
+//
+// --------------------------------------------------------------------
+@mixin px($unit) {
+  padding-left: $unit;
+  padding-right: $unit;
+}
+@mixin py($unit) {
+  padding-top: $unit;
+  padding-bottom: $unit;
 }
 
 // --------------------------------------------------------------------

@@ -9,7 +9,7 @@
 
 <p class="text-[#822] font-bold">If you do not receive an email please check the SPAM folder!</p>
 
-<div class="padded-box rounded mb-3 max-w-[380px]">
+<div class="ko-Box mb-3 max-w-[380px]">
   <?php
     echo form_errors();
 

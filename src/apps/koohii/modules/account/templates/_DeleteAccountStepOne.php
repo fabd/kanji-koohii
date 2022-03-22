@@ -1,4 +1,4 @@
-<section class="padded-box rounded mt-12 mb-8">
+<section class="ko-Box mt-12 mb-8">
 
   <h2 class="mb-4">Delete Account</h2>
   

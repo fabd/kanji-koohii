@@ -14,6 +14,54 @@
 //
 // ====================================================================
 
+@use "sass:color" as color;
+
+// --------------------------------------------------------------------
+// BUTTONS
+// 
+//   Helper to create CSS vars & handle states for each button style.
+// --------------------------------------------------------------------
+@mixin button-color($bg: blue, $text: #fff, $mix: true) {
+  --ko-btn-bg: #{$bg};
+  --ko-btn-border: #{$bg};
+  --ko-btn-text: #{$text};
+
+  // a darker shade of the main button color
+  --ko-btn-bg-darker: #{darken(saturate($bg, 5), 10)};
+
+  // :hover colors
+  --ko-btn-hover-text: #{$text};
+
+  @if $mix {
+    // $mix: $--color-mix-white;
+    --ko-btn-hover-bg: #{darken(saturate($bg, 5), 10)}; //mix($mix, $bg, 30%);
+    --ko-btn-hover-border: #{darken(saturate($bg, 5), 10)}; //mix($mix, $bg, 30%);
+
+    // --ko-btn-hover-bg: #{lighten(saturate($bg, 5), 10)};
+    // --ko-btn-hover-border: #{lighten(saturate($bg, 5), 10)};
+  } @else {
+    --ko-btn-hover-bg: #{$bg};
+    --ko-btn-hover-border: #{$bg};
+  }
+
+  // .is-disabled
+  $--disabled-bg: #{lighten(desaturate($bg, 15), 0)};
+  $--disabled-bg: #cdcdcd; // #{color.scale($bg, $saturation: -80%)};
+  --ko-btn-disabled-bg: #{$--disabled-bg};
+  --ko-btn-disabled-border: #{$--disabled-bg};
+  --ko-btn-disabled-text: #757575;
+
+  // outline aka "ghost" buttons
+  &.is-ghost {
+    --ko-btn-bg: transparent;
+    --ko-btn-border: #{$bg};
+    --ko-btn-text: var(--ko-btn-bg-darker);
+    --ko-btn-hover-bg: transparent;
+    --ko-btn-hover-border: var(--ko-btn-bg-darker);
+    --ko-btn-hover-text: #{darken(saturate($bg, 10), 20)};
+  }
+}
+
 // --------------------------------------------------------------------
 // FONT
 //

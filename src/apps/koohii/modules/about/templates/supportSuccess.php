@@ -17,7 +17,7 @@
     
     <p>Patreon is a great way to support this website on an ongoing basis.</p>
 
-    <a class="btn btn-lg btn-patreon" href="https://www.patreon.com/kanjikoohii" target="_blank">
+    <a class="ko-Btn ko-Btn--large ko-Btn--patreon" href="https://www.patreon.com/kanjikoohii" target="_blank">
       Become a Patron (recurring pledge)
     </a>
     </div>

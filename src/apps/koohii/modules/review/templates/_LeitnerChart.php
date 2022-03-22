@@ -26,7 +26,7 @@
 ?>
   </div>
 
-  <div id="leitner-chart_pane" class="min-h-[268px] md:min-h-[298px] p-4 bg-[#e7e1d3] no-gutter-xs-sm">
+  <div id="leitner-chart_pane" class="min-h-[268px] md:min-h-[298px] ko-Box no-gutter-xs-sm">
     <!-- Vue goes here -->
   </div>
 

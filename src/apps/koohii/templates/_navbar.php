@@ -172,7 +172,7 @@ if (!$sf_user->isAuthenticated()) {
 
 } else {
 
-  $nav_items[] = nav_m_t('Study', 'study', 'fa-book', [
+  $nav_items[] = nav_m_t('Study', 'study', 'fa-book-open', [
     nav_m_i('Index',       's-i',  'study/index'),
     nav_m_i('Restudy',     's-r',  'study/failedlist' ),
     nav_m_i('My Stories',  's-ms', 'study/mystories' ),

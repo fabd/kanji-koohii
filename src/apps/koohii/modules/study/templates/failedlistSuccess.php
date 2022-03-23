@@ -6,28 +6,28 @@
 
 <h2>Restudy List</h2>
 
-<div class="row mb-8">
-  <div class="col-md-6">
+<div class="row md:items-stretch mb-8">
+  <div class="col-md-6 mb-4 md:mb-0">
 <?php if ($restudyCount): ?>
-    <div class="ko-StrokeBox ko-StrokeBox--danger">
+    <div class="ko-Box ko-Box--stroke ko-Box--danger md:h-full">
       <h3 class="text-md font-bold text-danger-dark"><?= $restudyCount; ?> Kanji to Restudy</h3>
 <?php else: ?>
-    <div class="ko-StrokeBox ko-StrokeBox--success">
+    <div class="ko-Box ko-Box--stroke ko-Box--success">
       <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji !</h3>
 <?php endif; ?>
 
       <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#yaya', ['class' => 'whitespace-nowrap']); ?>
 
       <div class="flex items-center">
-        <button type="button" class="ko-Btn ko-Btn--success ko-Btn--large" disabled="disabled">
+        <button type="button" class="ko-Btn ko-Btn--danger ko-Btn--large" disabled="disabled">
           Begin Restudy<i class="fa fa-book ml-2"></i>
         </button>
 
         <?php if ($restudyCount): ?>
         <?= _bs_button(
-  'Review All Forgotten Kanji',
+  'Review All<i class="fa fa-arrow-right ml-2"></i>',
   '@review',
-  ['query_string' => 'box=1', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large is-ghost ml-6']
+  ['query_string' => 'box=1', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large is-ghost ml-4']
 );
         ?>
         <?php endif; ?>
@@ -36,15 +36,17 @@
   </div>
 
   <div class="col-md-6">
-    <div class="min-w-300px ml-auto padded-box rounded-md">
+    <div class="ko-Box md:h-full">
 
-      <div class="flex items-center justify-between">
+      <div class="flex">
         <h3 class="text-md font-bold text-body">Learned Kanji</h3>
-        <?= link_to(
+        <?php if ($learnedCount): ?>
+          <?= link_to(
           '<i class="fa fa-times mr-2"></i>Clear learned list ',
           'study/failedlist',
-          ['class' => 'text-danger-darker no-underline hover:underline']
-        ); ?>
+          ['class' => 'leading-1 text-danger-darker hover:underline ml-auto']
+          ); ?>
+        <?php endif; ?>
       </div>
       
       <?php if ($learnedCount): ?>
@@ -67,7 +69,7 @@
 
 <?php if (!$restudyCount): ?>
 
-  <div class="ko-StrokeBox ko-StrokeBox--subdued min-h-[336px] flex mb-8">
+  <div class="ko-Box  min-h-[336px] flex mb-8">
     <p class="text-warm m-auto">
       Hooray, your forgotten kanji list is empty!
     </p>

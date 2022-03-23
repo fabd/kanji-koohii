@@ -109,6 +109,12 @@
     <section class="ux-docSection ux-docDemoblock">
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">&lt;button&gt;</span>
+
+        <button type="button" class="ko-Btn ko-Btn--danger ko-Btn--large" disabled="disabled">
+          Begin Restudy
+          <i class="fa fa-book-open ml-2"></i>
+        </button>
+
         <button class="ko-Btn ko-Btn--large ko-Btn--primary">
           Spaced Repetition
           <i class="fa fa-arrow-right ml-2"></i>

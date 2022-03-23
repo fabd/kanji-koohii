@@ -1,11 +1,7 @@
 <div class="row">
   <div class="col-lg-10 mx-auto">
 
-<?php
-  if (null === sfConfig::get('app_fork')) {
-    include_partial('news/_jpodBanner');
-  }
-?>
+<?php if (!KK_ENV_FORK) { include_partial('news/_jpodBanner'); } ?>
 
 <h2>Blog</h2>
 

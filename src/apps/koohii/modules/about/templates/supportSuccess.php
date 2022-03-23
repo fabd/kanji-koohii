@@ -29,11 +29,7 @@
         PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).
       </p>
       <div class="kk-PaypalForm">
-<?php if (null === sfConfig::get('app_fork'))
-{
-  include_partial('_paypalDonateButton');
-}
-?>
+<?php if (!KK_ENV_FORK) { include_partial('_paypalDonateButton'); } ?>
       </div>
     </div>
  

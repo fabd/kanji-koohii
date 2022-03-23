@@ -37,7 +37,7 @@
   </section>
 
 <?php
-if (null === sfConfig::get('app_fork')) {
+if (!KK_ENV_FORK) {
   require_once(sfConfig::get('sf_lib_dir').'/vendor/Patreon/__patreon.php');
   $patron_info = PatreonPeer::getPatronInfo($sf_user->getUserId());
 ?>

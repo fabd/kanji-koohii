@@ -46,7 +46,7 @@
  *   _bs_input_password($name, $options = array())
  *   _bs_input_text    ($name, $options = array())
  *   _bs_input_textarea($name, $options = array())
- * 
+ *
  *   _bs_submit_tag    ($label, $options = array())
  *
  *
@@ -247,14 +247,16 @@ function _bs_input_textarea($name, $options = [])
  * default unless a `ko-Btn` class is used in the `class` option.
  *
  * @param string $label
- * @param array $options Symfony tag helper options
+ * @param array  $options Symfony tag helper options
+ *
  * @return string
  */
 function _bs_submit_tag($label, $options = [])
 {
   // default to adding `success` style - unless a button class is used
   $classnames = $options['class'] ?? '';
-  if (false === strstr($classnames, 'ko-Btn')) {
+  if (false === strstr($classnames, 'ko-Btn'))
+  {
     _bs_class_merge($options, 'ko-Btn ko-Btn--success');
   }
 
@@ -323,5 +325,34 @@ function kk_globals_out()
     }
 
     echo "\n<script>\nwindow.KK || (KK = {});\n".implode("\n", $lines)."\n</script>\n";
+  }
+}
+
+/**
+ * Include FontAwesome 5 webfonts.
+ *
+ *   - github (public) repo points to the free CDN version
+ *
+ *   - private repo has the pro download with all icons
+ *     (temporarily uncomment code below to enable all icons)
+ *
+ *   - production should use the "subset" version compiled
+ *     locally with the subsetter tool
+ */
+function include_fontawesome()
+{
+  // TEMPORARILY uncomment this to test all pro icons (private repo)
+  // echo '<link href="/fonts/fa5pro/css/all-but-duo.min.css" rel="stylesheet">';
+  // return;
+
+  if (KK_ENV_FORK)
+  {
+    // use the free, CDN version
+    echo '<link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">';
+  }
+  else
+  {
+    // use the pro "subset" version for reduced file sizes
+    echo '<link href="/fonts/fa5sub/css/all.min.css" rel="stylesheet">';
   }
 }

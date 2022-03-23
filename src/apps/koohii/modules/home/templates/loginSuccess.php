@@ -1,5 +1,5 @@
 <?php
-  use_helper('Bootstrap', 'Form', 'Validation');
+  use_helper('Form', 'Validation');
   $sf_request->setParameter('_homeFooter', true);
 ?>
 

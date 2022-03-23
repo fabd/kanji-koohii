@@ -1,5 +1,5 @@
 <?php
-  use_helper('Bootstrap', 'Form', 'Validation', 'Widgets', 'Decorator');
+  use_helper('Form', 'Validation', 'Widgets', 'Decorator');
 ?>
 
 <?php decorate_start('SideTabs', ['active' => 'editaccount']); ?>

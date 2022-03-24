@@ -63,11 +63,21 @@ If an image changes, simply rename it eg. `logo-20210815.gif`. For now we'd rath
 
 ## Versioning of CSS/JS not handled by Vite
 
-Since removing Juicer, it is still possible to add versioning to JS/CSS that is not handled by Vite. There is still a mod_rewrite rule in `.htaccess` which can handle css/js files through `version/cache.php` based on file naming pattern:
+It is possible to add versioning to JS/CSS that is not handled by Vite.
 
-`/web/vendor/some-lib.min.js` => `/web/vendor/some-lib-v20210815.min.js`
+There is a mod_rewrite rule in `.htaccess` which matches a filename pattern containing a version number (eg. a YYYYMMDD date), and routes these through a php scrip that sets far future expire headers.
 
-This will cause the file to be gzipped and add far future expire headers + the client will refresh its cache if the hash changed.
+    RewriteRule ^(.*)\.[a-z0-9]+\.(css|js)$   /version/cache.php?file=$0 [L]
+
+A file named...
+
+    /web/vendor/some-lib.min.js
+
+... is referenced in the app (php/js) as:
+
+    /web/vendor/some-lib-v20210815.min.js
+
+The `htaccess` rule will match the pattern, and get the original file, add far future expire headers, and return it as gzipped content.
 
 # Scripts execution
 

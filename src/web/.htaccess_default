@@ -1,7 +1,17 @@
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # Media: images, video, audio (use file name versioning if file is modified)
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/jpg "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg "access plus 1 month"
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # php handler for versioning of front end assets
+  # set far future expire headers for hashed assets
   RewriteRule ^(.*)\.[a-z0-9]+\.(css|js)$   /version/cache.php?file=$0 [L]
 
   # we skip all files with .something

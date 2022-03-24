@@ -5,6 +5,8 @@
 //
 //     button-color()
 //     font()
+//     mx()
+//     my()
 //     px()
 //     py()
 //
@@ -96,6 +98,25 @@
   @if $family != null {
     font-family: unquote($family);
   }
+}
+
+// --------------------------------------------------------------------
+// MX / MY
+//
+//   Shorthand to set horizontal margins.
+//
+//   Commonly used for negative margins, eg:
+//
+//     @include mx(-10px);
+//
+// --------------------------------------------------------------------
+@mixin mx($unit) {
+  margin-left: $unit;
+  margin-right: $unit;
+}
+@mixin my($unit) {
+  margin-top: $unit;
+  margin-bottom: $unit;
 }
 
 // --------------------------------------------------------------------

@@ -62,18 +62,43 @@
  */
 
 /**
- * Returns html for a Bootstrap button.
+ * Similar to sf's button_to(), but outputs a <button> (not an <input type=button>).
  *
- * Additional options as per Symfony's link_to() helper: 'absolute', 'query_string', 'anchor', etc.
+ * DOES NOT DO ANY ESCAPING of the button's contents!
  *
- * @param string $name
- * @param string $internal_uri
+ * <b>Options:</b>
+ * - 'absolute' - if set to true, the helper outputs an absolute URL
+ * - 'query_string' - to append a query string (starting by ?) to the routed url
+ * - 'anchor' - to append an anchor (starting by #) to the routed url
+ *
+ * @see lib/vendor/symfony/lib/helper/UrlHelper.php   button_to()
+ *
+ * @param string $label        valid  for the button
+ * @param string $internal_uri 'module/action' or '@rule' of the action
+ * @param array  $options      additional HTML compliant <input> tag parameters
  */
-function _bs_button($name, $internal_uri, array $options = [])
+function _bs_button($label, $internal_uri, array $options = [])
 {
-  // TODO
+  $html_options = _parse_attributes($options);
 
-  return link_to($name, $internal_uri, $options);
+  $url = url_for($internal_uri);
+
+  if (isset($html_options['query_string']))
+  {
+    $url = $url.'?'.$html_options['query_string'];
+    unset($html_options['query_string']);
+  }
+
+  if (isset($html_options['anchor']))
+  {
+    $url = $url.'#'.$html_options['anchor'];
+    unset($html_options['anchor']);
+  }
+
+  $html_options['onclick'] = "document.location.href='".$url."';";
+  $html_options = _convert_options_to_javascript($html_options);
+
+  return content_tag('button', $label, $html_options);
 }
 
 // Classnames are appended to $options['class'] if present.

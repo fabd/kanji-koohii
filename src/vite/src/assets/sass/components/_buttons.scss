@@ -208,3 +208,29 @@
     border-bottom-color: #3d83ac;
   }
 }
+
+// --------------------------------------------------------------------
+// A "sample" button as used in the Help page, when documentation
+//  refers to a button (ie. "select *Some Button* to do xyz").
+//
+//   <span class="ko-ExBtn ko-ExBtn--success">The Button</span>
+// --------------------------------------------------------------------
+.ko-ExBtn {
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+  @include mx(0.25em);
+  border: 1px solid #d4cdba;
+  color: #6f6961;
+
+  &--danger {
+    $text: $--color-btn-danger;
+    border-color: $text;
+    color: #{darken(saturate($text, 5), 10)};
+  }
+  
+  &--success {
+    $text: $--color-btn-success;
+    border-color: $text;
+    color: #{darken(saturate($text, 5), 10)};
+  }
+}

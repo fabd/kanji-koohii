@@ -61,27 +61,44 @@
 
       <div class="flex">
         <h3 class="text-md font-bold text-body">Learned Kanji</h3>
-        <?php if ($learnedCount): ?>
+<?php if ($learnedCount): ?>
           <?= link_to(
-          '<i class="fa fa-times mr-2"></i>Clear learned list ',
-          'study/clear?goto=restudy',
-          ['class' => 'leading-1 text-danger-darker hover:underline ml-auto']
-        ); ?>
-        <?php endif; ?>
+  '<i class="fa fa-times mr-2"></i>Clear learned list ',
+  'study/clear?goto=restudy',
+  ['class' => 'leading-1 text-danger-darker hover:underline ml-auto']
+); ?>
+<?php endif; ?>
       </div>
       
-      <?php if ($learnedCount): ?>
-        <p><strong><?= $learnedCount; ?></strong> learned kanji are ready for review.</p>
-
-<?= _bs_button(
+<?php if ($learnedCount): ?>
+        <p>You have learned kanji ready for review!</p>
+<?php else: ?>
+        <p>No learned kanji to review.</p>
+<?php endif; ?>
+<?php
+      if ($learnedCount)
+      {
+        echo _bs_button(
+          "Review <strong>{$learnedCount}</strong> Learned Kanji".'<i class="fa fa-arrow-right ml-2"></i>',
+          '@review',
+          [
+            'query_string' => 'type=relearned',
+            'class' => 'ko-Btn ko-Btn--success ko-Btn--large',
+          ]
+        );
+      }
+      else {
+        echo _bs_button(
           'Review Learned Kanji<i class="fa fa-arrow-right ml-2"></i>',
           '@review',
           [
-            'query_string' => 'box=1',
-            'class' => 'ko-Btn ko-Btn--success ko-Btn--large',
+            'query_string' => 'type=relearned',
+            'class' => 'ko-Btn ko-Btn--success ko-Btn--large is-disabled',
+            'disabled' => true,
           ]
-        ); ?>
-      <?php endif; ?>
+        );
+      }
+?>
 
     </div>
   </div>

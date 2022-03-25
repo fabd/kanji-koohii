@@ -20,10 +20,11 @@
 
       <div class="flex items-center">
 <?php
+      $restudyLabel = $learnedCount ? 'Continue Restudy' : 'Begin Restudy';
       if ($restudyCount)
       {
         echo _bs_button(
-          'Begin Restudy<i class="fa fa-book-open ml-2"></i>',
+          $restudyLabel.'<i class="fa fa-book-open ml-2"></i>',
           'study/edit',
           ['query_string' => 'restudy', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large']
         );

@@ -19,15 +19,12 @@
       <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#restudy-list', ['class' => 'whitespace-nowrap']); ?>
 
       <div class="flex items-center">
-        <button type="button" class="ko-Btn ko-Btn--danger ko-Btn--large" disabled="disabled">
-          Begin Restudy<i class="fa fa-book ml-2"></i>
-        </button>
 
         <?php if ($restudyCount): ?>
         <?= _bs_button(
-  'Review All<i class="fa fa-arrow-right ml-2"></i>',
-  '@review',
-  ['query_string' => 'box=1', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large is-ghost ml-4']
+  'Begin Restudy<i class="fa fa-book-open ml-2"></i>',
+  'study/edit',
+  ['query_string' => 'restudy', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large']
 );
         ?>
         <?php endif; ?>

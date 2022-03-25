@@ -1,7 +1,7 @@
 <?php
-  // the restudy session flag is also a cache of the count of failed cards
-  $failedCount = $sf_user->getAttribute(rtkUser::IS_RESTUDY_SESSION, 0);
-  $ofTotal = $failedCount > 0 ? " of {$failedCount}" : '';
+  $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
+
+  $ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
 ?>
 <div id="study-learned" class="study-action-comp no-gutter-xs-sm dsk:mb-4">
 

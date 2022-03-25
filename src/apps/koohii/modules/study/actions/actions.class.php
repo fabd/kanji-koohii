@@ -64,9 +64,7 @@ class studyActions extends sfActions
         $ucsId = ReviewsPeer::getNextUnlearnedKanji($userId);
         $this->forward404Unless($ucsId !== false);
 
-        // the flag is also the restudy total
-        $restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
-        $this->getUser()->setAttribute(rtkUser::IS_RESTUDY_SESSION, $restudyCount);
+        $this->getUser()->setAttribute(rtkUser::IS_RESTUDY_SESSION, true);
       }
       // study
       else

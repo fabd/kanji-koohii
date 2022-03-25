@@ -354,35 +354,6 @@
 /* Learned            */
 /* ------------------ */
 
-/* unlike search box, these blocks do not extend to edges, so they are distinct
-    from the search bar, and appear as part of the main content */
-.study-action-comp {
-  @apply py-2 px-4;
-}
-.study-action-comp h3,
-.study-action-comp .btn {
-  font-size: 18px;
-}
-.study-action-comp h3 {
-  font-weight: normal;
-  line-height: 34px;
-}
-
-/* tighten buttons a bit*/
-.study-action-comp .btn {
-  padding: 7px 12px;
-  line-height: 1em;
-}
-
-/* restudy pane */
-#study-restudy {
-  background: #ff7875;
-}
-#study-restudy,
-#study-restudy h3 {
-  color: #861c1c;
-}
-
 /* learned pane */
 #study-learned {
   background: #c7dfa9;

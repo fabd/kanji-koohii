@@ -40,9 +40,9 @@
 
 // extend our base buttons
 .ko-Btn--patreon {
-  @include button-color($bg: #eb491d, $mix: false);
+  @include button-color($bg: #eb491d, $mix: lighten);
 }
 
 .ko-Btn--paypal {
-  @include button-color($bg: #40acda, $mix: false);
+  @include button-color($bg: #40acda, $mix: lighten);
 }

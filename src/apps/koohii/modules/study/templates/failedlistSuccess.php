@@ -13,21 +13,44 @@
       <h3 class="text-md font-bold text-danger-dark"><?= $restudyCount; ?> Kanji to Restudy</h3>
 <?php else: ?>
     <div class="ko-Box ko-Box--stroke ko-Box--success">
-      <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji !</h3>
+      <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji - Hooray!</h3>
 <?php endif; ?>
 
       <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#restudy-list', ['class' => 'whitespace-nowrap']); ?>
 
       <div class="flex items-center">
-
-        <?php if ($restudyCount): ?>
-        <?= _bs_button(
-  'Begin Restudy<i class="fa fa-book-open ml-2"></i>',
-  'study/edit',
-  ['query_string' => 'restudy', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large']
-);
-        ?>
-        <?php endif; ?>
+<?php
+      if ($restudyCount)
+      {
+        echo _bs_button(
+          'Begin Restudy<i class="fa fa-book-open ml-2"></i>',
+          'study/edit',
+          ['query_string' => 'restudy', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large']
+        );
+      }
+      else
+      {
+        echo _bs_button(
+          'Begin Restudy<i class="fa fa-book-open ml-2"></i>',
+          '@review',
+          [
+            'query_string' => 'box=1',
+            'class' => 'ko-Btn ko-Btn--danger ko-Btn--large is-disabled',
+            'disabled' => true,
+          ]
+        );
+      }
+?>
+<?php
+      if ($restudyCount)
+      {
+        echo _bs_button(
+          'Review All<i class="fa fa-arrow-right ml-2"></i>',
+          '@review',
+          ['query_string' => 'box=1', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large is-ghost ml-4']
+        );
+      }
+?>
       </div>
     </div>
   </div>

@@ -3,23 +3,36 @@
 
   $ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
 ?>
-<div id="study-learned" class="study-action-comp no-gutter-xs-sm dsk:mb-4">
-
-  <div class="mbl:flex items-center">
-
-    <h3 class="m-0 dsk:mb-2">Learned <strong><?= $learnedCount; ?></strong><?= $ofTotal; ?></h3>
-
-    <div class="flex items-center -mx-1 mbl:w-[182px] mbl:ml-auto dsk:mb-2">
-      <div class="w-1/2 mx-1">
-        <?= link_to('Clear', 'study/clear?goto='.$kanji, ['class' => 'ko-Btn ko-Btn--danger']); ?>
-      </div>
-  
-      <div class="w-1/2 mx-1 mbl:ml-4">
-<?php if ($learnedCount > 0): ?>
-        <?= link_to('Review', '@review', ['query_string' => 'type=relearned', 'class' => 'ko-Btn ko-Btn--success']); ?>
-<?php endif; ?>
-      </div>
-
-    </div>
-  </div>
+<div class="ko-Box ko-Box--success ko-Box--stroke no-gutter-xs-sm dsk:mb-4">
+  <h3 class="text-success-dark font-bold leading-1 mb-2">Learned</h3>
+  <p class="text-success-darker text-sm mb-2">
+    <strong><?= $learnedCount; ?></strong>
+    of
+    <strong><?= $restudyCount; ?></strong> Forgotten Kanji
+  </p>
+<?php
+      if ($learnedCount)
+      {
+        echo _bs_button(
+          'Review Learned'.'<i class="fa fa-arrow-right ml-2"></i>',
+          '@review',
+          [
+            'query_string' => 'type=relearned',
+            'class' => 'ko-Btn ko-Btn--success',
+          ]
+        );
+      }
+      else
+      {
+        echo _bs_button(
+          'Review Learned<i class="fa fa-arrow-right ml-2"></i>',
+          '@review',
+          [
+            'query_string' => 'type=relearned',
+            'class' => 'ko-Btn ko-Btn--success is-disabled',
+            'disabled' => true,
+          ]
+        );
+      }
+?>
 </div>

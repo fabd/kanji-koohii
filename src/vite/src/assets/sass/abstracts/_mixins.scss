@@ -25,7 +25,7 @@
 //
 //   Helper to create CSS vars & handle states for each button style.
 // --------------------------------------------------------------------
-@mixin button-color($bg: blue, $text: #fff, $mix: true) {
+@mixin button-color($bg: blue, $text: #fff, $mix: darken) {
   --ko-btn-bg: #{$bg};
   --ko-btn-border: #{$bg};
   --ko-btn-text: #{$text};
@@ -36,14 +36,13 @@
   // :hover colors
   --ko-btn-hover-text: #{$text};
 
-  @if $mix {
-    // $mix: $--color-mix-white;
-    --ko-btn-hover-bg: #{darken(saturate($bg, 5), 10)}; //mix($mix, $bg, 30%);
-    --ko-btn-hover-border: #{darken(saturate($bg, 5), 10)}; //mix($mix, $bg, 30%);
-
-    // --ko-btn-hover-bg: #{lighten(saturate($bg, 5), 10)};
-    // --ko-btn-hover-border: #{lighten(saturate($bg, 5), 10)};
-  } @else {
+  @if $mix == "darken" {
+    --ko-btn-hover-bg: #{darken(saturate($bg, 5), 10)};
+    --ko-btn-hover-border: #{darken(saturate($bg, 5), 10)};
+  } @else if $mix == "lighten" {
+    --ko-btn-hover-bg: #{lighten(saturate($bg, 5), 10)};
+    --ko-btn-hover-border: #{lighten(saturate($bg, 5), 10)};
+  } @else if $mix == false {
     --ko-btn-hover-bg: #{$bg};
     --ko-btn-hover-border: #{$bg};
   }

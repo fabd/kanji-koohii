@@ -1,19 +1,23 @@
+customSuccess:
+  metas:
+    title: "Custom Kanji Review - Kanji Koohii"
+
 indexSuccess:
   metas:
-    title: 'Spaced Repetition - Kanji Koohii'
+    title: "Spaced Repetition - Kanji Koohii"
   javascripts:
     - src/entry-review.ts
 
 reviewSuccess:
   metas:
-    title: 'Flashcard Review'
+    title: "Flashcard Review - Kanji Koohii"
   javascripts:
     - src/entry-review.ts
 
 summarySuccess:
   metas:
-    title: 'Review Summary'
+    title: "Review Summary - Kanji Koohii"
 
 vocabSuccess:
   metas:
-    title: 'Vocab Shuffle Review'
+    title: "Vocab Shuffle - Kanji Koohii"

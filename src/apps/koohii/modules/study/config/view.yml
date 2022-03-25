@@ -1,19 +1,18 @@
-index:
+editSuccess:
   metas:
-    title: "Study: Introduction"
+    title: "Study - Kanji Koohii"
 
-edit:
+failedlistSuccess:
   metas:
-    title: "Index"
+    title: "Restudy List - Kanji Koohii"
 
-failedlist:
+mystoriesSuccess:
   metas:
-    title: "Study: Failed Kanji List"
-
-mystories:
-  metas:
-    title: "Study: My Stories List"
+    title: "My Stories - Kanji Koohii"
 
 all:
+  metas:
+    title: "Study - Kanji Koohii"
+
   javascripts:
     - src/entry-study.ts

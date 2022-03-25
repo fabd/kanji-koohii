@@ -1,22 +1,14 @@
 flashcardlistSuccess:
   metas:
-    title: "Detailed flashcard list"
-
-addcustom:
-  metas:
-    title: "Add custom selection"
-
-removelist:
-  metas:
-    title: "Remove from list"
+    title: "Flashcard List - Kanji Koohii"
 
 editkeywords:
   metas:
-    title: "Edit Keywords"
+    title: "Edit Keywords - Kanji Koohii"
 
 all:
   metas:
-    title: "Manage Flashcards"
+    title: "Manage Flashcards - Kanji Koohii"
 
   javascripts:
     - src/entry-manage.ts

@@ -43,9 +43,9 @@
         <?php if ($learnedCount): ?>
           <?= link_to(
           '<i class="fa fa-times mr-2"></i>Clear learned list ',
-          'study/failedlist',
+          'study/clear?goto=restudy',
           ['class' => 'leading-1 text-danger-darker hover:underline ml-auto']
-          ); ?>
+        ); ?>
         <?php endif; ?>
       </div>
       

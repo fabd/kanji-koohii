@@ -143,21 +143,20 @@ class studyActions extends sfActions
   }
 
   /**
-   * Clear learned list, then redirect to kanji
+   * Clear learned list, then redirect.
    * 
-   * study/clear?goto=< kanji | 0 >
+   * Because of the redirect, browser history doesn't keep
+   * this step, so the user can go "Back" without repeating this action.
    * 
    */
   public function executeClear($request)
   {
     LearnedKanjiPeer::clearAll($this->getUser()->getUserId());
 
-    // redirect
-    if (null !== ($gotoKanji = $request->getParameter('goto'))) {
-      $this->redirect('study/edit?id=' . $gotoKanji);
-    }
+    $goto =  $request->getParameter('goto');
+    $routeTo = $goto === 'restudy' ? 'study/failedlist' : 'study/kanji/1';
 
-    $this->forward404();
+    $this->redirect($routeTo);
   }
 
   /**

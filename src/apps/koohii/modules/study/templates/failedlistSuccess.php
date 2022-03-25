@@ -16,7 +16,7 @@
       <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji !</h3>
 <?php endif; ?>
 
-      <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#yaya', ['class' => 'whitespace-nowrap']); ?>
+      <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#restudy-list', ['class' => 'whitespace-nowrap']); ?>
 
       <div class="flex items-center">
         <button type="button" class="ko-Btn ko-Btn--danger ko-Btn--large" disabled="disabled">

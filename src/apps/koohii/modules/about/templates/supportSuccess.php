@@ -7,11 +7,11 @@
 
     <h2>Support Kanji Koohii<span class="visible-md-lg"> Development</span></h2>
 
-    <p>
+    <p class="mb-8">
       Maintaining and developing new features takes a considerable amount of time. Your support is very important and could allow me to free up more time for development. <em>Thank you!</em>
     </p>
 
-    <img class="block mb-8" style="width:126px" src="https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png" />
+    <img class="block mb-4" style="width:126px" src="https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png" />
 
     <div class="ko-Box no-gutter-xs-sm mb-8">
     
@@ -22,7 +22,7 @@
     </a>
     </div>
 
-    <img class="block mb-8" style="width:126px" src="/images/3.0/support/paypal.png" />
+    <img class="block mb-4" style="width:126px" src="/images/3.0/support/paypal.png" />
 
     <div class="ko-Box no-gutter-xs-sm mb-8">
       <p>

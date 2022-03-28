@@ -64,7 +64,8 @@ class studyActions extends sfActions
         $ucsId = ReviewsPeer::getNextUnlearnedKanji($userId);
         $this->forward404Unless($ucsId !== false);
 
-        $this->getUser()->setAttribute(rtkUser::IS_RESTUDY_SESSION, true);
+        // show the "Learned" pane
+        $this->isBeginRestudy = true;
       }
       // study
       else

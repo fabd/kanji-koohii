@@ -48,7 +48,10 @@ EOD;
 
 <div class="row">
 
-<?php include_partial('SideColumn', ['kanjiData' => $kanjiData, 'intro' => false ]) ?>
+<?php include_partial('SideColumn', [
+  'kanjiData' => $kanjiData,
+  'isBeginRestudy' => $isBeginRestudy ?? false
+  ]) ?>
 
   <div class="col-lg-9">
 

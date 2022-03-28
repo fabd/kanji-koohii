@@ -40,9 +40,6 @@ class rtkUser extends sfBasicSecurityUser
   public const CREDENTIAL_ADMIN = 'admin';
   public const CREDENTIAL_MEMBER = 'member';
 
-  // Misc. states that do not need database permanence
-  public const IS_RESTUDY_SESSION = 'study.restudy.start';
-
   // misc. session attributes
   public const KNOWN_KANJI = 'kanji.known';
 

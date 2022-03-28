@@ -19,11 +19,10 @@
 <?php
   include_partial('study/StudySearch', ['framenum' => $framenum]);
 
-  $isRestudyStarted = $sf_user->hasAttribute(rtkUser::IS_RESTUDY_SESSION);
   $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
   $learnedCount = LearnedKanjiPeer::getCount($sf_user->getUserId());
 
-  if ($isRestudyStarted || $learnedCount > 0)
+  if ($isBeginRestudy || $learnedCount > 0)
   {
     include_partial('study/LearnedPanel', [
       'learnedCount' => $learnedCount,

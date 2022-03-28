@@ -1,6 +1,4 @@
 <?php
-  $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
-
   $ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
 ?>
 <div class="ko-Box ko-Box--success no-gutter-xs-sm dsk:mb-4 mbl:rounded-none">

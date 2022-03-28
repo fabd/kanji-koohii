@@ -21,7 +21,8 @@
       <div class="flex items-center">
 <?php
       $restudyLabel = $learnedCount ? 'Continue Restudy' : 'Begin Restudy';
-      if ($restudyCount)
+      // also disable when all are learned!
+      if ($restudyCount && $learnedCount < $restudyCount)
       {
         echo _bs_button(
           $restudyLabel.'<i class="fa fa-book-open ml-2"></i>',

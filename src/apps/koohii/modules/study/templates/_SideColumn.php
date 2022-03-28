@@ -24,7 +24,7 @@
 
   if ($isBeginRestudy || $learnedCount > 0)
   {
-    include_partial('study/LearnedPanel', [
+    include_partial('LearnedPanel', [
       'learnedCount' => $learnedCount,
       'restudyCount' => $restudyCount,
       'kanji' => $cur_kanji,
@@ -32,7 +32,7 @@
   }
   elseif ($restudyCount)
   {
-    include_partial('RestudyList', [
+    include_partial('RestudyPanel', [
       'restudyCount' => $restudyCount,
     ]);
   }

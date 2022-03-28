@@ -3,6 +3,7 @@
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
       <input :value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
+      <input :value="fromRestudyList" type="hidden" name="fromRestudyList" />
 
       <div id="my-story" lang="ja">
         <div ref="maskArea" class="padding rtkframe flex">
@@ -222,6 +223,7 @@ export default defineComponent({
     initFavoriteStory: { type: Boolean, default: false },
 
     // Study page only, "Add to learned list" functionality
+    fromRestudyList: { type: Boolean, default: false },
     showLearnButton: { type: Boolean, default: false },
     showLearnedMessage: { type: Boolean, default: false },
 

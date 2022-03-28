@@ -169,6 +169,7 @@ EOD;
       'custKeyword' => $custKeyword,
 
       // Study page only (not for flashcards "edit story" dialog)
+      'fromRestudyList' => $sf_request->getParameter('from') === 'restudy-list',
       'showLearnButton' => $showLearnButton,
       'showLearnedMessage' => $showLearnedMessage,
     ];

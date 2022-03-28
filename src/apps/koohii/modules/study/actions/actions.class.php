@@ -34,6 +34,8 @@ class studyActions extends sfActions
    * Convert the search term to a framenum parameter and forward to index.
    * 
    * @url  /study/kanji/:id
+   * 
+   * @param coreRequest $request
    *
    */
   public function executeEdit($request)
@@ -92,6 +94,12 @@ class studyActions extends sfActions
       if ($request->hasParameter('doLearned'))
       {
         LearnedKanjiPeer::addKanji($userId, $ucsId);
+
+        // if user navigates from the Restudy List, goes back there
+        if (rtkValidators::sanitizeBool($request->getParameter('fromRestudyList')))
+        {
+          $this->redirect('study/failedlist');
+        }
 
         // redirect to next restudy kanji
         $nextId = ReviewsPeer::getNextUnlearnedKanji($userId);

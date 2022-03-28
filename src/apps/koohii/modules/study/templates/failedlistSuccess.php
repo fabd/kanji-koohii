@@ -43,7 +43,8 @@
       }
 ?>
 <?php
-      if ($restudyCount)
+      // don't show if all are learned (less confusing)
+      if ($restudyCount && $restudyCount > $learnedCount)
       {
         echo _bs_button(
           'Review All<i class="fa fa-arrow-right ml-2"></i>',

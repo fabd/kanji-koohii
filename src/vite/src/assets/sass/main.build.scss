@@ -143,10 +143,14 @@ a.admin-edit {
 
   // colors
   &--danger {
-    --ko-box-bg: #ff636399;
+    --ko-box-bg: #ffd1c9;
   }
+  &--danger#{&}--stroke {
+    --ko-box-bg: #F2A5A5; // slightly darker for border variant
+  }
+
   &--success {
-    --ko-box-bg: #6ca02a7a;
+    --ko-box-bg: #d1e2bb;
   }
 }
 

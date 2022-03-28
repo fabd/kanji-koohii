@@ -13,6 +13,16 @@
           <h3 class="text-md font-bold text-body">Card Title</h3>
           <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
+        <div class="min-w-[200px] ml-4 ko-Box ko-Box--danger">
+          <h3 class="text-md font-bold text-danger-darker">Card Title</h3>
+          <p class="mb-0 text-danger-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit!</p>
+        </div>
+        <div class="min-w-[200px] ml-4 ko-Box ko-Box--success">
+          <h3 class="text-md font-bold text-success-darker">Card Title</h3>
+          <p
+            class="mb-0 text-success-dark"
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
       </div>
       <div class="flex mb-0">
         <span class="self-center font-bold min-w-[100px]">stroke</span>

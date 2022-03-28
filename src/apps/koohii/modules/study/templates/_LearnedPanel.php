@@ -3,7 +3,7 @@
 
   $ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
 ?>
-<div class="ko-Box ko-Box--success ko-Box--stroke no-gutter-xs-sm dsk:mb-4">
+<div class="ko-Box ko-Box--success no-gutter-xs-sm dsk:mb-4">
   <div class="flex items-center mb-2">
     <h3 class="text-success-dark font-bold leading-1 mb-0">Learned</h3>
     <?= link_to('List', 'study/failedlist', ['class' => 'text-sm ml-auto']); ?>

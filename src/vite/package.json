@@ -27,7 +27,7 @@
     "esbuild": "^0.14.23",
     "npm-check-updates": "^11.8.5",
     "vue": "^3.2.31",
-    "vue-tsc": "^0.31.4",
+    "vue-tsc": "^0.33.7",
     "wanakana": "^4.0.2"
   },
   "devDependencies": {
@@ -51,7 +51,7 @@
     "stylelint-config-recommended-scss": "4.3.x",
     "stylelint-scss": "3.21.x",
     "tailwindcss": "^3.0.x",
-    "typescript": "^4.4.4",
+    "typescript": "^4.6.2",
     "vite": "^2.8.4",
     "vite-plugin-element-plus": "^0.0.12",
     "vite-plugin-md": "^0.11.8"

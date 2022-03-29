@@ -55,8 +55,8 @@
     </div>
 
     <div class="form-group">
-      <?php echo submit_tag('Post', ['class' => 'btn btn-success']) ?>&nbsp;&nbsp;
-      <input type="submit" name="do_preview" value="Preview" class="btn btn-primary">
+      <?php echo submit_tag('Post', ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']) ?>
+      <input type="submit" name="do_preview" value="Preview" class="ko-Btn ko-Btn--primary ko-Btn--large ml-2">
     </div>
 
     </form>

@@ -10,6 +10,6 @@
 
 <?php echo form_tag('manage/importKeywords', ['class' => 'main-form']) ?>
 
-  <p><a href="#" class="btn btn-primary JSManageCancel">Go back</a></p>
+  <p><a href="#" class="ko-Btn is-ghost JSManageCancel">Go back</a></p>
 
 </form>

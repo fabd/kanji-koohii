@@ -1,5 +1,5 @@
 <?php
-  use_helper('Bootstrap', 'Form', 'Validation');
+  use_helper('Form', 'Validation');
 ?>  
 <h2>Delete Your Account</h2>
 
@@ -7,7 +7,7 @@
 
 <?php /* <p>What did you think of the website? <?= link_to('Your feedback', '@contact', ['target' => '_blank']) ?> may help improve the site.</p> */ ?>
 
-<div class="padded-box rounded mb-8 ux-maxWidth360">
+<div class="ko-Box mb-8 ux-maxWidth360">
 
   <?php
   echo form_tag('account/delete', ['class' => '', 'autocomplete' => 'off']);
@@ -33,7 +33,7 @@
   </p>
   <?php
   echo _bs_form_group(
-    _bs_submit_tag('Delete this account', ['class' => 'btn-danger'])
+    _bs_submit_tag('Delete this account', ['class' => 'ko-Btn ko-Btn--danger'])
   );
   ?>
   </form>

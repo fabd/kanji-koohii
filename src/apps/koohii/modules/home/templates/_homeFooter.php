@@ -17,7 +17,7 @@ use_helper('Widgets');
     <div class="container">
       <section>
 <p>Made in Belgium since 2006 by&nbsp;Fabrice.</p>
-<?php if ($sf_user->isAuthenticated() && null === sfConfig::get('app_fork')): ?>
+<?php if ($sf_user->isAuthenticated() && !KK_ENV_FORK): ?>
 <p><strong>Support my work</strong> with <?php echo link_to('Patreon, PayPal', 'about/support') ?>, <span class="break">and affiliate <?php use_helper('__Sponsor'); echo link_to_jpod101('JapanesePod101.com') ?>.</span></p>
 <?php endif ?>
 

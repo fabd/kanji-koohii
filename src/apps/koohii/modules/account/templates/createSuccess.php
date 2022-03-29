@@ -14,7 +14,7 @@
 
 <?php echo form_tag('account/create', ['id' => 'signup-form', 'class' => 'JsFocusOnLoadError', 'autocomplete' => 'false']); ?>
 
-<div class="padded-box rounded mb-3 max-w-[380px]">
+<div class="ko-Box mb-3 max-w-[380px]">
 <?php
     // we use new 'validate' option to display error message below the input field
     // echo form_errors()
@@ -52,9 +52,9 @@
       ])
     );
 ?>
-</div><!-- /padded-box -->
+</div><!-- /ko-Box -->
 
-<div class="padded-box rounded mb-3" style="max-width:380px">
+<div class="ko-Box mb-3" style="max-width:380px">
 <?php
     echo _bs_form_group(
   [
@@ -70,14 +70,19 @@
 ?>
     <p>If you are stuck you can <?php echo link_to('request an account', '@contact'); ?></p>
 
-</div><!-- /padded-box -->
+</div><!-- /ko-Box -->
 
-<div class="padded-box rounded mb-3" style="max-width:380px">
+<div class="ko-Box mb-3" style="max-width:380px">
 <?php
     echo _bs_form_group(
-  _bs_submit_tag('Create Account', ['class' => 'btn-lg'])
-);
+      _bs_submit_tag(
+        'Create Account',
+        [
+          'class' => 'ko-Btn ko-Btn--success ko-Btn--large'
+        ]
+      )
+    );
 ?>
-</div><!-- /padded-box -->
+</div><!-- /ko-Box -->
 
 </form>

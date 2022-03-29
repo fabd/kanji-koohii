@@ -22,13 +22,12 @@
  *
  * COMMON HELPERS
  *
- *   _bs_button()                  MUST add Bootstrap css as option 'class' => 'btn btn-success ...'
- *   _bs_button_with_icon()         DONT add 'btn btn-success' ... MUST add 'icon' => 'fa-icon-id'
+ *   _bs_button()
  *
  *
  * FORM HELPERS
  *
- *  _bs_formgroup([array $options], ...)
+ *   _bs_formgroup([array $options], ...)
  *
  *    $options (optional) ... passed to Symfony tag helpers
  *
@@ -38,21 +37,17 @@
  *    Example:
  *      _bs_formgroup(['validate' => 'username'], ...)
  *
- *  _bs_input_checkbox($name, $options = array())
+ *   _bs_input_checkbox($name, $options = array())
  *
  *      OPTIONAL  'label' => 'Label text'
  *      NOTE!     The input's `value` is ALWAYS "1"
  *
- *  _bs_input_text    ($name, $options = array())
+ *   _bs_input_email   ($name, $options = array())
+ *   _bs_input_password($name, $options = array())
+ *   _bs_input_text    ($name, $options = array())
+ *   _bs_input_textarea($name, $options = array())
  *
- *  _bs_input_textarea($name, $options = array())
- *
- *  _bs_input_email   ($name, $options = array())
- *
- *  _bs_input_password($name, $options = array())
- *
- *  _bs_submit_tag    ($label, $options = array())
- *
+ *   _bs_submit_tag    ($label, $options = array())
  *
  *
  * FORM LAYOUT
@@ -67,41 +62,43 @@
  */
 
 /**
- * Returns html for a Bootstrap button.
+ * Similar to sf's button_to(), but outputs a <button> (not an <input type=button>).
  *
- * Uses 'btn btn-default' unless btn-success, btn-warning, etc specified.
+ * DOES NOT DO ANY ESCAPING of the button's contents!
  *
- * Additional options as per Symfony's link_to() helper: 'absolute', 'query_string', 'anchor', etc.
+ * <b>Options:</b>
+ * - 'absolute' - if set to true, the helper outputs an absolute URL
+ * - 'query_string' - to append a query string (starting by ?) to the routed url
+ * - 'anchor' - to append an anchor (starting by #) to the routed url
  *
- * @param string $name
- * @param string $internal_uri
+ * @see lib/vendor/symfony/lib/helper/UrlHelper.php   button_to()
+ *
+ * @param string $label        valid  for the button
+ * @param string $internal_uri 'module/action' or '@rule' of the action
+ * @param array  $options      additional HTML compliant <input> tag parameters
  */
-function _bs_button($name, $internal_uri, array $options = [])
+function _bs_button($label, $internal_uri, array $options = [])
 {
-  // TODO
+  $html_options = _parse_attributes($options);
 
-  return link_to($name, $internal_uri, $options);
-}
+  $url = url_for($internal_uri);
 
-/**
- * another helper to help refactoring later.
- *
- * Options:
- *   icon    fontawesome icon id (eg. fa-file-o)
- *
- * @param mixed $name
- * @param mixed $internal_uri
- */
-function _bs_button_with_icon($name, $internal_uri, array $options = [])
-{
-  $iconId = _get_option($options, 'icon');
-  assert($iconId !== null);
+  if (isset($html_options['query_string']))
+  {
+    $url = $url.'?'.$html_options['query_string'];
+    unset($html_options['query_string']);
+  }
 
-  _bs_class_merge($options, 'btn btn-success');
+  if (isset($html_options['anchor']))
+  {
+    $url = $url.'#'.$html_options['anchor'];
+    unset($html_options['anchor']);
+  }
 
-  $name = "<i class=\"far {$iconId}\"></i>{$name}";
+  $html_options['onclick'] = "document.location.href='".$url."';";
+  $html_options = _convert_options_to_javascript($html_options);
 
-  return link_to($name, $internal_uri, $options);
+  return content_tag('button', $label, $html_options);
 }
 
 // Classnames are appended to $options['class'] if present.
@@ -270,9 +267,23 @@ function _bs_input_textarea($name, $options = [])
   return _bs_input('textarea', $name, $options);
 }
 
+/**
+ * Returns <input type=submit" ...> - adds 'success' button styles by
+ * default unless a `ko-Btn` class is used in the `class` option.
+ *
+ * @param string $label
+ * @param array  $options Symfony tag helper options
+ *
+ * @return string
+ */
 function _bs_submit_tag($label, $options = [])
 {
-  _bs_class_merge($options, 'btn btn-success');
+  // default to adding `success` style - unless a button class is used
+  $classnames = $options['class'] ?? '';
+  if (false === strstr($classnames, 'ko-Btn'))
+  {
+    _bs_class_merge($options, 'ko-Btn ko-Btn--success');
+  }
 
   return submit_tag($label, $options);
 }
@@ -339,5 +350,34 @@ function kk_globals_out()
     }
 
     echo "\n<script>\nwindow.KK || (KK = {});\n".implode("\n", $lines)."\n</script>\n";
+  }
+}
+
+/**
+ * Include FontAwesome 5 webfonts.
+ *
+ *   - github (public) repo points to the free CDN version
+ *
+ *   - private repo has the pro download with all icons
+ *     (temporarily uncomment code below to enable all icons)
+ *
+ *   - production should use the "subset" version compiled
+ *     locally with the subsetter tool
+ */
+function include_fontawesome()
+{
+  // TEMPORARILY uncomment this to test all pro icons (private repo)
+  // echo '<link href="/fonts/fa5pro/css/all-but-duo.min.css" rel="stylesheet">';
+  // return;
+
+  if (KK_ENV_FORK)
+  {
+    // use the free, CDN version
+    echo '<link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">';
+  }
+  else
+  {
+    // use the pro "subset" version for reduced file sizes
+    echo '<link href="/fonts/fa5sub/css/all.min.css" rel="stylesheet">';
   }
 }

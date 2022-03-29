@@ -1,18 +1,16 @@
 // ====================================================================
 // Selective import of Bootstrap 5 * FORMS *.
 //
-//   - we just want the forms, since styling forms is a PITA
+//   - we just want the forms, since styling forms is a PITA,
+//     and they are reset by tailwind's included `normalize`
 //
 //   - we want to avoid most everything else in Bootstrap since it
 //     does not mix well with the atomic css approach of BEM/tailwind
 //
-//   - we also need default styles to all form elements, since they are
-//     reset by tailwind's included `normalize`
-//
 //   - we DONT want Bootstrap's "reboot" since it is a fork of normalize,
 //     which is already included in tailwind
 //
-//   - design wise, Bootstrap's rounded input styles fits well on Koohii.
+//   - design wise, Bootstrap's rounded input styles fits well on Koohii
 //
 //   @see https://getbootstrap.com/docs/5.0/customize/sass/
 //
@@ -39,13 +37,6 @@ $input-disabled-border-color: $--clr-bg-1s;
 $input-font-size: 15px;
 $input-placeholder-color: #9b9b9b;
 
-$btn-border-radius: 0.25rem;
-$btn-font-size: 14px;
-$btn-transition: none;
-// $btn-padding-y-lg:            $input-btn-padding-y-lg;
-// $btn-padding-x-lg:            $input-btn-padding-x-lg;
-$btn-font-size-lg: 18px;
-
 $form-feedback-invalid-color: #a94442;
 // generated with icones.js <3
 $form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="#e68683" d="M10 3h4v11h-4V3m0 18v-4h4v4h-4Z"></path></svg>');
@@ -55,12 +46,6 @@ $form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.o
 @import "bootstrap/scss/mixins";
 
 // 4. Include any optional Bootstrap components as you like
-
-// --------------------------------------------------------------------
-// Bootstrap 5 BUTTONS
-//   https://getbootstrap.com/docs/5.0/components/buttons/#variables
-// --------------------------------------------------------------------
-@import "bootstrap/scss/buttons";
 
 // --------------------------------------------------------------------
 // Bootstrap 5 FORMS
@@ -103,10 +88,6 @@ $form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.o
   vertical-align: middle;
 }
 
-// --------------------------------------------------------------------
-// Changes to Boostrap5 FORMs
-// --------------------------------------------------------------------
-
 // Unlike BS5, we only output this div when there is an error, instead of
 //  relying on BS5 fancy selectors and regardless of parent/sibling divs,
 //  just show the div.
@@ -120,12 +101,8 @@ textarea.form-control.is-invalid {
   background-image: none; // remove the invalid icon
 }
 
-/* ---------------------------- */
-/* BOOTSTRAP hacks              */
-/* cf. BootstrapHelper          */
-/* ---------------------------- */
-
-// we don't use Boostrap's structure here, see BootstrapHelper.php :: _bs_input_checkbox()
+// we don't use Boostrap's structure here,
+//  @see BootstrapHelper.php :: _bs_input_checkbox()
 .form-group input[type="checkbox"] {
   vertical-align: middle;
   margin: 0;

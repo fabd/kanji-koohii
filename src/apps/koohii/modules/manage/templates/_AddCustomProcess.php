@@ -16,6 +16,6 @@
 ?>
   </div>
 
-  <p><a href="#" class="btn btn-primary JSManageReset">Add more cards</a></p>
+  <p><a href="#" class="ko-Btn is-ghost JSManageReset">Add more cards</a></p>
 
 </form>

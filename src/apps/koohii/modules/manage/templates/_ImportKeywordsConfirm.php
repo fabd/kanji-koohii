@@ -8,6 +8,6 @@
 
   <?php echo ui_data_table($keywords) ?>
 
-  <?php echo _bs_submit_tag('Import') ?>&nbsp;&nbsp;<a href="#" class="btn btn-ghost JSManageCancel">Go back</a>
+  <?php echo _bs_submit_tag('Import') ?>&nbsp;&nbsp;<a href="#" class="ko-Btn is-ghost JSManageCancel">Go back</a>
 
 </form>

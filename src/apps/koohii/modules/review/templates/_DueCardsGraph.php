@@ -1,4 +1,4 @@
-<div id="due-cards" class="padded-box no-gutter-xs-sm mb-3">
+<div id="due-cards" class="ko-Box no-gutter-xs-sm mb-3">
   <div class="barchart-container">
     <div class="barchart-chart">
       <div class="barchart-grid"></div>

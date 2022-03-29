@@ -11,7 +11,7 @@
     <div class="row">
 
       <div class="col-lg-4">
-        <div class="box padded-box rounded mb-2">
+        <div class="box ko-Box mb-2">
           <div class="hd">
 <?php if ($countFailed <= 0)
 {
@@ -24,13 +24,13 @@ else
 ?>
           </div>
           <div class="bd">
-            <?= _bs_button('Study', 'study/index', ['class' => 'btn btn-lg btn-go']); ?>
+            <?= _bs_button('Study', 'study/index', ['class' => 'ko-Btn ko-Btn--push ko-Btn--xl min-w-[150px]']); ?>
           </div>
         </div>
       </div>
 
       <div class="col-lg-4">
-        <div class="box padded-box rounded mb-2">
+        <div class="box ko-Box mb-2">
           <div class="hd">
 <?php if ($countExpired <= 0)
 {
@@ -43,13 +43,13 @@ else
 ?>
           </div>
           <div class="bd">
-            <?= _bs_button('Review', '@overview', ['class' => 'btn btn-lg btn-go']); ?>
+            <?= _bs_button('Review', '@overview', ['class' => 'ko-Btn ko-Btn--push ko-Btn--xl min-w-[150px]']); ?>
           </div>
         </div>
       </div>
   
       <div class="col-lg-4">
-        <div class="box padded-box rounded mb-2">
+        <div class="box ko-Box mb-2">
           <div class="hd">
 <?php if ($progress->heisignum === false)
 {
@@ -68,7 +68,7 @@ else
 ?>
           </div>
           <div class="bd">
-            <?= _bs_button('Progress chart', '@progress', ['class' => 'btn btn-lg btn-go']); ?>
+            <?= _bs_button('Progress chart', '@progress', ['class' => 'ko-Btn ko-Btn--push ko-Btn--xl min-w-[150px]']); ?>
           </div>
         </div>
       </div>

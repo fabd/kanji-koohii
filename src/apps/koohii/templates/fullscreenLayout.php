@@ -14,9 +14,8 @@
 
   include_stylesheets();
   include_javascripts();
+  include_fontawesome();
 ?>
-  <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
-
   <!-- thx realfavicongenerator.net -->
   <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=20170121b">
   <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png?v=20170121" sizes="32x32">

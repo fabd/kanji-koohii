@@ -83,6 +83,13 @@ class FailedListTableBinding implements uiSelectTableBinding
           "cssClass":  "text-center whitespace-nowrap",
           "colData":  "ts_lastreview",
           "colDisplay":"_lastreview"
+        },
+        {
+          "caption":   "Learned",
+          "width":     1,
+          "cssClass":  "text-center",
+          "colData":   "is_learned",
+          "colDisplay":  "_learned"
         }
       ]
     }
@@ -92,9 +99,21 @@ EOD;
   public function filterDisplayData(uiSelectTableRow $row)
   {
     $rowData =& $row->getRowData();
+    
     $rowData['_failurecount'] = $rowData['failurecount']==0 ? '' : $rowData['failurecount'];
+    
     $rowData['_keyword'] = link_to_keyword($rowData['keyword'], $rowData['kanji']);
+    
     $rowData['_lastreview'] = simple_format_date((int)$rowData['ts_lastreview'], rtkLocale::DATE_SHORT);
+    
+    $isLearned = (int)$rowData['is_learned'];
+    
+    $rowData['_learned'] = $isLearned
+      ? '<span class="ko-RestudyList-learned">LEARNED</span>'
+      : link_to_keyword('Study', $rowData['kanji'], [
+        'class' => 'text-danger',
+        'query_string' => 'from=restudy-list'
+      ]);
   }
   
   public function validateRowData(array $rowData)

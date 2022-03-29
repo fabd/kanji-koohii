@@ -9,7 +9,7 @@
 
 <p class="text-[#822] font-bold">If you do not receive an email please check the SPAM folder!</p>
 
-<div class="padded-box rounded mb-3 max-w-[380px]">
+<div class="ko-Box mb-3 max-w-[380px]">
   <?php
     echo form_errors();
 
@@ -20,7 +20,7 @@
       _bs_input_email('email_address', ['label' => 'Email address', 'placeholder' => 'Email', 'class' => 'JsFocusOnLoadInput'])
     );
     echo _bs_form_group(
-      _bs_submit_tag('Send password instructions', ['class' => ''])
+      _bs_submit_tag('Send password instructions')
     );
   ?>
   </form>

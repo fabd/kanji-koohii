@@ -23,6 +23,8 @@ class koohiiConfiguration extends sfApplicationConfiguration
       define('KK_ENV_DEV', CORE_ENVIRONMENT === 'dev');
       define('KK_ENV_PROD', CORE_ENVIRONMENT === 'prod');
 
+      define('KK_ENV_FORK', sfConfig::get('app_fork'));
+
       // FIXME obsolete, clean up
       define('CJ_MODE', 'rtk');
       define('CJ_HANZI', false);

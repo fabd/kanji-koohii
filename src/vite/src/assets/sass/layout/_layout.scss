@@ -67,6 +67,7 @@ $GRID_GUTTER_X: 15px;
 
 // A few places can afford columns in tablet portrait mode (md)
 .col-md-3,
+.col-md-6,
 .col-md-9 {
   @apply grow-0 w-full;
   padding-left: $GRID_GUTTER_X;
@@ -75,6 +76,9 @@ $GRID_GUTTER_X: 15px;
 @include breakpoint-up(md) {
   .col-md-3 {
     @apply w-3/12;
+  }
+  .col-md-6 {
+    @apply w-6/12;
   }
   .col-md-9 {
     @apply w-9/12;

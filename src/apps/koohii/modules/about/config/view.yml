@@ -3,16 +3,11 @@ aboutSuccess:
     title: 'About - Kanji Koohii'
     robots: 'noindex,follow'
 
-advertiseSuccess:
-  metas:
-    title: 'Advertise with Kanji Koohii'
-    robots: 'noindex,nofollow'
-
 learnmoreSuccess:
   metas:
     title: 'Learn more - Kanji Koohii'
 
 supportSuccess:
   metas:
-    title: 'Support Kanji Koohii'
+    title: 'Support - Kanji Koohii'
     robots: 'noindex,follow'

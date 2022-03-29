@@ -17,7 +17,7 @@
 <?php if ($countNewCards) {
   echo _bs_submit_tag('Add Cards', ['style' => 'margin-right:0.5em']); }
 ?>
-<a href="#" class="btn btn-ghost JSManageCancel">Go back</a>
+<a href="#" class="ko-Btn is-ghost JSManageCancel">Go back</a>
 
 
 

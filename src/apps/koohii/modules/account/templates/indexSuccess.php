@@ -37,13 +37,13 @@
   </section>
 
 <?php
-if (null === sfConfig::get('app_fork')) {
+if (!KK_ENV_FORK) {
   require_once(sfConfig::get('sf_lib_dir').'/vendor/Patreon/__patreon.php');
   $patron_info = PatreonPeer::getPatronInfo($sf_user->getUserId());
 ?>
 
   <h3>Patreon</h3>
-  <div class="padded-box rounded">
+  <div class="ko-Box">
 <?php if (false !== $patron_info): ?>
   <p>Thank you for supporting Kanji Koohii, <strong><?php echo $patron_info['pa_full_name'] ?></strong>!</p>
 

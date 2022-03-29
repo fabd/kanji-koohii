@@ -7,33 +7,29 @@
 
     <h2>Support Kanji Koohii<span class="visible-md-lg"> Development</span></h2>
 
-    <p>
+    <p class="mb-8">
       Maintaining and developing new features takes a considerable amount of time. Your support is very important and could allow me to free up more time for development. <em>Thank you!</em>
     </p>
 
-    <img class="block mb-8" style="width:126px" src="https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png" />
+    <img class="block mb-4" style="width:126px" src="https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png" />
 
-    <div class="padded-box rounded-lg no-gutter-xs-sm mb-8">
+    <div class="ko-Box no-gutter-xs-sm mb-8">
     
     <p>Patreon is a great way to support this website on an ongoing basis.</p>
 
-    <a class="btn btn-lg btn-patreon" href="https://www.patreon.com/kanjikoohii" target="_blank">
+    <a class="ko-Btn ko-Btn--large ko-Btn--patreon" href="https://www.patreon.com/kanjikoohii" target="_blank">
       Become a Patron (recurring pledge)
     </a>
     </div>
 
-    <img class="block mb-8" style="width:126px" src="/images/3.0/support/paypal.png" />
+    <img class="block mb-4" style="width:126px" src="/images/3.0/support/paypal.png" />
 
-    <div class="padded-box rounded-lg no-gutter-xs-sm mb-8">
+    <div class="ko-Box no-gutter-xs-sm mb-8">
       <p>
         PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).
       </p>
       <div class="kk-PaypalForm">
-<?php if (null === sfConfig::get('app_fork'))
-{
-  include_partial('_paypalDonateButton');
-}
-?>
+<?php if (!KK_ENV_FORK) { include_partial('_paypalDonateButton'); } ?>
       </div>
     </div>
  
@@ -43,7 +39,7 @@
 
     <?php $patrons = PatreonPeer::getPatronsList(); ?>
   
-    <div class="padded-box rounded-lg no-gutter-xs-sm">
+    <div class="ko-Box no-gutter-xs-sm">
       <ul class="kk-PatronsList">
 <?php //DBG::printr($patrons);?>
 <?php

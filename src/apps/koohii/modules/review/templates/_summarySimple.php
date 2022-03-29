@@ -28,7 +28,7 @@
 
 <?php //echo DBG::printr($cards);?>
 
-<div id="fm-summary" class="padded-box rounded">
+<div id="fm-summary" class="ko-Box">
 <?php if (count($cards) > 0) { ?>
 
   <p><strong>Hint!</strong>  Click the <?= _CJ('kanji'); ?> to open the Study page</p>

@@ -57,14 +57,6 @@
   }
 }
 
-/* ajax table container div (cf. ./legacy/_widgets.scss) */
-.uiTable {
-  overflow-y: auto;
-  _overflow: auto;
-  margin: 0 0 1em;
-  border-right: 1px dotted #bdbcaa;
-}
-
 /* when footer gradient is used */
 body.with-footer {
   background: #f0ddd4;
@@ -130,10 +122,36 @@ a.admin-edit {
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* content boxes */
-.padded-box {
-  @apply px-4 py-4;
-  background-color: $--clr-bg-1;
+.ko-Box {
+  --ko-box-px: 14px;
+  --ko-box-py: 14px;
+  --ko-box-bg: #e7e1d3;
+
+  background-color: var(--ko-box-bg);
+  border-color: var(--ko-box-bg);
+  border-width: 2px;
+  border-radius: $--border-radius-lg;
+  @include px(var(--ko-box-px));
+  @include py(var(--ko-box-py));
+
+  // a style of bordered box, clear filling
+  &--stroke {
+    background: transparent;
+    border-width: 2px;
+    border-color: var(--ko-box-bg, transparent);
+  }
+
+  // colors
+  &--danger {
+    --ko-box-bg: #ffd1c9;
+  }
+  &--danger#{&}--stroke {
+    --ko-box-bg: #F2A5A5; // slightly darker for border variant
+  }
+
+  &--success {
+    --ko-box-bg: #d1e2bb;
+  }
 }
 
 /* ---------------------------- */
@@ -351,36 +369,6 @@ div.col-box-bis {
 /* ---------------------------- */
 #main_container {
   padding-top: 24px;
-}
-
-/* ---------------------------- */
-/* Site wide elements           */
-/* ---------------------------- */
-
-/* Study and SRS */
-.btn-srs strong {
-  color: #fff;
-  font-size: 120%;
-}
-.btn-srs.btn-failed {
-  color: #601008;
-  background-color: #f86464;
-  border-bottom: 3px solid rgb(210, 99, 63);
-}
-.btn-srs.btn-due {
-  color: #502a00;
-  background-color: #f7a247;
-  border-bottom: 3px solid rgb(210, 99, 63);
-}
-.btn-srs.btn-new {
-  color: #0c2b5a;
-  background-color: #79b8e9;
-  border-bottom: 3px solid rgb(61, 131, 172);
-}
-
-.btn-srs:active {
-  border-bottom: 0;
-  margin-top: 3px;
 }
 
 /* ---------------------------- */
@@ -854,11 +842,6 @@ table.lessons td {
   min-height: 3em;
 }
 
-#home-qs .btn-go {
-  font-size: 18px;
-  min-width: 150px;
-}
-
 #home-qs a {
   text-decoration: none;
 }
@@ -887,7 +870,7 @@ table.lessons td {
  * ---------------------------- */
 
 .ko-CustomReviewForm {
-  @extend .padded-box;
+  @extend .ko-Box;
   @apply rounded;
   font-size: 14px;
   min-height: 120px;
@@ -1036,37 +1019,6 @@ table.lessons td {
 }
 
 /* ------------------ */
-/* Social             */
-/* ------------------ */
-
-#custom-tweet-button {
-  margin: 2.5em 0 0;
-  max-width: 125px;
-  text-align: center;
-}
-#custom-tweet-button a {
-  display: inline-block;
-  padding: 4px 8px;
-  font-weight: bold;
-  font-size: 18px;
-  color: #fff;
-  cursor: pointer;
-  text-decoration: none;
-  background: #4faeec; /*1b95e0*/
-  border-radius: 3px;
-}
-#custom-tweet-button i {
-  width: 16px;
-  padding: 0 0.5em 0 0;
-  text-align: center;
-  color: #fff;
-}
-#custom-tweet-button span {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.8em;
-}
-
-/* ------------------ */
 /* CJK Fonts          */
 /* ------------------ */
 
@@ -1114,6 +1066,17 @@ table.lessons td {
 
   color: var(--fg);
   background: var(--bg);
+}
+
+// --------------------------------------------------------------------
+// Restudy List
+// --------------------------------------------------------------------
+.ko-RestudyList {
+  // small "learned" tag in the Restudy List
+  &-learned {
+    @apply px-[.4em] py-[.3em] rounded;
+    @apply bg-[#6cbe6b] text-[#fff];
+  }
 }
 
 // --------------------------------------------------------------------

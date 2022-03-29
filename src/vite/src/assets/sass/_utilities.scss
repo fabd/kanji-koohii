@@ -1,6 +1,11 @@
 // ====================================================================
 // UTILITIES
 //
+//   Layout
+//
+//     ux-flexButtonRow        ... simple horizontal spacing of * > childrens
+//
+//
 //   Sizes / Spacings
 //
 //     ux-maxWidth300/360
@@ -10,11 +15,12 @@
 /* @define utilities */
 
 // --------------------------------------------------------------------
-// MAX WIDTH
+// MIN/MAX WIDTH
 //
-//   Abstraction of small/medium/wide alignment of vertically
-//   stacked elements like centered content (with mx-auto) or form
-//   fields.
+//   Useful to align *block* and *inline-block* elements:
+//
+//     - Use on buttons so they are not too small when label is small.
+//     - Use on centered buttons stacked vertically so they are aligned.
 //
 //   Example:
 //
@@ -25,7 +31,43 @@ $maxWidthItems: ("300" 300px, "360" 360px);
 @each $item in $maxWidthItems {
   $key: nth($item, 1);
   $val: nth($item, 2);
+  //////////////////////////////////////////////////////////////////
+  // Output:
+  //   .ux-maxWidth300 {
+  //     max-width: 300px;
+  //   }
+  //////////////////////////////////////////////////////////////////
   .ux-maxWidth#{$key} {
     max-width: $val;
+  }
+}
+
+$minWidthItems: ("100" 100px, "200" 200px);
+@each $item in $minWidthItems {
+  $key: nth($item, 1);
+  $val: nth($item, 2);
+  //////////////////////////////////////////////////////////////////
+  // Output:
+  //   .ux-minWidth300 {
+  //     min-width: 300px;
+  //   }
+  //////////////////////////////////////////////////////////////////
+  .ux-minWidth#{$key} {
+    min-width: $val;
+  }
+}
+
+// --------------------------------------------------------------------
+// FLEX / BUTTON ROW
+//
+//   Simple spacer for button rows
+//
+// --------------------------------------------------------------------
+.ux-flexButtonRow {
+  $gutter: 0.5rem;
+  @apply flex flex-wrap items-center;
+  margin-left: -$gutter;
+  > * {
+    margin-left: $gutter;
   }
 }

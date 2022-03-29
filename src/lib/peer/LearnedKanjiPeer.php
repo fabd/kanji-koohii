@@ -118,9 +118,6 @@ class LearnedKanjiPeer extends coreDatabaseTable
    */
   public static function clearAll($userId)
   {
-    $user = sfContext::getInstance()->getUser();
-    $user->getAttributeHolder()->remove(rtkUser::IS_RESTUDY_SESSION);
-
     return self::getInstance()->delete('userid = ?', $userId);
   }
 

@@ -14,7 +14,7 @@
 
 ## About the RTK book {#rtk}
 
-<div class="kk-DocMain-whatisrtk padded-box rounded no-gutter-xs-sm mb-8" markdown="1">
+<div class="kk-DocMain-whatisrtk ko-Box pt-6 no-gutter-xs-sm mb-8" markdown="1">
 
   <div class="kk-RtkBook float-left mr-6 mb-4 md:px-4">
     <img src="/images/3.0/help/rtk-book-cover.gif" width="137" height="205" />
@@ -87,6 +87,36 @@ This is done in order to provide meaningful results for Koohii users. The dictio
 
 As such, Koohii's dictionary is not an exhaustive reference. There are already excellent resources dedicated to this such as jisho.org. The goal for Koohii's dictionary is to help you stay focused while getting through the 2000+ common use kanji.
 
+### Restudy List {#restudy-list}
+
+The [Restudy List](/study/failedlist) page lets you see all the kanji that are currently in your failed cards pile (the red pile on the SRS bar chart).
+
+From here you can begin the "Restudy" process, which has two advantages:
+
+1. helps you navigate the Restudy List, so you don't have to manually search for each kanji
+2. lets you mark specific kanji as "learned", and then review just those
+
+You can also select <span class="ko-ExBtn ko-ExBtn--danger">Review All</span> to start a SRS review of all the kanji in your failed pile.
+
+#### Begin Restudy
+
+Select <span class="ko-ExBtn ko-ExBtn--danger">Begin Restudy</span> to restudy, and review, parts or all of your forgotten kanji.
+
+- After you are done re-learning a kanji (perhaps updating your story, or using another one), select <span class="ko-ExBtn ko-ExBtn--success">Add to learned list</span> below the story.
+- Each time you mark a kanji as "learned" this way, you will move to the next kanji in your Restudy List, _in Heisig index order_.
+- You can go back to the Restudy List page at any time and you will see the LEARNED kanji marked in the list. Select "Begin Restudy" again to continue with the remaining kanji.
+
+**Tip!** _If you want to re-study only specific kanji in no particular order, simply click them in the Restudy List to navigate to those Study pages (and select "Add to learned list" each time)._
+
+#### Learned Kanji
+
+Use the Restudy process described above, to add kanji to the Learned Kanji list. "LEARNED" kanji will remain in this state until you either review the kanji succesfully (only SRS reviews), or manually clear the list.
+
+Select <span class="ko-ExBtn ko-ExBtn--success">Review Learned</span> to start a SRS review of only those forgotten kanji that you have marked as learned. This effectively allows you to review only parts of your forgotten kanji. You may want to leave some difficult kanji in this pile indefinitely for example - to restudy only when you'll need them.
+
+Select <span class="ko-ExBtn ko-ExBtn--danger">Clear learned list</span> to "reset" the learned kanji. You will rarely need this, but perhaps if you took a long break, and you had some "learned" kanji left over you may want to start the re-study process again.
+  
+At the end of this review (in fact, _any SRS review_), forgotten kanji will remain in the failed pile but please note _they will be cleared from the learned list_. Kanji that were succesfully reviewed (including "Hard" answer) are no longer in the Restudy List - well done!
 
 ## Using Flashcards
 
@@ -178,11 +208,6 @@ long term memory, therefore it is not possible to select the green piles. Often 
   </dl>
 
 </div>
-
-### Restudy List
-
-If you have previously forgotten kanji from SRS reviews, select **Restudy > Start**. This will take you to the first failed kanji. Once you have revised your story, select **Add to learned list**. This will take you to the next failed kanji. When you have finished working through failed kanji, select **Review** in the sidebar (top on mobile) to do a first review of these cards. Successfull reviews will move these cards into the SRS cycle, and your failed kanji list will eventually be cleared.
-
 
 ### Review Session
 

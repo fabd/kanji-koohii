@@ -26,18 +26,14 @@
 <div class="row">
   <div class="col-lg-9">
 
-<?php
-  if (null === sfConfig::get('app_fork')) {
-    include_partial('news/_jpodBanner');
-  }
-?>
+<?php if (!KK_ENV_FORK) { include_partial('news/_jpodBanner'); } ?>
 
     <h2><?php echo $title ?></h2>
 
     <?php include_partial('news/list', ['posts' => $posts]) ?>
 
     <div id="sitenews_back">
-      <?php echo _bs_button('&laquo; Back', '@homepage', ['class' => 'btn btn-success']) ?>
+      <?php echo _bs_button('&laquo; Back', '@homepage', ['class' => 'ko-Btn ko-Btn--success']) ?>
     </div>
 
   </div>

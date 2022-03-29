@@ -34,6 +34,8 @@ class studyActions extends sfActions
    * Convert the search term to a framenum parameter and forward to index.
    * 
    * @url  /study/kanji/:id
+   * 
+   * @param coreRequest $request
    *
    */
   public function executeEdit($request)
@@ -64,9 +66,8 @@ class studyActions extends sfActions
         $ucsId = ReviewsPeer::getNextUnlearnedKanji($userId);
         $this->forward404Unless($ucsId !== false);
 
-        // the flag is also the restudy total
-        $restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
-        $this->getUser()->setAttribute(rtkUser::IS_RESTUDY_SESSION, $restudyCount);
+        // show the "Learned" pane
+        $this->isBeginRestudy = true;
       }
       // study
       else
@@ -93,6 +94,12 @@ class studyActions extends sfActions
       if ($request->hasParameter('doLearned'))
       {
         LearnedKanjiPeer::addKanji($userId, $ucsId);
+
+        // if user navigates from the Restudy List, goes back there
+        if (rtkValidators::sanitizeBool($request->getParameter('fromRestudyList')))
+        {
+          $this->redirect('study/failedlist');
+        }
 
         // redirect to next restudy kanji
         $nextId = ReviewsPeer::getNextUnlearnedKanji($userId);
@@ -143,21 +150,20 @@ class studyActions extends sfActions
   }
 
   /**
-   * Clear learned list, then redirect to kanji
+   * Clear learned list, then redirect.
    * 
-   * study/clear?goto=< kanji | 0 >
+   * Because of the redirect, browser history doesn't keep
+   * this step, so the user can go "Back" without repeating this action.
    * 
    */
   public function executeClear($request)
   {
     LearnedKanjiPeer::clearAll($this->getUser()->getUserId());
 
-    // redirect
-    if (null !== ($gotoKanji = $request->getParameter('goto'))) {
-      $this->redirect('study/edit?id=' . $gotoKanji);
-    }
+    $goto =  $request->getParameter('goto');
+    $routeTo = $goto === 'restudy' ? 'study/failedlist' : 'study/kanji/1';
 
-    $this->forward404();
+    $this->redirect($routeTo);
   }
 
   /**

@@ -3,7 +3,7 @@
 // ====================================================================
 
 // --------------------------------------------------------------------
-// layout / breakpoints (used by breakpoint mixins)
+// Layout / breakpoints (used by breakpoint mixins)
 //
 //   References:
 //   https://getbootstrap.com/docs/5.0/layout/breakpoints/#available-breakpoints
@@ -17,7 +17,43 @@ $--bp-lg: 992px; // 992px = 62rem
 $--bp-xl: 1280px; // 1280px = 80rem
 
 // --------------------------------------------------------------------
-// colors
+// Borders
+// --------------------------------------------------------------------
+$--border-radius-md: 4px;
+$--border-radius-lg: 6px;
+
+// --------------------------------------------------------------------
+// Buttons
+// --------------------------------------------------------------------
+$--button-font-size-sm: 14px;
+$--button-font-size-md: 14px;
+$--button-font-size-lg: 15px;
+$--button-font-size-xl: 18px;
+
+// --------------------------------------------------------------------
+// Colors / Brand  (should match tailwind config)
+// --------------------------------------------------------------------
+$--color-btn-default: #8e8d8c;
+
+// main primary color (saturated blue/cyan)
+$--color-btn-primary: #3272d1;
+
+// main red color
+$--color-btn-danger: #d9534f;
+
+// main green color
+$--color-btn-success: #4ea84e;
+
+// utilities
+$--color-mix-white: #ffffff;
+
+// --------------------------------------------------------------------
+// Colors / Text
+// --------------------------------------------------------------------
+$--color-text-body: #42413d;
+
+// --------------------------------------------------------------------
+// Colors ( legacy sass stuff - needs renaming/merging )
 // --------------------------------------------------------------------
 $--clr-bg-body: #f4f0e5;
 $--clr-bg-1: #e7e1d3; /* shaded background 1 */

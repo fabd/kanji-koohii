@@ -31,7 +31,7 @@
 
 <div class="row">
   <div class="col-lg-6 mb-8">
-    <h3><?= $title; ?></h3>
+    <h3 class="font-bold"><?= $title; ?></h3>
 
     <p>Below is the list of flashcards from your last review session.
     <?php if (!$fc_free) { ?>Click the column titles to sort on frame number, keyword, etc.<?php } ?></p>
@@ -41,18 +41,25 @@
 
 <?php
     $go_back = $fc_free ? 'review/custom' : 'review/index';
-    echo _bs_button('Back', $go_back, ['class' => 'btn btn-primary']);
+    echo _bs_button('Back', $go_back, ['class' => 'ko-Btn is-ghost']);
 
     if ($fc_rept !== '')
     {
-      echo '&nbsp;&nbsp;'._bs_button('Repeat Review', $fc_rept, ['absolute' => true, 'class' => 'btn btn-success']);
+      echo '&nbsp;&nbsp;'._bs_button(
+        '<i class="fa fa-redo mr-2"></i>Repeat Review',
+        $fc_rept,
+        [
+          'absolute' => true,
+          'class' => 'ko-Btn ko-Btn--success'
+        ]
+      );
     }
 ?>
   </div>
   
   <div class="col-lg-6">
 <?php if ($fcr_total > 0) { ?>
-    <div class="padded-box rounded">
+    <div class="ko-Box">
 
       <?= ui_chart_vs([
         'valueLeft' => $fcr_pass,
@@ -65,7 +72,7 @@
 <?php } ?>
 
 <?php if (count($deletedCards)) { ?>
-    <div id="FcSummaryDeld" class="padded-box rounded">
+    <div id="FcSummaryDeld" class="ko-Box">
       <h3>Deleted flashcards <span>(<?= count($deletedCards); ?>)</span></h3>
       <p><?= cjk_lang_ja('&#'.implode(';&#', $deletedCards)); ?></p>
     </div>

@@ -5,7 +5,7 @@ import VueInstance from "@lib/helpers/vue-instance";
 
 import "@/assets/sass/pages/styleguide/docs.scss";
 
-import StyleguideApp from "@/vue/styleguide/index.vue";
+import StyleguideApp from "@/vue/styleguide/Styleguide.vue";
 
 domContentLoaded(() => {
   console.log("@entry-styleguide");

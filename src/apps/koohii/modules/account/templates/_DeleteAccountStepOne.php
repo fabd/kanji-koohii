@@ -1,4 +1,4 @@
-<section class="padded-box rounded mt-12 mb-8">
+<section class="ko-Box mt-12 mb-8">
 
   <h2 class="mb-4">Delete Account</h2>
   
@@ -12,7 +12,12 @@
       <li>your account registration information (username, email, etc)</li>
     </ul>
 
-    <?= link_to('Yes,  I want to delete my account ( step 1 of 2 )', 'account/delete', ['class' => 'btn btn-danger']); ?>
+    <?= link_to(
+        'Yes,  I want to delete my account ( step 1 of 2 )',
+        'account/delete',
+        ['class' => 'ko-Btn ko-Btn--danger']
+      );
+    ?>
   
   </div>
 </section>

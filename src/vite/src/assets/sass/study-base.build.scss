@@ -354,40 +354,6 @@
 /* Learned            */
 /* ------------------ */
 
-/* unlike search box, these blocks do not extend to edges, so they are distinct
-    from the search bar, and appear as part of the main content */
-.study-action-comp {
-  @apply py-2 px-4;
-}
-.study-action-comp h3,
-.study-action-comp .btn {
-  font-size: 18px;
-}
-.study-action-comp h3 {
-  font-weight: normal;
-  line-height: 34px;
-}
-
-/* tighten buttons a bit*/
-.study-action-comp .btn {
-  padding: 7px 12px;
-  line-height: 1em;
-}
-
-/* restudy pane */
-#study-restudy {
-  background: #ff7875;
-}
-#study-restudy,
-#study-restudy h3 {
-  color: #861c1c;
-}
-#study-restudy .btn-primary {
-  background: inherit;
-  border-color: rgba(134, 28, 28, 0.4);
-  color: #fff;
-}
-
 /* learned pane */
 #study-learned {
   background: #c7dfa9;
@@ -398,20 +364,6 @@
 #study-learned h3 span {
   color: #0f7439;
 }
-
-#study-learned .dismiss-msg {
-  font-size: 18px;
-  color: #457a45;
-}
-#study-learned .btn-dismiss .fa {
-  margin: 0;
-}
-
-#study-learned .btn-danger {
-  border-color: #26a65b;
-  color: #06863b;
-  background: inherit;
-} /* clear */
 
 /* ------------------- */
 /* Search autocomplete */
@@ -465,12 +417,6 @@
   line-height: 22px;
   color: #444;
 } /* small images in dropdown */
-
-/* failed kanji */
-table.failed-kanji td {
-  background-color: #fff;
-  border-top: 1px solid #eee;
-}
 
 @include breakpoint-up(lg) {
   /* less contrating themes for desktop sidebar */

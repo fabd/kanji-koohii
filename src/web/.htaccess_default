@@ -1,7 +1,32 @@
+# webfonts
+AddType application/vnd.ms-fontobject .eot
+AddType application/x-font-opentype .otf
+AddType application/x-font-ttf .ttf
+AddType application/x-font-woff .woff
+AddType application/font-woff2 .woff2
+AddType image/svg+xml .svg
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # media (change the path/file name when updating those files)
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/jpg "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  # fonts (change the path/file name when updating those files)
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+  ExpiresByType application/x-font-opentype "access plus 1 year"
+  ExpiresByType application/x-font-ttf "access plus 1 year"
+  ExpiresByType application/x-font-woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # php handler for versioning of front end assets
+  # set far future expire headers for hashed assets
   RewriteRule ^(.*)\.[a-z0-9]+\.(css|js)$   /version/cache.php?file=$0 [L]
 
   # we skip all files with .something

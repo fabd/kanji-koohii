@@ -51,6 +51,12 @@
   padding-left: 2em;
 }
 
+.markdown ol {
+  list-style-type: decimal;
+  margin: 0 0 calc(var(--vunit) * 1.5);
+  padding-left: 2em;
+}
+
 // blockquote
 .markdown blockquote {
   @apply text-body-light pl-[2em] italic;

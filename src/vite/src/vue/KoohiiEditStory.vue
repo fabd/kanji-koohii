@@ -3,6 +3,7 @@
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
       <input :value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
+      <input :value="fromRestudyList" type="hidden" name="fromRestudyList" />
 
       <div id="my-story" lang="ja">
         <div ref="maskArea" class="padding rtkframe flex">
@@ -75,7 +76,7 @@
                   name="txtStory"
                 ></textarea>
 
-                <div class="flex justify-between items-center">
+                <div class="flex flex-wrap items-center">
                   <div class="flex items-center">
                     <input
                       id="storyedit_public"
@@ -86,7 +87,7 @@
                     <label for="storyedit_public" class="form-label mb-0 ml-2">Share this story</label
                     >
                   </div>
-                  <div class="">
+                  <div class="ml-auto">
                     <koohii-chars-left
                       :text="postStoryEdit"
                       :max-length="512"
@@ -96,7 +97,7 @@
                       type="button"
                       value="Save changes"
                       title="Save/Update story"
-                      class="btn btn-success inline-block w-auto mr-1"
+                      class="ko-Btn ko-Btn--success inline-block w-auto mr-1"
                       @click.prevent="onSubmit"
                     />
                     <input
@@ -104,7 +105,7 @@
                       value="Cancel"
                       name="cancel"
                       title="Cancel changes"
-                      class="btn btn-default inline-block w-auto"
+                      class="ko-Btn is-ghost"
                       @click="onCancel"
                     />
                   </div>
@@ -141,7 +142,7 @@
                       type="submit"
                       name="doLearned"
                       value="Add to learned list"
-                      class="btn btn-success"
+                      class="ko-Btn ko-Btn--success ko-Btn--small"
                     />
                   </div>
 
@@ -222,6 +223,7 @@ export default defineComponent({
     initFavoriteStory: { type: Boolean, default: false },
 
     // Study page only, "Add to learned list" functionality
+    fromRestudyList: { type: Boolean, default: false },
     showLearnButton: { type: Boolean, default: false },
     showLearnedMessage: { type: Boolean, default: false },
 

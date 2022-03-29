@@ -12,8 +12,8 @@
     <div class="ko-Box ko-Box--stroke ko-Box--danger md:h-full">
       <h3 class="text-md font-bold text-danger-dark"><?= $restudyCount; ?> Kanji to Restudy</h3>
 <?php else: ?>
-    <div class="ko-Box ko-Box--stroke ko-Box--success">
-      <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji - Hooray!</h3>
+    <div class="ko-Box ko-Box--success">
+      <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji</h3>
 <?php endif; ?>
 
       <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#restudy-list', ['class' => 'whitespace-nowrap']); ?>
@@ -111,7 +111,7 @@
 
   <div class="ko-Box  min-h-[336px] flex mb-8">
     <p class="text-warm m-auto">
-      Hooray, your forgotten kanji list is empty!
+      Hooray! Your restudy list is empty!
     </p>
   </div>
 

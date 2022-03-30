@@ -339,9 +339,8 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getHeisigProgressCount($userId)
   {
-    // get the flashcard count in the RTK1 range
-    $select = self::getInstance()->select()->where(rtkIndex::getSqlCol().' <= ?', rtkIndex::inst()->getNumCharactersVol1());
-    $select = KanjisPeer::joinLeftUsingUCS($select);
+    $select = self::getInstance()->select();
+    $select = self::filterByRtk($select, 'rtk1');
     $select = self::filterByUserId($select, $userId);
     
     $select

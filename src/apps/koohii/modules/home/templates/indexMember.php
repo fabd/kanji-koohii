@@ -70,13 +70,13 @@
 
 <?php if ($hasFlashcards): ?>
       <div class="flex items-center">
-        <div class="flex items-center">
-          <div class="ko-SrsIso is-new text-[11px]"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-4"><?= $countSrsNew ?> <strong>new</strong></span>
+        <div class="flex items-center text-smx">
+          <div class="ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
+          <span class="ml-2"><?= $countSrsNew ?> <strong>new</strong></span>
         </div>
-        <div class="flex items-center ml-4">
-          <div class="ko-SrsIso is-due text-[11px]"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-4"><?= $countSrsDue ?> <strong>due</strong></span>
+        <div class="flex items-center text-smx ml-6">
+          <div class="ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
+          <span class="ml-2"><?= $countSrsDue ?> <strong>due</strong></span>
         </div>
         <?php
         echo _bs_button(

@@ -11,9 +11,6 @@ class memberActions extends sfActions
 
     define('RTK_VOLUME_3_LESSON', $curIndex->getNumLessonsVol1() + 1);
 
-    // get progress data for last completed frame number in order
-    $this->progress = rtkIndex::getProgressSummary();
-
     // find the success/fail flashcard count per lesson
     $card_data = ReviewsPeer::getProgressChartData($this->getUser()->getUserId());
     if (isset($card_data[0])) {
@@ -81,6 +78,9 @@ class memberActions extends sfActions
         $this->rtk1NotStarted = false;
       }
     }
+    
+    // get progress data for last completed frame number in order
+    $this->progress = rtkIndex::getProgressSummary();
 
     $this->lessons = $lessons;    
   }

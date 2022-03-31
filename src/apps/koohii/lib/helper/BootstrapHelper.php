@@ -381,3 +381,20 @@ function include_fontawesome()
     echo '<link href="/fonts/fa5sub/css/all.min.css" rel="stylesheet">';
   }
 }
+
+function query_string_for_review(array $queryParams)
+{
+  return http_build_query($queryParams);
+}
+
+/**
+ * returns url for the review page with given query parameters.
+ *
+ * @return string
+ */
+function url_for_review(array $queryParams)
+{
+  $queryString = query_string_for_review($queryParams);
+
+  return url_for('@review', ['absolute' => true]).'?'.$queryString;
+}

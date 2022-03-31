@@ -13,7 +13,7 @@
   $studyLesson = $progress->curlesson ?: 1;
   $studyLessonMax = rtkIndex::inst()->getCharCountForLesson($studyLesson);
   $studyLessonPos = $studyLessonMax - $progress->kanjitogo;
-  
+
   // FIXME - shows Restudy across ALL cards - not just current sequence
   $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
 
@@ -27,6 +27,11 @@
   $hasFlashcards = ReviewsPeer::getFlashcardCount($sf_user->getUserId());
   $countSrsNew = $hasFlashcards ? ReviewsPeer::getCountUntested($sf_user->getUserId()) : 0;
   $countSrsDue = $hasFlashcards ? ReviewsPeer::getCountExpired($sf_user->getUserId()) : 0;
+
+  $urls = [
+    'new' => url_for_review(['type' => 'untested']),
+    'due' => url_for_review(['type' => 'expired']),
+  ];
 
 // DBG::user();
 ?>
@@ -49,16 +54,18 @@
 
       <div>
 <?= _bs_button('Study Kanji #1<i class="fa fa-book-open ml-2"></i>', 'study/index', ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']); ?>
-<?php if ($restudyCount)
-{
-  echo _bs_button(
-    "Restudy List ( {$restudyCount} )".'<i class="fa fa-book-open ml-2"></i>',
-    'study/failedlist',
-    [
-      'class' => 'ko-Btn ko-Btn--danger ko-Btn--large ml-4',
-    ]
-  );
-} ?>
+<?php
+  if ($restudyCount)
+  {
+    echo _bs_button(
+      "Restudy List ( {$restudyCount} )".'<i class="fa fa-book-open ml-2"></i>',
+      'study/failedlist',
+      [
+        'class' => 'ko-Btn ko-Btn--danger ko-Btn--large ml-4',
+      ]
+    );
+  }
+?>
       </div>
 
     </div>
@@ -70,24 +77,23 @@
 
 <?php if ($hasFlashcards): ?>
       <div class="flex items-stretch -ml-2">
-        <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="#">
+        <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="<?= $urls['new']; ?>">
           <div class="ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2"><?= $countSrsNew ?> <strong>new</strong></span>
+          <span class="ml-2"><?= $countSrsNew; ?> <strong>new</strong></span>
         </a>
 
-        <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-2" href="#">
+        <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-2" href="<?= $urls['due']; ?>">
           <div class="ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2"><?= $countSrsDue ?> <strong>due</strong></span>
+          <span class="ml-2"><?= $countSrsDue; ?> <strong>due</strong></span>
         </a>
 
-        <?php
-        echo _bs_button(
-          "Spaced Repetition".'<i class="fa fa-arrow-right ml-2"></i>',
-          '@overview',
-          [
-            'class' => 'ko-Btn ko-Btn--primary ko-Btn--large ml-auto',
-          ]
-        );
+        <?= _bs_button(
+  'Spaced Repetition'.'<i class="fa fa-arrow-right ml-2"></i>',
+  '@overview',
+  [
+    'class' => 'ko-Btn ko-Btn--primary ko-Btn--large ml-auto',
+  ]
+);
         ?>
       </div>
 <?php endif; ?>  
@@ -97,20 +103,21 @@
 </div>
 
 <div class="ko-Box ko-DashBox">
-  <h3 class="ko-DashBox-title"><?= $rtk->getSequenceName(); ?> - Lesson <?= $studyLesson ?></h3>
+  <h3 class="ko-DashBox-title"><?= $rtk->getSequenceName(); ?> - Lesson <?= $studyLesson; ?></h3>
 
   <div>
-<?php if ($studyPos < $studyMax)
-      {
-        echo "{$studyLessonPos} / {$studyLessonMax} in <strong>lesson {$studyLesson}</strong>";
-      }
-      else
-      {
-        echo 'RTK 1 completed!';
-      }
+<?php
+  if ($studyPos < $studyMax)
+  {
+    echo "{$studyLessonPos} / {$studyLessonMax} in <strong>lesson {$studyLesson}</strong>";
+  }
+  else
+  {
+    echo 'RTK 1 completed!';
+  }
 ?>
   
-  <?= link_to("Show all {$numLessons} lessons", '@progress', ['class' => 'ml-2' ]); ?>
+  <?= link_to("Show all {$numLessons} lessons", '@progress', ['class' => 'ml-2']); ?>
   </div>
 
 </div>

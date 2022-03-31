@@ -76,7 +76,7 @@
       <h3 class="ko-DashBox-title">Review</h3>
 
 <?php if ($hasFlashcards): ?>
-      <div class="flex items-stretch -ml-2">
+      <div class="flex items-stretch -ml-2 mb-4">
         <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="<?= $urls['new']; ?>" title="Review new kanji cards">
           <div class="ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
           <span class="ml-2"><?= $countSrsNew; ?> <strong>new</strong></span>
@@ -96,7 +96,9 @@
 );
         ?>
       </div>
-<?php endif; ?>  
+<?php endif; ?>
+
+      <div class="bg-[#c2bdaf] h-px mb-4"></div>
 
     </div>
   </div>

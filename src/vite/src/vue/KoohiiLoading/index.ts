@@ -51,7 +51,7 @@ export default {
       component.originalPosition !== "absolute" &&
       component.originalPosition !== "fixed"
     ) {
-      target.classList.add("kk-loading-target--relative");
+      target.classList.add("ko-loading-target--relative");
     }
 
     target.appendChild(component.$el);

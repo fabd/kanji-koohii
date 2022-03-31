@@ -1,9 +1,9 @@
 <template>
   <span
     :class="[
-      'kk-charsleft',
-      { 'kk-charsleft--invalid': isTooLong },
-      { 'kk-charsleft--warning': isWarning },
+      'ko-charsleft',
+      { 'ko-charsleft--invalid': isTooLong },
+      { 'ko-charsleft--warning': isWarning },
     ]"
     >{{ charsLeft }}</span
   >
@@ -48,18 +48,18 @@ export default defineComponent({
 <style>
 /* KoohiiCharsLeft styles */
 
-.kk-charsleft {
+.ko-charsleft {
   display: inline-block;
   padding: 1px 4px;
   border-radius: 3px;
   color: #b7b7b7;
 }
-.kk-charsleft--invalid {
+.ko-charsleft--invalid {
   background-color: #ff7876;
   color: #fff;
   font-weight: bold;
 }
-.kk-charsleft--warning {
+.ko-charsleft--warning {
   color: #ff7876;
   font-weight: bold;
 }

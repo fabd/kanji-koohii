@@ -6,7 +6,7 @@
 // consistent corner radius FIXME : make a custom `rounded` tw var?
 $rounded: 0.5rem;
 
-.kk-Recognition {
+.ko-Recognition {
   &-output {
     @apply p-4;
     font-size: 24px;
@@ -65,7 +65,7 @@ $rounded: 0.5rem;
 // --------------------------------------------------------------------
 // the side pane
 // --------------------------------------------------------------------
-.kk-RecognitionPane {
+.ko-RecognitionPane {
   @apply bg-[#e7e1d3] p-4;
   border-radius: $rounded;
 

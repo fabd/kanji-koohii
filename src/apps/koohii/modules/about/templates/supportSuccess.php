@@ -28,7 +28,7 @@
       <p>
         PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).
       </p>
-      <div class="kk-PaypalForm">
+      <div class="ko-PaypalForm">
 <?php if (!KK_ENV_FORK) { include_partial('_paypalDonateButton'); } ?>
       </div>
     </div>
@@ -40,7 +40,7 @@
     <?php $patrons = PatreonPeer::getPatronsList(); ?>
   
     <div class="ko-Box no-gutter-xs-sm">
-      <ul class="kk-PatronsList">
+      <ul class="ko-PatronsList">
 <?php //DBG::printr($patrons);?>
 <?php
   $sf_user_name = $sf_user->getUserName();
@@ -52,7 +52,7 @@
       link_to_member($pa['username'], $style) :
       escape_once($pa['pa_full_name']);
     echo <<<HTML
-      <li class="kk-PatronsList-item">
+      <li class="ko-PatronsList-item">
         <span class="whitespace-nowrap">{$display_name}</span>
       </li>
       HTML;

@@ -43,7 +43,7 @@
         <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 
-      <div class="kk-PctBar mb-4">
+      <div class="ko-PctBar mb-4">
         27%
       </div>
 
@@ -71,11 +71,11 @@
 <?php if ($hasFlashcards): ?>
       <div class="flex items-center">
         <div class="flex items-center">
-          <div class="kk-DocIso is-new text-[11px]"><em class="is-top"></em><em class="is-side"></em></div>
+          <div class="ko-DocIso is-new text-[11px]"><em class="is-top"></em><em class="is-side"></em></div>
           <span class="ml-4"><?= $countSrsNew ?> <strong>new</strong></span>
         </div>
         <div class="flex items-center ml-4">
-          <div class="kk-DocIso is-due text-[11px]"><em class="is-top"></em><em class="is-side"></em></div>
+          <div class="ko-DocIso is-due text-[11px]"><em class="is-top"></em><em class="is-side"></em></div>
           <span class="ml-4"><?= $countSrsDue ?> <strong>due</strong></span>
         </div>
         <?php

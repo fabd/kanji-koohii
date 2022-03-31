@@ -34,12 +34,12 @@
           <!-- ------------------------------------------------------ -->
           <!-- OUTPUT -->
           <!-- ------------------------------------------------------ -->
-          <div class="kk-Recognition-output mb-8">
+          <div class="ko-Recognition-output mb-8">
             <cjk-lang-ja>
               <template v-for="(k, i) in jtextarray" :key="i">
                 <div
                   v-if="k.heisigNr"
-                  class="kk-Recognition-k"
+                  class="ko-Recognition-k"
                   :class="{
                     'is-known': k.isKnown,
                     'is-active': i === curKanjiIndex,
@@ -48,7 +48,7 @@
                 >
                   <span>{{ k.kanji }}</span>
                 </div>
-                <div v-else class="kk-Recognition-u">
+                <div v-else class="ko-Recognition-u">
                   <span>{{ k.kanji }}</span>
                 </div>
               </template>
@@ -67,7 +67,7 @@
       <!-- ------------------------------------------------------ -->
       <div class="w-[400px] ml-4">
         <template v-if="isStateEdit">
-          <div class="kk-RecognitionPane">
+          <div class="ko-RecognitionPane">
             <div id="introduction" class="markdown">
               <h3>Instructions</h3>
               <p> Enter Japanese text to the left... </p>
@@ -108,7 +108,7 @@
         </template>
 
         <template v-if="!isStateEdit && !curKanji">
-          <div class="kk-RecognitionPane">
+          <div class="ko-RecognitionPane">
             <p class="text-md text-body">
               Select a character on the left to display more information in this
               pane.
@@ -117,17 +117,17 @@
         </template>
 
         <template v-if="!isStateEdit && curKanji">
-          <div class="kk-RecognitionPane">
+          <div class="ko-RecognitionPane">
             <div class="flex mb-6">
-              <div class="kk-RecognitionPane-kanji">
-                <span class="kk-RecognitionPane-kanjiChar">
+              <div class="ko-RecognitionPane-kanji">
+                <span class="ko-RecognitionPane-kanjiChar">
                   {{ curKanji.kanji }}
                 </span>
               </div>
 
               <div v-if="isKana(curKanji.kanji)" class="ml-5">
                 <div class="mb-4">
-                  <h3 class="kk-RecognitionPane-h3 mb-0">KANA - READING</h3>
+                  <h3 class="ko-RecognitionPane-h3 mb-0">KANA - READING</h3>
                   <div
                     class="font-serif italic text-body text-[34px] leading-none"
                     >{{ toRomaji(curKanji.kanji) }}</div
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="mb-4">
-                  <h3 class="kk-RecognitionPane-h3 mb-0">UNICODE POINT</h3>
+                  <h3 class="ko-RecognitionPane-h3 mb-0">UNICODE POINT</h3>
                   <div class="text-body text-md leading-none">
                     <span>{{ curKanji.kanji.charCodeAt(0) }}</span>
                   </div>
@@ -144,7 +144,7 @@
 
               <div v-if="isKanji(curKanji.kanji)" class="ml-5">
                 <div class="mb-4">
-                  <h3 class="kk-RecognitionPane-h3 mb-0">Keyword</h3>
+                  <h3 class="ko-RecognitionPane-h3 mb-0">Keyword</h3>
                   <div
                     class="font-serif italic text-[#42413d] text-[34px] leading-none"
                   >
@@ -153,7 +153,7 @@
                 </div>
 
                 <div class="mb-4">
-                  <h3 class="kk-RecognitionPane-h3 mb-0">Heisig Index</h3>
+                  <h3 class="ko-RecognitionPane-h3 mb-0">Heisig Index</h3>
                   <div
                     class="font-serif text-[#42413d] text-[34px] leading-none"
                   >
@@ -168,12 +168,12 @@
             </div>
 
             <div v-if="!isHiragana(curKanji.kanji)">
-              <h3 class="kk-RecognitionPane-h3 mb-2">Dictionary</h3>
+              <h3 class="ko-RecognitionPane-h3 mb-2">Dictionary</h3>
 
               <!-- ------------------------------------------------------ -->
               <!-- DICT -->
               <!-- ------------------------------------------------------ -->
-              <div ref="refLoadingMask" class="kk-RecognitionPane-dict">
+              <div ref="refLoadingMask" class="ko-RecognitionPane-dict">
                 <template v-if="dictLoading">
                   <div style="min-height: 100px"></div>
                 </template>

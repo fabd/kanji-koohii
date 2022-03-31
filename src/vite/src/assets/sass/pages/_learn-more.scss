@@ -2,7 +2,7 @@
 // Learn More page & markdown output formatting
 // ====================================================================
 
-.kk-DocNav {
+.ko-DocNav {
   @include breakpoint-up(lg) {
     @apply fixed min-w-[218px];
   }
@@ -60,7 +60,7 @@
 }
 
 // note: this will be used also on dashboard "Welcome" section
-.kk-RtkBook {
+.ko-RtkBook {
   // this selector overrides `.markdown img` when appearing in the Help page
   img {
     @apply border-none p-0;
@@ -68,7 +68,7 @@
   }
 }
 
-.kk-DocMain {
+.ko-DocMain {
   @include breakpoint-up(md) {
     // vertical separator & guiding line
     @apply pl-4 border-l-[1px] border-shaded;

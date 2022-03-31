@@ -43,11 +43,16 @@ module.exports = {
 
     // redeclare to remove the baked-in line-height, and add `md` alias
     fontSize: {
-      xs: "0.75rem",
-      sm: "0.875rem",
+      xs: "0.75rem", // 12px
+      sm: "0.875rem", // 14px
       base: "1rem",
-      md: "1rem", // alias for "base"
-      lg: "1.125rem",
+      lg: "1.125rem", // 18px
+
+      // alias for `text-base`
+      md: "1rem", // 16px
+
+      // additional sizes in-between tailwind's
+      smx: "0.9375rem", // 15px
     },
 
     // responsive breakpoints

@@ -77,12 +77,12 @@
 
 <?php if ($hasFlashcards): ?>
       <div class="flex items-stretch -ml-2">
-        <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="<?= $urls['new']; ?>">
+        <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="<?= $urls['new']; ?>" title="Review new kanji cards">
           <div class="ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
           <span class="ml-2"><?= $countSrsNew; ?> <strong>new</strong></span>
         </a>
 
-        <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-2" href="<?= $urls['due']; ?>">
+        <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-2" href="<?= $urls['due']; ?>" title="Review due kanji cards">
           <div class="ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
           <span class="ml-2"><?= $countSrsDue; ?> <strong>due</strong></span>
         </a>

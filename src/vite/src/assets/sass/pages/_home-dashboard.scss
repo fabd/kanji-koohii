@@ -2,11 +2,12 @@
 // Redesigned homepage dashboard (2022)
 // ====================================================================
 
+@use "sass:color" as color;
+
 // --------------------------------------------------------------------
 // base class for the entire dashboard
 // --------------------------------------------------------------------
 .ko-Dash {
-
   //////////////////////////////////////////////////////////////////
   // the little SRS isometric icons
   //////////////////////////////////////////////////////////////////
@@ -14,15 +15,32 @@
     @extend .ko-SrsIso;
     --ko-srs-iso-w: 24px;
   }
+
+  //////////////////////////////////////////////////////////////////
+  // "new" and "due" SRS icons with labels - acting as buttons
+  //////////////////////////////////////////////////////////////////
+  &-srsIcoBtn {
+    // note: the height of these "buttons" comes from the parent's `items-stretch`
+    @apply text-smx text-body no-underline px-2 cursor-pointer rounded-md;
+
+    &:hover {
+      @apply no-underline;
+
+      &.is-new, &:focus.is-new {
+        background-color: #32b1fc4d; // color.change(#40a8e5, $alpha: 0.3);
+      }
+      &.is-due {
+        background-color: #ff982a6e; //color.change(#f7a247, $alpha: 0.3);
+      }
+    }
+  }
 }
 
 .ko-DashBox {
-
   // main heading
   &-title {
     @apply text-lg font-bold text-body;
   }
-
 }
 
 .ko-PctBar {

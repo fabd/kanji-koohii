@@ -69,15 +69,17 @@
       <h3 class="ko-DashBox-title">Review</h3>
 
 <?php if ($hasFlashcards): ?>
-      <div class="flex items-center">
-        <div class="flex items-center text-smx">
+      <div class="flex items-stretch -ml-2">
+        <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="#">
           <div class="ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
           <span class="ml-2"><?= $countSrsNew ?> <strong>new</strong></span>
-        </div>
-        <div class="flex items-center text-smx ml-6">
+        </a>
+
+        <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-2" href="#">
           <div class="ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
           <span class="ml-2"><?= $countSrsDue ?> <strong>due</strong></span>
-        </div>
+        </a>
+
         <?php
         echo _bs_button(
           "Spaced Repetition".'<i class="fa fa-arrow-right ml-2"></i>',

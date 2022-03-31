@@ -29,6 +29,7 @@
 
 // pages
 @import "./pages/about-support.scss";
+@import "./pages/home-dashboard.scss";
 @import "./pages/learn-more.scss";
 @import "./pages/review-home.scss";
 
@@ -824,46 +825,6 @@ table.lessons td {
   float: right;
   width: 260px;
   margin: 0 0 1em 1em;
-}
-
-/* ---------------------------- */
-/* ... */
-/* ---------------------------- */
-
-#home-qs .box {
-  text-align: center;
-}
-#home-qs .hd {
-  padding: 0 0 0.5em;
-  color: #3c3c3c;
-  font-size: 18px;
-  line-height: 1.2em;
-}
-#home-qs .bd {
-  min-height: 3em;
-}
-
-#home-qs a {
-  text-decoration: none;
-}
-#home-qs a:hover {
-}
-#home-qs a.expired {
-  color: #f0912a;
-}
-#home-qs a.failed {
-  color: #ff0000;
-}
-
-/* MEDIA-md (landscape on iPad) */
-@media all and (max-width: 800px) {
-  #home-qs .box {
-  }
-  #home-qs .hd {
-    min-height: 20px;
-  }
-  #home-qs .bd {
-  }
 }
 
 /* ----------------------------

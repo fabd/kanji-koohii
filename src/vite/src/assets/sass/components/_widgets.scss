@@ -5,13 +5,13 @@
 //
 //  Example
 //
-//    <div class="ko-DocIso is-new">
+//    <div class="ko-SrsIso is-new">
 //      <em class="is-top"></em>
 //      <em class="is-side"></em>
 //    </div>
 //
 // --------------------------------------------------------------------
-.ko-DocIso {
+.ko-SrsIso {
   $sideThick: 0.7em;
 
   // SRS chart box colors
@@ -20,27 +20,33 @@
   $bgDue: #{$--clr-srs-due};
   $bgUndue: #{$--clr-srs-undue};
 
-  width: 2em;
-  height: 2em;
+  --ko-srs-iso-w: 2em;
+  --ko-srs-iso-h: var(--ko-srs-iso-w);
+  --ko-srs-iso-bg: #aaa;
+
+  width: var(--ko-srs-iso-w);
+  height: var(--ko-srs-iso-h);
+
+  &,
+  > * {
+    background-color: var(--ko-srs-iso-bg);
+  }
+
   position: relative;
 
   box-shadow: 5px 2px 10px #4446; // fancy drop shadow to make it "pop"
 
-  &.is-fail,
-  &.is-fail > * {
-    background-color: $bgFail;
+  &.is-fail {
+    --ko-srs-iso-bg: #{$bgFail};
   }
-  &.is-new,
-  &.is-new > * {
-    background-color: $bgNew;
+  &.is-new {
+    --ko-srs-iso-bg: #{$bgNew};
   }
-  &.is-due,
-  &.is-due > * {
-    background-color: $bgDue;
+  &.is-due {
+    --ko-srs-iso-bg: #{$bgDue};
   }
-  &.is-undue,
-  &.is-undue > * {
-    background-color: $bgUndue;
+  &.is-undue {
+    --ko-srs-iso-bg: #{$bgUndue};
   }
 
   .is-top {

@@ -1,3 +1,29 @@
+.ko-PctBar {
+  background-color: #cdcdcd;
+  border-bottom: 3px solid #a8a8a8;
+
+  --ko-pct-bar-h: 39px; // height total
+  --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);
+  --ko-pct-bar-radius: 6px;
+
+  border-radius: var(--ko-pct-bar-radius);
+
+  height: var(--ko-pct-bar-h);
+
+  &-fill {
+    @apply inline-block h-full px-3;
+    @apply rounded-md;
+    border-bottom: 3px solid #4b9227;
+    border-radius: var(--ko-pct-bar-radius);
+    box-shadow: 1px 3px 5px 0px #0002; // very subtle depth :)
+    background-color: #67c23a;
+    color: #fff;
+    @include font(20px, 1);
+    text-align: right;
+    line-height: var(--ko-pct-bar-fill-h);
+  }
+}
+
 // --------------------------------------------------------------------
 // SMALL ISOMETRIC BOXES MATCHING THE LEITNER SRS COLORS
 //

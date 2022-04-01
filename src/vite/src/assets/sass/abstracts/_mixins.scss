@@ -37,8 +37,8 @@
   --ko-btn-hover-text: #{$text};
 
   @if $mix == "darken" {
-    --ko-btn-hover-bg: #{darken(saturate($bg, 5), 10)};
-    --ko-btn-hover-border: #{darken(saturate($bg, 5), 10)};
+    --ko-btn-hover-bg: #{darken(saturate($bg, 3), 7)};
+    --ko-btn-hover-border: #{darken(saturate($bg, 3), 7)};
   } @else if $mix == "lighten" {
     --ko-btn-hover-bg: #{lighten(saturate($bg, 5), 10)};
     --ko-btn-hover-border: #{lighten(saturate($bg, 5), 10)};

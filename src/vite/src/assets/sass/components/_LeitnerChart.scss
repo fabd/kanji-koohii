@@ -1,11 +1,3 @@
-// fade in the bar chart, looks nicer when page load is slow
-.chart-fade-enter-from {
-  opacity: 0;
-}
-.chart-fade-enter-active {
-  transition: opacity 0.3s;
-}
-
 /* the link */
 .box .bar {
   outline: none;

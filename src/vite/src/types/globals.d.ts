@@ -42,6 +42,9 @@ interface Window {
     // base URL for API requests (cf. layout.php & koohii_base_url() helper)
     BASE_URL: string;
 
+    // the new homepage dashboard (03/2022)
+    HOMEDASH_PCTBAR_PROPS: Dictionary;
+
     // site-wide mobile nav, setup data from php with the correct urls
     MBL_NAV_DATA: Dictionary;
 

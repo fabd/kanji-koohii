@@ -43,14 +43,12 @@
     <div class="ko-Box ko-DashBox">
       <h3 class="ko-DashBox-title">Study</h3>
 
-      <div class="text-smx mb-4">
+      <div class="text-smx mb-3">
         <strong><?= $flashcardCount; ?></strong> / <?= $studyMax; ?> kanji in <strong><?= $rtk->getSequenceName(); ?></strong>
         <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 
-      <div class="ko-PctBar mb-4">
-        27%
-      </div>
+      <div id="JsDashboardPctBar" class="mb-4"><!-- vue --></div>
 
       <div>
 <?= _bs_button('Study Kanji #1<i class="fa fa-book-open ml-2"></i>', 'study/index', ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']); ?>
@@ -123,5 +121,12 @@
   </div>
 
 </div>
+<?php
+  include_partial('news/recent');
 
-<?php include_partial('news/recent'); ?>
+  $propsPctBar = [
+    'value' => 33,
+    'max-value' => 330,
+  ];
+
+  kk_globals_put('HOMEDASH_PCTBAR_PROPS', $propsPctBar);

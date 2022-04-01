@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="ko-PctBar">
+    <div class="ko-PctBar" :class="{
+      'is-zero': pctValue === 0
+    }">
       <transition name="chart-fade" appear>
         <div
           class="ko-PctBar-fill"
@@ -33,7 +35,7 @@ export default defineComponent({
       let pct = (this.value * 100) / this.maxValue;
       let floor = Math.floor(pct);
 
-      return Math.max(floor, 1);
+      return pct > 0 ? Math.max(floor, 1) : 0;
     },
   },
 });

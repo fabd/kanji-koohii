@@ -2,7 +2,7 @@
   background-color: #cdcdcd;
   border-bottom: 3px solid #a8a8a8;
 
-  --ko-pct-bar-h: 39px; // height total
+  --ko-pct-bar-h: 42px; // height total with borders
   --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);
   --ko-pct-bar-radius: 6px;
 
@@ -21,6 +21,13 @@
     @include font(20px, 1);
     text-align: right;
     line-height: var(--ko-pct-bar-fill-h);
+  }
+
+  &.is-zero &-fill {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #2228;
   }
 }
 

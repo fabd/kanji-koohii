@@ -106,7 +106,11 @@
       </div>
 <?php endif; ?>
 
-      <div class="bg-[#c2bdaf] h-px mb-4"></div>
+      <div class="bg-[#c2bdaf] h-px mb-3"></div>
+
+      <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
+
+      <?= link_to('Review by Index or Lesson'.'<i class="fa fa-arrow-right ml-2"></i>', '@overview', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
 
     </div>
   </div>

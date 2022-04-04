@@ -10,16 +10,11 @@ class homeActions extends sfActions
   {
     if ($this->getUser()->isAuthenticated())
     {    
-      // get member stats for quick summary
-      $this->progress = rtkIndex::getProgressSummary();
-      $this->countExpired = ReviewsPeer::getCountExpired($this->getUser()->getUserId());
-      $this->countFailed = ReviewsPeer::getRestudyKanjiCount($this->getUser()->getUserId());
-
       return 'Member';
     }
     
     $request->setParameter('isLandingPage', true);
- //   $this->setLayout('landingpageLayout');
+
     return 'Guest';
   }
 

@@ -1,6 +1,8 @@
 <?php
   use_helper('Widgets');
   $sf_request->setParameter('_homeFooter', true);
+      
+  $progress = rtkIndex::getProgressSummary();
 
   // optimze?
   // $carddata = ReviewsPeer::getLeitnerBoxCounts($this->filter);
@@ -11,6 +13,7 @@
   $studyPos = $progress->heisignum ?: 0;
   $studyNext = $studyPos + 1;
   $studyMax = rtkIndex::inst()->getNumCharactersVol1();
+  
   $studyLesson = $progress->curlesson ?: 1;
   $studyLessonMax = rtkIndex::inst()->getCharCountForLesson($studyLesson);
   $studyLessonPos = $studyLessonMax - $progress->kanjitogo;

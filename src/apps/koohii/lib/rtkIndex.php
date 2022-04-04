@@ -21,16 +21,21 @@
  *  getDefaultUserSequence()
  *  getSequenceInfo()
  *  getSequenceName()
+ *  getSequenceMap()
  *  getSqlCol()
  *
  *  isExtendedIndex($n)
  *  isValidHeisigIndex($num)
+ * 
  *  getCharForIndex($id)
  *  getIndexForChar($cjk)
  *  getIndexForUCS($ucs)
  *  getUCSForIndex($n)
  *  convertToUCS(array $ids)
+ * 
  *  getLessons()
+ *  getLessonsDropdown()
+ *  getLessonInfo($lessonId)
  *  getCharCountForLesson($lesson)
  *  getLessonForIndex($frameNr)
  *  getLessonTitleForIndex($frameNr)
@@ -228,6 +233,19 @@ class rtkIndex
   }
 
   /**
+   * Returns true if the index is likely to be a UCS code point (Heisig frame
+   * numbers are well below the CJK Ideographs range).
+   * 
+   * @param   int     $n   An index number (Heisig, or extended UCS-2 code)
+   *
+   * @return  bool    
+   */
+  public static function isExtendedIndex($n)
+  {
+    return $n >= self::RTK_UCS;
+  }
+
+  /**
    * Returns true if the index number matches a Heisig frame number.
    *
    * @param  int  $num  A number
@@ -314,19 +332,6 @@ class rtkIndex
     $c_utf = rtkIndex::getCharForIndex($n);
 
     return ($c_utf !== null) ? utf8::toCodePoint($c_utf) : false;
-  }
-
-  /**
-   * Returns true if the index is likely to be a UCS code point (Heisig frame
-   * numbers are well below the CJK Ideographs range).
-   * 
-   * @param   int     $n   An index number (Heisig, or extended UCS-2 code)
-   *
-   * @return  bool    
-   */
-  public static function isExtendedIndex($n)
-  {
-    return $n >= self::RTK_UCS;
   }
 
   /**

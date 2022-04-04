@@ -27,10 +27,6 @@ class MembersListComponent extends sfComponent
   }
 }
 
-/**
- * Kanji Review Summary
- * 
- */
 class MembersListBinding implements uiSelectTableBinding
 {
   public function getConfig()

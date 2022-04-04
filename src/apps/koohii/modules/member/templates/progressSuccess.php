@@ -2,6 +2,9 @@
   use_helper('Gadgets');
   $sf_request->setParameter('_homeFooter', true);
 
+  // get progress data for last completed frame number in order
+  $progress = rtkIndex::getProgressSummary();
+
   // set flag : RTK3 complete
   $rtk3_less =& $lessons[ rtkIndex::inst()->getNumLessonsVol1() + 1 ];
   $is_rtk3_complete = $rtk3_less['totalCards'] === $rtk3_less['maxValue'];
@@ -12,11 +15,6 @@
   // echo link_to('Test', 'review/free', array(
   //   'query_string' => 'from='.$less['from'].'&to='.($less['from'] + $less['maxValue'] - 1).'&shuffle=1'))
 ?>
-<?php slot('inline_styles') ?>
-#progress-chart { margin:2em 0 0; }
-#progress-chart .active td { background-color:#E5F4A3; color:#000; }
-<?php end_slot() ?>
-
     <h2>Check your progress</h2>
   
     <p> The chart below represents your progress through <strong><?php echo rtkIndex::inst()->getSequenceName() ?></strong>
@@ -57,10 +55,8 @@
       <p> <strong>Your current goal is to complete lesson <?php echo $progress->curlesson ?>.</strong></p>
     <?php endif; ?>
  
-    <?php #progress chart table ?>
-
-<div class="no-gutter-xs-sm">
-    <table id="progress-chart" class="uiTabular" cellspacing="0">
+<div class="no-gutter-xs-sm mt-8">
+    <table class="ko-ProgressChart uiTabular" cellspacing="0">
      <thead>
       <tr>
         <th style="width:15%;"><span class="hd">Lesson</span></th>

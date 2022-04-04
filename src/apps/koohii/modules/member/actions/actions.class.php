@@ -79,9 +79,6 @@ class memberActions extends sfActions
       }
     }
     
-    // get progress data for last completed frame number in order
-    $this->progress = rtkIndex::getProgressSummary();
-
     $this->lessons = $lessons;    
   }
 

@@ -1031,6 +1031,14 @@ table.lessons td {
   background: var(--bg);
 }
 
+.ko-ProgressChart {
+  // active lesson row in the progress chart table
+  .active td {
+    background-color:#E5F4A3;
+    color:#000;
+  }
+}
+
 // --------------------------------------------------------------------
 // Restudy List
 // --------------------------------------------------------------------

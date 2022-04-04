@@ -174,19 +174,19 @@ if (!$sf_user->isAuthenticated()) {
 
   $nav_items[] = nav_m_t('Study', 'study', 'fa-book-open', [
     nav_m_i('Index',       's-i',  'study/index'),
-    nav_m_i('Restudy',     's-r',  'study/failedlist' ),
+    nav_m_i('Restudy List',     's-r',  'study/failedlist' ),
     nav_m_i('My Stories',  's-ms', 'study/mystories' ),
   ]);
     
   $nav_items[] = nav_m_t('Review', 'review', 'fa-signal', [
-    nav_m_i('SRS',   'r-a', '@overview'),
-    nav_m_i('Kanji', 'r-b', 'review/custom'),
+    nav_m_i('Spaced Repetition',   'r-a', '@overview'),
+    nav_m_i('Custom Review', 'r-b', 'review/custom'),
     nav_m_i('Vocab', 'r-c', 'review/vocab')
   ]);
 
   $nav_items[] = nav_m_t('Flashcards', 'flashcards', 'fa-copy', [
-    nav_m_i('Manage', 's-r', '@manage'),
-    nav_m_i('List',   's-i', 'manage/flashcardlist')
+    nav_m_i('Manage Flashcards', 's-r', '@manage'),
+    nav_m_i('Flashcard List',   's-i', 'manage/flashcardlist')
   ]);
 
   $nav_items[] = nav_m_t('Account', 'account', 'fa-user', [

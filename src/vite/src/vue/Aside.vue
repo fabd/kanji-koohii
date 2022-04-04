@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 import $$ from "@lib/dom";
 
 function getScrollBarWidth() {
@@ -115,7 +115,7 @@ export default defineComponent({
   z-index: 1002;
   overflow: auto;
   background: #2b3034;
-  width: 280px;
+  width: 320px;
 
   /* aside__left*/
   left: 0;
@@ -193,12 +193,5 @@ export default defineComponent({
 .mask-enter,
 .mask-leave-active {
   opacity: 0;
-}
-
-@media (max-width: 360px) {
-  /* reduce panel size on smaller screens */
-  .aside {
-    width: 250px;
-  }
 }
 </style>

@@ -12,11 +12,8 @@ export default {
     console.log("Aside open()");
 
     if (!instance) {
-      // merged with defaults in the component
-      let data = { width: 280 };
-
       // render off-document and append afterwards
-      let { vm } = VueInstance(AsideComponent, "#aside-component", data);
+      let { vm } = VueInstance(AsideComponent, "#aside-component");
       instance = vm;
 
       // render nav

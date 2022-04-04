@@ -496,6 +496,12 @@ class rtkIndex
     return $title;
   }
 
+  public static function getStudyPos()
+  {
+    $user = sfContext::getInstance()->getUser();
+    return ReviewsPeer::getHeisigProgressCount($user->getUserId());
+  }
+
   /**
    * Returns progress data based on last learned Heisig frame number.
    *
@@ -516,11 +522,10 @@ class rtkIndex
   {
     $inst = self::inst();
 
-    $o = (object)['curlesson' => false, 'kanjitogo' => false];
+    $o = (object) ['curlesson' => false, 'kanjitogo' => false];
 
     // determine active lesson if the user has added cards in order
-    $user = sfContext::getInstance()->getUser();
-    $o->heisignum = ReviewsPeer::getHeisigProgressCount($user->getUserId());
+    $o->heisignum = rtkIndex::getStudyPos();
 
     // if there are gaps, do not guesswork current lesson
     if ($o->heisignum !== false)

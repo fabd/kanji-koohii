@@ -202,7 +202,7 @@ In other words, they are still 'fresh' in your memory, and the SRS estimates tha
 your attention yet. These cards will eventually become *due* at which point you can review them.
 
 Reviewing cards ahead of time would defeat the purpose of the SRS, which tries to stimulate your
-long term memory, therefore it is not possible to select the green piles. Often times users who are new to the SRS want to do many reviews of new kanji. You can do so in the [Kanji Review](/review/custom) page. These reviews won't affect the SRS and can be repeated as many as you like.
+long term memory, therefore it is not possible to select the green piles. Often times users who are new to the SRS want to do many reviews of new kanji. You can do so in the [Custom Review](/review/custom) page. These reviews won't affect the SRS and can be repeated as many as you like.
 
   </dd>
   </dl>

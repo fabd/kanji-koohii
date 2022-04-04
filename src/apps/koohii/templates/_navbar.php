@@ -97,7 +97,7 @@ DOM
   echo nav_item('review-', 'Review', '@overview', [], <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/main">Spaced Repetition</a></li>
-  <li><a href="@/review/custom">Kanji Review</a></li>
+  <li><a href="@/review/custom">Custom Review</a></li>
   <li><a href="@/review/vocab">Vocab Shuffle</a></li>
   <li><a href="@/members">Who's Reviewing?</a></li>
 </ul>

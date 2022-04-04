@@ -8,11 +8,16 @@
 
   // alias template vars here, in case this becomes a Vue comp. someday
   $rtk = rtkIndex::inst();
-  $studyPos = $progress->heisignum ?: 1;
+  $studyPos = $progress->heisignum ?: 0;
+  $studyNext = $studyPos + 1;
   $studyMax = rtkIndex::inst()->getNumCharactersVol1();
   $studyLesson = $progress->curlesson ?: 1;
   $studyLessonMax = rtkIndex::inst()->getCharCountForLesson($studyLesson);
   $studyLessonPos = $studyLessonMax - $progress->kanjitogo;
+
+  $studyButtonLabel = $studyPos < $studyMax
+    ? 'Study Kanji #'.$studyNext
+    : 'Study Kanji #'.$studyNext;
 
   // FIXME - shows Restudy across ALL cards - not just current sequence
   $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
@@ -29,6 +34,7 @@
   $countSrsDue = $hasFlashcards ? ReviewsPeer::getCountExpired($sf_user->getUserId()) : 0;
 
   $urls = [
+    'study-resume-url' => url_for('@study_edit?'.http_build_query(['id' => $studyNext])),
     'new' => url_for_review(['type' => 'untested']),
     'due' => url_for_review(['type' => 'expired']),
   ];
@@ -51,7 +57,11 @@
       <div id="JsDashboardPctBar" class="mb-4"><!-- vue --></div>
 
       <div>
-<?= _bs_button('Study Kanji #1<i class="fa fa-book-open ml-2"></i>', 'study/index', ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']); ?>
+<?= link_to(
+    $studyButtonLabel.'<i class="fa fa-book-open ml-2"></i>',
+    $urls['study-resume-url'],
+    ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']);
+?>
 <?php
   if ($restudyCount)
   {

@@ -125,8 +125,8 @@
   include_partial('news/recent');
 
   $propsPctBar = [
-    'value' => 33,
-    'max-value' => 330,
+    'value' => $flashcardCount,
+    'max-value' => $studyMax,
   ];
 
   kk_globals_put('HOMEDASH_PCTBAR_PROPS', $propsPctBar);

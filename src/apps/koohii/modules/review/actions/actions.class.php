@@ -107,12 +107,12 @@ class reviewActions extends sfActions
     $reviewShuffle = $request->getParameter('shuffle', 0) > 0;
     // DBG::request();exit;
 
-    if ($lesson = $request->getParameter('lesson', 0))
+    if ($lessonId = (int) $request->getParameter('lesson', 0))
     {
-      $lessonInfo = rtkIndex::getLessonInfo((int) $lesson);
-      $this->forward404If($lessonInfo === null);
-      $reviewFrom = $lessonInfo['from'];
-      $reviewTo = $lessonInfo['from'] + $lessonInfo['count'] - 1;
+      $lessonInfo = rtkIndex::getLessonData($lessonId);
+      $this->forward404If(!$lessonInfo);
+      $reviewFrom = $lessonInfo['lesson_from'];
+      $reviewTo = $lessonInfo['lesson_from'] + $lessonInfo['lesson_count'] - 1;
     }
 
     // kanji > keyword

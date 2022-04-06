@@ -1,40 +1,38 @@
 <?php
   use_helper('Widgets');
   $sf_request->setParameter('_homeFooter', true);
-      
-  $progress = rtkIndex::getProgressSummary();
 
-  // optimze?
-  // $carddata = ReviewsPeer::getLeitnerBoxCounts($this->filter);
-  // $this->restudy_cards = $carddata[0]['expired_cards'];
+  $userId = $sf_user->getUserId();
 
-  // alias template vars here, in case this becomes a Vue comp. someday
-  $rtk = rtkIndex::inst();
-  $studyPos = $progress->heisignum ?: 0;
+  $studyPos = ReviewsPeer::getSequencePosition($userId);
   $studyNext = $studyPos + 1;
+
+  $sequenceName = rtkIndex::inst()->getSequenceName();
+  $isSequenceComplete = $studyPos === rtkIndex::inst()->getNumCharactersVol1();
+
   $studyMax = rtkIndex::inst()->getNumCharactersVol1();
-  
-  $studyLesson = $progress->curlesson ?: 1;
-  $studyLessonMax = rtkIndex::inst()->getCharCountForLesson($studyLesson);
-  $studyLessonPos = $studyLessonMax - $progress->kanjitogo;
+
+  $curLesson = rtkIndex::getLessonDataForIndex($studyNext);
+  $curLessonOffset = $curLesson ? $studyPos - $curLesson['lesson_from'] + 1 : 0;
+
+  $studyLesson = $curLesson['lesson_nr'] ?: 1;
 
   $studyButtonLabel = $studyPos < $studyMax
     ? 'Study Kanji #'.$studyNext
     : 'Study Kanji #'.$studyNext;
 
   // FIXME - shows Restudy across ALL cards - not just current sequence
-  $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
+  $restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
 
-  // number of lessons in current sequence
   $numLessons = rtkIndex::inst()->getNumLessonsVol1();
 
   // count of flashcards part of current  sequence
-  $flashcardCount = ReviewsPeer::getFlashcardCount($sf_user->getUserId(), 'rtk1');
+  $flashcardCount = ReviewsPeer::getFlashcardCount($userId, 'rtk1');
 
   // is the SRS active? (*ANY* flashcards, not just current sequence)
-  $hasFlashcards = ReviewsPeer::getFlashcardCount($sf_user->getUserId());
-  $countSrsNew = $hasFlashcards ? ReviewsPeer::getCountUntested($sf_user->getUserId()) : 0;
-  $countSrsDue = $hasFlashcards ? ReviewsPeer::getCountExpired($sf_user->getUserId()) : 0;
+  $hasFlashcards = ReviewsPeer::getFlashcardCount($userId);
+  $countSrsNew = $hasFlashcards ? ReviewsPeer::getCountUntested($userId) : 0;
+  $countSrsDue = $hasFlashcards ? ReviewsPeer::getCountExpired($userId) : 0;
 
   $urls = [
     'study-resume-url' => url_for('@study_edit?'.http_build_query(['id' => $studyNext])),
@@ -53,7 +51,7 @@
       <h3 class="ko-DashBox-title">Study</h3>
 
       <div class="text-smx mb-3">
-        <strong><?= $flashcardCount; ?></strong> / <?= $studyMax; ?> kanji in <strong><?= $rtk->getSequenceName(); ?></strong>
+        <strong><?= $flashcardCount; ?></strong> / <?= $studyMax; ?> kanji in <strong><?= $sequenceName; ?></strong>
         <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 
@@ -61,9 +59,10 @@
 
       <div>
 <?= link_to(
-    $studyButtonLabel.'<i class="fa fa-book-open ml-2"></i>',
-    $urls['study-resume-url'],
-    ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']);
+  $studyButtonLabel.'<i class="fa fa-book-open ml-2"></i>',
+  $urls['study-resume-url'],
+  ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+);
 ?>
 <?php
   if ($restudyCount)
@@ -120,13 +119,13 @@
 </div>
 
 <div class="ko-Box ko-DashBox">
-  <h3 class="ko-DashBox-title"><?= $rtk->getSequenceName(); ?> - Lesson <?= $studyLesson; ?></h3>
+  <h3 class="ko-DashBox-title">Lesson <?= $curLesson['lesson_nr']; ?><span class="font-normal"> in <?= $sequenceName; ?></span></h3>
 
   <div>
 <?php
-  if ($studyPos < $studyMax)
+  if (!$isSequenceComplete)
   {
-    echo "{$studyLessonPos} / {$studyLessonMax} in <strong>lesson {$studyLesson}</strong>";
+    echo "{$curLessonOffset} / {$curLesson['lesson_count']} in <strong>lesson {$curLesson['lesson_nr']}</strong>";
   }
   else
   {

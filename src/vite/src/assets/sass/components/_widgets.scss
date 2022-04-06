@@ -16,7 +16,7 @@
     border-bottom: 3px solid #4b9227;
     border-radius: var(--ko-pct-bar-radius);
     box-shadow: 1px 3px 5px 0px #0002; // very subtle depth :)
-    background-color: #67c23a;
+    background-color: $--color-btn-success;
     color: #fff;
     @include font(20px, 1);
     text-align: right;

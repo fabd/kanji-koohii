@@ -14,13 +14,14 @@
  *  getCountUntested()
  *  getLeitnerBoxCounts()
  *  getReviewedFlashcardCount()
- *  getHeisigProgressCount()
- *  getProgressChartData()
  *  getTotalReviews()
  *  getMostRecentReviewTimeStamp()
  *  getSelectForDetailedList()
  *  getSelectForExport()
  *  getFlashcardsForReview()
+ 
+ *  getHeisigProgressCount()
+ *  getProgressChartData()
  * 
  *  getRestudyKanjiCount($userId)
  *  getRestudyKanjiListSelect($userId)
@@ -321,94 +322,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::getInstance()->select()->where($condition);
     return self::_getFlashcardCount($userId, $select);
   }
-
-  /**
-   * Returns the number of kanji flashcards in RTK1 (only!) Heisig order.
-   *
-   * If there is any gap in the *RTK1* frame number range, it returns false.
-   *
-   * @return mixed  Heisig RTK1 progress count (int) or false
-   */
-  public static function getHeisigProgressCount($userId)
-  {
-    $select = self::getInstance()->select();
-    $select = self::filterByRtk($select, 'rtk1');
-    $select = self::filterByUserId($select, $userId);
-    
-    $select
-      ->columns(['count' => 'COUNT(*)'])
-      ->columns(['max' => 'MAX('.rtkIndex::getSqlCol().')']);
-    
-    $select->query();
-
-    $result = self::$db->fetch();
-    $flashcardCount = (int) $result['count'];
-    $maxRtkSeqNr = (int) $result['max'];
-
-    if ($flashcardCount !== $maxRtkSeqNr)
-    {
-      return false;
-    }
-    
-    return $maxRtkSeqNr;
-  }
-  
-  /**
-   * Returns progress status for Check Progress page.
-   *
-   * All flashcards not in the current sequence will be in lesson 0.
-   * 
-   * Returns:
-   *  array( <lessNr> => array( <lessonId>, <total>, <pass>, <fail> ), ... )
-   *     
-   * @return  array  Array of objects
-   */
-  public static function getProgressChartData($userId)
-  {
-    $select = self::getInstance()->select(['ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'leitnerbox', 'totalreviews', 'failurecount', 'successcount']);
-    $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select = self::filterByUserId($select, $userId);
-    $select->query();
-
-    $lessons = [];
-
-    while ($row = self::$db->fetchObject())
-    {
-      $lessNr = rtkIndex::getLessonForIndex((int)$row->seq_nr);
-
-      if (!isset($lessons[$lessNr])) {
-        $lessons[$lessNr] = (object) ['lessonId' => $lessNr, 'total' => 0, 'pass' => 0, 'fail' => 0];
-      }
-
-      // ref
-      $lesson =& $lessons[$lessNr];
-
-      $lesson->total++;
-      
-      if ($row->leitnerbox > 1 && $row->totalreviews > 0) {
-        $lesson->pass++;
-      }
-      elseif ($row->leitnerbox == 1 && $row->totalreviews > 0) {
-        $lesson->fail++;
-      }
-    }
-      
-/*
-    $select = self::getInstance()->select(array(
-        'lessonId'  => 'lessonnum',
-        'total'     => 'COUNT(*)',
-        'pass'      => 'SUM(leitnerbox > 1 AND totalreviews > 0)',
-        'fail'      => 'SUM(leitnerbox = 1 AND totalreviews > 0)'
-      ));
-    $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select->group('lessonnum ASC');
-*/
-
-//DBG::printr($lessons);exit;
-
-    return $lessons;
-  }
-
+ 
   /**
    * Return total reviews accross all kanji,
    * for the Profile page.
@@ -650,6 +564,97 @@ class ReviewsPeer extends coreDatabaseTable
     $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
 //DBG::out($select);exit;
     return $select;
+  }
+
+ /**
+   * Returns the last kanji card index in an uninterrupted sequence
+   * starting at 1 -- any cards after a gap are ignored.
+   *
+   * @return int  Sequence number of last kanji in sequence (starts at 1), or 0
+   */
+  public static function getSequencePosition($userId)
+  {
+    $select = self::getInstance()->select();
+    $select = self::filterByRtk($select, 'rtk1');
+    $select = self::filterByUserId($select, $userId);
+    $select->columns(['idx' => rtkIndex::getSqlCol()]);
+
+    $indices = self::$db->fetchCol($select);
+    $count = count($indices);
+
+    if (!$count) {
+      return 0;
+    } 
+
+    $indices = array_map('intval', $indices);
+    sort($indices);
+
+    // find where the first gap of the sequence is
+    $diff = array_diff(range(1, $count), $indices);
+
+    // if there is no gap in sequence then position = number of flashcards
+    $position = count($diff) ? min($diff) - 1 : $count;
+
+LOG::info($indices);
+LOG::info('pos', $position);
+   
+    return $position;
+  }
+  
+  /**
+   * Returns progress status for Check Progress page.
+   *
+   * All flashcards not in the current sequence will be in lesson 0.
+   * 
+   * Returns:
+   *  array( <lessNr> => array( <lessonId>, <total>, <pass>, <fail> ), ... )
+   *     
+   * @return  array  Array of objects
+   */
+  public static function getProgressChartData($userId)
+  {
+    $select = self::getInstance()->select(['ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'leitnerbox', 'totalreviews', 'failurecount', 'successcount']);
+    $select = KanjisPeer::joinLeftUsingUCS($select);
+    $select = self::filterByUserId($select, $userId);
+    $select->query();
+
+    $lessons = [];
+
+    while ($row = self::$db->fetchObject())
+    {
+      $lessNr = rtkIndex::getLessonForIndex((int)$row->seq_nr);
+
+      if (!isset($lessons[$lessNr])) {
+        $lessons[$lessNr] = (object) ['lessonId' => $lessNr, 'total' => 0, 'pass' => 0, 'fail' => 0];
+      }
+
+      // ref
+      $lesson =& $lessons[$lessNr];
+
+      $lesson->total++;
+      
+      if ($row->leitnerbox > 1 && $row->totalreviews > 0) {
+        $lesson->pass++;
+      }
+      elseif ($row->leitnerbox == 1 && $row->totalreviews > 0) {
+        $lesson->fail++;
+      }
+    }
+      
+/*
+    $select = self::getInstance()->select(array(
+        'lessonId'  => 'lessonnum',
+        'total'     => 'COUNT(*)',
+        'pass'      => 'SUM(leitnerbox > 1 AND totalreviews > 0)',
+        'fail'      => 'SUM(leitnerbox = 1 AND totalreviews > 0)'
+      ));
+    $select = KanjisPeer::joinLeftUsingUCS($select);
+    $select->group('lessonnum ASC');
+*/
+
+//DBG::printr($lessons);exit;
+
+    return $lessons;
   }
 
   /**

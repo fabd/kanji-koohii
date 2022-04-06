@@ -134,6 +134,10 @@ If you are not studying the kanji in the RTK sequence (say, JLPT), or you want t
 
 ## Reviewing
 
+### Custom Review {#custom-review}
+
+lorem ipsum.
+
 ### Spaced Repetition {#srs}
 
 Kanji Koohii uses a **Spaced Repetition System** (also known as "SRS") based on the popular [Leitner System](http://en.wikipedia.org/wiki/Leitner_system):

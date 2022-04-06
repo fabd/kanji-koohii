@@ -3,14 +3,26 @@
  * rtkIndex represents a unique index of characters and sequential frame
  * numbers, along with helper functions to convert between frame numbers
  * and characters.
+ * 
+ * TODO
+ *   Someday all "Heisig" reference will be replaced with "Sequence"
+ *   so we can have JLPT or RTK 3 sequences. A sequence number will
+ *   remain like Heisig indexes, an integer starting at 1 -- but well
+ *   below the UCS range.
+ *   
  *
- * Unique indexes are represented in php code to save database querries.
+ * Unique indexes are represented in php code to save database queries.
  *
- *
- * "frame number"   refers to an integer index number in Heisig's books.
- *
- * "extended frame number"   means an Heisig index number, or an UCS-2 code (since UCS-2 code
- *  values are above the RTK/RTH indexes, there is no overlap).
+ * Notes!
+ * 
+ *   "frame number" (or "sequence number")
+ *     an index number in Heisig's books (integer)
+ *   
+ *   "extended frame number"
+ *     an Heisig number, OR a UCS-2 code (since UCS code values are above
+ *     the RTK/RTH indexes, there is no overlap).
+ * 
+ * Methods:
  *
  *  getNumCharacters()
  *  getNumCharactersVol1()
@@ -24,22 +36,21 @@
  *  getSequenceMap()
  *  getSqlCol()
  *
- *  isExtendedIndex($n)
- *  isValidHeisigIndex($num)
+ *  isExtendedIndex($extNr)
+ *  isValidHeisigIndex($seqNr)
  * 
- *  getCharForIndex($id)
  *  getIndexForChar($cjk)
  *  getIndexForUCS($ucs)
- *  getUCSForIndex($n)
+ * 
+ *  getCharForIndex($extNr)
+ *  getUCSForIndex($extNr)
+ * 
  *  convertToUCS(array $ids)
  * 
  *  getLessons()
  *  getLessonsDropdown()
- *  getLessonInfo($lessonId)
- *  getCharCountForLesson($lesson)
- *  getLessonForIndex($frameNr)
- *  getLessonTitleForIndex($frameNr)
- *  getProgressSummary($cur_framenum)
+ *  getLessonForIndex($seqNr)
+ *  getLessonData($lessonId)
  * 
  *  createFlashcardSet($from, $to, $shuffle)
  * 
@@ -236,53 +247,25 @@ class rtkIndex
    * Returns true if the index is likely to be a UCS code point (Heisig frame
    * numbers are well below the CJK Ideographs range).
    * 
-   * @param   int     $n   An index number (Heisig, or extended UCS-2 code)
+   * @param   int $extNr  An index number (Heisig, or extended UCS code)
    *
    * @return  bool    
    */
-  public static function isExtendedIndex($n)
+  public static function isExtendedIndex($extNr)
   {
-    return $n >= self::RTK_UCS;
+    return $extNr >= self::RTK_UCS;
   }
 
   /**
    * Returns true if the index number matches a Heisig frame number.
    *
-   * @param  int  $num  A number
+   * @param  int  $seqNr  A Heisig frame number
    * 
    * @return bool  True if number is valid RTK/RSH/RTH frame number
    */
-  public static function isValidHeisigIndex($num)
+  public static function isValidHeisigIndex($seqNr)
   {
-    return ($num >= 1 && $num <= self::inst()->getNumCharacters());
-  }
-
-  /**
-   * Returns a tf8 character for a given Heisig frame number.
-   *
-   * Supports extended frame numbers: UCS-2 codes are converted to UTF8 characters.
-   * 
-   * @param  int      An extended RTK frame number (starts at 1)
-   * 
-   * @return mixed    Single utf8 character or null if the index number does
-   *                  not match a heisig character.
-   */
-  public static function getCharForIndex($id)
-  {
-    $id = intval($id);
-
-    assert($id > 0);
-
-    if (self::isValidHeisigIndex($id))
-    {
-      return mb_substr(self::inst()->kanjis, $id - 1, 1, 'utf8');
-    }
-    else if (CJK::isCJKUnifiedUCS($id))
-    {
-      return utf8::fromUnicode([$id]);
-    }
-
-    return null;
+    return ($seqNr > 0 && $seqNr <= self::inst()->getNumCharacters());
   }
 
   /**
@@ -317,6 +300,32 @@ class rtkIndex
   }
 
   /**
+   * Returns a tf8 character for a given Heisig frame number.
+   *
+   * Supports extended frame numbers: UCS-2 codes are converted to UTF8 characters.
+   * 
+   * @param  int $extNr   An "extended frame number" (starts at 1)
+   * 
+   * @return mixed    Single utf8 character or null if the index number does
+   *                  not match a heisig character.
+   */
+  public static function getCharForIndex($extNr)
+  {
+    $id = (int) $extNr;
+
+    if (self::isValidHeisigIndex($id))
+    {
+      return mb_substr(self::inst()->kanjis, $id - 1, 1, 'utf8');
+    }
+    else if (CJK::isCJKUnifiedUCS($id))
+    {
+      return utf8::fromUnicode([$id]);
+    }
+
+    return null;
+  }
+
+  /**
    * Get the UCS code point of the character, given a extended Heisig index.
    *
    * @param  int   $n   An extended frame number (Heisig or UCS).
@@ -324,12 +333,12 @@ class rtkIndex
    * @return mixed   UCS code point, or false if input is neither a Heisig index
    *                 or a valid CJK Unified code point.
    */
-  public static function getUCSForIndex($n)
+  public static function getUCSForIndex($extNr)
   {
-    $n = intval($n);
+    $extNr = (int) $extNr;
 
     // index must be Heisig frame number or valid CJK Unified code point
-    $c_utf = rtkIndex::getCharForIndex($n);
+    $c_utf = rtkIndex::getCharForIndex($extNr);
 
     return ($c_utf !== null) ? utf8::toCodePoint($c_utf) : false;
   }
@@ -339,7 +348,7 @@ class rtkIndex
    *
    * If the value is already in the CJK range, it is unchanged.
    * 
-   * @param   integer|array   Extended frame numbers (index or UCS-2)
+   * @param   int|int[]   Extended frame numbers (index or UCS-2)
    *
    * @return  array   Array with sequence numbers (ie. Heisig) converted to UCS-2, others unchanged.
    */
@@ -404,158 +413,76 @@ class rtkIndex
   }
 
   /**
-   * Returns lesson metadata given lesson id from getLessons().
-   *
-   * @return mixed   [from => (int), count => (int)]  or  null if invalid lesson
-   */
-  public static function getLessonInfo($lessonId)
-  {
-    $lessons = self::getLessons();
-
-    $from = 1;
-
-    foreach ($lessons as $lessNr => $lessCount) {
-      if ($lessNr == $lessonId) {
-        return ['from' => $from, 'count' => $lessCount];
-      }
-      $from += $lessCount;
-    }
-    return null;
-  }
-
-  /**
-   * Returns count of kanji in given lesson.
-   * 
-   * @param  int $lesson   Lesson starts at 1 like in the book.
-   * @return mixed   Count or false
-   */
-  public static function getCharCountForLesson($lesson)
-  {
-    $lessons = self::getLessons();
-    return isset($lessons[$lesson]) ? $lessons[$lesson] : false;
-  }
-  
-  /**
    * Returns lesson number given a Heisig frame number.
    * 
-   * @param  int    $frameNr   A Heisig index number (frame number).
+   * @param  int    $seqNr   A Heisig index number (frame number).
    *
    * @return int    Returns lesson number, 0 if the frame number is not valid.
    */
-  public static function getLessonForIndex($frameNr)
+  public static function getLessonForIndex(int $seqNr)
   {
-    $lesson = 0;
-    $lessons = self::getLessons();
-    if ($frameNr > 0 && $frameNr <= self::inst()->getNumCharacters())
+    if (self::isValidHeisigIndex($seqNr))
     {
+      $lessons = self::getLessons();
       $maxframe = 0;
       foreach ($lessons as $lesson => $count)
       {
         $maxframe += $count;
-        if ($frameNr <= $maxframe)
+        if ($seqNr <= $maxframe)
         {
-          break;
+          return $lesson;
         }
       }
     }
 
-    return $lesson;
+    return 0;
   }
 
   /**
-   * TODO   Refactor this code into the sequence-specific classes
+   * Return information for the lesson, given lesson number.
+   * 
+   * Returns:
+   *   - lesson number
+   *   - lesson index start
+   *   - lesson's kanji count
+   *   - position from start of lesson (1 to x) (if $seqNr is provided)
    *
-   * @return string
+   * @return array|false Returns false if index not within current sequence.
    */
-  public static function getLessonTitleForIndex($frameNr)
+  public static function getLessonData(int $lessonId, $seqNr = 0)
   {
-    $lessNr = self::getLessonForIndex($frameNr);
-    $title  = '';
-
-    if ($lessNr >= 1 && $lessNr <= self::inst()->getNumLessonsVol1())
+    $lessons = self::getLessons();
+    $indexEnd = 0;
+    foreach ($lessons as $lesson => $count)
     {
-      $title = 'Lesson '.$lessNr;
-    }
-    else if ($lessNr === 56 && CJ_HANZI)
-    {
-      $title = 'Volume 2';
-    }
-    else if ($lessNr === 57)
-    {
-      $title = 'RTK Volume 3';
-    }
-    else if ($lessNr === 58)
-    {
-      $title = 'RTK1 Supplement';
-    }
-    else
-    {
-      $title = 'Character not in '.rtkIndex::inst()->shortName;
+      $indexStart = $indexEnd + 1;
+      $indexEnd += $count;
+      
+      if ($lesson === $lessonId)
+      {
+        return [
+          'lesson_nr' => $lesson,
+          'lesson_from' => $indexStart,
+          'lesson_pos' => $seqNr ? ($seqNr - $indexStart + 1) : 0,
+          'lesson_count' => $count,
+        ];
+      }
     }
 
-    return $title;
-  }
-
-  public static function getStudyPos()
-  {
-    $user = sfContext::getInstance()->getUser();
-    return ReviewsPeer::getHeisigProgressCount($user->getUserId());
+    return false;
   }
 
   /**
-   * Returns progress data based on last learned Heisig frame number.
-   *
-   * Assumes there are no gaps in learned kanji since frame one.
-   *
-   * If RTK1 is completed => kanjitogo == 0, framenum == MAXKANJI_VOL1, curlesson == false
-   *
-   * If there is a gap in the RTK1 range, curlesson==false, framenum==false
+   * Return information for the lesson, given sequence number.
    * 
-   * Returns object:
-   *  (bool|int) heisignum     Current Heisig frame number, or false if there are gaps
-   *  (bool|int) curlesson     Current active lesson (based on next unlearned kanji)
-   *  (int)      kanjitogo     Reamining unlearned kanji in current lesson
-   * 
-   * @return mixed  Progress info as an object, or null if RtK Vol 1. is completed.
+   * See `getLessonData()`.
+   *
+   * @return array|false Returns false if index not within current sequence.
    */
-  public static function getProgressSummary()
+  public static function getLessonDataForIndex(int $seqNr)
   {
-    $inst = self::inst();
-
-    $o = (object) ['curlesson' => false, 'kanjitogo' => false];
-
-    // determine active lesson if the user has added cards in order
-    $o->heisignum = rtkIndex::getStudyPos();
-
-    // if there are gaps, do not guesswork current lesson
-    if ($o->heisignum !== false)
-    {
-      if ($o->heisignum >= $inst->MAXKANJI_VOL1)
-      {
-        $o->kanjitogo = 0;
-      }
-      else if ($o->heisignum < $inst->MAXKANJI_VOL1)
-      {
-        // find current lesson, 57 = RTK1 finished
-        $o->curlesson = self::getLessonForIndex($o->heisignum + 1);
-
-        // find out remaining unlearned kanji towards next lesson
-        $maxframe = 0;
-        foreach (self::getLessons() as $lesson => $kanjiCount)
-        {
-          $minframe = $maxframe + 1;
-          $maxframe += $kanjiCount;
-          if ($o->heisignum < $maxframe)
-          {
-            break;
-          }
-        }
-
-        $o->kanjitogo = $kanjiCount - ($o->heisignum - $minframe + 1);
-      }
-    }
-
-    return $o;
+    $lessonId = self::getLessonForIndex($seqNr);
+    return self::getLessonData($lessonId, $seqNr);
   }
 
   /**
@@ -587,5 +514,4 @@ class rtkIndex
 
     return $ids;
   }
-
 }

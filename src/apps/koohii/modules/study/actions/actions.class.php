@@ -125,7 +125,7 @@ class studyActions extends sfActions
       $request->setParameter('search', $this->kanjiData->framenum);
 
       // set descriptive lesson title
-      $this->title = rtkIndex::getLessonTitleForIndex($this->kanjiData->framenum);
+      $this->title = $this->getLessonTitleForIndex($this->kanjiData->framenum);
 
       // enable caching of Shared Stories list ONLY for Heisig indexed (~3000 items)
       if (false === rtkIndex::isExtendedIndex($this->kanjiData->framenum))
@@ -147,6 +147,42 @@ class studyActions extends sfActions
       // search gave no results
       $this->kanjiData = false;
     }
+  }
+
+  /**
+  * TODO   Refactor this code into the sequence-specific classes.
+  *
+  * @param mixed $frameNr
+  *
+  * @return string
+  */
+  public function getLessonTitleForIndex($frameNr)
+  {
+    // $lesson = rtkIndex::getLessonDataForIndex($frameNr);
+    // $lessNr = $lesson['lesson_nr'];
+    $lessNr = rtkIndex::getLessonForIndex($frameNr);
+
+    $title = '';
+
+    if ($lessNr && $lessNr <= rtkIndex::inst()->getNumLessonsVol1())
+    {
+      // $title = "Lesson {$lessNr} <span>- Kanji {$lesson['lesson_pos']} of {$lesson['lesson_count']}</span>";
+      $title = "Lesson {$lessNr}";
+    }
+    elseif ($lessNr === 57)
+    {
+      $title = 'RTK Volume 3';
+    }
+    elseif ($lessNr === 58)
+    {
+      $title = 'RTK1 Supplement';
+    }
+    else
+    {
+      $title = 'Character not in '.rtkIndex::inst()->shortName;
+    }
+
+    return $title;
   }
 
   /**

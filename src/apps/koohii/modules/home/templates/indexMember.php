@@ -89,8 +89,7 @@
   <div class="flex items-start mb-4">
     <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-[#42413d40] rounded-sm"/>
     <div class="text-smx ml-4">
-      <strong>Spaced Repetition</strong> will be available after you add kanji cards.
-      <?= link_to('Help', '@learnmore#srs', ['class' => 'ml-2 whitespace-nowrap']); ?>
+      <strong>Spaced Repetition</strong> will be available after you <?= link_to('add kanji flashcards', '@manage', ['class' => 'whitespace-nowrap']); ?>.
     </div> 
   </div>
 <?php endif; ?>

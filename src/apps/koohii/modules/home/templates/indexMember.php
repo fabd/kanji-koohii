@@ -50,10 +50,16 @@
     <div class="ko-Box ko-DashBox h-full">
       <h3 class="ko-DashBox-title">Study</h3>
 
+<?php if ($isSequenceComplete): ?>
+      <div class="text-smx mb-3">
+        <span class="text-success-darker font-bold">Well done! <?= $sequenceName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
+      </div>
+<?php else: ?>
       <div class="text-smx mb-3">
         <strong><?= $flashcardCount; ?></strong> / <?= $studyMax; ?> kanji in <strong><?= $sequenceName; ?></strong>
         <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
+<?php endif; ?>
 
       <div id="JsDashboardPctBar" class="mb-4"><!-- vue --></div>
 

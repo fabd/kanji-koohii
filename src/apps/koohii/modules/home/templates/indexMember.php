@@ -64,12 +64,23 @@
       <div id="JsDashboardPctBar" class="mb-4"><!-- vue --></div>
 
       <div>
+
+<?php if ($isSequenceComplete): ?>
+<?= link_to(
+  // generic study button when sequence is complete
+  'Go to Study <i class="fa fa-book-open ml-2"></i>',
+  url_for('@study_edit?id=1'),
+  ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+);
+?>
+<?php else: ?>
 <?= link_to(
   $studyButtonLabel.'<i class="fa fa-book-open ml-2"></i>',
   $urls['study-resume-url'],
   ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
 );
 ?>
+<?php endif; ?>
 <?php
   if ($restudyCount)
   {

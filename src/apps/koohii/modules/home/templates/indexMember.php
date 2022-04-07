@@ -47,7 +47,7 @@
 
 <div class="row mb-5">
   <div class="col-md-6 md:mb-0">
-    <div class="ko-Box ko-DashBox">
+    <div class="ko-Box ko-DashBox h-full">
       <h3 class="ko-DashBox-title">Study</h3>
 
       <div class="text-smx mb-3">
@@ -84,6 +84,17 @@
   <div class="col-md-6 md:mb-0">
     <div class="ko-Box ko-DashBox h-full">
       <h3 class="ko-DashBox-title">Review</h3>
+
+<?php if (!$hasFlashcards): ?>
+  <div class="flex items-start mb-4">
+    <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-[#42413d40] rounded-sm"/>
+    <div class="text-smx ml-4">
+      <strong>Spaced Repetition</strong> will be available after you add kanji cards.
+      <?= link_to('Help', '@learnmore#srs', ['class' => 'ml-2 whitespace-nowrap']); ?>
+    </div> 
+  </div>
+<?php endif; ?>
+
 
 <?php if ($hasFlashcards): ?>
       <div class="flex items-stretch -ml-2 mb-4">

@@ -729,33 +729,12 @@ a:hover.subdued {
 /* Progress Chart */
 /* -------------- */
 
-table.lessons {
-  border: none;
-  margin: 0 0 1em;
-}
-table.lessons td {
-  color: #888678;
-  font: 12px Arial, sans-serif;
-  width: 67px;
-  height: 66px;
-  background: #e0ded0;
-  border-bottom: 1px solid #fffde7;
-  border-right: 1px solid #fffde7;
-  text-align: center;
-}
-.lessons td.empty {
-  background: transparent;
-  border: none;
-}
-.lessons td.completed {
-  color: #5b6c7d;
-  font-weight: bold;
-  background: #b9dcff;
-}
-.lessons td.active {
-  background: #ffea00;
-  color: #19108f;
-  font-weight: bold;
+.ko-ProgressChart {
+  // active lesson row in the progress chart table
+  .active td {
+    background-color:#E5F4A3;
+    color:#000;
+  }
 }
 
 /* ---------------------------- */
@@ -1029,14 +1008,6 @@ table.lessons td {
 
   color: var(--fg);
   background: var(--bg);
-}
-
-.ko-ProgressChart {
-  // active lesson row in the progress chart table
-  .active td {
-    background-color:#E5F4A3;
-    color:#000;
-  }
 }
 
 // --------------------------------------------------------------------

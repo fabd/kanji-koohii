@@ -176,8 +176,6 @@
     'fc_reverse' => $fc_reverse,
     'fc_view' => 'kanji',
 
-    'fc_known_kanji' => $sf_user->getUserKnownKanji(),
-
     // (NOT freemode) edit flashcard menu
     'fc_edit_uri' => $sf_context->getController()->genUrl('flashcards/dialog'),
     // Edit Flashcard menu, data-param (json)

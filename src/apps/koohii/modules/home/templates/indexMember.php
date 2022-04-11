@@ -12,7 +12,7 @@
 
   $studyMax = rtkIndex::inst()->getNumCharactersVol1();
 
-  $curLesson = rtkIndex::getLessonDataForIndex($studyNext);
+  $curLesson = rtkIndex::getLessonDataForIndex($studyPos);
   $curLessonOffset = $curLesson ? $studyPos - $curLesson['lesson_from'] + 1 : 0;
 
   $studyLesson = $curLesson['lesson_nr'] ?: 1;
@@ -70,7 +70,7 @@
   // generic study button when sequence is complete
   'Go to Study <i class="fa fa-book-open ml-2"></i>',
   url_for('@study_edit?id=1'),
-  ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+  ['class' => 'ko-Btn ko-Btn--success ko-Btn--large is-ghost']
 );
 ?>
 <?php else: ?>

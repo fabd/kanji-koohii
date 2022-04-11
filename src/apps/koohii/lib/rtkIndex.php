@@ -204,7 +204,9 @@ class rtkIndex
   }
 
   /**
-   * Return a key-value pair array fo the user's RTK index (useful for Js Map()).
+   * Return an array of [[ucsId, seqNr], ...] for the current sequence.
+   * 
+   * Useful to instance a Map() in Javascript, for matching UCS > Heisig index.
    *
    * @return array
    */

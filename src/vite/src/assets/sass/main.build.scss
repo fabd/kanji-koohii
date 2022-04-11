@@ -129,7 +129,7 @@ a.admin-edit {
 .ko-Box {
   --ko-box-px: 14px;
   --ko-box-py: 14px;
-  --ko-box-bg: #e7e1d3;
+  --ko-box-bg: #{$--clr-bg-1};
 
   background-color: var(--ko-box-bg);
   border-color: var(--ko-box-bg);

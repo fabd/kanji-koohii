@@ -164,6 +164,14 @@
   </div>
 
 </div>
+
+<?php /* PURPOSELY CLOSE THE MAIN CONTAINER cf. layout.php
+  </div><!-- /#main_container -->
+</div><!-- /#main -->
+<div id="main">
+  <div id="main_container" class="container">
+ */ ?>
+ 
 <?php
   include_partial('news/recent');
 

@@ -44,6 +44,7 @@ interface Window {
 
     // the new homepage dashboard (03/2022)
     HOMEDASH_PCTBAR_PROPS: Dictionary;
+    HOMEDASH_LESSON_PROPS: Dictionary;
 
     // site-wide mobile nav, setup data from php with the correct urls
     MBL_NAV_DATA: Dictionary;

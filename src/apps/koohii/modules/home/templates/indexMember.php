@@ -61,7 +61,7 @@
       </div>
 <?php endif; ?>
 
-      <div id="JsDashboardPctBar" class="mb-4"><!-- vue --></div>
+      <div id="JsHomePctBar" class="mb-4"><!-- vue --></div>
 
       <div>
 
@@ -145,25 +145,7 @@
   </div>
 </div>
 
-<div class="ko-Box ko-DashBox">
-  <h3 class="ko-DashBox-title">Lesson <?= $curLesson['lesson_nr']; ?><span class="font-normal"> in <?= $sequenceName; ?></span></h3>
-
-  <div>
-<?php
-  if (!$isSequenceComplete)
-  {
-    echo "{$curLessonOffset} / {$curLesson['lesson_count']} in <strong>lesson {$curLesson['lesson_nr']}</strong>";
-  }
-  else
-  {
-    echo 'RTK 1 completed!';
-  }
-?>
-  
-  <?= link_to("Show all {$numLessons} lessons", '@progress', ['class' => 'ml-2']); ?>
-  </div>
-
-</div>
+<div id="JsHomeLesson" class="mb-4"><!-- vue --></div>
 
 <?php /* PURPOSELY CLOSE THE MAIN CONTAINER cf. layout.php
   </div><!-- /#main_container -->
@@ -171,7 +153,7 @@
 <div id="main">
   <div id="main_container" class="container">
  */ ?>
- 
+
 <?php
   include_partial('news/recent');
 
@@ -181,3 +163,13 @@
   ];
 
   kk_globals_put('HOMEDASH_PCTBAR_PROPS', $propsPctBar);
+
+  $lessonProps = [
+    'lessonNum' => $curLesson['lesson_nr'],
+    'lessonPos' => $curLesson['lesson_pos'],
+    'lessonCount' => $curLesson['lesson_count'],
+    'allLessonsCount' => $numLessons,
+    'allLessonsUrl' => url_for('@progress'),
+    'sequenceName' => $sequenceName,
+  ];
+  kk_globals_put('HOMEDASH_LESSON_PROPS', $lessonProps);

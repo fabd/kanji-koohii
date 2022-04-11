@@ -595,8 +595,8 @@ class ReviewsPeer extends coreDatabaseTable
     // if there is no gap in sequence then position = number of flashcards
     $position = count($diff) ? min($diff) - 1 : $count;
 
-LOG::info($indices);
-LOG::info('pos', $position);
+// LOG::info($indices);
+// LOG::info('pos', $position);
    
     return $position;
   }

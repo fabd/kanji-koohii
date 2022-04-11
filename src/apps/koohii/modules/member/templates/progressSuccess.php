@@ -3,13 +3,15 @@
   $sf_request->setParameter('_homeFooter', true);
 
   // get progress data for last completed frame number in order
-  $progress = rtkIndex::getProgressSummary();
+  $studyPos = ReviewsPeer::getSequencePosition($sf_user->getUserId());
+  $lessonNr = rtkIndex::getLessonForIndex($studyPos);
+  $isSequenceComplete = $studyPos === rtkIndex::inst()->getNumCharactersVol1();
 
   // set flag : RTK3 complete
   $rtk3_less =& $lessons[ rtkIndex::inst()->getNumLessonsVol1() + 1 ];
   $is_rtk3_complete = $rtk3_less['totalCards'] === $rtk3_less['maxValue'];
 
-// DBG::printr($lessons)
+// LOG::info($lessons);
 
   // test links code (obsolete)
   // echo link_to('Test', 'review/free', array(
@@ -38,7 +40,7 @@
       </div>
     <?php endif; ?>
 
-<?php if ($progress->heisignum === rtkIndex::inst()->getNumCharactersVol1()): ?>
+<?php if ($isSequenceComplete): ?>
       <p class="confirmwhatwasdone" style="color:#318c1c;">
         <strong>RTK Volume 1 complete!</strong> Congratulations!</p>
       </p>
@@ -51,8 +53,8 @@
 <?php endif ?>
 
 
-    <?php if ($progress->curlesson !== false): ?>
-      <p> <strong>Your current goal is to complete lesson <?php echo $progress->curlesson ?>.</strong></p>
+    <?php if ($lessonNr): ?>
+      <p> <strong>Your current goal is to complete lesson <?php echo $lessonNr ?>.</strong></p>
     <?php endif; ?>
  
 <div class="no-gutter-xs-sm mt-8">
@@ -66,7 +68,7 @@
      </thead>
      <tbody>
      <?php $i=1; foreach ($lessons as $lkey => $less): ?>
-      <tr<?php $cssClass = (($i++ % 2) ? 'odd' : '') . ($lkey === $progress->curlesson ? ' active' : ''); 
+      <tr<?php $cssClass = (($i++ % 2) ? 'odd' : '') . ($lkey === $lessonNr ? ' active' : ''); 
         if ($cssClass !== '') echo ' class="'.$cssClass.'"';
        ?>>
         <td><?php echo $less['label'] ?></td>

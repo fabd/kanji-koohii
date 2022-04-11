@@ -29,10 +29,23 @@
     <div class="flex items-center">
       <ko-lesson-map :values="lessonMap" class="flex-1 mr-4" />
 
-      <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary">
+      <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary" @click="isOpen = !isOpen">
         Show Kanji
-        <i class="fa fa-chevron-down ml-2"></i>
+        <i
+          class="fa ml-2"
+          :class="{
+            'fa-chevron-down': isOpen,
+            'fa-arrow-right': !isOpen,
+          }"
+        ></i>
       </button>
+    </div>
+
+    <!-- --- -->
+    <!-- MID -->
+    <!-- --- -->
+    <div v-if="isOpen" class="mt-5 pt-4 border-t border-dash-line">
+      <ko-kanji-grid :cards="cards" />
     </div>
   </div>
 </template>
@@ -40,12 +53,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import KoKanjiGrid from "@/vue/KoKanjiGrid.vue";
 import KoLessonMap from "@/vue/KoLessonMap.vue";
 
 export default defineComponent({
   name: "KoLessonPane",
 
   components: {
+    KoKanjiGrid,
     KoLessonMap,
   },
 
@@ -56,6 +71,12 @@ export default defineComponent({
     allLessonsCount: { type: Number, required: true },
     allLessonsUrl: { type: String, required: true },
     sequenceName: { type: String, required: true },
+  },
+
+  data() {
+    return {
+      isOpen: true,
+    }
   },
 
   computed: {

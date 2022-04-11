@@ -135,7 +135,7 @@
       </div>
 <?php endif; ?>
 
-      <div class="bg-[#c2bdaf] h-px mb-3"></div>
+      <div class="bg-dash-line h-px mb-3"></div>
 
       <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 
@@ -181,7 +181,6 @@
       ['id' => 26376],
       ['id' => 30000],
       ['id' => 30446],
-      ['id' => 21476],
     ],
     'lessonNum' => $curLesson['lesson_nr'],
     'lessonPos' => $curLesson['lesson_pos'],

@@ -39,6 +39,12 @@ module.exports = {
         DEFAULT: "#87847D",
         light: "#A9A396",
       },
+
+      // dashboard & other stat boxes
+      dash: {
+        // separator line in dashboard panes (#A9A396 / 59% opacity)
+        line: "#c2bdaf", 
+      }
     },
 
     // redeclare to remove the baked-in line-height, and add `md` alias

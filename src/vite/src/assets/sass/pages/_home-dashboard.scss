@@ -44,6 +44,9 @@
   }
 }
 
+.ko-LessonPane {
+}
+
 .ko-LessonMap {
   $height: 41px; // align height with ko-Btn--large
   background-color: #696866;
@@ -60,5 +63,41 @@
     @apply rounded;
     background-color: #5cb85c;
     margin: 0 1px;
+  }
+}
+
+.ko-KanjiGrid {
+  $gutter: 0.125rem;
+  @apply flex flex-wrap;
+  margin-left: -$gutter;
+  > * {
+    margin-left: $gutter;
+    margin-bottom: 1rem;
+  }
+}
+
+.ko-KanjiCard {
+  --ko-kanjicard-w: 125px;
+  --ko-kanjicard-h: calc(var(--ko-kanjicard-w) * 1.25);
+  width: var(--ko-kanjicard-w);
+  height: var(--ko-kanjicard-h);
+
+  text-align: center;
+
+  background-color: #fff;
+
+  @apply flex flex-col items-center;
+
+  // FIXME use cj-k comp
+  &-chr {
+    font-size: 60px;
+  }
+
+  &-tag > span {
+    @apply inline-block rounded-md text-xs px-3;
+    height: 27px;
+    line-height: 27px;
+    background-color: #50AC50;
+    color: #fff;
   }
 }

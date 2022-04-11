@@ -26,7 +26,8 @@
     &:hover {
       @apply no-underline;
 
-      &.is-new, &:focus.is-new {
+      &.is-new,
+      &:focus.is-new {
         background-color: #32b1fc4d; // color.change(#40a8e5, $alpha: 0.3);
       }
       &.is-due {
@@ -40,5 +41,24 @@
   // main heading
   &-title {
     @apply text-lg font-bold text-body;
+  }
+}
+
+.ko-LessonMap {
+  $height: 41px; // align height with ko-Btn--large
+  background-color: #696866;
+  padding: 2px;
+  height: $height;
+  @apply rounded-md;
+
+  // default for the cells
+  color: #fff;
+
+  @apply flex items-stretch;
+  > * {
+    @apply flex-1;
+    @apply rounded;
+    background-color: #5cb85c;
+    margin: 0 1px;
   }
 }

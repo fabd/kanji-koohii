@@ -165,6 +165,24 @@
   kk_globals_put('HOMEDASH_PCTBAR_PROPS', $propsPctBar);
 
   $lessonProps = [
+    'cards' => [
+      ['id' => 19968],
+      ['id' => 20108],
+      ['id' => 19977],
+      ['id' => 22235],
+      ['id' => 20116],
+      ['id' => 20845],
+      ['id' => 19971],
+      ['id' => 20843],
+      ['id' => 20061],
+      ['id' => 21313],
+      ['id' => 21475],
+      ['id' => 26085],
+      ['id' => 26376],
+      ['id' => 30000],
+      ['id' => 30446],
+      ['id' => 21476],
+    ],
     'lessonNum' => $curLesson['lesson_nr'],
     'lessonPos' => $curLesson['lesson_pos'],
     'lessonCount' => $curLesson['lesson_count'],

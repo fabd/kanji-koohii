@@ -7,14 +7,17 @@
 .fc-kanji .d-kanji .cj-k { display:block; /* v align */padding:0 0 0.2em; }
 
 .fc-kanji .d-strokec {
-  position:absolute; left:8px; bottom:6px;
-  font:12px Georgia, Times New Roman, sans-serif; color:#a0a0a0;
+  position:absolute; left:8px; bottom:.5rem;
+  font:14px/1em Georgia, Times New Roman, sans-serif; color:#a0a0a0;
 }
-.fc-kanji .d-strokec .kanji { font-size:20pt; }
+.fc-kanji .d-strokec .kanji {
+  font-size:20pt; 
+  line-height: 1;
+}
 
 .fc-kanji .d-framenr {
-  font:12px Georgia, Times New Roman, sans-serif;
-  position:absolute; bottom:7px; right:8px; color:#a0a0a0;
+  font:14px/1em Georgia, Times New Roman, sans-serif;
+  position:absolute; bottom:.5rem; right:8px; color:#a0a0a0;
 }
 
 /* states :: default review mode */

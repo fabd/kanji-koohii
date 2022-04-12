@@ -205,7 +205,7 @@ class rtkIndex
 
   /**
    * Return an array of [[ucsId, seqNr], ...] for the current sequence.
-   * 
+   *
    * Useful to instance a Map() in Javascript, for matching UCS > Heisig index.
    *
    * @return array
@@ -517,5 +517,18 @@ class rtkIndex
     $ids = rtkIndex::convertToUCS($framenums);
 
     return $ids;
+  }
+
+  public static function useKeywordsFile()
+  {
+    // a unique hash for versioning assets cached by client (cf .htaccess rule)
+    $HASH = '20220412';
+
+    $sfContext = sfContext::getInstance();
+
+    $seqId = $sfContext->getUser()->getUserSequence();
+    $keywordsFile = "/revtk/study/keywords-rtk-{$seqId}.{$HASH}.js";
+
+    $sfContext->getResponse()->addJavascript($keywordsFile, 'first', ['defer' => true]);
   }
 }

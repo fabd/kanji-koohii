@@ -1,11 +1,8 @@
 <?php
   use_helper('CJK', 'Form');
 
-  // file hash matches the ones output by Vite build (cf .htaccess rule)
-  $FILEHASH = '20211019';
-  $rtkIndex = $sf_user->getUserSequence(); // 0 = OLD, 1 = NEW
-  $keywordsFile = "/revtk/study/keywords-rtk-{$rtkIndex}.{$FILEHASH}.js";
-  use_javascript($keywordsFile, 'first', ['defer' => true]);
+  // keywords and index for the search box (front end side)
+  rtkIndex::useKeywordsFile();
 
   //$restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
 

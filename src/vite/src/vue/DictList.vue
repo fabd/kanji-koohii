@@ -11,18 +11,12 @@
             <i v-else class="far fa-star"></i>
           </div>
 
-          <cjk-lang-ja
-            class-name="c vocab_c"
-            :html="$item.c"
-            :class="{ known: $item.known }"
-          ></cjk-lang-ja>
-          <cjk-lang-ja class-name="r vocab_r" :html="$item.fr"></cjk-lang-ja>
+          <cjk-lang-ja class="c vocab_c" :html="$item.c" :class="{ known: $item.known }" />
+          <cjk-lang-ja class="r vocab_r" :html="$item.fr" />
         </div>
-        <div class="dl_d">
-          {{ $item.g }}
-        </div>
+        <div class="dl_d">{{ $item.g }}</div>
 
-        <div if="isMenu"> </div>
+        <div if="isMenu"></div>
       </div>
     </template>
   </div>

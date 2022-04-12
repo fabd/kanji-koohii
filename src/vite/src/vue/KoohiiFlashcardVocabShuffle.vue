@@ -1,10 +1,7 @@
 <template>
   <div class="fc-vshuffle">
-    <cjk-lang-ja
-      class-name="ta-c dispword"
-      :html="cardData.dispword"
-    ></cjk-lang-ja>
-    <cjk-lang-ja class-name="ta-c reading">{{ cardData.reading }}</cjk-lang-ja>
+    <cjk-lang-ja class="ta-c dispword" :html="cardData.dispword" />
+    <cjk-lang-ja class="ta-c reading">{{ cardData.reading }}</cjk-lang-ja>
     <div class="ta-c glossary">{{ cardData.glossary }}</div>
   </div>
 </template>

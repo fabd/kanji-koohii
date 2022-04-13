@@ -179,7 +179,7 @@ class studyActions extends sfActions
     }
     else
     {
-      $title = 'Character not in '.rtkIndex::inst()->shortName;
+      $title = 'Character not in '.rtkIndex::getSequenceName();
     }
 
     return $title;

@@ -190,7 +190,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    * 
    * @return array   Associative array:  ucs_id => (ucs_id, seq_nr, keyword)
    */
-  public static function getCustomKeywords($userid, $onlyFlashcards = false)
+  public static function getCoalescedKeywords($userid, $onlyFlashcards = false)
   {
     $select = self::$db->select(['kanjis.ucs_id', 'seq_nr' => rtkIndex::getSqlCol()]);
 

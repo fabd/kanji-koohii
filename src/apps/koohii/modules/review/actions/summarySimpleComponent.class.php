@@ -13,7 +13,7 @@ class summarySimpleComponent extends sfComponent
 
     if (count($answers))
     {
-      $keywords = CustkeywordsPeer::getCustomKeywords($this->getUser()->getUserId());
+      $keywords = CustkeywordsPeer::getCoalescedKeywords($this->getUser()->getUserId());
 
       foreach ($answers as $ucsId => $answer)
       {

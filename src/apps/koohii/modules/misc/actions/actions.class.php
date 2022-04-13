@@ -10,7 +10,7 @@ class miscActions extends sfActions
   {
     // get the Heisig keywords coalesced with user's customized keywords
     $userId = $this->getContext()->getUser()->getUserId();
-    $keywords = CustkeywordsPeer::getCustomKeywords($userId);
+    $keywords = CustkeywordsPeer::getCoalescedKeywords($userId);
     // DBG::printr($keywords);exit;
 
     $keywordsMap = [];

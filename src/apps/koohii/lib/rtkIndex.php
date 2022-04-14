@@ -490,33 +490,27 @@ class rtkIndex
   }
 
   /**
-   * Create an array of flashcard ids using sequence numbers.
+   * Create an array of UCS codes (kanji flashcard ids) for a range of the
+   * sequence.
    *
-   * @param int  $from    Sequence number start
-   * @param int  $to      Sequence number end
-   * @param bool $shuffle True to randomize the cards
+   * @param int  $from    sequence start
+   * @param int  $to      sequence end
+   * @param bool $shuffle randomize the array
    *
    * @return int[]
    */
   public static function createFlashcardSet($from, $to, $shuffle = false)
   {
-    // create array of UCS ids from sequential Heisig flashcard range
-    $numCards = $to - $from + 1;
-    $framenums = array_fill(0, $numCards, 0);
-    for ($i = 0; $i < $numCards; ++$i)
-    {
-      $framenums[$i] = $from + $i;
-    }
+    $framenums = range($from, $to);
 
     if ($shuffle)
     {
-      // shuffle
       shuffle($framenums);
     }
 
-    $ids = rtkIndex::convertToUCS($framenums);
+    $ucsIds = rtkIndex::convertToUCS($framenums);
 
-    return $ids;
+    return $ucsIds;
   }
 
   public static function useKeywordsFile()

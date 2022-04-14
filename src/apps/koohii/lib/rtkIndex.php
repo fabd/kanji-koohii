@@ -210,20 +210,20 @@ class rtkIndex
    *
    * @return array
    */
-  public static function getSequenceMap()
-  {
-    mb_internal_encoding('utf-8');
-    $kanjis = mb_str_split(self::inst()->kanjis);
-    $map = [];
-    $seqNr = 1;
-    foreach ($kanjis as $char)
-    {
-      $ucsId = mb_ord($char);
-      $map[] = [$ucsId, $seqNr++];
-    }
+  // public static function getSequenceMap()
+  // {
+  //   mb_internal_encoding('utf-8');
+  //   $kanjis = mb_str_split(self::inst()->kanjis);
+    
+  //   $map = [];
+  //   $seqNr = 1;
+  //   foreach ($kanjis as $char)
+  //   {
+  //     $map[] = [mb_ord($char), $seqNr++];
+  //   }
 
-    return $map;
-  }
+  //   return $map;
+  // }
 
   /**
    * Returns the index column to use depending on the user's selected edition.
@@ -502,7 +502,7 @@ class rtkIndex
   {
     // create array of UCS ids from sequential Heisig flashcard range
     $numCards = $to - $from + 1;
-    $framenums = array_fill(0, $numCards, 1);
+    $framenums = array_fill(0, $numCards, 0);
     for ($i = 0; $i < $numCards; ++$i)
     {
       $framenums[$i] = $from + $i;

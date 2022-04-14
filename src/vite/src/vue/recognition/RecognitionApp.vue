@@ -203,6 +203,7 @@ import { kk_globals_get } from "@app/root-bundle";
 import { urlForStudy } from "@/lib/koohii";
 import * as wanakana from "wanakana";
 import * as CJK from "@/lib/kanji";
+import * as RTK from "@/lib/rtk";
 import CacheDictResults from "@/app/dict/CacheDictResults";
 
 import CjkLangJa from "@/vue/CjkLangJa.vue";
@@ -222,17 +223,10 @@ type TRecKanji = {
 // --------------------------------------------------------------------
 // hydration
 // --------------------------------------------------------------------
-type TKeywordMap = Map<TUcsId, string>; // UCS code, keyword
-type TRtkIndexMap = Map<number, number>; // UCS code, Heisig Index
-
-const keywordsMap = new Map(kk_globals_get("USER_KEYWORDS_MAP")) as TKeywordMap;
-const getKeywordForUCS = (ucsId: TUcsId) => keywordsMap.get(ucsId) || "";
 
 const knownKanji = kk_globals_get("USER_KNOWN_KANJI") as string;
 const isKnownKanji = (char: string) => knownKanji.indexOf(char) >= 0;
 
-const rtkIndexMap = new Map(kk_globals_get("RTK_INDEX_MAP")) as TRtkIndexMap;
-const getIndexForUCS = (ucsId: TUcsId) => rtkIndexMap.get(ucsId) || 0;
 // --------------------------------------------------------------------
 
 export default defineComponent({
@@ -351,13 +345,14 @@ export default defineComponent({
         let ucsId = char.charCodeAt(0);
         // console.log(strKanji, kanjiInfo);
 
-        let data: TRecKanji;
+        const heisigNr = RTK.getIndexForUCS(ucsId);
+        const keyword = heisigNr ? RTK.getKeywordForUCS(ucsId) : "";
 
-        data = {
+        const data: TRecKanji = {
           kanji: char,
           ucsId: char.charCodeAt(0),
-          heisigNr: getIndexForUCS(ucsId),
-          keyword: getKeywordForUCS(ucsId),
+          heisigNr: heisigNr,
+          keyword: keyword,
         };
 
         if (isKnownKanji(char)) {

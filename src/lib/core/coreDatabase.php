@@ -575,6 +575,22 @@ class coreDatabaseSelect
     $this->parts[self::WHERE][] = $this->db->bind($criteria, $bindParams);
     return $this;
   }
+  
+  /**
+   * Add a WHERE col IN (values) clause.
+   * 
+   * FIXME? Only needed with integer values so far.
+   *
+   * @param string $column 
+   * @param int[] $values
+   * @return self
+   */
+  public function whereIn($column, $values)
+  {
+    assert(is_array($values));
+    $this->parts[self::WHERE][] = $column.' IN ('.implode(',', $values).')';
+    return $this;
+  }
 
   /**
    * 

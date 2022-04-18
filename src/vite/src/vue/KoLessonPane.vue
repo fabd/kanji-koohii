@@ -51,10 +51,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import KoKanjiGrid from "@/vue/KoKanjiGrid.vue";
 import KoLessonMap from "@/vue/KoLessonMap.vue";
+
+import { TKanjiCardData } from "./KoKanjiCard.vue";
 
 export default defineComponent({
   name: "KoLessonPane",
@@ -65,7 +67,7 @@ export default defineComponent({
   },
 
   props: {
-    cards: { type: Array, required: true },
+    cards: { type: Array as PropType<TKanjiCardData[]>, required: true },
     lessonNum: { type: Number, required: true },
     lessonPos: { type: Number, required: true },
     allLessonsCount: { type: Number, required: true },

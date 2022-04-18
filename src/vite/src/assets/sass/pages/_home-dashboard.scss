@@ -44,9 +44,13 @@
   }
 }
 
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 .ko-LessonPane {
 }
 
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 .ko-LessonMap {
   $height: 41px; // align height with ko-Btn--large
   background-color: #696866;
@@ -66,38 +70,85 @@
   }
 }
 
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 .ko-KanjiGrid {
-  $gutter: 0.125rem;
   @apply flex flex-wrap;
-  margin-left: -$gutter;
+
+  $gutter: 16px;
+  $half-gutter: calc($gutter / 2);
+  margin-left: (-$half-gutter);
+  margin-right: (-$half-gutter);
+
   > * {
-    margin-left: $gutter;
+    margin-left: $half-gutter;
+    margin-right: $half-gutter;
     margin-bottom: 1rem;
   }
 }
 
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
 .ko-KanjiCard {
   --ko-kanjicard-w: 125px;
-  --ko-kanjicard-h: calc(var(--ko-kanjicard-w) * 1.25);
+  --ko-kanjicard-h: calc(var(--ko-kanjicard-w) * 1.315);
   width: var(--ko-kanjicard-w);
   height: var(--ko-kanjicard-h);
-
+  padding: 6px 8px 8px;
   text-align: center;
-
-  background-color: #fff;
 
   @apply flex flex-col items-center;
 
-  // FIXME use cj-k comp
-  &-chr {
-    font-size: 60px;
+  //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+  background-color: transparent;
+  border: 1px dashed rgba(73, 70, 63, 0.2);
+  border-radius: 6px;
+
+  &.is-box {
+    background: linear-gradient(148.74deg, #f8f7f6 0%, #f8f8f8 80.21%, #ffffff 89.58%, #eaeaea 100%);
+    border: 0;
+    border-bottom: 1px solid #bab6ae; //hexa(#6c6c6c, .37);
+    border-radius: 0;
   }
 
-  &-tag > span {
-    @apply inline-block rounded-md text-xs px-3;
+  &-idx,
+  &-kwd {
+    @apply font-serif;
+    color: #3c3c3c;
+    font-size: 15px;
+    line-height: calc(19 / 15 * 1em);
+  }
+
+  &-chr {
+    font-size: 60px;
+    line-height: 1;
+    color: #313130;
+    @apply mt-auto mb-auto; // flex spacings
+  }
+
+  &-tag {
+    @apply rounded-md text-xs px-2 font-light;
     height: 27px;
     line-height: 27px;
-    background-color: #50AC50;
+    background-color: #d7d1c4;
+    @apply text-body;
+  }
+
+  //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+  &-tag {
+  }
+
+  // card footer / tag default to green for SRS boxes 1+
+  &.is-box &-tag {
     color: #fff;
+    background-color: #50ac50;
+  }
+  
+  // "Restudy"
+  &.is-box-1 &-tag {
+    color: #fff;
+    background-color: #ef5757;
   }
 }

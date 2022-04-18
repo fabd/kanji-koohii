@@ -445,10 +445,10 @@ class rtkIndex
    * Return information for the lesson, given lesson number.
    *
    * Returns:
-   *   - lesson number
-   *   - lesson index start
-   *   - lesson's kanji count
-   *   - position from start of lesson (1 to x) (if $seqNr is provided)
+   *   - lesson_nr ... (int) number
+   *   - lesson_from ... (int) index start
+   *   - lesson_count ... (int) kanji count
+   *   - lesson_pos ... (int) position in lesson (1 to X) *if* $seqNr is provided
    *
    * @return array|false returns false if index not within current sequence
    */

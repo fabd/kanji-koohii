@@ -156,32 +156,30 @@
 
 <?php
   include_partial('news/recent');
+  
+  // ids of kanji cards shown in this lesson (to limit queries)
+  $cardsIds = rtkIndex::createFlashcardSet(
+    $curLesson['lesson_from'],
+    $curLesson['lesson_from'] + $curLesson['lesson_count'] - 1
+  );
 
-  $propsPctBar = [
+  // include orig & user keyword maps for the kanji card component
+  rtkIndex::useKeywordsFile();
+
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId, $cardsIds);
+  // $keywordsMap = array_map(
+  //   fn ($item) => [(int) $item['ucs_id'], $item['keyword']],
+  //   array_values($keywords)
+  // );
+
+  $pctBarProps = [
     'value' => $flashcardCount,
     'max-value' => $studyMax,
   ];
-
-  kk_globals_put('HOMEDASH_PCTBAR_PROPS', $propsPctBar);
-
+  
+  $cardsData = ReviewsPeer::getJsKanjiCards($userId, $cardsIds);
   $lessonProps = [
-    'cards' => [
-      ['id' => 19968],
-      ['id' => 20108],
-      ['id' => 19977],
-      ['id' => 22235],
-      ['id' => 20116],
-      ['id' => 20845],
-      ['id' => 19971],
-      ['id' => 20843],
-      ['id' => 20061],
-      ['id' => 21313],
-      ['id' => 21475],
-      ['id' => 26085],
-      ['id' => 26376],
-      ['id' => 30000],
-      ['id' => 30446],
-    ],
+    'cards' => $cardsData,
     'lessonNum' => $curLesson['lesson_nr'],
     'lessonPos' => $curLesson['lesson_pos'],
     'lessonCount' => $curLesson['lesson_count'],
@@ -189,4 +187,7 @@
     'allLessonsUrl' => url_for('@progress'),
     'sequenceName' => $sequenceName,
   ];
+
+  kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
+  kk_globals_put('HOMEDASH_PCTBAR_PROPS', $pctBarProps);
   kk_globals_put('HOMEDASH_LESSON_PROPS', $lessonProps);

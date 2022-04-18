@@ -84,6 +84,49 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
+   * Return array of kanji card data matching UCS ids -- whether or not the
+   * user has a flashcard for it!
+   * 
+   * The data is tailored for the kanji card component.
+   *
+   * @param int[] $ucsIds
+   * @return array
+   */
+  public static function getJsKanjiCards(int $userId, array $ucsIds)
+  {
+    $select = self::getInstance()->select([
+      'ucs' => 'reviews.ucs_id',
+      'box' => 'leitnerbox',      
+    ]);
+
+    $select = KanjisPeer::joinLeftUsingUCS($select);
+    $select = self::filterByUserId($select, $userId);
+    
+    $select->whereIn('ucs_id', $ucsIds);
+
+// DBG::out($select);exit;
+    $rows = self::$db->fetchAll($select);
+
+    $cards = [];
+
+    // set "NOT LEARNED" cards (the user doesn't have a flashcard)
+    foreach ($ucsIds as $ucsId) {
+      $cards[$ucsId] = ['ucs' => $ucsId, 'box' => 0];
+    }
+
+    // merge user's flashcard data
+    foreach ($rows as $row) {
+      $ucsId = (int) $row['ucs'];
+      $cards[$ucsId] = ['ucs' => $ucsId, 'box' => (int) $row['box']];
+    }
+
+    // remove the array index
+    $cards = array_values($cards);
+
+    return $cards;
+  }
+
+  /**
    * Returns true if user has a flashcard for given character UCS code.
    * 
    * @param int   $userId 

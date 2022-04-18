@@ -1,14 +1,14 @@
 <template>
-  <div class="ko-KanjiCard">
+  <div class="ko-KanjiCard" :class="[{ 'is-box': card.box }, tagClass()]">
     <div class="ko-KanjiCard-idx">
-      <span>{{ seqNr }}</span>
+      <span>{{ getIndex() }}</span>
     </div>
-    <div class="ko-KanjiCard-kwd">{{ keyword }}</div>
+    <div class="ko-KanjiCard-kwd">{{ getKeyword() }}</div>
     <div class="ko-KanjiCard-chr">
-      <cjk-lang-ja>{{ String.fromCodePoint(card.id) }}</cjk-lang-ja>
+      <cjk-lang-ja>{{ String.fromCodePoint(card.ucs) }}</cjk-lang-ja>
     </div>
     <div class="ko-KanjiCard-tag">
-      <span>{{ card.tag }}</span>
+      <span>{{ getTagLabel() }}</span>
     </div>
   </div>
 </template>
@@ -19,8 +19,8 @@ import * as RTK from "@/lib/rtk";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 
 export type TKanjiCardData = {
-  id: TUcsId;
-  tag: string;
+  ucs: TUcsId;
+  box: number;
 };
 
 export default defineComponent({
@@ -29,18 +29,30 @@ export default defineComponent({
   components: {
     CjkLangJa,
   },
+
   props: {
     card: { type: Object as PropType<TKanjiCardData>, required: true },
   },
 
-  computed: {
-    keyword(): string {
-      return RTK.getKeywordForUCS(this.card.id) || '-!error!-';
+  methods: {
+    getKeyword(): string {
+      return RTK.getKeywordForUCS(this.card.ucs) || "-";
     },
-    seqNr(): number {
-      return RTK.getIndexForUCS(this.card.id);
+
+    getIndex(): number {
+      return RTK.getIndexForUCS(this.card.ucs);
+    },
+
+    getTagLabel(): string {
+      const box = this.card.box;
+      const labels = ['NOT LEARNED', 'Restudy', 'Box 1', 'Box 2', 'Box 3', 'Box 4', 'Box 5', 'Box 6', 'Box 7', 'Box 8', 'Box 9', 'Box 10'];
+
+      return labels[box] || '-';
+    },
+
+    tagClass(): string {
+      return this.card.box ? `is-box-${this.card.box}`: '';
     }
   },
-
 });
 </script>

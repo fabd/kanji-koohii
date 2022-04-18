@@ -180,6 +180,33 @@ class CustkeywordsPeer extends coreDatabaseTable
   }*/
 
   /**
+   * Return *only* the user's customized keywords (not coalesced).
+   * 
+   * Optional subset of flashcard ids.
+   *
+   * @param int $userId
+   * 
+   * @return user keywords as a JS map
+   */
+  public static function getUserKeywordsMap($userId, array $ucsIds = [])
+  {
+    $select = self::getInstance()
+      ->select(['ucs_id', 'keyword'])
+      ->where('userid = ?', $userId);
+
+    if (count($ucsIds)) {
+      $select->whereIn('ucs_id', $ucsIds);
+    }
+
+    $rows = self::$db->fetchAll($select);
+    foreach ($rows as $row) {
+      $keywords[] = [(int) $row['ucs_id'], $row['keyword']];
+    }
+
+    return $keywords;
+  }
+
+  /**
    * Get user's customized keywords coalesced in an assoc. array.
    *
    * FIXME  The non-limited query returns Heisig characters for now to avoid

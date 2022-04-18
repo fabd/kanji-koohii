@@ -1,25 +1,30 @@
 /**
- * This modules deals with handling kanji sequences (ie. RTK indexes).
+ * Helpers to deal with handling kanji sequences (ie. RTK indexes).
  *
  * Methods:
- *
  *   getIndexForUCS()
  *   getKeywordForUCS()
  *
  */
-import { kk_globals_get } from "@app/root-bundle";
 
-type TKeywordMap = Map<TUcsId, string>; // UCS code, keyword
-type TRtkIndexMap = Map<TUcsId, number>; // UCS code, Heisig Index
+import { kk_globals_get, kk_globals_has } from "@app/root-bundle";
+
+// UCS code, keyword
+type TKeywordMap = Map<TUcsId, string>;
+
+// UCS code, Heisig Index
+type TRtkIndexMap = Map<TUcsId, number>;
 
 let rtkIndexMap: TRtkIndexMap;
-
-let origKeywordsMap: TKeywordMap;
+let origKeywordsMap: Map<number, string>; // <sequence nr, keyword>
 let userKeywordsMap: TKeywordMap;
 
+/**
+ * Derive index of <ucs, seq_nr> from the KANJIS string which is already
+ * included in the keywords file used by the Study pages.
+ *
+ */
 function getRtkIndexMap() {
-  // a string of all kanjis in active sequence, in sequential order (no gaps)
-  // -- therefore sequence nr is inferred from position in string
   const chars: string = kk_globals_get("SEQ_KANJIS");
   rtkIndexMap = new Map(chars.split("").map((k, i) => [k.charCodeAt(0), i + 1]));
 
@@ -33,21 +38,28 @@ const getUserKeywords = function () {
 };
 
 /**
- * For now, orig keywords is OPTIONAL. If not set by php, then it is assumed
- * all necessary keywords would be in the user keywords map.
+ * Create a map <seq_nr, keyword> by re-using the data from the keywords
+ * file which is also used on the Study pages.
  *
- * Cf. "sightreading" page where coalesced keywords are returned in USER_KEYWORDS_MAP.
+ * NOTES
+ *   - the keywords file is OPTIONAL, and may not be present
+ *   - the map's keys are sequence number, not UCS
  */
 const getOrigKeywords = function () {
-  // keywords file should be included in the page (from the php side)
-  // console.assert(window.KK && window.KK["SEQ_KEYWORDS"].length);
-  const keywords: string[] = (window.KK["SEQ_KEYWORDS"] && kk_globals_get("SEQ_KEYWORDS")) || [];
-  origKeywordsMap ??= new Map(keywords.map((str, index) => [index, str]));
+  const keywords: string[] = (kk_globals_has("SEQ_KEYWORDS") && kk_globals_get("SEQ_KEYWORDS")) || [];
+
+  origKeywordsMap ??= new Map(keywords.map((str, index) => [index + 1, str]));
 
   return origKeywordsMap;
 };
 
-// return a sequence number (starts at 1), 0 if ucs code not in active sequence
+/**
+ * Returns a Heisig index number for UCS codes that match a Heisig char.
+ *
+ * If the char is not within active sequence, returns the code as is.
+ *
+ * @return number ... extended frame number (Heisig index, or UCS)
+ */
 function getIndexForUCS(ucsId: TUcsId): number {
   return (rtkIndexMap || getRtkIndexMap()).get(ucsId) || 0;
 }
@@ -56,7 +68,7 @@ function getKeywordForUCS(ucsId: TUcsId) {
   const userKeywords = userKeywordsMap || getUserKeywords();
   const origKeywords = origKeywordsMap || getOrigKeywords();
 
-  return userKeywords.get(ucsId) || origKeywords.get(ucsId) || "-";
+  return userKeywords.get(ucsId) || origKeywords.get(getIndexForUCS(ucsId)) || "-";
 }
 
 export { getKeywordForUCS, getIndexForUCS };

@@ -10,9 +10,7 @@ let bodyED: EventDelegator | null = null;
  * Returns an EventDelegator instance for click events on the page body.
  */
 export function getBodyED(): EventDelegator {
-  return bodyED
-    ? bodyED
-    : (bodyED = new EventDelegator(document.body, "click"));
+  return bodyED ? bodyED : (bodyED = new EventDelegator(document.body, "click"));
 }
 
 /**
@@ -36,6 +34,8 @@ function focusOnLoad() {
   }
 }
 
+const kkGlobalsHas = (name: string) => window.KK.hasOwnProperty(name);
+
 /**
  * Helper makes it easier to find code where values are shared between php/js.
  *
@@ -43,14 +43,17 @@ function focusOnLoad() {
  *
  * @param name key (make sure to declare them in globals.d.ts)
  */
-// see kk_globals_put() on the php side
-export function kk_globals_get(name: keyof Window["KK"]): any {
+export function kk_globals_get(name: keyof Window["KK"], defaultVal?: any): any {
   console.assert(!!window.KK);
   console.assert(
-    (window.KK as Object).hasOwnProperty(name),
-    `window.KK[${name}] is not set`
+    typeof defaultVal !== "undefined" || kkGlobalsHas(name),
+    `Global KK['${name}'] is not set, and no default value`
   );
-  return window.KK[name];
+  return kkGlobalsHas(name) ? window.KK[name] : defaultVal;
+}
+
+export function kk_globals_has(name: keyof Window["KK"]): boolean {
+  return kkGlobalsHas(name);
 }
 
 export default function () {

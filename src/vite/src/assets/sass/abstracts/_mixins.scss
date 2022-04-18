@@ -21,7 +21,18 @@
 @use "sass:color" as color;
 
 // --------------------------------------------------------------------
-// BUTTONS
+// FUNCTIONS / MISC
+// --------------------------------------------------------------------
+
+// create a color from #RRGGBB hex code, and alpha value (useful when
+//  copying or updating colors from FIGMA).
+@function hexa($hex, $alpha) {
+  $rgba: "rgba(" + red($hex) + "," + green($hex) + "," + blue($hex) + "," + $alpha + ")";
+  @return unquote($rgba);
+}
+
+// --------------------------------------------------------------------
+// BUTTON-COLOR
 //
 //   Helper to create CSS vars & handle states for each button style.
 // --------------------------------------------------------------------

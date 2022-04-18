@@ -33,6 +33,9 @@ module.exports = {
     // this check is already covered by TS (Vetur), complains about types
     // declared in globals.d.ts
     "no-undef": "off",
+    
+    // we don't need to do weird things with Object.create(), kiss
+    "no-prototype-builtins": "off",
 
     "vue/max-attributes-per-line": "off",
     "vue/no-v-html": "off",

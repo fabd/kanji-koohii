@@ -4,6 +4,36 @@
 
 @use "sass:color" as color;
 
+@mixin card-tag-colors() {
+  &.is-off {
+    //
+  }
+  &.is-new {
+    color: #fff;
+    background-color: var(--ko-cardmap-new);
+  }
+  &.is-res {
+    color: #fff;
+    background-color: var(--ko-cardmap-res);
+  }
+  &.is-L1 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L1);
+  }
+  &.is-L2 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L2);
+  }
+  &.is-L3 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L3);
+  }
+  &.is-L4 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L4);
+  }
+}
+
 // --------------------------------------------------------------------
 // base class for the entire dashboard
 // --------------------------------------------------------------------
@@ -47,6 +77,13 @@
 // --------------------------------------------------------------------
 // --------------------------------------------------------------------
 .ko-LessonPane {
+  // default card tag colors for the kanji grid
+  --ko-cardmap-new: #a3a197;
+  --ko-cardmap-res: #ef5e4f;
+  --ko-cardmap-L1: #5cb85c; //#83d37d;
+  --ko-cardmap-L2: #5cb85c; //#63b95c;
+  --ko-cardmap-L3: #5cb85c; //#4ea747;
+  --ko-cardmap-L4: #5cb85c; //#3b8f35;
 }
 
 // --------------------------------------------------------------------
@@ -92,10 +129,14 @@
 .ko-KanjiCard {
   --ko-kanjicard-w: 125px;
   --ko-kanjicard-h: calc(var(--ko-kanjicard-w) * 1.315);
-  width: var(--ko-kanjicard-w);
   height: var(--ko-kanjicard-h);
   padding: 6px 8px 8px;
   text-align: center;
+
+  // dynamic width to neatly fit the entire row
+  // width: var(--ko-kanjicard-w);
+  --n: 6;
+  width: calc((100% - 16px * var(--n)) / var(--n));
 
   @apply flex flex-col items-center;
 
@@ -105,7 +146,8 @@
   border: 1px dashed rgba(73, 70, 63, 0.2);
   border-radius: 6px;
 
-  &.is-box {
+  // a flashcard exists for this kanji
+  &.is-on {
     background: linear-gradient(148.74deg, #f8f7f6 0%, #f8f8f8 80.21%, #ffffff 89.58%, #eaeaea 100%);
     border: 0;
     border-bottom: 1px solid #bab6ae; //hexa(#6c6c6c, .37);
@@ -118,6 +160,13 @@
     color: #3c3c3c;
     font-size: 15px;
     line-height: calc(19 / 15 * 1em);
+  }
+
+  &-kwd {
+    @apply no-underline hover:underline;
+    &:hover {
+      color: #005cb1;
+    }
   }
 
   &-chr {
@@ -135,20 +184,7 @@
     @apply text-body;
   }
 
-  //////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////
   &-tag {
-  }
-
-  // card footer / tag default to green for SRS boxes 1+
-  &.is-box &-tag {
-    color: #fff;
-    background-color: #50ac50;
-  }
-  
-  // "Restudy"
-  &.is-box-1 &-tag {
-    color: #fff;
-    background-color: #ef5757;
+    @include card-tag-colors();
   }
 }

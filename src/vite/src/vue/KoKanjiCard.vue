@@ -1,14 +1,17 @@
 <template>
-  <div class="ko-KanjiCard" :class="[{ 'is-box': card.box }, tagClass()]">
+  <div class="ko-KanjiCard" :class="[{ 'is-on': card.box }]">
     <div class="ko-KanjiCard-idx">
       <span>{{ getIndex() }}</span>
     </div>
-    <div class="ko-KanjiCard-kwd">{{ getKeyword() }}</div>
+
+    <a :href="getStudyUrl()" class="ko-KanjiCard-kwd">{{ getKeyword() }}</a>
+
     <div class="ko-KanjiCard-chr">
       <cjk-lang-ja>{{ String.fromCodePoint(card.ucs) }}</cjk-lang-ja>
     </div>
-    <div class="ko-KanjiCard-tag">
-      <span>{{ getTagLabel() }}</span>
+
+    <div class="ko-KanjiCard-tag" :class="getTagCss()">
+      <span>{{ getTagText() }}</span>
     </div>
   </div>
 </template>
@@ -21,6 +24,27 @@ import CjkLangJa from "@/vue/CjkLangJa.vue";
 export type TKanjiCardData = {
   ucs: TUcsId;
   box: number;
+  tot: number;
+};
+
+const isCardNew = (card: TKanjiCardData) => {
+  return card.box === 1 && card.tot === 0;
+}
+
+export const getColorForCard = (card: TKanjiCardData) => {
+  if (!card.box) {
+    return 'is-off';
+  }
+  else if (isCardNew(card)) {
+    return 'is-new';
+  }
+  else if (card.box === 1) {
+    return 'is-res';
+  }
+
+  const levels = ['', '', 'is-L1', 'is-L2', 'is-L3', 'is-L4'];
+
+  return levels[card.box] || 'is-L4';
 };
 
 export default defineComponent({
@@ -43,15 +67,25 @@ export default defineComponent({
       return RTK.getIndexForUCS(this.card.ucs);
     },
 
-    getTagLabel(): string {
-      const box = this.card.box;
-      const labels = ['NOT LEARNED', 'Restudy', 'Box 1', 'Box 2', 'Box 3', 'Box 4', 'Box 5', 'Box 6', 'Box 7', 'Box 8', 'Box 9', 'Box 10'];
-
-      return labels[box] || '-';
+    getStudyUrl(): string {
+      return '/study/kanji/' + String.fromCodePoint(this.card.ucs);
     },
 
-    tagClass(): string {
-      return this.card.box ? `is-box-${this.card.box}`: '';
+    getTagText(): string {
+      const card = this.card;
+      const labels = [
+        'NOT LEARNED', 'Restudy', 'Box 1', 'Box 2', 'Box 3', 'Box 4', 'Box 5', 'Box 6', 'Box 7', 'Box 8', 'Box 9', 'Box 10'
+      ];
+
+      if (isCardNew(card)) {
+        return 'New';
+      }
+
+      return labels[card.box] || '-';
+    },
+
+    getTagCss(): string {
+      return getColorForCard(this.card);
     }
   },
 });

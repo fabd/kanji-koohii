@@ -90,20 +90,61 @@
 // --------------------------------------------------------------------
 .ko-LessonMap {
   $height: 41px; // align height with ko-Btn--large
+  $heightInner: $height - 2 * 2px;
+
+  --ko-lmap-h: 41px;
+  --ko-lmap-p: 3px;
+  --ko-lmap-cell-h: calc(var(--ko-lmap-h) - 2 * var(--ko-lmap-p));
+
+  //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
   background-color: #696866;
-  padding: 2px;
-  height: $height;
+  padding: var(--ko-lmap-p) calc(var(--ko-lmap-p) - 1px);
+  height: var(--ko-lmap-h);
   @apply rounded-md;
 
+  //////////////////////////////////////////////////////////////////
   // default for the cells
-  color: #fff;
+  //////////////////////////////////////////////////////////////////
+  color: #8f897c;
+  text-align: center;
 
   @apply flex items-stretch;
   > * {
     @apply flex-1;
     @apply rounded;
-    background-color: #5cb85c;
     margin: 0 1px;
+
+    @include card-tag-colors();
+  }
+
+  .is-off {
+    &:before {
+      content: "•"; // \2022 (bullet)
+      font-size: 30px;
+      line-height: calc(var(--ko-lmap-cell-h) - 3px);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////
+  // tighter layout if there are too many cells to fit
+  //////////////////////////////////////////////////////////////////
+  &.is-dense {
+    .is-off {
+      margin: 0;
+    }
+    .is-off:before {
+      content: "•"; // \2022 (bullet)
+      font-size: 10px;
+    }
+    > * {
+      @apply rounded-sm; // less radius
+      margin: 0 1px 0 0;
+    }
+  }
+
+  &.is-tight > * {
+    @apply rounded-sm; // less radius
   }
 }
 

@@ -1,23 +1,28 @@
 <template>
-  <div class="ko-LessonMap">
-    <div v-for="(item, i) in values" :key="i">
-      x
-    </div>
+  <div class="ko-LessonMap" :class="{
+    'is-dense': cards.length >= 75,
+    'is-tight': cards.length >= 50 && cards.length < 75
+  }">
+    <div v-for="(card, i) in cards" :key="i" :class="getCss(card)"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-
-type TItem = number;
+import { TKanjiCardData } from "@/vue/KoKanjiCard.vue";
+import { getColorForCard } from "@/vue/KoKanjiCard.vue";
 
 export default defineComponent({
   name: "KoLessonMap",
 
   props: {
-    values: { type: Array as PropType<TItem[]>, required: true },
+    cards: { type: Array as PropType<TKanjiCardData[]>, required: true },
   },
 
-  computed: {},
+  methods: {
+    getCss(card: TKanjiCardData) {
+      return getColorForCard(card);
+    },
+  },
 });
 </script>

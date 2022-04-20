@@ -1,5 +1,5 @@
 <template>
-  <div class="ko-Box ko-DashBox">
+  <div class="ko-LessonPane ko-Box ko-DashBox">
     <!-- --- -->
     <!-- TOP -->
     <!-- --- -->
@@ -9,25 +9,24 @@
         <span class="font-normal">of {{ sequenceName }}</span>
       </h3>
 
-      <a :href="allLessonsUrl" class="ml-4">Show all {{ allLessonsCount }} lessons</a>
+      <a
+        v-if="allLessonsUrl"
+        :href="allLessonsUrl"
+        class="ml-4"
+      >View all {{ allLessonsCount }} lessons</a>
 
       <!-- <div class="text-warm text-lg ml-auto">{{ lessonPos }} / {{ lessonCount }} kanji</div> -->
 
       <div
         class="px-2 py-1 rounded bg-[#E1FFC2] text-lg text-success-dark font-bold leading-1 ml-auto"
-      >
-        {{
-          // pctValue < 100 ? `${pctValue}% complete` : 'Completed!'
-          `${lessonPos} / ${lessonCount} kanji`
-        }}
-      </div>
+      >{{ `${lessonPos} / ${lessonCount} kanji` }}</div>
     </div>
 
     <!-- --- -->
     <!-- MID -->
     <!-- --- -->
     <div class="flex items-center">
-      <ko-lesson-map :values="lessonMap" class="flex-1 mr-4" />
+      <ko-lesson-map :cards="cards" class="flex-1 mr-4" />
 
       <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary" @click="isOpen = !isOpen">
         Show Kanji
@@ -70,14 +69,14 @@ export default defineComponent({
     cards: { type: Array as PropType<TKanjiCardData[]>, required: true },
     lessonNum: { type: Number, required: true },
     lessonPos: { type: Number, required: true },
-    allLessonsCount: { type: Number, required: true },
-    allLessonsUrl: { type: String, required: true },
+    allLessonsCount: { type: Number, required: false, default: 0 },
+    allLessonsUrl: { type: String, required: false, default: '' },
     sequenceName: { type: String, required: true },
   },
 
   data() {
     return {
-      isOpen: true,
+      isOpen: false,
     }
   },
 
@@ -86,25 +85,12 @@ export default defineComponent({
       return this.cards.length;
     },
 
-    lessonMap(): number[] {
-      let arr = this.cards.map(card => {
-        return 1;
-      });
-
-      return arr;
-    },
-
     pctValue(): number {
       let pct = (this.lessonPos * 100) / this.lessonCount;
       let floor = Math.floor(pct);
 
       return pct > 0 ? Math.max(floor, 1) : 0;
     },
-
-    isSequenceComplete(): boolean {
-      return this.lessonNum >= this.allLessonsCount;
-    }
-
   },
 });
 </script>

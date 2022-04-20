@@ -89,35 +89,54 @@ class ReviewsPeer extends coreDatabaseTable
    * 
    * The data is tailored for the kanji card component.
    *
-   * @param int[] $ucsIds
+   * @param int $userId
+   * @param int[]|null $ucsIds a set of flashcard ids, null for all RTK1 cards
    * @return array
    */
-  public static function getJsKanjiCards(int $userId, array $ucsIds)
+  public static function getJsKanjiCards(int $userId, ?array $ucsIds = null)
   {
     $select = self::getInstance()->select([
       'ucs' => 'reviews.ucs_id',
-      'box' => 'leitnerbox',      
+      'box' => 'leitnerbox',
+      'tot' => 'totalreviews',
     ]);
 
-    $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = self::filterByUserId($select, $userId);
     
-    $select->whereIn('ucs_id', $ucsIds);
+    if ($ucsIds !== null) {
+      $select = KanjisPeer::joinLeftUsingUCS($select);
+      $select->whereIn('ucs_id', $ucsIds);
+    }
+    else
+    {
+      // ! this method adds the KanjisPeer join
+      $select = self::filterByRtk($select, 'rtk1');
+    }
 
 // DBG::out($select);exit;
     $rows = self::$db->fetchAll($select);
 
     $cards = [];
 
+    // create UCS array for all of RTK1 kanji
+    if (is_null($ucsIds)) {
+      $ucsIds = rtkIndex::createFlashcardSet(1, rtkIndex::inst()->getNumCharactersVol1()
+      );
+    }
+
     // set "NOT LEARNED" cards (the user doesn't have a flashcard)
     foreach ($ucsIds as $ucsId) {
-      $cards[$ucsId] = ['ucs' => $ucsId, 'box' => 0];
+      $cards[$ucsId] = ['ucs' => $ucsId, 'box' => 0, 'tot' => 0];
     }
 
     // merge user's flashcard data
     foreach ($rows as $row) {
       $ucsId = (int) $row['ucs'];
-      $cards[$ucsId] = ['ucs' => $ucsId, 'box' => (int) $row['box']];
+      $cards[$ucsId] = [
+        'ucs' => $ucsId,
+        'box' => (int) $row['box'],
+        'tot' => (int) $row['tot'],
+      ];
     }
 
     // remove the array index

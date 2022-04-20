@@ -4,6 +4,7 @@ import { kk_globals_get } from "@app/root-bundle";
 
 import KoLessonPane from "@/vue/KoLessonPane.vue";
 import KoPctBar from "@/vue/KoPctBar.vue";
+import KoLessonsChart from "@/vue/KoLessonsChart.vue";
 
 class HomeDashboard {
   constructor() {
@@ -11,14 +12,17 @@ class HomeDashboard {
 
     elMount = $$("#JsHomePctBar")[0];
     if (elMount) {
-      const props = kk_globals_get("HOMEDASH_PCTBAR_PROPS");
-      VueInstance(KoPctBar, elMount, props);
+      VueInstance(KoPctBar, elMount, kk_globals_get("HOMEDASH_PCTBAR_PROPS"));
     }
 
     elMount = $$("#JsHomeLesson")[0];
     if (elMount) {
-      const props = kk_globals_get("HOMEDASH_LESSON_PROPS");
-      VueInstance(KoLessonPane, elMount, props);
+      VueInstance(KoLessonPane, elMount, kk_globals_get("HOMEDASH_LESSON_PROPS"));
+    }
+
+    elMount = $$("#JsViewAllLessons")[0];
+    if (elMount) {
+      VueInstance(KoLessonsChart, elMount, kk_globals_get("LESSONS_CHART_PROPS"));
     }
   }
 }

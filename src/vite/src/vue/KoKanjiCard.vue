@@ -1,5 +1,5 @@
 <template>
-  <div class="ko-KanjiCard" :class="[{ 'is-on': card.box }]">
+  <ko-ratio-box class="ko-KanjiCard" :inner="'ko-KanjiCard-inner'" :class="[{ 'is-on': card.box }]">
     <div class="ko-KanjiCard-idx">
       <span>{{ getIndex() }}</span>
     </div>
@@ -13,13 +13,14 @@
     <div class="ko-KanjiCard-tag" :class="getTagCss()">
       <span>{{ getTagText() }}</span>
     </div>
-  </div>
+  </ko-ratio-box>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import * as RTK from "@/lib/rtk";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
+import KoRatioBox from "@/vue/KoRatioBox.vue";
 
 export type TKanjiCardData = {
   ucs: TUcsId;
@@ -52,6 +53,7 @@ export default defineComponent({
 
   components: {
     CjkLangJa,
+    KoRatioBox,
   },
 
   props: {

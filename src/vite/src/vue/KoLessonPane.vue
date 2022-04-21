@@ -19,7 +19,7 @@
 
       <div
         class="px-2 py-1 rounded bg-[#E1FFC2] text-lg text-success-dark font-bold leading-1 ml-auto"
-      >{{ `${lessonPos} / ${lessonCount} kanji` }}</div>
+      >{{ `${kanjiCount} / ${lessonCount} kanji` }}</div>
     </div>
 
     <!-- --- -->
@@ -81,6 +81,10 @@ export default defineComponent({
   },
 
   computed: {
+    kanjiCount(): number {
+      return this.cards.reduce((count, { box }) => { return count + (box ? 1 : 0); }, 0);
+    },
+
     lessonCount(): number {
       return this.cards.length;
     },

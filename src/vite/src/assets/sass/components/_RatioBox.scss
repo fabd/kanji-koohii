@@ -1,0 +1,38 @@
+// --------------------------------------------------------------------
+// Aspect Ratio Box
+//
+//   Classic "aspect ratio box" css trick.
+//     https://css-tricks.com/aspect-ratio-boxes/
+//
+//   The `aspect-ratio` property is too recent
+//    (early 2021 for Chrome/Edge, Sept 2021 for Safari 15+).
+//
+//
+// EXAMPLE
+//
+//    Note! `--ko-ratiobox-ratio` can be set in the component, or even
+//    once in a parent element, for example the container for many cards.
+//
+//    <ko-aspect-ratio class="MyComponent" :inner="'MyComponent-inner'">
+//      <h3>Card Title</h3>
+//      ...
+//
+//    .MyComponent {
+//      /* set the ratio and the width in the component's root element */
+//      --ko-ratiobox-ratio: 3 / 4;
+//      width: 100px;
+//
+//      &-inner {
+//        /* target content css here */
+//
+// --------------------------------------------------------------------
+.ko-RatioBox {
+  &-height {
+    padding-bottom: calc(100% / (1 * var(--ko-ratiobox-ratio, 3 / 4)));
+    position: relative;
+  }
+
+  &-inner {
+    @apply absolute left-0 top-0 right-0 bottom-0;
+  }
+}

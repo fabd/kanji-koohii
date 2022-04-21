@@ -4,7 +4,9 @@
       <span>{{ getIndex() }}</span>
     </div>
 
-    <a :href="getStudyUrl()" class="ko-KanjiCard-kwd">{{ getKeyword() }}</a>
+    <div class="ko-KanjiCard-kwd">
+      <a :href="getStudyUrl()">{{ getKeyword() }}</a>
+    </div>
 
     <div class="ko-KanjiCard-chr">
       <cjk-lang-ja>{{ String.fromCodePoint(card.ucs) }}</cjk-lang-ja>

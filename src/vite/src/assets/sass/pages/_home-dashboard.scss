@@ -179,7 +179,7 @@
 
   &-inner {
     padding: 6px 8px 8px;
-    @apply flex flex-col items-center;
+    @apply flex flex-col; // do NOT use `items-center`! it breaks `text-overflow`!
     text-align: center;
 
     background-color: transparent;
@@ -207,9 +207,9 @@
   }
 
   &-kwd {
-    @apply no-underline hover:underline;
-    &:hover {
-      color: #005cb1;
+    a {
+      @apply block no-underline hover:underline;
+      @include text-truncate();
     }
   }
 

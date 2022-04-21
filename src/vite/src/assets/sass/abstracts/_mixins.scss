@@ -9,6 +9,7 @@
 //     my()
 //     px()
 //     py()
+//     text-truncate()
 //
 //   Responsive & Media Queries:
 //
@@ -142,6 +143,15 @@
 @mixin py($unit) {
   padding-top: $unit;
   padding-bottom: $unit;
+}
+
+// --------------------------------------------------------------------
+// TEXT-TRUNCATE
+// --------------------------------------------------------------------
+@mixin text-truncate($overflow-mode: ellipsis) {
+  text-overflow: $overflow-mode;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 // --------------------------------------------------------------------

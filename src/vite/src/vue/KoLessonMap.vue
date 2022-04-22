@@ -1,8 +1,11 @@
 <template>
-  <div class="ko-LessonMap" :class="{
-    'is-dense': cards.length >= 75,
-    'is-tight': cards.length >= 50 && cards.length < 75
-  }">
+  <div
+    class="ko-LessonMap"
+    :class="{
+      'is-tight': cards.length >= 40 && cards.length < 50,
+      'is-dense': cards.length >= 50,
+    }"
+  >
     <div v-for="(card, i) in cards" :key="i" :class="getCss(card)"></div>
   </div>
 </template>

@@ -180,6 +180,7 @@
 
   &.is-tight > * {
     @apply rounded-sm; // less radius
+    margin: 0 1px 0 0;
   }
 }
 

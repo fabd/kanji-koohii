@@ -136,7 +136,16 @@ If you are not studying the kanji in the RTK sequence (say, JLPT), or you want t
 
 ### Custom Review {#custom-review}
 
-lorem ipsum.
+Custom Review modes let you review at any time, without managing flashcards.
+
+In the [Custom Review](/review/custom) section, you can repeat reviews for any RTK lesson, or any range of kanji (using the RTK index numbers).
+
+To keep track of your progress along the *Remembering the Kanji* book, you'll need to add flashcards. A flashcard marks the kanji as "learned".
+
+**Custom Review** is probably easier and simpler to use when you begin RTK. The early kanji are simpler to remember and to write, so it is fairly easy to review even a hundred kanji a day.
+
+However once you have learned a few hundred kanji you may find it difficult to review all of them every day. At this point you may take advantage of the **Spaced Repetition System** described in the next section.
+
 
 ### Spaced Repetition {#srs}
 

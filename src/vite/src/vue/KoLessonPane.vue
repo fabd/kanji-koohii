@@ -44,11 +44,13 @@
     <!-- MID -->
     <!-- --- -->
     <div v-if="isOpen" class="mt-5 pt-4 border-t border-dash-line">
-      <div :class="{
-        'ko-LessonPane--maxHeight': maxHeight
-      }">
-        <ko-kanji-grid :cards="cards" />
-      </div>
+      <transition appear name="lesson-fadein">
+        <div :class="{
+          'ko-LessonPane--maxHeight': maxHeight
+        }">
+          <ko-kanji-grid :cards="cards" />
+        </div>
+      </transition>
     </div>
   </div>
 </template>

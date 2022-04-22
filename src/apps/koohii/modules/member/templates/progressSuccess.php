@@ -4,7 +4,7 @@
 
   $userId = $sf_user->getUserId();
 
-  // prep lessons chart data -- EXCLUDE RTK 3 for now (in the future 
+  // prep lessons chart data -- EXCLUDE RTK 3 for now (in the future
   //  it will be a separate sequence -- this to avoid dumping 800 kanji card
   //  in one lesson)
   $rtkLessons = rtkIndex::getLessons();
@@ -27,7 +27,6 @@
     ];
   }
 
-
   $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
 
   $cardsData = ReviewsPeer::getJsKanjiCards($userId);
@@ -39,7 +38,7 @@
     'lessons' => $lessons,
     'sequenceName' => $sequenceName,
   ];
-  
+
   // include orig & user keyword maps for the kanji card component
   rtkIndex::useKeywordsFile();
 
@@ -50,12 +49,15 @@
 <h2>View All Lessons</h2>
 
 <p>
-Here you can explore all lessons in <strong><?php echo $sequenceName ?></strong> - as well as check your overall progress.
+Here you can explore all lessons in <strong><?= $sequenceName; ?></strong> - as well as check your overall progress.
 </p>
 
-<p>
-Note : your progress through lessons is tracked by <?php echo link_to('adding flashcards', '@manage') ?> (reviewing them is optional). <?= link_to('Learn More', '@learnmore#adding-flashcards', ['class' => 'ml-2 whitespace-nowrap']); ?>
+<p class="text-[#cc2d7a] mb-4">
+  <i class="fas fa-info-circle mr-2"></i>
+  Your progress through lessons is tracked by <?= link_to('adding flashcards', '@manage'); ?> (reviewing them is optional).
 </p>
+
+<div class="h-4"></div>
 
 <?php if (isset($extraFlashcards)): ?>
   <div class="warningmessagebox">

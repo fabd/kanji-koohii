@@ -4,6 +4,7 @@
 
   $userId = $sf_user->getUserId();
 
+  // studyPos will be 0 if the user has no flashcards yet!
   $studyPos = ReviewsPeer::getSequencePosition($userId);
   $studyNext = $studyPos + 1;
 
@@ -12,14 +13,10 @@
 
   $studyMax = rtkIndex::inst()->getNumCharactersVol1();
 
-  $curLesson = rtkIndex::getLessonDataForIndex($studyPos);
-  $curLessonOffset = $curLesson ? $studyPos - $curLesson['lesson_from'] + 1 : 0;
+  // if there are no flashcards, default to 1st lesson
+  $curLesson = rtkIndex::getLessonDataForIndex($studyPos ?: 1);
 
-  $studyLesson = $curLesson['lesson_nr'] ?: 1;
-
-  $studyButtonLabel = $studyPos < $studyMax
-    ? 'Study Kanji #'.$studyNext
-    : 'Study Kanji #'.$studyNext;
+  $studyLesson = $curLesson['lesson_nr'];
 
   // FIXME - shows Restudy across ALL cards - not just current sequence
   $restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
@@ -75,7 +72,7 @@
 ?>
 <?php else: ?>
 <?= link_to(
-  $studyButtonLabel.'<i class="fa fa-book-open ml-2"></i>',
+  'Study Kanji #'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
   $urls['study-resume-url'],
   ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
 );
@@ -167,10 +164,6 @@
   rtkIndex::useKeywordsFile();
 
   $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId, $cardsIds);
-  // $keywordsMap = array_map(
-  //   fn ($item) => [(int) $item['ucs_id'], $item['keyword']],
-  //   array_values($keywords)
-  // );
 
   $pctBarProps = [
     'value' => $flashcardCount,

@@ -29,13 +29,10 @@
       <ko-lesson-map :cards="cards" class="flex-1 mr-4" />
 
       <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary" @click="isOpen = !isOpen">
-        Show Kanji
+        {{ 'Show Kanji' }}
         <i
-          class="fa ml-2"
-          :class="{
-            'fa-chevron-down': isOpen,
-            'fa-arrow-right': !isOpen,
-          }"
+          class="fa fa-chevron-down ml-2"
+          :class="[isOpen ? 'ux-rotateIcon180' : '']"
         ></i>
       </button>
     </div>

@@ -274,3 +274,8 @@
     @include card-tag-colors();
   }
 }
+
+// FIXME : cleanup, add mixin for button icons?
+.ux-rotateIcon180 {
+  transform: rotate(180deg);
+}

@@ -84,6 +84,41 @@
   --ko-cardmap-L2: #5cb85c; //#63b95c;
   --ko-cardmap-L3: #5cb85c; //#4ea747;
   --ko-cardmap-L4: #5cb85c; //#3b8f35;
+
+  //////////////////////////////////////////////////////////////////
+  // on the home page, use max-height and scrollbar, to limit the
+  //  vertical space taken by long lessons
+  //////////////////////////////////////////////////////////////////
+  &--maxHeight {
+    max-height: 378px; // approx. 2rows of cards + vert. margins
+    overflow-x: clip;
+    overflow-y: auto;
+    padding-right: 1rem; // breathing room between cards and scrollbar
+
+    $trackColor: #c7c3ba;
+    $thumbColor: #f0f0f0;
+    $trackRadius: 6px;
+
+    /* Works on Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: $thumbColor $trackColor;
+
+    /* Works on Chrome, Edge, and Safari */
+    &::-webkit-scrollbar {
+      width: 14px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $trackColor;
+      border-radius: $trackRadius;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $thumbColor;
+      border-radius: $trackRadius;
+      width: 10px;
+      // use inset shadow to pretend there is a gap between thumb & track
+      box-shadow: inset 0 0 0 3px $trackColor;
+    }
+  }
 }
 
 // --------------------------------------------------------------------

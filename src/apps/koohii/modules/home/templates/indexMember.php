@@ -186,6 +186,7 @@
     'allLessonsCount' => $numLessons,
     'allLessonsUrl' => url_for('@progress'),
     'sequenceName' => $sequenceName,
+    'maxHeight' => true,
   ];
 
   kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);

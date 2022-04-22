@@ -44,7 +44,11 @@
     <!-- MID -->
     <!-- --- -->
     <div v-if="isOpen" class="mt-5 pt-4 border-t border-dash-line">
-      <ko-kanji-grid :cards="cards" />
+      <div :class="{
+        'ko-LessonPane--maxHeight': maxHeight
+      }">
+        <ko-kanji-grid :cards="cards" />
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +76,7 @@ export default defineComponent({
     allLessonsCount: { type: Number, required: false, default: 0 },
     allLessonsUrl: { type: String, required: false, default: '' },
     sequenceName: { type: String, required: true },
+    maxHeight: { type: Boolean, required: false, default: false },
   },
 
   data() {

@@ -46,7 +46,7 @@
 <h2>Welcome back, <?= $sf_user->getUserName(); ?>!</h2>
 
 <div class="row mb-5">
-  <div class="col-md-6 md:mb-0">
+  <div class="col-md-6 mb-4 md:mb-0">
     <div class="ko-Box ko-DashBox h-full">
       <h3 class="ko-DashBox-title">Study</h3>
 
@@ -156,7 +156,7 @@
 
 <?php
   include_partial('news/recent');
-  
+
   // ids of kanji cards shown in this lesson (to limit queries)
   $cardsIds = rtkIndex::createFlashcardSet(
     $curLesson['lesson_from'],
@@ -176,7 +176,7 @@
     'value' => $flashcardCount,
     'max-value' => $studyMax,
   ];
-  
+
   $cardsData = ReviewsPeer::getJsKanjiCards($userId, $cardsIds);
   $lessonProps = [
     'cards' => $cardsData,

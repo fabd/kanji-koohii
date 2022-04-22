@@ -198,6 +198,8 @@ class CustkeywordsPeer extends coreDatabaseTable
       $select->whereIn('ucs_id', $ucsIds);
     }
 
+    $keywords = [];
+
     $rows = self::$db->fetchAll($select);
     foreach ($rows as $row) {
       $keywords[] = [(int) $row['ucs_id'], $row['keyword']];

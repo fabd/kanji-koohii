@@ -4,6 +4,10 @@ indexGuest:
   javascripts:
     - src/entry-landing.ts
 
+indexMember:
+  javascripts:
+    - src/entry-home.ts
+
 loginSuccess:
   metas:
     title: "Sign In - Kanji Koohii"

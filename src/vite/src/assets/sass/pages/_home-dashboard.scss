@@ -1,0 +1,281 @@
+// ====================================================================
+// Redesigned homepage dashboard (2022)
+// ====================================================================
+
+@use "sass:color" as color;
+
+@mixin card-tag-colors() {
+  &.is-off {
+    //
+  }
+  &.is-new {
+    color: #fff;
+    background-color: var(--ko-cardmap-new);
+  }
+  &.is-res {
+    color: #fff;
+    background-color: var(--ko-cardmap-res);
+  }
+  &.is-L1 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L1);
+  }
+  &.is-L2 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L2);
+  }
+  &.is-L3 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L3);
+  }
+  &.is-L4 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L4);
+  }
+}
+
+// --------------------------------------------------------------------
+// base class for the entire dashboard
+// --------------------------------------------------------------------
+.ko-Dash {
+  //////////////////////////////////////////////////////////////////
+  // the little SRS isometric icons
+  //////////////////////////////////////////////////////////////////
+  &-srsIso {
+    @extend .ko-SrsIso;
+    --ko-srs-iso-w: 21px;
+  }
+
+  //////////////////////////////////////////////////////////////////
+  // "new" and "due" SRS icons with labels - acting as buttons
+  //////////////////////////////////////////////////////////////////
+  &-srsIcoBtn {
+    // note: the height of these "buttons" comes from the parent's `items-stretch`
+    @apply text-smx text-body no-underline px-2 cursor-pointer rounded-md;
+
+    &:hover {
+      @apply no-underline;
+
+      &.is-new,
+      &:focus.is-new {
+        background-color: #32b1fc4d; // color.change(#40a8e5, $alpha: 0.3);
+      }
+      &.is-due {
+        background-color: #ff982a6e; //color.change(#f7a247, $alpha: 0.3);
+      }
+    }
+  }
+}
+
+.ko-DashBox {
+  // main heading
+  &-title {
+    @apply text-lg font-bold text-body;
+  }
+}
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+.ko-LessonPane {
+  // default card tag colors for the kanji grid
+  --ko-cardmap-new: #a3a197;
+  --ko-cardmap-res: #ef5e4f;
+  --ko-cardmap-L1: #5cb85c; //#83d37d;
+  --ko-cardmap-L2: #5cb85c; //#63b95c;
+  --ko-cardmap-L3: #5cb85c; //#4ea747;
+  --ko-cardmap-L4: #5cb85c; //#3b8f35;
+
+  //////////////////////////////////////////////////////////////////
+  // on the home page, use max-height and scrollbar, to limit the
+  //  vertical space taken by long lessons
+  //////////////////////////////////////////////////////////////////
+  &--maxHeight {
+    max-height: 378px; // approx. 2rows of cards + vert. margins
+    overflow-x: clip;
+    overflow-y: auto;
+    padding-right: 1rem; // breathing room between cards and scrollbar
+
+    $trackColor: #c7c3ba;
+    $thumbColor: #f0f0f0;
+    $trackRadius: 6px;
+
+    /* Works on Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: $thumbColor $trackColor;
+
+    /* Works on Chrome, Edge, and Safari */
+    &::-webkit-scrollbar {
+      width: 14px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $trackColor;
+      border-radius: $trackRadius;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $thumbColor;
+      border-radius: $trackRadius;
+      width: 10px;
+      // use inset shadow to pretend there is a gap between thumb & track
+      box-shadow: inset 0 0 0 3px $trackColor;
+    }
+  }
+}
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+.ko-LessonMap {
+  $height: 41px; // align height with ko-Btn--large
+  $heightInner: $height - 2 * 2px;
+
+  --ko-lmap-h: 41px;
+  --ko-lmap-p: 3px;
+  --ko-lmap-cell-h: calc(var(--ko-lmap-h) - 2 * var(--ko-lmap-p));
+
+  //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+  background-color: #696866;
+  padding: var(--ko-lmap-p) calc(var(--ko-lmap-p) - 1px);
+  height: var(--ko-lmap-h);
+  @apply rounded-md;
+
+  //////////////////////////////////////////////////////////////////
+  // default for the cells
+  //////////////////////////////////////////////////////////////////
+  color: #8f897c;
+  text-align: center;
+
+  @apply flex items-stretch;
+  > * {
+    @apply flex-1;
+    @apply rounded;
+    margin: 0 1px;
+
+    @include card-tag-colors();
+  }
+
+  .is-off {
+    &:before {
+      content: "•"; // \2022 (bullet)
+      font-size: 30px;
+      line-height: calc(var(--ko-lmap-cell-h) - 3px);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////
+  // tighter layout if there are too many cells to fit
+  //////////////////////////////////////////////////////////////////
+  &.is-dense {
+    .is-off {
+      margin: 0;
+    }
+    .is-off:before {
+      content: "•"; // \2022 (bullet)
+      font-size: 10px;
+    }
+    > * {
+      @apply rounded-sm; // less radius
+      margin: 0 1px 0 0;
+    }
+  }
+
+  &.is-tight > * {
+    @apply rounded-sm; // less radius
+    margin: 0 1px 0 0;
+  }
+}
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+.ko-KanjiGrid {
+  @apply flex flex-wrap;
+
+  $gutter: 16px;
+  $half-gutter: calc($gutter / 2);
+  margin-left: (-$half-gutter);
+  margin-right: (-$half-gutter);
+
+  > * {
+    margin-left: $half-gutter;
+    margin-right: $half-gutter;
+    margin-bottom: 1rem;
+  }
+
+  // ratio for the kanji cards
+  --ko-ratiobox-ratio: 1 / 1.3;
+}
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+.ko-KanjiCard {
+  // calc width so that cards fit neatly into the space available
+  --cards-per-row: 2;
+  @include breakpoint-up(md) {
+    --cards-per-row: 5;
+  }
+  @include breakpoint-up(lg) {
+    --cards-per-row: 6;
+  }
+
+  --ko-kanjicard-w: calc((100% - 16px * var(--cards-per-row)) / var(--cards-per-row));
+  width: var(--ko-kanjicard-w);
+
+  &-inner {
+    padding: 6px 8px 8px;
+    @apply flex flex-col; // do NOT use `items-center`! it breaks `text-overflow`!
+    text-align: center;
+
+    background-color: transparent;
+    border: 1px dashed rgba(73, 70, 63, 0.2);
+    border-radius: 6px;
+  }
+
+  // a flashcard exists for this kanji
+  &.is-on &-inner {
+    background: linear-gradient(148.74deg, #f8f7f6 0%, #f8f8f8 80.21%, #ffffff 89.58%, #eaeaea 100%);
+    border: 0;
+    border-bottom: 1px solid #bab6ae; //hexa(#6c6c6c, .37);
+    border-radius: 0;
+  }
+
+  //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+
+  &-idx,
+  &-kwd {
+    @apply font-serif;
+    color: #3c3c3c;
+    font-size: 15px;
+    line-height: calc(19 / 15 * 1em);
+  }
+
+  &-kwd {
+    a {
+      @apply block no-underline hover:underline;
+      @include text-truncate();
+    }
+  }
+
+  &-chr {
+    font-size: 60px;
+    line-height: 1;
+    color: #313130;
+    @apply mt-auto mb-auto; // flex spacings
+  }
+
+  &-tag {
+    @apply rounded-md text-xs px-2 font-light;
+    height: 27px;
+    line-height: 27px;
+    background-color: #d7d1c4;
+    @apply text-body;
+  }
+
+  &-tag {
+    @include card-tag-colors();
+  }
+}
+
+// FIXME : cleanup, add mixin for button icons?
+.ux-rotateIcon180 {
+  transform: rotate(180deg);
+}

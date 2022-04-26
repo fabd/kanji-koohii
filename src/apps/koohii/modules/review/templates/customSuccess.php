@@ -3,13 +3,13 @@
   $sf_request->setParameter('_homeFooter', true);
 ?>
 
-<h2>Kanji Review</h2>
+<h2>Custom Review</h2>
       
 <section>
 
     <div class="mb-8">
       <p class="text-[#cc2d7a] mb-4">
-        <i class="far fa-question-circle mr-2"></i><strong>Review modes below do <u>not</u> use Spaced Repetition (SRS).</strong>
+        <i class="fas fa-info-circle mr-2"></i><strong>Custom review modes do <u>not</u> use Spaced Repetition (SRS).</strong>
       </p>
 
       <p class="mb-2">
@@ -17,7 +17,7 @@
       </p>
 
       <p class="mb-2">
-        To save your results and schedule reviews, <?php echo link_to('add flashcards', '@manage') ?> and then use the SRS page.
+        To save your results and schedule reviews, <?php echo link_to('add flashcards', '@manage') ?> and then use the <em>Spaced Repetition</em> page.
       </p>
     </div>
 

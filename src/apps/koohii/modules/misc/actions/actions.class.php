@@ -6,27 +6,36 @@ class miscActions extends sfActions
   {
   }
 
+  /**
+   * Note: similar to the View All Lessons page, we include the original
+   * RTK keywords and kanjis as a javascript file, which is (in theory) more
+   * efficient than pulling them from the db (otherwise the full coalesced
+   * custom > orig keywords map is ~60 KB in the output html - before gzip).
+   *
+   * It is the same file that is already included on the Study pages anyway
+   * and therefore likely in the browser's cache.
+   *
+   * We pull the user's customized keywords into a separate map, which is
+   * a simpler query - and assuming most users don't customize many keywords.
+   *
+   * The helpers on the frontend side "coalesce" the custom keywords with
+   * the original keywords, for any kanji in the sequence.
+   *
+   * @param coreRequest $request
+   */
   public function executeReading($request)
   {
-    // get the Heisig keywords coalesced with user's customized keywords
     $userId = $this->getContext()->getUser()->getUserId();
-    $keywords = CustkeywordsPeer::getCustomKeywords($userId);
-    // DBG::printr($keywords);exit;
 
-    $keywordsMap = [];
-    foreach ($keywords as $ucsId => $data)
-    {
-      $keywordsMap[] = [(int) $ucsId, $data['keyword']];
-    }
-    // DBG::printr(count($keywordsMap));exit;
+    $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
 
     $knownKanji = ReviewsPeer::getKnownKanji($userId);
-
-    $indexMap = rtkIndex::getSequenceMap();
 
     sfProjectConfiguration::getActive()->loadHelpers(['Bootstrap']);
     kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
     kk_globals_put('USER_KNOWN_KANJI', $knownKanji);
-    kk_globals_put('RTK_INDEX_MAP', $indexMap);
+
+    // include RTK keywords and kanjis (cf. rtk.ts helpers)
+    rtkIndex::useKeywordsFile();
   }
 }

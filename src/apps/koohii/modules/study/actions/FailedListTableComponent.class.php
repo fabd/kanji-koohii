@@ -35,10 +35,6 @@ class FailedListTableComponent extends sfComponent
   }
 }
 
-/**
- * Kanji Review Summary
- * 
- */
 class FailedListTableBinding implements uiSelectTableBinding
 {
   public function getConfig()

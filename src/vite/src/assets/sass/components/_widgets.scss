@@ -1,0 +1,104 @@
+.ko-PctBar {
+  background-color: #cdcdcd;
+  border-bottom: 3px solid #a8a8a8;
+
+  --ko-pct-bar-h: 42px; // height total with borders
+  --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);
+  --ko-pct-bar-radius: 6px;
+
+  border-radius: var(--ko-pct-bar-radius);
+
+  height: var(--ko-pct-bar-h);
+
+  &-fill {
+    @apply inline-block h-full px-3;
+    @apply rounded-md;
+    border-bottom: 3px solid #4b9227;
+    border-radius: var(--ko-pct-bar-radius);
+    box-shadow: 1px 3px 5px 0px #0002; // very subtle depth :)
+    background-color: $--color-btn-success;
+    color: #fff;
+    @include font(20px, 1);
+    text-align: right;
+    line-height: var(--ko-pct-bar-fill-h);
+  }
+
+  &.is-zero &-fill {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #2228;
+  }
+}
+
+// --------------------------------------------------------------------
+// SMALL ISOMETRIC BOXES MATCHING THE LEITNER SRS COLORS
+//
+//   - Scales based on font-size!
+//
+//  Example
+//
+//    <div class="ko-SrsIso is-new">
+//      <em class="is-top"></em>
+//      <em class="is-side"></em>
+//    </div>
+//
+// --------------------------------------------------------------------
+.ko-SrsIso {
+  // SRS chart box colors
+  $bgFail: #{$--clr-danger-bg};
+  $bgNew: #40a8e5;
+  $bgDue: #{$--clr-srs-due};
+  $bgUndue: #{$--clr-srs-undue};
+
+  --ko-srs-iso-w: 1.8em;
+  --ko-srs-iso-h: var(--ko-srs-iso-w);
+  --ko-srs-iso-bg: #aaa;
+
+  display: inline-block;
+
+  width: var(--ko-srs-iso-w);
+  height: var(--ko-srs-iso-h);
+  margin-top: calc(var(--ko-srs-iso-h) / 3);
+  margin-right: calc(var(--ko-srs-iso-w) / 3);
+
+  position: relative;
+
+  &,
+  > * {
+    background-color: var(--ko-srs-iso-bg);
+  }
+
+  box-shadow: 5px 2px 10px #4446; // fancy drop shadow to make it "pop"
+
+  &.is-fail {
+    --ko-srs-iso-bg: #{$bgFail};
+  }
+  &.is-new {
+    --ko-srs-iso-bg: #{$bgNew};
+  }
+  &.is-due {
+    --ko-srs-iso-bg: #{$bgDue};
+  }
+  &.is-undue {
+    --ko-srs-iso-bg: #{$bgUndue};
+  }
+
+  .is-top {
+    // use bottom-[99%] instead of 100% to avoid pixel gap
+    @apply absolute w-full bottom-[99%];
+    height: calc(var(--ko-srs-iso-h) / 3);
+    transform: skew(-45deg);
+    transform-origin: bottom right;
+    filter: brightness(1.3);
+    border-bottom: 1px solid #fff1; // subtle bright edge
+  }
+  .is-side {
+    @apply absolute h-full left-full;
+    width: calc(var(--ko-srs-iso-w) / 3);
+    transform: skew(0, -45deg);
+    transform-origin: top left;
+    filter: brightness(0.9) saturate(1.2);
+    border-left: 1px solid #4441; // subtle darkened edge
+  }
+}

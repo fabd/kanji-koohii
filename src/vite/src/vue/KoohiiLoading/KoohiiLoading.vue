@@ -1,12 +1,12 @@
 <template>
-  <transition name="kk-loading-fade">
+  <transition name="ko-loading-fade">
     <div
       v-show="isVisible"
-      class="kk-loading-mask"
+      class="ko-loading-mask"
       :style="{ backgroundColor: background || '' }"
     >
-      <div class="kk-loading-spinner">
-        <div class="kk-html-spinner"></div>
+      <div class="ko-loading-spinner">
+        <div class="ko-html-spinner"></div>
       </div>
     </div>
   </transition>
@@ -39,7 +39,7 @@ export default defineComponent({
       const target = this.target;
 
       if (target) {
-        target.classList.remove("kk-loading-target--relative");
+        target.classList.remove("ko-loading-target--relative");
       }
 
       // remove vue from page
@@ -56,12 +56,12 @@ export default defineComponent({
 </script>
 
 <style>
-.kk-loading-target--relative {
+.ko-loading-target--relative {
   /* class added by the mixin to the target element covered by the mask (the mask being appended as a child) */
   position: relative;
 }
 
-.kk-loading-mask {
+.ko-loading-mask {
   /* the mask is appended asa child, the parent element is position:relative, this covers the area */
   position: absolute;
   z-index: 2000;
@@ -74,7 +74,7 @@ export default defineComponent({
   transition: opacity 0.3s;
 }
 
-.kk-loading-spinner {
+.ko-loading-spinner {
   top: 50%;
   margin-top: -21px;
   width: 100%;
@@ -83,7 +83,7 @@ export default defineComponent({
 }
 
 /* simple css spinner with border trick */
-.kk-html-spinner {
+.ko-html-spinner {
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -93,13 +93,13 @@ export default defineComponent({
 
   /* animation */
   transition-property: transform;
-  animation-name: kk-html-spinner-rotate;
+  animation-name: ko-html-spinner-rotate;
   animation-duration: 1.2s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
-@keyframes kk-html-spinner-rotate {
+@keyframes ko-html-spinner-rotate {
   from {
     transform: rotate(0deg);
   }
@@ -109,8 +109,8 @@ export default defineComponent({
 }
 
 /* vue transition */
-.kk-loading-fade-enter-from,
-.kk-loading-fade-leave-active {
+.ko-loading-fade-enter-from,
+.ko-loading-fade-leave-active {
   opacity: 0;
 }
 </style>

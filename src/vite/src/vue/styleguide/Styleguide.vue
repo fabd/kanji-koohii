@@ -4,6 +4,31 @@
       <a href="/index_dev.php">Koohii</a> / UX Docs
     </h1>
 
+    <h2>PctBar</h2>
+
+    <section class="ux-docSection ux-docDemoblock">
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">0 %</span>
+        <ko-pct-bar :value="0" :max-value="200" class="w-[100px]" />
+      </div>
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">0.x %</span>
+        <ko-pct-bar :value="1" :max-value="200" class="w-[428px]" />
+      </div>
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">xx %</span>
+        <ko-pct-bar :value="75" :max-value="200" class="w-[428px]" />
+      </div>
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">99.x %</span>
+        <ko-pct-bar :value="199" :max-value="200" class="w-[428px]" />
+      </div>
+      <div class="mb-4 ux-flexButtonRow">
+        <span class="self-center font-bold min-w-[120px]">100 %</span>
+        <ko-pct-bar :value="200" :max-value="200" class="w-[428px]" />
+      </div>
+    </section>
+
     <h2>PaddedBox</h2>
 
     <section class="ux-docSection ux-docDemoblock">
@@ -19,9 +44,7 @@
         </div>
         <div class="min-w-[200px] ml-4 ko-Box ko-Box--success">
           <h3 class="text-md font-bold text-success-darker">Card Title</h3>
-          <p
-            class="mb-0 text-success-dark"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p class="mb-0 text-success-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
       </div>
       <div class="flex mb-0">
@@ -153,11 +176,13 @@
 import { defineComponent } from "vue";
 
 import { ElButton } from "@lib/vendor/element";
+import KoPctBar from "@/vue/KoPctBar.vue";
 
 export default defineComponent({
   name: "StyleguideIndex",
   components: {
     ElButton,
+    KoPctBar,
   },
 });
 </script>

@@ -26,8 +26,7 @@
     </div>
 
     <div class="d-strokec" title="Stroke count">
-      <cjk-lang-ja html="&#30011;&#25968;" class-name="kanji"></cjk-lang-ja
-      ><span>{{ cardData.strokecount }}</span>
+      <cjk-lang-ja html="&#30011;&#25968;" class="kanji" /> <span>{{ cardData.strokecount }}</span>
     </div>
 
     <div class="d-framenr" v-html="cardData.framenum"></div>
@@ -39,7 +38,7 @@
           <!-- do this for now, until we position everything dynamically -->
           <div class="tb">
             <div class="td">
-              <cjk-lang-ja :html="cardData.kanji"></cjk-lang-ja>
+              <cjk-lang-ja :html="cardData.kanji" />
             </div>
           </div>
         </div>
@@ -49,7 +48,7 @@
         <div class="uiFcHalf d-kanji" k-note="fix-reflow">
           <div class="tb">
             <div class="td">
-              <cjk-lang-ja :html="cardData.kanji"></cjk-lang-ja>
+              <cjk-lang-ja :html="cardData.kanji" />
             </div>
           </div>
         </div>
@@ -66,11 +65,11 @@
                 >
                   <div>
                     <cjk-lang-ja
-                      class-name="vyc vocab_c"
+                      class="vyc vocab_c"
                       :html="formatCompound($item.compound)"
                     ></cjk-lang-ja>
                     <cjk-lang-ja
-                      class-name="vyr vocab_r"
+                      class="vyr vocab_r"
                       :html="formatReading($item.reading)"
                     ></cjk-lang-ja>
                   </div>

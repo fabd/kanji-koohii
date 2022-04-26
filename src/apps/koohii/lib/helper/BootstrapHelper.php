@@ -346,7 +346,7 @@ function kk_globals_out()
     $lines = [];
     foreach ($kk_globals->getAll() as $name => $value)
     {
-      $lines[] = "KK.{$name} = ".json_encode($value, JSON_UNESCAPED_SLASHES);
+      $lines[] = "KK.{$name} = ".json_encode($value, JSON_UNESCAPED_SLASHES).';';
     }
 
     echo "\n<script>\nwindow.KK || (KK = {});\n".implode("\n", $lines)."\n</script>\n";
@@ -380,4 +380,21 @@ function include_fontawesome()
     // use the pro "subset" version for reduced file sizes
     echo '<link href="/fonts/fa5sub/css/all.min.css" rel="stylesheet">';
   }
+}
+
+function query_string_for_review(array $queryParams)
+{
+  return http_build_query($queryParams);
+}
+
+/**
+ * returns url for the review page with given query parameters.
+ *
+ * @return string
+ */
+function url_for_review(array $queryParams)
+{
+  $queryString = query_string_for_review($queryParams);
+
+  return url_for('@review', ['absolute' => true]).'?'.$queryString;
 }

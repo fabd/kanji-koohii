@@ -5,12 +5,12 @@
 <div class="row">
 
   <div class="col-md-3 mb-8">
-    <div class="kk-DocNav">
+    <div class="ko-DocNav">
       <?= $tocHtml; ?>
     </div>
   </div>
   
-  <div class="col-md-9 markdown kk-DocMain">
+  <div class="col-md-9 markdown ko-DocMain">
     <?= $docHtml; ?>
   </div>
 

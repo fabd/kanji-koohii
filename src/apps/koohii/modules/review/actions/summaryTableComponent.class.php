@@ -53,9 +53,6 @@ class summaryTableComponent extends sfComponent
   }
 }
 
-/**
- * Kanji Review Summary.
- */
 class FlashcardListBinding implements uiSelectTableBinding
 {
   private $ratings;

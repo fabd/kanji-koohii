@@ -12,15 +12,16 @@
  *  getTodayCount()
  *  getCountExpired()
  *  getCountUntested()
- *  getCountRtK3()
  *  getLeitnerBoxCounts()
  *  getReviewedFlashcardCount()
- *  getHeisigProgressCount()
  *  getTotalReviews()
  *  getMostRecentReviewTimeStamp()
  *  getSelectForDetailedList()
  *  getSelectForExport()
  *  getFlashcardsForReview()
+ 
+ *  getHeisigProgressCount()
+ *  getProgressChartData()
  * 
  *  getRestudyKanjiCount($userId)
  *  getRestudyKanjiListSelect($userId)
@@ -80,6 +81,68 @@ class ReviewsPeer extends coreDatabaseTable
     $select->query();
 
     return self::$db->fetch();
+  }
+
+  /**
+   * Return array of kanji card data matching UCS ids -- whether or not the
+   * user has a flashcard for it!
+   * 
+   * The data is tailored for the kanji card component.
+   *
+   * @param int $userId
+   * @param int[]|null $ucsIds a set of flashcard ids, null for all RTK1 cards
+   * @return array
+   */
+  public static function getJsKanjiCards(int $userId, ?array $ucsIds = null)
+  {
+    $select = self::getInstance()->select([
+      'ucs' => 'reviews.ucs_id',
+      'box' => 'leitnerbox',
+      'tot' => 'totalreviews',
+    ]);
+
+    $select = self::filterByUserId($select, $userId);
+    
+    if ($ucsIds !== null) {
+      $select = KanjisPeer::joinLeftUsingUCS($select);
+      $select->whereIn('ucs_id', $ucsIds);
+    }
+    else
+    {
+      // ! this method adds the KanjisPeer join
+      $select = self::filterByRtk($select, 'rtk1');
+    }
+
+// DBG::out($select);exit;
+    $rows = self::$db->fetchAll($select);
+
+    $cards = [];
+
+    // create UCS array for all of RTK1 kanji
+    if (is_null($ucsIds)) {
+      $ucsIds = rtkIndex::createFlashcardSet(1, rtkIndex::inst()->getNumCharactersVol1()
+      );
+    }
+
+    // set "NOT LEARNED" cards (the user doesn't have a flashcard)
+    foreach ($ucsIds as $ucsId) {
+      $cards[$ucsId] = ['ucs' => $ucsId, 'box' => 0, 'tot' => 0];
+    }
+
+    // merge user's flashcard data
+    foreach ($rows as $row) {
+      $ucsId = (int) $row['ucs'];
+      $cards[$ucsId] = [
+        'ucs' => $ucsId,
+        'box' => (int) $row['box'],
+        'tot' => (int) $row['tot'],
+      ];
+    }
+
+    // remove the array index
+    $cards = array_values($cards);
+
+    return $cards;
   }
 
   /**
@@ -153,7 +216,7 @@ class ReviewsPeer extends coreDatabaseTable
    * 
    * @return int
    */
-  protected static function _getFlashcardCount($userId, $select = null)
+  private static function _getFlashcardCount($userId, $select = null)
   {
     if (is_null($select))
     {
@@ -169,13 +232,19 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
-   * Return count of all flashcards for user.
+   * Return count of flashcards for user.
    * 
-   * @return 
+   * @param int $userId
+   * @param string $filter  See filterByRtk()
+   * 
+   * @return int
    */
-  public static function getFlashcardCount($userId)
+  public static function getFlashcardCount($userId, $filter = '')
   {
-    return self::_getFlashcardCount($userId);
+    $select = self::getInstance()->select();
+    $select = self::filterByRtk($select, $filter);
+
+    return self::_getFlashcardCount($userId, $select);
   }
 
   /**
@@ -239,20 +308,6 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::filterByRtk($select, $filter);
     return self::_getFlashcardCount($userId, $select);
   }
-
-  /**
-   * Return count of flashcards for RtK Volume 3 kanji.
-   * 
-   * @return 
-   */
-  public static function getCountRtK3($userId)
-  {
-    $user = sfContext::getInstance()->getUser();
-    $select = self::getInstance()->select();
-    $select = self::filterByRtk($select, 'rtk3');
-    return self::_getFlashcardCount($userId, $select);
-  }
-
 
   /**
    * Return flashcard counts for Leitner boxes.
@@ -329,95 +384,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::getInstance()->select()->where($condition);
     return self::_getFlashcardCount($userId, $select);
   }
-
-  /**
-   * Returns the number of kanji flashcards in RTK1 (only!) Heisig order.
-   *
-   * If there is any gap in the *RTK1* frame number range, it returns false.
-   *
-   * @return mixed  Heisig RTK1 progress count (int) or false
-   */
-  public static function getHeisigProgressCount($userId)
-  {
-    // get the flashcard count in the RTK1 range
-    $select = self::getInstance()->select()->where(rtkIndex::getSqlCol().' <= ?', rtkIndex::inst()->getNumCharactersVol1());
-    $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select = self::filterByUserId($select, $userId);
-    
-    $select
-      ->columns(['count' => 'COUNT(*)'])
-      ->columns(['max' => 'MAX('.rtkIndex::getSqlCol().')']);
-    
-    $select->query();
-
-    $result = self::$db->fetch();
-    $flashcardCount = (int) $result['count'];
-    $maxRtkSeqNr = (int) $result['max'];
-
-    if ($flashcardCount !== $maxRtkSeqNr)
-    {
-      return false;
-    }
-    
-    return $maxRtkSeqNr;
-  }
-  
-  /**
-   * Returns progress status for Check Progress page.
-   *
-   * All flashcards not in the current sequence will be in lesson 0.
-   * 
-   * Returns:
-   *  array( <lessNr> => array( <lessonId>, <total>, <pass>, <fail> ), ... )
-   *     
-   * @return  array  Array of objects
-   */
-  public static function getProgressChartData($userId)
-  {
-    $select = self::getInstance()->select(['ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'leitnerbox', 'totalreviews', 'failurecount', 'successcount']);
-    $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select = self::filterByUserId($select, $userId);
-    $select->query();
-
-    $lessons = [];
-
-    while ($row = self::$db->fetchObject())
-    {
-      $lessNr = rtkIndex::getLessonForIndex((int)$row->seq_nr);
-
-      if (!isset($lessons[$lessNr])) {
-        $lessons[$lessNr] = (object) ['lessonId' => $lessNr, 'total' => 0, 'pass' => 0, 'fail' => 0];
-      }
-
-      // ref
-      $lesson =& $lessons[$lessNr];
-
-      $lesson->total++;
-      
-      if ($row->leitnerbox > 1 && $row->totalreviews > 0) {
-        $lesson->pass++;
-      }
-      elseif ($row->leitnerbox == 1 && $row->totalreviews > 0) {
-        $lesson->fail++;
-      }
-    }
-      
-/*
-    $select = self::getInstance()->select(array(
-        'lessonId'  => 'lessonnum',
-        'total'     => 'COUNT(*)',
-        'pass'      => 'SUM(leitnerbox > 1 AND totalreviews > 0)',
-        'fail'      => 'SUM(leitnerbox = 1 AND totalreviews > 0)'
-      ));
-    $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select->group('lessonnum ASC');
-*/
-
-//DBG::printr($lessons);exit;
-
-    return $lessons;
-  }
-
+ 
   /**
    * Return total reviews accross all kanji,
    * for the Profile page.
@@ -661,6 +628,97 @@ class ReviewsPeer extends coreDatabaseTable
     return $select;
   }
 
+ /**
+   * Returns the last kanji card index in an uninterrupted sequence
+   * starting at 1 -- any cards after a gap are ignored.
+   *
+   * @return int  Sequence number of last kanji in sequence (starts at 1), or 0
+   */
+  public static function getSequencePosition($userId)
+  {
+    $select = self::getInstance()->select();
+    $select = self::filterByRtk($select, 'rtk1');
+    $select = self::filterByUserId($select, $userId);
+    $select->columns(['idx' => rtkIndex::getSqlCol()]);
+
+    $indices = self::$db->fetchCol($select);
+    $count = count($indices);
+
+    if (!$count) {
+      return 0;
+    } 
+
+    $indices = array_map('intval', $indices);
+    sort($indices);
+
+    // find where the first gap of the sequence is
+    $diff = array_diff(range(1, $count), $indices);
+
+    // if there is no gap in sequence then position = number of flashcards
+    $position = count($diff) ? min($diff) - 1 : $count;
+
+// LOG::info($indices);
+// LOG::info('pos', $position);
+   
+    return $position;
+  }
+  
+  /**
+   * Returns progress status for Check Progress page.
+   *
+   * All flashcards not in the current sequence will be in lesson 0.
+   * 
+   * Returns:
+   *  array( <lessNr> => array( <lessonId>, <total>, <pass>, <fail> ), ... )
+   *     
+   * @return  array  Array of objects
+   */
+  public static function getProgressChartData($userId)
+  {
+    $select = self::getInstance()->select(['ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'leitnerbox', 'totalreviews', 'failurecount', 'successcount']);
+    $select = KanjisPeer::joinLeftUsingUCS($select);
+    $select = self::filterByUserId($select, $userId);
+    $select->query();
+
+    $lessons = [];
+
+    while ($row = self::$db->fetchObject())
+    {
+      $lessNr = rtkIndex::getLessonForIndex((int)$row->seq_nr);
+
+      if (!isset($lessons[$lessNr])) {
+        $lessons[$lessNr] = (object) ['lessonId' => $lessNr, 'total' => 0, 'pass' => 0, 'fail' => 0];
+      }
+
+      // ref
+      $lesson =& $lessons[$lessNr];
+
+      $lesson->total++;
+      
+      if ($row->leitnerbox > 1 && $row->totalreviews > 0) {
+        $lesson->pass++;
+      }
+      elseif ($row->leitnerbox == 1 && $row->totalreviews > 0) {
+        $lesson->fail++;
+      }
+    }
+      
+/*
+    $select = self::getInstance()->select(array(
+        'lessonId'  => 'lessonnum',
+        'total'     => 'COUNT(*)',
+        'pass'      => 'SUM(leitnerbox > 1 AND totalreviews > 0)',
+        'fail'      => 'SUM(leitnerbox = 1 AND totalreviews > 0)'
+      ));
+    $select = KanjisPeer::joinLeftUsingUCS($select);
+    $select->group('lessonnum ASC');
+*/
+
+//DBG::printr($lessons);exit;
+
+    return $lessons;
+  }
+
   /**
    * Return count of failed kanji for user.
    * 
@@ -748,57 +806,6 @@ class ReviewsPeer extends coreDatabaseTable
     $ucsId = self::$db->fetchOne($select);
 
     return $ucsId !== false ? intval($ucsId) : false;
-  }
-
-  /**
-   * Filter flashcard selection by frame number for given RtK Volume
-   * (or no filter = all).
-   * 
-   * @param  coreDatabaseSelect   $select
-   * @param  string   $filter     'rtk1', 'rtk3', 'rtk1+3', '' (no filter)
-   * 
-   * @return coreDatabaseSelect   Returns modified select object
-   */
-  private static function filterByRtk($select, $filter = '')
-  {
-    // always add Sequences join, will be discarded by SQL if not used anyway
-    $curSeq = rtkIndex::inst();
-
-    if ($filter !== '')
-    {
-      $select = KanjisPeer::joinLeftUsingUCS($select);
-      $idxCol = rtkIndex::getSqlCol();
-
-      switch ($filter)
-      {
-        case 'rtk1':
-          $select->where($idxCol.' <= ?', $curSeq->getNumCharactersVol1());
-          break;
-        case 'rtk3':
-          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', [$curSeq->getNumCharactersVol1(), $curSeq->getNumCharactersVol3()]);
-          break;
-        case 'rtk1+3':
-          $select->where($idxCol.' <= ?', $curSeq->getNumCharacters());
-          break;
-        default:
-          break;
-      }
-    }
-
-    return $select;
-  }
-
-  /**
-   * Apply user id filter to select object.
-   * 
-   * @param  coreDatabaseSelect  $select
-   * @param  int   $userId
-   * 
-   * @return coreDatabaseSelect
-   */
-  public static function filterByUserId(coreDatabaseSelect $select, $userId)
-  {
-    return $select->where(self::getInstance()->getName().'.userid = ?', $userId);
   }
 
   /**
@@ -1101,5 +1108,56 @@ class ReviewsPeer extends coreDatabaseTable
 
     // return succesfully added ids
     return $done;
+  }
+
+   /**
+   * Filter flashcard selection by frame number for given RtK Volume
+   * (or no filter = all).
+   * 
+   * @param  coreDatabaseSelect   $select
+   * @param  string   $filter     'rtk1', 'rtk3', 'rtk1+3', '' (no filter)
+   * 
+   * @return coreDatabaseSelect   Returns modified select object
+   */
+  private static function filterByRtk($select, $filter = '')
+  {
+    // always add Sequences join, will be discarded by SQL if not used anyway
+    $curSeq = rtkIndex::inst();
+
+    if ($filter !== '')
+    {
+      $select = KanjisPeer::joinLeftUsingUCS($select);
+      $idxCol = rtkIndex::getSqlCol();
+
+      switch ($filter)
+      {
+        case 'rtk1':
+          $select->where($idxCol.' <= ?', $curSeq->getNumCharactersVol1());
+          break;
+        case 'rtk3':
+          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', [$curSeq->getNumCharactersVol1(), $curSeq->getNumCharactersVol3()]);
+          break;
+        case 'rtk1+3':
+          $select->where($idxCol.' <= ?', $curSeq->getNumCharacters());
+          break;
+        default:
+          break;
+      }
+    }
+
+    return $select;
+  }
+
+ /**
+   * Apply user id filter to select object.
+   * 
+   * @param  coreDatabaseSelect  $select
+   * @param  int   $userId
+   * 
+   * @return coreDatabaseSelect
+   */
+  private static function filterByUserId(coreDatabaseSelect $select, $userId)
+  {
+    return $select->where(self::getInstance()->getName().'.userid = ?', $userId);
   }
 }

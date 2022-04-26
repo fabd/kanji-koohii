@@ -2,7 +2,7 @@
 // Learn More page & markdown output formatting
 // ====================================================================
 
-.kk-DocNav {
+.ko-DocNav {
   @include breakpoint-up(lg) {
     @apply fixed min-w-[218px];
   }
@@ -60,7 +60,7 @@
 }
 
 // note: this will be used also on dashboard "Welcome" section
-.kk-RtkBook {
+.ko-RtkBook {
   // this selector overrides `.markdown img` when appearing in the Help page
   img {
     @apply border-none p-0;
@@ -68,7 +68,7 @@
   }
 }
 
-.kk-DocMain {
+.ko-DocMain {
   @include breakpoint-up(md) {
     // vertical separator & guiding line
     @apply pl-4 border-l-[1px] border-shaded;
@@ -117,69 +117,5 @@
     dd {
       margin: 0 0 1em 60px;
     }
-  }
-}
-
-// --------------------------------------------------------------------
-// SMALL ISOMETRIC BOXES MATCHING THE LEITNER SRS COLORS
-//
-//   - Scales based on font-size!
-//
-//  Example
-//
-//    <div class="kk-DocIso is-new">
-//      <em class="is-top"></em>
-//      <em class="is-side"></em>
-//    </div>
-//
-// --------------------------------------------------------------------
-.kk-DocIso {
-  $sideThick: 0.7em;
-
-  // SRS chart box colors
-  $bgFail: #{$--clr-danger-bg};
-  $bgNew: #40a8e5;
-  $bgDue: #{$--clr-srs-due};
-  $bgUndue: #{$--clr-srs-undue};
-
-  width: 2em;
-  height: 2em;
-  position: relative;
-
-  box-shadow: 5px 2px 10px #4446; // fancy drop shadow to make it "pop"
-
-  &.is-fail,
-  &.is-fail > * {
-    background-color: $bgFail;
-  }
-  &.is-new,
-  &.is-new > * {
-    background-color: $bgNew;
-  }
-  &.is-due,
-  &.is-due > * {
-    background-color: $bgDue;
-  }
-  &.is-undue,
-  &.is-undue > * {
-    background-color: $bgUndue;
-  }
-
-  .is-top {
-    // use bottom-[99%] instead of 100% to avoid pixel gap
-    @apply absolute w-full bottom-[99%];
-    height: $sideThick;
-    transform: skew(-45deg);
-    transform-origin: bottom right;
-    filter: brightness(1.3);
-    border-bottom: 1px solid #fff1; // subtle bright edge
-  }
-  .is-side {
-    @apply absolute h-full left-full;
-    width: $sideThick;
-    transform: skew(0, -45deg);
-    transform-origin: top left;
-    filter: brightness(0.9) saturate(1.2);
-    border-left: 1px solid #4441; // subtle darkened edge
   }
 }

@@ -1,3 +1,5 @@
 progressSuccess:
   metas:
     title: 'Progress Chart'
+  javascripts:
+    - src/entry-home.ts

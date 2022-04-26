@@ -42,6 +42,11 @@ interface Window {
     // base URL for API requests (cf. layout.php & koohii_base_url() helper)
     BASE_URL: string;
 
+    // the new homepage dashboard (03/2022)
+    HOMEDASH_PCTBAR_PROPS: Dictionary;
+    HOMEDASH_LESSON_PROPS: Dictionary;
+    LESSONS_CHART_PROPS: Dictionary;
+
     // site-wide mobile nav, setup data from php with the correct urls
     MBL_NAV_DATA: Dictionary;
 
@@ -49,7 +54,7 @@ interface Window {
 
     EDITSTORY_PROPS: Dictionary;
 
-    REVIEW_OPTIONS: { fcrOptions: TReviewOptions, props: Dictionary };
+    REVIEW_OPTIONS: { fcrOptions: TReviewOptions; props: Dictionary };
     REVIEW_MODE: Dictionary;
 
     // study > My Stories
@@ -57,13 +62,12 @@ interface Window {
     MYSTORIES_SORT_OPTIONS: Dictionary;
 
     ACCOUNT_SRS: Dictionary;
-  };
 
-  // 4th/5th edition keywords and kanji, import cf. _SideColumn.php
-  //   web/revtk/study/keywords-rtk-0.js
-  //   web/revtk/study/keywords-rtk-1.js
-  kklist: string;
-  kwlist: string[];
+    // Old/New edition RTK keywords and kanji
+    SEQ_KANJIS: string;
+    SEQ_KEYWORDS: string[];
+    USER_KEYWORDS_MAP: Dictionary;
+  };
 
   Koohii: {
     // misc. references shared between backend/frontend,

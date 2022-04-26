@@ -22,12 +22,17 @@
 
 // components
 @import "./components/_buttons.scss";
+@import "./components/_mobile-nav.scss";
+@import "./components/_RatioBox.scss";
+@import "./components/_transitions.scss";
+@import "./components/_widgets.scss";
 @import "./legacy/_widgets.scss";
 @import "./_navbar.scss";
 @import "./_markdown.scss";
 
 // pages
 @import "./pages/about-support.scss";
+@import "./pages/home-dashboard.scss";
 @import "./pages/learn-more.scss";
 @import "./pages/review-home.scss";
 
@@ -125,7 +130,7 @@ a.admin-edit {
 .ko-Box {
   --ko-box-px: 14px;
   --ko-box-py: 14px;
-  --ko-box-bg: #e7e1d3;
+  --ko-box-bg: #{$--clr-bg-1};
 
   background-color: var(--ko-box-bg);
   border-color: var(--ko-box-bg);
@@ -721,39 +726,6 @@ a:hover.subdued {
   padding: 1px;
 }
 
-/* -------------- */
-/* Progress Chart */
-/* -------------- */
-
-table.lessons {
-  border: none;
-  margin: 0 0 1em;
-}
-table.lessons td {
-  color: #888678;
-  font: 12px Arial, sans-serif;
-  width: 67px;
-  height: 66px;
-  background: #e0ded0;
-  border-bottom: 1px solid #fffde7;
-  border-right: 1px solid #fffde7;
-  text-align: center;
-}
-.lessons td.empty {
-  background: transparent;
-  border: none;
-}
-.lessons td.completed {
-  color: #5b6c7d;
-  font-weight: bold;
-  background: #b9dcff;
-}
-.lessons td.active {
-  background: #ffea00;
-  color: #19108f;
-  font-weight: bold;
-}
-
 /* ---------------------------- */
 /* Review Summary */
 /* ---------------------------- */
@@ -825,53 +797,12 @@ table.lessons td {
   margin: 0 0 1em 1em;
 }
 
-/* ---------------------------- */
-/* ... */
-/* ---------------------------- */
-
-#home-qs .box {
-  text-align: center;
-}
-#home-qs .hd {
-  padding: 0 0 0.5em;
-  color: #3c3c3c;
-  font-size: 18px;
-  line-height: 1.2em;
-}
-#home-qs .bd {
-  min-height: 3em;
-}
-
-#home-qs a {
-  text-decoration: none;
-}
-#home-qs a:hover {
-}
-#home-qs a.expired {
-  color: #f0912a;
-}
-#home-qs a.failed {
-  color: #ff0000;
-}
-
-/* MEDIA-md (landscape on iPad) */
-@media all and (max-width: 800px) {
-  #home-qs .box {
-  }
-  #home-qs .hd {
-    min-height: 20px;
-  }
-  #home-qs .bd {
-  }
-}
-
 /* ----------------------------
  * Flashcard Review
  * ---------------------------- */
 
 .ko-CustomReviewForm {
   @extend .ko-Box;
-  @apply rounded;
   font-size: 14px;
   min-height: 120px;
   margin-bottom: 1em;

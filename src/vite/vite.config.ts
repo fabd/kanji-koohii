@@ -26,6 +26,7 @@ export default defineConfig({
       input: [
         "./src/entry-account.ts",
         "./src/entry-common.ts",
+        "./src/entry-home.ts",
         "./src/entry-landing.ts",
         "./src/entry-manage.ts",
         "./src/entry-recognition.ts",

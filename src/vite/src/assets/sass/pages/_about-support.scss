@@ -1,4 +1,4 @@
-.kk-PatronsList {
+.ko-PatronsList {
   margin-top: -0.5em;
   padding: 1em 0 0;
   list-style: none;
@@ -30,7 +30,7 @@
   }
 }
 
-.kk-PaypalForm {
+.ko-PaypalForm {
   // this fixes a vertical gap when paypal's `pixel.gif` is not yet loaded
   form > img[height="1"] {
     width: 1px;

@@ -2,13 +2,13 @@
   <div class="ko-CustomReviewForm">
     <h3 class="text-lg font-bold text-body mb-4">Create a Review Deck from Japanese Text</h3>
 
-    <p>Paste japanese text (or any selection of kanji) below :</p>
+    <p>Paste <strong>japanese text</strong> (or any selection of kanji) below :</p>
 
     <form :action="actionUrl" method="post">
       <div class="form-group">
         <textarea v-model="japText" class="form-control mb-1" rows="5"></textarea>
-        <div class="text-right">
-          {{ `${count} unique RTK kanji` }}
+        <div class="text-right text-warm">
+          <strong class="text-body">{{ count }}</strong> unique RTK kanji in text
         </div>
       </div>
 

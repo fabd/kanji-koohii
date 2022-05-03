@@ -50,9 +50,8 @@ export default defineComponent({
 
   computed: {
     count(): number {
-      const text = this.japText.trim();
-
-      return text !== "" ? filterRtkKanji(this.japText.split("")).length : 0;
+      const uniq = (arr: any[]) => [...new Set(arr)];
+      return uniq(filterRtkKanji(this.japText.split(""))).length;
     },
   },
 

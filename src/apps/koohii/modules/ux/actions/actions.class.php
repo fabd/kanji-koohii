@@ -4,6 +4,11 @@ class uxActions extends sfActions
 {
   public function executeIndex()
   {
+    $this->guard();
+  }
+
+  private function guard()
+  {
     $user = $this->getUser();
 
     // developer only

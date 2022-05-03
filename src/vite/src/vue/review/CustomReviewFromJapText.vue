@@ -12,7 +12,7 @@
         </div>
       </div>
 
-      <div class="form-group mb-1">
+      <div class="form-group mb-1 -mt-1">
         <label>
           <input type="checkbox" name="shuffle" value="1" />
           <span>Shuffle cards</span>
@@ -26,7 +26,15 @@
         </label>
       </div>
 
-      <button type="submit" class="ko-Btn ko-Btn--success">Start Review<i class="fa fa-arrow-right ml-2"></i></button>
+      <button
+        type="submit"
+        class="ko-Btn ko-Btn--success ko-Btn--large"
+        :class="{
+          'is-disabled': !formIsValid,
+        }"
+        :disabled="!formIsValid"
+        >Start Review<i class="fa fa-arrow-right ml-2"></i
+      ></button>
     </form>
   </div>
 </template>
@@ -52,6 +60,10 @@ export default defineComponent({
     count(): number {
       const uniq = (arr: any[]) => [...new Set(arr)];
       return uniq(filterRtkKanji(this.japText.split(""))).length;
+    },
+
+    formIsValid(): boolean {
+      return this.count > 0;
     },
   },
 

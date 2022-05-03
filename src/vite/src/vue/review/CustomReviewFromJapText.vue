@@ -6,7 +6,10 @@
 
     <form :action="actionUrl" method="post">
       <div class="form-group">
-        <textarea v-model="japText" class="form-control mb-3" rows="5"></textarea>
+        <textarea v-model="japText" class="form-control mb-1" rows="5"></textarea>
+        <div class="text-right">
+          {{ `${count} unique RTK kanji` }}
+        </div>
       </div>
 
       <div class="form-group mb-1">
@@ -30,6 +33,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { filterRtkKanji } from "@/lib/rtk";
 
 export default defineComponent({
   name: "CustomReviewFromJapText",
@@ -42,6 +46,14 @@ export default defineComponent({
     return {
       japText: "一二三四五六七八九十",
     };
+  },
+
+  computed: {
+    count(): number {
+      const text = this.japText.trim();
+
+      return text !== "" ? filterRtkKanji(this.japText.split("")).length : 0;
+    },
   },
 
   methods: {},

@@ -1,6 +1,11 @@
 <?php
   use_helper('Form', 'Validation', 'Links');
   $sf_request->setParameter('_homeFooter', true);
+
+  // Custom Review From Japanese Text
+  kk_globals_put('CUSTOM_REVIEW_PROPS', [
+    'actionUrl' => url_for('review/custom'),
+  ]);
 ?>
 
 <h2>Custom Review</h2>
@@ -30,7 +35,7 @@
 
       <?php echo form_tag('review/free', ['method' => 'get']) ?>
       
-      <h3 class="mb-4">Review a range of kanji</h3>
+      <h3 class="text-lg font-bold text-body mb-4">Review by Index or Lesson</h3>
 
       <div class="form-group">
         RTK Index
@@ -44,10 +49,10 @@
         RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-select form-control-i w-[14em] mx-2']); ?>
       </div>
 
-<?php 
-      echo _bs_form_group(
-        _bs_input_checkbox('shuffle', ['label' => 'Shuffle cards'])
-      );
+<?php echo _bs_form_group(
+  ['class' => 'mb-1'],
+  _bs_input_checkbox('shuffle', ['label' => 'Shuffle cards'])
+);
       echo _bs_form_group(
         _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
       );
@@ -63,6 +68,14 @@
   </div><!-- /col -->
   <div class="col-lg-6">
 
+    <div id="CustomReviewFromJapText" class="mb-4"><!-- vue --></div>
+
+  </div><!-- /col -->
+</div><!-- /row -->
+
+<?php
+  // OBSOLETE?
+  /*
     <div class="ko-CustomReviewForm">
 
       <h3 class="mb-4">Review from learned kanji</h3>
@@ -97,6 +110,4 @@
 <?php endif ?>
 
     </div>
-
-  </div><!-- /col -->
-</div><!-- /row -->
+  */

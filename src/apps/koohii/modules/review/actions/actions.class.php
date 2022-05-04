@@ -77,11 +77,12 @@ class reviewActions extends sfActions
   /**
    * Kanji Flashcard review page with FlashcardReview.
    *
-   * Free Review Mode (Labs page):
+   * Custom Review modes:
    *
    *   from, to     Range of Heisig numbers (1-xxxx)
    *   lesson       Lesson Id (sets from, to)
    *   known        N cards to review from known kanji.
+   *   from_text    String of unique kanji to create deck from
    *
    * Options:
    *
@@ -107,6 +108,8 @@ class reviewActions extends sfActions
     $reviewShuffle = $request->getParameter('shuffle', 0) > 0;
     // DBG::request();exit;
 
+    $reviewFromText = $request->getParameter('from_text', '');
+
     if ($lessonId = (int) $request->getParameter('lesson', 0))
     {
       $lessonInfo = rtkIndex::getLessonData($lessonId);
@@ -119,7 +122,7 @@ class reviewActions extends sfActions
     $options['fc_reverse'] = $request->getParameter('reverse') ? true : false;
 
     // flag to indentify free review mode
-    $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0;
+    $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0 || $reviewFromText;
 
     $options['ts_start'] = UsersPeer::intLocalTime();
 
@@ -160,9 +163,22 @@ class reviewActions extends sfActions
         // repeat button URL disable because the randomized card set can change
         $options['fc_rept'] = '';
       }
+      else if ($reviewFromText) {
+        // Custom Review : Create a Review Deck from Japanese Text
+
+        $chars = CJK::getKanji($reviewFromText);
+        $this->forward404Unless(count($chars) > 0, 'from_text is invalid');
+
+        // just in case client didn't remove the duplicates
+        $uniqueChars = array_unique($chars);
+        
+        $options['items'] = array_map(fn($char) => mb_ord($char), $uniqueChars);
+// DBG::printr($options);exit;
+        $options['fc_rept'] = '';
+      }
       else
       {
-        // free review :: fixed range
+        // Custom Review : by index or lesson (from/to)
 
         $this->forward404If(!BaseValidators::validateInteger($reviewFrom), 'Invalid card range');
         $this->forward404If(!BaseValidators::validateInteger($reviewTo), 'Invalid card range');

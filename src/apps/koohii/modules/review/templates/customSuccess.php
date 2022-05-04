@@ -5,7 +5,7 @@
   // Custom Review From Japanese Text
   rtkIndex::useKeywordsFile(); // for the rtk.ts helpers
   kk_globals_put('CUSTOM_REVIEW_PROPS', [
-    'actionUrl' => url_for('review/custom'),
+    'actionUrl' => url_for('review/free'),
   ]);
 ?>
 

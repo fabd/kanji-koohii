@@ -23,30 +23,30 @@
       </p>
 
       <p class="mb-2">
-        To save your results and schedule reviews, <?php echo link_to('add flashcards', '@manage') ?> and then use the <em>Spaced Repetition</em> page.
+        To save your results and schedule reviews, <?= link_to('add flashcards', '@manage'); ?> and then use the <em>Spaced Repetition</em> page.
       </p>
     </div>
 
 </section>
 
-<div class="row">
+<div class="row mb-6">
   <div class="col-lg-6">
 
     <div class="ko-CustomReviewForm">
 
-      <?php echo form_tag('review/free', ['method' => 'get']) ?>
+      <?= form_tag('review/free', ['method' => 'get']); ?>
       
       <h3 class="text-lg font-bold text-body mb-4">Review by Index or Lesson</h3>
 
       <div class="form-group">
         RTK Index
-        <?php echo input_tag('from', 1, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
+        <?= input_tag('from', 1, ['class' => 'form-control form-control-i w-[4.5em] mx-2']); ?>
         to
-        <?php echo input_tag('to', 10, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
+        <?= input_tag('to', 10, ['class' => 'form-control form-control-i w-[4.5em] mx-2']); ?>
       </div>
 
       <div class="form-group">
-      <?php $options_lessons = array_merge([0 => '---'], rtkIndex::getLessonsDropdown()) ?>
+      <?php $options_lessons = array_merge([0 => '---'], rtkIndex::getLessonsDropdown()); ?>
         RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-select form-control-i w-[14em] mx-2']); ?>
       </div>
 
@@ -84,8 +84,8 @@
       <p>You have <strong><?php echo $knowncount ?></strong> learned kanji (<strong class="clr-srs-due">due</strong> and <strong class="clr-srs-undue">scheduled</strong> cards).</p>
 
 <?php if ($knowncount > 0): ?>
-      <?php echo form_tag('review/free', ['method' => 'get']) ?>       
-<?php 
+      <?php echo form_tag('review/free', ['method' => 'get']) ?>
+<?php
       echo _bs_form_group(
         _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
       );

@@ -15,7 +15,7 @@
 <?php
       if ($learnedCount)
       {
-        echo _bs_button(
+        echo _bs_button_to(
           'Review Learned'.'<i class="fa fa-arrow-right ml-2"></i>',
           '@review',
           [
@@ -26,7 +26,7 @@
       }
       else
       {
-        echo _bs_button(
+        echo _bs_button_to(
           'Review Learned<i class="fa fa-arrow-right ml-2"></i>',
           '@review',
           [

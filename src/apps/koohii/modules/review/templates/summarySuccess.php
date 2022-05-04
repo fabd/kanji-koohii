@@ -41,11 +41,11 @@
 
 <?php
     $go_back = $fc_free ? 'review/custom' : 'review/index';
-    echo _bs_button('Back', $go_back, ['class' => 'ko-Btn is-ghost']);
+    echo _bs_button_to('Back', $go_back, ['class' => 'ko-Btn is-ghost']);
 
     if ($fc_rept !== '')
     {
-      echo '&nbsp;&nbsp;'._bs_button(
+      echo '&nbsp;&nbsp;'._bs_button_to(
         '<i class="fa fa-redo mr-2"></i>Repeat Review',
         $fc_rept,
         [

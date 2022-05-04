@@ -81,7 +81,7 @@
 <?php
   if ($restudyCount)
   {
-    echo _bs_button(
+    echo _bs_button_to(
       "{$restudyCount} Kanji to Restudy".'<i class="fa fa-book-open ml-2"></i>',
       'study/failedlist',
       [
@@ -121,7 +121,7 @@
           <span class="ml-2"><?= $countSrsDue; ?> <strong>due</strong></span>
         </a>
 
-        <?= _bs_button(
+        <?= _bs_button_to(
   'Spaced Repetition'.'<i class="fa fa-arrow-right ml-2"></i>',
   '@overview',
   [

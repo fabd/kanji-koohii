@@ -113,7 +113,7 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
 
         <div class="max-w-[540px] mx-auto md:flex md:items-center pt-8">
           <div class="mb-6 md:w-1/2 md:mb-0">
-            <?= _bs_button('Register', 'account/create', ['class' => 'ko-ButtonSignup']); ?>
+            <?= _bs_button_to('Register', 'account/create', ['class' => 'ko-ButtonSignup']); ?>
           </div>
           <div class="md:w-1/2">
             <?= link_to('Learn more', '@learnmore', ['class' => 'learnmore whitespace-nowrap']); ?>

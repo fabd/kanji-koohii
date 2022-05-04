@@ -13,16 +13,16 @@
  *     ['class' => 'max-w-[100px] text-sm', 'data-userid' => '1007']
  *
  *
- * INPUT OPTIONS
+ * MISC TAG HELPERS
+ *
+ *   _bs_button_to()
+ *
+ *
+ * FORM INPUT OPTIONS
  *
  *   'helptext' => 'message'     To add a Bootstrap .form-text element after the input
  *   'label'                     Adds label  NOTE! input name = id
  *   'optional'                  Add an (Optional) text next to the label
- *
- *
- * COMMON HELPERS
- *
- *   _bs_button()
  *
  *
  * FORM HELPERS
@@ -77,7 +77,7 @@
  * @param string $internal_uri 'module/action' or '@rule' of the action
  * @param array  $options      additional HTML compliant <input> tag parameters
  */
-function _bs_button($label, $internal_uri, array $options = [])
+function _bs_button_to($label, $internal_uri, array $options = [])
 {
   $html_options = _parse_attributes($options);
 

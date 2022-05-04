@@ -19,7 +19,7 @@
 
   <div class="mb-6 relative">
     <div class="absolute right-0 top-0">
-      <?= _bs_button(
+      <?= _bs_button_to(
           'Export to CSV<i class="fa fa-arrow-down ml-2"></i>',
           'study/export',
           [

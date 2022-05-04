@@ -5,16 +5,11 @@
 
 <h2>Vocab Shuffle</h2>
 
-<div class="mb-3">
+<div class="text-smx mb-6">
+  <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
 
-    <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
-
-    <p>Each new test will display a selection from the priority entries as defined in Jim Breen's
-    Japanese/English dictionary (JMDICT).</p>
-
-    <?php #echo link_to('<span>Start Vocab Shuffle!</span>', 'labs/review', array('class' => 'uiIBtn uiIBtnDefault')) ?>
-
-
+  <p>Each new test will display a selection from the <?php echo link_to('priority entries', '@learnmore#dictionary-sources') ?> as defined in Jim Breen's
+  Japanese/English dictionary (JMDICT).</p>
 </div>
 
 <div class="row">

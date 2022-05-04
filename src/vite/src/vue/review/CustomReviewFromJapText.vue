@@ -4,13 +4,15 @@
 
     <p>Paste <strong>japanese text</strong> (or any selection of kanji) below :</p>
 
-    <form :action="actionUrl" method="post">
-      <div class="form-group">
-        <textarea v-model="japText" class="form-control mb-1" rows="5"></textarea>
-        <div class="text-right text-warm">
-          <strong class="text-body">{{ count }}</strong> unique RTK kanji in text
-        </div>
+    <div class="form-group">
+      <textarea v-model="japText" class="form-control mb-1" rows="5"></textarea>
+      <div class="text-right text-warm">
+        <strong class="text-body">{{ countRtkKanji }}</strong> unique RTK kanji in text
       </div>
+    </div>
+
+    <form :action="actionUrl" method="post">
+      <input type="hidden" name="from_text" :value="kanjiForReview" />
 
       <div class="form-group mb-1 -mt-1">
         <label>
@@ -33,6 +35,7 @@
           'is-disabled': !formIsValid,
         }"
         :disabled="!formIsValid"
+        @click="onSubmit"
         >Start Review<i class="fa fa-arrow-right ml-2"></i
       ></button>
     </form>
@@ -53,20 +56,32 @@ export default defineComponent({
   data() {
     return {
       japText: "一二三四五六七八九十",
+      kanjiForReview: "",
     };
   },
 
   computed: {
-    count(): number {
+    uniqueRtkKanji(): string[] {
       const uniq = (arr: any[]) => [...new Set(arr)];
-      return uniq(filterRtkKanji(this.japText.split(""))).length;
+      return uniq(filterRtkKanji(this.japText.split("")));
+    },
+
+    countRtkKanji(): number {
+      return this.uniqueRtkKanji.length;
     },
 
     formIsValid(): boolean {
-      return this.count > 0;
+      return this.countRtkKanji > 0;
     },
   },
 
-  methods: {},
+  methods: {
+    onSubmit(): boolean {
+      // updates the input in the <form>
+      this.kanjiForReview = this.uniqueRtkKanji.join("");
+
+      return true;
+    },
+  },
 });
 </script>

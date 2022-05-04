@@ -16,7 +16,7 @@
 
       <div class="form-group mb-1 -mt-1">
         <label>
-          <input type="checkbox" name="shuffle" value="1" />
+          <input type="checkbox" name="shuffle" value="1" checked />
           <span>Shuffle cards</span>
         </label>
       </div>

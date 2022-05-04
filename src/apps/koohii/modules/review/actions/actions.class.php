@@ -21,11 +21,19 @@ class reviewActions extends sfActions
     $this->flashcard_count = ReviewsPeer::getFlashcardCount($this->getUser()->getUserId());
   }
 
+  /**
+   * Custom Review modes 
+   *
+   * @param sfRequest $request
+   */
   public function executeCustom($request)
   {
     $userId = sfContext::getInstance()->getUser()->getUserId();
     $this->knowncount = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
     $this->knowndefault = max($this->knowncount, 1);
+
+    // set defaults for forms
+    $request->setParameter('shuffle', 1);
   }
 
   public function executeVocab($request)

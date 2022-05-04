@@ -15,7 +15,8 @@
  *
  * MISC TAG HELPERS
  *
- *   _bs_button_to()
+ *   _bs_button()                Output a standard `<button>` tag
+ *   _bs_button_to()             Output a `<button>` that acts similar to link_to()
  *
  *
  * FORM INPUT OPTIONS
@@ -60,6 +61,21 @@
  *   https://getbootstrap.com/docs/3.3/css/#forms
  *
  */
+
+/**
+ * Output a standard `<button>` tag.
+ *
+ * DOES NOT DO ANY ESCAPING of the button's contents!
+ *
+ * @param string $content ... button label, or any HTML (is NOT escaped!)
+ * @param array  $options ... same as sf's content_tag() helper
+ *
+ * @return string
+ */
+function _bs_button($content = '', $options = [])
+{
+  return content_tag('button', $content, $options);
+}
 
 /**
  * Similar to sf's button_to(), but outputs a <button> (not an <input type=button>).

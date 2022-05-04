@@ -17,7 +17,7 @@
 
     <div class="ko-CustomReviewForm">
     
-      <h3>Discover words based on RTK index</h3>
+      <h3 class="ko-CustomReviewForm-title">Discover words based on RTK index</h3>
 
       <p>Start a vocab session with words selected based on RTK index.</p>
 
@@ -34,8 +34,11 @@
 ?>
       </div>
 <?php
-      echo _bs_form_group(['class' => 'mb-2'],
-        _bs_submit_tag('Start Review')
+      echo _bs_form_group(['class' => 'mb-0'],
+        _bs_button(
+          'Start Review<i class="fa fa-arrow-right ml-2"></i>',
+          ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+        )
       );
 ?>
       </form>
@@ -47,7 +50,7 @@
 
     <div class="ko-CustomReviewForm">
       
-      <h3>Discover words made only of learned kanji</h3>
+      <h3 class="ko-CustomReviewForm-title">Discover words made only of learned kanji</h3>
 
 <?php if ($learnedcount > 0): ?>
       <p><strong><?php echo $learnedcount ?></strong> learned kanji (one or more succesful reviews).</p>
@@ -58,8 +61,11 @@
       echo form_tag('labs/shuffle2', ['method' => 'post']);
       echo form_errors();
 
-      echo _bs_form_group(['class' => 'mb-2'],
-        _bs_submit_tag('Start Review')
+      echo _bs_form_group(['class' => 'mb-0'],
+        _bs_button(
+          'Start Review<i class="fa fa-arrow-right ml-2"></i>',
+          ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+        )
       );
 ?>
       </form>

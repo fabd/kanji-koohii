@@ -1,6 +1,6 @@
 <template>
   <div class="ko-CustomReviewForm">
-    <h3 class="text-lg font-bold text-body mb-4">Create a Review Deck from Japanese Text</h3>
+    <h3 class="ko-CustomReviewForm-title mb-4">Create a Review Deck from Japanese Text</h3>
 
     <p>Paste <strong>japanese text</strong> (or any selection of kanji) below :</p>
 

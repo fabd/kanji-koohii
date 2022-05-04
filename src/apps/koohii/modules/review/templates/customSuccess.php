@@ -36,7 +36,7 @@
 
       <?= form_tag('review/free', ['method' => 'get']); ?>
       
-      <h3 class="text-lg font-bold text-body mb-4">Review by Index or Lesson</h3>
+      <h3 class="ko-CustomReviewForm-title mb-4">Review by Index or Lesson</h3>
 
       <div class="form-group">
         RTK Index
@@ -59,7 +59,10 @@
       );
       echo _bs_form_group(
         ['class' => 'mb-2'],
-        _bs_submit_tag('Start Review')
+        _bs_button(
+          'Start Review<i class="fa fa-arrow-right ml-2"></i>',
+          ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+        )
       );
 ?>
       </form>

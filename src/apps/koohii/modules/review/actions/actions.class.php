@@ -219,6 +219,42 @@ class reviewActions extends sfActions
   }
 
   /**
+   * Review Summary (SRS and Custom Reviews)
+   *
+   * POST (from form in _ReviewKanji.php which is submitted at end of review):
+   *
+   *   ts_start
+   *   fc_deld
+   *   fc_free      Is "1" if Custom Review mode (not SRS)
+   * 
+   * If Custom Review mode (not SRS):
+   *
+   *   fc_rept      JSON encoded POST params to repeat the review
+   * 
+   * @param sfRequest $request
+   */
+  public function executeSummary($request)
+  {
+    // free mode review flag
+    $this->fc_free = $request->getParameter('fc_free', 0);
+    $this->fc_rept = $request->getParameter('fc_rept', '');
+
+    // POST request is initiated by the end of a review session
+    if ($request->getMethod() === sfRequest::POST)
+    {
+      // validate post parameters
+      $validator = new coreValidator($this->getContext()->getActionName());
+      $this->forward404Unless($validator->validate($request->getParameterHolder()->getAll()));
+
+      // (SRS only): update last review info for the "Who's Reviewing" table
+      if (!$this->fc_free)
+      {
+        ActiveMembersPeer::updateFlashcardInfo($this->getUser()->getUserId());
+      }
+    }
+  }
+
+  /**
    * Ajax handler for SRS flashcard reviews.
    *
    * @param sfRequest $request

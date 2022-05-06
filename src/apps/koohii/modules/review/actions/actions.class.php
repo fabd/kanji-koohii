@@ -109,14 +109,17 @@ class reviewActions extends sfActions
   {
     $this->setLayout('fullscreenLayout');
 
-    // if 'from' is not specified, then it is assumed to be a SRS review
-    $reviewFrom = $request->getParameter('from', 0);
-    $reviewTo = $request->getParameter('to', 0);
-    $reviewKnown = $request->getParameter('known', 0);
-    $reviewShuffle = $request->getParameter('shuffle', 0) > 0;
-    // DBG::request();exit;
-
+    $reviewFrom = (int) $request->getParameter('from', 0);
+    $reviewTo = (int) $request->getParameter('to', 0);
+    $reviewKnown = (int) $request->getParameter('known', 0);
     $reviewFromText = $request->getParameter('from_text', '');
+
+    $reviewShuffle = !!$request->getParameter('shuffle', 0);
+    $reviewFlip = !!$request->getParameter('reverse', 0);
+    // DBG::request();exit;
+    
+    // if any of these options is set it is assumed to be a Custom Review (not SRS)
+    $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0 || $reviewFromText;
 
     if ($lessonId = (int) $request->getParameter('lesson', 0))
     {
@@ -126,12 +129,8 @@ class reviewActions extends sfActions
       $reviewTo = $lessonInfo['lesson_from'] + $lessonInfo['lesson_count'] - 1;
     }
 
-    // kanji > keyword
-    $options['fc_reverse'] = $request->getParameter('reverse') ? true : false;
-
-    // flag to indentify free review mode
-    $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0 || $reviewFromText;
-
+    // set review template options
+    $options['fc_reverse'] = $reviewFlip;
     $options['ts_start'] = UsersPeer::intLocalTime();
 
     if (false === $options['freemode'])
@@ -157,6 +156,9 @@ class reviewActions extends sfActions
     }
     else
     {
+      $options['ajax_url'] = $this->getController()->genUrl('review/ajaxfree');
+      $options['fc_rept'] = null;
+
       if ($request->hasParameter('known'))
       {
         // free review :: known cards
@@ -168,8 +170,8 @@ class reviewActions extends sfActions
         $options['items'] = array_slice($cards, 0, $reviewKnown);
         //DBG::printr($options['items']);exit;
 
-        // repeat button URL disable because the randomized card set can change
-        $options['fc_rept'] = '';
+        // NO repeat button because the randomized card set can change
+        $options['fc_rept'] = null;
       }
       else if ($reviewFromText) {
         // Custom Review : Create a Review Deck from Japanese Text
@@ -181,8 +183,18 @@ class reviewActions extends sfActions
         $uniqueChars = array_unique($chars);
         
         $options['items'] = array_map(fn($char) => mb_ord($char), $uniqueChars);
+
+        // shuffle the cards
+
+
+        // set the options to repeat the review at the Review Summary screen
+        $options['fc_rept'] = json_encode([
+          'action' => $this->getController()->genUrl('review/free'),
+          'from_text' => implode($uniqueChars),
+          'reverse' => (int) $reviewFlip,
+          'shuffle' => (int) $reviewShuffle,
+        ], JSON_UNESCAPED_UNICODE);
 // DBG::printr($options);exit;
-        $options['fc_rept'] = '';
       }
       else
       {
@@ -193,20 +205,16 @@ class reviewActions extends sfActions
         $this->forward404If($reviewFrom > $reviewTo || $reviewTo > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
 
         $options['items'] = rtkIndex::createFlashcardSet($reviewFrom, $reviewTo, $reviewShuffle);
-
-        // repeat button URL
-        $options['fc_rept'] = $this->getController()->genUrl(
-          implode('&', [
-            'review/free?from='.$reviewFrom,
-            'to='.$reviewTo,
-            'shuffle='.intval($reviewShuffle),
-            'reverse='.intval($options['fc_reverse']),
-          ]),
-          true
-        );
+        
+        // set the options to repeat the review at the Review Summary screen
+        $options['fc_rept'] = json_encode([
+          'action' => $this->getController()->genUrl('review/free'),
+          'from' => $reviewFrom,
+          'to' => $reviewTo,
+          'reverse' => (int) $reviewFlip,
+          'shuffle' => (int) $reviewShuffle,
+        ]);
       }
-
-      $options['ajax_url'] = $this->getController()->genUrl('review/ajaxfree');
     }
 
     // route for Exit button and 'empty' review url

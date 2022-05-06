@@ -182,10 +182,13 @@ class reviewActions extends sfActions
         // just in case client didn't remove the duplicates
         $uniqueChars = array_unique($chars);
         
-        $options['items'] = array_map(fn($char) => mb_ord($char), $uniqueChars);
+        $cards = array_map(fn($char) => mb_ord($char), $uniqueChars);
 
-        // shuffle the cards
+        if ($reviewShuffle) {
+          shuffle($cards);
+        }
 
+        $options['items'] = $cards;
 
         // set the options to repeat the review at the Review Summary screen
         $options['fc_rept'] = json_encode([

@@ -81,7 +81,7 @@
 <?php
   if ($restudyCount)
   {
-    echo _bs_button(
+    echo _bs_button_to(
       "{$restudyCount} Kanji to Restudy".'<i class="fa fa-book-open ml-2"></i>',
       'study/failedlist',
       [
@@ -121,7 +121,7 @@
           <span class="ml-2"><?= $countSrsDue; ?> <strong>due</strong></span>
         </a>
 
-        <?= _bs_button(
+        <?= _bs_button_to(
   'Spaced Repetition'.'<i class="fa fa-arrow-right ml-2"></i>',
   '@overview',
   [
@@ -136,7 +136,7 @@
 
       <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 
-      <?= link_to('Review by Index or Lesson'.'<i class="fa fa-arrow-right ml-2"></i>', 'review/custom', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
+      <?= link_to('Custom Review Modes'.'<i class="fa fa-arrow-right ml-2"></i>', 'review/custom', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
 
     </div>
   </div>

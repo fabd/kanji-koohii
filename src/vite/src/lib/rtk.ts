@@ -1,7 +1,9 @@
 /**
  * Helpers to deal with handling kanji sequences (ie. RTK indexes).
  *
- * Methods:
+ * Helpers:
+ *   filterRtkKanji()
+ * 
  *   getIndexForUCS()
  *   getKeywordForUCS()
  *
@@ -71,4 +73,16 @@ function getKeywordForUCS(ucsId: TUcsId) {
   return userKeywords.get(ucsId) || origKeywords.get(getIndexForUCS(ucsId)) || "-";
 }
 
-export { getKeywordForUCS, getIndexForUCS };
+/**
+ * Removes all non-RTK sequence characters from the chars array.
+ * 
+ * @param string[] chars ... an array of characters (eg. from `split('')`)
+ * 
+ */
+function filterRtkKanji(chars: string[]): string[] {
+  return chars.filter(
+    (char: string) => { return getIndexForUCS(char.codePointAt(0) || 0); }
+  );
+}
+
+export { getKeywordForUCS, getIndexForUCS, filterRtkKanji };

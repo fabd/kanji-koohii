@@ -1,6 +1,8 @@
 customSuccess:
   metas:
     title: "Custom Kanji Review - Kanji Koohii"
+  javascripts:
+    - src/entry-review.ts
 
 indexSuccess:
   metas:

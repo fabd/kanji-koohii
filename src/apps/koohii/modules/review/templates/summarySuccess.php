@@ -1,5 +1,5 @@
 <?php
-  use_helper('Widgets', 'Gadgets', 'CJK', 'Links');
+  use_helper('Widgets', 'Form', 'Gadgets', 'CJK', 'Links');
 
   // unix timestamp recorded at start of last review to match updated flashcards
   $ts_start = $sf_params->get('ts_start', 0);
@@ -20,11 +20,23 @@
     $title = "Remembered {$fcr_pass} of {$fcr_total} kanji.";
   }
 
-  // deleted cards
-  $deletedCards = $sf_params->get('fc_deld', '');
-  $deletedCards = $deletedCards ? explode(',', $deletedCards) : [];
+  // handle the repeat button for Custom Review modes
+  $repeat_button_html = '';
+  if ($fc_rept) {
+    $formData = json_decode($fc_rept, true) ?? [];
+    $formAction = $formData['action'];
+    unset($formData['action']);
 
-  //DBG::request();
+    $repeat_button_html = form_with_data(
+      $formAction,
+      $formData,
+      ['class' => 'inline-block ml-4'],
+      _bs_button(
+        '<i class="fa fa-redo mr-2"></i>Repeat Review',
+        [ 'class' => 'ko-Btn ko-Btn--success' ]
+      )
+    );
+  }
 ?>
 
   <h2>Review Summary</h2>
@@ -41,19 +53,9 @@
 
 <?php
     $go_back = $fc_free ? 'review/custom' : 'review/index';
-    echo _bs_button('Back', $go_back, ['class' => 'ko-Btn is-ghost']);
-
-    if ($fc_rept !== '')
-    {
-      echo '&nbsp;&nbsp;'._bs_button(
-        '<i class="fa fa-redo mr-2"></i>Repeat Review',
-        $fc_rept,
-        [
-          'absolute' => true,
-          'class' => 'ko-Btn ko-Btn--success'
-        ]
-      );
-    }
+    echo _bs_button_to('Back', $go_back, ['class' => 'ko-Btn is-ghost']);
+    
+    echo $repeat_button_html;
 ?>
   </div>
   

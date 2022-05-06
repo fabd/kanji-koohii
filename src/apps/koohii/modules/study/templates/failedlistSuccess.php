@@ -24,7 +24,7 @@
       // also disable when all are learned!
       if ($restudyCount && $learnedCount < $restudyCount)
       {
-        echo _bs_button(
+        echo _bs_button_to(
           $restudyLabel.'<i class="fa fa-book-open ml-2"></i>',
           'study/edit',
           ['query_string' => 'restudy', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large']
@@ -32,7 +32,7 @@
       }
       else
       {
-        echo _bs_button(
+        echo _bs_button_to(
           'Begin Restudy<i class="fa fa-book-open ml-2"></i>',
           '@review',
           [
@@ -47,7 +47,7 @@
       // don't show if all are learned (less confusing)
       if ($restudyCount && $restudyCount > $learnedCount)
       {
-        echo _bs_button(
+        echo _bs_button_to(
           'Review All<i class="fa fa-arrow-right ml-2"></i>',
           '@review',
           ['query_string' => 'box=1', 'class' => 'ko-Btn ko-Btn--danger ko-Btn--large is-ghost ml-4']
@@ -80,7 +80,7 @@
 <?php
       if ($learnedCount)
       {
-        echo _bs_button(
+        echo _bs_button_to(
           "Review <strong>{$learnedCount}</strong> Learned Kanji".'<i class="fa fa-arrow-right ml-2"></i>',
           '@review',
           [
@@ -90,7 +90,7 @@
         );
       }
       else {
-        echo _bs_button(
+        echo _bs_button_to(
           'Review Learned Kanji<i class="fa fa-arrow-right ml-2"></i>',
           '@review',
           [

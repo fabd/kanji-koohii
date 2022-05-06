@@ -9,7 +9,7 @@
     <p class="text-danger-darker text-sm mb-2 mbl:mb-0">
       <strong><?= $restudyCount; ?></strong> Forgotten Kanji
     </p>
-<?= _bs_button(
+<?= _bs_button_to(
   'Begin Restudy<i class="fa fa-book-open ml-2"></i>',
   'study/edit',
   ['query_string' => 'restudy', 'class' => 'ko-Btn ko-Btn--danger']

@@ -141,15 +141,19 @@
   <div class="clear-both"></div>
 </div><!-- fr-body -->
 
-<?php // Form to redirect to Review Summary with POST?>
-<form method="post" id="uiFcRedirectForm" action="<?= url_for('@review_summary'); ?>" style="display:none">
-  <?= input_hidden_tag('ts_start', $ts_start); ?>
-  <?= input_hidden_tag('fc_deld', 0); ?>
-  <?= input_hidden_tag('fc_free', (int) $freemode); ?>
-<?php if ($freemode) { ?>
-  <input type="hidden" name="fc_rept" value="<?= $fc_rept; ?>" />
-<?php } ?>
-</form>
+<?php
+  // Form to redirect to Review Summary with POST
+  echo form_with_data(
+    url_for('@review_summary'),
+    [
+      'ts_start' => $ts_start,
+      'fc_deld' => 0, // this is set by JS at end of review before submit
+      'fc_free' => (int) $freemode,
+      'fc_rept' => $fc_rept ?? '',
+    ],
+    [ 'id' => 'uiFcRedirectForm', 'style' => 'display:none' ]
+  );
+?>
 
 <div id="mobile-debug" style="padding:20px 0 0;"></div>
 

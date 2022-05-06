@@ -1,6 +1,12 @@
 <?php
   use_helper('Form', 'Validation', 'Links');
   $sf_request->setParameter('_homeFooter', true);
+
+  // Custom Review From Japanese Text
+  rtkIndex::useKeywordsFile(); // for the rtk.ts helpers
+  kk_globals_put('CUSTOM_REVIEW_PROPS', [
+    'actionUrl' => url_for('review/free'),
+  ]);
 ?>
 
 <h2>Custom Review</h2>
@@ -17,43 +23,46 @@
       </p>
 
       <p class="mb-2">
-        To save your results and schedule reviews, <?php echo link_to('add flashcards', '@manage') ?> and then use the <em>Spaced Repetition</em> page.
+        To save your results and schedule reviews, <?= link_to('add flashcards', '@manage'); ?> and then use the <em>Spaced Repetition</em> page.
       </p>
     </div>
 
 </section>
 
-<div class="row">
+<div class="row mb-6">
   <div class="col-lg-6">
 
     <div class="ko-CustomReviewForm">
 
-      <?php echo form_tag('review/free', ['method' => 'get']) ?>
+      <?= form_tag('review/free', ['method' => 'get']); ?>
       
-      <h3 class="mb-4">Review a range of kanji</h3>
+      <h3 class="ko-CustomReviewForm-title mb-4">Review by Index or Lesson</h3>
 
       <div class="form-group">
         RTK Index
-        <?php echo input_tag('from', 1, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
+        <?= input_tag('from', 1, ['class' => 'form-control form-control-i w-[4.5em] mx-2']); ?>
         to
-        <?php echo input_tag('to', 10, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
+        <?= input_tag('to', 10, ['class' => 'form-control form-control-i w-[4.5em] mx-2']); ?>
       </div>
 
       <div class="form-group">
-      <?php $options_lessons = array_merge([0 => '---'], rtkIndex::getLessonsDropdown()) ?>
+      <?php $options_lessons = array_merge([0 => '---'], rtkIndex::getLessonsDropdown()); ?>
         RTK Lesson<?= select_tag('lesson', options_for_select($options_lessons, $sf_request->getParameter('lesson')), ['class' => 'form-select form-control-i w-[14em] mx-2']); ?>
       </div>
 
-<?php 
-      echo _bs_form_group(
-        _bs_input_checkbox('shuffle', ['label' => 'Shuffle cards'])
-      );
+<?php echo _bs_form_group(
+  ['class' => 'mb-1'],
+  _bs_input_checkbox('shuffle', ['label' => 'Shuffle cards'])
+);
       echo _bs_form_group(
         _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
       );
       echo _bs_form_group(
         ['class' => 'mb-2'],
-        _bs_submit_tag('Start Review')
+        _bs_button(
+          'Start Review<i class="fa fa-arrow-right ml-2"></i>',
+          ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+        )
       );
 ?>
       </form>
@@ -63,6 +72,14 @@
   </div><!-- /col -->
   <div class="col-lg-6">
 
+    <div id="CustomReviewFromJapText" class="mb-4"><!-- vue --></div>
+
+  </div><!-- /col -->
+</div><!-- /row -->
+
+<?php
+  // OBSOLETE?
+  /*
     <div class="ko-CustomReviewForm">
 
       <h3 class="mb-4">Review from learned kanji</h3>
@@ -70,8 +87,8 @@
       <p>You have <strong><?php echo $knowncount ?></strong> learned kanji (<strong class="clr-srs-due">due</strong> and <strong class="clr-srs-undue">scheduled</strong> cards).</p>
 
 <?php if ($knowncount > 0): ?>
-      <?php echo form_tag('review/free', ['method' => 'get']) ?>       
-<?php 
+      <?php echo form_tag('review/free', ['method' => 'get']) ?>
+<?php
       echo _bs_form_group(
         _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
       );
@@ -97,6 +114,4 @@
 <?php endif ?>
 
     </div>
-
-  </div><!-- /col -->
-</div><!-- /row -->
+  */

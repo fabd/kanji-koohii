@@ -47,6 +47,9 @@ interface Window {
     HOMEDASH_LESSON_PROPS: Dictionary;
     LESSONS_CHART_PROPS: Dictionary;
 
+    // custom review page
+    CUSTOM_REVIEW_PROPS: Dictionary;
+
     // site-wide mobile nav, setup data from php with the correct urls
     MBL_NAV_DATA: Dictionary;
 

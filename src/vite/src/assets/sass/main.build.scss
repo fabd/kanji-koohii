@@ -803,12 +803,12 @@ a:hover.subdued {
 
 .ko-CustomReviewForm {
   @extend .ko-Box;
-  font-size: 14px;
+  font-size: 15px;
   min-height: 120px;
   margin-bottom: 1em;
 
-  p {
-    margin-bottom: 1em;
+  &-title {
+    @apply text-lg font-bold text-body;
   }
 }
 

@@ -5,16 +5,11 @@
 
 <h2>Vocab Shuffle</h2>
 
-<div class="mb-3">
+<div class="text-smx mb-6">
+  <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
 
-    <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
-
-    <p>Each new test will display a selection from the priority entries as defined in Jim Breen's
-    Japanese/English dictionary (JMDICT).</p>
-
-    <?php #echo link_to('<span>Start Vocab Shuffle!</span>', 'labs/review', array('class' => 'uiIBtn uiIBtnDefault')) ?>
-
-
+  <p>Each new test will display a selection from the <?php echo link_to('priority entries', '@learnmore#dictionary-sources') ?> as defined in Jim Breen's
+  Japanese/English dictionary (JMDICT).</p>
 </div>
 
 <div class="row">
@@ -22,7 +17,7 @@
 
     <div class="ko-CustomReviewForm">
     
-      <h3>Discover words based on RTK index</h3>
+      <h3 class="ko-CustomReviewForm-title">Discover words based on RTK index</h3>
 
       <p>Start a vocab session with words selected based on RTK index.</p>
 
@@ -39,8 +34,11 @@
 ?>
       </div>
 <?php
-      echo _bs_form_group(['class' => 'mb-2'],
-        _bs_submit_tag('Start Review')
+      echo _bs_form_group(['class' => 'mb-0'],
+        _bs_button(
+          'Start Review<i class="fa fa-arrow-right ml-2"></i>',
+          ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+        )
       );
 ?>
       </form>
@@ -52,7 +50,7 @@
 
     <div class="ko-CustomReviewForm">
       
-      <h3>Discover words made only of learned kanji</h3>
+      <h3 class="ko-CustomReviewForm-title">Discover words made only of learned kanji</h3>
 
 <?php if ($learnedcount > 0): ?>
       <p><strong><?php echo $learnedcount ?></strong> learned kanji (one or more succesful reviews).</p>
@@ -63,8 +61,11 @@
       echo form_tag('labs/shuffle2', ['method' => 'post']);
       echo form_errors();
 
-      echo _bs_form_group(['class' => 'mb-2'],
-        _bs_submit_tag('Start Review')
+      echo _bs_form_group(['class' => 'mb-0'],
+        _bs_button(
+          'Start Review<i class="fa fa-arrow-right ml-2"></i>',
+          ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+        )
       );
 ?>
       </form>

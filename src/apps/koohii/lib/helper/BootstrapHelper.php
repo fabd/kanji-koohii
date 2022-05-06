@@ -13,16 +13,17 @@
  *     ['class' => 'max-w-[100px] text-sm', 'data-userid' => '1007']
  *
  *
- * INPUT OPTIONS
+ * MISC TAG HELPERS
+ *
+ *   _bs_button()                Output a standard `<button>` tag
+ *   _bs_button_to()             Output a `<button>` that acts similar to link_to()
+ *
+ *
+ * FORM INPUT OPTIONS
  *
  *   'helptext' => 'message'     To add a Bootstrap .form-text element after the input
  *   'label'                     Adds label  NOTE! input name = id
  *   'optional'                  Add an (Optional) text next to the label
- *
- *
- * COMMON HELPERS
- *
- *   _bs_button()
  *
  *
  * FORM HELPERS
@@ -62,6 +63,21 @@
  */
 
 /**
+ * Output a standard `<button>` tag.
+ *
+ * DOES NOT DO ANY ESCAPING of the button's contents!
+ *
+ * @param string $content ... button label, or any HTML (is NOT escaped!)
+ * @param array  $options ... same as sf's content_tag() helper
+ *
+ * @return string
+ */
+function _bs_button($content = '', $options = [])
+{
+  return content_tag('button', $content, $options);
+}
+
+/**
  * Similar to sf's button_to(), but outputs a <button> (not an <input type=button>).
  *
  * DOES NOT DO ANY ESCAPING of the button's contents!
@@ -77,7 +93,7 @@
  * @param string $internal_uri 'module/action' or '@rule' of the action
  * @param array  $options      additional HTML compliant <input> tag parameters
  */
-function _bs_button($label, $internal_uri, array $options = [])
+function _bs_button_to($label, $internal_uri, array $options = [])
 {
   $html_options = _parse_attributes($options);
 

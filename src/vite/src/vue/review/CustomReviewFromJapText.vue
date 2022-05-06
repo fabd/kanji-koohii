@@ -55,7 +55,7 @@ export default defineComponent({
 
   data() {
     return {
-      japText: "一二三四五六七八九十",
+      japText: "",
       kanjiForReview: "",
     };
   },

@@ -20,11 +20,6 @@
     $title = "Remembered {$fcr_pass} of {$fcr_total} kanji.";
   }
 
-  // deleted cards
-  $deletedCards = $sf_params->get('fc_deld', '');
-  $deletedCards = $deletedCards ? explode(',', $deletedCards) : [];
-
-  //DBG::request();
   // handle the repeat button for Custom Review modes
   $repeat_button_html = '';
   if ($fc_rept) {

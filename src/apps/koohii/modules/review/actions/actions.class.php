@@ -246,6 +246,10 @@ class reviewActions extends sfActions
     // free mode review flag
     $this->fc_free = $request->getParameter('fc_free', 0);
     $this->fc_rept = $request->getParameter('fc_rept', '');
+  
+    // deleted cards
+    $deletedCards = $request->getParameter('fc_deld');
+    $this->deletedCards = $deletedCards ? explode(',', $deletedCards) : [];
 
     // POST request is initiated by the end of a review session
     if ($request->getMethod() === sfRequest::POST)

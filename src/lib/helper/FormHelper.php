@@ -2,8 +2,24 @@
 /**
  * Various helpers to build forms, based on the FormHelper in the early version
  * of symfony (that seems to be absent from sf 1.4).
+ * 
+ * Methods:
+ *   form_with_data()     Create a <form> with hidden inputs from key/values, and url.
+ * 
+ *   options_for_select()
+ *   select_tag()
+ *   input_tag()
+ *   input_hidden_tag()
+ *   input_password_tag()
+ *   textarea_tag()
+ *   checkbox_tag()
+ *   radiobutton_tag()
+ *   submit_tag()
+ *   label_for()
+ * 
  *
  * Repopulating forms:
+ * 
  *   The text input, checkbox, radio and textarea elements can be repopulated.
  *   For these elements, the value argument is a default value. When the field is repopulated,
  *   the get/post value is used in place of the default value.
@@ -16,6 +32,43 @@
  * @author     Fabrice Denis
  * @copyright  Code based on Symfony php framework, by Fabien Potencier (www.symfony-project.org)
  */
+
+/**
+ * Create a FORM with hidden inputs to submit manually or via a
+ *  button that can be passed as $content.
+ *
+ * @param string $action       absolute or relative url (use url_for())
+ * @param array  $data         the form data, encoded as <input type="hidden" ...>
+ * @param array  $html_options html options for the <form> tag
+ * @param string $content      optional content (eg. a button to submit)
+ * @param mixed  $url
+ *
+ * @return string
+ */
+function form_with_data($url, $data = [], $html_options = [], $content = '')
+{
+  // set some defaults
+  $html_options = array_merge([
+    'method' => 'post',
+  ], $html_options);
+
+  $html_options['action'] = $url;
+
+  $inputs = [];
+  foreach ($data as $key => $val)
+  {
+    $inputs[] = input_hidden_tag($key, $val);
+  }
+
+  // (make the html output readable)
+  $html = tag('form', $html_options, true)
+    ."\n".implode("\n", $inputs)
+    ."\n".$content
+    ."\n</form>\n";
+
+  return $html;
+}
+
 
 /**
  * Returns a formatted set of <option> tags based on optional <i>$options</i> array variable.

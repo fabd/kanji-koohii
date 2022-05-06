@@ -136,7 +136,7 @@
 
       <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 
-      <?= link_to('Review by Index or Lesson'.'<i class="fa fa-arrow-right ml-2"></i>', 'review/custom', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
+      <?= link_to('Custom Review Modes'.'<i class="fa fa-arrow-right ml-2"></i>', 'review/custom', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
 
     </div>
   </div>

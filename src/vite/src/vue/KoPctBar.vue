@@ -1,15 +1,20 @@
 <template>
   <div>
-    <div class="ko-PctBar" :class="{
-      'is-zero': pctValue === 0
-    }">
+    <div
+      class="ko-PctBar"
+      :class="{
+        'is-zero': pctValue === 0,
+      }"
+    >
       <transition name="chart-fade" appear>
         <div
           class="ko-PctBar-fill"
           :style="{
-            'min-width': cssFillWidth
+            'min-width': cssFillWidth,
           }"
-        >{{ pctValue }}%</div>
+        >
+          {{ pctMain }}<span class="text-[0.9em]">{{ pctFrac }}%</span>
+        </div>
       </transition>
     </div>
   </div>
@@ -31,11 +36,19 @@ export default defineComponent({
       return `${this.pctValue}%`;
     },
 
-    pctValue(): number {
-      let pct = (this.value * 100) / this.maxValue;
-      let floor = Math.floor(pct);
+    pctMain(): string {
+      return "" + Math.floor(this.pctValue);
+    },
 
-      return pct > 0 ? Math.max(floor, 1) : 0;
+    pctFrac(): string {
+      return ("" + this.pctValue).replace(/^\d+/, "");
+    },
+
+    // return percentage with one decimal, round up non-zero progress to 0.1
+    pctValue(): number {
+      const pct = (this.value * 1000) / this.maxValue;
+      const min = pct > 0 ? Math.max(pct, 1) : 0;
+      return Math.floor(min) / 10;
     },
   },
 });

@@ -84,7 +84,7 @@
   $_pc = sfProjectConfiguration::getActive();
   $_db = $_pc->getDatabase();
   if ($_db->getProfiler()) { echo $_db->getProfiler()->getDebugLog(); }
-  echo '<div style="background:#fff;font:15px/1em Arial;padding:5px 10px;text-align:right;overflow:hidden;">'.$_pc->getAdminInfoFooter().'</div>';
+  echo $_pc->getAdminInfoFooter();
 } ?>
 
 <?php /*

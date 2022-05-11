@@ -96,9 +96,15 @@ class koohiiConfiguration extends sfApplicationConfiguration
       $percentsql = 0;
     }
 
-    $html = 'Generated in '.$profiler->format_time_duration($totaltime)." ($percentphp% PHP / $percentsql% MySQL)";
+    $text = 'Generated in '.$profiler->format_time_duration($totaltime)." ($percentphp% PHP / $percentsql% MySQL)";
 
-    return $html;
+    return <<<END
+<div style="background:#222;display:flex;justify-content:right;">
+  <div style="background:#fff;padding:5px 10px;font:15px/1em Arial;">
+    {$text}
+  </div>
+</div>
+END;
   }
 }
 

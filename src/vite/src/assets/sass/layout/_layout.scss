@@ -40,6 +40,7 @@ $GRID_GUTTER_X: 15px;
 .col-lg-3,
 .col-lg-4,
 .col-lg-6,
+.col-lg-8,
 .col-lg-9,
 .col-lg-10 {
   @apply grow-0 w-full;
@@ -56,6 +57,9 @@ $GRID_GUTTER_X: 15px;
   }
   .col-lg-6 {
     @apply w-6/12;
+  }
+  .col-lg-8 {
+    @apply w-8/12;
   }
   .col-lg-9 {
     @apply w-9/12;

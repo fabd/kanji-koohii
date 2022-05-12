@@ -32,7 +32,7 @@ function flashcard_stats($cardData)
   $lastReview = esc_specialchars($cardData['ts_lastreview'] > 0 ? simple_format_date((int)$cardData['ts_lastreview'], rtkLocale::DATE_SHORT) : 'Not tested yet.');
 
   $html = <<<EOD
-<table class="stats" cellspacing="0">
+<table class="stats">
 <tr><th>Box</th><td>{$whichBox}</td></tr>
 <tr><th>Passed</th><td><strong>{$cardData['successcount']}</strong> time(s)</td></tr>
 <tr><th>Failed</th><td><strong>{$cardData['failurecount']}</strong> time(s)</td></tr>

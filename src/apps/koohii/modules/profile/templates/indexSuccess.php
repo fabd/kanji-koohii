@@ -11,7 +11,7 @@
 
   <h3>Activity</h3>
 
-  <table cellspacing="0" class="blocky mb-8">
+  <table class="blocky mb-8">
     <tr><th style="width: 170px">Stories</th>
         <td><strong><?php echo $num_stories->total ?></strong> (<?php echo $num_stories->public ?> public,
         <?php echo $num_stories->private ?> private)</td>

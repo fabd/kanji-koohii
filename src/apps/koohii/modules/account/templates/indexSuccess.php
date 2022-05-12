@@ -9,7 +9,7 @@
   <h3>Statistics</h3>
 
   <section class="mb-8">
-  <table cellspacing="0" class="blocky">
+  <table class="blocky">
     <tr><th style="width:130px;">Flashcard Count</hd><td><?php
     echo $flashcard_count.' ('.$reviewed_count.' reviewed)';
     ?></td></tr>
@@ -20,7 +20,7 @@
   <h3>Profile</h3>
 
   <section class="mb-8">
-  <table cellspacing="0" class="blocky">
+  <table class="blocky">
     <tr><th style="width:130px;">Username</th>
         <td><b><?php echo esc_specialchars($user['username']) ?></b></td></tr>
     <tr><th>Email</th>

@@ -56,7 +56,7 @@ class accountActions extends sfActions
       return $this->renderPartial('misc/requestThrottleError');
     }*/
     
-    $sfs = new StopForumSpam();
+    $sfs = StopForumSpam::getInstance();
 
     // log IPs to investigate bots/spam wasting database space
     $regip = StopForumSpam::getRemoteAddress();

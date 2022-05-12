@@ -33,6 +33,14 @@ class StopForumSpam
     $this->db = sfProjectConfiguration::getActive()->getDatabase();
   }
 
+  public static function getInstance(): self
+  {
+    static $instance = null;
+    $instance ??= new self();
+
+    return $instance;
+  }
+
   /**
    *
    * @return string   Readable IPv4 or IPv6 address

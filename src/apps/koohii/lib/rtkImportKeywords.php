@@ -177,13 +177,11 @@ class rtkImportKeywords
 
   public function getTableHead()
   {
-    $thead = [
-      '<th width="5%"><span class="hd">Index#</span></th>',
-      '<th width="10%"><span class="hd">Kanji</span></th>',
-      '<th width="85%"><span class="hd">Imported&nbsp;Keyword</span></th>'
-    ];
-
-    return implode('', $thead);
+    return <<<HTML
+      <th width="5%"><span class="is-padded">Index#</span></th>
+      <th width="10%"><span class="is-padded">Kanji</span></th>
+      <th><span class="is-padded whitespace-nowrap">Imported Keyword</span></th>
+    HTML;
   }
 
   public function getTableBody()

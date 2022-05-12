@@ -10,6 +10,7 @@
 
 @import "./_filterstd.scss";
 @import "./_pager.scss";
+@import "./ui-select-table.scss";
 
 /**
  * uiIBtn - Inline Block Buttons
@@ -137,71 +138,6 @@
 .uiChartVs .left  .pct span { left:10px; }
 .uiChartVs .right .pct span { right:10px; }
 .uiChartVs .pct span em { font-size:17px; }
-
-
-
-
-/**
- * uiTable
- */
-/* =provide "widgets" */
-
-.uiTable {
-  // crude solution for horizontal scrolling on small screens
-  overflow-y: auto;
-  _overflow: auto;
-  margin: 0 0 1em;
- }
-
-.uiTabular { border:1px solid #BDBCAA; border-top:1px solid #D9D8CE; width:100%; }
-/* thead */
-.uiTabular th { padding:0; font:13px Arial, sans-serif; color:#5C5B52; border-bottom:1px solid #A1A1A1; text-align:left;
-  background:#D9D6B7 url(/assets/legacy/widgets-selecttable.gif) repeat-x 0 0; }
-.uiTabular th a,
-.uiTabular th span.hd { display:block; float:left; padding:6px 10px; text-align:left; text-decoration:none; } /* non-sortable */
-.uiTabular th a { color:#005CB1; }
-.uiTabular th a:hover { text-decoration:underline; color:#005CB1; padding-right:12px; background-color:#fff; }
-.uiTabular th a.active { color:#000; }
- /* sort icon */
-.uiTabular th a.sort { padding-right:12px; }
-.uiTabular th a.sort:hover { background:url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% 50%;   }
-.uiTabular th a.sortasc { padding-right:12px; background:url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% -37px; }
-.uiTabular th a.sortdesc { padding-right:12px; background:url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% -72px; }
-/* tbody */
-.uiTabular td {
-  padding:10px 10px;
-  color:#666;
-  font-size:13px;
-  line-height:1.1em;
-  border-bottom:1px solid #E8E5CA;
-}
-.uiTabular tbody td {
-  background-color:$--clr-tbl-bg;
-  color:#5C5B52;
-}
-.uiTabular .odd td { background-color:#fff; }
-/* uiTable hover */
-.uiTabular tbody tr.hover { background-color:#fff; }
-
-.uiTabular tbody var { color:#000; font-size:13px; }
-/* errors */
-.uiTabular tbody td.error { background-color:#FBCFCF; }
-
-
-/* CELL STYLES */
-table.uiTabular td.editlink { text-align:center; }
-table.uiTabular td.editlinnkk a { color:#21C635; }
-table.uiTabular td.red { color:#C82222; } /* failed reviews */
-table.uiTabular td.compound { color:#000; padding-top:0; padding-bottom:0; }
-table.uiTabular td.kanji   { text-align:center; font-size:24px; line-height:1em; color:#000; padding-top:4px; padding-bottom:4px; }
-table.uiTabular td.keyword { text-align:left; font:15px/1em Georgia, serif; white-space:nowrap; }
-
-
-@media (max-width:767px) {
-  /* hug edges on phones (xs) */
-  .uiTable   { border:none; }
-  .uiTabular { border-left:none; border-right:none; }
-}
 
 
 /**

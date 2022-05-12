@@ -197,7 +197,7 @@ class rtkImportKeywords
       $c_ext = $c_ext !== false ? $c_ext : $ucs;
 
       // framenumber (extended), kanji, keyword
-      $rows[] = '<tr><td class="text-center>'.$c_ext.'</td>'
+      $rows[] = '<tr><td class="text-center">'.$c_ext.'</td>'
               . '<td class="kanji">'.cjk_lang_ja('&#'.$ucs.';').'</td>'
               . '<td>'.esc_specialchars($keyword).'</td></tr>';
     }

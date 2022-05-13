@@ -109,10 +109,11 @@ function ui_select_pager($pager = false, $slot = 'widgets.ui.pager')
  * 
  * @param  uiSelectTable $table
  * @param  uiSelectPager $pager   Optional pager, to display paging links and rows-per-page
+ * @param array $html_options   Optional attributes for the <table> tag (same as sf's tag helpers)
  * 
  * @return string  HTML representation
  */
-function ui_select_table(uiSelectTable $table, uiSelectPager $pager = null)
+function ui_select_table(uiSelectTable $table, uiSelectPager $pager = null, $html_options = [])
 {
   ob_start();
 
@@ -121,8 +122,10 @@ function ui_select_table(uiSelectTable $table, uiSelectPager $pager = null)
     echo ui_select_pager($pager);
   }
 
+  $html_options['class'] = merge_html_classes('uiTabular', $html_options['class'] ?? []);
+
   $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(['table' => $table]);
+  $view->getParameterHolder()->add(['table' => $table, 'table_options' => $html_options]);
   $view->setTemplate(dirname(__FILE__).'/templates/ui_select_table.php');
   echo $view->render();
   

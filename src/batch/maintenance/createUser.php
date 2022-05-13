@@ -68,7 +68,8 @@ class CreateUser_CLI extends Command_CLI
       'raw_password' => $raw_password,
       'userlevel'    => $this->getFlag('level', UsersPeer::USERLEVEL_USER),
       'email'        => trim($this->getFlag('email', EMAIL_DEFAULT)),
-      'location'     => trim($this->getFlag('location', LOCATION_DEFAULT))
+      'location'     => trim($this->getFlag('location', LOCATION_DEFAULT)),
+      'regip'        => '00.111.222.333'
     );
     
     //die(print_r($userinfo, true));

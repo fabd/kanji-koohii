@@ -117,24 +117,6 @@ function _bs_button_to($label, $internal_uri, array $options = [])
   return content_tag('button', $label, $html_options);
 }
 
-// Classnames are appended to $options['class'] if present.
-function _bs_class_merge(array &$options, $classnames)
-{
-  if (isset($options['class']))
-  {
-    if (!is_array($options['class']))
-    {
-      $classnames = $classnames.' '.$options['class'];
-    }
-    else
-    {
-      throw new sfException('_bs_class_merge() options["class"] must be a string');
-    }
-  }
-
-  $options['class'] = $classnames;
-}
-
 /**
  * Optional first argument : array $options.
  *
@@ -163,8 +145,6 @@ function _bs_form_group()
   // pull the optional first argument : array $options
   $options = is_array($args[0]) ? array_shift($args) : [];
 
-  $merge_class = 'form-group';
-
   // add Bootstrap 'has-error' class
   if (false !== ($input_name = $options['validate'] ?? false))
   {
@@ -176,7 +156,7 @@ function _bs_form_group()
     }
   }
 
-  _bs_class_merge($options, $merge_class);
+  $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], 'form-group');
 
   $html = "\n<div "._tag_options($options).'>'
         .implode($args)
@@ -201,7 +181,7 @@ function _bs_input($type, $name, $options = [])
   }
 
   // input
-  _bs_class_merge($options, 'form-control');
+  $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], 'form-control');
 
   // FIXME  obsolete FormHelper (not the Symfony one) did not include 'id'
   $options['id'] = get_id_from_name($name);
@@ -298,7 +278,7 @@ function _bs_submit_tag($label, $options = [])
   $classnames = $options['class'] ?? '';
   if (false === strstr($classnames, 'ko-Btn'))
   {
-    _bs_class_merge($options, 'ko-Btn ko-Btn--success');
+    $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], 'ko-Btn ko-Btn--success');
   }
 
   return submit_tag($label, $options);

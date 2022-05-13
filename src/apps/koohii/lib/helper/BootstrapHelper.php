@@ -13,6 +13,9 @@
  *     ['class' => 'max-w-[100px] text-sm', 'data-userid' => '1007']
  *
  *
+ *   merge_html_classes()        Merge css classnames
+ *
+ *
  * MISC TAG HELPERS
  *
  *   _bs_button()                Output a standard `<button>` tag
@@ -156,7 +159,7 @@ function _bs_form_group()
     }
   }
 
-  $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], 'form-group');
+  $options['class'] = merge_html_classes($options['class'] ?? [], 'form-group');
 
   $html = "\n<div "._tag_options($options).'>'
         .implode($args)
@@ -181,7 +184,7 @@ function _bs_input($type, $name, $options = [])
   }
 
   // input
-  $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], 'form-control');
+  $options['class'] = merge_html_classes($options['class'] ?? [], 'form-control');
 
   // FIXME  obsolete FormHelper (not the Symfony one) did not include 'id'
   $options['id'] = get_id_from_name($name);
@@ -278,7 +281,7 @@ function _bs_submit_tag($label, $options = [])
   $classnames = $options['class'] ?? '';
   if (false === strstr($classnames, 'ko-Btn'))
   {
-    $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], 'ko-Btn ko-Btn--success');
+    $options['class'] = merge_html_classes($options['class'] ?? [], ['ko-Btn', 'ko-Btn--success']);
   }
 
   return submit_tag($label, $options);
@@ -393,4 +396,35 @@ function url_for_review(array $queryParams)
   $queryString = query_string_for_review($queryParams);
 
   return url_for('@review', ['absolute' => true]).'?'.$queryString;
+}
+
+/**
+ * Returns merged css class names as a string (for the html class attribute),
+ * from arguments passed either as a string or string[].
+ * 
+ * @param string|string[] $classnames ... string or array of classes to merge into
+ * @param string|string[] $tokens     ... one or more additional classes
+ *
+ * @return string
+ */
+function merge_html_classes($classnames, $tokens)
+{
+  if (empty($tokens))
+  {
+    return $classnames;
+  }
+
+  if (is_string($classnames))
+  {
+    $classnames = preg_split('/\s+/', $classnames);
+  }
+
+  if (!is_array($tokens))
+  {
+    $tokens = [$tokens];
+  }
+
+  $classnames = array_unique(array_merge($classnames, $tokens));
+
+  return implode(' ', $classnames);
 }

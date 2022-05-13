@@ -32,7 +32,7 @@
 function ui_filter_std($label, $links, $options = [])
 {
   // always set the widget class name in the main div tag
-  $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], ['uiFilterStd']);
+  $options['class'] = merge_html_classes($options['class'] ?? [], 'uiFilterStd');
 
   // add the JSFilterStd class to each link, and the 'active' class to the active item
   $active = isset($options['active']) ? (int)$options['active'] : false;
@@ -49,7 +49,7 @@ function ui_filter_std($label, $links, $options = [])
       unset($options['active']);
     }
 
-    $linkClasses = phpToolkit::merge_class_names($linkOptions['class'] ?? [], $addClasses);
+    $linkClasses = merge_html_classes($linkOptions['class'] ?? [], $addClasses);
 
     $links[$i][2] = array_merge($linkOptions, ['class' => $linkClasses]);
   }
@@ -216,7 +216,7 @@ function ui_ibtn($name, $internal_uri = '', $options = [])
     unset($options['type']);
   }
 
-  $options['class'] = phpToolkit::merge_class_names($options['class'] ?? [], ['uiIBtn', $button_type]);
+  $options['class'] = merge_html_classes($options['class'] ?? [], ['uiIBtn', $button_type]);
 
   if (isset($options['icon']))
   {

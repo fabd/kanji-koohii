@@ -1,13 +1,15 @@
 <?php
 
 // disable SwiftMailer (cf. lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php)
-class Swift { }
-  
+class Swift
+{
+}
+
 /**
  * Global helper to retrieve database connection.
- * 
+ *
  * @throws sfException if connection can not be established (usually SQL is too busy)
- * 
+ *
  * @return coreDatabaseMySQL
  */
 function kk_get_database()
@@ -20,13 +22,13 @@ function kk_get_database()
     $db = new coreDatabaseMySQL(sfConfig::get('app_db_connection'));
     $db->connect();
   }
-  
+
   return $db;
 }
 
 class koohiiConfiguration extends sfApplicationConfiguration
 {
-  private $profile_time = null;
+  private $profile_time;
 
   public function configure()
   {
@@ -38,7 +40,6 @@ class koohiiConfiguration extends sfApplicationConfiguration
       // FIXME .. refactor to sf
       define('CORE_ENVIRONMENT', $this->getEnvironment());
 
-      //
       define('KK_ENV_DEV', CORE_ENVIRONMENT === 'dev');
       define('KK_ENV_PROD', CORE_ENVIRONMENT === 'prod');
 
@@ -48,12 +49,18 @@ class koohiiConfiguration extends sfApplicationConfiguration
       define('CJ_MODE', 'rtk');
       define('CJ_HANZI', false);
       // translate between kanji/hanzi sites, FIXME @obsolete
-      function _CJ($sid) { return $sid; }
+      function _CJ($sid)
+      {
+        return $sid;
+      }
       // Return the string with first character uppercase. FIXME @obsolete
-      function _CJ_U($sid) { return ucfirst(_CJ($sid)); }
+      function _CJ_U($sid)
+      {
+        return ucfirst(_CJ($sid));
+      }
 
       // autoloading of old Peer classes, ensures self::$db is always set
-      require(sfConfig::get('sf_lib_dir').'/core/coreAutoload.php');
+      require sfConfig::get('sf_lib_dir').'/core/coreAutoload.php';
       coreAutoload::register();
     }
 
@@ -97,15 +104,14 @@ class koohiiConfiguration extends sfApplicationConfiguration
       $percentsql = 0;
     }
 
-    $text = 'Generated in '.$profiler->format_time_duration($totaltime)." ($percentphp% PHP / $percentsql% MySQL)";
+    $text = 'Generated in '.$profiler->format_time_duration($totaltime)." ({$percentphp}% PHP / {$percentsql}% MySQL)";
 
     return <<<END
-<div style="background:#222;display:flex;justify-content:right;">
-  <div style="background:#fff;padding:5px 10px;font:15px/1em Arial;">
-    {$text}
-  </div>
-</div>
-END;
+      <div style="background:#222;display:flex;justify-content:right;">
+        <div style="background:#fff;padding:5px 10px;font:15px/1em Arial;">
+          {$text}
+        </div>
+      </div>
+      END;
   }
 }
-

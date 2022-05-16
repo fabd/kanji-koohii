@@ -407,7 +407,7 @@ class manageActions extends sfActions
       return $this->renderPartial('misc/requestThrottleError');
     }
 
-    $db      = sfProjectConfiguration::getActive()->getDatabase();
+    $db      = kk_get_database();
     $csv     = new ExportCSV($db);
     $select  = ReviewsPeer::getSelectForExport($this->getUser()->getUserId());
 

@@ -30,7 +30,7 @@ class StopForumSpam
 
   public function __construct()
   {
-    $this->db = sfProjectConfiguration::getActive()->getDatabase();
+    $this->db = kk_get_database();
   }
 
   public static function getInstance(): self

@@ -136,7 +136,7 @@ class apiActions extends sfActions
 
     if (rtkApi::API_DEBUG_SQL)
     {
-      $log = sfProjectConfiguration::getActive()->getDatabase()->getDebugLog();
+      $log = kk_get_database()->getDebugLog();
       //$log = "\n".implode("\n", $log);
       $msg = array_merge($msg, [
         'sql_debug' => sprintf('%d QUERIES. *** ', count($log)).implode('###', $log),

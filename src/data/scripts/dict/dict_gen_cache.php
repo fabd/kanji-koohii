@@ -77,7 +77,7 @@ class MyCommand extends Command_CLI
   {
     mb_internal_encoding('utf-8');
 
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     $this->tableName = CacheDictLookupPeer::getInstance()->getName();
 

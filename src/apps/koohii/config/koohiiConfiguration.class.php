@@ -2,11 +2,30 @@
 
 // disable SwiftMailer (cf. lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php)
 class Swift { }
+  
+/**
+ * Global helper to retrieve database connection.
+ * 
+ * @throws sfException if connection can not be established (usually SQL is too busy)
+ * 
+ * @return coreDatabaseMySQL
+ */
+function kk_get_database()
+{
+  static $db = null;
+
+  // create database connection only when needed
+  if (!$db)
+  {
+    $db = new coreDatabaseMySQL(sfConfig::get('app_db_connection'));
+    $db->connect();
+  }
+  
+  return $db;
+}
 
 class koohiiConfiguration extends sfApplicationConfiguration
 {
-  private coreDatabaseMySQL $core_db;
-
   private $profile_time = null;
 
   public function configure()
@@ -42,24 +61,6 @@ class koohiiConfiguration extends sfApplicationConfiguration
     $this->dispatcher->connect('flashcards.update', ['rtkUser', 'eventUpdateUserKnownKanji']);
   }
 
-  /**
-   * Retrieve a single instance of the MySQL database (old code).
-   *
-   * @return coreDatabaseMySQL
-   */
-  public function getDatabase()
-  {
-    if (!isset($this->core_db))
-    {
-      // Create database connection when needed
-      $db = new coreDatabaseMySQL(sfConfig::get('app_db_connection'));
-      $db->connect();
-      $this->core_db = $db;
-    }
-    
-    return $this->core_db ?? null;
-  }
-
   public function profileStart()
   {
     $this->profile_time = microtime(true);
@@ -72,7 +73,7 @@ class koohiiConfiguration extends sfApplicationConfiguration
 
   public function getAdminInfoFooter()
   {
-    $profiler = $this->core_db->getProfiler();
+    $profiler = kk_get_database()->getProfiler();
 
     $totaltime = (microtime(true) - $this->profile_time);
 

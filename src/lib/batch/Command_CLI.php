@@ -108,7 +108,7 @@ class Command_CLI
 
     $this->opts = new Zend_Console_Getopt($zend_getopt);
 
-#$db = sfApplicationConfiguration::getActive()->getDatabase();
+#$db = kk_get_database();
 #echo get_class($db);exit;
 
 

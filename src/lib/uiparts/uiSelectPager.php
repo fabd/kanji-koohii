@@ -60,7 +60,7 @@ class uiSelectPager
 
   public function __construct(array $options)
   {
-    $this->db = sfProjectConfiguration::getActive()->getDatabase();
+    $this->db = kk_get_database();
 
     if (!isset($options['internal_uri']))
     {

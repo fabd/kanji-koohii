@@ -224,7 +224,7 @@ class uiSelectTable
     }
 
     // apply sorting to data source and fetch data
-    $this->rowdata = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($this->applySorting($this->select));
+    $this->rowdata = kk_get_database()->fetchAll($this->applySorting($this->select));
 
     // ready for view template
     $this->processed = true;

@@ -38,22 +38,22 @@
 .markdown code,
 .markdown table,
 .markdown .img-block {
-  margin: 0 0 var(--vunit);
+  margin-bottom: var(--vunit);
 }
 
 .markdown ol,
 .markdown li {
-  margin: 0 0 calc(var(--vunit) / 2);
+  margin-bottom: calc(var(--vunit) / 2);
 }
 
 .markdown ul {
-  margin: 0 0 calc(var(--vunit) * 1.5);
+  margin-bottom: calc(var(--vunit) * 1.5);
   padding-left: 2em;
 }
 
 .markdown ol {
   list-style-type: decimal;
-  margin: 0 0 calc(var(--vunit) * 1.5);
+  margin-bottom: calc(var(--vunit) * 1.5);
   padding-left: 2em;
 }
 

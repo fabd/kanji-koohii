@@ -75,7 +75,7 @@ class MyStoriesTableComponent extends sfComponent
     $get_select = clone($pager->getSelect());
     $get_select->order($orderBy);
 
-    $rows = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($get_select);
+    $rows = kk_get_database()->fetchAll($get_select);
 // LOG::info('', (string)$get_select);
     foreach ($rows as &$R)
     {

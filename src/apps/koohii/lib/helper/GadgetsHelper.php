@@ -94,7 +94,7 @@ function ui_progress_bar(array $bars, $maxValue, $options = [])
   }
   
   // merge widget class name
-  $options['class'] = phpToolkit::merge_class_names(isset($options['class']) ? $options['class'] : [], ['uiProgressBar']);
+  $options['class'] = merge_html_classes($options['class'] ?? [], ['uiProgressBar']);
   
   // generate the bars as SPANs
   $spans = [];

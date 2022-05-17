@@ -26,14 +26,4 @@ class defaultActions extends sfActions
   public function executeSecure()
   {
   }
-
-  /**
-   * Redirects <website url>/admin to the backend app.
-   * 
-   * @see  Url routing @go_to_backend
-   */  
-  public function executeGoToBackend()
-  {
-    $this->redirect(sfConfig::get('app_backend_url'));
-  }
 }

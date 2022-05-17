@@ -8,7 +8,7 @@ class SharedStoriesListComponent extends sfComponent
 {
   public function execute($request)
   {
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     // the character should be validated earlier in the Study page, but it can also be
     // sent by the paging list POST request
@@ -103,7 +103,7 @@ class SharedStoriesListComponent extends sfComponent
   {
     assert(is_int($ucsId) && $ucsId >= 0x3000);
 
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     // NOTE: must add `public` to select the table partition!
 

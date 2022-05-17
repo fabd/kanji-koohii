@@ -1,6 +1,6 @@
 <div class="no-gutter-xs-sm">
   <div class="uiTable">
-    <table cellspacing="0" class="uiTabular">
+<?php echo tag('table', $table_options, true) ?>
     <thead>
       <tr>
 <?php echo $table->getTableHead() ?>

@@ -25,7 +25,7 @@ class exportAction extends sfAction
 
     $userId  = $this->getUser()->getUserId();
 
-    $db      = sfProjectConfiguration::getActive()->getDatabase();
+    $db      = kk_get_database();
     $csv     = new ExportCSV($db);
     $select  = StoriesPeer::getSelectForExport($userId);
 

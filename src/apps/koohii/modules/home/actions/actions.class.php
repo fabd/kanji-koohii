@@ -143,7 +143,7 @@ class homeActions extends sfActions
           $request->setError('spam', 'Note: due to spam, we have to block messages containing links. (Pssst! If you are a real person, simply remove the http prefix from the URL and it will go through.)');
           $this->getResponse()->setStatusCode(403);
 
-          $sfs = new StopForumSpam();
+          $sfs = StopForumSpam::getInstance();
           $sfs->logActivity($remote_addr, '/contact : blocked message with link (403)');
 
           return $this->renderText('Spam.');
@@ -154,7 +154,7 @@ class homeActions extends sfActions
           $request->setError('spam', 'Spam.');
           $this->getResponse()->setStatusCode(403);
 
-          $sfs = new StopForumSpam();
+          $sfs = StopForumSpam::getInstance();
           $sfs->logActivity($remote_addr, '/contact : blocked Russian (403)');
 
           return $this->renderText('Spam.');

@@ -77,29 +77,4 @@ class phpToolkit
     */
     return $result;
   }
-
-  /**
-   * Merge class names given as strings or arrays (array arguments is faster).
-   * 
-   * @param  mixed  $classnames      Class name(s) given as a "class" attribute string, or an array of class names
-   * @param  mixed  $add_classnames  Class names to add, given as string or array
-   * @return string   String with all class names combined
-   * 
-   */
-  public static function merge_class_names($classnames, $add_classnames)
-  {
-    if (is_string($classnames)) {
-      $classnames = preg_split('/\s+/', $classnames);
-    }
-    
-    if (is_string($add_classnames)) {
-      $add_classnames = preg_split('/\s+/', $add_classnames);
-    }
-    
-    if (count($add_classnames)) {
-      $classnames = array_merge($classnames, $add_classnames);
-    }
-
-    return implode(' ', $classnames);
-  }
 }

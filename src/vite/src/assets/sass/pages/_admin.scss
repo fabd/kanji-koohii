@@ -1,0 +1,200 @@
+// ====================================================================
+// Admin panel styles
+//
+//   - Refactored from old backend.css
+//   - Included in the main build so it goes through Vite/Tailwind/etc
+//
+// ====================================================================
+
+$--main-px: 1.5rem;
+
+$--admin-bg: #f4f4f4;
+$--admin-text: #425065;
+
+.ko-Admin {
+  background-color: $--admin-bg;
+  color: $--admin-text;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+
+  &-main {
+    padding: ($--main-px * 1.25) $--main-px 5rem;
+  }
+
+  // --------------------------------------------------------------------
+  // Generic admin styles (override koohii's)
+  // --------------------------------------------------------------------
+  h2 {
+    color: #7d7f85;
+  }
+}
+
+.ko-AdminNav {
+  @apply bg-[#36557d] pt-3;
+  padding-left: $--main-px;
+  padding-right: $--main-px;
+
+  &-title {
+    padding-left: 25px;
+    background: url(/backend/brick_go.png) no-repeat 0 50%;
+    @apply font-bold text-[20px] leading-1 mb-0;
+    color: #849dbe;
+  }
+
+  &-toprightItem {
+    @apply inline-block ml-4;
+    @apply text-[#ededed] hover:text-[#fff] no-underline text-sm leading-1;
+
+    &.is-user {
+      padding: 6px 8px;
+      @apply rounded text-[#A9C8E1];
+      padding-left: calc(8px + 16px + 4px);
+      background: #0004 url(/backend/user.png) no-repeat 6px 50%;
+      box-shadow: 0 0.5px 0 rgb(255 255 255 / 25%);
+    }
+  }
+
+  &-primary {
+    @apply flex items-center;
+
+    li {
+      @apply mr-2;
+    }
+
+    a {
+      @apply block;
+      @apply font-bold text-sm leading-1 text-[#fff] no-underline hover:underline;
+      padding: 7px 12px 6px;
+      background-color: #5c9fd6;
+    }
+
+    .is-active {
+      background: $--admin-bg;
+      color: #000c;
+    }
+  }
+}
+
+.ko-AdminBox {
+  $--padding: 11px;
+
+  border: 1px solid #dddddd;
+  padding: $--padding;
+  margin-bottom: 1rem;
+  color: #222222;
+
+  font-size: 1rem;
+  line-height: calc(20 / 16 * 1rem);
+
+  background-color: #fff;
+
+  // default main title (large) for the main view
+  h2 {
+    font: bold 18px/1.1em Arial, sans-serif;
+    color: #36557d;
+    text-transform: none;
+  }
+
+  // the title bar in the sidebar boxes
+  &-title {
+    margin: (-1 * $--padding) (-1 * $--padding) 1rem;
+    padding: 7px $--padding 7px;
+    background-color: #dddddd;
+  }
+
+  a {
+    @apply no-underline hover:underline;
+  }
+
+  // list bullet style
+  ul {
+    list-style: disc;
+    margin-left: 1.75em;
+  }
+  li::marker {
+    font-size: 1.25em;
+    color: #70c2f5;
+  }
+
+  // misc
+  samp,
+  code {
+    background-color: #e0e2e5;
+    color: #444;
+    font-size: 0.9em;
+    padding: 0.1em 0.2em;
+  }
+}
+
+// --------------------------------------------------------------------
+// Colorize print_r() output (cf. DocHelper.php)
+// --------------------------------------------------------------------
+pre {
+  background-color: #222;
+  color: #fff;
+  @apply font-mono;
+  font-size: 13px;
+  line-height: 17px;
+  overflow: auto;
+  padding: 0.5em 0 0.5em 1em;
+  margin: 1em 0 1.5em;
+
+  &.info,
+  &.printr {
+    background-color: #404e65;
+    color: #e4e5eb;
+  }
+
+  // --------------------------------------------------------------------
+  // colorize print_r() output parsed by DocHelper
+  // --------------------------------------------------------------------
+  &.printr {
+    .key {
+      color: #4df45b;
+      font-weight: bold;
+    }
+
+    .arrow {
+      color: #888;
+    }
+  }
+
+  .comment {
+    color: #888;
+  }
+
+  .var {
+    color: #c047cb;
+  }
+
+  .php {
+    color: red;
+  }
+
+  .static {
+    color: #4ff;
+    font-weight: bold;
+  }
+
+  .const {
+    font-weight: bold;
+  }
+
+  .string {
+    color: #4df45b;
+  }
+
+  .keyword {
+    color: #ccc;
+  }
+
+  /* PhpDoc */
+  .phpdoc {
+    color: #49987c;
+  }
+
+  .type {
+    color: #49987c;
+    font-weight: bold;
+  }
+}

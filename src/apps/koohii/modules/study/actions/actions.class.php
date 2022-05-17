@@ -217,7 +217,7 @@ class studyActions extends sfActions
    */
   protected function getUCSForSearch($sSearch, $userId)
   {
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     $s = trim($sSearch);
     //$s = preg_replace('/[^0-9a-zA-Z-\.\' \[\]\(\)]/', '', $s);
@@ -749,7 +749,7 @@ class studyActions extends sfActions
     if (false === $DictEntryArray) {
       // error_log("Not Dict Cache for UCS {$ucsId}");
       $select = rtkLabs::getSelectForDictStudy($ucsId);
-      $DictEntryArray = sfProjectConfiguration::getActive()->getDatabase()->fetchAll($select);
+      $DictEntryArray = kk_get_database()->fetchAll($select);
     }
 
     return $DictEntryArray;

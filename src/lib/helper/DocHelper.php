@@ -1,16 +1,22 @@
 <?php
 /**
- * Documentation Helper.
- * 
  * Simple highlighting and formatting of <pre> blocks and print_r() output.
  * 
- * Example:
+ * For custom documentation:
  * 
  *   <%php pre_start() %>
  *     // this is a comment
  *     // @return integer
  *     function do_something($options);
  *   <%php pre_end() %>
+ * 
+ * 
+ * To colorize output of print_r() for readable debug stuff:
+ * 
+ *   pre_start('printr');
+ *   print_r($_SERVER);
+ *   pre_end();
+ * 
  * 
  * CSS rules for styling:
  * 

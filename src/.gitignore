@@ -46,7 +46,6 @@ koohii-log.txt
 /web/robots*
 
 # private
-/apps/backend
 /batch/deploy
 /web/backend
 /apps/koohii/config/app.yml

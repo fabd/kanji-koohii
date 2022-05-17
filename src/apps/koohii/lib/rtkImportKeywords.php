@@ -177,13 +177,11 @@ class rtkImportKeywords
 
   public function getTableHead()
   {
-    $thead = [
-      '<th width="5%"><span class="hd">Index#</span></th>',
-      '<th width="10%"><span class="hd">Kanji</span></th>',
-      '<th width="85%"><span class="hd">Imported&nbsp;Keyword</span></th>'
-    ];
-
-    return implode('', $thead);
+    return <<<HTML
+      <th width="5%"><span class="is-padded">Index#</span></th>
+      <th width="10%"><span class="is-padded">Kanji</span></th>
+      <th><span class="is-padded whitespace-nowrap">Imported Keyword</span></th>
+    HTML;
   }
 
   public function getTableBody()
@@ -199,7 +197,7 @@ class rtkImportKeywords
       $c_ext = $c_ext !== false ? $c_ext : $ucs;
 
       // framenumber (extended), kanji, keyword
-      $rows[] = '<tr><td class="text-center>'.$c_ext.'</td>'
+      $rows[] = '<tr><td class="text-center">'.$c_ext.'</td>'
               . '<td class="kanji">'.cjk_lang_ja('&#'.$ucs.';').'</td>'
               . '<td>'.esc_specialchars($keyword).'</td></tr>';
     }

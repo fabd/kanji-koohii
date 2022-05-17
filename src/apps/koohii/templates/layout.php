@@ -81,10 +81,9 @@
 
 <div id="__debug_log"></div>
 <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()) {
-  $_pc = sfProjectConfiguration::getActive();
-  $_db = $_pc->getDatabase();
-  if ($_db->getProfiler()) { echo $_db->getProfiler()->getDebugLog(); }
-  echo '<div style="background:#fff;font:15px/1em Arial;padding:5px 10px;text-align:right;overflow:hidden;">'.$_pc->getAdminInfoFooter().'</div>';
+  $db = kk_get_database();
+  if ($db->getProfiler()) { echo $db->getProfiler()->getDebugLog(); }
+  echo sfProjectConfiguration::getActive()->getAdminInfoFooter();
 } ?>
 
 <?php /*

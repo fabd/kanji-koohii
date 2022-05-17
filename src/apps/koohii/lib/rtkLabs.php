@@ -300,7 +300,7 @@ class rtkLabs
    */
   public function __construct()
   {
-    $this->db = sfProjectConfiguration::getActive()->getDatabase();
+    $this->db = kk_get_database();
   }
 
   /**
@@ -316,7 +316,7 @@ class rtkLabs
   public static function getSelectForDictStudy($ucsId)
   {
     // columns returned as per DictEntry (cf. data/scripts/dict/dict_gen_cache.php)
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
     $select = 
       $db->select(['id' => 'jdict.dictid', 'c' => 'compound', 'r' => 'reading', 'g' => 'glossary', 'pri' => 'jdict.pri'])
          ->from(self::TABLE_JDICT)
@@ -338,7 +338,7 @@ class rtkLabs
    */
   public static function getVocabFlashcard($dictId)
   {
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     $db->select(['compound', 'reading', 'glossary'])->from(self::TABLE_JDICT)->where('dictid = ?', $dictId)->query();
 
@@ -352,7 +352,7 @@ class rtkLabs
    */
   public static function getVocabShuffleMode1Items($max_framenum = 20)
   {
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     // example
     // SELECT dl.dictid FROM dictlevels AS dl WHERE framenum <= 2000 AND pri & 0xE0 ORDER BY rand() LIMIT 20
@@ -385,7 +385,7 @@ class rtkLabs
    */
   public static function getVocabShuffleMode2Items()
   {
-    $db     = sfProjectConfiguration::getActive()->getDatabase();
+    $db     = kk_get_database();
     $userId = sfContext::getInstance()->getUser()->getUserId();
 
     /*SELECT dictid, numkanji, pri, COUNT(*) AS c
@@ -553,7 +553,7 @@ class rtkLabs
    */
   public static function getSampleWords($ucsId, $cardData, $api_mode = false)
   {
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     // obtain a limited set of randomized example words for given kanji
 
@@ -624,7 +624,7 @@ class rtkLabs
   {
     $VocabPickArray = [];
 
-    $db = sfProjectConfiguration::getActive()->getDatabase();
+    $db = kk_get_database();
 
     $select = $db->select(['dictid', 'compound', 'reading', 'glossary'])
       ->from(['vp' => VocabPicksPeer::getInstance()->getName()])

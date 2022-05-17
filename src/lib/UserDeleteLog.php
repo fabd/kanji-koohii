@@ -14,7 +14,7 @@ class UserDeleteLog
 
   public function __construct()
   {
-    $this->db = sfProjectConfiguration::getActive()->getDatabase();
+    $this->db = kk_get_database();
   }
 
   /**

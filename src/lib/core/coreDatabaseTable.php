@@ -100,7 +100,7 @@ abstract class coreDatabaseTable
   public function __construct($peerclass)
   {
     // static reference for convenience
-    self::$db = sfProjectConfiguration::getActive()->getDatabase();
+    self::$db = kk_get_database();
     
     // check naming of model and determine the default table name
     if (!preg_match('/^(\\w+)Peer$/', $peerclass, $matches))

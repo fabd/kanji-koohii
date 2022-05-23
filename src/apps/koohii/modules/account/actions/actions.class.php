@@ -102,6 +102,7 @@ class accountActions extends sfActions
         $this->username = trim($request->getParameter('username'));
         $email          = trim($request->getParameter('email'));
         $raw_password   = trim($request->getParameter('password'));
+        $location       = trim($request->getParameter('location', ''));
         
         if (UsersPeer::usernameExists($this->username))
         {
@@ -129,7 +130,7 @@ class accountActions extends sfActions
           else
           {
             $request->setError('question', 'Incorrect answer (note: it\'s a city).');
-            $sfs->logActivity($regip, 'WRONG answer to the anti-spam question ("'.$answer.'")');
+            $sfs->logActivity($regip, "WRONG answer: \"{$answer}\" (with location \"{$location}\")");
             return sfView::SUCCESS;
           }
         }
@@ -171,7 +172,7 @@ class accountActions extends sfActions
           'username'     => trim($request->getParameter('username')),
           'raw_password' => $raw_password,
           'email'        => $email,
-          'location'     => trim($request->getParameter('location', '')),
+          'location'     => $location,
           'regip'        => $regip
         ];
 
@@ -190,7 +191,8 @@ class accountActions extends sfActions
 
       // temporary, log validation errors to get a better idea of what user is trying to enter and improve validation
       if ($request->hasError('location')) {
-        $sfs->logActivity($regip, 'Location error: "'.$request->getParameter('location').'"');
+        $location = trim($request->getParameter('location', ''));
+        $sfs->logActivity($regip, "REGISTER: location error: \"{$location}\"");
       }
 
     }

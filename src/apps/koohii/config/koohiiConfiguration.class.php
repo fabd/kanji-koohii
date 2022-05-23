@@ -33,7 +33,10 @@ class koohiiConfiguration extends sfApplicationConfiguration
   public function configure()
   {
     $this->profileStart();
+  }
 
+  public function initialize()
+  {
     // because of sf cache:clear repeating this code??
     if (!defined('CORE_ENVIRONMENT'))
     {

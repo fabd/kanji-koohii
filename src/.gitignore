@@ -39,6 +39,7 @@ koohii-log.txt
 /vendor
 
 # admin/misc
+/apps/koohii/config/unavailable.php
 /web/*.php
 !/web/index.php
 !/web/index_dev.php

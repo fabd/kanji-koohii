@@ -62,7 +62,7 @@
     'class' => 'form-section',
   ],
   _bs_input_text('question', [
-    'label' => 'What is the capital of J&nbsp;A&nbsp;P&nbsp;A&nbsp;N ?',
+    'label' => 'Whаt is the cарital of Jараո ?',
     'helptext' => '(Help us stop spam!)',
     'autocomplete' => 'off',
   ])

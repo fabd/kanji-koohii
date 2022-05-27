@@ -41,7 +41,7 @@ Pre-requisites:
 
 **Init some Symfony directories**:
 
-    mkdir -p cache log ; chmod 777 cache log
+    mkdir -p cache data log ; chmod 777 cache data log
 
 **Init the ViteJs build** directory:
 

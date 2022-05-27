@@ -19,6 +19,9 @@ return (new PhpCsFixer\Config())
     // always use heredoc
     'heredoc_to_nowdoc' => false,
 
+    // heredoc should always start at column 1, easy to see, more space for html
+    'heredoc_indentation' => false,
+
     // allow cleaner one-line conditionals in php templates :
     //   <!php if (expr): !> ... <!php else: !> ... <!php endif; !>
     'no_alternative_syntax' => [

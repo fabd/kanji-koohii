@@ -147,6 +147,16 @@ a.admin-edit {
     border-color: var(--ko-box-bg, transparent);
   }
 
+  // used by JPOD banner (hide box at bp <= md)
+  @include breakpoint-down(md) {
+    &--banner {
+      // keep the px for the gutter on mobile
+      --ko-box-px: 0;
+      --ko-box-py: 0;
+      --ko-box-bg: transparent;
+    }
+  }
+
   // colors
   &--danger {
     --ko-box-bg: #ffd1c9;
@@ -560,17 +570,6 @@ $--color-blog-heading: #fa3d60;
 
 #sitenews_back {
   margin: 0 0 2em;
-}
-
-/* sponsor banner */
-#sitenews_jpod img {
-  display: block;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  border: none;
-  background: #fa3d60;
-  border-radius: 5px;
 }
 
 /* monthly archives */

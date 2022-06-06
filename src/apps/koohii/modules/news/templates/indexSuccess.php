@@ -26,7 +26,11 @@
 <div class="row">
   <div class="col-lg-9">
 
-<?php if (!KK_ENV_FORK) { include_partial('news/_jpodBanner'); } ?>
+<?php if (!KK_ENV_FORK): ?>
+  <div class="mb-12">
+    <?php include_partial('news/_jpodBanner'); ?>
+  </div>
+<?php endif ?>
 
     <h2><?php echo $title ?></h2>
 

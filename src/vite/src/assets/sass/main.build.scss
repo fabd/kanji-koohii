@@ -147,16 +147,6 @@ a.admin-edit {
     border-color: var(--ko-box-bg, transparent);
   }
 
-  // used by JPOD banner (hide box at bp <= md)
-  @include breakpoint-down(md) {
-    &--banner {
-      // keep the px for the gutter on mobile
-      --ko-box-px: 0;
-      --ko-box-py: 0;
-      --ko-box-bg: transparent;
-    }
-  }
-
   // colors
   &--danger {
     --ko-box-bg: #ffd1c9;

@@ -143,7 +143,7 @@
 </div>
 
 <?php if (!KK_ENV_FORK): ?>
-  <div class="ko-Box ko-Box--banner mb-5">
+  <div class="mb-5">
     <?php include_partial('news/_jpodBanner'); ?>
   </div>
 <?php endif ?>

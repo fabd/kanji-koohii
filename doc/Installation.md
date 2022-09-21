@@ -18,10 +18,10 @@
 
 # First Time Setup
 
-Pre-requisites:
+**Pre-requisites**
 
-- Install [Docker CE](https://docs.docker.com/install/) on Ubuntu, or [Docker Desktop](https://docs.docker.com/desktop/mac/install/) on Macs.
-- `docker` and `docker-compose` are available in your terminal
+- Install [Docker Engine](https://docs.docker.com/install/) on Ubuntu, or [Docker Desktop](https://docs.docker.com/desktop/mac/install/) on Macs.
+- `docker` and `docker compose` are available in your terminal
 
 **Init bash history files** which are persisted through Docker volumes:
 
@@ -29,15 +29,15 @@ Pre-requisites:
 
 **Build the containers**.
 
-> :point_right: &nbsp; Note right after the containers are up, MySQL/Mariadb may take a minute to populate the local database. Check with `docker-compose logs -f`. A new folder `mysql56/` will be created in the root directory, which maintains the state of the database.
+> :point_right: &nbsp; Note right after the containers are up, MySQL/Mariadb may take a minute to populate the local database. Check with `docker compose logs -f`. A new folder `mysql56/` will be created in the root directory, which maintains the state of the database.
 
-    docker-compose up -d
+    docker compose up -d
 
 **CLI into the `web` (php/Apache) container**. You should see a colored prompt: `[php] root /var/www/html $`.
 
 > :point_right: &nbsp; Note: the path `/var/www/html` is mapped to `src/` which is the Symfony root folder.
 
-    docker-compose exec web bash
+    docker compose exec web bash
 
 **Init some Symfony directories**:
 
@@ -211,7 +211,7 @@ Or use the bash alias (see .docker/php-apache/root/.bash_aliases):
 
 Suggested aliases:
 
-    alias dc='docker-compose'
+    alias dc='docker compose'
     alias dk='docker'
 
 Make sure both containers are running, and don't show "exit 0":

@@ -11,8 +11,8 @@
             <i v-else class="far fa-star"></i>
           </div>
 
-          <cjk-lang-ja class="c vocab_c" :html="$item.c" :class="{ known: $item.known }" />
-          <cjk-lang-ja class="r vocab_r" :html="$item.fr" />
+          <!-- (#270): keep a white space between kanji & reading for users to ctrl-c -->
+          <cjk-lang-ja class="c vocab_c" :html="$item.c" :class="{ known: $item.known }" />&nbsp;<cjk-lang-ja class="r vocab_r" :html="$item.fr" />
         </div>
         <div class="dl_d">{{ $item.g }}</div>
 

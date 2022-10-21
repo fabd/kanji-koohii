@@ -31,13 +31,15 @@
       </span>
 
       <div class="mt-2 mb-4">
-        <em class="inline-block mr-4">Intervals (days):</em>
-        <span
-          v-for="(i, k) in intervals"
-          :key="k"
-          class="inline-block mr-2 pt-1 px-2 pb-[0.15rem] font-mono bg-[#d7e0b5] text-[#485f27] border-b border-[#aab38a] rounded-md"
-          >{{ i.days }}</span
-        >
+        <div class="flex items-center">
+          <em class="inline-block mr-4">Intervals (days):</em>
+          <span
+            v-for="(i, k) in intervals"
+            :key="k"
+            class="mr-2 pt-2 pb-1 px-2 leading-1 font-mono bg-[#d7e0b5] text-[#485f27] border-b border-[#aab38a] rounded-md"
+            >{{ i.days }}</span
+          >
+        </div>
       </div>
 
       <select
@@ -64,7 +66,7 @@
       </span>
 
       <div class="mt-2 mb-4">
-        <em>Max interval for Hard answer:</em>
+        <em class="mr-4">Max interval for Hard answer:</em>
         <span>
           {{
             srs_hard_box > 0

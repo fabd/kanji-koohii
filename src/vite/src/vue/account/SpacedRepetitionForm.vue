@@ -2,6 +2,81 @@
   <div>
     <div class="form-group mb-8">
       <label for="srs_max_box" class="form-label block text-md"
+        >Flashcard Options</label
+      >
+      <span class="form-text"
+        >Choose whether to show <b>keyword</b> or <b>kanji</b> on the front of
+        the flashcards. The default (keyword to kanji) follows James Heisig's
+        recommendation (see Lesson 11 introduction in RTK Volume 1).</span
+      >
+
+      <div class="mt-2 mb-4">
+        <div class="flex items-center mb-4">
+          <em class="inline-block mr-8">Prompt:</em>
+
+          <label class="flex items-center">
+            <input
+              v-model="srs_reverse"
+              value="0"
+              type="radio"
+              class="mr-2"
+              @change="animateCard"
+            />
+            <span>Keyword to kanji (default)</span>
+          </label>
+          <label class="flex items-center ml-8">
+            <input
+              v-model="srs_reverse"
+              value="1"
+              type="radio"
+              class="mr-2"
+              @change="animateCard"
+            />
+            <span>Kanji to keyword</span>
+          </label>
+        </div>
+
+        <div class="bg-shaded rounded-lg p-4">
+          <transition name="lesson-fadein">
+            <div v-if="showPreview" class="flex items-center justify-center">
+              <template v-for="front in [1, 0]" :key="front">
+                <ko-ratio-box class="w-[140px]">
+                  <div class="ko-FlashcardBg p-2 flex flex-col h-full">
+                    <div>
+                      <span v-if="front && isSrsReverse" class="text-body-light"
+                        >&middot; &middot; &middot;</span
+                      >
+                      <span v-else class="text-link">apricot</span>
+                    </div>
+
+                    <div class="text-center my-auto text-[80px]"
+                      ><span v-if="!front || isSrsReverse" title="杏"
+                        >&#26447;</span
+                      >
+                      <span v-else class="my-auto">&nbsp;</span>
+                    </div>
+
+                    <div class="text-right">
+                      <span v-if="!front">203</span>
+                      <span v-else class="text-body-light"
+                        >&middot; &middot; &middot;</span
+                      >
+                    </div>
+                  </div>
+                </ko-ratio-box>
+
+                <span v-if="front" class="mx-8 text-[86px] text-[#DCD7CB]"
+                  ><i class="fa fa-chevron-right"></i
+                ></span>
+              </template>
+            </div>
+          </transition>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mb-8">
+      <label for="srs_max_box" class="form-label block text-md"
         >Number of boxes</label
       >
       <span class="form-text">
@@ -106,15 +181,24 @@
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 
+import KoRatioBox from "@/vue/KoRatioBox.vue";
+
 export default defineComponent({
   name: "SpacedRepetitionForm",
+
+  components: {
+    KoRatioBox,
+  },
 
   data() {
     return {
       // form
+      srs_reverse: "0", // radio button
       srs_max_box: 0,
       srs_mult: 0, // integer (205 means 2.05)
       srs_hard_box: 0,
+
+      showPreview: true,
 
       // select options
       srs_max_box_values: [
@@ -141,6 +225,10 @@ export default defineComponent({
   },
 
   computed: {
+    isSrsReverse() {
+      return this.srs_reverse === "1";
+    },
+
     isValidHardBox() {
       return this.srs_hard_box < this.srs_max_box;
     },
@@ -172,12 +260,20 @@ export default defineComponent({
     // FIXME use props
     const srsSettings = kk_globals_get("ACCOUNT_SRS");
 
+    this.srs_reverse = srsSettings.reverse || "0";
     this.srs_max_box = srsSettings.max_box;
     this.srs_mult = srsSettings.mult;
     this.srs_hard_box = srsSettings.hard_box;
   },
 
   methods: {
+    animateCard() {
+      this.showPreview = false;
+      this.$nextTick(() => {
+        this.showPreview = true;
+      });
+    },
+
     nthInterval(n) {
       let first = 3;
       let mult = 1.0 * Number(this.srs_mult / 100).toFixed(2); // 205 => 2.05

@@ -231,10 +231,7 @@
 
   // a flashcard exists for this kanji
   &.is-on &-inner {
-    background: linear-gradient(148.74deg, #f8f7f6 0%, #f8f8f8 80.21%, #ffffff 89.58%, #eaeaea 100%);
-    border: 0;
-    border-bottom: 1px solid #bab6ae; //hexa(#6c6c6c, .37);
-    border-radius: 0;
+    @extend .ko-FlashcardBg;
   }
 
   //////////////////////////////////////////////////////////////////

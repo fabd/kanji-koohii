@@ -1,0 +1,28 @@
+// ====================================================================
+// Flashcard related styles to be decoupled
+// ====================================================================
+
+// --------------------------------------------------------------------
+// The main background for a kanji card
+//
+//   - clear white background
+//   - very faint gradient in one corner to give depth
+//   - a 1px bottom drop shadow
+//
+//   NO implicit padding, font style/size, text color, etc!
+//
+//   Use @extend, or apply this class to a component's root element
+//
+// --------------------------------------------------------------------
+.ko-FlashcardBg {
+  background: linear-gradient(
+    148.74deg,
+    #f8f7f6 0%,
+    #f8f8f8 80.21%,
+    #ffffff 89.58%,
+    #eaeaea 100%
+  );
+  border: 0;
+  border-bottom: 1px solid #bab6ae; //hexa(#6c6c6c, .37);
+  border-radius: 0;
+}

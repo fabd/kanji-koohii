@@ -9,6 +9,11 @@
 </template>
 
 <script lang="ts">
+/** 
+ * NOTE   currently the ratio is set via CSS or style as a CSS var, cf. _RatioBox.scss
+ * 
+ *     --ko-ratiobox-ratio: 3/4;
+ */
 import { defineComponent } from "vue";
 
 export default defineComponent({

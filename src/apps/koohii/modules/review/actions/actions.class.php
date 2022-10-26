@@ -103,7 +103,7 @@ class reviewActions extends sfActions
    *   box  = 'all'|[1-5]
    *   filt = ''|'rtk1'|'rtk3'
    *
-   * @param object $request
+   * @param sfRequest $request
    */
   public function executeReview($request)
   {
@@ -114,7 +114,6 @@ class reviewActions extends sfActions
     $reviewKnown = (int) $request->getParameter('known', 0);
     $reviewFromText = $request->getParameter('from_text', '');
     $reviewShuffle = !!$request->getParameter('shuffle', 0);
-    $reviewReverse = !!$request->getParameter('reverse', 0);
     // DBG::request();exit;
     
     // if any of these options is set it is assumed to be a Custom Review (not SRS)
@@ -130,11 +129,14 @@ class reviewActions extends sfActions
 
     if (false === $isCustomReview)
     {
+      $reviewReverse = (int) $this->getUser()->getUserSetting('OPT_SRS_REVERSE');
+    
       // SRS review
       $reviewBox = $request->getParameter('box', 'all');
       $reviewType = $request->getParameter('type', 'expired');
       $reviewFilt = $request->getParameter('filt', '');
       $reviewMerge = $request->getParameter('merge') ? true : false;
+      
 
       // validate
       $this->forward404Unless(preg_match('/^(all|[0-9]+)$/', $reviewBox));
@@ -151,6 +153,8 @@ class reviewActions extends sfActions
     }
     else
     {
+      $reviewReverse = (int) $request->getParameter('reverse', 0);
+
       $options['ajax_url'] = $this->getController()->genUrl('review/ajaxfree');
       $options['fc_rept'] = null;
 
@@ -189,7 +193,7 @@ class reviewActions extends sfActions
         $options['fc_rept'] = json_encode([
           'action' => $this->getController()->genUrl('review/free'),
           'from_text' => implode($uniqueChars),
-          'reverse' => (int) $reviewReverse,
+          'reverse' => $reviewReverse,
           'shuffle' => (int) $reviewShuffle,
         ], JSON_UNESCAPED_UNICODE);
         // DBG::printr($options);exit;
@@ -209,7 +213,7 @@ class reviewActions extends sfActions
           'action' => $this->getController()->genUrl('review/free'),
           'from' => $reviewFrom,
           'to' => $reviewTo,
-          'reverse' => (int) $reviewReverse,
+          'reverse' => $reviewReverse,
           'shuffle' => (int) $reviewShuffle,
         ]);
       }

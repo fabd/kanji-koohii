@@ -17,6 +17,7 @@
           <label class="flex items-center">
             <input
               v-model="srs_reverse"
+              name="opt_srs_reverse"
               value="0"
               type="radio"
               class="mr-2"
@@ -27,6 +28,7 @@
           <label class="flex items-center ml-8">
             <input
               v-model="srs_reverse"
+              name="opt_srs_reverse"
               value="1"
               type="radio"
               class="mr-2"

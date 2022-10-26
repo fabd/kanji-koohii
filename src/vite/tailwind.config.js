@@ -12,10 +12,8 @@ module.exports = {
   theme: {
     colors: {
       body: {
-        // default body text (not all black)
-        DEFAULT: "#42413d",
-        // less contrasted body text (mainly headings atm)
-        light: "#7f7d75",
+        DEFAULT: "#42413d", // FIGMA "Text/Body" (default body text, not 100% black)
+        light: "#7f7d75", // FIGMA "Text/Headings" (less contarsted body text, headings)
       },
 
       danger: {
@@ -24,8 +22,10 @@ module.exports = {
         darker: "#BD2420",
       },
 
+      link: "#005cb1", // FIGMA "Text/Link"
+
       shaded: {
-        DEFAULT: "#e7e1d3",
+        DEFAULT: "#e7e1d3", // FIGMA "Bg/Light"
       },
 
       success: {

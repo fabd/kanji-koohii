@@ -103,7 +103,7 @@ class reviewActions extends sfActions
    *   box  = 'all'|[1-5]
    *   filt = ''|'rtk1'|'rtk3'
    *
-   * @param object $request
+   * @param sfRequest $request
    */
   public function executeReview($request)
   {
@@ -113,13 +113,11 @@ class reviewActions extends sfActions
     $reviewTo = (int) $request->getParameter('to', 0);
     $reviewKnown = (int) $request->getParameter('known', 0);
     $reviewFromText = $request->getParameter('from_text', '');
-
     $reviewShuffle = !!$request->getParameter('shuffle', 0);
-    $reviewFlip = !!$request->getParameter('reverse', 0);
     // DBG::request();exit;
     
     // if any of these options is set it is assumed to be a Custom Review (not SRS)
-    $options['freemode'] = $reviewFrom > 0 || $reviewKnown > 0 || $reviewFromText;
+    $isCustomReview = $reviewFrom > 0 || $reviewKnown > 0 || $reviewFromText;
 
     if ($lessonId = (int) $request->getParameter('lesson', 0))
     {
@@ -129,17 +127,16 @@ class reviewActions extends sfActions
       $reviewTo = $lessonInfo['lesson_from'] + $lessonInfo['lesson_count'] - 1;
     }
 
-    // set review template options
-    $options['fc_reverse'] = $reviewFlip;
-    $options['ts_start'] = UsersPeer::intLocalTime();
-
-    if (false === $options['freemode'])
+    if (false === $isCustomReview)
     {
+      $reviewReverse = (int) $this->getUser()->getUserSetting('OPT_SRS_REVERSE');
+    
       // SRS review
       $reviewBox = $request->getParameter('box', 'all');
       $reviewType = $request->getParameter('type', 'expired');
       $reviewFilt = $request->getParameter('filt', '');
       $reviewMerge = $request->getParameter('merge') ? true : false;
+      
 
       // validate
       $this->forward404Unless(preg_match('/^(all|[0-9]+)$/', $reviewBox));
@@ -156,6 +153,8 @@ class reviewActions extends sfActions
     }
     else
     {
+      $reviewReverse = (int) $request->getParameter('reverse', 0);
+
       $options['ajax_url'] = $this->getController()->genUrl('review/ajaxfree');
       $options['fc_rept'] = null;
 
@@ -194,10 +193,10 @@ class reviewActions extends sfActions
         $options['fc_rept'] = json_encode([
           'action' => $this->getController()->genUrl('review/free'),
           'from_text' => implode($uniqueChars),
-          'reverse' => (int) $reviewFlip,
+          'reverse' => $reviewReverse,
           'shuffle' => (int) $reviewShuffle,
         ], JSON_UNESCAPED_UNICODE);
-// DBG::printr($options);exit;
+        // DBG::printr($options);exit;
       }
       else
       {
@@ -214,14 +213,21 @@ class reviewActions extends sfActions
           'action' => $this->getController()->genUrl('review/free'),
           'from' => $reviewFrom,
           'to' => $reviewTo,
-          'reverse' => (int) $reviewFlip,
+          'reverse' => $reviewReverse,
           'shuffle' => (int) $reviewShuffle,
         ]);
       }
     }
+    
+    // additional options passed to the front end
+    $options['freemode'] = $isCustomReview;
+    
+    $options['ts_start'] = UsersPeer::intLocalTime();
+    
+    $options['fc_reverse'] = $reviewReverse;
 
     // route for Exit button and 'empty' review url
-    $options['exit_url'] = $options['freemode'] ? 'review/custom' : '@overview';
+    $options['exit_url'] = $isCustomReview ? 'review/custom' : '@overview';
 
     FlashcardReview::getInstance()->start();
 

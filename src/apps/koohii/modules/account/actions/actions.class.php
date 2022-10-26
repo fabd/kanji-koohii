@@ -473,6 +473,7 @@ class accountActions extends sfActions
 
   public function executeSpacedrepetition($request)
   {
+    /** @var rtkUser */
     $user = $this->getUser();
 
     if ($request->getMethod() != sfRequest::POST)
@@ -485,11 +486,13 @@ class accountActions extends sfActions
       $opt_srs_max_box  = intval($request->getParameter('opt_srs_max_box'));
       $opt_srs_mult     = intval($request->getParameter('opt_srs_mult'));
       $opt_srs_hard_box = intval($request->getParameter('opt_srs_hard_box'));
+      $opt_srs_reverse  = intval($request->getParameter('opt_srs_reverse'));
 
       // needs to match the Vue form validation
       if ($opt_srs_max_box < 5 || $opt_srs_max_box > 10 ||
           $opt_srs_mult < 130 || $opt_srs_mult > 400 ||
-          $opt_srs_hard_box >= $opt_srs_max_box) {
+          $opt_srs_hard_box >= $opt_srs_max_box ||
+          !BaseValidators::validateIntegerRange($opt_srs_reverse, 0, 1)) {
         $request->setError('x', 'Invalid form submission');
       }
       else
@@ -497,7 +500,8 @@ class accountActions extends sfActions
         $settings = [
           'OPT_SRS_MAX_BOX'  => $opt_srs_max_box,
           'OPT_SRS_MULT'     => $opt_srs_mult,
-          'OPT_SRS_HARD_BOX' => $opt_srs_hard_box
+          'OPT_SRS_HARD_BOX' => $opt_srs_hard_box,
+          'OPT_SRS_REVERSE'  => $opt_srs_reverse,
         ];
 
         UsersSettingsPeer::saveUserSettings($user->getUserId(), $settings);
@@ -508,7 +512,8 @@ class accountActions extends sfActions
     $this->srsSettings = [
       'max_box' => $user->getUserSetting('OPT_SRS_MAX_BOX'),
       'mult' => $user->getUserSetting('OPT_SRS_MULT'),
-      'hard_box' => $user->getUserSetting('OPT_SRS_HARD_BOX')
+      'hard_box' => $user->getUserSetting('OPT_SRS_HARD_BOX'),
+      'reverse' => $user->getUserSetting('OPT_SRS_REVERSE')
     ];
   }
 

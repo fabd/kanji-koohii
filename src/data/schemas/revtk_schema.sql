@@ -331,6 +331,7 @@ CREATE TABLE `users_settings` (
   `srs_max_box`  TINYINT UNSIGNED NOT NULL,
   `srs_mult`     SMALLINT UNSIGNED NOT NULL,
   `srs_hard_box` TINYINT UNSIGNED NOT NULL,
+  `srs_reverse`  TINYINT UNSIGNED NOT NULL DEFAULT 0,
 
   PRIMARY KEY  (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

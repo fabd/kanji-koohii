@@ -28,6 +28,10 @@ class BaseValidators
     return ctype_digit($value);
   }
 
+  public static function validateIntegerRange($value, $min, $max) {
+    return is_int($value) && $value >= $min && $value <= $max;
+  }
+
   public static function validateNoHtmlTags($value)
   {
     return (strip_tags($value) == $value);

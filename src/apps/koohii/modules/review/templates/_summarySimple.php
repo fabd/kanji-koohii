@@ -10,7 +10,7 @@
   <p><strong>Hint!</strong>  Click the <?= _CJ('kanji'); ?> to open the Study page</p>
   <ul>
   <?php foreach ($cards as $c) { ?>
-    <li class="card<?= $c->pass ? '' : ' fail'; ?>">
+    <li class="ko-FlashcardBg card<?= $c->pass ? '' : ' fail'; ?>">
       <div class="rbn"></div>
       <div class="chr"><?= link_to(cjk_lang_ja($c->kanji), '@study_edit?id='.$c->framenum, ['target' => '_blank']); ?></div>
       <div class="inf">#<?= $c->framenum.'<em>'.$c->keyword; ?></em></div>

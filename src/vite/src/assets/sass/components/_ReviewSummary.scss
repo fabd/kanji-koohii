@@ -32,11 +32,7 @@
 #fm-summary ul { margin:0 -6px; list-style:none; padding:0; }
 #fm-summary .card {
   position:relative; float:left; padding:10px 10px; width:109px; height:150px; margin:0 10px 23px;
-  border-bottom:1px solid #cfcdbb; text-align:center;
-  /* http://www.colorzilla.com/gradient-editor/ */
-  background: #fff; /* Old browsers */
-  background: -moz-linear-gradient(315deg, #ffffff 0%, #f8f8f8 80%, #FFFFFF 93%, #EAEAEA 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#ffffff), color-stop(80%,#f8f8f8), color-stop(93%,#ffffff), color-stop(100%,#eaeaea)); /* Chrome,Safari4+ */
+  text-align:center;
 }
 #fm-summary li a  { text-decoration:none; display:block; color:#000; }
 #fm-summary li a:hover { color:#005CB1; }

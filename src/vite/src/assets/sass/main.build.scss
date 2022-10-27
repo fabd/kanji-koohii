@@ -25,6 +25,7 @@
 @import "./components/_KanjiCard.scss";
 @import "./components/_mobile-nav.scss";
 @import "./components/_RatioBox.scss";
+@import "./components/_ReviewSummary.scss";
 @import "./components/_transitions.scss";
 @import "./components/_widgets.scss";
 @import "./legacy/_widgets.scss";
@@ -759,25 +760,6 @@ a:hover.subdued {
   text-decoration: underline;
 }
 
-#FcSummaryDeld {
-  margin: 10px 0 0;
-  background-color: #fff9b3;
-}
-#FcSummaryDeld h3 {
-  font: italic bold 14px/1em Georgia, serif;
-  color: #a2442b;
-}
-#FcSummaryDeld h3 span {
-  font-style: normal;
-  font-weight: normal;
-}
-#FcSummaryDeld p {
-  color: #dd5d3a;
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.2em;
-}
-
 /* ---------------------------- */
 /* Full kanji list */
 /* ---------------------------- */
@@ -954,40 +936,6 @@ a:hover.subdued {
 .cj-t {
   font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC",
     serif;
-}
-
-// --------------------------------------------------------------------
-// Flashcard Review Summary
-// --------------------------------------------------------------------
-.SummaryTableRating {
-  @apply px-[.5em] py-[.35em] rounded;
-  --bg: #ccc;
-  --fg: #fff;
-
-  // No and Again cards are both in the failed pile
-  &.is-no,
-  &.is-again {
-    --bg: #a53000;
-  }
-
-  // Again-* cards are lapsed (forgotten), slightly different shade of red
-  &.is-again-hard,
-  &.is-again-yes,
-  &.is-again-easy {
-    --bg: #b84314;
-    //--bg: #b8146a;
-  }
-
-  &.is-hard,
-  &.is-yes,
-  &.is-easy {
-    //--bg: #ea8212;   orange hard
-    --bg: #5aa107;
-    //--bg: #269189;  easy
-  }
-
-  color: var(--fg);
-  background: var(--bg);
 }
 
 // --------------------------------------------------------------------

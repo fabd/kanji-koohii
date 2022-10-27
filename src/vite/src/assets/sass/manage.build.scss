@@ -56,8 +56,6 @@
 }
 #mng-cards .scroll {
   padding: 10px 0 0;
-  height: auto !important;
-  height: 411px;
   max-height: 411px;
   overflow-x: none;
   overflow-y: scroll;
@@ -67,28 +65,7 @@
   padding: 12px 0 15px;
   margin: 0 7px 9px;
   float: left;
-  border: 1px solid #e8e6d2;
-  border-top: none;
-  border-bottom-color: #cfcdbb;
   text-align: center;
-  /* http://www.colorzilla.com/gradient-editor/ */
-  background: #fff; /* Old browsers */
-  background: -moz-linear-gradient(
-    315deg,
-    #ffffff 0%,
-    #f8f8f8 80%,
-    #ffffff 93%,
-    #eaeaea 100%
-  ); /* FF3.6+ */
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    color-stop(0%, #ffffff),
-    color-stop(80%, #f8f8f8),
-    color-stop(93%, #ffffff),
-    color-stop(100%, #eaeaea)
-  ); /* Chrome,Safari4+ */
 }
 #mng-cards .cj-t,
 #mng-cards .cj-k {

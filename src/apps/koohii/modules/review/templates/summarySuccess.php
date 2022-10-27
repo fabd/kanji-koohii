@@ -86,7 +86,6 @@
 <div style="margin-top:2em;">
 
 <?php if ($fcr_total > 0) { ?>
-  <div id="summaryTable<?= $fc_free ? ' fcfree' : ''; ?>">
     <?php
       /**
        * FIXME? Instead of using ts_start to match the last updated cards, we
@@ -102,7 +101,6 @@
         include_component('review', 'summarySimple');
       }
     ?>
-  </div>
 <?php } ?>
 
 </div>

@@ -3,10 +3,19 @@
 
   $userId = $sf_user->getUserId();
 
+  // get the user's edited keywords (currently for the sidebar "Last Viewed")
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
+  
+  // required for displaying Cust Keywords in "Last Viewed" component
+  kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
+
   if ($kanjiData) {
     $ucsId  = $kanjiData->ucs_id;
 
+    // FIXME? we could save a (tiny) query here by re-using the $keywordsMap
+    // $custKeyword = $keywordsMap[(int)$ucsId] ?? null; <- not ASSOC array
     $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+
     $formatKeyword = $custKeyword ?? $kanjiData->keyword;
 
     $sf_response->setTitle( $kanjiData->kanji . ' "' . $formatKeyword . '" - ' . _CJ('Kanji Koohii') );
@@ -177,3 +186,4 @@ EOD;
     $propsData = array_merge($propsData, $initStoryData);
     echo kk_globals_put('EDITSTORY_PROPS', $propsData);
   }
+

@@ -232,11 +232,15 @@ class CustkeywordsPeer extends coreDatabaseTable
   /**
    * Return *only* the user's customized keywords (not coalesced).
    * 
-   * Optional subset of flashcard ids.
+   * Returns a map used by the front end components. The front end handles
+   * itself "coalescing" custom with original keywords (the main reason for
+   * that is that we already have the static keywords file for Old/New editions
+   * and custom keywords are in many cases a smaller diff).
    *
    * @param int $userId
+   * @param int[] $ucsIds   (optional) subset of flashcard ids to match
    * 
-   * @return user keywords as a JS map
+   * @return user's edited keywords as a map: [[ucsId, keyword], ...]
    */
   public static function getUserKeywordsMap($userId, array $ucsIds = [])
   {

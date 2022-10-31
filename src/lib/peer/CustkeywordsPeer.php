@@ -1,8 +1,24 @@
 <?php
 /**
- * Custom Keywords table.
+ * Custom Keywords - this table stores user's edited keywords.
  * 
- * @author  Fabrice Denis
+ * Methods:
+ *   getCustomKeyword($userId, $ucsId)
+ * 
+ *   getCoalescedKeyword($userId, $ucsId)
+ *   getCoalescedKeywords($userid)
+ * 
+ *   updateCustomKeyword($userId, $ucsId, $keyword)
+ *   deleteCustomKeyword($userId, $ucsId)
+ * 
+ *   importList($userId, array $keywords, $request)
+ * 
+ *   getUserKeywordsMap($userId, array $ucsIds = [])
+ * 
+ * Helpers:
+ *   coalesceExpr()
+ *   addCustomKeywordJoin($select, $userId)
+ * 
  */
 
 class CustkeywordsPeer extends coreDatabaseTable
@@ -53,6 +69,40 @@ class CustkeywordsPeer extends coreDatabaseTable
     $select->where('kanjis.ucs_id = ?', $ucsId);
     $keyword = self::$db->fetchOne($select);
     return (false !== $keyword) ? $keyword : null;
+  }
+
+  /**
+   * Get user's customized keywords coalesced in an assoc. array.
+   *
+   * FIXME  The non-limited query returns Heisig characters for now to avoid
+   *        pulling 12559 rows (atm, only Heisig kanji can have cust. keyw).
+   *
+   * @param   int     $userId
+   * 
+   * @return array   Associative array:  ucs_id => (ucs_id, seq_nr, keyword)
+   */
+  public static function getCoalescedKeywords($userid)
+  {
+    $indexSqlCol = rtkIndex::getSqlCol();
+
+    $select = self::$db->select(['kanjis.ucs_id', 'seq_nr' => $indexSqlCol]);
+
+    // get all kanji keywords with custom keywords if defined
+    $select->from(KanjisPeer::getInstance()->getName());
+
+    // add last to avoid "ambiguous" ucs_id column
+    $select = self::addCustomKeywordJoin($select, $userid);
+
+    // FIXME? will need to change this if we want cust.kw for non-Heisig kanji
+    $select->where("`{$indexSqlCol}` < ?", rtkIndex::RTK_UCS);
+
+    $rows = self::$db->fetchAll($select);
+
+    $keywords = array_column($rows, null, 'ucs_id');
+// LOG::info($keywords);
+// LOG::info(count($keywords));
+
+    return $keywords;
   }
 
   /**
@@ -204,40 +254,6 @@ class CustkeywordsPeer extends coreDatabaseTable
     foreach ($rows as $row) {
       $keywords[] = [(int) $row['ucs_id'], $row['keyword']];
     }
-
-    return $keywords;
-  }
-
-  /**
-   * Get user's customized keywords coalesced in an assoc. array.
-   *
-   * FIXME  The non-limited query returns Heisig characters for now to avoid
-   *        pulling 12559 rows (atm, only Heisig kanji can have cust. keyw).
-   *
-   * @param   int     $userId
-   * 
-   * @return array   Associative array:  ucs_id => (ucs_id, seq_nr, keyword)
-   */
-  public static function getCoalescedKeywords($userid)
-  {
-    $indexSqlCol = rtkIndex::getSqlCol();
-
-    $select = self::$db->select(['kanjis.ucs_id', 'seq_nr' => $indexSqlCol]);
-
-    // get all kanji keywords with custom keywords if defined
-    $select->from(KanjisPeer::getInstance()->getName());
-
-    // add last to avoid "ambiguous" ucs_id column
-    $select = self::addCustomKeywordJoin($select, $userid);
-
-    // FIXME? will need to change this if we want cust.kw for non-Heisig kanji
-    $select->where("`{$indexSqlCol}` < ?", rtkIndex::RTK_UCS);
-
-    $rows = self::$db->fetchAll($select);
-
-    $keywords = array_column($rows, null, 'ucs_id');
-// LOG::info($keywords);
-// LOG::info(count($keywords));
 
     return $keywords;
   }

@@ -8,17 +8,21 @@
   &-listItem {
     @apply mb-1;
     @apply leading-1 no-underline hover:no-underline;
-    @apply rounded bg-[#DBD4C3];
+    @apply rounded;
     @apply flex items-center p-1 h-[1.75em];
 
-    @apply hover:bg-[#fff];
+    @apply hover:bg-[#DBD4C3];
+
+    &.is-active {
+      @apply bg-[#DBD4C3];
+    }
 
     &Idx {
-      @apply flex-auto;
+      flex: 0 0 auto;
       @apply w-[40px] mr-3 text-center text-body;
     }
 
-    &Kwd { 
+    &Kwd {
       @apply font-serif;
 
       // truncate keyword +fix for flex item

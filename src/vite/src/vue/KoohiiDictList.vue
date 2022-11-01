@@ -14,24 +14,8 @@
           @click="onVocabSelect($event)"
         />
       </template>
-      <template v-else class="dict-list_info">
-        <div class="p-4">
-          <p class="mb-4"><strong>No common words found</strong> using this kanji.</p>
-          <ul class="fa-ul mb-0">
-            <li class="mb-2">
-              <span class="fa-li"><i class="fas fa-search"></i></span>
-              <a :href="jishoSearchUrl" target="blank" class="no-underline hover:underline"
-                >Search words using {{ curKanji }} on <strong>jisho.org</strong></a
-              >
-            </li>
-            <li class="mb-2">
-              <span class="fa-li"><i class="fas fa-arrow-right"></i></span>
-              <a href="/learnmore#dictionary-sources" target="blank" class="no-underline hover:underline"
-                >Learn more about Kanji Koohii’s builtin dictionary</a
-              >
-            </li>
-          </ul>
-        </div>
+      <template v-else>
+        <ko-dict-empty :ucs-id="ucsId" />
       </template>
     </div>
 
@@ -58,6 +42,7 @@ import { getApi } from "@app/api/api";
 
 import DictList from "@/vue/DictList.vue";
 import KanjiReview from "@app/review/review-kanji";
+import KoDictEmpty from "@/vue/KoDictEmpty.vue";
 import KoohiiLoading from "@/vue/KoohiiLoading";
 import KoohiiFlashcardKanji from "./KoohiiFlashcardKanji.vue";
 
@@ -69,6 +54,7 @@ export default defineComponent({
 
   components: {
     DictList,
+    KoDictEmpty,
   },
 
   data() {
@@ -110,14 +96,6 @@ export default defineComponent({
     isMobile(): boolean {
       // (legacy code) cf. lib/front/corejs/ui/mobile.js
       return window.innerWidth <= 720;
-    },
-
-    curKanji(): string {
-      return String.fromCodePoint(this.ucsId);
-    },
-
-    jishoSearchUrl(): string {
-      return `https://jisho.org/search/${this.curKanji}`;
     },
   },
 

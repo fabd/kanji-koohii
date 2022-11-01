@@ -35,11 +35,15 @@
   }
 ?>
 
-  <div class="visible-md-lg ko-Box mb-3">
+  <div class="mbl:hidden ko-Box mb-4">
     <h3>Links</h3>
     <div class="mb-2"><?= link_to('My stories', 'study/mystories'); ?></div>
   </div>
   
+  <?php /* (fabd) for now prefer to add JS widgets last in the sidebar, so it
+  doesn't visually flicker other static content that would come below it, if JS
+  was slow to load */ ?>
+  <div id="JsLastViewedKanji" class="mbl:hidden mb-4"></div>
 
 </div><!-- /col -->
 

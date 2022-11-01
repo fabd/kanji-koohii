@@ -8,6 +8,7 @@ import EventDelegator from "@old/eventdelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
+import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
 type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
@@ -67,6 +68,11 @@ export default {
         kk_globals_get("EDITSTORY_PROPS")
       );
       window.Koohii.Refs.vueEditStory = vm;
+    }
+
+    const elLastViewed = domGetById("JsLastViewedKanji");
+    if (elLastViewed) {
+      VueInstance(KoStudyLastViewed, elLastViewed);
     }
 
     const elDictStudy = domGetById("DictStudy");

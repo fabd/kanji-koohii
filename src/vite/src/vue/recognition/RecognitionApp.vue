@@ -184,9 +184,9 @@
                     :known-kanji="knownKanji"
                   />
                 </template>
-                <template v-else class="dict-list_info">
-                  <p>No results.</p>
-                </template>
+                <div v-else class="bg-[#fff] mx-2 rounded">
+                  <ko-dict-empty :ucs-id="curKanji.ucsId" />
+                </div>
               </div>
             </div>
           </div>
@@ -208,6 +208,7 @@ import CacheDictResults from "@/app/dict/CacheDictResults";
 
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 import DictList from "@/vue/DictList.vue";
+import KoDictEmpty from "@/vue/KoDictEmpty.vue";
 
 const DEFAULT_TEXT = `むかし、むかし、ご存知のとおり、うさぎとかめは、山の上まで競争しました。誰もが、うさぎの方がかめよりも早くそこに着くと思いました。しかし迂闊にも、うさぎは途中で寝てしまいました。目が覚めた時は、もうあとのまつりでした。かめはすでに山のてっ辺に立っていました。`;
 
@@ -235,6 +236,7 @@ export default defineComponent({
   components: {
     CjkLangJa,
     DictList,
+    KoDictEmpty,
   },
 
   data() {

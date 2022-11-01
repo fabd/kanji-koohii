@@ -58,7 +58,7 @@ export default defineComponent({
 
     this.list = [];
     if (store) {
-      for (let ucsId of store?.lastViewed) {
+      for (let ucsId of store.lastViewed) {
         const index = RTK.getIndexForUCS(ucsId);
         const keyword = index ? RTK.getKeywordForUCS(ucsId) : "???";
         this.list.push([index, ucsId, keyword]);
@@ -114,6 +114,9 @@ export default defineComponent({
     update() {
       const currentUcsId = kk_globals_get("LASTVIEWED_UCS_ID", 0);
 
+      // if this is 0, it means backend does not have the $kanjiData
+      //  12000+ CJK chars are in the database, and have a "extended frame number"
+      //  so this would likely be an invalid or extremely rare CJK char
       if (!currentUcsId) {
         return;
       }

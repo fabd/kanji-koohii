@@ -8,7 +8,7 @@ import EventDelegator from "@old/eventdelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
-import KoLastViewedKanji from "@/vue/KoLastViewedKanji.vue";
+import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
 type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
@@ -72,7 +72,7 @@ export default {
 
     const elLastViewed = domGetById("JsLastViewedKanji");
     if (elLastViewed) {
-      VueInstance(KoLastViewedKanji, elLastViewed);
+      VueInstance(KoStudyLastViewed, elLastViewed);
     }
 
     const elDictStudy = domGetById("DictStudy");

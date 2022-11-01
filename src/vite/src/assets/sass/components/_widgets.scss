@@ -5,8 +5,11 @@
     @apply -mx-2;
   }
 
-  &-listItem {
-    @apply mb-1;
+  &-item {
+    @apply mb-px;
+  }
+
+  &-link {
     @apply leading-1 no-underline hover:no-underline;
     @apply rounded;
     @apply flex items-center p-1 h-[1.75em];
@@ -16,21 +19,21 @@
     &.is-active {
       @apply bg-[#DBD4C3];
     }
+  }
 
-    &Idx {
-      flex: 0 0 auto;
-      @apply w-[40px] mr-3 text-center text-body;
-    }
+  &-idx {
+    flex: 0 0 auto;
+    @apply w-[40px] mr-3 text-center text-body;
+  }
 
-    &Kwd {
-      @apply font-serif;
+  &-kwd {
+    @apply font-serif;
 
-      // truncate keyword +fix for flex item
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      min-width: 0;
-    }
+    // truncate keyword +fix for flex item
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-width: 0;
   }
 }
 

@@ -1,15 +1,20 @@
 <template>
   <div class="ko-Box ko-LastViewed">
     <h3>Last Viewed</h3>
-    <div v-for="(item, i) in list" :key="item" class="ko-LastViewed-list">
-      <a :href="createStudyUrl(item[1])" class="ko-LastViewed-listItem"
-        :class="{
-          'is-active': i=== 0
-        }">
-        <span class="ko-LastViewed-listItemIdx">{{ item[0] }}</span>
-        <span class="ko-LastViewed-listItemKwd">{{ item[2] }}</span>
-      </a>
-    </div>
+    <ul class="ko-LastViewed-list mb-0">
+      <li v-for="(item, i) in list" :key="item" class="ko-LastViewed-item">
+        <a
+          :href="createStudyUrl(item[1])"
+          class="ko-LastViewed-link"
+          :class="{
+            'is-active': i === 0,
+          }"
+        >
+          <span class="ko-LastViewed-idx">{{ item[0] }}</span>
+          <span class="ko-LastViewed-kwd">{{ item[2] }}</span>
+        </a>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -35,7 +40,7 @@ let store: TKoohiiLocalStore;
 const STUDY_SEARCH_URL = kk_globals_get("STUDY_SEARCH_URL");
 
 export default defineComponent({
-  name: "KoLastViewedKanji",
+  name: "KoStudyLastViewed",
 
   data() {
     return {

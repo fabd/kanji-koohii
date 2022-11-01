@@ -33,10 +33,9 @@ class dictcacheAction extends sfAction
 
     $results = CacheDictLookupPeer::getDictResultsFor($ucsArr);
 
-    $fixmeSingleKanjiResults = $results[0];
-
+    // FIXME - for now it doesn't lookup multiple kanji
     $tron = new JsTron([
-      'items' => $fixmeSingleKanjiResults,
+      'items' => $results[0] ?? []
     ]);
 
     return $tron->renderJson($this);

@@ -63,7 +63,7 @@ const getOrigKeywords = function () {
  * @return number ... extended frame number (Heisig index, or UCS)
  */
 function getIndexForUCS(ucsId: TUcsId): number {
-  return (rtkIndexMap || getRtkIndexMap()).get(ucsId) || 0;
+  return (rtkIndexMap || getRtkIndexMap()).get(ucsId) || ucsId;
 }
 
 function getKeywordForUCS(ucsId: TUcsId) {

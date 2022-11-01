@@ -55,6 +55,9 @@ interface Window {
 
     STUDY_SEARCH_URL: string;
 
+    // sets current page id for the Last Viewed component on Study page
+    LASTVIEWED_UCS_ID: number;
+
     EDITSTORY_PROPS: Dictionary;
 
     REVIEW_OPTIONS: { fcrOptions: TReviewOptions; props: Dictionary };

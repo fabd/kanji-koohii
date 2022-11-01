@@ -1,3 +1,35 @@
+.ko-LastViewed {
+  @apply text-smx;
+
+  &-list {
+    @apply -mx-2;
+  }
+
+  &-listItem {
+    @apply mb-1;
+    @apply leading-1 no-underline hover:no-underline;
+    @apply rounded bg-[#DBD4C3];
+    @apply flex items-center p-1 h-[1.75em];
+
+    @apply hover:bg-[#fff];
+
+    &Idx {
+      @apply flex-auto;
+      @apply w-[40px] mr-3 text-center text-body;
+    }
+
+    &Kwd { 
+      @apply font-serif;
+
+      // truncate keyword +fix for flex item
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      min-width: 0;
+    }
+  }
+}
+
 .ko-PctBar {
   background-color: #cdcdcd;
   border-bottom: 3px solid #a8a8a8;

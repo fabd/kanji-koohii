@@ -11,6 +11,9 @@
 
   if ($kanjiData) {
     $ucsId  = $kanjiData->ucs_id;
+  
+    // for the Last Viewed component : the current index
+    kk_globals_put('LASTVIEWED_UCS_ID', (int)$ucsId);
 
     // FIXME? we could save a (tiny) query here by re-using the $keywordsMap
     // $custKeyword = $keywordsMap[(int)$ucsId] ?? null; <- not ASSOC array

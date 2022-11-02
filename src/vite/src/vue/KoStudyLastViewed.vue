@@ -7,7 +7,7 @@
           :href="createStudyUrl(item[1])"
           class="ko-LastViewed-link"
           :class="{
-            'is-active': i === 0,
+            'is-active': i === 0 && isActive,
           }"
         >
           <span class="ko-LastViewed-idx">{{ item[0] }}</span>
@@ -44,6 +44,9 @@ export default defineComponent({
 
   data() {
     return {
+      // only show the current item highlight if the Study page matches a valid kanji
+      isActive: false,
+
       list: [] as TListItem[],
     };
   },
@@ -113,6 +116,8 @@ export default defineComponent({
 
     update() {
       const currentUcsId = kk_globals_get("LASTVIEWED_UCS_ID", 0);
+
+      this.isActive = currentUcsId > 0;
 
       // if this is 0, it means backend does not have the $kanjiData
       //  12000+ CJK chars are in the database, and have a "extended frame number"

@@ -142,13 +142,13 @@
   </div>
 </div>
 
+<div id="JsHomeLesson" class="mb-12"><!-- vue --></div>
+
 <?php if (!KK_ENV_FORK): ?>
-  <div class="mb-5">
+  <div class="mb-12">
     <?php include_partial('news/_jpodBanner'); ?>
   </div>
 <?php endif ?>
-
-<div id="JsHomeLesson" class="mb-12"><!-- vue --></div>
 
 <?php /* PURPOSELY CLOSE THE MAIN CONTAINER cf. layout.php
   </div><!-- /#main_container -->

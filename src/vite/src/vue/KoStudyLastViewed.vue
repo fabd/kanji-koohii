@@ -10,6 +10,7 @@
             'is-active': i === 0 && isActive,
           }"
         >
+          <span class="ko-LastViewed-kan">{{ item[1] }}</span>
           <span class="ko-LastViewed-idx">{{ item[0] }}</span>
           <span class="ko-LastViewed-kwd">{{ item[2] }}</span>
         </a>
@@ -32,7 +33,7 @@ type TKoohiiLocalStore = {
   lastViewed: TUcsId[];
 };
 
-type TListItem = [number, TUcsId, string]; // index, ucs, keyword
+type TListItem = [number, string, string]; // index, kanji, keyword
 
 let storage: Storage;
 let store: TKoohiiLocalStore;
@@ -63,15 +64,15 @@ export default defineComponent({
     if (store) {
       for (let ucsId of store.lastViewed) {
         const index = RTK.getIndexForUCS(ucsId);
+        const kanji = String.fromCodePoint(ucsId);
         const keyword = index ? RTK.getKeywordForUCS(ucsId) : "???";
-        this.list.push([index, ucsId, keyword]);
+        this.list.push([index, kanji, keyword]);
       }
     }
   },
 
   methods: {
-    createStudyUrl(ucsId: TUcsId) {
-      const kanji = String.fromCodePoint(ucsId);
+    createStudyUrl(kanji: string) {
       return `${STUDY_SEARCH_URL}/${kanji}`;
     },
 

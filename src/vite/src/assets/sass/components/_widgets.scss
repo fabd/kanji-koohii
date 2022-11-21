@@ -12,13 +12,21 @@
   &-link {
     @apply leading-1 no-underline hover:no-underline;
     @apply rounded;
-    @apply flex items-center p-1 h-[1.75em];
+    @apply flex items-center h-[1.75em];
+
+    // apply pl-2 here to visually align kanjis with the title in the box
+    //  if the keyword is clipped then it's fine, allow for smaller padding on the right end
+    @apply p-1 pl-2;
 
     @apply hover:bg-[#DBD4C3];
 
     &.is-active {
       @apply bg-[#DBD4C3];
     }
+  }
+
+  &-kan {
+    @apply text-body mr-3;
   }
 
   &-idx {

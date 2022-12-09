@@ -1,11 +1,20 @@
 <?php
   $todayCount = ReviewsPeer::getTodayCount($sf_user->getUserId());
-?>
-<h2>Spaced Repetition</h2>
+  ?>
+
+<div class="flex items-center mb-4">
+  <h2 class="text-2xl md:text-[30px] mb-0">Spaced Repetition</h2>
+
+  <?= link_to(
+    '<i class="fa fa-edit mr-2"></i>SRS Settings',
+    'account/spacedrepetition',
+    ['class' => 'uiGUI ko-Btn is-ghost ml-auto']
+  ); ?>
+</div>
 
 <div class="text-lg mb-2">
-  <span class=""><strong><?= $flashcard_count; ?></strong> flashcards</span>
-  <span class="text-[#484] ml-4"><strong><?= $todayCount; ?></strong> reviews today</span>
+  <span class="mr-4"><strong><?= $flashcard_count; ?></strong> flashcards</span>
+  <span class="text-[#484] mr-4"><strong><?= $todayCount; ?></strong> reviews today</span>
 </div>
 
 <div class="mb-8">

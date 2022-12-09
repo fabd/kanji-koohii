@@ -3,9 +3,9 @@
 ?>
 <h2>Spaced Repetition</h2>
 
-<div id="srs-summary" class="text-lg mb-2">
-  <span class="total"><strong><?= $flashcard_count; ?></strong> flashcards</span>
-  <span class="today"><strong><?= $todayCount; ?></strong> reviews today</span>
+<div class="text-lg mb-2">
+  <span class=""><strong><?= $flashcard_count; ?></strong> flashcards</span>
+  <span class="text-[#484] ml-4"><strong><?= $todayCount; ?></strong> reviews today</span>
 </div>
 
 <div class="mb-8">

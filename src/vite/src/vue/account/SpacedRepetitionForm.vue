@@ -262,7 +262,7 @@ export default defineComponent({
     // FIXME use props
     const srsSettings = kk_globals_get("ACCOUNT_SRS");
 
-    this.srs_reverse = srsSettings.reverse || "0";
+    this.srs_reverse = String(srsSettings.reverse);
     this.srs_max_box = srsSettings.max_box;
     this.srs_mult = srsSettings.mult;
     this.srs_hard_box = srsSettings.hard_box;

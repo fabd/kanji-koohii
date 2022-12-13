@@ -226,8 +226,7 @@
 #k-nav_d .k-nav_dropdown li {
   float: none;
   white-space: nowrap;
-  border: none;
-  border-top: 1px solid $--clr-bg-1s;
+  @apply border-0 border-t border-shaded-dark;
 }
 #k-nav_d .k-nav_dropdown li:first-child {
   border-top: none;

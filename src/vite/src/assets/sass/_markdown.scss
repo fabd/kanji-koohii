@@ -77,7 +77,7 @@
   height: auto;
 }
 .markdown .img-block {
-  border: 1px solid $--clr-bg-1s;
+  @apply border-shaded-dark;
 }
 
 /* tables */

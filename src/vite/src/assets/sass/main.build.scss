@@ -576,7 +576,7 @@ $--color-blog-heading: #fa3d60;
   padding: 5px 10px;
   display: block;
   text-decoration: none;
-  border-bottom: 1px dotted $--clr-bg-1s;
+  @apply border-dotted border-shaded-dark border-b;
 }
 #news-by-month a:hover {
   background-color: $--clr-bg-1;

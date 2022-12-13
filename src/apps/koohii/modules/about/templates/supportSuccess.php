@@ -11,14 +11,14 @@
       Maintaining and developing new features takes a considerable amount of time. Your support is very important and could allow me to free up more time for development. <em>Thank you!</em>
     </p>
 
-    <img class="block mb-4" style="width:126px" src="https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png" />
+    <img class="block mb-4" style="width:126px" src="/images/3.0/support/patreon.png" />
 
     <div class="ko-Box no-gutter-xs-sm mb-8">
     
     <p>Patreon is a great way to support this website on an ongoing basis.</p>
 
     <a class="ko-Btn ko-Btn--large ko-Btn--patreon" href="https://www.patreon.com/kanjikoohii" target="_blank">
-      Become a Patron (recurring pledge)
+      Become a Patron
     </a>
     </div>
 

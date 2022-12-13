@@ -40,7 +40,10 @@
 
 // extend our base buttons
 .ko-Btn--patreon {
-  @include button-color($bg: #eb491d, $mix: lighten);
+  // use Patreon's "Fiery Coral" https://www.patreon.com/brand
+  @include button-color($bg: #ff424d, $mix: false);
+  --ko-btn-hover-bg: #eb3741;
+  --ko-btn-hover-border: #eb3741;
 }
 
 .ko-Btn--paypal {

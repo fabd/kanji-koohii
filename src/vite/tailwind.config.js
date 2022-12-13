@@ -43,8 +43,8 @@ module.exports = {
       // dashboard & other stat boxes
       dash: {
         // separator line in dashboard panes (#A9A396 / 59% opacity)
-        line: "#c2bdaf", 
-      }
+        line: "#c2bdaf",
+      },
     },
 
     // redeclare to remove the baked-in line-height, and add `md` alias
@@ -53,6 +53,8 @@ module.exports = {
       sm: "0.875rem", // 14px
       base: "1rem",
       lg: "1.125rem", // 18px
+      xl: "1.25rem", // 20px
+      "2xl": "1.5rem", // 24px
 
       // alias for `text-base`
       md: "1rem", // 16px

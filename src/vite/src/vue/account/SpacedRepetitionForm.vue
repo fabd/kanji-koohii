@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="form-group mb-8">
+    <div class="form-group form-section mb-8">
       <label for="srs_max_box" class="form-label block text-md"
-        >Flashcard Options</label
+        >Flashcard Prompt</label
       >
       <span class="form-text"
         >Choose whether to show <b>keyword</b> or <b>kanji</b> on the front of

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="form-group mb-8">
+    <div class="form-group form-section mb-8">
       <label for="srs_max_box" class="form-label block text-md"
-        >Flashcard Options</label
+        >Flashcard Prompt</label
       >
       <span class="form-text"
         >Choose whether to show <b>keyword</b> or <b>kanji</b> on the front of
@@ -262,7 +262,7 @@ export default defineComponent({
     // FIXME use props
     const srsSettings = kk_globals_get("ACCOUNT_SRS");
 
-    this.srs_reverse = srsSettings.reverse || "0";
+    this.srs_reverse = String(srsSettings.reverse);
     this.srs_max_box = srsSettings.max_box;
     this.srs_mult = srsSettings.mult;
     this.srs_hard_box = srsSettings.hard_box;

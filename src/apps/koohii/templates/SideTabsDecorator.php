@@ -7,7 +7,7 @@
 
     <div class="col-lg-9">
       <div class="views">
-        <div id="manage-view" class="manage-view">
+        <div id="manage-view">
   <?php echo $decorator_content; ?>
         </div>
       </div>

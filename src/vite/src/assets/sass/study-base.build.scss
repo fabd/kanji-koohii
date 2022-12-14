@@ -315,7 +315,7 @@
     background: $--clr-bg-1;
   }
   .study-search_btn {
-    background: $--clr-bg-1s;
+    @apply bg-shaded-dark;
   }
 
   #study-restudy,
@@ -433,7 +433,7 @@
     background: $--clr-bg-1;
   }
   .study-search_btn {
-    background: $--clr-bg-1s;
+    @apply bg-shaded-dark;
   }
 
   #study-restudy,

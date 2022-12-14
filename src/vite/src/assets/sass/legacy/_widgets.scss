@@ -169,8 +169,7 @@
  * Side tabs navigation.
  */
 .side-menu {
-  border:1px solid $--clr-bg-1s; border-radius:3px; margin-bottom:15px; 
-  font-size: 14px;
+  @apply border border-shaded-dark rounded mb-4 text-sm; 
 }
 .side-menu h2 {
   padding: 8px 10px;

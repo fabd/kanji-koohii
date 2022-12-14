@@ -26,6 +26,7 @@ module.exports = {
 
       shaded: {
         DEFAULT: "#e7e1d3", // FIGMA "Bg/Light"
+        dark: "#d4cdba", // FIGMA *TODO*
       },
 
       success: {

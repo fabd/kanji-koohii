@@ -576,7 +576,7 @@ $--color-blog-heading: #fa3d60;
   padding: 5px 10px;
   display: block;
   text-decoration: none;
-  border-bottom: 1px dotted $--clr-bg-1s;
+  @apply border-dotted border-shaded-dark border-b;
 }
 #news-by-month a:hover {
   background-color: $--clr-bg-1;
@@ -783,17 +783,6 @@ a:hover.subdued {
   &-title {
     @apply text-lg font-bold text-body;
   }
-}
-
-/* ----------------------------
- * Manage & Account Layout
- * ---------------------------- */
-
-.manage-view {
-  /*border:1px solid $--clr-bg-1s; border-radius:3px;*/
-}
-.manage-view h3 {
-  /*  padding:8px 10px; margin:0; font-size:13px; font-weight:bold; background-color:$--clr-bg-1; border-bottom:1px solid $--clr-bg-1m;*/
 }
 
 /* ------------------ */

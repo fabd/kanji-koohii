@@ -294,9 +294,6 @@ class CustkeywordsPeer extends coreDatabaseTable
     // add the custom keyword column to the query
     $select->columns(['keyword' => self::coalesceExpr()]);
 
-    // use the userid from the joined table with USING clause
-    //$select->joinLeftUsing($thisTableName, array('ucs_id', 'userid'));
-
     // here we want userid in the JOIN expression and not the WHERE clause, so that a COALESCE expression can be
     //  use to compare against any kanjis rows and not just custkeywords rows.
 

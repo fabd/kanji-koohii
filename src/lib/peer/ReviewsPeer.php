@@ -475,10 +475,11 @@ class ReviewsPeer extends coreDatabaseTable
       'compound'
     ]);
     $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
-    $select = VocabPicksPeer::addVocabPicksLeftJoin($select, $userId);
+    $select = CustkeywordsPeer::addCustomKeywordJoinUsing($select);
+    $select = VocabPicksPeer::addVocabPicksLeftJoinUsing($select);
     $select->order('seq_nr', 'ASC');
     $select = self::filterByUserId($select, $userId);
+// DBG::out($select);exit;
     return $select;
   }
 

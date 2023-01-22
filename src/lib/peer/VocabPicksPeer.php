@@ -63,17 +63,12 @@ class VocabPicksPeer extends coreDatabaseTable
    *
    * @return coreDatabaseSelect
    */
-  public static function addVocabPicksLeftJoin($select, $userId)
+  public static function addVocabPicksLeftJoinUsing($select)
   {
     $vocabpicks = self::getInstance()->getName();
 
-    $kanjis = KanjisPeer::getInstance()->getName();
-    $vocabJoinExpr   = "$kanjis.ucs_id = $vocabpicks.ucs_id AND $vocabpicks.userid = $userId";
-    $select->joinLeft($vocabpicks, $vocabJoinExpr);
-
-    $jdict = rtkLabs::TABLE_JDICT;
-    $dictJoinExpr   = "$jdict.dictid = $vocabpicks.dictid";
-    $select->joinLeft($jdict, $dictJoinExpr);
+    $select->joinLeftUsing($vocabpicks, ['userid', 'ucs_id']);
+    $select->joinLeftUsing(rtkLabs::TABLE_JDICT, 'dictid');
 
     return $select;
   }

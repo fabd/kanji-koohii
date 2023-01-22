@@ -67,9 +67,6 @@ class VocabPicksPeer extends coreDatabaseTable
   {
     $vocabpicks = self::getInstance()->getName();
 
-    // add the compound column to the query
-    $select->columns(['compound']);
-
     $kanjis = KanjisPeer::getInstance()->getName();
     $vocabJoinExpr   = "$kanjis.ucs_id = $vocabpicks.ucs_id AND $vocabpicks.userid = $userId";
     $select->joinLeft($vocabpicks, $vocabJoinExpr);

@@ -418,7 +418,7 @@ class manageActions extends sfActions
     $csvText = $csv->export(
       $tabularData,
       // column names
-      ['FrameNumber', _CJ_U('kanji'), 'Keyword', 'LastReview', 'ExpireDate', 'LeitnerBox', 'FailCount', 'PassCount', 'Compound'],
+      ['FrameNumber', _CJ_U('kanji'), 'Keyword', 'LastReview', 'ExpireDate', 'LeitnerBox', 'FailCount', 'PassCount', 'Vocab'],
       // options
       ['col_escape' => [0, 1, 1, 0, 0, 0, 0, 0, 1], 'column_heads' => true]
     );

@@ -282,6 +282,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    *
    * Assumes the query already includes the kanjis table and userid in the WHERE clause.
    *
+   * @param coreDatabaseSelect $select
    * @param  int  $userId  Match all cust keywords
    * 
    * @return coreDatabaseSelect
@@ -293,14 +294,35 @@ class CustkeywordsPeer extends coreDatabaseTable
     // add the custom keyword column to the query
     $select->columns(['keyword' => self::coalesceExpr()]);
 
-    // use the userid from the joined table with USING clause
-    //$select->joinLeftUsing($thisTableName, array('ucs_id', 'userid'));
-
     // here we want userid in the JOIN expression and not the WHERE clause, so that a COALESCE expression can be
     //  use to compare against any kanjis rows and not just custkeywords rows.
+
     $kanjis = KanjisPeer::getInstance()->getName();
-    $expr   = "$kanjis.ucs_id = $custkeywords.ucs_id AND $custkeywords.userid = $userId";
+    $expr = "{$kanjis}.ucs_id = {$custkeywords}.ucs_id AND {$custkeywords}.userid = {$userId}";
     $select->joinLeft($custkeywords, $expr);
+
+    return $select;
+  }
+  
+  /**
+   * Probably a marginal upgrade to the LEFT JOIN version - but allows for
+   * less code & shorter SQL query.
+   * 
+   * Interestingly, EXPLAIN shows "Using where" when using LEFT JOIN,
+   *  but not when using LEFT JOIN .. USING (..).
+   * 
+   * @param coreDatabaseSelect $select
+   *
+   * @return coreDatabaseSelect
+   */
+  public static function addCustomKeywordJoinUsing($select)
+  {
+    $custkeywords = self::getInstance()->getName();
+
+    // add the custom keyword column to the query
+    $select->columns(['keyword' => self::coalesceExpr()]);
+
+    $select->joinLeftUsing($custkeywords, ['userid', 'ucs_id']);
 
     return $select;
   }

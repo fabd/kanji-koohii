@@ -52,4 +52,24 @@ class VocabPicksPeer extends coreDatabaseTable
     $items  = self::$db->fetchCol($select);
     return $items ?: [];
   }
+
+  /**
+   * Adds the vocab picks and dictionary left joins to a query (chainable).
+   *
+   * Assumes the query already includes the kanjis table.
+   *
+   * @param coreDatabaseSelect $select
+   * @param int                $userId  Match all user's dictionary words.
+   *
+   * @return coreDatabaseSelect
+   */
+  public static function addVocabPicksLeftJoinUsing($select)
+  {
+    $vocabpicks = self::getInstance()->getName();
+
+    $select->joinLeftUsing($vocabpicks, ['userid', 'ucs_id']);
+    $select->joinLeftUsing(rtkLabs::TABLE_JDICT, 'dictid');
+
+    return $select;
+  }
 }

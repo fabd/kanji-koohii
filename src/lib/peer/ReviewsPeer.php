@@ -470,11 +470,16 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::getInstance()->select([
       'seq_nr' => rtkIndex::getSqlCol(), 'kanji',
       'keyword' => CustkeywordsPeer::coalesceExpr(),
-      'lastreview', 'expiredate', 'leitnerbox', 'failurecount', 'successcount']);
+      'lastreview', 'expiredate', 'leitnerbox', 'failurecount', 'successcount',
+      // vocab added with PR #287 (works because we currently have 1 word per card limit)
+      'compound'
+    ]);
     $select = KanjisPeer::joinLeftUsingUCS($select);
-    $select = CustkeywordsPeer::addCustomKeywordJoin($select, $userId);
+    $select = CustkeywordsPeer::addCustomKeywordJoinUsing($select);
+    $select = VocabPicksPeer::addVocabPicksLeftJoinUsing($select);
     $select->order('seq_nr', 'ASC');
     $select = self::filterByUserId($select, $userId);
+// DBG::out($select);exit;
     return $select;
   }
 

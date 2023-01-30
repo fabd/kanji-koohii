@@ -614,7 +614,6 @@ const actb = function(obj, ca)
   function actb_penter()
   {
     actb_display = false;
-    var word = '';
     var c = 0;
     for (var i = 0, length = actb_self.actb_keywords.length; i <= length; i++) 
     {
@@ -622,20 +621,19 @@ const actb = function(obj, ca)
         c++;
       if (c == actb_pos) 
       {
-        word = actb_self.actb_keywords[i];
         break;
       }
     }
 
+    // set the kanji as the search term (fix #288)
+    let searchTerm = KK.SEQ_KANJIS[i];
+
     // insert word in the search box
-    actb_elem.value = word;
+    actb_elem.value = searchTerm;
     actb_mouse_on_list = 0;
     actb_removedisp();
-    
-    if (actb_self.onChangeCallback) 
-    {
-      actb_self.onChangeCallback(actb_elem.value);
-    }
+
+    actb_self.onPressEnterCallback && actb_self.onPressEnterCallback(searchTerm);
   }
   function actb_removedisp()
   {

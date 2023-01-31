@@ -202,7 +202,7 @@ import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import { urlForStudy } from "@/lib/koohii";
 import * as wanakana from "wanakana";
-import * as CJK from "@/lib/kanji";
+import * as CJK from "@/lib/cjk";
 import * as RTK from "@/lib/rtk";
 import CacheDictResults from "@/app/dict/CacheDictResults";
 

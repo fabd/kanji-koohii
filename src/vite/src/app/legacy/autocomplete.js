@@ -1,18 +1,11 @@
-/*! AutoComplete based on work by 'zichun' (http://codeproject.com/jscript/jsactb.asp) */
 /**
- * Changes:
- * - use stylesheet instead of setting the style property by code
- * - use <iframe> to display the dropdown on top of other elements (such as combobox) in Internet Explorer 5.5+
- * - misc small fixes to the behaviour
- * - removed unused variables
- * - firstText behaviour also matches words beginning after spaces in text
- * - ! removed support for 'delimiters'
- * v2.1
- * - uses polling for compatibility with IME (Input Method Editor)
+ * EXTREMELY OUTDATED dropdown search completion - to be refactored to VueJs.
+ *  
+ * AutoComplete originally by 'zichun' http://codeproject.com/jscript/jsactb.asp
+ * 
  */
 
 var AUTOSUGGEST_CONTAINER_ID = 'actbdiv';
-var USE_IFRAME_FIX = false; // only really needed for IE, but compatible with other browsers
 
 function ac_addEvent(obj, event_name, func_name)
 {
@@ -195,7 +188,6 @@ const actb = function(obj, ca)
   this.actb_midTextSeparator = "[\\s-\/]"; // regexp to match start of search (if firsttext=true)
   this.actb_mouse = true; // Enable Mouse Support
   this.actb_startcheck = 1; // Show widget only after this number of characters is typed in.
-  this.actb_delimiter = []; // Delimiter for multiple autocomplete. Set it to empty array for single autocomplete
   this.onChangeCallback = null;
   this.onPressEnterCallback = null;
 
@@ -204,9 +196,6 @@ const actb = function(obj, ca)
   this.actb_extracolumns = function (iRow) { return ''; };
 
   /* ---- Private Variables ---- */
-  var actb_delimwords = [];
-  var actb_cdelimword = 0;
-  var actb_delimchar = [];
   var actb_display = false;
   var actb_pos = 0;
   var actb_total = 0;
@@ -262,15 +251,9 @@ const actb = function(obj, ca)
   }
   function actb_parse(n)
   {
-    if (actb_self.actb_delimiter.length > 0) 
-    {
-      var t = actb_delimwords[actb_cdelimword].trim().addslashes();
-      var plen = actb_delimwords[actb_cdelimword].trim().length;
-    } else 
-    {
-      var t = actb_elem.value.addslashes();
-      var plen = actb_elem.value.length;
-    }
+    var t = actb_elem.value.addslashes();
+    var plen = actb_elem.value.length;
+
     var i;
     
     if (actb_self.actb_firstText) 
@@ -344,21 +327,6 @@ const actb = function(obj, ca)
 
     cdiv.appendChild(a);
     actb_parent().appendChild(cdiv);
-    
-    //++ In IE we add an IFRAME right under the table, to fix the combobox overlap
-    if (window.USE_IFRAME_FIX) 
-    {
-      window.setTimeout(function()
-      {
-        // at this point, we should be able to read the proper pixel dimensions of the table (tested: ie/firefox)
-        var tWidth = a.offsetWidth;
-        var tHeight = a.offsetHeight;
-        var iframe = actb_makeiframe();
-        iframe.style.width = actb_elem.offsetWidth + 'px';
-        iframe.style.height = tHeight + 'px';
-        cdiv.insertBefore(iframe, a);
-      }, 0);
-    }
     
     var i, length;
     var first = true;
@@ -440,20 +408,6 @@ const actb = function(obj, ca)
     }
     var cdiv = document.getElementById(AUTOSUGGEST_CONTAINER_ID);
     cdiv.appendChild(a);
-    
-    //++ Resize the iframe (see actb_generate)
-    if (window.USE_IFRAME_FIX) 
-    {
-      window.setTimeout(function()
-      {
-        var tHeight = a.offsetHeight;
-        var iframe = cdiv.getElementsByTagName('iframe');
-        if (iframe[0]) /* the iframe should be created only in IE */ 
-        {
-          iframe[0].style.height = tHeight + 'px';
-        }
-      }, 0);
-    }
     
     
     var i, length;
@@ -656,66 +610,10 @@ const actb = function(obj, ca)
         actb_removedisp();
       }, actb_self.actb_timeOut);
   }
-  /* ---- */
   
-  function actb_insertword(a)
-  {
-    if (actb_self.actb_delimiter.length > 0) 
-    {
-      var str = '';
-      var l = 0;
-      for (i = 0; i < actb_delimwords.length; i++) 
-      {
-        if (actb_cdelimword == i) 
-        {
-          prespace = postspace = '';
-          gotbreak = false;
-          for (j = 0; j < actb_delimwords[i].length; ++j) 
-          {
-            if (actb_delimwords[i].charAt(j) != ' ') 
-            {
-              gotbreak = true;
-              break;
-            }
-            prespace += ' ';
-          }
-          for (j = actb_delimwords[i].length - 1; j >= 0; --j) 
-          {
-            if (actb_delimwords[i].charAt(j) != ' ') 
-              break;
-            postspace += ' ';
-          }
-          str += prespace;
-          str += a;
-          l = str.length;
-          if (gotbreak) 
-            str += postspace;
-        } else 
-        {
-          str += actb_delimwords[i];
-        }
-        if (i != actb_delimwords.length - 1) 
-        {
-          str += actb_delimchar[i];
-        }
-      }
-      actb_elem.value = str;
-      setCaret(actb_elem, l);
-    } else 
-    {
-      actb_elem.value = a;
-    }
-    actb_mouse_on_list = 0;
-    actb_removedisp();
-    
-    //++ callback for updating other stuff on the page based on selected entry
-    //if (actb_self.onchangeEvent != null)
-    //  actb_self.onchangeEvent();
-  }
   function actb_penter()
   {
     actb_display = false;
-    var word = '';
     var c = 0;
     for (var i = 0, length = actb_self.actb_keywords.length; i <= length; i++) 
     {
@@ -723,17 +621,19 @@ const actb = function(obj, ca)
         c++;
       if (c == actb_pos) 
       {
-        word = actb_self.actb_keywords[i];
         break;
       }
     }
-    actb_insertword(word);
-    // l = getCaretStart(actb_elem);
-    
-    if (actb_self.onChangeCallback) 
-    {
-      actb_self.onChangeCallback(actb_elem.value);
-    }
+
+    // set the kanji as the search term (fix #288)
+    let searchTerm = KK.SEQ_KANJIS[i];
+
+    // insert word in the search box
+    actb_elem.value = searchTerm;
+    actb_mouse_on_list = 0;
+    actb_removedisp();
+
+    actb_self.onPressEnterCallback && actb_self.onPressEnterCallback(searchTerm);
   }
   function actb_removedisp()
   {
@@ -872,52 +772,8 @@ const actb = function(obj, ca)
       return;
     }
     
-    if (actb_self.actb_delimiter.length > 0) 
-    {
-      // caret_pos_start = getCaretStart(actb_elem);
-      var caret_pos_end = getCaretEnd(actb_elem);
-      
-      let delim_split = '';
-      for (i = 0; i < actb_self.actb_delimiter.length; i++) 
-      {
-        delim_split += actb_self.actb_delimiter[i];
-      }
-      delim_split = delim_split.addslashes();
-      delim_split_rx = new RegExp("([" + delim_split + "])");
-      let c = 0;
-      actb_delimwords = [];
-      actb_delimwords[0] = '';
-      for (i = 0, j = actb_elem.value.length; i < actb_elem.value.length; i++, j--) 
-      {
-        if (actb_elem.value.substr(i, j).search(delim_split_rx) === 0) 
-        {
-          ma = actb_elem.value.substr(i, j).match(delim_split_rx);
-          actb_delimchar[c] = ma[1];
-          c++;
-          actb_delimwords[c] = '';
-        } else 
-        {
-          actb_delimwords[c] += actb_elem.value.charAt(i);
-        }
-      }
-      
-      var l = 0;
-      actb_cdelimword = -1;
-      for (i = 0; i < actb_delimwords.length; i++) 
-      {
-        if (caret_pos_end >= l && caret_pos_end <= l + actb_delimwords[i].length) 
-        {
-          actb_cdelimword = i;
-        }
-        l += actb_delimwords[i].length + 1;
-      }
-      var ot = actb_delimwords[actb_cdelimword].trim();
-      var t = actb_delimwords[actb_cdelimword].addslashes().trim();
-    } else 
-    {
-      var ot = actb_elem.value;
-      var t = actb_elem.value.addslashes();
-    }
+    var ot = actb_elem.value;
+    var t = actb_elem.value.addslashes();
     
     if (ot.length == 0) 
     {

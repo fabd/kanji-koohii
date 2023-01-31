@@ -8,7 +8,7 @@
 import { getApi } from "@app/api/api";
 import { GetDictCacheFor } from "@app/api/models";
 
-import * as CJK from "@/lib/kanji";
+import * as CJK from "@/lib/cjk";
 
 class CacheDictResults {
   //

@@ -187,7 +187,7 @@ import $$, { insertAfter, getNode } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import { KanjiData, PostUserStoryResponse } from "@app/api/models";
 import * as TRON from "@lib/tron";
-import { checkForUnsupportedUtf } from "@/lib/kanji";
+import { checkForUnsupportedUtf } from "@/lib/cjk";
 
 import VueInstance from "@lib/helpers/vue-instance";
 

@@ -2,8 +2,12 @@
 
 import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
+import * as RTK from "@/lib/rtk";
+
 import VueInstance from "@lib/helpers/vue-instance";
+
 import actb from "@old/autocomplete.js";
+
 import EventDelegator from "@old/eventdelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
@@ -37,7 +41,7 @@ export default {
 
       const actb1 = new actb(this.elSearch, seqKeywords);
       actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
-      actb1.onPressEnterCallback = this.quicksearchEnterCallback.bind(this);
+      actb1.onPressEnterCallback = this.quicksearchOnChangeCallback.bind(this);
 
       actb1.actb_extracolumns = function (iRow) {
         return `<span class="f">${
@@ -158,48 +162,33 @@ export default {
   },
 
   /**
-   * Auto-complete onchange callback, fires after user selects
-   * something from the drop down list.
+   * Update Jan 2023
    *
-   * @param  string  text  String typed into the searchbox
+   *   Always lookup by kanji, and use /study/kanji/{x} URLs (fixes #288)
    *
-   * @see    autocomplete.js
+   *  - autocomplete.js no longer returns a keyword, always a kanji
+   *  - if user enters a unicode like `19968`, convert it to kanji where possible
+   *
    */
-  quicksearchOnChangeCallback(text: string) {
-    if (text.length > 0) {
-      // Lookup the first kanji if there is any kanji in the search string, ignore other characters
-      // Regexp is equivalent of \p{InCJK_Unified_Ideographs}
-      if (/([\u4e00-\u9fff])/.test(text)) {
-        text = RegExp.$1;
-      }
+  quicksearchOnChangeCallback(search: string) {
+    const frameNum = search.trim();
+    let char: string | null = "";
+    let matches: RegExpExecArray | null;
 
-      window.location.href =
-        kk_globals_get("STUDY_SEARCH_URL") +
-        "/" +
-        this.anesthetizeThisBloodyUri(text);
+    if (/^\d+$/.test(frameNum)) {
+      char = RTK.getCharForIndex(parseInt(frameNum));
+    }
+
+    if (!char && (matches = /([\u4e00-\u9fff])/.exec(search))) {
+      // if it is text and it has kanji in it, use the 1st kanji as the search
+      // Regexp is equivalent of \p{InCJK_Unified_Ideographs}
+      char = matches[1];
+    }
+
+    if (char) {
+      window.location.href = kk_globals_get("STUDY_SEARCH_URL") + "/" + char;
+
       return true;
     }
-  },
-
-  /**
-   * Auto-complete ENTER key callback.
-   *
-   * @see    autocomplete.js
-   */
-  quicksearchEnterCallback(text: string) {
-    this.quicksearchOnChangeCallback(text);
-  },
-
-  /**
-   * Replaces problematic characters in the url which cause trouble
-   * either with parsing the route (slash) or some kind of filter on the
-   * web host's side which returns a 404 for urls with uncommon dot patterns
-   * (eg. "/study/kanji/made in...").
-   *
-   * On the backend side, the dashes become wildcards.
-   */
-  anesthetizeThisBloodyUri(annoyingUri: string) {
-    const s = annoyingUri.replace(/[\/\.]/g, "-");
-    return encodeURIComponent(s);
   },
 };

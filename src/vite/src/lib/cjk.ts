@@ -1,15 +1,21 @@
 /**
- * Helpers for handling Japanese text.
+ * Helpers for handling CJK characters (mainly, Japanese unicode blocks).
+ *
+ * See lib/CJK.php for equivalent functionality on the backend side.
+ *
  *
  * EXPORTS
  *
- *   getKanji()                        ...
- *   getKanjiArray()                   ...
- *   getUniqueKanji()                  ...
+ *   getKanji(text)                    ... filter out all non-kanji from string
+ *   getKanjiArray(text)               ... return array of individual kanji in string
+ *   getUniqueKanji(text)              ... return array of unique kanji in string
  *
  *   isCharKanji()                     ...
+ *   isCJKUnifiedUCS($ucs)             ...
  *
  *   toUnicode()
+ *
+ *   checkForUnsupportedUtf(text)
  *
  *
  * NOTES
@@ -17,6 +23,9 @@
  *   - wanakana isCharKanji() doesn't test for "CJK unified ideographs Extension A"
  *
  */
+
+const CJK_UNIFIED_BEGIN = 0x4e00;
+const CJK_UNIFIED_END = 0x9faf;
 
 // https://stackoverflow.com/questions/15033196/using-javascript-to-check-whether-a-string-contains-japanese-characters-includi
 // const CJK_PUNCTUATION = "\\u3000-\\u303f";
@@ -28,20 +37,45 @@
 //   https://en.wikipedia.org/wiki/CJK_Unified_Ideographs_Extension_A
 // const CJK_KANJI = "\\u4e00-\\u9faf\\u3400-\\u4dbf";
 
-export function getKanjiArray(text: string) {
-  return text.match(/[\u4e00-\u9faf\u3400-\u4dbf]/g) || [];
-}
-
 export function getKanji(text: string) {
   return getKanjiArray(text).join("");
+}
+
+/**
+ * Returns an array containing the CJK Unified Ideographs characters filtered
+ * from a string. All other characters are ignored.
+ */
+export function getKanjiArray(text: string) {
+  return text.match(/[\u4e00-\u9faf\u3400-\u4dbf]/g) || [];
 }
 
 export function getUniqueKanji(text: string) {
   return [...new Set(getKanjiArray(text))];
 }
 
+/**
+ * Returns true if the string is a single utf8 kanji.
+ *
+ * Unlike `isCJKUnifiedUCS()`, this function does not require the kanji
+ * to be present in the database.
+ *
+ *  CJK Unified Ideographs (Common and uncommon kanji) U+4E00 - U+9FAF
+ *  CJK Unified Ideographs Extension A (Rare kanji)    U+3400 - U+4DBF
+ *
+ */
 export function isCharKanji(char: string) {
   return /[\u4e00-\u9faf\u3400-\u4dbf]/.test(char);
+}
+
+/**
+ * Checks whether UCS code point is in the "CJK Unified Ideographs" range.
+ *
+ * (note: to be precise, the range of kanjis that are in the `kanjis` db table,
+ *  which is CJK Unified Ideographs (Common and uncommon kanji) U+4E00 - U+9FAF)
+ *
+ */
+export function isCJKUnifiedUCS(ucsId: number): boolean {
+  return ucsId >= CJK_UNIFIED_BEGIN && ucsId <= CJK_UNIFIED_END;
 }
 
 export function toUnicode(text: string) {

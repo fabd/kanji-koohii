@@ -8,6 +8,8 @@
  *
  * EXPORTS
  *
+ *   isValidSequenceIndex(seqNr)
+ *
  *   getIndexForUCS(ucsId)
  *   getKeywordForUCS(ucsId)
  *
@@ -128,14 +130,24 @@ export function getKeywordForUCS(ucsId: TUcsId) {
 }
 
 /**
+ * Returns true if the index is within the kanji sequence (ie. Heisig index).\
+ *
+ * Same as (for now):
+ *
+ *   return (seqNr > 0 && seqNr <= getSeqKanjis().length);
+ *
+ */
+export function isValidSequenceIndex(seqNr: number): boolean {
+  return getIndexToUcsMap().has(seqNr);
+}
+
+/**
  * Returns CJK character for given "extended frame number" (Heisig or UCS).
  *
  */
 export function getCharForIndex(extNr: number): string | null {
-  let heisigNr = getUcsToIndexMap().get(extNr);
-
-  if (heisigNr) {
-    return getSeqKanjis().charAt(heisigNr - 1);
+  if (isValidSequenceIndex(extNr)) {
+    return getSeqKanjis().charAt(extNr - 1);
   }
 
   if (CJK.isCJKUnifiedUCS(extNr)) {

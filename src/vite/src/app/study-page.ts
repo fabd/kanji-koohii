@@ -175,6 +175,7 @@ export default {
     let char: string | null = "";
     let matches: RegExpExecArray | null;
 
+    // if it's an integer, assume it is an Heisig index or decimal Unicode
     if (/^\d+$/.test(frameNum)) {
       char = RTK.getCharForIndex(parseInt(frameNum));
     }
@@ -184,6 +185,9 @@ export default {
       // Regexp is equivalent of \p{InCJK_Unified_Ideographs}
       char = matches[1];
     }
+
+    // if it isn't a sequence nr, or a UCS, let it pass through as is
+    char = char || search;
 
     if (char) {
       window.location.href = kk_globals_get("STUDY_SEARCH_URL") + "/" + char;

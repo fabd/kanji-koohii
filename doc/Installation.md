@@ -2,9 +2,10 @@
 2. [Running the website](#running-the-website)
 3. [Development & Production Builds](#development--production-builds)
    1. [The Symfony 1 Project Structure](#the-symfony-1-project-structure)
-4. [Working with the Php-Apache container](#working-with-the-php-apache-container)
-   1. [Using virtual host name](#using-virtual-host-name)
-5. [Working with the MySQL container](#working-with-the-mysql-container)
+4. [The Php/Apache container](#the-phpapache-container)
+   1. [Solving file permission issues with a Linux host](#solving-file-permission-issues-with-a-linux-host)
+   2. [Using virtual host name](#using-virtual-host-name)
+5. [The MySQL/mariadb container](#the-mysqlmariadb-container)
       1. [About the sample database](#about-the-sample-database)
       2. [MySQL Workbench](#mysql-workbench)
       3. [Using MySQL from the command line](#using-mysql-from-the-command-line)
@@ -121,13 +122,23 @@ All application configuration is in `apps/koohii/config/` Yaml files: `app.yml`,
 
 The global layout is in `apps/koohii/templates/layout.php`.
 
-# Working with the Php-Apache container
+# The Php/Apache container
 
-This setup assumes files are created & modified from outside the container, otherwise there may be permission issues (YMMV). Occasionally folders and files can appear with owner `www-data`. I have no idea why this happens. All files and folders in the php/apache container should show up as `root root`.
+This is how I usually work with the docker locally:
 
-- Typically I run VSCode, Sublime Merge, Vim, git etc. **from the host**.
+- I run VSCode, Sublime Merge, Vim, git etc. **from the host**
+- all `npm` scripts, including the Vite client are run **from the container**
 
-- All `npm` scripts, including the Vite client are run **from the container**.
+## Solving file permission issues with a Linux host
+
+On a Linux host there may be file permission issues with the `/src` folder. The file permissions are "imported" by the docker volume. To solve this a custom user is created with uid/gid that matches the permissions of your user in the Linux host. Apache is then configured to run as that user (instead of the default `www-data`).
+
+If you are seeing php errors related to writing to files - check your uid/gid with the `id` command (in the host), and make sure it matches those in the Dockerfile (then rebuild the container with `dc down ; dc build ; dc up -d`):
+
+    ARG UID=1000
+    ARG GID=1000
+
+
 
 ## Using virtual host name
 
@@ -139,7 +150,7 @@ Update the `ServerName` in `.docker/php-apache/koohii.vhosts.conf`, then rebuild
 
 Also make sure to update `website_url` setting located in `src/apps/koohii/config/app.yml`. This setting is used to generate links in a few places.
 
-# Working with the MySQL container
+# The MySQL/mariadb container
 
 The local database is initialized from a SQL file located in `.docker/db/initdb.d/`. This folder is mapped to the MySQL Docker image (cf. [Initializing a fresh instance](https://hub.docker.com/_/mysql/#initializing-a-fresh-instance)).
 

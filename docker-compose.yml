@@ -11,11 +11,9 @@ services:
 
     container_name: kk_webserver
 
-    # 8080, 8888 : webpack-dev-server, webpack-bundle-analyzer
+    # 3000 Vite server
     ports:
       - "80:80"
-      - "8080:8080"
-      - "8888:8888"
       - "3000:3000"
 
     volumes:

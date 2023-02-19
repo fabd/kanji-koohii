@@ -85,6 +85,7 @@ EXPOSE 443
 
 # for Vite dev server
 EXPOSE 3000
+COPY bash/.bash_aliases /root/.bash_aliases
 
 RUN rm /var/www/html/index.html
 

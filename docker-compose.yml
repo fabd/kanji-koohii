@@ -7,9 +7,12 @@ services:
       context: ./docker/php-apache
       dockerfile: Dockerfile
 
-    image: kk_webserver_img
-
     container_name: kk_webserver
+    
+    depends_on:
+      - db
+
+    image: kk_webserver_img  
 
     # 3000 Vite server
     ports:
@@ -19,31 +22,27 @@ services:
     volumes:
       - ./src:/var/www/html
 
-      # use a custom prompt + aliases, preserve bash history
+      # preserve bash history
       - ./docker/php-apache/bash/.bash_history:/root/.bash_history
-      - ./docker/php-apache/bash/.bash_aliases:/root/.bash_aliases
-
-    depends_on:
-      - db
   
   db:
     build:
       context: ./docker/db
     
-    image: kk_mysql_img
-
     container_name: kk_mysql
-
-    restart: always
-    
-    ports:
-      - "3306:3306"
 
     environment:
       MYSQL_DATABASE:      db_github
       MYSQL_USER:          koohii
       MYSQL_PASSWORD:      koohii
       MYSQL_ROOT_PASSWORD: root
+
+    image: kk_mysql_img
+    
+    ports:
+      - "3306:3306"
+
+    restart: always
     
     volumes:
       - ./mysql56:/var/lib/mysql

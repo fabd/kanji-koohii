@@ -9,9 +9,3 @@
 #---------------------------------------------------------------------------
 "\e[1;5D": backward-word
 "\e[1;5C": forward-word
-
-# make ~/doc complete to ~/Documents
-set completion-ignore-case on
-
-# show all completions after pressing tab once instead of twice
-set show-all-if-ambiguous on

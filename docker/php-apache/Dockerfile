@@ -21,6 +21,8 @@ RUN apt-get update -y \
     && apt-get install software-properties-common -y \
     && apt-get update  -y \
     && apt-get upgrade -y
+# Bash configs
+COPY bash/.inputrc /root/
 
 # Install utils
 RUN apt-get install -yq --no-install-recommends \
@@ -72,10 +74,6 @@ ADD koohii.php.ini /etc/php/7.4/apache2/conf.d/
 # Configure vhost
 ADD koohii.vhosts.conf /etc/apache2/sites-enabled/000-default.conf
 
-# Cursor Up/Down to browse command history, Cursor Left/Right to move between command args
-RUN cd /root \
-    && printf '"\e[A": history-search-backward\n"\e[B": history-search-forward' > /root/.inputrc \
-    && printf '\n\n"\e[1;5D": backward-word\n"\e[1;5C": forward-word' >> /root/.inputrc
 
 # Setup a non-UTC timezone for checking the proper handling of dates & times in the app
 ENV TZ=Europe/Brussels

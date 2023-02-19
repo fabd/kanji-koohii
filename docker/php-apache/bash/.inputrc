@@ -1,0 +1,17 @@
+#---------------------------------------------------------------------------
+# Cursor Up / Down  autocompletes from history
+#---------------------------------------------------------------------------
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+#---------------------------------------------------------------------------
+# Ctrl + Cursor Left / Right  to move between args
+#---------------------------------------------------------------------------
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+
+# make ~/doc complete to ~/Documents
+set completion-ignore-case on
+
+# show all completions after pressing tab once instead of twice
+set show-all-if-ambiguous on

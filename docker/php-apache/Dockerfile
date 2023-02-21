@@ -70,16 +70,18 @@ RUN locale-gen en_US.UTF-8 en_GB.UTF-8
 ENV TZ=Europe/Brussels
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Configure PHP
-ADD koohii.php.ini /etc/php/7.4/apache2/conf.d/
-
-# Configure vhost
-ADD koohii.vhosts.conf /etc/apache2/sites-enabled/000-default.conf
-
 # Create a custom user to run PHP as - to solve file permission issues
 RUN adduser --system --no-create-home --group --shell /bin/bash --uid ${UID} ${USR} && \
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=${USR}/g" /etc/apache2/envvars && \
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=${USR}/g" /etc/apache2/envvars
+
+# Configure PHP
+ADD koohii.php.ini /etc/php/7.4/apache2/conf.d/
+
+# Configure vhost
+ADD koohii-local.conf /etc/apache2/sites-available/
+
+RUN a2ensite koohii-local
 
 # Ports
 #   3000 ... Vite dev server

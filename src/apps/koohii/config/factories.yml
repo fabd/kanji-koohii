@@ -1,6 +1,13 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/05-Factories
 
+linode:
+  logger:
+    class:   sfNoLogger
+    param:
+      level:   err
+      loggers: ~
+
 prod:
   logger:
     class:   sfNoLogger

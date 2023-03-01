@@ -46,6 +46,7 @@ RUN apt-get install -y --no-install-recommends \
     php7.4-bz2 \
     php7.4-cli \
     php7.4-curl \
+    php7.4-intl \
     php7.4-json \
     php7.4-mbstring \
     php7.4-mysql \
@@ -74,6 +75,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN adduser --system --no-create-home --group --shell /bin/bash --uid ${UID} ${USR} && \
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=${USR}/g" /etc/apache2/envvars && \
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=${USR}/g" /etc/apache2/envvars
+
+# switch to user so files created inside the container match the host user, and not root/root
+# USER ${USR}
 
 # Configure PHP
 ADD koohii.php.ini /etc/php/7.4/apache2/conf.d/

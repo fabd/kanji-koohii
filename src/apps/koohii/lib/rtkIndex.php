@@ -516,7 +516,7 @@ class rtkIndex
   public static function useKeywordsFile()
   {
     // a unique hash for versioning assets cached by client (cf .htaccess rule)
-    $HASH = '20220412';
+    $HASH = '20230301';
 
     $sfContext = sfContext::getInstance();
 

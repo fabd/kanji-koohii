@@ -68,8 +68,8 @@ spl_autoload_register(['Zend_Loader', 'autoload']);
 // Console colour output
 require_once(SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php');
 
-
-//exit(is_numeric($statusCode) ? $statusCode : 0);
+// Composer
+require_once(SF_ROOT_DIR.'/vendor/autoload.php'); 
 
 
 class Command_CLI

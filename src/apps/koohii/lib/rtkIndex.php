@@ -105,13 +105,20 @@ class rtkIndex
   /**
    * Multiple indexes (FIXME move to rtk/rthSequences class ?).
    *
-   *   sqlId  is used in the database for the user option,
-   *          MUST match the sequence array index
    */
   // sqlId of sequence set for new users by default
   public const NEWUSER_SEQUENCE = 1;
 
-  // keep in sync with /modules/account/templates/sequenceView !
+  /**
+   * Kanji Squences (aka RTK Old and New Editions).
+   * 
+   *   classId    is a substring that matches the class name 
+   *              (ie. `rtkIndexOldEdition.php` )
+   *   sqlId      is the integer value used in the user setting `opt_sequence`
+   *   sqlCol     is the matching col for that index in the kanjis table
+   * 
+   * NOTE!  Keep in sync with /modules/account/templates/sequenceView
+   */
   public static $rtk_sequences = [
     0 => ['classId' => 'OldEdition', 'sqlId' => 0, 'sqlCol' => 'idx_olded'],
     1 => ['classId' => 'NewEdition', 'sqlId' => 1, 'sqlCol' => 'idx_newed'],
@@ -516,7 +523,7 @@ class rtkIndex
   public static function useKeywordsFile()
   {
     // a unique hash for versioning assets cached by client (cf .htaccess rule)
-    $HASH = '20220412';
+    $HASH = '20230303';
 
     $sfContext = sfContext::getInstance();
 

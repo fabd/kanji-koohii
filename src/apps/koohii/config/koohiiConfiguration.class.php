@@ -44,7 +44,7 @@ class koohiiConfiguration extends sfApplicationConfiguration
       define('CORE_ENVIRONMENT', $this->getEnvironment());
 
       define('KK_ENV_DEV', CORE_ENVIRONMENT === 'dev');
-      define('KK_ENV_PROD', CORE_ENVIRONMENT === 'prod');
+      define('KK_ENV_PROD', CORE_ENVIRONMENT === 'prod' || CORE_ENVIRONMENT === 'linode');
 
       define('KK_ENV_FORK', sfConfig::get('app_fork'));
 

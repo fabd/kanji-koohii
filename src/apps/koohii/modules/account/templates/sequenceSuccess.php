@@ -23,12 +23,19 @@ td input { vertical-align:middle; }
     $eds = [
       [
         'short' => 'Old Edition',
-        'long'  => 'Volume 1 : 5th edition or earlier.<br/>Volume 3 : 1st or 2nd edition.<br/>Newly Approved General-Use Kanji (3008-3030)',
+        'long'  => <<<END
+Volume 1 : 5th edition or earlier <samp class="ml-2 text-success-darker">#1-2042</samp><br/>
+Volume 3 : 1st or 2nd edition <samp class="ml-2 text-success-darker">#2043-3007</samp><br/>
+Newly Approved General-Use Kanji <samp class="ml-2 text-success-darker">#3008-3030</samp>
+END,
         'count' => '3030'
       ],
       [
         'short' => 'New Edition',
-        'long'  => 'Volume 1 : 6th edition.<br/>Volume 3 : 3rd edition.',
+        'long'  => <<<END
+Volume 1 : 6th edition <samp class="ml-2 text-success-darker">#1-2200</samp><br/>
+Volume 3 : 3rd edition <samp class="ml-2 text-success-darker">#2201-3000</samp>
+END,
         'count' => '3000'
       ]
     ];

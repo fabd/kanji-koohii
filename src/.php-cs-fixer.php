@@ -16,6 +16,13 @@ return (new PhpCsFixer\Config())
       'position_after_control_structures' => 'next',
     ],
 
+    // *don't* add backslashes everywhere
+    'global_namespace_import' => [
+      'import_classes' => true,
+      'import_constants' => true,
+      'import_functions' => true,
+    ],
+
     // always use heredoc
     'heredoc_to_nowdoc' => false,
 

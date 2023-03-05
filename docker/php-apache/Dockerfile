@@ -10,6 +10,7 @@
 #    Apache sites
 #      /etc/apache2/sites-enabled/000-default.conf
 #
+#
 
 FROM ubuntu:20.04
 
@@ -26,17 +27,16 @@ ENV DEBIAN_FRONTEND noninteractive
 # Bash configs
 COPY bash/.inputrc /root/
 
-# Update
-RUN apt-get update -y
-
 # Install utils
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     git \
     less \
-    nano \
     locales \
+    nano \
+    # sudo \
     vim
 
 # Install Apache + PHP
@@ -73,11 +73,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Create a custom user to run PHP as - to solve file permission issues
 RUN adduser --system --no-create-home --group --shell /bin/bash --uid ${UID} ${USR} && \
+    # usermod -aG sudo ${USR} && \
+    # echo "${USR} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USR} && \
+    # chmod 0440 /etc/sudoers.d/${USR} && \
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=${USR}/g" /etc/apache2/envvars && \
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=${USR}/g" /etc/apache2/envvars
-
-# switch to user so files created inside the container match the host user, and not root/root
-# USER ${USR}
 
 # Configure PHP
 ADD koohii.php.ini /etc/php/7.4/apache2/conf.d/
@@ -86,6 +86,8 @@ ADD koohii.php.ini /etc/php/7.4/apache2/conf.d/
 ADD koohii-local.conf /etc/apache2/sites-available/
 
 RUN a2ensite koohii-local
+
+# USER ${USR}
 
 # Ports
 #   3000 ... Vite dev server

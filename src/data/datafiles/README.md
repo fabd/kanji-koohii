@@ -16,8 +16,7 @@ The scripts in data/scripts/ may reference one or more of these files.
             - Old Edition lesson numbers (merged in from Ziggr's Heisig Kanji Index)
 
         RTK Editions Compared.csv
-          This is the .ods file exported to .csv with tab delimiters, removing
-          unnecessary data (remove cols A I J K L, remove rows 1-2).
+          This is the .ods file exported to .csv for parsing. See RtkParser.php
 
       generated/
       
@@ -39,7 +38,7 @@ If you need any of these files to run a script from the data/scripts/ folder, th
           jmdict.xml.utf8
             Download JMdict_e.gz ("only English glosses") [from here](http://ftp.edrdg.org/pub/Nihongo/00INDEX.html#dic_fil)
 
-          kanjidic2.xml.utf8
+          kanjidic2.xml
             Download the current version of kanjidic2.xml (.gz) [from here](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project#Introduction)
 
           Unihan/

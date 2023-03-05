@@ -15,5 +15,10 @@
     "exclude-from-classmap": [
       "vendor/erusev/parsedown-extra/test/"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Koohii\\Scripts\\": "data/scripts/"
+    }
   }
 }

@@ -1,9 +1,11 @@
 <template>
   <div v-once class="ko-LessonsChart">
     <ko-lesson-pane
-      v-for="(lessonData, index) in lessons"
-      v-bind="getPropsForLesson(lessonData)"
+      v-for="(lesson, index) in lessons"
       :key="index"
+      :cards="getCardsForLesson(lesson)"
+      :lesson-num="lesson.num"
+      :sequence-name="sequenceName"
       class="mb-3"
     />
   </div>
@@ -18,7 +20,7 @@ type TLessonsChartLesson = {
   num: number; // lesson number, starts at 1
   from: number; // sequence index start of lesson, starts at 1
   count: number;
-}
+};
 
 export default defineComponent({
   name: "KoLessonsChart",
@@ -34,20 +36,13 @@ export default defineComponent({
   },
 
   methods: {
-    getPropsForLesson(lesson: TLessonsChartLesson): any {
+    getCardsForLesson(lesson: TLessonsChartLesson) {
       const cardsForThisLesson = this.cards.slice(
         lesson.from - 1,
         lesson.from + lesson.count - 1
       );
-
-      return {
-        'cards': cardsForThisLesson,
-        'lessonNum': lesson.num,
-        'lessonPos': lesson.pos,
-        'sequenceName': this.sequenceName
-      }
+      return cardsForThisLesson;
     },
-
   },
 });
 </script>

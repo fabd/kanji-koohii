@@ -45,7 +45,6 @@ export default defineComponent({
         'cards': cardsForThisLesson,
         'lessonNum': lesson.num,
         'lessonPos': lesson.pos,
-        'lessonCount': lesson.count,
         'sequenceName': this.sequenceName
       }
     },

@@ -72,10 +72,12 @@ export default defineComponent({
     cards: { type: Array as PropType<TKanjiCardData[]>, required: true },
     lessonNum: { type: Number, required: true },
     lessonPos: { type: Number, required: true },
+    sequenceName: { type: String, required: true },
+    
+    // this is set only on the home page Dashboard for the current lesson
+    maxHeight: { type: Boolean, required: false, default: false },
     allLessonsCount: { type: Number, required: false, default: 0 },
     allLessonsUrl: { type: String, required: false, default: '' },
-    sequenceName: { type: String, required: true },
-    maxHeight: { type: Boolean, required: false, default: false },
   },
 
   data() {

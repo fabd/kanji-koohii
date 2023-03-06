@@ -181,11 +181,10 @@
     'cards' => $cardsData,
     'lessonNum' => $curLesson['lesson_nr'],
     'lessonPos' => $curLesson['lesson_pos'],
-    'lessonCount' => $curLesson['lesson_count'],
-    'allLessonsCount' => $numLessons,
-    'allLessonsUrl' => url_for('@progress'),
     'sequenceName' => $sequenceName,
     'maxHeight' => true,
+    'allLessonsCount' => $numLessons,
+    'allLessonsUrl' => url_for('@progress'),
   ];
 
   kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);

@@ -71,7 +71,6 @@ export default defineComponent({
   props: {
     cards: { type: Array as PropType<TKanjiCardData[]>, required: true },
     lessonNum: { type: Number, required: true },
-    lessonPos: { type: Number, required: true },
     sequenceName: { type: String, required: true },
     
     // this is set only on the home page Dashboard for the current lesson
@@ -95,12 +94,12 @@ export default defineComponent({
       return this.cards.length;
     },
 
-    pctValue(): number {
-      let pct = (this.lessonPos * 100) / this.lessonCount;
-      let floor = Math.floor(pct);
+    // pctValue(): number {
+    //   let pct = (this.lessonPos * 100) / this.lessonCount;
+    //   let floor = Math.floor(pct);
 
-      return pct > 0 ? Math.max(floor, 1) : 0;
-    },
+    //   return pct > 0 ? Math.max(floor, 1) : 0;
+    // },
   },
 });
 </script>

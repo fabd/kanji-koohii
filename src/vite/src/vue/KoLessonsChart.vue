@@ -17,7 +17,6 @@ import KoLessonPane from "@/vue/KoLessonPane.vue";
 type TLessonsChartLesson = {
   num: number; // lesson number, starts at 1
   from: number; // sequence index start of lesson, starts at 1
-  pos: number; // kanji nr within lesson, starts at 1 (eg. "1 of 15")
   count: number;
 }
 

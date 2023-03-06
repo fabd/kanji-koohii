@@ -41,9 +41,11 @@
   // include orig & user keyword maps for the kanji card component
   rtkIndex::useKeywordsFile();
 
-  kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
-  kk_globals_put('USER_KANJI_CARDS', $cardsData);
-  kk_globals_put('LESSONS_CHART_PROPS', $lessonsChartProps);
+  kk_globals_put([
+    'USER_KEYWORDS_MAP' => $keywordsMap,
+    'USER_KANJI_CARDS' => $cardsData,
+    'LESSONS_CHART_PROPS' => $lessonsChartProps
+  ]);
 ?>
 <h2>View All Lessons</h2>
 

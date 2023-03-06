@@ -187,6 +187,8 @@
     'allLessonsUrl' => url_for('@progress'),
   ];
 
-  kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
-  kk_globals_put('HOMEDASH_PCTBAR_PROPS', $pctBarProps);
-  kk_globals_put('HOMEDASH_LESSON_PROPS', $lessonProps);
+  kk_globals_put([
+    'USER_KEYWORDS_MAP' => $keywordsMap,
+    'HOMEDASH_PCTBAR_PROPS' => $pctBarProps,
+    'HOMEDASH_LESSON_PROPS' => $lessonProps
+  ]);

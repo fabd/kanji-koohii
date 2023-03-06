@@ -41,6 +41,8 @@
 <?php endif; ?>
 
 <?php
-  kk_globals_put('MYSTORIES_SORT_ACTIVE', $sort_active);
-  kk_globals_put('MYSTORIES_SORT_OPTIONS', $sort_options);
+  kk_globals_put([
+    'MYSTORIES_SORT_ACTIVE' => $sort_active,
+    'MYSTORIES_SORT_OPTIONS' => $sort_options
+  ]);
 ?>

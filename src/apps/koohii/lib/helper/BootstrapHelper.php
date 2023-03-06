@@ -315,12 +315,12 @@ define('KK_GLOBALS', 'kk.globals');
  *
  * Conveniently, this hydration happens BEFORE defered modules
  * from Vite build are run, since defered modules happen after
- * the document is parsed, and <script>'s are part of the document.
+ * the document is parsed, and \<script>'s are part of the document.
  *
- * @param string $name  the key name (convention ALL_UPPERCASE)
- * @param mixed  $value any valid value that parses to JSON (string, boolean, null, etc)
+ * @param array $key   key name (convention ALL_UPPERCASE), or array of key => values
+ * @param mixed $value (if single key) any value that parses to JSON (string, boolean, null, etc)
  */
-function kk_globals_put(string $name, $value)
+function kk_globals_put($key, $value = null)
 {
   $kk_globals = sfConfig::get(KK_GLOBALS);
   if (null === $kk_globals)
@@ -328,7 +328,18 @@ function kk_globals_put(string $name, $value)
     $kk_globals = new sfParameterHolder();
     sfConfig::set(KK_GLOBALS, $kk_globals);
   }
-  $kk_globals->set($name, $value);
+
+  if (is_array($key))
+  {
+    foreach ($key as $name => $value)
+    {
+      $kk_globals->set($name, $value);
+    }
+  }
+  else
+  {
+    $kk_globals->set($key, $value);
+  }
 }
 
 /**
@@ -401,7 +412,7 @@ function url_for_review(array $queryParams)
 /**
  * Returns merged css class names as a string (for the html class attribute),
  * from arguments passed either as a string or string[].
- * 
+ *
  * @param string|string[] $classnames ... string or array of classes to merge into
  * @param string|string[] $tokens     ... one or more additional classes
  *

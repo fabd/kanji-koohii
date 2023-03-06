@@ -158,15 +158,12 @@ class studyActions extends sfActions
   */
   public function getLessonTitleForIndex($frameNr)
   {
-    // $lesson = rtkIndex::getLessonDataForIndex($frameNr);
-    // $lessNr = $lesson['lesson_nr'];
     $lessNr = rtkIndex::getLessonForIndex($frameNr);
 
     $title = '';
 
     if ($lessNr && $lessNr <= rtkIndex::inst()->getNumLessonsVol1())
     {
-      // $title = "Lesson {$lessNr} <span>- Kanji {$lesson['lesson_pos']} of {$lesson['lesson_count']}</span>";
       $title = "Lesson {$lessNr}";
     }
     elseif ($lessNr === 57)

@@ -22,7 +22,6 @@
     $lessons[] = [
       'num' => $lessData['lesson_nr'],
       'from' => $lessData['lesson_from'],
-      'pos' => $lessData['lesson_pos'],
       'count' => $lessData['lesson_count'],
     ];
   }

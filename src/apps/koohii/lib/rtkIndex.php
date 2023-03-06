@@ -455,7 +455,6 @@ class rtkIndex
    *   - lesson_nr ... (int) number
    *   - lesson_from ... (int) index start
    *   - lesson_count ... (int) kanji count
-   *   - lesson_pos ... (int) position in lesson (1 to X) *if* $seqNr is provided
    *
    * @return array|false returns false if index not within current sequence
    */
@@ -473,27 +472,12 @@ class rtkIndex
         return [
           'lesson_nr' => $lesson,
           'lesson_from' => $indexStart,
-          'lesson_pos' => $seqNr ? ($seqNr - $indexStart + 1) : 0,
           'lesson_count' => $count,
         ];
       }
     }
 
     return false;
-  }
-
-  /**
-   * Return information for the lesson, given sequence number.
-   *
-   * See `getLessonData()`.
-   *
-   * @return array|false returns false if index not within current sequence
-   */
-  public static function getLessonDataForIndex(int $seqNr)
-  {
-    $lessonId = self::getLessonForIndex($seqNr);
-
-    return self::getLessonData($lessonId, $seqNr);
   }
 
   /**

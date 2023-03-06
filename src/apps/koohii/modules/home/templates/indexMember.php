@@ -14,7 +14,8 @@
   $studyMax = rtkIndex::inst()->getNumCharactersVol1();
 
   // if there are no flashcards, default to 1st lesson
-  $curLesson = rtkIndex::getLessonDataForIndex($studyPos ?: 1);
+  $lessonId = rtkIndex::getLessonForIndex($studyPos ?: 1);
+  $curLesson = rtkIndex::getLessonData($lessonId);
 
   $studyLesson = $curLesson['lesson_nr'];
 
@@ -180,7 +181,6 @@
   $lessonProps = [
     'cards' => $cardsData,
     'lessonNum' => $curLesson['lesson_nr'],
-    'lessonPos' => $curLesson['lesson_pos'],
     'sequenceName' => $sequenceName,
     'maxHeight' => true,
     'allLessonsCount' => $numLessons,

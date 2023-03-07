@@ -84,16 +84,16 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
-   * Return array of kanji card data matching UCS ids -- whether or not the
-   * user has a flashcard for it!
+   * Return user's kanji card data for use by the front end. Only data for
+   * existing flashcards is returned! (no empty/default card values)
    * 
-   * The data is tailored for the kanji card component.
+   * Optionally filter the returned card data to a set of UCS codes.
    *
    * @param int $userId
    * @param int[]|null $ucsIds a set of flashcard ids, null for all RTK1 cards
    * @return array
    */
-  public static function getJsKanjiCards(int $userId, ?array $ucsIds = null)
+  public static function getUserKanjiCardsJS(int $userId, ?array $ucsIds = null)
   {
     $select = self::getInstance()->select([
       'ucs' => 'reviews.ucs_id',
@@ -109,8 +109,10 @@ class ReviewsPeer extends coreDatabaseTable
     }
     else
     {
-      // ! this method adds the KanjisPeer join
-      $select = self::filterByRtk($select, 'rtk1');
+      // For Old Editions, make sure to include the range #3008-3030 so we can
+      // show Lesson 58 (RTK Supplement) on the Progress Chart.
+      // FIXME? includes RTK3 kanjis (lesson 57) which we don't currently display.
+      $select = self::filterByRtk($select, 'rtk1+3');
     }
 
 // DBG::out($select);exit;
@@ -118,29 +120,24 @@ class ReviewsPeer extends coreDatabaseTable
 
     $cards = [];
 
-    // create UCS array for all of RTK1 kanji
-    if (is_null($ucsIds)) {
-      $ucsIds = rtkIndex::createFlashcardSet(1, rtkIndex::inst()->getNumCharactersVol1()
-      );
-    }
-
-    // set "NOT LEARNED" cards (the user doesn't have a flashcard)
-    foreach ($ucsIds as $ucsId) {
-      $cards[$ucsId] = ['ucs' => $ucsId, 'box' => 0, 'tot' => 0];
-    }
-
-    // merge user's flashcard data
+    // format the data for use as `new Map(data)`
     foreach ($rows as $row) {
-      $ucsId = (int) $row['ucs'];
-      $cards[$ucsId] = [
-        'ucs' => $ucsId,
-        'box' => (int) $row['box'],
-        'tot' => (int) $row['tot'],
+      $ucs = (int) $row['ucs'];
+
+      // Leitner box
+      $box = (int) $row['box'];
+
+      // is it a new card? (use 0/1 as boolean shorter JSON output)
+      $new = (int) ($row['tot'] === '0' && $box === 1);
+
+      $cards[] = [
+        $ucs, [
+          'ucs' => $ucs,
+          'box' => $box,
+          'new' => $new,
+        ]
       ];
     }
-
-    // remove the array index
-    $cards = array_values($cards);
 
     return $cards;
   }

@@ -20,20 +20,20 @@
     $lessData = rtkIndex::getLessonData($id);
 
     $lessons[] = [
-      'num' => $lessData['lesson_nr'],
+      'id' => $lessData['lesson_nr'],
       'from' => $lessData['lesson_from'],
       'count' => $lessData['lesson_count'],
     ];
   }
+// DBG::printr($lessons);exit;
 
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 
-  $cardsData = ReviewsPeer::getJsKanjiCards($userId);
-
+  $cardsData = ReviewsPeer::getUserKanjiCardsJS($userId);
+// DBG::printr($cardsData);exit;
   $sequenceName = rtkIndex::inst()->getSequenceName();
 
   $lessonsChartProps = [
-    'cards' => $cardsData,
     'lessons' => $lessons,
     'sequenceName' => $sequenceName,
   ];

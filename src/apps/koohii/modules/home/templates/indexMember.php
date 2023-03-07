@@ -177,10 +177,10 @@
     'max-value' => $studyMax,
   ];
 
-  $cardsData = ReviewsPeer::getJsKanjiCards($userId, $cardsIds);
   $lessonProps = [
-    'cards' => $cardsData,
-    'lessonNum' => $curLesson['lesson_nr'],
+    'lessonFrom' => $curLesson['lesson_from'],
+    'lessonId' => $curLesson['lesson_nr'],
+    'lessonCount' => $curLesson['lesson_count'],
     'sequenceName' => $sequenceName,
     'maxHeight' => true,
     'allLessonsCount' => $numLessons,
@@ -188,6 +188,7 @@
   ];
 
   kk_globals_put([
+    'USER_KANJI_CARDS' => ReviewsPeer::getUserKanjiCardsJS($userId, $cardsIds),
     'USER_KEYWORDS_MAP' => $keywordsMap,
     'HOMEDASH_PCTBAR_PROPS' => $pctBarProps,
     'HOMEDASH_LESSON_PROPS' => $lessonProps

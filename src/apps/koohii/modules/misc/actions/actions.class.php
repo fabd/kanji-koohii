@@ -27,7 +27,7 @@ class miscActions extends sfActions
   {
     $userId = $this->getContext()->getUser()->getUserId();
 
-    $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
+    $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 
     $knownKanji = ReviewsPeer::getKnownKanji($userId);
 

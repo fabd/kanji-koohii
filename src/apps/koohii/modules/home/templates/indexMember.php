@@ -170,7 +170,7 @@
   // include orig & user keyword maps for the kanji card component
   rtkIndex::useKeywordsFile();
 
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId, $cardsIds);
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId, $cardsIds);
 
   $pctBarProps = [
     'value' => $flashcardCount,

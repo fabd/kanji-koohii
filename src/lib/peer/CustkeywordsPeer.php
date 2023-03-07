@@ -13,7 +13,7 @@
  * 
  *   importList($userId, array $keywords, $request)
  * 
- *   getUserKeywordsMap($userId, array $ucsIds = [])
+ *   getUserKeywordsMapJS($userId, array $ucsIds = [])
  * 
  * Helpers:
  *   coalesceExpr()
@@ -242,7 +242,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    * 
    * @return user's edited keywords as a map: [[ucsId, keyword], ...]
    */
-  public static function getUserKeywordsMap($userId, array $ucsIds = [])
+  public static function getUserKeywordsMapJS($userId, array $ucsIds = [])
   {
     $select = self::getInstance()
       ->select(['ucs_id', 'keyword'])

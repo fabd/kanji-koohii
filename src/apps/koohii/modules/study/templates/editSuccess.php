@@ -4,7 +4,7 @@
   $userId = $sf_user->getUserId();
 
   // get the user's edited keywords (currently for the sidebar "Last Viewed")
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
   
   // required for displaying Cust Keywords in "Last Viewed" component
   kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);

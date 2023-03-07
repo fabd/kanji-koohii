@@ -1,7 +1,7 @@
 <?php
   // required for displaying Cust Keywords in "Last Viewed" component
   $userId = $sf_user->getUserId();
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
   kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
 ?>
 <div class="row">

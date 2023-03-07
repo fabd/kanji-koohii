@@ -13,10 +13,12 @@
  *   getIndexForUCS(ucsId)
  *   getKeywordForUCS(ucsId)
  *
- *   getUCSForIndex(extNr)
+ *   getUCSForIndex(seqNr)
  *   getCharForIndex(extNr)
  *
  *   filterRtkKanji()
+ *
+ *   getSeqKanjis()              ... return string of kanji in OLD/NEW edition (3030/3000)
  *
  */
 
@@ -37,7 +39,7 @@ let rtkIndexToUcsMap: TMapIndexToUcs;
 let origKeywordsMap: Map<number, string>; // <sequence nr, keyword>
 let userKeywordsMap: TKeywordMap;
 
-function getSeqKanjis(): string {
+export function getSeqKanjis(): string {
   if (!kkGlobalsSeqKanjis) {
     kkGlobalsSeqKanjis = kk_globals_get("SEQ_KANJIS") as string;
   }
@@ -116,8 +118,8 @@ export function getIndexForUCS(ucsId: TUcsId): number {
  * kanji sequence (eg. RTK 6th edition), returns false.
  *
  */
-export function getUCSForIndex(extNr: number): number | false {
-  return getIndexToUcsMap().get(extNr) || false;
+export function getUCSForIndex(seqNr: number): number | false {
+  return getIndexToUcsMap().get(seqNr) || false;
 }
 
 export function getKeywordForUCS(ucsId: TUcsId) {

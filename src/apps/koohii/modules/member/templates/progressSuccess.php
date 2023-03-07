@@ -20,21 +20,20 @@
     $lessData = rtkIndex::getLessonData($id);
 
     $lessons[] = [
-      'num' => $lessData['lesson_nr'],
+      'id' => $lessData['lesson_nr'],
       'from' => $lessData['lesson_from'],
-      'pos' => $lessData['lesson_pos'],
       'count' => $lessData['lesson_count'],
     ];
   }
+// DBG::printr($lessons);exit;
 
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 
-  $cardsData = ReviewsPeer::getJsKanjiCards($userId);
-
+  $cardsData = ReviewsPeer::getUserKanjiCardsJS($userId);
+// DBG::printr($cardsData);exit;
   $sequenceName = rtkIndex::inst()->getSequenceName();
 
   $lessonsChartProps = [
-    'cards' => $cardsData,
     'lessons' => $lessons,
     'sequenceName' => $sequenceName,
   ];
@@ -42,9 +41,11 @@
   // include orig & user keyword maps for the kanji card component
   rtkIndex::useKeywordsFile();
 
-  kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
-  kk_globals_put('USER_KANJI_CARDS', $cardsData);
-  kk_globals_put('LESSONS_CHART_PROPS', $lessonsChartProps);
+  kk_globals_put([
+    'USER_KEYWORDS_MAP' => $keywordsMap,
+    'USER_KANJI_CARDS' => $cardsData,
+    'LESSONS_CHART_PROPS' => $lessonsChartProps
+  ]);
 ?>
 <h2>View All Lessons</h2>
 

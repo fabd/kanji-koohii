@@ -27,13 +27,15 @@ class miscActions extends sfActions
   {
     $userId = $this->getContext()->getUser()->getUserId();
 
-    $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId);
+    $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 
     $knownKanji = ReviewsPeer::getKnownKanji($userId);
 
     sfProjectConfiguration::getActive()->loadHelpers(['Bootstrap']);
-    kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
-    kk_globals_put('USER_KNOWN_KANJI', $knownKanji);
+    kk_globals_put([
+      'USER_KEYWORDS_MAP' => $keywordsMap,
+      'USER_KNOWN_KANJI' => $knownKanji
+    ]);
 
     // include RTK keywords and kanjis (cf. rtk.ts helpers)
     rtkIndex::useKeywordsFile();

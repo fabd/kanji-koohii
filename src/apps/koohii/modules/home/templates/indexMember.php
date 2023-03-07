@@ -14,7 +14,8 @@
   $studyMax = rtkIndex::inst()->getNumCharactersVol1();
 
   // if there are no flashcards, default to 1st lesson
-  $curLesson = rtkIndex::getLessonDataForIndex($studyPos ?: 1);
+  $lessonId = rtkIndex::getLessonForIndex($studyPos ?: 1);
+  $curLesson = rtkIndex::getLessonData($lessonId);
 
   $studyLesson = $curLesson['lesson_nr'];
 
@@ -169,25 +170,26 @@
   // include orig & user keyword maps for the kanji card component
   rtkIndex::useKeywordsFile();
 
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMap($userId, $cardsIds);
+  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId, $cardsIds);
 
   $pctBarProps = [
     'value' => $flashcardCount,
     'max-value' => $studyMax,
   ];
 
-  $cardsData = ReviewsPeer::getJsKanjiCards($userId, $cardsIds);
   $lessonProps = [
-    'cards' => $cardsData,
-    'lessonNum' => $curLesson['lesson_nr'],
-    'lessonPos' => $curLesson['lesson_pos'],
+    'lessonFrom' => $curLesson['lesson_from'],
+    'lessonId' => $curLesson['lesson_nr'],
     'lessonCount' => $curLesson['lesson_count'],
-    'allLessonsCount' => $numLessons,
-    'allLessonsUrl' => url_for('@progress'),
     'sequenceName' => $sequenceName,
     'maxHeight' => true,
+    'allLessonsCount' => $numLessons,
+    'allLessonsUrl' => url_for('@progress'),
   ];
 
-  kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
-  kk_globals_put('HOMEDASH_PCTBAR_PROPS', $pctBarProps);
-  kk_globals_put('HOMEDASH_LESSON_PROPS', $lessonProps);
+  kk_globals_put([
+    'USER_KANJI_CARDS' => ReviewsPeer::getUserKanjiCardsJS($userId, $cardsIds),
+    'USER_KEYWORDS_MAP' => $keywordsMap,
+    'HOMEDASH_PCTBAR_PROPS' => $pctBarProps,
+    'HOMEDASH_LESSON_PROPS' => $lessonProps
+  ]);

@@ -1,3 +1,9 @@
+/**
+ * These are types for the old flashcard review code that was refactored
+ *  for Vite build. Hence they are all grouped here.
+ *
+ */
+
 type TCardData = {
   framenum: number;
   id: TUcsId;

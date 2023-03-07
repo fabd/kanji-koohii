@@ -17,12 +17,20 @@ class HomeDashboard {
 
     elMount = $$("#JsHomeLesson")[0];
     if (elMount) {
-      VueInstance(KoLessonPane, elMount, kk_globals_get("HOMEDASH_LESSON_PROPS"));
+      VueInstance(
+        KoLessonPane,
+        elMount,
+        kk_globals_get("HOMEDASH_LESSON_PROPS")
+      );
     }
 
     elMount = $$("#JsViewAllLessons")[0];
     if (elMount) {
-      VueInstance(KoLessonsChart, elMount, kk_globals_get("LESSONS_CHART_PROPS"));
+      VueInstance(
+        KoLessonsChart,
+        elMount,
+        kk_globals_get("LESSONS_CHART_PROPS")
+      );
     }
   }
 }

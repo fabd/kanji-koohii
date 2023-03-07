@@ -72,7 +72,10 @@ interface Window {
     // Old/New edition RTK keywords and kanji
     SEQ_KANJIS: string;
     SEQ_KEYWORDS: string[];
+
+    // User data (someday/maybe we may have a global user state on the JS side)
     USER_KEYWORDS_MAP: Dictionary;
+    USER_KANJI_CARDS: TUserKanjiCard[];
   };
 
   Koohii: {

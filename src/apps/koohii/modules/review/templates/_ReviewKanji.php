@@ -186,5 +186,7 @@
     'fc_edit_params' => '{"review": 1}',
   ];
 
-  kk_globals_put('REVIEW_OPTIONS', $reviewOptions);
-  kk_globals_put('REVIEW_MODE', $reviewMode);
+  kk_globals_put([
+    'REVIEW_OPTIONS' => $reviewOptions,
+    'REVIEW_MODE' => $reviewMode
+  ]);

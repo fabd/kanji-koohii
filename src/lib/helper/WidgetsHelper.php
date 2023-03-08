@@ -148,7 +148,7 @@ function ui_select_table(uiSelectTable $table, uiSelectPager $pager = null, $htm
  *
  * @return string
  */
-function ui_data_table($table)
+function ui_data_table($table, $html_options = [])
 {
   if (!method_exists($table, 'getTableHead') || !method_exists($table, 'getTableBody')) {
     throw new sfException(__METHOD__.' Bad interface on $table');
@@ -156,8 +156,10 @@ function ui_data_table($table)
 
   ob_start();
 
+  $html_options['class'] = merge_html_classes('uiTabular', $html_options['class'] ?? []);
+
   $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(['table' => $table]);
+  $view->getParameterHolder()->add(['table' => $table, 'table_options' => $html_options]);
   $view->setTemplate(dirname(__FILE__).'/templates/ui_select_table.php');
   echo $view->render();
   

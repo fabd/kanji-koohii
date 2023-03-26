@@ -24,9 +24,6 @@ WORKDIR /var/www/html
 # makes  the  default  answers  be used for all questions
 ENV DEBIAN_FRONTEND noninteractive
 
-# Bash configs
-COPY bash/.inputrc /root/
-
 # Install utils
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
@@ -79,22 +76,19 @@ RUN adduser --system --no-create-home --group --shell /bin/bash --uid ${UID} ${U
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=${USR}/g" /etc/apache2/envvars && \
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=${USR}/g" /etc/apache2/envvars
 
-# Configure PHP
-ADD koohii.php.ini /etc/php/7.4/apache2/conf.d/
-
-# Configure vhost
-ADD koohii-local.conf /etc/apache2/sites-available/
-
-RUN a2ensite koohii-local
-
 # USER ${USR}
 
+# Configure PHP
+ADD ./php/koohii.php.ini /etc/php/7.4/apache2/conf.d/
+
+# Configure vhost
+ADD ./php/koohii.conf /etc/apache2/sites-available/
+
+RUN a2ensite koohii
+
 # Ports
-#   3000 ... Vite dev server
 EXPOSE 80
 EXPOSE 443
 EXPOSE 3000   
-
-COPY bash/.bash_aliases /root/.bash_aliases
 
 CMD ["apache2ctl", "-D", "FOREGROUND"]

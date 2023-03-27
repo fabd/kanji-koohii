@@ -86,9 +86,12 @@ ADD ./php/koohii.conf /etc/apache2/sites-available/
 
 RUN a2ensite koohii
 
+COPY bash/bashrc /root/.bashrc
+
 # Ports
 EXPOSE 80
 EXPOSE 443
 EXPOSE 3000   
+
 
 CMD ["apache2ctl", "-D", "FOREGROUND"]

@@ -23,7 +23,7 @@ services:
       - ./src:/var/www/html
       
       # make it easier to edit/update aliases
-      - ./docker/bash/.bash_aliases:/root/.bash_aliases
+      - ./docker/bash/:/root/bash
 
       # preserve bash history
       - ./docker/php/.bash_history:/root/.bash_history
@@ -56,7 +56,7 @@ services:
       - ./docker/db/initdb.d:/docker-entrypoint-initdb.d
 
       # make it easier to edit/update aliases
-      - ./docker/bash/.bash_aliases:/root/.bash_aliases
+      - ./docker/bash/:/root/bash
 
       # preserve bash history
       - ./docker/db/.bash_history:/root/.bash_history

@@ -8,3 +8,5 @@ RUN apt-get update && \
 #  America/Rainy_River   CET   UTC-06
 ENV TZ=America/Rainy_River
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+COPY bash/bashrc /root/.bashrc

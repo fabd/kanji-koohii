@@ -1,0 +1,53 @@
+# ====================================================================
+# .bashrc (for the local docker containers)
+# ====================================================================
+
+D_ROOT='/root'
+
+source "$D_ROOT/bash/bash_config.sh"
+
+# --------------------------------------------------------------------
+# Koohii CONFIG
+# --------------------------------------------------------------------
+
+KK_APP=/var/www/html
+KK_WEB=/var/www/html/web
+
+isApacheService() {
+  if [ -d "/var/lib/apache2" ]; then
+    return 0 # directory exists, return true
+  else
+    return 1 # directory does not exist, return false
+  fi
+}
+
+if isApacheService; then
+
+  # ------------------------------------------------------------------
+  # php/Apache container
+  # ------------------------------------------------------------------
+  source "$D_ROOT/bash/koohii_dev.sh"
+
+  export PS1="\[\033[01;03;42m\][php]\[\033[01;31;49m\] ${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u\[\033[01;32m\] \w \[\033[00m\]\$ "
+
+else
+
+  # ------------------------------------------------------------------
+  # MariaDB container
+  # ------------------------------------------------------------------
+  KO_DB_CHAR='--default-character-set=utf8'
+  alias dbroot="mysql -u root -proot $KO_DB_CHAR"
+  alias dbgithub="mysql -u koohii -pkoohii -D db_github $KO_DB_CHAR"
+  
+  export PS1="\033[33m(db) \033[1;31m\u\033[0;32m \033[1;34m\w $ \033[0m"
+
+  # a colored prompt for readability ( https://dbdemon.com/mariadb_cli_with_colours/ )
+  export MYSQL_PS1=$'\001\033[1;31m\002\\u \001\033[1;34m\002\\d >\001\033[00m\002 '
+
+fi
+
+if isApacheService; then
+  cd "$KK_APP"
+else
+  cd /var/lib/mysql/
+fi

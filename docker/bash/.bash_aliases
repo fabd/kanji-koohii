@@ -127,15 +127,15 @@ if isApacheService; then
   kklog() { tail -f koohii-log.txt; }
 
   # test email sending
-  alias kkmailtest="php $KK_APP/batch/maintenance/mailtest.php"
+  alias kkmailtest="php $KK_APP/batch/admin/mailtest.php"
 
   # website maintenance (locally testing the "website unavailable" page)
   alias kkdis='sf project:disable koohii dev'
   alias kkena='sf project:enable koohii dev'
 
   # admin misc
-  createuser() { php batch/maintenance/createUser.php $@; }
-  edituser() { php batch/maintenance/edituser.php $@; }
+  createuser() { php batch/admin/createuser.php $@; }
+  edituser() { php batch/admin/edituser.php $@; }
 
 else
 

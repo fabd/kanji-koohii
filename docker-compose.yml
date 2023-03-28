@@ -4,8 +4,8 @@ services:
   web:
 
     build:
-      context: ./docker/php-apache
-      dockerfile: Dockerfile
+      context: ./docker
+      dockerfile: ./php/Dockerfile
 
     container_name: kk_webserver
     
@@ -21,13 +21,18 @@ services:
 
     volumes:
       - ./src:/var/www/html
+      
+      # make it easier to edit/update aliases
+      - ./docker/bash/:/root/bash
 
       # preserve bash history
-      - ./docker/php-apache/bash/.bash_history:/root/.bash_history
-  
+      - ./docker/php/.bash_history:/root/.bash_history
+
+
   db:
     build:
-      context: ./docker/db
+      context: ./docker
+      dockerfile: ./db/Dockerfile
     
     container_name: kk_mysql
 
@@ -47,9 +52,11 @@ services:
     volumes:
       - ./mysql56:/var/lib/mysql
 
-      # use a custom prompt + aliases, preserve bash history
-      - ./docker/db/bash/.bash_history:/root/.bash_history
-      - ./docker/db/bash/.bashrc:/root/.bashrc
-      
       # sources to initialize development database
       - ./docker/db/initdb.d:/docker-entrypoint-initdb.d
+
+      # make it easier to edit/update aliases
+      - ./docker/bash/:/root/bash
+
+      # preserve bash history
+      - ./docker/db/.bash_history:/root/.bash_history

@@ -9,12 +9,8 @@ Users are included for integrity between tables. They are real Kanji Koohii user
 Additional users can be created on the command line (php container):
 
 ```bash
-$ php batch/maintenance/createUser.php -u aaaaaa -p aaaaaa --location 'Localhost'
+$ php batch/admin/createuser.php -u aaaaaa -p aaaaaa --location 'Localhost'
 ```
-
-You can create additional users from the command line. From the `web` type:
-
-    $ php batch/maintenance/createUser.php
 
 ### Admin
 

@@ -12,7 +12,6 @@
       4. [Rebuild / reset the sample database](#rebuild--reset-the-sample-database)
 6. [Working with Symfony 1.x](#working-with-symfony-1x)
    1. [Clearing Symfony's cache](#clearing-symfonys-cache)
-   2. [Debugging & checking for errors](#debugging--checking-for-errors)
 7. [F.A.Q.](#faq)
    1. [Docker](#docker)
    2. [Generate favicons (optional)](#generate-favicons-optional)
@@ -26,7 +25,7 @@
 
 **Init bash history files** which are persisted through Docker volumes:
 
-    touch docker/db/bash/.bash_history docker/php-apache/bash/.bash_history
+    touch docker/db/.bash_history docker/php/.bash_history
 
 **Build the containers**.
 
@@ -79,7 +78,7 @@ Start the **Vite dev server** (otherwise the site will look broken without any s
 
 > :point_right: &nbsp; If the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead. See `USE_DEV_SERVER` info in [Development.md](./Development.md)
 
-> :point_right: &nbsp; You can also just type `vite` instead of `npm run dev` (a few aliases are setup in `./docker/php-apache/bash/.bash_aliases`).
+> :point_right: &nbsp; You can also just type `vite` instead of `npm run dev` (see aliases  in `./docker/bash/`).
 
     npm run dev
 
@@ -146,7 +145,7 @@ You can use a virtual host name instead of `localhost`, for example (`/etc/hosts
 
     127.0.0.1    koohii.local
 
-Update the `ServerName` in `.docker/php-apache/koohii.vhosts.conf`, then rebuild the `web` container (`dc down ; dc build ; dc up -d`).
+Update the `ServerName` in `.docker/php/koohii.conf`, then rebuild the `web` container (`dc down ; dc build ; dc up -d`).
 
 Also make sure to update `website_url` setting located in `src/apps/koohii/config/app.yml`. This setting is used to generate links in a few places.
 
@@ -205,16 +204,6 @@ Most YAML (`.yml`) configuration changes are picked up automatically (for exampl
 > :exclamation: &nbsp; Make sure to be in the Symfony root folder `src/`, **not** in the Vite subfolder (`src/vite/`)
 
     sf cache:clear --type=config
-
-## Debugging & checking for errors
-
-A really simple way to debug on the php side is to use [error_log](https://www.php.net/manual/en/function.error-log) function. Then check the log in real time (from the `web` container):
-
-    tail -f /var/log/apache2/error.log
-
-Or use the bash alias (see .docker/php-apache/root/.bash_aliases):
-
-    phperrlog
 
 # F.A.Q.
 

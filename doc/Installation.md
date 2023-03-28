@@ -35,20 +35,13 @@
 
 **CLI into the `web` (php/Apache) container**. You should see a colored prompt: `[php] root /var/www/html $`.
 
-> :point_right: &nbsp; Note: the path `/var/www/html` is mapped to `src/` which is the Symfony root folder.
+> :point_right: &nbsp; Note: the path `/var/www/html` is mapped to `src/` which is the Symfony root folder - while `/var/www/html/web` is the folder served by Apache.
 
     docker compose exec web bash
 
-**Init some Symfony directories**:
+**Init some application config files and folders**:
 
-    mkdir -p cache data log ; chmod 777 cache data log
-
-**Init the ViteJs build** directory:
-
-    mkdir -p web/build ; chmod 777 web web/build
-
-**Init private config files**:
-
+    mkdir -p cache log web/build && chmod 777 cache log web web/build
     cp web/.htaccess_default web/.htaccess
     cp apps/koohii/config/app.example.yml apps/koohii/config/app.yml
     cp apps/koohii/config/settings.example.yml apps/koohii/config/settings.yml
@@ -57,7 +50,7 @@
 
 The next step will create and populate the `src/vendor/` subfolder:
 
-> :point_right: &nbsp; Note! Composer's [autoloader optimizations](https://getcomposer.org/doc/articles/autoloader-optimization.md#autoloader-optimization) are enabled, therefore after adding or renaming any PSR-4 class, you'll need to re-run `composer install` for the autoloader to recognize it.
+> :point_right: &nbsp; Note! If you are adding a new php class, you may have to run `composer dump-autoload` to pick up the new files.
 
     composer install
 
@@ -97,9 +90,11 @@ Now you should be able to preview the site at (refresh the page if it looks brok
 
 > :point_right: &nbsp; Note: if somehow your `vite` dev server is not running at `http://localhost:3000/` then edit `VITE_SERVER` in `coreWebResponse.php`
 
-You can sign in as `admin`, or `guest` or any of the users that are linked to the shared stories. All users in the sample database have a the password `test` and a dummy email.
+You can sign in as `admin`, or `guest` or any of the users that are linked to the shared stories.
 
-You can of course create additional accounts. No emails are sent in development mode.
+* All users in the sample database have the password `test` and a dummy email.
+* You can create additional test users using the signup form, or on the command line with the `createuser` script (see the alias in docker/bash/koohii_dev.sh).
+* No emails are sent in development mode.
 
 # Development & Production Builds
 
@@ -174,7 +169,7 @@ Then run **mysql** CLI:
 
     mysql -u koohii -pkoohii -h localhost -D db_github --default-character-set=utf8
 
-You can also add an alias in `.docker/db/root/.bashrc`.
+You can also use one of the aliases declared in `.docker/bash/bashrc`.
 
 ### Rebuild / reset the sample database
 

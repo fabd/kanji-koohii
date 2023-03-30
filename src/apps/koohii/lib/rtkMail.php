@@ -1,25 +1,15 @@
 <?php
 /**
- * Sends Koohii mails.
+ * Sends Koohii emails, using email templates.
  *
- * CONFIGURATION
- *
- *   Requires configuration in app.yml
- *   Each configuration value is an associative array with 'email' and 'name' properties.
+ * Example configuration in app.yml (see parseAddress() for accepted formats):
  *
  *   all:
- *     .dummy:
- *
- *       # from (email, name) for automatic mailings (registration, password change, ...)
- *       email_robot:       { email: '...', name: 'Kanji Koohii' }
- *
- *       # to   (email, name) for contact page form
- *       email_feedback_to: { email: '...',  name: 'Fabrice' }
+ *     email_robot:       'Kanji Koohii <kanji.koohii+robot@domain.com>'
+ *     email_feedback_to: 'Fabrice <fabrice@domain.com>'
  *
  *
- * RENDERING EMAIL TEMPLATES
- *
- *   Email templates are stored in `%sf_app_template_dir%/emails` by default.
+ * Email templates are stored in `%sf_app_template_dir%/emails`.
  *
  *   For example:
  *
@@ -42,6 +32,54 @@ class rtkMail extends MailAbstract
   }
 
   /**
+   * Simple parsing of email address, no need for all the fancy RFC stuff.
+   *
+   * @param string $address Full address as `"Name" <email>` or just `email`.
+   *                        Quotes around the name are optional.
+   *
+   * @return array array with `name` and `email` keys, `name` is an empty string
+   *               if it was not provided
+   */
+  public static function parseAddress($address)
+  {
+    $address = trim($address ?? '');
+    assert(!empty($address));
+
+    $name = '';
+    $email = '';
+
+    if (preg_match('/"?([^><,"]+)"?\s*((?:<[^><,]+>)?)/', $address, $matches))
+    {
+      if (!empty($matches[2]))
+      {
+        $name = trim($matches[1]);
+        $email = trim($matches[2], '<>');
+      }
+      else
+      {
+        $email = $matches[1];
+      }
+    }
+
+    return ['name' => $name, 'email' => $email];
+  }
+
+  /**
+   * Reverse of parseAddress(). Formats name and email to `"name" <email>` or just
+   * `email`.
+   *
+   * @param array $from Array with keys `name` and `email`
+   *
+   * @return string
+   */
+  public static function formatAddress($from)
+  {
+    return !empty($from['name'])
+      ? "\"{$from['name']}\" <{$from['email']}>"
+      : $from['email'];
+  }
+
+  /**
    * Sends Forgot Password email with new password.
    *
    * @param string $userAddress
@@ -50,8 +88,8 @@ class rtkMail extends MailAbstract
    */
   public function sendForgotPasswordConfirmation($userAddress, $userName, $rawPassword)
   {
-    $from = sfConfig::get('app_email_robot');
-    $this->setFrom($from['email'], $from['name'] ?? '');
+    $from = self::parseAddress(sfConfig::get('app_email_robot'));
+    $this->setFrom($from['email'], $from['name']);
 
     $this->addTo($userAddress, $userName);
     $this->setSubject('Your new password at '._CJ('Kanji Koohii!'));
@@ -73,8 +111,8 @@ class rtkMail extends MailAbstract
    */
   public function sendNewAccountConfirmation($userAddress, $userName, $rawPassword)
   {
-    $from = sfConfig::get('app_email_robot');
-    $this->setFrom($from['email'], $from['name'] ?? '');
+    $from = self::parseAddress(sfConfig::get('app_email_robot'));
+    $this->setFrom($from['email'], $from['name']);
 
     $this->addTo($userAddress, $userName);
     $this->setSubject('Welcome to '._CJ('Kanji Koohii!'));
@@ -101,8 +139,8 @@ class rtkMail extends MailAbstract
 
     $this->setFrom($name_from, $author);
 
-    $to = sfConfig::get('app_email_feedback_to');
-    $this->addTo($to['email'], $to['name'] ?? '');
+    $to = self::parseAddress(sfConfig::get('app_email_feedback_to'));
+    $this->addTo($to['email'], $to['name']);
 
     $this->setSubject($subject);
     $this->setBodyText($message);
@@ -119,8 +157,8 @@ class rtkMail extends MailAbstract
    */
   public function sendUpdatePasswordConfirmation($userAddress, $userName, $rawPassword)
   {
-    $from = sfConfig::get('app_email_robot');
-    $this->setFrom($from['email'], $from['name'] ?? '');
+    $from = self::parseAddress(sfConfig::get('app_email_robot'));
+    $this->setFrom($from['email'], $from['name']);
 
     $this->addTo($userAddress, $userName);
     $this->setSubject('Account update at '._CJ('Kanji Koohii!'));
@@ -157,7 +195,7 @@ class rtkMail extends MailAbstract
 
     if (!is_readable($templateFile))
     {
-      throw new sfException('Email template file not found <b>'.$templateFile.'</b>');
+      throw new sfException("Template file not found: `{$templateFile}`");
     }
 
     // load core and standard helpers

@@ -1,16 +1,16 @@
-#
-# Date: 2021.01.19
-#
-#  Table to log user account deletions.
-#  Keeps track of released usernames, and userids in case of issues.
-#  
-#  NOTES
-#  
-#    - Only last N days will be kept so the table will not become very long
-#      and the user's info is eventually completely removed.
-#
-# @See  ./lib/UserDeleteLog.php
-#
+--
+-- Date: 2021.01.19
+--
+--  Table to log user account deletions.
+--  Keeps track of released usernames, and userids in case of issues.
+--  
+--  NOTES
+--  
+--    - Only last N days will be kept so the table will not become very long
+--      and the user's info is eventually completely removed.
+--
+-- @See  ./lib/UserDeleteLog.php
+--
 
 -- ----------------------------------------------------------------------------
 -- log_user_delete

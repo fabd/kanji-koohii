@@ -86,6 +86,7 @@
 <div style="margin-top:2em;">
 
 <?php if ($fcr_total > 0) { ?>
+  <div id="KoReviewSummaryTable">
     <?php
       /**
        * FIXME? Instead of using ts_start to match the last updated cards, we
@@ -101,12 +102,12 @@
         include_component('review', 'summarySimple');
       }
     ?>
+  </div>
 <?php } ?>
 
 </div>
 
 <?php koohii_onload_slot(); ?>
-  if (document.getElementById('summaryTable')) {
-    new Koohii.UX.AjaxTable('summaryTable');
-  }
+  const el = document.getElementById('KoReviewSummaryTable');
+  el && new Koohii.UX.AjaxTable(el);
 <?php end_slot(); ?>

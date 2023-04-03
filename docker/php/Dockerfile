@@ -59,7 +59,7 @@ RUN apt-get install -y --no-install-recommends \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # nodejs (required for Vite)
-RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 # Set locales
 RUN locale-gen en_US.UTF-8 en_GB.UTF-8

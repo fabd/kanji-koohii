@@ -38,7 +38,7 @@ type TListItem = [number, string, string]; // index, kanji, keyword
 let storage: Storage;
 let store: TKoohiiLocalStore;
 
-const STUDY_SEARCH_URL = kk_globals_get("STUDY_SEARCH_URL");
+let studySearchUrl: string;
 
 export default defineComponent({
   name: "KoStudyLastViewed",
@@ -73,7 +73,8 @@ export default defineComponent({
 
   methods: {
     createStudyUrl(kanji: string) {
-      return `${STUDY_SEARCH_URL}/${kanji}`;
+      const url = (studySearchUrl ??= kk_globals_get("STUDY_SEARCH_URL"));
+      return `${url}/${kanji}`;
     },
 
     // KISS for now, we don't store other things on localStorage

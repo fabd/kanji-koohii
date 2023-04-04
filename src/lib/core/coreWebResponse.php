@@ -14,7 +14,7 @@ class coreWebResponse extends sfWebResponse
   /**
    * Vite dev server.
    */
-  const VITE_SERVER = 'http://localhost:3000/';
+  const VITE_SERVER = 'http://localhost:5173/';
   const VITE_CLIENT = '@vite/client';
 
   const USE_DEV_SERVER = true;

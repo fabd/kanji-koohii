@@ -59,7 +59,7 @@ RUN apt-get install -y --no-install-recommends \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # nodejs (required for Vite)
-RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 # Set locales
 RUN locale-gen en_US.UTF-8 en_GB.UTF-8
@@ -88,10 +88,8 @@ RUN a2ensite koohii
 
 COPY bash/bashrc /root/.bashrc
 
-# Ports
 EXPOSE 80
 EXPOSE 443
-EXPOSE 3000   
-
+EXPOSE 5173
 
 CMD ["apache2ctl", "-D", "FOREGROUND"]

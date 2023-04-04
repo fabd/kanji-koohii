@@ -14,10 +14,10 @@ services:
 
     image: kk_webserver_img  
 
-    # 3000 Vite server
+    # 5173 : Vite's default dev server port
     ports:
       - "80:80"
-      - "3000:3000"
+      - "5173:5173"
 
     volumes:
       - ./src:/var/www/html

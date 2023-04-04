@@ -1,9 +1,13 @@
 module.exports = {
   extends: [
-    // @plugins stylelint-scss, @extends stylelint-config-recommended
+    //  stylelint-config-recommended
+    //    + stylelint-scss plugin & rules
+    //    + postcss-scss custom syntqx
+    // https://github.com/stylelint-scss/stylelint-config-recommended-scss
     "stylelint-config-recommended-scss",
-    // add this last
-    "stylelint-config-prettier",
+    //
+    // https://github.com/ota-meshi/stylelint-config-recommended-vue
+    "stylelint-config-recommended-vue/scss",
   ],
 
   ignoreFiles: [

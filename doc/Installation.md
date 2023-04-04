@@ -13,8 +13,9 @@
 6. [Working with Symfony 1.x](#working-with-symfony-1x)
    1. [Clearing Symfony's cache](#clearing-symfonys-cache)
 7. [F.A.Q.](#faq)
-   1. [Docker](#docker)
-   2. [Generate favicons (optional)](#generate-favicons-optional)
+   1. [VSCode Setup](#vscode-setup)
+   2. [Docker](#docker)
+   3. [Generate favicons (optional)](#generate-favicons-optional)
 
 # First Time Setup
 
@@ -201,6 +202,17 @@ Most YAML (`.yml`) configuration changes are picked up automatically (for exampl
     sf cache:clear --type=config
 
 # F.A.Q.
+
+## VSCode Setup
+
+Recommended setup:
+
+- ESLint [link](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- Prettier [link](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Stylelint [link](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+- Tailwind CSS IntelliSense [link](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- TypeScript Vue Plugin (Volar) [link](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+- Vue Language Features (Volar) [link](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 
 ## Docker
 

@@ -83,7 +83,7 @@
   if ($restudyCount)
   {
     echo _bs_button_to(
-      "{$restudyCount} Kanji to Restudy".'<i class="fa fa-book-open ml-2"></i>',
+      "Restudy ({$restudyCount})".'<i class="fa fa-book-open ml-2"></i>',
       'study/failedlist',
       [
         'class' => 'ko-Btn ko-Btn--danger ko-Btn--large ml-4',

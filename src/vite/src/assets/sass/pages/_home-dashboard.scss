@@ -51,7 +51,7 @@
   //////////////////////////////////////////////////////////////////
   &-srsIcoBtn {
     // note: the height of these "buttons" comes from the parent's `items-stretch`
-    @apply text-smx text-body no-underline px-2 cursor-pointer rounded-md;
+    @apply text-smx text-body no-underline cursor-pointer rounded-md;
 
     &:hover {
       @apply no-underline;

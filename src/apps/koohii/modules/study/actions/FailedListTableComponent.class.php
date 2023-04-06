@@ -47,7 +47,7 @@ class FailedListTableBinding implements uiSelectTableBinding
       },
       "columns": [
         {
-          "caption":   "Framenum",
+          "caption":   "Index",
           "width":     5,
           "cssClass":  "text-center",
           "colData":  "seq_nr"

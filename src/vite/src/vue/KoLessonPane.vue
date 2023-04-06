@@ -9,8 +9,8 @@
         <span class="font-normal">of {{ sequenceName }}</span>
       </h3>
 
-      <a v-if="allLessonsUrl" :href="allLessonsUrl" class="ml-4"
-        >View all {{ allLessonsCount }} lessons</a
+      <a v-if="allLessonsUrl" :href="allLessonsUrl" class="ml-4 leading-1"
+        >View all lessons</a
       >
 
       <!-- <div class="text-warm text-lg ml-auto">{{ lessonPos }} / {{ lessonCount }} kanji</div> -->

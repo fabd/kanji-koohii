@@ -152,13 +152,26 @@ a.admin-edit {
   // colors
   &--danger {
     --ko-box-bg: #ffd1c9;
+    @apply text-danger-dark;
+  }
+  &--danger &-title {
+    @apply text-danger-dark;
   }
   &--danger#{&}--stroke {
-    --ko-box-bg: #F2A5A5; // slightly darker for border variant
+    --ko-box-bg: #f2a5a5; // slightly darker for border variant
   }
 
   &--success {
     --ko-box-bg: #d1e2bb;
+    @apply text-success-dark;
+  }
+  &--success &-title {
+    @apply text-success-darker;
+  }
+
+  &-title {
+    @apply font-bold text-body;
+    font-size: min(15px + 0.5vw, 18px);
   }
 }
 
@@ -774,15 +787,9 @@ a:hover.subdued {
  * Flashcard Review
  * ---------------------------- */
 
-.ko-CustomReviewForm {
+.ko-Box--customReview {
   @extend .ko-Box;
   font-size: 15px;
-  min-height: 120px;
-  margin-bottom: 1em;
-
-  &-title {
-    @apply text-lg font-bold text-body;
-  }
 }
 
 /* ------------------ */

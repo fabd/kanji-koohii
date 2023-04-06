@@ -1,10 +1,10 @@
 <template>
-  <div class="ko-LessonPane ko-Box ko-DashBox">
+  <div class="ko-LessonPane ko-Box">
     <!-- --- -->
     <!-- TOP -->
     <!-- --- -->
     <div class="flex items-center mb-4">
-      <h3 class="ko-DashBox-title mb-0">
+      <h3 class="ko-Box-title mb-0">
         Lesson {{ lessonId }}
         <span class="font-normal">of {{ sequenceName }}</span>
       </h3>

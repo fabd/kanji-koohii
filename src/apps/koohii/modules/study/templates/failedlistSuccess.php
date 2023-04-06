@@ -10,10 +10,10 @@
   <div class="col-md-6 mb-4 md:mb-0">
 <?php if ($restudyCount): ?>
     <div class="ko-Box ko-Box--stroke ko-Box--danger md:h-full">
-      <h3 class="text-md font-bold text-danger-dark"><?= $restudyCount; ?> Kanji to Restudy</h3>
+      <h3 class="ko-Box-title"><?= $restudyCount; ?> Kanji to Restudy</h3>
 <?php else: ?>
     <div class="ko-Box ko-Box--success">
-      <h3 class="text-md font-bold text-success-darker">No Forgotten Kanji</h3>
+      <h3 class="ko-Box-title">No Forgotten Kanji</h3>
 <?php endif; ?>
 
       <p>Restudy your forgotten kanji, <em>in index order</em>. <?= link_to('Learn More', '@learnmore#restudy-list', ['class' => 'whitespace-nowrap']); ?>
@@ -62,7 +62,7 @@
     <div class="ko-Box md:h-full">
 
       <div class="flex">
-        <h3 class="text-md font-bold text-body">Learned Kanji</h3>
+        <h3 class="ko-Box-title">Learned Kanji</h3>
 <?php if ($learnedCount): ?>
           <?= link_to(
   '<i class="fa fa-times mr-2"></i>Clear learned list ',

@@ -45,8 +45,8 @@
 
 <div class="row mb-5">
   <div class="col-md-6 mb-4 md:mb-0">
-    <div class="ko-Box ko-DashBox h-full">
-      <h3 class="ko-DashBox-title">Study</h3>
+    <div class="ko-Box h-full">
+      <h3 class="ko-Box-title">Study</h3>
 
 <?php if ($isSequenceComplete): ?>
       <div class="text-smx mb-3">
@@ -97,8 +97,8 @@
   </div>
 
   <div class="col-md-6 md:mb-0">
-    <div class="ko-Box ko-DashBox h-full">
-      <h3 class="ko-DashBox-title">Review</h3>
+    <div class="ko-Box h-full">
+      <h3 class="ko-Box-title">Review</h3>
 
 <?php if (!$hasFlashcards): ?>
   <div class="flex items-start mb-4">

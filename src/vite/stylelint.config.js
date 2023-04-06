@@ -84,6 +84,12 @@ module.exports = {
     // stylelint-scss
     /////////////////////////////////////////////////////////////
 
+    // pointless rule
+    "scss/at-extend-no-missing-placeholder": null,
+
+    // another pointless rule
+    "scss/comment-no-empty": null,
+
     // no `margin: { left: 10px; }`
     "scss/declaration-nested-properties": "never",
 

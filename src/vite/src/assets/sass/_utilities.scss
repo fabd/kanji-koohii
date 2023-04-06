@@ -73,10 +73,8 @@ $minWidthItems: ("100" 100px, "200" 200px);
 .ux-flexButtonRow {
   $gutter: 0.5rem;
   @apply flex flex-wrap items-center;
-  margin-left: -$gutter;
-  > * {
-    margin-left: $gutter;
-  }
+  gap: $gutter;
+}
 
 // --------------------------------------------------------------------
 // RESPONSIVE FONT SIZES

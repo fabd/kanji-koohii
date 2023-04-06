@@ -10,6 +10,11 @@
 //
 //     ux-maxWidth300/360
 //
+//
+//   Typography
+//
+//     ux-text-sm/md/lg        ... responsive font sizes
+//
 // ====================================================================
 
 @use "sass:list";
@@ -72,4 +77,25 @@ $minWidthItems: ("100" 100px, "200" 200px);
   > * {
     margin-left: $gutter;
   }
+
+// --------------------------------------------------------------------
+// RESPONSIVE FONT SIZES
+//
+//   sm/md/lg/etc  should roughly match Tailwind's text-sm/md/etc
+//                 for desktop view.
+// --------------------------------------------------------------------
+.ux-text-sm {
+  font-size: min(11px + 0.33vw, 14px);
+}
+.ux-text-md {
+  font-size: min(12px + 0.41vw, 16px);
+}
+.ux-text-lg {
+  font-size: min(14px + 0.4vw, 18px);
+}
+.ux-text-xl {
+  font-size: min(16px + 0.4vw, 20px);
+}
+.ux-text-2xl {
+  font-size: min(20px + 1vw, 30px);
 }

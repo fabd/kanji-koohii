@@ -31,9 +31,9 @@
         class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary"
         @click="isOpen = !isOpen"
       >
-        {{ "Show Kanji" }}
+        <span class="mbl:hidden mr-2">Show Kanji</span>
         <i
-          class="fa fa-chevron-down ml-2"
+          class="fa fa-chevron-down"
           :class="[isOpen ? 'ux-rotateIcon180' : '']"
         ></i>
       </button>

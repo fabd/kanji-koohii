@@ -41,7 +41,7 @@
 // DBG::user();
 ?>
 
-<h2>Welcome back, <?= $sf_user->getUserName(); ?>!</h2>
+<h2 class="ux-text-2xl">Welcome back, <?= $sf_user->getUserName(); ?>!</h2>
 
 <div class="row mb-5">
   <div class="col-md-6 mb-4 md:mb-0">

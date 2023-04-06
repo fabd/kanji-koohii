@@ -3,7 +3,7 @@
   ?>
 
 <div class="flex items-center mb-4">
-  <h2 class="text-2xl md:text-[30px] mb-0">Spaced Repetition</h2>
+  <h2 class="mb-0">Spaced Repetition</h2>
 
   <?= link_to(
     '<i class="fa fa-edit mr-2"></i>SRS Settings',

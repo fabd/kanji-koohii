@@ -120,10 +120,12 @@
   border-radius: $--border-radius-lg;
 }
 
-.ko-Btn--large {
-  @include font($--button-font-size-lg);
-  padding: 12px 14px; // ~41px height
-  border-radius: $--border-radius-lg;
+@include breakpoint-up(lg) {
+  .ko-Btn--large {
+    @include font($--button-font-size-lg);
+    padding: 12px 14px; // ~41px height
+    border-radius: $--border-radius-lg;
+  }
 }
 
 // --------------------------------------------------------------------
@@ -227,7 +229,7 @@
     border-color: $text;
     color: #{darken(saturate($text, 5), 10)};
   }
-  
+
   &--success {
     $text: $--color-btn-success;
     border-color: $text;

@@ -17,7 +17,6 @@
 // utilities
 // _variables.scss ( <-- imported in vite.config.ts )
 @import "./abstracts/_mixins.scss";
-@import "./_utilities.scss";
 @import "./layout/_layout.scss";
 
 // components
@@ -900,6 +899,13 @@ a:hover.subdued {
     @apply bg-[#6cbe6b] text-[#fff];
   }
 }
+
+// --------------------------------------------------------------------
+// (before-last) our own utilities
+//   We want to be able to override our component styles with utilities.
+//   For example font-size in `.Box-title` can be overridden by `.ux-text-lg`.
+// --------------------------------------------------------------------
+@import "./_utilities.scss";
 
 // --------------------------------------------------------------------
 // (last) tailwind utilities

@@ -4,6 +4,7 @@
 
 @use "sass:color" as color;
 
+// this mixin outputs classes that match getColorForCard() in JS
 @mixin card-tag-colors() {
   &.is-off {
     //
@@ -38,6 +39,12 @@
 // base class for the entire dashboard
 // --------------------------------------------------------------------
 .ko-Dash {
+  // optimize the dashboard's boxes padding a little bit
+  @include breakpoint-down(md) {
+    --ko-box-px: 10px;
+    --ko-box-py: 10px;
+  }
+
   //////////////////////////////////////////////////////////////////
   // the little SRS isometric icons
   //////////////////////////////////////////////////////////////////
@@ -64,6 +71,17 @@
         background-color: #ff982a6e; //color.change(#f7a247, $alpha: 0.3);
       }
     }
+  }
+}
+
+// --------------------------------------------------------------------
+// View All Lessons page
+// --------------------------------------------------------------------
+// optimize the lessons list padding a little bit
+.ko-ViewAllLessons {
+  @include breakpoint-down(md) {
+    --ko-box-px: 10px;
+    --ko-box-py: 10px;
   }
 }
 

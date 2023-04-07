@@ -43,7 +43,7 @@
 
 <h2 class="ux-text-2xl">Welcome back, <?= $sf_user->getUserName(); ?>!</h2>
 
-<div class="row mb-5">
+<div class="row mb-5 ko-Dash">
   <div class="col-md-6 mb-4 md:mb-0">
     <div class="ko-Box h-full">
       <h3 class="ko-Box-title">Study</h3>
@@ -143,7 +143,9 @@
   </div>
 </div>
 
-<div id="JsHomeLesson" class="mb-12"><!-- vue --></div>
+<div id="JsHomeLesson" class="ko-Dash mb-12">
+  <!-- vue -->
+</div>
 
 <?php if (!KK_ENV_FORK): ?>
   <div class="mb-12">

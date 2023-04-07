@@ -21,6 +21,7 @@
 @import "./layout/_layout.scss";
 
 // components
+@import "./components/_Box.scss";
 @import "./components/_buttons.scss";
 @import "./components/_KanjiCard.scss";
 @import "./components/_mobile-nav.scss";
@@ -128,51 +129,6 @@ a.admin-edit {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.ko-Box {
-  --ko-box-px: 14px;
-  --ko-box-py: 14px;
-  --ko-box-bg: #{$--clr-bg-1};
-
-  background-color: var(--ko-box-bg);
-  border-color: var(--ko-box-bg);
-  border-width: 2px;
-  border-radius: $--border-radius-lg;
-  @include px(var(--ko-box-px));
-  @include py(var(--ko-box-py));
-
-  // a style of bordered box, clear filling
-  &--stroke {
-    background: transparent;
-    border-width: 2px;
-    border-color: var(--ko-box-bg, transparent);
-  }
-
-  // colors
-  &--danger {
-    --ko-box-bg: #ffd1c9;
-    @apply text-danger-dark;
-  }
-  &--danger &-title {
-    @apply text-danger-dark;
-  }
-  &--danger#{&}--stroke {
-    --ko-box-bg: #f2a5a5; // slightly darker for border variant
-  }
-
-  &--success {
-    --ko-box-bg: #d1e2bb;
-    @apply text-success-dark;
-  }
-  &--success &-title {
-    @apply text-success-darker;
-  }
-
-  &-title {
-    @apply font-bold text-body;
-    font-size: min(15px + 0.5vw, 18px);
-  }
 }
 
 /* ---------------------------- */

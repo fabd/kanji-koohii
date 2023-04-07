@@ -4,7 +4,7 @@
     <!-- TOP -->
     <!-- --- -->
     <div class="flex items-center mb-4">
-      <h3 class="ko-Box-title mb-0">
+      <h3 class="ko-Box-title ux-text-lg mb-0">
         Lesson {{ lessonId }}
         <span class="font-normal">of {{ sequenceName }}</span>
       </h3>

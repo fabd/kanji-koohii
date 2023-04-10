@@ -13,7 +13,7 @@
             'min-width': cssFillWidth,
           }"
         >
-          {{ pctMain }}<span class="text-[0.9em]">{{ pctFrac }}%</span>
+          {{ pctMain }}{{ pctFrac }}%
         </div>
       </transition>
     </div>

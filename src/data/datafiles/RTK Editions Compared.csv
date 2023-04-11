@@ -93,7 +93,7 @@
 副	89	93	5	5	vice-	vice-
 別	90	94	5	5	separate	separate
 丁	91	95	5	5	street	street
-町	92	96	5	5	village	village
+町	92	96	5	5	village	town
 可	93	97	5	5	can	can
 頂	94	98	5	5	place on the head	place on the head
 子	95	99	6	6	child	child
@@ -218,7 +218,7 @@
 椅	2480	218	57	10	chair	chair
 枯	206	219	10	10	wither	wither
 朴	207	220	10	10	crude	crude
-村	208	221	10	10	town	town
+村	208	221	10	10	town	village
 相	209	222	10	10	inter-	inter-
 机	210	223	10	10	desk	desk
 本	211	224	10	10	book	book

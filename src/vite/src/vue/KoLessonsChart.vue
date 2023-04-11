@@ -3,7 +3,6 @@
     <ko-lesson-pane
       v-for="(lesson, index) in lessons"
       :key="index"
-      :cards="getCardsForLesson(lesson)"
       :lesson-from="lesson.from"
       :lesson-id="lesson.id"
       :lesson-count="lesson.count"
@@ -34,17 +33,6 @@ export default defineComponent({
   props: {
     lessons: { type: Array as PropType<TLessonsChartLesson[]>, required: true },
     sequenceName: { type: String, required: true },
-  },
-
-  methods: {
-    getCardsForLesson(lesson: TLessonsChartLesson) {
-      const cards = USER.getKanjiCardDataForRange(
-        lesson.from,
-        lesson.from + lesson.count - 1
-      );
-
-      return cards;
-    },
   },
 });
 </script>

@@ -1,10 +1,18 @@
 <template>
-  <div class="p-8">
-    <h1>
-      <a href="/index_dev.php">Koohii</a> / UX Docs
-    </h1>
+  <div class="">
+    <h1> <a href="/index_dev.php">Koohii</a> / UX Docs </h1>
 
-    <h2>PctBar</h2>
+    <h2>Responsive Font Sizes</h2>
+
+    <section class="ux-docSection ux-docDemoblock">
+      <h3 class="ux-text-lg">Heading ux-text-lg</h3>
+      <p class="ux-text-md">Lorem ipsum <samp>ux-text-md</samp> sit amet, consectetur adipiscing elit.</p>
+      
+      <h3 class="ux-text-2xl">Heading ux-text-2xl</h3>
+      <p class="ux-text-md">Lorem ipsum <samp>ux-text-md</samp> sit amet, consectetur adipiscing elit.</p>
+    </section>
+
+    <h2>KoPctBar</h2>
 
     <section class="ux-docSection ux-docDemoblock">
       <div class="mb-4 ux-flexButtonRow">
@@ -29,39 +37,52 @@
       </div>
     </section>
 
-    <h2>PaddedBox</h2>
+    <h2>KoBox</h2>
 
     <section class="ux-docSection ux-docDemoblock">
-      <div class="flex mb-4">
-        <span class="self-center font-bold min-w-[100px]">plain</span>
-        <div class="min-w-[200px] ml-4 ko-Box">
-          <h3 class="text-md font-bold text-body">Card Title</h3>
-          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p>Base style</p>
+
+      <div class="flex flex-wrap gap-4 mb-4">
+        <div class="min-w-[200px] ko-Box">
+          <h3 class="ko-Box-title">Card Title</h3>
+          <p class="mb-0"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p
+          >
         </div>
-        <div class="min-w-[200px] ml-4 ko-Box ko-Box--danger">
-          <h3 class="text-md font-bold text-danger-darker">Card Title</h3>
-          <p class="mb-0 text-danger-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit!</p>
+        <div class="min-w-[200px] ko-Box ko-Box--danger">
+          <h3 class="ko-Box-title">Card Title</h3>
+          <p class="mb-0"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit!</p
+          >
         </div>
-        <div class="min-w-[200px] ml-4 ko-Box ko-Box--success">
-          <h3 class="text-md font-bold text-success-darker">Card Title</h3>
-          <p class="mb-0 text-success-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="min-w-[200px] ko-Box ko-Box--success">
+          <h3 class="ko-Box-title">Card Title</h3>
+          <p class="mb-0"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p
+          >
         </div>
       </div>
-      <div class="flex mb-0">
-        <span class="self-center font-bold min-w-[100px]">stroke</span>
-        <div class="min-w-[200px] ml-4 ko-Box ko-Box--stroke">
-          <h3 class="text-md font-bold">Card Title</h3>
-          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+      <p>Stroke style</p>
+
+      <div class="flex flex-wrap gap-4 mb-0">
+        <div class="min-w-[200px] ko-Box ko-Box--stroke">
+          <h3 class="ko-Box-title">Card Title</h3>
+          <p class="mb-0"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p
+          >
         </div>
-        <div class="min-w-[200px] ml-4 ko-Box ko-Box--stroke ko-Box--danger">
-          <h3 class="text-md font-bold text-danger-dark">Card Title</h3>
-          <p class="mb-0 text-danger">Lorem ipsum dolor sit amet, consectetur adipiscing elit!</p>
+        <div class="min-w-[200px] ko-Box ko-Box--stroke ko-Box--danger">
+          <h3 class="ko-Box-title">Card Title</h3>
+          <p class="mb-0"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit!</p
+          >
         </div>
-        <div class="min-w-[200px] ml-4 ko-Box ko-Box--stroke ko-Box--success">
-          <h3 class="text-md font-bold text-success-dark">Card Title</h3>
-          <p
-            class="mb-0 text-success-darker"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="min-w-[200px] ko-Box ko-Box--stroke ko-Box--success">
+          <h3 class="ko-Box-title">Card Title</h3>
+          <p class="mb-0"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p
+          >
         </div>
       </div>
     </section>
@@ -123,17 +144,35 @@
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">is-ghost</span>
         <button class="ko-Btn is-ghost ko-Btn--large">Default</button>
-        <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary">Primary</button>
-        <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--success">Success</button>
-        <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--danger">Danger</button>
+        <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary"
+          >Primary</button
+        >
+        <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--success"
+          >Success</button
+        >
+        <button class="ko-Btn is-ghost ko-Btn--large ko-Btn--danger"
+          >Danger</button
+        >
       </div>
 
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">is-disabled</span>
-        <button class="ko-Btn is-disabled ko-Btn--large" disabled>Default</button>
-        <button class="ko-Btn is-disabled ko-Btn--large ko-Btn--primary" disabled>Primary</button>
-        <button class="ko-Btn is-disabled ko-Btn--large ko-Btn--success" disabled>Success</button>
-        <button class="ko-Btn is-disabled ko-Btn--large ko-Btn--danger" disabled>Danger</button>
+        <button class="ko-Btn is-disabled ko-Btn--large" disabled
+          >Default</button
+        >
+        <button
+          class="ko-Btn is-disabled ko-Btn--large ko-Btn--primary"
+          disabled
+          >Primary</button
+        >
+        <button
+          class="ko-Btn is-disabled ko-Btn--large ko-Btn--success"
+          disabled
+          >Success</button
+        >
+        <button class="ko-Btn is-disabled ko-Btn--large ko-Btn--danger" disabled
+          >Danger</button
+        >
       </div>
     </section>
 
@@ -143,7 +182,11 @@
       <div class="mb-4 ux-flexButtonRow">
         <span class="self-center font-bold min-w-[120px]">&lt;button&gt;</span>
 
-        <button type="button" class="ko-Btn ko-Btn--danger ko-Btn--large" disabled="disabled">
+        <button
+          type="button"
+          class="ko-Btn ko-Btn--danger ko-Btn--large"
+          disabled="disabled"
+        >
           Begin Restudy
           <i class="fa fa-book-open ml-2"></i>
         </button>
@@ -152,7 +195,10 @@
           Spaced Repetition
           <i class="fa fa-arrow-right ml-2"></i>
         </button>
-        <button class="ko-Btn ko-Btn--large ko-Btn--success is-disabled" disabled>
+        <button
+          class="ko-Btn ko-Btn--large ko-Btn--success is-disabled"
+          disabled
+        >
           Start Review
           <i class="fa fa-arrow-right ml-2"></i>
         </button>

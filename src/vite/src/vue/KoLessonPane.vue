@@ -1,23 +1,23 @@
 <template>
-  <div class="ko-LessonPane ko-Box ko-DashBox">
+  <div class="ko-LessonPane ko-Box">
     <!-- --- -->
     <!-- TOP -->
     <!-- --- -->
     <div class="flex items-center mb-4">
-      <h3 class="ko-DashBox-title mb-0">
+      <h3 class="ko-Box-title ux-text-lg mb-0">
         Lesson {{ lessonId }}
         <span class="font-normal">of {{ sequenceName }}</span>
       </h3>
 
-      <a v-if="allLessonsUrl" :href="allLessonsUrl" class="ml-4"
-        >View all {{ allLessonsCount }} lessons</a
+      <a v-if="allLessonsUrl" :href="allLessonsUrl" class="ml-4 leading-1"
+        >View all lessons</a
       >
 
       <!-- <div class="text-warm text-lg ml-auto">{{ lessonPos }} / {{ lessonCount }} kanji</div> -->
 
       <div
-        class="px-2 py-1 rounded bg-[#E1FFC2] text-lg text-success-dark font-bold leading-1 ml-auto"
-        >{{ `${kanjiCount} / ${lessonCount} kanji` }}</div
+        class="px-2 py-1 rounded bg-[#E1FFC2] ux-text-lg text-success-dark font-bold leading-1 whitespace-nowrap ml-auto"
+        >{{ `${kanjiCount} / ${lessonCount}` }}<span class="hidden md:inline"> kanji</span></div
       >
     </div>
 
@@ -31,9 +31,9 @@
         class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary"
         @click="isOpen = !isOpen"
       >
-        {{ "Show Kanji" }}
+        <span class="mbl:hidden mr-2">Show Kanji</span>
         <i
-          class="fa fa-chevron-down ml-2"
+          class="fa fa-chevron-down"
           :class="[isOpen ? 'ux-rotateIcon180' : '']"
         ></i>
       </button>

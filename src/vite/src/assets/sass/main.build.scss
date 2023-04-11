@@ -17,10 +17,10 @@
 // utilities
 // _variables.scss ( <-- imported in vite.config.ts )
 @import "./abstracts/_mixins.scss";
-@import "./_utilities.scss";
 @import "./layout/_layout.scss";
 
 // components
+@import "./components/_Box.scss";
 @import "./components/_buttons.scss";
 @import "./components/_KanjiCard.scss";
 @import "./components/_mobile-nav.scss";
@@ -128,38 +128,6 @@ a.admin-edit {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.ko-Box {
-  --ko-box-px: 14px;
-  --ko-box-py: 14px;
-  --ko-box-bg: #{$--clr-bg-1};
-
-  background-color: var(--ko-box-bg);
-  border-color: var(--ko-box-bg);
-  border-width: 2px;
-  border-radius: $--border-radius-lg;
-  @include px(var(--ko-box-px));
-  @include py(var(--ko-box-py));
-
-  // a style of bordered box, clear filling
-  &--stroke {
-    background: transparent;
-    border-width: 2px;
-    border-color: var(--ko-box-bg, transparent);
-  }
-
-  // colors
-  &--danger {
-    --ko-box-bg: #ffd1c9;
-  }
-  &--danger#{&}--stroke {
-    --ko-box-bg: #F2A5A5; // slightly darker for border variant
-  }
-
-  &--success {
-    --ko-box-bg: #d1e2bb;
-  }
 }
 
 /* ---------------------------- */
@@ -774,15 +742,9 @@ a:hover.subdued {
  * Flashcard Review
  * ---------------------------- */
 
-.ko-CustomReviewForm {
+.ko-Box--customReview {
   @extend .ko-Box;
   font-size: 15px;
-  min-height: 120px;
-  margin-bottom: 1em;
-
-  &-title {
-    @apply text-lg font-bold text-body;
-  }
 }
 
 /* ------------------ */
@@ -937,6 +899,13 @@ a:hover.subdued {
     @apply bg-[#6cbe6b] text-[#fff];
   }
 }
+
+// --------------------------------------------------------------------
+// (before-last) our own utilities
+//   We want to be able to override our component styles with utilities.
+//   For example font-size in `.Box-title` can be overridden by `.ux-text-lg`.
+// --------------------------------------------------------------------
+@import "./_utilities.scss";
 
 // --------------------------------------------------------------------
 // (last) tailwind utilities

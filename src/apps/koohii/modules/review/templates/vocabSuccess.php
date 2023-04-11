@@ -15,9 +15,9 @@
 <div class="row">
   <div class="col-lg-6">
 
-    <div class="ko-CustomReviewForm">
+    <div class="ko-Box ko-Box--customReview mb-4">
     
-      <h3 class="ko-CustomReviewForm-title">Discover words based on RTK index</h3>
+      <h3 class="ko-Box-title">Discover words based on RTK index</h3>
 
       <p>Start a vocab session with words selected based on RTK index.</p>
 
@@ -48,9 +48,9 @@
   </div><!-- /col -->       
   <div class="col-lg-6">
 
-    <div class="ko-CustomReviewForm">
+    <div class="ko-Box ko-Box--customReview mb-4">
       
-      <h3 class="ko-CustomReviewForm-title">Discover words made only of learned kanji</h3>
+      <h3 class="ko-Box-title">Discover words made only of learned kanji</h3>
 
 <?php if ($learnedcount > 0): ?>
       <p><strong><?php echo $learnedcount ?></strong> learned kanji (one or more succesful reviews).</p>

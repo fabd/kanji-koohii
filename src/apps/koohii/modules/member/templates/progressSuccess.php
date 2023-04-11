@@ -67,4 +67,6 @@ Here you can explore all lessons in <strong><?= $sequenceName; ?></strong> - as 
   </div>
 <?php endif; ?>
 
-<div id="JsViewAllLessons" class="mb-4"><!-- vue --></div>
+<div id="JsViewAllLessons" class="ko-ViewAllLessons mb-4">
+  <!-- vue -->
+</div>

@@ -32,11 +32,11 @@
 <div class="row mb-6">
   <div class="col-lg-6">
 
-    <div class="ko-CustomReviewForm">
+    <div class="ko-Box ko-Box--customReview mb-4">
 
       <?= form_tag('review/free', ['method' => 'get']); ?>
       
-      <h3 class="ko-CustomReviewForm-title mb-4">Review by Index or Lesson</h3>
+      <h3 class="ko-Box-title mb-4">Review by Index or Lesson</h3>
 
       <div class="form-group">
         RTK Index
@@ -80,7 +80,7 @@
 <?php
   // OBSOLETE?
   /*
-    <div class="ko-CustomReviewForm">
+    <div class="ko-Box ko-Box--customReview mb-4">
 
       <h3 class="mb-4">Review from learned kanji</h3>
 

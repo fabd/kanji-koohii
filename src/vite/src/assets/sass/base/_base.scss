@@ -75,7 +75,7 @@ h1 {
 }
 
 h2 {
-  font-size: 30px;
+  font-size: min(20px + 1vw, 30px);
 }
 
 h3 {

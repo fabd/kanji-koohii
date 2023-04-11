@@ -64,32 +64,32 @@ The next step will create and populate the `src/vendor/` subfolder:
 
 # Running the website
 
-From the `web` (php/apache) container, cd into the **vite/** subfolder:
+CLI into the php/Apache container :
 
-    cd vite/
+    docker compose exec web bash
 
-Start the **Vite dev server** (otherwise the site will look broken without any stylesheets applied).
+Then start the **Vite dev server**:
+
+> :point_right: &nbsp; `vite` is an alias set up  in `./docker/bash/` - it is the same as `npm run dev`
 
 > :point_right: &nbsp; If the latency from Vite dev server is annoying it's possible to use `vite build --watch` instead. See `USE_DEV_SERVER` info in [Development.md](./Development.md)
 
-> :point_right: &nbsp; You can also just type `vite` instead of `npm run dev` (see aliases  in `./docker/bash/`).
-
-    npm run dev
+    cd /var/www/html/vite/ && vite
 
 You should see something like this:
 
-    vite v2.5.6 dev server running at:
+> :point_right: &nbsp; Note: if somehow your `vite` dev server is not running on the same port then edit `VITE_SERVER` in `coreWebResponse.php`
 
-    > Local:    http://localhost:3000/
-    > Network:  http://172.20.0.3:3000/
-
-    ready in 3495ms.
+    VITE v4.2.1  ready in 282 ms
+  
+    ➜  Local:   http://localhost:5173/
+    ➜  Network: http://172.18.0.3:5173/
+    ➜  press h to show help
 
 Now you should be able to preview the site at (refresh the page if it looks broken):
 
     http://localhost/index_dev.php
 
-> :point_right: &nbsp; Note: if somehow your `vite` dev server is not running at `http://localhost:3000/` then edit `VITE_SERVER` in `coreWebResponse.php`
 
 You can sign in as `admin`, or `guest` or any of the users that are linked to the shared stories.
 

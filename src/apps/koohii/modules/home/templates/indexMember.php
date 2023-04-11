@@ -41,12 +41,12 @@
 // DBG::user();
 ?>
 
-<h2>Welcome back, <?= $sf_user->getUserName(); ?>!</h2>
+<h2 class="ux-text-2xl">Welcome back, <?= $sf_user->getUserName(); ?>!</h2>
 
-<div class="row mb-5">
+<div class="row mb-5 ko-Dash">
   <div class="col-md-6 mb-4 md:mb-0">
-    <div class="ko-Box ko-DashBox h-full">
-      <h3 class="ko-DashBox-title">Study</h3>
+    <div class="ko-Box h-full">
+      <h3 class="ko-Box-title">Study</h3>
 
 <?php if ($isSequenceComplete): ?>
       <div class="text-smx mb-3">
@@ -73,7 +73,7 @@
 ?>
 <?php else: ?>
 <?= link_to(
-  'Study Kanji #'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
+  'Study <span class="mbl:hidden">Kanji </span>#'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
   $urls['study-resume-url'],
   ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
 );
@@ -83,7 +83,7 @@
   if ($restudyCount)
   {
     echo _bs_button_to(
-      "{$restudyCount} Kanji to Restudy".'<i class="fa fa-book-open ml-2"></i>',
+      "Restudy ({$restudyCount})".'<i class="fa fa-book-open ml-2"></i>',
       'study/failedlist',
       [
         'class' => 'ko-Btn ko-Btn--danger ko-Btn--large ml-4',
@@ -97,8 +97,8 @@
   </div>
 
   <div class="col-md-6 md:mb-0">
-    <div class="ko-Box ko-DashBox h-full">
-      <h3 class="ko-DashBox-title">Review</h3>
+    <div class="ko-Box h-full">
+      <h3 class="ko-Box-title">Review</h3>
 
 <?php if (!$hasFlashcards): ?>
   <div class="flex items-start mb-4">
@@ -111,15 +111,15 @@
 
 
 <?php if ($hasFlashcards): ?>
-      <div class="flex items-stretch -ml-2 mb-4">
+      <div class="flex items-stretch mb-4">
         <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="<?= $urls['new']; ?>" title="Review new kanji cards">
           <div class="ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2"><?= $countSrsNew; ?> <strong>new</strong></span>
+          <span class="ml-2 leading-1"><?= $countSrsNew; ?> <strong>new</strong></span>
         </a>
 
-        <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-2" href="<?= $urls['due']; ?>" title="Review due kanji cards">
+        <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-4" href="<?= $urls['due']; ?>" title="Review due kanji cards">
           <div class="ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2"><?= $countSrsDue; ?> <strong>due</strong></span>
+          <span class="ml-2 leading-1"><?= $countSrsDue; ?> <strong>due</strong></span>
         </a>
 
         <?= _bs_button_to(
@@ -143,7 +143,9 @@
   </div>
 </div>
 
-<div id="JsHomeLesson" class="mb-12"><!-- vue --></div>
+<div id="JsHomeLesson" class="ko-Dash mb-12">
+  <!-- vue -->
+</div>
 
 <?php if (!KK_ENV_FORK): ?>
   <div class="mb-12">

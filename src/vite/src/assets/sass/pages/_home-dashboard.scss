@@ -4,6 +4,7 @@
 
 @use "sass:color" as color;
 
+// this mixin outputs classes that match getColorForCard() in JS
 @mixin card-tag-colors() {
   &.is-off {
     //
@@ -38,6 +39,12 @@
 // base class for the entire dashboard
 // --------------------------------------------------------------------
 .ko-Dash {
+  // optimize the dashboard's boxes padding a little bit
+  @include breakpoint-down(md) {
+    --ko-box-px: 10px;
+    --ko-box-py: 10px;
+  }
+
   //////////////////////////////////////////////////////////////////
   // the little SRS isometric icons
   //////////////////////////////////////////////////////////////////
@@ -51,7 +58,7 @@
   //////////////////////////////////////////////////////////////////
   &-srsIcoBtn {
     // note: the height of these "buttons" comes from the parent's `items-stretch`
-    @apply text-smx text-body no-underline px-2 cursor-pointer rounded-md;
+    @apply text-smx text-body no-underline cursor-pointer rounded-md;
 
     &:hover {
       @apply no-underline;
@@ -67,10 +74,14 @@
   }
 }
 
-.ko-DashBox {
-  // main heading
-  &-title {
-    @apply text-lg font-bold text-body;
+// --------------------------------------------------------------------
+// View All Lessons page
+// --------------------------------------------------------------------
+// optimize the lessons list padding a little bit
+.ko-ViewAllLessons {
+  @include breakpoint-down(md) {
+    --ko-box-px: 10px;
+    --ko-box-py: 10px;
   }
 }
 
@@ -122,10 +133,19 @@
 }
 
 // --------------------------------------------------------------------
+// the lesson "progress bar"
+//
+//   For testing colors and stuff in devtools:
+//   Array.from($('.ko-LessonMap-items').children).forEach(el => el.className = ['is-off','is-res','is-new','is-L1'][Math.floor(Math.random() * 4)])
 // --------------------------------------------------------------------
 .ko-LessonMap {
   $height: 41px; // align height with ko-Btn--large
   $heightInner: $height - 2 * 2px;
+
+  $dotColor: #8f897c; // color of the "off" items (empty cells)
+  $dotSm: 10px; // smallest dot size, when there are many items
+  $dotMd: 15px;
+  $dotLg: 20px; // larger dots, for lessons with fewer items
 
   --ko-lmap-h: 41px;
   --ko-lmap-p: 3px;
@@ -134,53 +154,67 @@
   //////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////
   background-color: #696866;
-  padding: var(--ko-lmap-p) calc(var(--ko-lmap-p) - 1px);
+  padding: var(--ko-lmap-p);
   height: var(--ko-lmap-h);
   @apply rounded-md;
 
   //////////////////////////////////////////////////////////////////
   // default for the cells
   //////////////////////////////////////////////////////////////////
-  color: #8f897c;
-  text-align: center;
+  &-items {
+    @apply flex;
+    height: 100%;
+    gap: 1px;
+    color: $dotColor;
+    text-align: center;
+  }
 
-  @apply flex items-stretch;
-  > * {
-    @apply flex-1;
-    @apply rounded;
-    margin: 0 1px;
-
+  &-items > div {
+    @apply flex-1 rounded;
     @include card-tag-colors();
   }
 
-  .is-off {
-    &:before {
-      content: "•"; // \2022 (bullet)
-      font-size: 30px;
-      line-height: calc(var(--ko-lmap-cell-h) - 3px);
-    }
+  .is-off:before {
+    content: "•"; // \2022 (bullet)
+    font-size: $dotSm;
+    line-height: calc(var(--ko-lmap-cell-h) - 3px);
   }
 
   //////////////////////////////////////////////////////////////////
-  // tighter layout if there are too many cells to fit
+  // adapt layout if there are too many cells to fit
   //////////////////////////////////////////////////////////////////
-  &.is-dense {
-    .is-off {
-      margin: 0;
+  container: KoLessonMap / inline-size;
+
+  @container KoLessonMap (width < 400px) {
+    &.is-sm .is-off:before {
+      font-size: $dotMd;
     }
-    .is-off:before {
-      content: "•"; // \2022 (bullet)
-      font-size: 10px;
-    }
-    > * {
-      @apply rounded-sm; // less radius
-      margin: 0 1px 0 0;
+
+    &.is-md .is-off:before {
+      font-size: $dotSm;
     }
   }
 
-  &.is-tight > * {
-    @apply rounded-sm; // less radius
-    margin: 0 1px 0 0;
+  @container KoLessonMap (width < 600px) {
+    &.is-lg .is-off:before {
+      content: "";
+    }
+  }
+
+  @container KoLessonMap (width >= 400px) {
+    &.is-sm &-items,
+    &.is-md &-items {
+      gap: 2px;
+    }
+    &.is-sm .is-off:before {
+      font-size: $dotLg;
+    }
+    &.is-md .is-off:before {
+      font-size: $dotMd;
+    }
+    &.is-lg .is-off:before {
+      font-size: $dotSm;
+    }
   }
 }
 
@@ -216,7 +250,9 @@
     --cards-per-row: 6;
   }
 
-  --ko-kanjicard-w: calc((100% - 16px * var(--cards-per-row)) / var(--cards-per-row));
+  --ko-kanjicard-w: calc(
+    (100% - 16px * var(--cards-per-row)) / var(--cards-per-row)
+  );
   width: var(--ko-kanjicard-w);
 
   &-inner {

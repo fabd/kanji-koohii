@@ -1,4 +1,6 @@
-<?php use_helper('Form', 'Validation', 'Widgets', 'Decorator') ?>
+<?php
+  use_helper('Form', 'Markdown', 'Validation', 'Widgets', 'Decorator');
+?>
 <?php slot('inline_styles') ?>
 td label { white-space:nowrap; }
 td input { vertical-align:middle; }
@@ -67,17 +69,17 @@ END,
     </tbody>
   </table>
 
-  <p>The selected edition affects the Heisig index numbers displayed in the Study pages and on the flashcards. It also changes
-    the order in which characters are presented in the Study pages, and which <?php echo _CJ('kanji') ?> will be added to your
-    flashcards when you enter Heisig indexes in the Manage pages.</p>
+<?php markdown_begin() ?>
+The selected edition affects the Heisig index numbers displayed in the Study pages and on the flashcards. It also changes the order in which characters are presented in the Study pages, and which kanji will be added to your flashcards when you enter Heisig indexes in the Manage pages.
 
-  <p><span style="color:#484;">Switching between editions is safe</span>. Stories and flashcards are always linked to a unique
-    character, regardless of what index is selected here. Any flashcards currently in your deck will remain as they are, and will
-      continue to be scheduled in the SRS.
-    </p>
+<span class="text-success-dark">**Switching between editions is safe**</span>.
+Stories and flashcards are always linked to a unique character, regardless of what index is selected here. Any flashcards currently in your deck will remain as they are, and will continue to be scheduled in the SRS.
 
-  <p><strong>Old Edition ONLY</strong> : includes 23 characters from <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">Newly Approved General-Use Kanji (pdf)</a>.
-  These are added at the end, frame numbers 3008 - 3030.</p>
+**Keywords are always from the last edition!** This ensures everyone shares stories based on the same keywords. In particular please note with the 6th Edition errata Dr. Heisig swapped the keywords for "town" (now  町) and "village" (now 村).
+
+**Old Edition ONLY** : includes 23 characters from <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">Newly Approved General-Use Kanji (pdf)</a>.
+These are added at the end, frame numbers 3008 - 3030.
+<?php echo markdown_end() ?>
 
 <?php
     echo _bs_form_group(

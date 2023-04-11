@@ -16,7 +16,10 @@ The scripts in data/scripts/ may reference one or more of these files.
             - Old Edition lesson numbers (merged in from Ziggr's Heisig Kanji Index)
 
         RTK Editions Compared.csv
-          This is the .ods file exported to .csv for parsing. See RtkParser.php
+          This is the .ods file exported to .csv:
+          - remove rows 1-2
+          - remove cols A I J K L
+          - Save as `.csv` with tab delimiters
 
       generated/
       

@@ -12,8 +12,8 @@
  *
  *  Output keyword files for the Study page search dropdown
  *    (note the date/hash used for versioning needs to be updated in rtkIndex.php)
- *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-0.20230411.js -k 0
- *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-1.20230411.js -k 1
+ *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-0.20230411b.js -k 0
+ *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-1.20230411b.js -k 1
  *
  *  Output lesson maps that are included in `rtkIndex(New|Old)Edition.php`
  *  $ php data/scripts/kanjis_table.php -l 0 > old_lessons.txt

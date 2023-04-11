@@ -12,8 +12,8 @@
  *
  *  Output keyword files for the Study page search dropdown
  *    (note the date/hash used for versioning needs to be updated in rtkIndex.php)
- *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-0.20230303.js -k 0
- *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-1.20230303.js -k 1
+ *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-0.20230411.js -k 0
+ *  $ php data/scripts/kanjis_table.php -v -o web/revtk/study/keywords-rtk-1.20230411.js -k 1
  *
  *  Output lesson maps that are included in `rtkIndex(New|Old)Edition.php`
  *  $ php data/scripts/kanjis_table.php -l 0 > old_lessons.txt
@@ -35,8 +35,11 @@
  *     LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/table_kanjis.csv' INTO TABLE kanjis CHARACTER SET 'utf8' FIELDS TERMINATED BY '\t' ENCLOSED BY '';
  *
  *   Production:
- *   - export the whole table locally, SOURCE <file> on the server
- *     mysqldump -uroot -proot db_github kanjis > /docker-entrypoint-initdb.d/kanjis.sql
+ *     Export the kanjis table locally and SOURCE it on the server:
+ *     $ mysqldump -uroot -proot db_github kanjis > /docker-entrypoint-initdb.d/kanjis.sql
+ *     (move file to /src)
+ *     (deploy --env prod --file kanjis.sql)
+ *     (rtkprod ... dbprod ... SOURCE kanjis.sql)
  *
  *
  * NOTES

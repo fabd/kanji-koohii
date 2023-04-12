@@ -11,6 +11,12 @@
 
 class MyStoriesTableComponent extends sfComponent
 {
+  /**
+   * Undocumented function
+   *
+   * @param sfWebRequest $request
+   * @return void
+   */
   public function execute($request)
   {
     // component parameters

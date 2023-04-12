@@ -62,7 +62,7 @@ class MyStoriesTableComponent extends sfComponent
       'select'       => $storiesSelect,
       'internal_uri' => 'study/mystories',
       'query_params' => [
-        uiSelectTable::QUERY_SORTCOLUMN => $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'seq_nr'),
+        uiSelectTable::QUERY_SORTCOLUMN => $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN),
         uiSelectTable::QUERY_SORTORDER  => $request->getParameter(uiSelectTable::QUERY_SORTORDER, 1),
         uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE]
       ],

@@ -326,7 +326,7 @@ class studyActions extends sfActions
   public function executeMystories($request)
   {
     // use Last Edit as the default sort
-    $sortkey = $request->getParameter('sort', 'lastedit');
+    $sortkey = $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'lastedit');
     
     $this->forward404If(
       $sortkey
@@ -361,6 +361,7 @@ class studyActions extends sfActions
     ];
 
     $this->sort_active = $sortkey;
+    $request->setParameter(uiSelectTable::QUERY_SORTCOLUMN, $sortkey);
   }
 
   /**

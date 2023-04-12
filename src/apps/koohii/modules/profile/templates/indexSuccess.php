@@ -5,6 +5,10 @@
   $profile_uid = $profile_user->userid;
 
   $num_stories = StoriesPeer::getStoriesCounts($profile_uid);
+    
+  // set the default sort for the profile page
+  $sortkey = $sf_request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'seq_nr');
+  $sf_request->setParameter(uiSelectTable::QUERY_SORTCOLUMN, $sortkey);
 ?>
 
   <h2><?php echo escape_once($profile_user->username) ?><span>'s public profile</span></h2>

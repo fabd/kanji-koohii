@@ -33,12 +33,7 @@ class MyStoriesTableComponent extends sfComponent
         uiSelectPager::QUERY_ROWSPERPAGE => 10
       ]);
 
-
     $sortkey = $request->getParameter('sort', 'lastedit');
-
-    if ($isProfile) {
-      $sortkey = 'seq_nr'; // fixed
-    }
 
     $action->forward404Unless(!$sortkey || preg_match('/^[a-z_]+$/', $sortkey));
 

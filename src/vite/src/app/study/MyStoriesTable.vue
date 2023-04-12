@@ -21,6 +21,7 @@
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import AjaxTable from "@old/ajaxtable";
+import AjaxPanel from "@old/ajaxpanel";
 
 let ajaxTable: AjaxTable;
 
@@ -36,18 +37,12 @@ export default defineComponent({
 
   watch: {
     selected(value: string): void {
-      let oAjaxPanel = this.getAjaxPanel();
-      (oAjaxPanel as any).post({ sort: value });
+      ajaxTable.oAjaxPanel.post({ sort: value });
     },
   },
 
-  methods: {
-    getAjaxPanel() {
-      if (!ajaxTable) {
-        ajaxTable = new AjaxTable("MyStoriesComponent");
-      }
-      return ajaxTable.oAjaxPanel;
-    },
+  mounted() {
+    ajaxTable = new AjaxTable("MyStoriesComponent");
   },
 });
 </script>

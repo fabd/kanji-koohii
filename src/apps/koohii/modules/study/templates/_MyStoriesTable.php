@@ -7,8 +7,7 @@
 <div id="my-stories" class="no-gutter-xs-sm">
 <?php echo form_tag('study/MyStoriesTable') ?>
 
-  <input type="hidden" name="stories_uid" value="<?php echo (int)$stories_uid ?>"/>
-
+  <?php echo input_hidden_tag('stories_uid', (int)$stories_uid) ?>
   <?php echo input_hidden_tag('profile_page', (int)$profile_page) ?>
 
   <?php echo ui_select_pager($pager) ?>

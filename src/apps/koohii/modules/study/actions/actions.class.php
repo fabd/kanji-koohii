@@ -320,12 +320,18 @@ class studyActions extends sfActions
   /**
    * My Stories page.
    * 
+   * @param sfWebRequest $request
    * @return 
    */
   public function executeMystories($request)
   {
-    $sortkey = $request->getParameter('sort', false);
-    $this->forward404Unless(!$sortkey || preg_match('/^(seq_nr|keyword|lastedit|votes|reports|public)$/', $sortkey));
+    // use Last Edit as the default sort
+    $sortkey = $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'lastedit');
+    
+    $this->forward404If(
+      $sortkey
+      && !preg_match('/^(seq_nr|keyword|lastedit|votes|reports|public)$/', $sortkey)
+    );
 
     $this->sort_options = [
       [
@@ -354,12 +360,8 @@ class studyActions extends sfActions
       ]
     ];
 
-    if (!$sortkey /*|| !isset($this->sort_options[$sortkey])*/)
-    {
-      $sortkey = 'lastedit';
-    }
-
     $this->sort_active = $sortkey;
+    $request->setParameter(uiSelectTable::QUERY_SORTCOLUMN, $sortkey);
   }
 
   /**

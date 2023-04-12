@@ -1,6 +1,12 @@
 <?php
 class flashcardlistAction extends sfAction
 {
+  /**
+   * Undocumented function
+   *
+   * @param sfWebRequest $request
+   * @return void
+   */
   public function execute($request)
   {
     $queryParams = $this->getUser()->getLocalPrefs()

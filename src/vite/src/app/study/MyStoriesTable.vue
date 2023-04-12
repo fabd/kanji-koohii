@@ -16,11 +16,12 @@
 </template>
 
 <script lang="ts">
-// FIXME : converted from legacy js, make a "My Stories" component including table, pager, etc.
+// NOTE! converted from legacy js, the pager is still handled on php end
 
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import AjaxTable from "@old/ajaxtable";
+import AjaxPanel from "@old/ajaxpanel";
 
 let ajaxTable: AjaxTable;
 
@@ -36,28 +37,12 @@ export default defineComponent({
 
   watch: {
     selected(value: string): void {
-      let option = this.getOption(value);
-      let oAjaxPanel = this.getAjaxPanel();
-      (oAjaxPanel as any).post({ sort: option.value });
+      ajaxTable.oAjaxPanel.post({ sort: value });
     },
   },
 
-  methods: {
-    getAjaxPanel() {
-      if (!ajaxTable) {
-        ajaxTable = new AjaxTable("MyStoriesComponent");
-      }
-      return ajaxTable.oAjaxPanel;
-    },
-
-    getOption(value: string) {
-      for (let i = 0; i < this.options.length; i++) {
-        if (this.options[i].value === value) {
-          return this.options[i];
-        }
-      }
-      return null;
-    },
+  mounted() {
+    ajaxTable = new AjaxTable("MyStoriesComponent");
   },
 });
 </script>

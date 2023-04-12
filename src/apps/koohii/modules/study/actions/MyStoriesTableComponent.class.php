@@ -11,6 +11,12 @@
 
 class MyStoriesTableComponent extends sfComponent
 {
+  /**
+   * Undocumented function
+   *
+   * @param sfWebRequest $request
+   * @return void
+   */
   public function execute($request)
   {
     // component parameters
@@ -27,12 +33,7 @@ class MyStoriesTableComponent extends sfComponent
         uiSelectPager::QUERY_ROWSPERPAGE => 10
       ]);
 
-
     $sortkey = $request->getParameter('sort', 'lastedit');
-
-    if ($isProfile) {
-      $sortkey = 'seq_nr'; // fixed
-    }
 
     $action->forward404Unless(!$sortkey || preg_match('/^[a-z_]+$/', $sortkey));
 
@@ -62,7 +63,7 @@ class MyStoriesTableComponent extends sfComponent
       'select'       => $storiesSelect,
       'internal_uri' => 'study/mystories',
       'query_params' => [
-        uiSelectTable::QUERY_SORTCOLUMN => $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'seq_nr'),
+        uiSelectTable::QUERY_SORTCOLUMN => $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN),
         uiSelectTable::QUERY_SORTORDER  => $request->getParameter(uiSelectTable::QUERY_SORTORDER, 1),
         uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE]
       ],

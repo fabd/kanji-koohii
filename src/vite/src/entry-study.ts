@@ -1,5 +1,8 @@
 /**
- * This bundle is used on all pages, except landing (home) & flashcard review.
+ * STUDY bundle.
+ *
+ * Used in all /study pages.
+ *
  */
 
 // stylesheets
@@ -13,13 +16,10 @@ import MyStoriesTable from "@app/study/MyStoriesTable.vue";
 domContentLoaded(() => {
   console.log("@entry-study");
 
-  // My Stories page?
-  let elMount = domGetById("MyStoriesSelect")!;
-  if (elMount) {
-    VueInstance(MyStoriesTable, elMount);
-  }
+  let elMount: HTMLElement;
+
+  elMount = domGetById("MyStoriesSelect")!;
+  elMount && VueInstance(MyStoriesTable, elMount);
 
   StudyPage.initialize();
-
-  // console.log("@entry study ...done");
 });

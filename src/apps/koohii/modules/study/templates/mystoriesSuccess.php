@@ -3,7 +3,7 @@
   $num_stories = StoriesPeer::getStoriesCounts($sf_user->getUserId());
 ?>
 
-<h2>My Stories</h2>
+<h2 class="ux-text-2xl">My Stories</h2>
 
 <?php if ($num_stories->total === 0): ?>
   <p>
@@ -11,7 +11,7 @@
   </p>
 <?php else: ?>
 
-  <div class="mystories-stats text-xl mb-6">
+  <div class="ux-text-xl mb-6">
     <strong><?= $num_stories->private; ?></strong> private</li>, 
     <strong><?= $num_stories->public; ?></strong> public</li>
     (<?= $num_stories->total; ?> total)

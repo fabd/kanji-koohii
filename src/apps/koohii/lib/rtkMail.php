@@ -1,6 +1,18 @@
 <?php
 /**
- * Sends Koohii emails, using email templates.
+ * Sends Koohii emails, optionally using email templates.
+ *
+ *   sendNewAccountConfirmation($userAddress, $userName, $rawPassword)
+ *   sendForgotPasswordConfirmation($userAddress, $userName, $rawPassword)
+ *   sendUpdatePasswordConfirmation($userAddress, $userName, $rawPassword)
+ *
+ *   sendFeedbackMessage($subject, $from_name, $from_addr, $message)
+ *
+ *   parseAddress($address)
+ *   formatAddress($from)
+ *
+ *   renderTemplate($templateName, $templateVars = [])
+ *
  *
  * Example configuration in app.yml (see parseAddress() for accepted formats):
  *
@@ -17,68 +29,13 @@
  *     $this->setBodyText($body);
  */
 
-// uncomment this one to revert to php mail
-// use Koohii\Mail\MailAbstract;
+use Koohii\Mail\MailAbstractPHP;
 
-use Koohii\Mail\MailAbstractSMTP as MailAbstract;
+// uncomment this instead to use SMTP (wip)
+// use Koohii\Mail\MailAbstractSMTP as MailAbstract;
 
-class rtkMail extends MailAbstract
+class rtkMail extends MailAbstractPHP
 {
-  private string $templateDir;
-
-  public function __construct()
-  {
-    $this->setTemplateDir(sfConfig::get('sf_app_template_dir').'/emails');
-  }
-
-  /**
-   * Simple parsing of email address, no need for all the fancy RFC stuff.
-   *
-   * @param string $address Full address as `"Name" <email>` or just `email`.
-   *                        Quotes around the name are optional.
-   *
-   * @return array array with `name` and `email` keys, `name` is an empty string
-   *               if it was not provided
-   */
-  public static function parseAddress($address)
-  {
-    $address = trim($address ?? '');
-    assert(!empty($address));
-
-    $name = '';
-    $email = '';
-
-    if (preg_match('/"?([^><,"]+)"?\s*((?:<[^><,]+>)?)/', $address, $matches))
-    {
-      if (!empty($matches[2]))
-      {
-        $name = trim($matches[1]);
-        $email = trim($matches[2], '<>');
-      }
-      else
-      {
-        $email = $matches[1];
-      }
-    }
-
-    return ['name' => $name, 'email' => $email];
-  }
-
-  /**
-   * Reverse of parseAddress(). Formats name and email to `"name" <email>` or just
-   * `email`.
-   *
-   * @param array $from Array with keys `name` and `email`
-   *
-   * @return string
-   */
-  public static function formatAddress($from)
-  {
-    return !empty($from['name'])
-      ? "\"{$from['name']}\" <{$from['email']}>"
-      : $from['email'];
-  }
-
   /**
    * Sends Forgot Password email with new password.
    *
@@ -127,17 +84,15 @@ class rtkMail extends MailAbstract
   /**
    * Send a feedback email to the webmaster.
    *
-   * @param string $subject   Email subject
-   * @param string $name_from From address (reply to)
-   * @param string $username  Author (username)
-   * @param string $message   The message
-   * @param string $author
+   * @param string $subject
+   * @param string $from_addr
+   * @param string $from_name
+   * @param string $message
    */
-  public function sendFeedbackMessage($subject, $name_from, $author, $message)
+  public function sendFeedbackMessage($subject, $from_addr, $from_name, $message)
   {
     $message = trim(strip_tags($message));
-
-    $this->setFrom($name_from, $author);
+    $this->setFrom($from_addr, $from_name);
 
     $to = self::parseAddress(sfConfig::get('app_email_feedback_to'));
     $this->addTo($to['email'], $to['name']);
@@ -174,16 +129,6 @@ class rtkMail extends MailAbstract
   }
 
   /**
-   * Sets the dreictory where email templates are stored.
-   *
-   * @param string $path template directory, no trailing slash
-   */
-  private function setTemplateDir($path)
-  {
-    $this->templateDir = $path;
-  }
-
-  /**
    * Simple templating for rendering email contents.
    *
    * @param string $templateName
@@ -191,10 +136,10 @@ class rtkMail extends MailAbstract
    */
   private function renderTemplate($templateName, $templateVars = [])
   {
-    $templateFile = $this->templateDir.'/'.$templateName.'.php';
+    $templateDir = sfConfig::get('sf_app_template_dir').'/emails';
+    $templateFile = $templateDir.'/'.$templateName.'.php';
 
-    if (!is_readable($templateFile))
-    {
+    if (!is_readable($templateFile)) {
       throw new sfException("Template file not found: `{$templateFile}`");
     }
 
@@ -210,5 +155,55 @@ class rtkMail extends MailAbstract
     require $templateFile;
 
     return ob_get_clean();
+  }
+
+  /**
+   * Simple parsing of email address, no need for all the fancy RFC stuff.
+   *
+   * Example accepted formats:
+   *
+   *    admin@website.com
+   *    The Admin <admin@website.com>
+   *    "The Admin" <admin@website.com>
+   *
+   * @param string $address Full address as `"Name" <email>` or just `email`.
+   *                        Quotes around the name are optional.
+   *
+   * @return array array with `name` and `email` keys, `name` is an empty string
+   *               if it was not provided
+   */
+  public static function parseAddress(string $address)
+  {
+    $address = trim($address ?? '');
+    assert(!empty($address));
+
+    $name = '';
+    $email = '';
+
+    if (preg_match('/"?([^><,"]+)"?\s*((?:<[^><,]+>)?)/', $address, $matches)) {
+      if (!empty($matches[2])) {
+        $name = trim($matches[1]);
+        $email = trim($matches[2], '<>');
+      } else {
+        $email = $matches[1];
+      }
+    }
+
+    return ['name' => $name, 'email' => $email];
+  }
+
+  /**
+   * Reverse of parseAddress(). Formats name and email to `"name" <email>` or just
+   * `email`.
+   *
+   * @param array $from Array with keys `name` and `email`
+   *
+   * @return string
+   */
+  public static function formatAddress(array $from)
+  {
+    return !empty($from['name'])
+      ? "\"{$from['name']}\" <{$from['email']}>"
+      : $from['email'];
   }
 }

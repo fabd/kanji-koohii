@@ -1,16 +1,13 @@
 <?php
 /**
- * NOTE!
- *   - obsolete code using Zend Mail - to be removed eventually.
- *   - if we want to revert to php mail() then extend this class in rtkMail.php.
- *
  * MailAbstract is an abstraction layer for sending email, using Zend_Mail.
- * Requires bridge to Zend classes and autoloading setup in Application Configuration
+ * Requires bridge to Zend classes and autoloading setup in Application Configuration.
+ *
+ * May eventually be replaced by providing a `MailAbstractSMTP` instead in rtkMail.php.
  */
 
 namespace Koohii\Mail;
 
-use MailAbstract;
 use sfConfig;
 use Zend_Mail;
 
@@ -20,9 +17,7 @@ class MailAbstractPHP extends MailAbstract
   protected $mailer;
 
   /** @var string */
-  protected $templateDir;
-
-  protected const CHARSET_UTF8 = 'utf-8';
+  protected $charset = 'utf-8';
 
   /**
    * Constructor, set mailer defaults and template directory
@@ -37,17 +32,17 @@ class MailAbstractPHP extends MailAbstract
     require_once $zend_inc_dir.'/Zend/Loader.php';
     spl_autoload_register(['Zend_Loader', 'autoload']);
 
-    $this->mailer = new Zend_Mail(self::CHARSET_UTF8);
+    $this->mailer = new Zend_Mail($this->charset);
   }
 
   public function setBodyText($body)
   {
-    $this->mailer->setBodyText($body, self::CHARSET_UTF8);
+    $this->mailer->setBodyText($body, $this->charset);
   }
 
-  public function setFrom($address, $name = '')
+  public function setFrom($email, $name = '')
   {
-    $this->mailer->setFrom($address, $name);
+    $this->mailer->setFrom($email, $name);
   }
 
   public function addTo($email, $name = '')
@@ -63,8 +58,5 @@ class MailAbstractPHP extends MailAbstract
   public function send()
   {
     $this->mailer->send();
-
-    // Note: Zend_Mail causes Exception in case of error
-    return true;
   }
 }

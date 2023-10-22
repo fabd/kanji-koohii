@@ -55,18 +55,6 @@ class MailAbstractPHP extends MailAbstract
     $this->mailer->addTo($email, $name);
   }
 
-  /**
-   * Add a "Reply-To" address.
-   *
-   * @param string $address The email address to reply to
-   * @param string $name
-   * @param mixed  $email
-   */
-  public function addReplyTo($email, $name = '')
-  {
-    // FIXME - not in the old Zend_Mail ?
-  }
-
   public function setSubject($subject)
   {
     $this->mailer->setSubject($subject);

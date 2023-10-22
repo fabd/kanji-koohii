@@ -16,6 +16,8 @@
     <div class="ko-Box mb-3 max-w-[600px]">
 
 <?php
+    echo form_errors();
+
     echo form_tag('home/contact', ['class'=>'block']);
 
     echo _bs_form_group(

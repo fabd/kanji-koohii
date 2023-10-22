@@ -113,12 +113,12 @@ class homeActions extends sfActions
 
     if ($validator->validate($request->getParameterHolder()->getAll()))
     {
-      $name_from = trim($request->getParameter('name'));
-      $reply_to  = trim($request->getParameter('email'));
+      $from_name = trim($request->getParameter('name'));
+      $from_addr = trim($request->getParameter('email'));
       $message   = trim($request->getParameter('message'));
 
       // quick fix vs XSS attacks (June 29, 2014)
-      if (!preg_match('/^[a-zA-Z0-9 _\'-()]+$/', $name_from) > 0)
+      if (!preg_match('/^[a-zA-Z0-9 _\'-()]+$/', $from_name) > 0)
       {
         $request->setError('woops', 'Name: please use only letters a-z A-Z \' _ - ( and )');
         return;
@@ -166,7 +166,7 @@ class homeActions extends sfActions
         try
         {
           $mailer = new rtkMail();
-          $mailer->sendFeedbackMessage('Feedback from '.$name_from, $reply_to, $name_from, $message);
+          $mailer->sendFeedbackMessage('Feedback from '.$from_name, $from_addr, $from_name, $message);
         }
         catch(sfException $e)
         {

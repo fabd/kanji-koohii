@@ -50,11 +50,18 @@ dev:
 
 # default values
 all:
-  .dummy:
-    # from (email, name) for automatic mailings (registration, password change, ...)
-    email_robot:       { email: 'admin@koohii.local', name: 'Kanji Koohii' }
-    # to   (email, name) for contact page form
-    email_feedback_to: { email: 'feedback@koohii.local',  name: 'Fabrice' }
+  # ----------------------------------------------------------------------------
+  # Example accepted formats (see rtkMail::parseAddress()):
+  # 
+  #    admin@website.com
+  #    The Admin <admin@website.com>
+  #    "The Admin" <admin@website.com>
+  # 
+  # *from* address for account related emails (registration, password change, ...)
+  email_robot:       'Kanji Koohii <admin@koohii.local>'
+  # *to*   address used by the Contact form
+  email_feedback_to: 'Fabrice <fabrice@koohii.local>'
+  # ----------------------------------------------------------------------------
 
   # MySQL server timezone to adjust date/times to the local time of the user
   #   cf. setting in mysql Dockerfile !

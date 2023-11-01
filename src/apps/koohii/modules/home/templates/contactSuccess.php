@@ -14,7 +14,10 @@ Feedback is always appreciated, and can help motivate further developments. Than
 Please note if you like, you can also:
 
 * Post **bugs and suggestions** directly to [fabd/kanji-koohii](https://github.com/fabd/kanji-koohii/issues) on Github
+
+<?php if ($sf_user->isAuthenticated()): ?>
 * Use your own email client, send mail to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#110;&#106;&#105;&#46;&#107;&#111;&#111;&#104;&#105;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#107;&#97;&#110;&#106;&#105;&#32;&#8226;&#32;&#107;&#111;&#111;&#104;&#105;&#105;&#32;&#65312;&#32;&#103;&#109;&#97;&#105;&#108;&#32;&#8226;&#32;&#99;&#111;&#109;</a>
+<?php endif; ?>
 
 <?= markdown_end(); ?>
   </div>

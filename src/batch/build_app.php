@@ -19,7 +19,7 @@ class BuildViteManifest extends Command_CLI
   public function __construct()
   {
     parent::__construct([
-      'vite=s' => 'Include vite entries, parse manifest.json',
+      'vite' => 'Include vite entries, parse manifest.json',
       'out|o=s' => 'Output filename (required)',
     ]);
 

@@ -28,7 +28,7 @@
 // --------------------------------------------------------------------
 .ko-RatioBox {
   &-height {
-    padding-bottom: calc(100% / (1 * var(--ko-ratiobox-ratio, 3 / 4)));
+    padding-bottom: calc(100% / (1 * var(--ko-ratiobox-ratio, calc(3 / 4))));
     position: relative;
   }
 

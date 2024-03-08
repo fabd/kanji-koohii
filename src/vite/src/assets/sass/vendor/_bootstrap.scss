@@ -41,9 +41,13 @@ $form-feedback-invalid-color: #a94442;
 // generated with icones.js <3
 $form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="#e68683" d="M10 3h4v11h-4V3m0 18v-4h4v4h-4Z"></path></svg>');
 
+
+
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
 
 // 4. Include any optional Bootstrap components as you like
 

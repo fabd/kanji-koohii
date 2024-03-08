@@ -23,7 +23,7 @@ class Vite
 
   public static function getManifestJson()
   {
-    $file = sfConfig::get('sf_web_dir').self::OUTDIR.'/manifest.json';
+    $file = sfConfig::get('sf_web_dir').self::OUTDIR.'/.vite/manifest.json';
 
     if (false === ($text = file_get_contents($file)))
     {

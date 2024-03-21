@@ -39,3 +39,13 @@ function link_to_keyword($sKeyword, $sKanjiId = '', $options = [])
 
   return link_to($sKeyword, '@study_edit?id='.$sKanjiId, $options);
 }
+
+function link_to_rk1_supplement()
+{
+  $URL = 'https://web.archive.org/web/20200227181804/http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf';
+
+  return link_to('RTK Supplement', $URL, [
+    'target' => 'blank',
+    'class' => 'link-pdf',
+  ]);
+}

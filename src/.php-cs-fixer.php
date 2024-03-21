@@ -1,6 +1,8 @@
 <?php
 
-return (new PhpCsFixer\Config())
+use PhpCsFixer\Config;
+
+return (new Config())
   ->setRules([
     // rulesets
     '@PSR2' => true,
@@ -48,6 +50,9 @@ return (new PhpCsFixer\Config())
 
     // *don't* prematurely rewrite my code
     'return_assignment' => false,
+
+    // don't reformat my top of class comment block if there is a single line of text
+    'single_line_comment_style' => ['comment_types' => ['hash']],
 
     'echo_tag_syntax' => ['format' => 'short', 'shorten_simple_statements_only' => true],
 

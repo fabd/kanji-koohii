@@ -1,4 +1,4 @@
-<?php use_helper('Form', 'Validation', 'Widgets'); ?>
+<?php use_helper('Form', 'Links', 'Validation', 'Widgets'); ?>
 
 <?= form_tag('manage/addOrderConfirm', ['class' => 'main-form']); ?>
 
@@ -26,8 +26,7 @@
 
   <div class="ko-Box">
 
-      23 new characters from the
-      <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">RTK Supplement</a>
+      23 new characters from the <?= link_to_rk1_supplement() ?>
       (PDF document, ~490kb) can be added through the <?= link_to('Custom selection', 'manage/addcustom'); ?> page.
       &nbsp;See <?= link_to('update notes', '@news_by_id?id=154'/*, array('class' => 'link-article')*/); ?>.
 

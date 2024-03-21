@@ -1,5 +1,5 @@
 <?php
-  use_helper('Form', 'Markdown', 'Validation', 'Widgets', 'Decorator');
+  use_helper('Form', 'Links', 'Markdown', 'Validation', 'Widgets', 'Decorator');
 ?>
 <?php slot('inline_styles') ?>
 td label { white-space:nowrap; }
@@ -77,7 +77,7 @@ Stories and flashcards are always linked to a unique character, regardless of wh
 
 **Keywords are always from the last edition!** This ensures everyone shares stories based on the same keywords. In particular please note with the 6th Edition errata Dr. Heisig swapped the keywords for "town" (now  町) and "village" (now 村).
 
-**Old Edition ONLY** : includes 23 characters from <a href="http://nirc.nanzan-u.ac.jp/en/files/2012/12/RK1-Supplement.pdf" target="blank" class="link-pdf">Newly Approved General-Use Kanji (pdf)</a>.
+**Old Edition ONLY** : includes 23 characters from <?= link_to_rk1_supplement() ?> (Newly Approved General-Use Kanji).
 These are added at the end, frame numbers 3008 - 3030.
 <?php echo markdown_end() ?>
 

@@ -38,10 +38,17 @@ class MailAbstractSMTP extends MailAbstract
     $this->mailer->Body = $body;
   }
 
+  /**
+   * For GMail SMTP we also set reply-to, because `+robot` suffix is removed by
+   * GMail from the from: address. It will be kept in the `reply-to` address,
+   * so when user replies to robot emails they can be tagged in GMail.
+   */
   public function setFrom($email, $name = '')
   {
     $this->mailer->setFrom($email, $name);
     // dump('setFrom()', $email, $name);
+
+    $this->mailer->addReplyTo($email, $name);
   }
 
   public function addTo($email, $name = '')

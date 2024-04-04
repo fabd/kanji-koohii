@@ -1,4 +1,4 @@
-Dear <?php echo $username ?>,
+Hi <?php echo $username ?>,
 
 A request for a new password was sent to this address.
 

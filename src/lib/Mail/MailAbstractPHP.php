@@ -3,11 +3,14 @@
  * MailAbstract is an abstraction layer for sending email, using Zend_Mail.
  * Requires bridge to Zend classes and autoloading setup in Application Configuration.
  *
- * May eventually be replaced by providing a `MailAbstractSMTP` instead in rtkMail.php.
+ * FIXME?
+ *   - remove the old Zend_Mail from lib/vendor/ and use the correct composer package
  */
 
 namespace Koohii\Mail;
 
+use Exception;
+use rtkMail;
 use sfConfig;
 use Zend_Mail;
 
@@ -15,6 +18,8 @@ class MailAbstractPHP extends MailAbstract
 {
   /** @var Zend_Mail */
   protected $mailer;
+
+  public static string $PROTOCOL = self::PROTOCOL_PHP;
 
   /** @var string */
   protected $charset = 'utf-8';
@@ -50,13 +55,32 @@ class MailAbstractPHP extends MailAbstract
     $this->mailer->addTo($email, $name);
   }
 
+  public function addReplyTo($email, $name = '')
+  {
+    // does not exist in the old Zend_Mail ?
+    // $this->mailer->addReplyTo($email, $name);
+
+    $this->mailer->addHeader('Reply-To', rtkMail::formatAddress(
+      ['name' => $name, 'email' => $email]
+    ));
+  }
+
   public function setSubject($subject)
   {
     $this->mailer->setSubject($subject);
   }
 
-  public function send()
+  public function send(): bool
   {
-    $this->mailer->send();
+    $isMailSent = false;
+
+    try {
+      $this->mailer->send();
+      $isMailSent = true;
+    } catch (Exception $e) {
+      error_log(__CLASS__.':: exception');
+    }
+
+    return $isMailSent;
   }
 }

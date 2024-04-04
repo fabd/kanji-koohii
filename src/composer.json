@@ -6,7 +6,8 @@
     "erusev/parsedown": "1.7.4",
     "erusev/parsedown-extra": "0.8.1",
     "illuminate/collections": "^8.83",
-    "symfony/var-dumper": "^5.4"
+    "symfony/var-dumper": "^5.4",
+    "phpmailer/phpmailer": "^6.8"
   },
   "autoload": {
     "psr-4": {

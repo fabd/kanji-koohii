@@ -29,12 +29,13 @@
  *     $this->setBodyText($body);
  */
 
-use Koohii\Mail\MailAbstractPHP;
+// uncomment this to use php mail()
+// use Koohii\Mail\MailAbstractPHP  as MailAbstractAPI;
 
-// uncomment this instead to use SMTP (wip)
-// use Koohii\Mail\MailAbstractSMTP as MailAbstract;
+// uncomment this to use SMTP via GMail server
+use Koohii\Mail\MailAbstractSMTP as MailAbstractAPI;
 
-class rtkMail extends MailAbstractPHP
+class rtkMail extends MailAbstractAPI
 {
   /**
    * Sends Forgot Password email with new password.
@@ -91,7 +92,6 @@ class rtkMail extends MailAbstractPHP
    */
   public function sendFeedbackMessage($subject, $from_addr, $from_name, $message)
   {
-    $message = trim(strip_tags($message));
     $this->setFrom($from_addr, $from_name);
 
     $to = self::parseAddress(sfConfig::get('app_email_feedback_to'));

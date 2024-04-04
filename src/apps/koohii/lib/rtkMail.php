@@ -92,7 +92,6 @@ class rtkMail extends MailAbstractAPI
    */
   public function sendFeedbackMessage($subject, $from_addr, $from_name, $message)
   {
-    $message = trim(strip_tags($message));
     $this->setFrom($from_addr, $from_name);
 
     $to = self::parseAddress(sfConfig::get('app_email_feedback_to'));

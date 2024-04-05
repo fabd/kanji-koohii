@@ -105,7 +105,8 @@ class MailAbstractSMTP extends MailAbstract
     // SMTP::DEBUG_OFF = off (for production use)
     // SMTP::DEBUG_CLIENT = client messages
     // SMTP::DEBUG_SERVER = client and server messages
-    $mail->SMTPDebug = KK_ENV_DEV ? SMTP::DEBUG_SERVER : SMTP::DEBUG_OFF;
+    // (fabd) don´t output debug text to the html response, only for the CLI tool
+    $mail->SMTPDebug = class_exists('Command_CLI', false) ? SMTP::DEBUG_SERVER : SMTP::DEBUG_OFF;
 
     // Set the hostname of the mail server
     $mail->Host = 'smtp.gmail.com';

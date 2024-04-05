@@ -1,7 +1,7 @@
 // FIXME: refactor into a single class for srs/free/vocab modes
 // @ts-check
 
-import $$, { DomJS, asHtmlElement } from "@lib/dom";
+import $$, { DomJS, asHtmlElement, hasClass } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 
@@ -130,6 +130,10 @@ export default class VocabReview {
         break;
 
       case "flip":
+        if (oEvent.type === "click" && hasClass(asHtmlElement(oEvent.target), "JsLink")) {
+          // pass through so the link functions
+          return true;
+        }
         if (this.oReview.getFlashcardState() === 0) {
           this.oReview.setFlashcardState(1);
         } else {

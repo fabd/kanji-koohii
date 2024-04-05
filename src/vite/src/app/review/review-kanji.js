@@ -256,7 +256,7 @@ export default class KanjiReview {
         break;
 
       case "flip":
-        if (oEvent.type === "click" && hasClass(asHtmlElement(oEvent.target), "JsKeywordLink")) {
+        if (oEvent.type === "click" && hasClass(asHtmlElement(oEvent.target), "JsLink")) {
           // pass through so the link functions
           return true;
         }

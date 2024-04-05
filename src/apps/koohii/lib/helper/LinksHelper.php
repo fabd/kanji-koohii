@@ -35,7 +35,7 @@ function link_to_keyword($sKeyword, $sKanjiId = '', $options = [])
 
   // for the review page front end
   $classNames = $options['class'] ?? '';
-  $options['class'] = trim(implode(' ', [$classNames, 'JsKeywordLink']));
+  $options['class'] = trim(implode(' ', [$classNames, 'JsLink']));
 
   return link_to($sKeyword, '@study_edit?id='.$sKanjiId, $options);
 }

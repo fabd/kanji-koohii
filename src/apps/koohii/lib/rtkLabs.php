@@ -514,7 +514,11 @@ class rtkLabs
       if (false !== ($framenum = rtkIndex::getIndexForChar($c)))
       {
         $tooltip = CustkeywordsPeer::getCoalescedKeyword($userId, $ucsId) .' (#'.$framenum.')';
-        $url = link_to($c, '@study_edit?id='.$c, ['title' => $tooltip, 'target' => '_blank']);
+        $url = link_to($c, '@study_edit?id='.$c, [
+          'class' => 'JsLink', // allows to handle the <a> tag, instead of flipping card 
+          'title' => $tooltip,
+          'target' => '_blank'
+        ]);
         $s = $s . $url;
       }
       else

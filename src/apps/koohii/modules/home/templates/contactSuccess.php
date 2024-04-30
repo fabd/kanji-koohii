@@ -1,6 +1,9 @@
 <?php
 use_helper('Form', 'Markdown', 'Validation');
 $sf_request->setParameter('_homeFooter', true);
+$contactMailTo = rtkMail::parseAddress(sfConfig::get('app_email_feedback_to'));
+$contactMailToEnts = utf8::toHtmlEntities('mailto:'.$contactMailTo['email']);
+$contactMailToDisp = utf8::toHtmlEntities('kanji • koohii ＠ gmail • com');
 ?>
 
   <h2>Contact</h2>
@@ -16,13 +19,13 @@ Please note if you like, you can also:
 * Post **bugs and suggestions** directly to [fabd/kanji-koohii](https://github.com/fabd/kanji-koohii/issues) on Github
 
 <?php if ($sf_user->isAuthenticated()): ?>
-* Use your own email client, send mail to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#110;&#106;&#105;&#46;&#107;&#111;&#111;&#104;&#105;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#107;&#97;&#110;&#106;&#105;&#32;&#8226;&#32;&#107;&#111;&#111;&#104;&#105;&#105;&#32;&#65312;&#32;&#103;&#109;&#97;&#105;&#108;&#32;&#8226;&#32;&#99;&#111;&#109;</a>
+* Use your own email client, send mail to <a href="<?= $contactMailToEnts; ?>"><?= $contactMailToDisp ?></a>
 <?php endif; ?>
 
 <?= markdown_end(); ?>
   </div>
 
-<?php if ($sf_user->isAuthenticated()): ?>
+<?php if (0 && $sf_user->isAuthenticated()): ?>
 
   <p style="color:#484"><em><span class="required-legend">*</span> Please provide a valid email address, it will only be used to reply to your message.</em></p>
 
@@ -66,6 +69,12 @@ Please note if you like, you can also:
 
     </form>
   </div>
+
+<?php elseif($sf_user->isAuthenticated()): ?>
+
+  <p style="color:#844">
+      The <strong>contact form</strong> is currently disabled, please use the email shown above.
+    </p>
 
 <?php else: ?>
 

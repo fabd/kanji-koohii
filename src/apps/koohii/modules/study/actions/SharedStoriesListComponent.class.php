@@ -66,9 +66,9 @@ class SharedStoriesListComponent extends sfComponent
     $db->setFetchMode($fetchMode);
     foreach ($rows as &$row)
     {
-      // do not show 0's
-      if (!$row->stars) { $row->stars = ''; }
-      if (!$row->kicks) { $row->kicks = ''; }
+      // fix type cast errors in php8
+      $row->stars = (int)$row->stars;
+      $row->kicks = (int)$row->kicks;
 
       $row->text   = StoriesPeer::getFormattedStory($row->text, $keyword, true, false);
     }

@@ -2,17 +2,17 @@
 #  Configs
 #
 #    Php inis
-#      /etc/php/7.4/apache2/conf.d/koohii.php.ini
+#      /etc/php/8.1/apache2/conf.d/koohii.php.ini
 #
 #    Php mods
-#      /etc/php/7.4/mods-available/
+#      /etc/php/8.1/mods-available/
 #
 #    Apache sites
 #      /etc/apache2/sites-enabled/000-default.conf
 #
 #
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # The UID/GID of the user in the host - to fix file permissions in the /src folder
 ARG UID=1000
@@ -39,16 +39,16 @@ RUN apt-get update -y && \
 # Install Apache + PHP
 RUN apt-get install -y --no-install-recommends \
     apache2 \
-    libapache2-mod-php7.4 \
-    php7.4-bz2 \
-    php7.4-cli \
-    php7.4-curl \
-    php7.4-intl \
-    php7.4-json \
-    php7.4-mbstring \
-    php7.4-mysql \
-    php7.4-xml \
-    php7.4-zip \
+    libapache2-mod-php \
+    php-bz2 \
+    php-cli \
+    php-curl \
+    php-intl \
+    php-json \
+    php-mbstring \
+    php-mysql \
+    php-xml \
+    php-zip \
     # Configure Apache + PHP
     && a2enmod rewrite \
     && a2enmod expires \

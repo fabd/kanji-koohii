@@ -99,12 +99,12 @@ class coreView
 
     if ($moduleName==='global')
     {
-      $this->directory = coreConfig::get('sf_app_template_dir');
+      $this->directory = sfConfig::get('sf_app_template_dir');
       $this->template = $actionName.'View'.$this->getExtension();
     }
     else
     {
-      $this->directory = coreConfig::get('sf_app_module_dir').'/'.$moduleName.'/templates';
+      $this->directory = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/templates';
       $this->template = $actionName.$viewName.'View'.$this->getExtension();
     }
 
@@ -133,7 +133,7 @@ class coreView
     }
     else
     {
-      $this->directory = coreConfig::get('sf_app_module_dir').'/'.$this->context->getModuleName().'/templates';
+      $this->directory = sfConfig::get('sf_app_module_dir').'/'.$this->context->getModuleName().'/templates';
       $this->template = $template;
     }
     
@@ -178,7 +178,7 @@ class coreView
       {
           return;
       }
-    $this->decoratorFile = coreConfig::get('sf_app_template_dir').'/'.$templateName.'View'.$this->getExtension();
+    $this->decoratorFile = sfConfig::get('sf_app_template_dir').'/'.$templateName.'View'.$this->getExtension();
   }
 
   /**
@@ -240,7 +240,7 @@ class coreView
   protected function renderFile($templateFile)
   {
     // load core and standard helpers
-    //$helpers = array_unique(array_merge(array('Core', 'Url', 'Asset', 'Tag'/*, 'Escaping'*/), coreConfig::get('standard_helpers')));
+    //$helpers = array_unique(array_merge(array('Core', 'Url', 'Asset', 'Tag'/*, 'Escaping'*/), sfConfig::get('standard_helpers')));
     //coreToolkit::loadHelpers($helpers);
 
     extract($this->parameterHolder->getAll(), EXTR_REFS);

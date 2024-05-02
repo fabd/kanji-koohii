@@ -52,8 +52,8 @@ class coreAutoload
     {
       // simplifying tant que pas besoin de plus
       //$dirs = array();
-      //$dirs[] = coreConfig::get('app_lib_dir').'/model';
-      //$dirs[] = coreConfig::get('lib_dir').'/model';
+      //$dirs[] = sfConfig::get('app_lib_dir').'/model';
+      //$dirs[] = sfConfig::get('lib_dir').'/model';
 
       $fileName = $class.'.php';
       //foreach ($dirs as $dir)

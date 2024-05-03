@@ -17,7 +17,7 @@
   <a href="#" class="uiFcOptBtn uiFcOptBtnStory uiFcAction" data-action="story" title="View/Edit story for this flashcard"><span><u>S</u>tory</span></a>
   <a href="#" id="JsBtnDict" class="uiFcOptBtn uiFcOptBtnDict uiFcAction" data-action="dict" title="Dictionary lookup"><span><u>D</u>ict</span></a>
   
-  <?= link_to('<span><u>U</u>ndo</span>', '', ['absolute' => 'true',
+  <?= link_to('<span><u>U</u>ndo</span>', '/', ['absolute' => 'true',
     'id' => 'JsBtnUndo',
     'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction',
     'title' => 'Go back one flashcard',

@@ -76,8 +76,8 @@ function get_dialog_menu($menu)
   $html = '<div class="uiBMenu">';
   foreach ($menu as $item)
   {
-    // $html = $html . link_to($item['label'], '#', $item['attributes']);
-    $html = $html . '<div class="uiBMenuItem">'.ui_ibtn($item['label'], '', $item['attributes']).'</div>';
+    // $html = $html . link_to($item['label'], '/', $item['attributes']);
+    $html = $html . '<div class="uiBMenuItem">'.ui_ibtn($item['label'], '/', $item['attributes']).'</div>';
   }
   $html .= '</div>';
 

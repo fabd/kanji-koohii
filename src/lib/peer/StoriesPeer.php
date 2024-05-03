@@ -55,7 +55,8 @@ class StoriesPeer extends coreDatabaseTable
     $select = self::getInstance()->select()
       ->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
       ->query();
-    return self::$db->fetchObject();
+    $db = self::getInstance()->getDb();
+    return $db->fetchObject();
   }
 
   /**
@@ -66,7 +67,8 @@ class StoriesPeer extends coreDatabaseTable
   public static function getStoryId($userId, $ucsId)
   {
     $select = self::getInstance()->select('sid')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
-    $sid = self::$db->fetchOne($select);
+    $db = self::getInstance()->getDb();
+    $sid = $db->fetchOne($select);
     return (false === $sid) ? false : (int)$sid;
   }
 
@@ -98,8 +100,9 @@ class StoriesPeer extends coreDatabaseTable
 
     assert((int)$ucsId >= 0x3000);
 
-    $storyId = self::$db->fetchOne(
-      self::$db->select('sid')->from('stories')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
+    $db = self::getInstance()->getDb();
+    $storyId = $db->fetchOne(
+      $db->select('sid')->from('stories')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
     );
 
     // either false (no row), or a positive auto increment number > 0 
@@ -109,7 +112,7 @@ class StoriesPeer extends coreDatabaseTable
     {
       $data = array_merge($data, ['userid' => $userId, 'ucs_id' => $ucsId]);
       self::getInstance()->insert($data);
-      $storyId = self::$db->lastInsertId();
+      $storyId = $db->lastInsertId();
     }
     else
     {
@@ -292,7 +295,8 @@ class StoriesPeer extends coreDatabaseTable
   {
     assert(is_int($ucsId) && $ucsId >= 0x3000);
 
-    $select = self::$db->select();
+    $db = self::getInstance()->getDb();
+    $select = $db->select();
 
     $select->columns([
         'u.username','lastmodified' => 'DATE_FORMAT(ss.updated_on,\'%e-%c-%Y\')',
@@ -332,9 +336,9 @@ class StoriesPeer extends coreDatabaseTable
 //DBG::out($select);exit;
 
     // must fetch all here because getFormattedStory() will do more querries
-    $fetchMode = self::$db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $rows = self::$db->fetchAll($select);
-    self::$db->setFetchMode($fetchMode);
+    $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
+    $rows = $db->fetchAll($select);
+    $db->setFetchMode($fetchMode);
 
     $stories = [];
 
@@ -364,11 +368,13 @@ class StoriesPeer extends coreDatabaseTable
     $num_stories->private = 0;
     $num_stories->public  = 0;
     
+    $db = self::getInstance()->getDb();
+    
     self::getInstance()->select(['public', 'count' => 'COUNT(*)'])
       ->where('userid = ?', $userId)
       ->group('public')
       ->query();
-    while ($R = self::$db->fetchObject())
+    while ($R = $db->fetchObject())
     {
       if ($R->public==0){
         $num_stories->private = $R->count;
@@ -391,7 +397,8 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getMyStoriesSelect($userId)
   {
-    $select = self::$db->select()->columns(
+    $db = self::getInstance()->getDb();
+    $select = $db->select()->columns(
       [
         'seq_nr' => rtkIndex::getSqlCol(), 'kanji', 'story' => 'text', 'public',
         'stars', 'kicks' => 'reports', 's.updated_on', 'ts_dispdate' => 'UNIX_TIMESTAMP(s.updated_on)'
@@ -414,8 +421,9 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getSelectForExport($userId)
   {
+    $db = self::getInstance()->getDb();
     // Order of columns is important! cf. "My Stories" export action
-    $select = self::$db->select([
+    $select = $db->select([
       's.ucs_id',
       'framenr' => rtkIndex::getSqlCol(),
       'kanji',

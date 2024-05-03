@@ -38,7 +38,7 @@ class SitenewsPeer extends coreDatabaseTable
   public static function getRawPostById($id)
   {
     $select = self::getInstance()->select('*')->where('id = ?', $id)->query();
-    return self::$db->fetchObject();
+    return self::getInstance()->getDb()->fetchObject();
   }
 
   /**
@@ -52,7 +52,7 @@ class SitenewsPeer extends coreDatabaseTable
   {
     $select = self::getPostCols()->where('id = ?', $id)->query();
     
-    if ($post = self::$db->fetchObject())
+    if ($post = self::getInstance()->getDb()->fetchObject())
     {
       $posts = self::formatPostsArray([$post], $brief);
       return $posts[0];
@@ -82,9 +82,10 @@ class SitenewsPeer extends coreDatabaseTable
       $select->where('EXTRACT(DAY FROM created_on) = ?', $day);
     }
 
-    $fetchMode = self::$db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $result = self::formatPostsArray(self::$db->fetchAll($select));
-    self::$db->setFetchMode($fetchMode);
+    $db = self::getInstance()->getDb();
+    $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
+    $result = self::formatPostsArray($db->fetchAll($select));
+    $db->setFetchMode($fetchMode);
     return $result;
   }
 
@@ -100,9 +101,10 @@ class SitenewsPeer extends coreDatabaseTable
       ->order('created_on DESC')
       ->limit($max);
 
-    $fetchMode = self::$db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $result = self::formatPostsArray(self::$db->fetchAll($select), true);
-    self::$db->setFetchMode($fetchMode);
+    $db = self::getInstance()->getDb();
+    $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
+    $result = self::formatPostsArray($db->fetchAll($select), true);
+    $db->setFetchMode($fetchMode);
 
     return $result;
   }
@@ -122,9 +124,10 @@ class SitenewsPeer extends coreDatabaseTable
       'month' => 'EXTRACT(MONTH FROM created_on)'])
       ->group('yyyymm')
       ->order('yyyymm DESC');
-    $fetchMode = self::$db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $result = self::$db->fetchAll($select);
-    self::$db->setFetchMode($fetchMode);
+    $db = self::getInstance()->getDb();
+    $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
+    $result = $db->fetchAll($select);
+    $db->setFetchMode($fetchMode);
     return $result;
   }
 
@@ -201,6 +204,6 @@ class SitenewsPeer extends coreDatabaseTable
 
   public static function lastInsertId()
   {
-    return self::$db->lastInsertId();
+    return self::getInstance()->getDb()->lastInsertId();
   }
 }

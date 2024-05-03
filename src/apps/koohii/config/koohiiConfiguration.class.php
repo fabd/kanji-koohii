@@ -56,10 +56,6 @@ class koohiiConfiguration extends sfApplicationConfiguration
       {
         return ucfirst(_CJ($sid));
       }
-
-      // autoloading of old Peer classes, ensures self::$db is always set
-      require sfConfig::get('sf_lib_dir').'/core/coreAutoload.php';
-      coreAutoload::register();
     }
 
     // events

@@ -93,8 +93,10 @@ class UsersSettingsPeer extends coreDatabaseTable
     $select = self::getInstance()
       ->select(array_keys(self::$map))
       ->where('userid = ?', $userId)->query();
+    
+    $db = self::getInstance()->getDb();
 
-    if ($row = self::$db->fetch())
+    if ($row = $db->fetch())
     {
       $settings = self::mapColsToOpts($row);
     }

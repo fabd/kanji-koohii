@@ -12,7 +12,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Koohii\\": "lib/"
+      "Koohii\\": "lib/",
+      "": "lib/peer/"
     },
     "exclude-from-classmap": [
       "vendor/erusev/parsedown-extra/test/"

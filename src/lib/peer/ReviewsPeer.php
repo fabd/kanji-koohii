@@ -80,7 +80,8 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::filterByUserId($select, $userId);
     $select->query();
 
-    return self::$db->fetch();
+    $db = self::getInstance()->getDb();
+    return $db->fetch();
   }
 
   /**
@@ -116,7 +117,7 @@ class ReviewsPeer extends coreDatabaseTable
     }
 
 // DBG::out($select);exit;
-    $rows = self::$db->fetchAll($select);
+    $rows = self::getInstance()->getDb()->fetchAll($select);
 
     $cards = [];
 
@@ -202,7 +203,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     $select = self::filterByUserId($select, $userId);
 
-    return self::$db->fetchCol($select);
+    return self::getInstance()->getDb()->fetchCol($select);
   }
   
   /**
@@ -215,6 +216,8 @@ class ReviewsPeer extends coreDatabaseTable
    */
   private static function _getFlashcardCount($userId, $select = null)
   {
+    $db = self::getInstance()->getDb();
+
     if (is_null($select))
     {
       $select = self::getInstance()->select();
@@ -224,7 +227,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::filterByUserId($select, $userId);
 // DBG::printr($select->__toString());exit;
     $select->query();
-    $result = self::$db->fetchObject();
+    $result = $db->fetchObject();
     return (int) $result->count;
   }
 
@@ -257,7 +260,7 @@ class ReviewsPeer extends coreDatabaseTable
     // get array of known kanji as ucs ids (this simple SELECT uses INDEX)
     $select = self::getInstance()->select()->columns('ucs_id');
     $select = self::filterByUserId($select, $userId);
-    $ucs_array = self::$db->fetchCol($select);
+    $ucs_array = self::getInstance()->getDb()->fetchCol($select);
 
     // convert to utf8 string for storage
     $knownKanji = count($ucs_array) ? utf8::fromUnicode($ucs_array) : '';
@@ -336,7 +339,7 @@ class ReviewsPeer extends coreDatabaseTable
     
     $select = self::filterByUserId($select, $userId);
     $select = self::filterByRtk($select, $filter); // FIXME  we don't strictly need sequences JOIN here
-    $rows   = self::$db->fetchAll($select);
+    $rows   = self::getInstance()->getDb()->fetchAll($select);
 
     // do not assume a fixed box setting, do assume SQL data is not messed up
     $highest_box = count($rows) ? max(array_column($rows, 'box')) : 1;
@@ -390,9 +393,10 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getTotalReviews($userId)
   {
-    $select = self::$db->select(['count' => 'SUM(totalreviews)'])->from('reviews');
+    $db = self::getInstance()->getDb();
+    $select = $db->select(['count' => 'SUM(totalreviews)'])->from('reviews');
     self::filterByUserId($select, $userId)->query();
-    $row = self::$db->fetchObject();
+    $row = $db->fetchObject();
     return (int)$row->count;
   }
 
@@ -407,7 +411,7 @@ class ReviewsPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select('MAX(lastreview)');
     $select = self::filterByUserId($select, $userId);
-    $ts_lastreview = self::$db->fetchOne($select);
+    $ts_lastreview = self::getInstance()->getDb()->fetchOne($select);
     return !is_null($ts_lastreview) ? $ts_lastreview : false;
   }
 
@@ -570,7 +574,8 @@ class ReviewsPeer extends coreDatabaseTable
 
 // DBG::out($select);exit;
 
-    $ids = self::$db->fetchCol($select);
+    $db = self::getInstance()->getDb();
+    $ids = $db->fetchCol($select);
 
     return array_map('intval', $ids);
   }
@@ -595,7 +600,7 @@ class ReviewsPeer extends coreDatabaseTable
       ->where('expiredate < DATE_ADD('.$exprLocalTime.', INTERVAL '.DueCardsGraphComponent::GRAPH_DAYS.' DAY)');
 
 //echo $select;exit;
-   return self::$db->fetchCol($select);
+   return self::getInstance()->getDb()->fetchCol($select);
   }
 
   /**
@@ -643,7 +648,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::filterByUserId($select, $userId);
     $select->columns(['idx' => rtkIndex::getSqlCol()]);
 
-    $indices = self::$db->fetchCol($select);
+    $indices = self::getInstance()->getDb()->fetchCol($select);
     $count = count($indices);
 
     if (!$count) {
@@ -683,8 +688,10 @@ class ReviewsPeer extends coreDatabaseTable
     $select->query();
 
     $lessons = [];
+    
+    $db = self::getInstance()->getDb();
 
-    while ($row = self::$db->fetchObject())
+    while ($row = $db->fetchObject())
     {
       $lessNr = rtkIndex::getLessonForIndex((int)$row->seq_nr);
 
@@ -782,7 +789,7 @@ class ReviewsPeer extends coreDatabaseTable
       ->order('seq_nr')
       ->limit(10);
 
-    return self::$db->fetchAll($select);
+    return self::getInstance()->getDb()->fetchAll($select);
   }
   */
 
@@ -805,7 +812,7 @@ class ReviewsPeer extends coreDatabaseTable
       ->order(rtkIndex::getSqlCol().' ASC')
       ->limit(1);
 
-    $ucsId = self::$db->fetchOne($select);
+    $ucsId = self::getInstance()->getDb()->fetchOne($select);
 
     return $ucsId !== false ? intval($ucsId) : false;
   }
@@ -1001,7 +1008,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::filterByUserId($select, $userId);
 
     // array of flashcard ids that are in the user's deck
-    $userCards = self::$db->fetchCol($select);
+    $userCards = self::getInstance()->getDb()->fetchCol($select);
 
     // filter out ids that are in both sets
     $newCards = array_diff($cards, $userCards);
@@ -1021,6 +1028,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   private static function addFlashcards($userId, array $cards)
   {
+    $db = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
     
     // only lock if necessary
@@ -1028,11 +1036,11 @@ class ReviewsPeer extends coreDatabaseTable
 
     // lock the table (to speedup index) (minimal speed gain..)
     if ($lockTable) {
-      self::$db->query('LOCK TABLE '.$tableName.' WRITE');
+      $db->query('LOCK TABLE '.$tableName.' WRITE');
     }
 
     // prepare statement and execute for all cards
-    $stmt = new coreDatabaseStatementMySQL(self::$db,
+    $stmt = new coreDatabaseStatementMySQL($db,
       sprintf('INSERT %s (userid,ucs_id,created_on,leitnerbox) VALUES (%d,?,NOW(),1)', $tableName, $userId));
 
     try
@@ -1053,7 +1061,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     // unlock table
     if ($lockTable) {
-      self::$db->query('UNLOCK TABLES');
+      $db->query('UNLOCK TABLES');
     }
 
     // return succesfully added ids
@@ -1070,6 +1078,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   private static function deleteFlashcards($userId, $cards)
   {
+    $db = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
   
     // only lock if necessary
@@ -1077,11 +1086,11 @@ class ReviewsPeer extends coreDatabaseTable
 
     // lock the table (to speedup index) (minimal speed gain..)
     if ($lockTable) {
-      self::$db->query('LOCK TABLE '.$tableName.' WRITE');
+      $db->query('LOCK TABLE '.$tableName.' WRITE');
     }
 
     // prepare statement and execute for all cards
-    $stmt = new coreDatabaseStatementMySQL(self::$db,
+    $stmt = new coreDatabaseStatementMySQL($db,
       sprintf('DELETE FROM %s WHERE userid = %d AND ucs_id = ?', $tableName, $userId));
 
     try
@@ -1105,7 +1114,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     // unlock table
     if ($lockTable) {
-      self::$db->query('UNLOCK TABLES');
+      $db->query('UNLOCK TABLES');
     }
 
     // return succesfully added ids

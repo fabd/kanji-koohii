@@ -49,7 +49,7 @@ class CustkeywordsPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select('keyword')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
 //DBG::out($select);
-    $keyword = self::$db->fetchOne($select);
+    $keyword = self::getInstance()->getDb()->fetchOne($select);
     return (false !== $keyword) ? $keyword : null;
   }
 
@@ -64,10 +64,11 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   public static function getCoalescedKeyword($userId, $ucsId)
   {
-    $select = self::$db->select()->from(KanjisPeer::getInstance()->getName());
+    $db = self::getInstance()->getDb();
+    $select = $db->select()->from(KanjisPeer::getInstance()->getName());
     $select = self::addCustomKeywordJoin($select, $userId);
     $select->where('kanjis.ucs_id = ?', $ucsId);
-    $keyword = self::$db->fetchOne($select);
+    $keyword = $db->fetchOne($select);
     return (false !== $keyword) ? $keyword : null;
   }
 
@@ -85,7 +86,9 @@ class CustkeywordsPeer extends coreDatabaseTable
   {
     $indexSqlCol = rtkIndex::getSqlCol();
 
-    $select = self::$db->select(['kanjis.ucs_id', 'seq_nr' => $indexSqlCol]);
+    $db = self::getInstance()->getDb();
+
+    $select = $db->select(['kanjis.ucs_id', 'seq_nr' => $indexSqlCol]);
 
     // get all kanji keywords with custom keywords if defined
     $select->from(KanjisPeer::getInstance()->getName());
@@ -96,7 +99,7 @@ class CustkeywordsPeer extends coreDatabaseTable
     // FIXME? will need to change this if we want cust.kw for non-Heisig kanji
     $select->where("`{$indexSqlCol}` < ?", rtkIndex::RTK_UCS);
 
-    $rows = self::$db->fetchAll($select);
+    $rows = $db->fetchAll($select);
 
     $keywords = array_column($rows, null, 'ucs_id');
 // LOG::info($keywords);
@@ -145,7 +148,7 @@ class CustkeywordsPeer extends coreDatabaseTable
   public static function importList($userId, array $keywords, $request)
   {
     $tableName = self::getInstance()->getName();
-    $db = self::$db;
+    $db = self::getInstance()->getDb();
 
     // obtenir l'id des custom keywords existants, comme clé dans un array assoc.
     $colUcs = $db->fetchCol(self::getInstance()->select('ucs_id')->where('userid = ?', $userId));
@@ -191,7 +194,7 @@ class CustkeywordsPeer extends coreDatabaseTable
     }
 
     // unlock table
-    self::$db->query('UNLOCK TABLES');
+    $db->query('UNLOCK TABLES');
 
     //$t=sfProjectConfiguration::getActive()->profileEnd();
     //DBG::out("time $t  done: $done");exit;
@@ -211,7 +214,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   /*public static function getExportKeywords($userid)
   {
-    $select = self::$db->select(array('seq_nr' => rtkIndex::getSqlCol(), 'kanji'));
+    $select = $db->select(array('seq_nr' => rtkIndex::getSqlCol(), 'kanji'));
 
     // get ALL customized keywords of this user, regardless of the characters
     $select->from(KanjisPeer::getInstance()->getName());
@@ -220,7 +223,7 @@ class CustkeywordsPeer extends coreDatabaseTable
 //DBG::out($select);exit;
 
     $keywords = array();
-    while (false !== ($row = self::$db->fetch()))
+    while (false !== ($row = $db->fetch()))
     {
       $key = (string)$row['seq_nr'];
       $keywords[$key] = $row;
@@ -253,8 +256,10 @@ class CustkeywordsPeer extends coreDatabaseTable
     }
 
     $keywords = [];
+    
+    $db = self::getInstance()->getDb();
 
-    $rows = self::$db->fetchAll($select);
+    $rows = $db->fetchAll($select);
     foreach ($rows as $row) {
       $keywords[] = [(int) $row['ucs_id'], $row['keyword']];
     }

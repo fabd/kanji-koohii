@@ -31,7 +31,8 @@ class StoryVotesPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select('authorid')->where('userid = ? AND ucs_id = ? AND vote = 1', [$userId, $ucsId])->limit(1);
 
-    return self::$db->fetchOne($select);
+    $db = self::getInstance()->getDb();
+    return $db->fetchOne($select);
   }
 
   /**
@@ -104,9 +105,11 @@ class StoryVotesPeer extends coreDatabaseTable
     // FIXME for now always invalidate the cache
     StoriesSharedPeer::invalidateStoriesCache($ucsId);
 
+    $db = self::getInstance()->getDb();
+
     // performance check (see one line in SharedStoriesComponent.js)
-    if (null !== self::$db->getProfiler()) {
-      $response['__debug_log'] = self::$db->getProfiler()->getDebugLog();
+    if (null !== $db->getProfiler()) {
+      $response['__debug_log'] = $db->getProfiler()->getDebugLog();
     }
 
     return $response;
@@ -119,7 +122,8 @@ class StoryVotesPeer extends coreDatabaseTable
   protected static function getLastVote($authorId, $ucsId, $userId)
   {
     $select = self::getInstance()->select('vote')->where('authorid = ? AND ucs_id = ? AND userid = ?', [$authorId, $ucsId, $userId]);
-    $result = self::$db->fetchOne($select);
+    $db = self::getInstance()->getDb();
+    $result = $db->fetchOne($select);
     return intval($result);
   }
 }

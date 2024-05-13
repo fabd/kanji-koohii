@@ -14,7 +14,7 @@
 <div class="uiFcOptions">
   <?= link_to('<span>Exit</span>', $exit_url, ['absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review']) ?>
 
-  <?= link_to('<span><u>B</u>ack</span>', '', ['absolute' => 'true',
+  <?= link_to('<span><u>B</u>ack</span>', '/', ['absolute' => 'true',
     'id'    => 'JsBtnBack',
     'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction', 
     'title' => 'Go back one flashcard',
@@ -53,7 +53,7 @@
     
         <div id="uiFcButtons1" style="display:none">
           <h3>Press Spacebar to continue</h3>
-          <?= ui_ibtn('Continue', '', ['class' => 'uiFcBtnAC uiFcAction', 'data-action' => 'flip']) ?>
+          <?= ui_ibtn('Continue', '/', ['class' => 'uiFcBtnAC uiFcAction', 'data-action' => 'flip']) ?>
         </div>
       
       </div><!-- uiFcButtons -->
@@ -67,7 +67,7 @@
 
        <?= ui_ibtn('Exit', $exit_url, ['class' => 'uiIBtnGreen']); ?>
 
-       <?= ui_ibtn('Search on google.co.jp', '', ['id' => 'search-google-jp', 'class' => 'uiIBtnGreen', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
+       <?= ui_ibtn('Search on google.co.jp', '/', ['id' => 'search-google-jp', 'class' => 'uiIBtnGreen', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
 
     </div><!-- uiFcStats -->    
   </div>

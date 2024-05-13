@@ -1,6 +1,11 @@
 <?php
   use_helper('Links');
   $sf_request->setParameter('_homeFooter', true);
+
+  // (fabd): double-check autoloading on a simple page
+  // $declaredClasses = get_declared_classes();
+  // LOG::info(count($declaredClasses).' declared classes');
+  // LOG::info($declaredClasses);
 ?>
 <div class="row">
   <div class="col-lg-9 mx-auto">

@@ -65,7 +65,8 @@ class UsersPeer extends coreDatabaseTable
     $select->where($criteria . ' = ?', $value)
            ->query();
            
-    $user = self::$db->fetch();
+    $db = self::getInstance()->getDb();
+    $user = $db->fetch();
 
     // normalize integers
     if (false !== $user)
@@ -116,7 +117,8 @@ class UsersPeer extends coreDatabaseTable
   public static function getUserId($username)
   {
     $select = self::getInstance()->select('userid')->where('username = ?', $username)->query();
-    if ($row = self::$db->fetch())
+    $db = self::getInstance()->getDb();
+    if ($row = $db->fetch())
     {
       return (int) $row['userid'];
     }
@@ -206,6 +208,8 @@ class UsersPeer extends coreDatabaseTable
    */
   public static function deleteUser($userid)
   {
+    $db = self::getInstance()->getDb();
+
     $result = true;
     $deleteStmt = 'DELETE FROM %s WHERE userid = ?';
     $where = 'userid = ?';
@@ -213,37 +217,37 @@ class UsersPeer extends coreDatabaseTable
 
     // This one can potentially delete 2000+ records at once
     $table = ReviewsPeer::getInstance()->getName();
-    $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
+    $stmt = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
     $result = $result && $stmt->execute([$userid]);
     $count['flashcards'] = $stmt->rowCount();
 
     // This one also can potentially delete 2000+ rows at once
     $table = StoriesPeer::getInstance()->getName();
-    $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
+    $stmt = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
     $result = $result && $stmt->execute([$userid]);
     $count['stories'] = $stmt->rowCount();
 
     // Custom Keywords
     $table = CustkeywordsPeer::getInstance()->getName();
-    $stmt = new coreDatabaseStatementMySQL(self::$db, sprintf($deleteStmt, $table));
+    $stmt = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
     $result = $result && $stmt->execute([$userid]);
     $count['keywords'] = $stmt->rowCount();
 
     // Other misc linked tables
     $table = ActiveMembersPeer::getInstance()->getName();
-    $result = $result && self::$db->delete($table, $where, $userid);
+    $result = $result && $db->delete($table, $where, $userid);
     $table = LearnedKanjiPeer::getinstance()->getname();
-    $result = $result && self::$db->delete($table, $where, $userid);
+    $result = $result && $db->delete($table, $where, $userid);
     $table = StoriesSharedPeer::getInstance()->getName();
-    $result = $result && self::$db->delete($table, $where, $userid);
+    $result = $result && $db->delete($table, $where, $userid);
     $table = StoryVotesPeer::getInstance()->getName();
-    $result = $result && self::$db->delete($table, $where, $userid);
+    $result = $result && $db->delete($table, $where, $userid);
     $table = UsersSettingsPeer::getInstance()->getName();
-    $result = $result && self::$db->delete($table, $where, $userid);
+    $result = $result && $db->delete($table, $where, $userid);
 
     // Delete the user last in case some sql above breaks, user can still sign in
     $table = UsersPeer::getInstance()->getName();
-    $result = $result && self::$db->delete($table, $where, $userid);
+    $result = $result && $db->delete($table, $where, $userid);
 
     if (true !== $result)
     {
@@ -294,7 +298,8 @@ class UsersPeer extends coreDatabaseTable
       ->where('regip = ?', $regip)
       ->where('joindate > DATE_SUB(NOW(), INTERVAL ? HOUR)', (int)$since_hours);
 
-    return (int)self::$db->fetchOne($select);
+    $db = self::getInstance()->getDb();
+    return (int)$db->fetchOne($select);
   }
 
   /**
@@ -331,8 +336,8 @@ class UsersPeer extends coreDatabaseTable
   {
     $user = sfContext::getInstance()->getUser();
 
-    self::getInstance();
-    $ts = self::$db->fetchOne('SELECT UNIX_TIMESTAMP(?)', new coreDbExpr(UsersPeer::sqlLocalTime()));
+    $db = self::getInstance()->getDb();
+    $ts = $db->fetchOne('SELECT UNIX_TIMESTAMP(?)', new coreDbExpr(UsersPeer::sqlLocalTime()));
     if (!$ts) {
       throw new sfException('getLocalizedTimestamp() failed');
     }

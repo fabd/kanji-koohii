@@ -29,7 +29,8 @@ class coreDatabaseMySQL extends coreDatabase
     {
       echo $e->getMessage() . "\n"
            . sprintf("\nHint: check the environment settings for database connection parameters (app: %s, env: %s).\n",
-             CORE_APP, CORE_ENVIRONMENT);
+           sfConfig::get('sf_app'), sfConfig::get('sf_environment')
+          );
       $this->connection = false;
     }
 

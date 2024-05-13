@@ -147,6 +147,11 @@ abstract class coreDatabaseTable
     return $this->columns;
   }
 
+  public function getDb()
+  {
+    return self::$db;
+  }
+
   /**
    * Build a select query using this table as FROM clause.
    * 

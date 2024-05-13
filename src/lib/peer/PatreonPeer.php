@@ -59,7 +59,8 @@ class PatreonPeer extends coreDatabaseTable
   static public function getPatronInfo($userId)
   {
     self::getInstance()->select('*')->where('userid = ?', $userId)->query();
-    return self::$db->fetch();
+    $db = self::getInstance()->getDb();
+    return $db->fetch();
   }
 
   /**
@@ -68,13 +69,13 @@ class PatreonPeer extends coreDatabaseTable
    */
   static public function getPatronsList()
   {
+    $db = self::getInstance()->getDb();
     //$select = self::getInstance()->select('pa_full_name')->where('is_active = 1');
-
-    $select = self::$db->select(['u.username', 'p.userid', 'p.pa_full_name'])
+    $select = $db->select(['u.username', 'p.userid', 'p.pa_full_name'])
       ->from(['p' => self::getInstance()->getName()])
       ->joinLeftUsing(['u' => 'users'], 'userid')
       ->where('is_active = 1');
 
-    return self::$db->fetchAll($select);
+    return $db->fetchAll($select);
   }
 }

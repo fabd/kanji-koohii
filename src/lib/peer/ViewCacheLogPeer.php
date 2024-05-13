@@ -95,7 +95,8 @@ class ViewCacheLogPeer extends coreDatabaseTable
       'total'       => 'COUNT(*)'
     ])->query();
 
-    $result = self::$db->fetchObject();
+    $db = self::getInstance()->getDb();
+    $result = $db->fetchObject();
 
     if ($result === false || $result->total == 0) {
       return false;

@@ -1,10 +1,5 @@
 <?php
 
-// disable SwiftMailer (cf. lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php)
-class Swift
-{
-}
-
 /**
  * Global helper to retrieve database connection.
  *
@@ -61,10 +56,6 @@ class koohiiConfiguration extends sfApplicationConfiguration
       {
         return ucfirst(_CJ($sid));
       }
-
-      // autoloading of old Peer classes, ensures self::$db is always set
-      require sfConfig::get('sf_lib_dir').'/core/coreAutoload.php';
-      coreAutoload::register();
     }
 
     // events

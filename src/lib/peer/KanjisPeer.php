@@ -52,8 +52,9 @@ class KanjisPeer extends coreDatabaseTable
     }
 
     self::getInstance()->select()->where('ucs_id = ?', $ucsId)->query();
+    $db = self::getInstance()->getDb();
 
-    if (false !== ($o = self::$db->fetchObject()))
+    if (false !== ($o = $db->fetchObject()))
     {
       // set "framenum" to the selected Heisig index, otherwise UCS
       $heisigNr = rtkIndex::getIndexForChar($o->kanji);
@@ -80,7 +81,8 @@ class KanjisPeer extends coreDatabaseTable
 
     self::getInstance()->select()->where('framenum = ?', $heisigNum)->query();
 
-    return self::$db->fetchObject();
+    $db = self::getInstance()->getDb();
+    return $db->fetchObject();
   }
 
   /**
@@ -96,7 +98,8 @@ class KanjisPeer extends coreDatabaseTable
       return false;
     }
     self::getInstance()->select()->where('kanji = ?', $utf8)->query();
-    return self::$db->fetchObject();
+    $db = self::getInstance()->getDb();
+    return $db->fetchObject();
   }
 
   /**
@@ -169,7 +172,8 @@ class KanjisPeer extends coreDatabaseTable
     $sequences = rtkIndex::getSequences();
     $indexCols = ['index1' => $sequences[0]['sqlCol'], 'index2' => $sequences[1]['sqlCol']];
     $select = self::getInstance()->select($indexCols)->where('ucs_id = ?', $ucsId)->query();
-    if ($row = self::$db->fetch())
+    $db = self::getInstance()->getDb();
+    if ($row = $db->fetch())
     {
       // anything above 0x3400 is an UCS code, below should be known Heisig indexes
       return ($row['index1'] > 0 && $row['index1'] < rtkIndex::RTK_UCS) 

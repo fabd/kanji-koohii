@@ -136,8 +136,8 @@
         >Maximum box for cards marked 'Hard'</label
       >
       <span class="form-text">
-        Here, you can chose the maximum interval for a Hard answer by limiting
-        the upper box. So for example if you chose to use 10 boxes and a Hard
+        Here, you can choose the maximum interval for a Hard answer by limiting
+        the upper box. So for example if you choose to use 10 boxes and a Hard
         answer limit of 5 then a card in box 6,7,8,9 and 10 will always drop
         down to 5.
       </span>

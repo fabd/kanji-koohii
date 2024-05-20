@@ -46,7 +46,7 @@ function nav_item(string $nav_id, string $text, string $internal_uri, $options =
 
   $li_class = $li_class ? ' class="'.implode(' ', $li_class).'"' : '';
 
-  return "<li${li_class}>\n  ${link}\n${dropdown}\n</li>\n";
+  return "<li{$li_class}>\n  {$link}\n{$dropdown}\n</li>\n";
 }
 
 function staging_marker() {
@@ -88,6 +88,7 @@ if (!$sf_user->isAuthenticated()) {
 <ul class="k-nav_dropdown">
   <li><a href="@/study">Browse</a></li>
   <li><a href="@/study/failedlist">Restudy List</a></li>
+  <li><a href="@/progress">View All Lessons</a></li>
   <li><a href="@/study/mystories" class="active">My Stories</a></li>
 </ul>
 DOM
@@ -175,6 +176,7 @@ if (!$sf_user->isAuthenticated()) {
   $nav_items[] = nav_m_t('Study', 'study', 'fa-book-open', [
     nav_m_i('Index',       's-i',  'study/index'),
     nav_m_i('Restudy List',     's-r',  'study/failedlist' ),
+    nav_m_i('View Lessons',     's-l',  '@progress' ),
     nav_m_i('My Stories',  's-ms', 'study/mystories' ),
   ]);
     

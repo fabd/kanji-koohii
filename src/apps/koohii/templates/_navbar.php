@@ -46,7 +46,7 @@ function nav_item(string $nav_id, string $text, string $internal_uri, $options =
 
   $li_class = $li_class ? ' class="'.implode(' ', $li_class).'"' : '';
 
-  return "<li${li_class}>\n  ${link}\n${dropdown}\n</li>\n";
+  return "<li{$li_class}>\n  {$link}\n{$dropdown}\n</li>\n";
 }
 
 function staging_marker() {

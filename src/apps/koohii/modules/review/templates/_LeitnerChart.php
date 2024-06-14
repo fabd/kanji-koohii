@@ -25,7 +25,7 @@
 ?>
 </div>
 
-<div id="leitner-chart_pane" class="min-h-[268px] md:min-h-[298px] ko-Box no-gutter-xs-sm">
+<div id="JsLeitnerChartComponent" class="min-h-[268px] md:min-h-[298px] ko-Box no-gutter-xs-sm">
   <!-- Vue goes here -->
 </div>
 

@@ -24,9 +24,9 @@ domContentLoaded(() => {
   let elMount;
 
   // Leitner chart page
-  elMount = $$("#leitner-chart_pane")[0];
+  elMount = $$("#JsLeitnerChartComponent")[0];
   if (elMount) {
-    VueInstance(LeitnerChart, elMount, { containerId: "leitner-chart_pane" });
+    VueInstance(LeitnerChart, elMount, { containerId: "JsLeitnerChartComponent" });
   }
 
   // Custom Review form

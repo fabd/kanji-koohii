@@ -26,7 +26,10 @@ domContentLoaded(() => {
   // Leitner chart page
   elMount = $$("#JsLeitnerChartComponent")[0];
   if (elMount) {
-    VueInstance(LeitnerChart, elMount, { containerId: "JsLeitnerChartComponent" });
+    VueInstance(LeitnerChart, elMount, {
+      containerId: "JsLeitnerChartComponent",
+      chartData: kk_globals_get("LEITNER_CHART_DATA")
+    });
   }
 
   // Custom Review form

@@ -93,12 +93,15 @@ module.exports = {
     // no `margin: { left: 10px; }`
     "scss/declaration-nested-properties": "never",
 
+    // ???
+    "scss/load-no-partial-leading-underscore": null,
+    "scss/at-import-partial-extension": null,
+
     // buggy with Prettier
     "scss/operator-no-newline-after": null,
 
     // buggy with Prettier
     "scss/operator-no-unspaced": [true, { "severity": "warning" }],
-
 
     // sass compiler ignores `&` in `.foo & .bar`, but useful to know
     "scss/selector-no-redundant-nesting-selector": true,

@@ -47,6 +47,9 @@ interface Window {
     HOMEDASH_LESSON_PROPS: Dictionary;
     LESSONS_CHART_PROPS: Dictionary;
 
+    // the Leitner Chart (Spaced Repetition homepage)
+    LEITNER_CHART_DATA: TLeitnerChartData;
+
     // custom review page
     CUSTOM_REVIEW_PROPS: Dictionary;
 

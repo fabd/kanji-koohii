@@ -8,6 +8,10 @@
 #
 # ====================================================================
 
+# symlinks removed from mariadb 11.x
+alias mysql=mariadb
+alias mysqldump=mariadb-dump
+
 KO_DB_USER='root'
 KO_DB_PASS='root'
 KO_DB_CHAR='--default-character-set=utf8'
@@ -38,5 +42,8 @@ backup-db() {
 # --------------------------------------------------------------------
 # aliases
 # --------------------------------------------------------------------
+
+
 alias dbroot="mysql -u$KO_DB_USER -p$KO_DB_PASS $KO_DB_CHAR"
 alias dbgithub="mysql -u$KO_DB_USER -p$KO_DB_PASS -D db_github $KO_DB_CHAR"
+alias dbprod="mysql -u$KO_DB_USER -p$KO_DB_PASS -D db_prod $KO_DB_CHAR"

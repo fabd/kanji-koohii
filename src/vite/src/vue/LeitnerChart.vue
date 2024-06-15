@@ -2,7 +2,7 @@
   <div>
     <transition name="chart-fade" appear>
       <div v-once class="pt-[30px] pb-[40px] flex justify-between">
-        <div v-for="(bar, b) in displayBoxes" :key="b" class="box flex-1">
+        <div v-for="(box, b) in displayBoxes" :key="b" class="box flex-1">
           <div class="box_inner relative h-[170px] md:h-[200px]">
             <div
               :class="{ lbl: true, first: b === 0 }"
@@ -12,42 +12,42 @@
               href="#"
               class="bar bar1"
               :style="{
-                height: getHeight(bar[0]),
-                backgroundColor: getColor(bar[0], 0),
+                height: getHeight(box[0]),
+                backgroundColor: getColor(box[0], 0),
               }"
-              @click="onClick($event, bar[0])"
+              @click="onClick($event, box[0])"
             >
               <div
                 class="side"
-                :style="{ backgroundColor: getColor(bar[0], 1) }"
+                :style="{ backgroundColor: getColor(box[0], 1) }"
               ></div>
               <div
                 class="top"
-                :style="{ backgroundColor: getColor(bar[0], 2) }"
+                :style="{ backgroundColor: getColor(box[0], 2) }"
               ></div>
-              <span :class="['val', bar[0].value ? '' : 'val-zero']">{{
-                bar[0].value
+              <span :class="['val', box[0].value ? '' : 'val-zero']">{{
+                box[0].value
               }}</span>
             </a>
             <a
               href="#"
               class="bar bar2"
               :style="{
-                height: getHeight(bar[1]),
-                backgroundColor: getColor(bar[1], 0),
+                height: getHeight(box[1]),
+                backgroundColor: getColor(box[1], 0),
               }"
-              @click="onClick($event, bar[1])"
+              @click="onClick($event, box[1])"
             >
               <div
                 class="side"
-                :style="{ backgroundColor: getColor(bar[1], 1) }"
+                :style="{ backgroundColor: getColor(box[1], 1) }"
               ></div>
               <div
                 class="top"
-                :style="{ backgroundColor: getColor(bar[1], 2) }"
+                :style="{ backgroundColor: getColor(box[1], 2) }"
               ></div>
-              <span :class="['val', bar[1].value ? '' : 'val-zero']">{{
-                bar[1].value
+              <span :class="['val', box[1].value ? '' : 'val-zero']">{{
+                box[1].value
               }}</span>
             </a>
           </div>
@@ -57,23 +57,21 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-import { kk_globals_get } from "@app/root-bundle";
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   props: {
     // id of a parent container used to determine the available horizontal space
     containerId: { type: String, required: true },
+
+    chartData: { type: Object as PropType<TLeitnerChart>, required: true },
   },
 
   data() {
     return {
-      box_data: kk_globals_get("LEITNER_CHART_DATA").boxes,
-      box_urls: kk_globals_get("LEITNER_CHART_DATA").urls,
-
       colors: {
-        // bar.type
+        // front, side & top colors for each type of stack
         failed: ["#ff8257", "#d2633f", "#ffa994"],
         new: ["#40a8e5", "#3d83ac", "#8abde4"],
         fresh: ["#40e569", "#3dac58", "#8ae49c"],
@@ -85,8 +83,8 @@ export default defineComponent({
 
   computed: {
     // less than ideal solution due to device orientation switch
-    numDisplayBoxes() {
-      let numSrsBoxes = this.box_data.length;
+    numDisplayBoxes(): number {
+      let numSrsBoxes = this.chartData.boxes.length;
 
       let el,
         containerWidth =
@@ -103,45 +101,26 @@ export default defineComponent({
       return Math.min(maxVisibleBoxes, numSrsBoxes);
     },
 
-    // was intended to display 5 boxes in portrait, 8 in landscape
-    displayBoxes() {
-      // console.log("displayBoxes()")
+    displayBoxes(): TLeitnerBox[] {
       let maxBox = this.numDisplayBoxes,
-        boxes = [];
+        boxes = [] as TLeitnerBox[];
 
-      this.box_data.map((b, i) => {
+      this.chartData.boxes.map((box, i) => {
         if (i < maxBox) {
-          boxes.push(b);
+          boxes.push(box);
         } else {
-          boxes[maxBox - 1][0].value += b[0].value;
-          boxes[maxBox - 1][1].value += b[1].value;
+          boxes[maxBox - 1][0].value += box[0].value;
+          boxes[maxBox - 1][1].value += box[1].value;
         }
       });
-
-      while (boxes.length < maxBox) {
-        boxes.push([{ value: 0 }, { value: 0 }]);
-      }
 
       return boxes;
     },
 
-    // flatten boxes (two stacks each) into an array of stacks
-    stacks() {
-      // console.log("get property: stacks ...")
-      let bars = [];
-      this.displayBoxes.map((b) => {
-        bars.push(b[0], b[1]);
-      });
-      return bars;
-    },
-
-    maxHeight() {
-      // console.log("get property: maxHeight ...")
-      var vals = this.stacks.map(function (s) {
-        return s.value;
-      });
-      var c = Math.max.apply(null, vals);
-      return c;
+    maxHeight(): number {
+      let stacks = this.displayBoxes.flat();
+      let counts = stacks.map((s) => s.value);
+      return Math.max(...counts);
     },
   },
 
@@ -150,34 +129,31 @@ export default defineComponent({
   },
 
   methods: {
-    getBoxLabel(box) {
+    getBoxLabel(box: number) {
       const lastBox = this.numDisplayBoxes - 1;
-      return box === 0 ? "Fail &<br>New" : box < lastBox ? box : box + "+";
+      return box === 0 ? "Fail &<br>New" : box < lastBox ? box : `${box}+`;
     },
 
-    getColor(bar, face) {
-      return this.colors[bar.type][face];
+    getColor(bar: TLeitnerStack, side: number) {
+      return this.colors[bar.type][side];
     },
 
-    getPercent(height) {
-      return this.maxHeight > 0
-        ? Math.ceil((height * 100) / this.maxHeight)
-        : 0;
+    toPercent(height: number) {
+      return this.maxHeight ? Math.ceil((height * 100) / this.maxHeight) : 0;
     },
 
-    getHeight(bar) {
-      var height = this.getPercent(bar.value);
+    getHeight(bar: TLeitnerStack) {
+      var height = this.toPercent(bar.value);
 
-      return height >= 0 && height < 4 ? "4px" : height + "%";
+      return height < 4 ? "4px" : `${height}%`;
     },
 
-    onClick(event, bar) {
+    onClick(event: Event, bar: TLeitnerStack) {
       let url = this.getBarUrl(bar);
 
       // console.log('bar %d  type %s   go to %s' , bar.index, bar.type, url)
-
       if (url !== "") {
-        window.location = url;
+        window.location.href = url;
         return true;
       }
 
@@ -185,25 +161,21 @@ export default defineComponent({
       return false;
     },
 
-    // return a destination url for restudy / new / due piles
-    getBarUrl(bar) {
+    getBarUrl(bar: TLeitnerStack) {
       let url = "";
-      if (bar.value > 0) {
-        if (bar.index < 2) {
-          url = this.box_urls[bar.index === 0 ? "restudy" : "new"];
-        } else if (bar.type === "due") {
-          url = this.box_urls["due"] + "&box=" + ((bar.index >> 1) + 1);
-        }
+      if (bar.value && bar.index < 2) {
+        url = this.chartData.urls[bar.index === 0 ? "restudy" : "new"];
+      } else if (bar.value && bar.type === "due") {
+        url = this.chartData.urls["due"] + "&box=" + ((bar.index >> 1) + 1);
       }
       return url;
     },
 
-    // bar type is fixed in the SRS chart design, "nill" is dynamic and for empty bars
-    getBarType(bar) {
+    getBarType(bar: TLeitnerStack) {
       let i = bar.index,
-        type;
+        type: TLeitnerStackId;
 
-      if (bar.value <= 0) {
+      if (!bar.value) {
         type = "nill";
       } else if (i < 2) {
         type = i & 1 ? "new" : "failed";
@@ -214,14 +186,13 @@ export default defineComponent({
       return type;
     },
 
-    // set index & type for all the bars in the chart
     prepareStacks() {
-      this.displayBoxes.forEach((bars, index) => {
-        bars[0].index = index * 2;
-        bars[0].type = this.getBarType(bars[0]);
+      this.displayBoxes.forEach((box, index) => {
+        box[0].index = index * 2;
+        box[0].type = this.getBarType(box[0]);
 
-        bars[1].index = index * 2 + 1;
-        bars[1].type = this.getBarType(bars[1]);
+        box[1].index = index * 2 + 1;
+        box[1].type = this.getBarType(box[1]);
       });
     },
   },

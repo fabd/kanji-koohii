@@ -4,47 +4,17 @@
 
   $userId = $sf_user->getUserId();
 
-  // prep lessons chart data -- EXCLUDE RTK 3 for now (in the future
-  //  it will be a separate sequence -- this to avoid dumping 800 kanji card
-  //  in one lesson)
-  $rtkLessons = rtkIndex::getLessons();
-  $lessons = [];
-  foreach ($rtkLessons as $id => $count)
-  {
-    // for now ignore  RTK 3
-    if ($id === 57)
-    {
-      continue;
-    }
-
-    $lessData = rtkIndex::getLessonData($id);
-
-    $lessons[] = [
-      'id' => $lessData['lesson_nr'],
-      'from' => $lessData['lesson_from'],
-      'count' => $lessData['lesson_count'],
-    ];
-  }
-// DBG::printr($lessons);exit;
-
   $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 
   $cardsData = ReviewsPeer::getUserKanjiCardsJS($userId);
 // DBG::printr($cardsData);exit;
-  $sequenceName = rtkIndex::inst()->getSequenceName();
-
-  $lessonsChartProps = [
-    'lessons' => $lessons,
-    'sequenceName' => $sequenceName,
-  ];
 
   // include orig & user keyword maps for the kanji card component
   rtkIndex::useKeywordsFile();
 
   kk_globals_put([
     'USER_KEYWORDS_MAP' => $keywordsMap,
-    'USER_KANJI_CARDS' => $cardsData,
-    'LESSONS_CHART_PROPS' => $lessonsChartProps
+    'USER_KANJI_CARDS' => $cardsData
   ]);
 ?>
 <h2>View All Lessons</h2>

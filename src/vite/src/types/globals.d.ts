@@ -45,7 +45,6 @@ interface Window {
     // the new homepage dashboard (03/2022)
     HOMEDASH_PCTBAR_PROPS: Dictionary;
     HOMEDASH_LESSON_PROPS: Dictionary;
-    LESSONS_CHART_PROPS: Dictionary;
 
     // the Leitner Chart (Spaced Repetition homepage)
     LEITNER_CHART_DATA: TLeitnerChartData;
@@ -75,6 +74,7 @@ interface Window {
     // Old/New edition RTK keywords and kanji
     SEQ_KANJIS: string;
     SEQ_KEYWORDS: string[];
+    SEQ_LESSONS: { sequenceName: string, lessonsData: Dictionary };
 
     // User data (someday/maybe we may have a global user state on the JS side)
     USER_KEYWORDS_MAP: Dictionary;

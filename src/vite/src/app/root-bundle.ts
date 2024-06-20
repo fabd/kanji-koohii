@@ -43,7 +43,7 @@ const kkGlobalsHas = (name: string) => window.KK.hasOwnProperty(name);
  *
  * @param name key (make sure to declare them in globals.d.ts)
  */
-export function kk_globals_get(name: keyof Window["KK"], defaultVal?: any): any {
+export function kk_globals_get<K extends keyof Window["KK"]>(name: K, defaultVal?: any): Window["KK"][K] {
   console.assert(!!window.KK);
   console.assert(
     typeof defaultVal !== "undefined" || kkGlobalsHas(name),

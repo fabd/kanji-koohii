@@ -26,10 +26,14 @@ class HomeDashboard {
 
     elMount = $$("#JsViewAllLessons")[0];
     if (elMount) {
+      const seqLessons = kk_globals_get("SEQ_LESSONS");
       VueInstance(
         KoLessonsChart,
         elMount,
-        kk_globals_get("LESSONS_CHART_PROPS")
+        {
+          sequenceName: seqLessons.sequenceName,
+          lessons: seqLessons.lessons,
+        }
       );
     }
   }

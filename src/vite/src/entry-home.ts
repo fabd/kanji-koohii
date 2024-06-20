@@ -1,6 +1,7 @@
 import VueInstance from "@lib/helpers/vue-instance";
 import $$, { domContentLoaded } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
+import * as RTK from "@/lib/rtk";
 
 import KoLessonPane from "@/vue/KoLessonPane.vue";
 import KoPctBar from "@/vue/KoPctBar.vue";
@@ -26,13 +27,12 @@ class HomeDashboard {
 
     elMount = $$("#JsViewAllLessons")[0];
     if (elMount) {
-      const seqLessons = kk_globals_get("SEQ_LESSONS");
       VueInstance(
         KoLessonsChart,
         elMount,
         {
-          sequenceName: seqLessons.sequenceName,
-          lessons: seqLessons.lessons,
+          sequenceName: RTK.getSeqName(),
+          lessons: RTK.getSeqLessons(),
         }
       );
     }

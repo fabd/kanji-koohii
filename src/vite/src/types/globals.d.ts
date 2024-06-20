@@ -1,9 +1,7 @@
 /**
- * Declare globals for legacy components (.js).
+ * Types for globals received from php, passed into Window.KK.
  *
- *   Koohii
- *   . API             ... expose axios based API for review & study bundles
- *   . Dom             ... expose DOM utilities
+ * Also types for legacy .js components.
  *
  */
 
@@ -36,10 +34,23 @@ type AjaxDialogOpts = {
   context?: [string, string, string, null, any];
 };
 
+// --------------------------------------------------------------------
+// 
+// --------------------------------------------------------------------
+
+// lessons data as formatted in the keywords file, cf. generating script kanjis_table.php
+// - the lessons array is formatted as tuples, to be loaded into a new Map()
+// - the Map's key is the lesson number, starting at 1
+type TSeqLessonsMeta = { sequenceName: string; lessons: TSeqLessonEntry[] };
+type TSeqLessonId = number;
+type TSeqLessonEntry = [key: TSeqLessonId, value: TSeqLessonData];
+type TSeqLessonData = [from: number, count: number];
+type TSeqLessonMap = Map<TSeqLessonId, TSeqLessonData>;
+
 interface Window {
   // cf. kk_globals_put() on the php side
   KK: {
-    // base URL for API requests (cf. layout.php & koohii_base_url() helper)
+    // base URL for API requests, is *always* set
     BASE_URL: string;
 
     // the new homepage dashboard (03/2022)
@@ -74,7 +85,7 @@ interface Window {
     // Old/New edition RTK keywords and kanji
     SEQ_KANJIS: string;
     SEQ_KEYWORDS: string[];
-    SEQ_LESSONS: { sequenceName: string, lessonsData: Dictionary };
+    SEQ_LESSONS: TSeqLessonsMeta;
 
     // User data (someday/maybe we may have a global user state on the JS side)
     USER_KEYWORDS_MAP: Dictionary;

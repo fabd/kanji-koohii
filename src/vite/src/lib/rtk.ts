@@ -8,17 +8,24 @@
  *
  * EXPORTS
  *
+ *   getSeqKanjis()              ... return string of all kanji in current sequence
+ *                                   (ie. OLD/NEW edition) in index order so that the
+ *                                   position in the string is the sequence index (-1)
+ *
+ *   getSeqName()                ... returns the sequence's name (ie. "Old/New Edition")
+ *   getSeqLessons()             ... return Map of the lessons in the sequence
+ *
  *   isValidSequenceIndex(seqNr)
  *
  *   getIndexForUCS(ucsId)
+ *   getUCSForIndex(seqNr)
+ *
  *   getKeywordForUCS(ucsId)
  *
- *   getUCSForIndex(seqNr)
  *   getCharForIndex(extNr)
  *
- *   filterRtkKanji()
+ *   filterRtkKanji(chars)  Removes all non-RTK sequence characters from the chars array
  *
- *   getSeqKanjis()              ... return string of kanji in OLD/NEW edition (3030/3000)
  *
  */
 
@@ -31,6 +38,9 @@ type TMapIndexToUcs = Map<number, TUcsId>;
 
 // initiliazed as needed
 let kkGlobalsSeqKanjis: string;
+
+// the lessons Map is created when needed
+let seqLessonsMap: TSeqLessonMap;
 
 // maps to convert between UCS code and Heisig index (initialized by helpers as needed)
 let rtkUcsToIndexMap: TMapUcsToIndex;
@@ -45,6 +55,16 @@ export function getSeqKanjis(): string {
   }
 
   return kkGlobalsSeqKanjis;
+}
+
+export function getSeqName(): string {
+  console.assert(kk_globals_has("SEQ_LESSONS"));
+  return kk_globals_get("SEQ_LESSONS").sequenceName;
+}
+
+export function getSeqLessons() {
+  console.assert(kk_globals_has("SEQ_LESSONS"));
+  return (seqLessonsMap ??= new Map(kk_globals_get("SEQ_LESSONS").lessons));
 }
 
 /**

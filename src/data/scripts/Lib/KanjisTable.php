@@ -53,7 +53,8 @@ class KanjisTable
    */
   public function getEntriesBySeqId($seqId): array
   {
-    $sequences = rtkIndex::getSequences();
+    // FIXME hardcoded old/new for now
+    // $sequences = rtkIndex::getSequences();
     $indexKey = $seqId === 0 ? KanjisRow::IDX_OLD : KanjisRow::IDX_NEW;
 
     $array = Collection::make($this->entries)

@@ -153,7 +153,7 @@ class MyCommand extends Command_CLI
       $sequences = rtkIndex::getSequences();
       assert(isset($sequences[$seqId]));
 
-      $this->outputLessons((int) $seqId, $kanjisTable);
+      $this->outputLessonsForPhp((int) $seqId, $kanjisTable);
     }
 
     $this->verbose("\nFinished.");
@@ -162,9 +162,27 @@ class MyCommand extends Command_CLI
   /**
    * Output the lesson map that is included in `rtkIndexOld/NewEdition.php`.
    *
-   * @param int $seqId
    */
-  private function outputLessons($seqId, KanjisTable $kanjisTable)
+  private function outputLessonsForPhp(int $seqId, KanjisTable $kanjisTable)
+  {
+    $lessons = $this->getLessonsArray($seqId, $kanjisTable);
+
+    $arr = [];
+    foreach ($lessons as $lessNr => $count)
+    {
+      $arr[] = "{$lessNr} => {$count}";
+    }
+
+    echo sprintf("%s\n", implode(', ', $arr));
+  }
+
+  /**
+   * Return lessons as an assoc. array where the key is the lesson number
+   * (starts at 1) and the value is the length (number of entries in this lesson).
+   *
+   * @return array
+   */
+  private function getLessonsArray(int $seqId, KanjisTable $kanjisTable)
   {
     $kanjisBySeq = $kanjisTable->getEntriesBySeqId($seqId);
 
@@ -191,13 +209,44 @@ class MyCommand extends Command_CLI
       ++$lessons[$lessNr];
     }
 
-    $arr = [];
+    return $lessons;
+  }
+  
+
+  /**
+   * Generate sequence data usable by the client side:
+   * 
+   *   - the sequence name (ie. "RTK Old Edition")
+   *   - the lessons with pre-baked from/count values even if we could infer "from"
+   *     on the client side, so it is more readily usable
+   *
+   * @return array
+   */
+  private function getSequenceData(int $seqId, KanjisTable $kanjisTable)
+  {
+    $sequences = rtkIndex::getSequences();
+    assert(isset($sequences[$seqId]));
+    $sequenceInfo = $sequences[$seqId];
+
+    //FIXME hardcoded for now, we'll need to refactor rtkIndex if we want to support
+    // additional sequences, so it's more flexible (not too hard, no use for now)
+    $sequenceName = $seqId === 0 ? 'RTK Old Edition' : 'RTK New Edition';
+
+    $lessons = $this->getLessonsArray($seqId, $kanjisTable);
+
+    // arrange data for new Map() in JavaScript
+    $lessonsMap = [];
+    $from = 1;
     foreach ($lessons as $lessNr => $count)
     {
-      $arr[] = "{$lessNr} => {$count}";
+      $lessonsMap[] = [$lessNr, [$from, $count]];
+      $from += $count;
     }
 
-    echo sprintf("%s\n", implode(', ', $arr));
+    return [
+      'sequenceName' => $sequenceName,
+      'lessons' => $lessonsMap,
+    ];
   }
 
   /**
@@ -246,8 +295,11 @@ class MyCommand extends Command_CLI
       ++$seqNrCheck;
     }
 
+    $lessons = $this->getSequenceData($seqId, $kanjisTable);
+
     // output template
     $keywords_json = json_encode($keywords, JSON_UNESCAPED_UNICODE);
+    $lessons_json = json_encode($lessons, JSON_UNESCAPED_UNICODE);
     $characters = implode('', $kanjis);
     $generatorTime = date('F j, Y G:i:s');
     $generatorFile = basename(__FILE__);
@@ -264,6 +316,8 @@ window.KK || (KK = {});
 KK.SEQ_KEYWORDS = {$keywords_json};
 
 KK.SEQ_KANJIS='{$characters}';
+
+KK.SEQ_LESSONS= {$lessons_json};
 EOD;
     fwrite($handle, $s);
 

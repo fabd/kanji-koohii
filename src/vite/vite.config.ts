@@ -2,7 +2,10 @@ import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import strip from "@rollup/plugin-strip";
-import importElementPlus from 'vite-plugin-element-plus'
+
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
 // bundle all node_modules into a vendor chunk
 const ROLLUP_VENDOR_CHUNK = "vendor";
@@ -139,7 +142,13 @@ export default defineConfig({
   },
 
   plugins: [
-    importElementPlus({}),
+    // ...
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
 
     // ---------------------------------------------------------------------------
     // @vitejs/plugin-vue

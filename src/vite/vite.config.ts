@@ -147,6 +147,7 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
+      dirs: ['src/vue'],
       resolvers: [ElementPlusResolver()],
     }),
 

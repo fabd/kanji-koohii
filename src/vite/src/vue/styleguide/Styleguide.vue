@@ -221,15 +221,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import { ElButton } from "@lib/vendor/element";
-import KoPctBar from "@/vue/KoPctBar.vue";
-
 export default defineComponent({
   name: "StyleguideIndex",
-  components: {
-    ElButton,
-    KoPctBar,
-  },
 });
 </script>
 

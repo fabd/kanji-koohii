@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, type PropType } from "vue";
 import { getColorForCard } from "@/vue/KoKanjiCard.vue";
 
 export default defineComponent({

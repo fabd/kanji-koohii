@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ComponentPublicInstance } from "vue";
+import { defineComponent, type ComponentPublicInstance } from "vue";
 import $$, { px } from "@lib/dom";
 import KoohiiNavMenu from "@/vue/KoohiiNavMenu.vue";
 

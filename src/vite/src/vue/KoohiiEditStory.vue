@@ -185,7 +185,7 @@ import { defineComponent, nextTick } from "vue";
 
 import $$, { insertAfter, getNode } from "@lib/dom";
 import { getApi } from "@app/api/api";
-import { KanjiData, PostUserStoryResponse } from "@app/api/models";
+import type { KanjiData, PostUserStoryResponse } from "@app/api/models";
 import * as TRON from "@lib/tron";
 import { checkForUnsupportedUtf } from "@/lib/cjk";
 

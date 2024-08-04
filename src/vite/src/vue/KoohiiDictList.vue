@@ -36,7 +36,7 @@
  *
  */
 import { defineComponent } from "vue";
-import { GetDictListForUCS } from "@app/api/models";
+import type { GetDictListForUCS } from "@app/api/models";
 import { getApi } from "@app/api/api";
 // import CacheDictResults from "@/app/dict/CacheDictResults";
 

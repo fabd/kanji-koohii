@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, type PropType } from "vue";
 import * as RTK from "@/lib/rtk";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 import KoRatioBox from "@/vue/KoRatioBox.vue";

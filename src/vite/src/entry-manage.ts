@@ -14,7 +14,7 @@ import $$, { domContentLoaded, domGetById } from "@lib/dom";
 import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import AjaxTable from "@old/ajaxtable";
-import EditKeywordDialog, { EditKeywordCallback } from "@old/components/EditKeywordDialog";
+import EditKeywordDialog, { type EditKeywordCallback } from "@old/components/EditKeywordDialog";
 import SelectionTable from "@old/selectiontable";
 
 class ManagePage {

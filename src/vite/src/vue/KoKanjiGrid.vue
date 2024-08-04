@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, type PropType } from "vue";
 
-import { TKanjiCardData } from "./KoKanjiCard.vue";
+import { type TKanjiCardData } from "./KoKanjiCard.vue";
 
 import KoKanjiCard from "@/vue/KoKanjiCard.vue";
 

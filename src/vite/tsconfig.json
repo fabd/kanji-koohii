@@ -1,71 +1,52 @@
 {
+  ///////////////////////////////////////////////////////////////////////////////
+  //
+  // See  https://www.typescriptlang.org/tsconfig/
+  //
+  ///////////////////////////////////////////////////////////////////////////////
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  // exclude folders for IntelliSense performance, exclude build files
+  "exclude": ["node_modules"],
+  //
   "compilerOptions": {
-    ///////////////////////////////////////////////////////////////////
-    // set by @vitejs/app (vue-ts)
-    ///////////////////////////////////////////////////////////////////
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    /* Type Checking */
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
     "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
+
+    /* Modules */
+    "module": "Preserve",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@old/*": ["./src/app/legacy/*"]
+    },
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-    ],
-    "types": [
-      "node",
-      "vite/client"
-    ],
-    ///////////////////////////////////////////////////////////////////
-    // suggested by Volar
-    ///////////////////////////////////////////////////////////////////
-    // let Volar parse old Vue components
+    "types": ["node", "vite/client"],
+
+    /* Emit */
+    /* "importHelpers": true, */
+    "noEmit": true,
+
+    /* JavaScript Support */
     "allowJs": true,
     "checkJs": false,
-    // instead of `@typescript-eslint/no-unused-vars`
-    "noUnusedLocals": false,
-    ///////////////////////////////////////////////////////////////////
-    // additions
-    ///////////////////////////////////////////////////////////////////
-    "isolatedModules": true,
+
+    /* Interop Constraints */
     "allowSyntheticDefaultImports": true,
-    "importHelpers": true,
-    "skipLibCheck": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "baseUrl": ".",
-    // also see `resolve.alias` in vite.config.js
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@app/*": [
-        "src/app/*"
-      ],
-      "@lib/*": [
-        "src/lib/*"
-      ],
-      "@old/*": [
-        "src/app/legacy/*"
-      ],
-    },
-  },
-  ///////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
-  ///////////////////////////////////////////////////////////////////
-  // exclude folders for IntelliSense performance, exclude build files
-  ///////////////////////////////////////////////////////////////////
-  "exclude": [
-    "node_modules"
-  ]
+    "isolatedModules": true,
+
+    /* Language and Environment */
+    "jsx": "preserve",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "moduleDetection": "force",
+    "target": "es2022",
+
+    /* Completeness */
+    "skipLibCheck": true
+  }
 }

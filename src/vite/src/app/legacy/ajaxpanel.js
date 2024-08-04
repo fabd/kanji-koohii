@@ -102,7 +102,7 @@ import $$, { domGetById, stopEvent } from "@lib/dom";
 import Lang from "@lib/lang";
 import AjaxIndicator from "@old/ajaxindicator";
 import AjaxRequest from "@old/ajaxrequest";
-import EventCache from "@old/eventcache";
+import EventCache from "@lib/EventCache";
 import EventDelegator from "@old/eventdelegator";
 import EventDispatcher from "@old/eventdispatcher";
 

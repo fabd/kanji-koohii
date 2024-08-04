@@ -2,7 +2,7 @@
 
 import $$, { stopEvent } from "@lib/dom";
 import * as TRON from "@lib/tron";
-import EventCache from "@old/eventcache";
+import EventCache from "@lib/EventCache";
 import AjaxDialog from "@old/ajaxdialog";
 
 type EditKeywordResponse = {
@@ -99,9 +99,11 @@ export default class EditKeywordDialog {
     this.evtCache = null;
   }
 
-  onKeyDown(e: KeyboardEvent) {
+  onKeyDown(e: Event) {
+    const kbdEvent = <KeyboardEvent>e;
+
     // TAB key
-    if (e.keyCode === 9) {
+    if (kbdEvent.keyCode === 9) {
       this.dialog!.getAjaxPanel().post({ doNext: true });
       stopEvent(e);
       return false;

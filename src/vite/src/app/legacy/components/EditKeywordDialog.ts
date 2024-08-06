@@ -59,7 +59,7 @@ export default class EditKeywordDialog {
     };
 
     this.dialog = new AjaxDialog(null, dlgopts);
-    this.dialog.on("JsReset", this.onReset, this);
+    this.dialog.on("click", ".JsReset", this.onReset, this);
     this.dialog.show();
   }
 

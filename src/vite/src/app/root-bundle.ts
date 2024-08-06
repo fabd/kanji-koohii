@@ -1,6 +1,6 @@
 import $$, { domContentLoaded } from "@lib/dom";
 import AjaxTable from "@old/ajaxtable";
-import EventDelegator from "@old/eventdelegator";
+import EventDelegator from "@lib/EventDelegator";
 import KoohiiAside from "@/vue/Aside";
 import KoohiiNav from "@old/components/KoohiiNav";
 
@@ -10,7 +10,7 @@ let bodyED: EventDelegator | null = null;
  * Returns an EventDelegator instance for click events on the page body.
  */
 export function getBodyED(): EventDelegator {
-  return bodyED ? bodyED : (bodyED = new EventDelegator(document.body, "click"));
+  return bodyED ? bodyED : (bodyED = new EventDelegator(document.body));
 }
 
 /**

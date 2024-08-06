@@ -33,8 +33,7 @@ export default class ReviewPage {
     this.oKeyboard = new Keyboard();
 
     // handler for custom actions on the page with `.uiFcAction` elements
-    var ed = getBodyED();
-    ed.on("uiFcAction", this.onActionEvent, this);
+    getBodyED().on("click", ".uiFcAction", this.onActionEvent, this);
   }
 
   /**
@@ -67,11 +66,11 @@ export default class ReviewPage {
    * Makes sure to stop the mouse click event, to prevent page from jumping.
    *
    * @param  {Event}      ev   Event object
-   * @param  {HTMLElement} el   Matched element
+   * @param  {Element} el   Matched element
    * @return {boolean}
    */
   onActionEvent(ev, el) {
-    const actionId = el.dataset.action;
+    const actionId = /** @type {HTMLElement} */(el).dataset.action;
     console.assert(!!actionId, 'onActionEvent() bad "action" attribute, element %o', el);
     return this.notifyAction(/** @type {string}*/ (actionId), ev);
   }

@@ -30,7 +30,7 @@
  */
 import $$, { domGetById } from "@lib/dom";
 import AjaxPanel from "@old/ajaxpanel";
-import EventDelegator from "@old/eventdelegator";
+import EventDelegator from "@lib/EventDelegator";
 
 export default class AjaxTable {
   /** @type {HTMLElement} */
@@ -56,10 +56,10 @@ export default class AjaxTable {
     });
 
     // intercept clicks in the pager widget (rows per page, and paging links)
-    this.evtDel = new EventDelegator(container, "click");
-    this.evtDel.on("JSTableSort", this.onRefreshTable, this);
-    this.evtDel.on("JSPagerLink", this.onRefreshTable, this);
-    this.evtDel.on("JSFilterStd", this.onRefreshTable, this);
+    this.evtDel = (new EventDelegator(this.container))
+      .on("click", ".JSTableSort", this.onRefreshTable, this)
+      .on("click", ".JSPagerLink", this.onRefreshTable, this)
+      .on("click", ".JSFilterStd", this.onRefreshTable, this);
 
     // clicks in the pager widget will be ignored while waiting for a response
     this.ajaxInProgress = false;

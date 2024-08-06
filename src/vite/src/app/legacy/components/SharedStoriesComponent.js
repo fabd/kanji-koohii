@@ -3,7 +3,7 @@
 import $$, { domGetById, insertBefore } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import AjaxTable from "@old/ajaxtable";
-import EventDelegator from "@old/eventdelegator";
+import EventDelegator from "@lib/EventDelegator";
 
 // story in collapsed view with small "Unhide" link
 const CLASS_HIDDEN_STORY = "is-moderated";
@@ -18,14 +18,14 @@ class SharedStoriesComponent {
    */
   constructor(elContainer) {
     // handling of votes, etc
-    this.evtDel = new EventDelegator(elContainer, "click");
-    this.evtDel.on("JsNewest", this.onNewestClick, this);
-    this.evtDel.on("JsCopy", this.onCopy, this);
-    this.evtDel.on("JsReport", this.onReport, this);
-    this.evtDel.on("JsStar", this.onStar, this);
+    this.evtDel = (new EventDelegator(elContainer))
+      .on("click", ".JsNewest", this.onNewestClick, this)
+      .on("click", ".JsCopy", this.onCopy, this)
+      .on("click", ".JsReport", this.onReport, this)
+      .on("click", ".JsStar", this.onStar, this);
 
     // link that unhide most reported stories
-    this.evtDel.on("JsUnhide", this.onUnhide, this);
+    this.evtDel.on("click", ".JsUnhide", this.onUnhide, this);
 
     // handling of the stories paging
     new AjaxTable("SharedStoriesListComponent", {

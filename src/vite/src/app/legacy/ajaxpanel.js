@@ -103,7 +103,7 @@ import Lang from "@lib/lang";
 import AjaxIndicator from "@old/ajaxindicator";
 import AjaxRequest from "@old/ajaxrequest";
 import EventCache from "@lib/EventCache";
-import EventDelegator from "@old/eventdelegator";
+import EventDelegator from "@lib/EventDelegator";
 import EventDispatcher from "@old/eventdispatcher";
 
 /** @typedef {import("@/lib/tron").TronInst} TronInst */
@@ -167,8 +167,8 @@ export default class AjaxPanel {
     this.ajaxRequest = null;
 
     // event delegator to handle clicks in the panel
-    this.eventDel = new EventDelegator(this.container, "click");
-    this.eventDel.on("JSDialogSubmit", this.onPanelSubmit, this); // legacy support from AjaxDialog refactor
+    this.eventDel = new EventDelegator(this.container);
+    this.eventDel.on("click", ".JSDialogSubmit", this.onPanelSubmit, this); // legacy support from AjaxDialog refactor
 
     // register events
     this.eventDispatcher = new EventDispatcher();
@@ -314,8 +314,8 @@ export default class AjaxPanel {
    * EventDelegator handler for mouse clicks on elements styled
    * liked form submit buttons.
    *
-   * @param {Object} e
-   * @param {Object} el
+   * @param {Event} e
+   * @param {Element} el
    */
   onPanelSubmit(e, el) {
     if (this.getForm()) {

@@ -32,10 +32,10 @@ class ManagePage {
     this.viewDiv = this.initView("#manage-view .ajax");
 
     // Cancel/Reset buttons on ajax forms
-    bodyED.on("JSManageCancel", (e, el) => {
+    bodyED.on("click", ".JSManageCancel", (e, el) => {
       return this.load(el, { cancel: true });
     });
-    bodyED.on("JSManageReset", (e, el) => {
+    bodyED.on("click", ".JSManageReset", (e, el) => {
       return this.load(el, { reset: true });
     });
 
@@ -44,7 +44,7 @@ class ManagePage {
     if (el) {
       new AjaxTable(el);
       this.editKeywordUri = el.dataset.uri!;
-      bodyED.on("JSEditKeyword", this.onEditKeyword.bind(this));
+      bodyED.on("click", ".JSEditKeyword", this.onEditKeyword.bind(this));
     }
   }
 
@@ -102,7 +102,7 @@ class ManagePage {
    * Open the Edit Keyword dialog for keywords in the Manage > Edit Keywords table.
    *
    */
-  onEditKeyword(e: Event | null, el: HTMLElement): boolean {
+  onEditKeyword(e: Event | null, el: Element): boolean {
     const callback: EditKeywordCallback = (keyword, next) => {
       console.log("EditKeywordDialog callback");
 

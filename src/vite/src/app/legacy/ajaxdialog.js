@@ -182,7 +182,7 @@ import $$, { hasClass } from "@lib/dom";
 import * as TRON from "@lib/tron";
 import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
-import EventDelegator from "@old/eventdelegator";
+import EventDelegator from "@lib/EventDelegator";
 import EventDispatcher from "@old/eventdispatcher";
 
 /** @typedef {import("@/lib/tron").TronInst} TronInst */
@@ -361,23 +361,24 @@ export default class AjaxDialog {
     }
 
     // register default actions
-    this.eventDel = new EventDelegator(this.container, "click");
-    this.eventDel.on("JSDialogSuccess", () => {
-      this.handleDialogStatus(AjaxDialog.STATUS_SUCCESS);
-      return false;
-    });
-    this.eventDel.on("JSDialogFail", () => {
-      this.handleDialogStatus(AjaxDialog.STATUS_FAILED);
-      return false;
-    });
-    this.eventDel.on("JSDialogClose", () => {
-      this.destroy();
-      return false;
-    });
-    this.eventDel.on("JSDialogHide", () => {
-      this.hide();
-      return false;
-    });
+    this.eventDel = new EventDelegator(this.container);
+    this.eventDel
+      .on("click", ".JSDialogSuccess", () => {
+        this.handleDialogStatus(AjaxDialog.STATUS_SUCCESS);
+        return false;
+      })
+      .on("click", ".JSDialogFail", () => {
+        this.handleDialogStatus(AjaxDialog.STATUS_FAILED);
+        return false;
+      })
+      .on("click", ".JSDialogClose", () => {
+        this.destroy();
+        return false;
+      })
+      .on("click", ".JSDialogHide", () => {
+        this.hide();
+        return false;
+      });
 
     // fire the init event for static dialog content
     if (this.options.useMarkup) {
@@ -386,11 +387,10 @@ export default class AjaxDialog {
 
     // autoclose option: clicking the modal mask will hide the dialog
     if (this.options.autoclose) {
-      getBodyED().onDefault(function (ev) {
-        if (hasClass(ev.target, "mask")) {
-          this.hide();
-        }
-      }, this);
+      getBodyED().onRoot("click", (ev) => {
+        // we intentionally check ev.target which is YUI2's modal mask layer, not doc.body
+        hasClass(ev.target, "mask") && this.hide();
+      });
     }
   }
 

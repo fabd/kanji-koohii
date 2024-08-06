@@ -2,7 +2,7 @@
 //  fixed to work with ESM build
 
 import $$ from "@lib/dom";
-import EventDelegator from "@old/eventdelegator";
+import EventDelegator from "@lib/EventDelegator";
 
 export default {
   dropdown: null,
@@ -14,14 +14,11 @@ export default {
     // console.log("KoohiiNav::init()");
 
     // desktop nav
-    var eventDel = new EventDelegator(document.body, [
-      "click",
-      "touchend",
-      "mouseover",
-      "mouseout",
-    ]);
-    eventDel.on("JsHasDropdown", this.onDropdown, this);
-    eventDel.onDefault(this.onClick, this);
+    let eventDel = new EventDelegator(document.body);
+    eventDel.on(
+      ["click", "touchend", "mouseover", "mouseout"],
+      ".JsHasDropdown", this.onDropdown, this);
+    eventDel.onRoot("click", this.onClick, this);
   },
 
   onDropdown: function (ev, el) {
@@ -96,12 +93,12 @@ export default {
     return false;
   },
 
-  // this event handler clears the dropdown if clicking/tapping outside
+  /**
+   * this event handler clears the dropdown if clicking/tapping outside
+   * 
+   * @param {Event} ev
+   */
   onClick: function (ev) {
-    if (ev.type !== "click") {
-      return true;
-    }
-
     if (this.dropdown) {
       this.toggleDropdown(false);
     }

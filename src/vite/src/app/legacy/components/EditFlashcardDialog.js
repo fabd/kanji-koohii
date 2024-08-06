@@ -102,7 +102,7 @@ class EditFlashcardDialog {
 
     if (!this.dialog) {
       this.dialog = new AjaxDialog(null, this.dlgOpts);
-      this.dialog.on("JsMenuItem", this.onMenuItem, this);
+      this.dialog.on("click", ".JsMenuItem", this.onMenuItem, this);
     }
 
     this.dialog.show();

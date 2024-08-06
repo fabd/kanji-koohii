@@ -8,7 +8,7 @@ import VueInstance from "@lib/helpers/vue-instance";
 
 import actb from "@old/autocomplete.js";
 
-import EventDelegator from "@old/eventdelegator";
+import EventDelegator from "@lib/EventDelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
@@ -90,8 +90,8 @@ export default {
     const elEditFlashcard = domGetById("EditFlashcard");
     if (elEditFlashcard) {
       this.elEditFlashcard = elEditFlashcard;
-      const ed = new EventDelegator(elEditFlashcard as HTMLElement, "click");
-      ed.on("JsEditFlashcard", this.onEditFlashcard, this);
+      (new EventDelegator(elEditFlashcard))
+        .on("click", ".JsEditFlashcard", this.onEditFlashcard.bind(this));
     }
   },
 
@@ -119,8 +119,8 @@ export default {
     }
   },
 
-  onEditFlashcard(evt: Event, el: HTMLElement) {
-    let data = el.dataset;
+  onEditFlashcard(evt: Event, el: Element) {
+    let data = (el as HTMLElement).dataset;
 
     function onMenuResponse(result: "added" | "deleted") {
       // update icon to reflect new flashcard state

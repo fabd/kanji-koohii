@@ -1,14 +1,14 @@
-// "styleguide" is for now a developer only page to test element-plus
+// set up for the `/ux` live docs/testing ground
 
 import { domGetById, domContentLoaded } from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import "@/assets/sass/pages/styleguide/docs.scss";
 
-import StyleguideApp from "@/vue/styleguide/Styleguide.vue";
+import UxIndex from "@/vue/styleguide/ux-index.vue";
 
 domContentLoaded(() => {
   console.log("@entry-styleguide");
   let elMount = domGetById("JsStyleguideApp")!;
-  elMount && VueInstance(StyleguideApp, elMount);
+  elMount && VueInstance(UxIndex, elMount);
 });

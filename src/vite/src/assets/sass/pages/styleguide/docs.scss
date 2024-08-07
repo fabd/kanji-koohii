@@ -1,7 +1,15 @@
-//
 $borderColor: #d8d1c2;
 
-//
+.ux-DocNav {
+  &-list {
+    a:not(:first-child) {
+      border-left: solid 1px $borderColor;
+      margin-left: 0.5em;
+      padding-left: 0.5em;
+    }
+  }
+}
+
 .ux-doc {
   &Demoblock {
     border: 1px solid $borderColor;

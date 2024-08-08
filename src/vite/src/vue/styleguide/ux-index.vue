@@ -41,7 +41,7 @@ export default defineComponent({
   data() {
     return {
       baseUrl: kk_globals_get("BASE_URL"),
-      currentPath: "/",
+      currentPath: window.location.hash,
     };
   },
   computed: {

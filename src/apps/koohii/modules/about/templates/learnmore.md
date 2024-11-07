@@ -24,7 +24,8 @@
 
 You can already start studying 294 kanji in 12 lessons with [**the free sample chapter**](https://web.archive.org/web/20190101104438/https://nirc.nanzan-u.ac.jp/en/files/2012/12/RK-1-6th-edition-sample.pdf) made available by the publisher.
 
-You can buy the book on [Amazon](https://www.amazon.com/Remembering-Kanji-Complete-Japanese-Characters/dp/0824835921) as well as [publisher](https://nirc.nanzan-u.ac.jp/en/publications/miscellaneous-publications/remembering-the-kanji/) in paper or ebook format. [Here is a good review](https://www.kanjiclinic.com/reviewheisigwiig.htm) from KanjiClinic.
+You can buy the book on [Amazon](https://www.amazon.com/Remembering-Kanji-Complete-Japanese-Characters/dp/0824835921).<br>
+[Here is a good review](https://web.archive.org/web/20210126123639/https://www.kanjiclinic.com/reviewheisigwiig.htm) from KanjiClinic.
 
 </div>
 

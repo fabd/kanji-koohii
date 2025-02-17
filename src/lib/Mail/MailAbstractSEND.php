@@ -49,6 +49,7 @@ class MailAbstractSEND extends MailAbstract
 
   public function setSubject($subject)
   {
+    // \LOG::info('MailAbstractSEND() setSubject()', $subject);
     $this->mailer->setSubject($subject);
   }
 
@@ -63,6 +64,7 @@ class MailAbstractSEND extends MailAbstract
 
     $sendgrid = new SendGrid($credentials['apikey']);
 
+
     try {
       $response = $sendgrid->send($mail);
       // printf("Response status: %d\n\n", $response->statusCode());
@@ -72,6 +74,8 @@ class MailAbstractSEND extends MailAbstract
       // foreach ($headers as $header) {
       //   echo '- '.$header."\n";
       // }
+    
+      // \LOG::info('MailAbstractSEND()', 'email sent');
 
       $isMailSent = true;
     } catch (Exception $e) {

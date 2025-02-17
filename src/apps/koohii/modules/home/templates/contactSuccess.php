@@ -1,9 +1,15 @@
 <?php
 use_helper('Form', 'Markdown', 'Validation');
 $sf_request->setParameter('_homeFooter', true);
+
 $contactMailTo = rtkMail::parseAddress(sfConfig::get('app_email_feedback_to'));
-$contactMailToEnts = utf8::toHtmlEntities('mailto:'.$contactMailTo['email']);
-$contactMailToDisp = utf8::toHtmlEntities('kanji • koohii ＠ gmail • com');
+$email = $contactMailTo['email'];
+
+$contactMailToEnts = utf8::toHtmlEntities('mailto:'.$email);
+
+$emailDisp = str_replace(['.', '@'], [' • ',' @ '], $email);
+
+$contactMailToDisp = utf8::toHtmlEntities($emailDisp);
 ?>
 
   <h2>Contact</h2>
@@ -87,7 +93,7 @@ Please note if you like, you can also:
         <p class="mb-2">
           <strong>If you are unable to sign in</strong>, contact:<br>
           <br>
-          kanji &bull; koohii &#65312; gmail &bull; com
+          <?= $emailDisp ?>
         </p>
     </div>
 

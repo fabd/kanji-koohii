@@ -64,17 +64,23 @@ class MailAbstractSEND extends MailAbstract
 
     $sendgrid = new SendGrid($credentials['apikey']);
 
-
+    // ------------------------------------------------------------------
+    // Possible status codes:
+    //   202 Accepted       (mail sent)
+    //   401 Unauthorized   (= invalid api key)
+    // ------------------------------------------------------------------
     try {
       $response = $sendgrid->send($mail);
-      // printf("Response status: %d\n\n", $response->statusCode());
-
-      // $headers = array_filter($response->headers());
-      // echo "Response Headers\n\n";
-      // foreach ($headers as $header) {
-      //   echo '- '.$header."\n";
-      // }
-    
+      
+      /*
+      printf("Response status: %d\n\n", $response->statusCode());
+      $headers = array_filter($response->headers());
+      echo "Response Headers\n\n";
+      foreach ($headers as $header) {
+        echo '- '.$header."\n";
+      }
+      */
+      
       // \LOG::info('MailAbstractSEND()', 'email sent');
 
       $isMailSent = true;

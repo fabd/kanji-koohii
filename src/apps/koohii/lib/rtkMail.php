@@ -33,7 +33,7 @@
 // use Koohii\Mail\MailAbstractPHP  as MailAbstractAPI;
 
 // uncomment this to use SMTP via GMail server
-use Koohii\Mail\MailAbstractSMTP as MailAbstractAPI;
+use Koohii\Mail\MailAbstractSEND as MailAbstractAPI;
 
 class rtkMail extends MailAbstractAPI
 {

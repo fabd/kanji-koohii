@@ -183,7 +183,10 @@ class accountActions extends sfActions
         if (!KK_ENV_DEV)
         {
           $mailer = new rtkMail();
-          $mailer->sendNewAccountConfirmation($userinfo['email'], $userinfo['username'], $raw_password);
+          $mailSent = $mailer->sendNewAccountConfirmation($userinfo['email'], $userinfo['username'], $raw_password);
+          if (!$mailSent) {
+            $request->setError('mail', 'Woops. Could not send registration email.');
+          }
         }
         
         return 'Done';

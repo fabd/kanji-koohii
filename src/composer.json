@@ -8,8 +8,7 @@
     "illuminate/collections": "^8.83",
     "symfony/var-dumper": "^5.4",
     "phpmailer/phpmailer": "^6.8",
-    "friendsofsymfony1/symfony1": "1.5.*",
-    "sendgrid/sendgrid": "^8.1"
+    "friendsofsymfony1/symfony1": "1.5.*"
   },
   "autoload": {
     "psr-4": {

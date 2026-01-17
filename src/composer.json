@@ -8,7 +8,10 @@
     "illuminate/collections": "^8.83",
     "symfony/var-dumper": "^5.4",
     "phpmailer/phpmailer": "^6.8",
-    "friendsofsymfony1/symfony1": "1.5.*"
+    "friendsofsymfony1/symfony1": "1.5.*",
+    "php-http/guzzle7-adapter": "^1.1",
+    "nyholm/psr7": "^1.8",
+    "mailersend/mailersend": "^0.35.0"
   },
   "autoload": {
     "psr-4": {
@@ -22,6 +25,11 @@
   "autoload-dev": {
     "psr-4": {
       "Koohii\\Scripts\\": "data/scripts/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
     }
   }
 }

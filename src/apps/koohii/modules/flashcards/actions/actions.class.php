@@ -76,13 +76,7 @@ class flashcardsActions extends sfActions
 
     // handle menu action
     $menu = $request->getParameter('menu');
-    if ($menu === 'add' && $this->menuFlashcardAdd($request, $userId, $ucsId))
-    {
-      $result  = 'added';
-      sfProjectConfiguration::getActive()->loadHelpers('CJK');
-      $message = 'New flashcard added for '.cjk_lang_ja($charData->kanji).' (#'.$extFrameNum.')';
-    }
-    elseif ($menu === 'fail' && $this->menuFlashcardFail($request, $userId, $ucsId))
+    if ($menu === 'fail' && $this->menuFlashcardFail($request, $userId, $ucsId))
     {
       $result  = 'failed';
       $message = 'Flashcard moved to the restudy pile. The page will reload.';
@@ -118,23 +112,6 @@ class flashcardsActions extends sfActions
       'message'      => $message,
       'confirm'      => $confirm           
     ]);
-  }
-
-  private function menuFlashcardAdd($request, $userId, $ucsId)
-  {
-    if (!ReviewsPeer::hasFlashcard($userId, $ucsId))
-    {
-      $added = ReviewsPeer::addSelection($userId, [$ucsId]);
-
-      if (count($added) === 1)
-      {
-        return true;
-      }
-    }
-
-    // not expected to be seen by user
-    $request->setError('x', __METHOD__);
-    return false;
   }
 
   private function menuFlashcardFail($request, $userId, $ucsId)

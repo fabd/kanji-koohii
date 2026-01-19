@@ -13,6 +13,30 @@ class flashcardsActions extends sfActions
     throw new sfException("Woopsies");
   }
 
+  public function executeAdd($request)
+  {
+    $json = $request->getContentJson();
+    $ucsId = BaseValidators::sanitizeInteger($json->ucs);
+
+    $userId = $this->getUser()->getUserId();
+    $status = JsTron::STATUS_FAILED;
+
+    if (!ReviewsPeer::hasFlashcard($userId, $ucsId))
+    {
+      $added = ReviewsPeer::addSelection($userId, [$ucsId]);
+
+      if (count($added) === 1)
+      {
+        $status = JsTron::STATUS_SUCCESS;
+      }
+    }
+
+    $tron = new JsTron();
+    $tron->setStatus($status);
+
+    return $tron->renderJson($this);
+  }
+
   /**
    * Returns body of the Flashcard Edit Dialog on the Study page.
    *

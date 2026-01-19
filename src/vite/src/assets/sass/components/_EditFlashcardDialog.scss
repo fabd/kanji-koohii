@@ -62,7 +62,7 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
   top:0;
 
   .ko-Btn {
-    width: 150px;
+    min-width: 120px;
   }
 
   &.is-loading {
@@ -86,4 +86,28 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+.ko-Notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background-color: #50ac50;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+  z-index: 1000;
+
+  &.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  &.hide {
+    opacity: 0;
+  }
 }

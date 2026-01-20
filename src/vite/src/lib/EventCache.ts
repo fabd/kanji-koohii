@@ -18,18 +18,14 @@ export default class EventCache {
   private cache: {
     target: Node;
     type: string;
-    callback: EventListenerOrEventListenerObject;
+    callback: EventListener;
   }[];
 
   constructor() {
     this.cache = [];
   }
 
-  addEvent(
-    target: Node,
-    type: string,
-    callback: EventListenerOrEventListenerObject
-  ) {
+  addEvent(target: Node, type: string, callback: EventListener) {
     target.addEventListener(type, callback);
     this.cache.push({ target, type, callback });
   }
@@ -38,11 +34,7 @@ export default class EventCache {
    * Bind multiple events to one listener.
    *
    */
-  addEvents(
-    target: Node,
-    types: string[],
-    callback: EventListenerOrEventListenerObject
-  ) {
+  addEvents(target: Node, types: string[], callback: EventListener) {
     for (const type of types) {
       this.addEvent(target, type, callback);
     }

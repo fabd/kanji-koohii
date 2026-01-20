@@ -65,8 +65,9 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
     min-width: 120px;
   }
 
-  &.is-loading {
-    background: pink;
+  .is-loading {
+    background: #a19e97;
+    border-color: #a19e97;
     cursor: not-allowed;
   }
 
@@ -93,7 +94,7 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
   top: 20px;
   left: 50%;
   transform: translateX(-50%) translateY(-100px);
-  background-color: #50ac50;
+  background-color: #73ac50;
   color: white;
   padding: 16px 32px;
   border-radius: 8px;

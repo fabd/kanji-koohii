@@ -155,7 +155,7 @@ export default {
     if (loading) {
       html = `
 <a href="#" class="uiGUI ko-Btn JsEditFlashcard is-loading flex items-center justify-center">
-  <div class="is-icon spinner mr-2"></div>
+  <div class="is-icon spinner mr-2"></div>Add Card
 </a>`;
     } else if (state === false) {
       html = `

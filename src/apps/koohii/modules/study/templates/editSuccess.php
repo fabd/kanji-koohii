@@ -39,23 +39,7 @@
     $showLearnedMessage = /*!$reviewMode &&*/ $isRestudyKanji && $isRelearnedKanji;
   }
 
-function get_flashcard_button($userId, $context, $ucsId) {
   $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
-  $dialogUri  = $context->getController()->genUrl('flashcards/dialog');
-  $params     = esc_specialchars(json_encode(['ucs' => intval($ucsId)]));
-//<div id="EditFlashcard" class="f$bFlashcard">
-//  <a href="#" title="Edit Flashcard" class="uiGUI JsEditFlashcard" data-uri="$dialogUri" data-param="$params">&nbsp;</a>
-//</div>
-
-  return <<<EOD
-<div id="EditFlashcard" class="is-toggle-$has_flashcard">
-  <a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard is-0" title="Add  Card" data-uri="$dialogUri" data-param="$params"
-><i class="fa fa-plus mr-2"></i>Add Card</a>
-  <a href="#" class="uiGUI ko-Btn is-ghost rounded JsEditFlashcard is-1" title="Edit Card" data-uri="$dialogUri" data-param="$params"
-><i class="fa fa-edit mr-2"></i>Edit Card</a>
-</div>
-EOD;
-}
 ?>
 
 <div class="row">
@@ -84,7 +68,9 @@ EOD;
   <div id="EditStoryComponent">
     <div style="position:relative;">
       <h2><?php echo $title; ?></h2>
-      <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)) { echo get_flashcard_button($userId, $sf_context, $kanjiData->ucs_id); } ?>
+<?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)): ?>
+      <div class="ko-EditFlashcard" data-ucs="<?= $kanjiData->ucs_id ?>" data-has-card="<?= $has_flashcard ?>"></div>
+<?php endif ?>
     </div>
 
     <div id="JsEditStoryInst" class="min-h-[100px]">

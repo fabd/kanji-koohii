@@ -140,6 +140,13 @@ export class LegacyApi extends HttpClient {
     return this.post<PostVoteStoryResponse>("/study/ajax", params);
   }
 
+  //
+  addCard(ucsId: TUcsId) {
+    return this.post("/flashcards/add", {
+      ucs: ucsId
+    })
+  }
+
   // get vocab entries for the Dictionary (example words for given kanji)
   getDictListForUCS(ucsId: number, getKnownKanji: boolean) {
     return this.get<GetDictListForUCS>("/study/dict", {

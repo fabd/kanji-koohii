@@ -56,10 +56,59 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
 
 
 /* Edit Flashcard button on the Study page */
-#EditFlashcard { position:absolute; right:0; top:0; }
-#EditFlashcard.is-toggle-0 .is-1,
-#EditFlashcard.is-toggle-1 .is-0 { display:none; }
+.ko-EditFlashcard {
+  position:absolute;
+  right:0;
+  top:0;
 
-/*#EditFlashcard .btn.is-1 { border:1px solid #23527c; }*/
+  .ko-Btn {
+    min-width: 120px;
+  }
 
+  .is-loading {
+    background: #a19e97;
+    border-color: #a19e97;
+    cursor: not-allowed;
+  }
 
+  .is-icon {
+    // make sure label doesnt move when .fa icon is replaced with spinner
+    width: 15px;
+    height: 15px;
+  }
+
+  .spinner {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.ko-Notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background-color: #73ac50;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+  z-index: 1000;
+
+  &.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  &.hide {
+    opacity: 0;
+  }
+}

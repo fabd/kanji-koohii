@@ -3,6 +3,8 @@
 import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
 import * as RTK from "@/lib/rtk";
+import { getApi } from "@app/api/api";
+import { baseUrl } from "@/lib/koohii";
 
 import VueInstance from "@lib/helpers/vue-instance";
 
@@ -17,14 +19,55 @@ import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
 type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
 
-const CLASS_ACTIVE = "active";
+class KoNotification {
+  private element: HTMLElement;
+  private static hideTimeout: NodeJS.Timeout | null = null;
+
+  constructor() {
+    // Create the div only once
+    let div = $$<HTMLElement>(".ko-Notification")[0];
+    if (!div) {
+      div = document.createElement("div");
+      div.className = "ko-Notification";
+      document.body.appendChild(div);
+    }
+
+    this.element = div;
+  }
+
+  public show(message: string): void {
+    // Clear any existing timeout
+    if (KoNotification.hideTimeout) {
+      clearTimeout(KoNotification.hideTimeout);
+    }
+
+    // Set the message and show the notification
+    this.element.textContent = message;
+    this.element.classList.remove("hide");
+
+    // Trigger reflow to ensure the transition works
+    void this.element.offsetWidth;
+
+    this.element.classList.add("show");
+
+    // Hide after 3 seconds
+    KoNotification.hideTimeout = setTimeout(() => {
+      this.hide();
+    }, 3000);
+  }
+
+  public hide(): void {
+    this.element.classList.add("hide");
+  }
+}
 
 export default {
-  elEditFlashcard: null as Element | null,
+  elEditFlashcard: null as HTMLElement | null,
+  hasFlashcard: false,
 
   oEditFlashcard: null as EditFlashcardDialog | null,
 
-  elSearch: (null as any) as HTMLInputElement,
+  elSearch: null as any as HTMLInputElement,
 
   dictVisible: false,
 
@@ -87,12 +130,46 @@ export default {
       new SharedStoriesComponent(elSharedStories);
     }
 
-    const elEditFlashcard = domGetById("EditFlashcard");
+    const elEditFlashcard = $$<HTMLElement>(".ko-EditFlashcard")[0];
     if (elEditFlashcard) {
-      this.elEditFlashcard = elEditFlashcard;
-      (new EventDelegator(elEditFlashcard))
-        .on("click", ".JsEditFlashcard", this.onEditFlashcard.bind(this));
+      this.initFlashcardButton(elEditFlashcard);
     }
+  },
+
+  initFlashcardButton(el: HTMLElement) {
+    this.elEditFlashcard = el;
+
+    this.hasFlashcard = el.dataset["hasCard"] === "1";
+
+    this.renderFlashcardButton(this.hasFlashcard, false);
+
+    new EventDelegator(el).on(
+      "click",
+      ".JsEditFlashcard",
+      this.onClickFlashcardButton.bind(this)
+    );
+  },
+
+  renderFlashcardButton(state: boolean, loading: boolean) {
+    let html = "";
+    if (loading) {
+      html = `
+<a href="#" class="uiGUI ko-Btn JsEditFlashcard is-loading flex items-center justify-center">
+  <div class="is-icon spinner mr-2"></div>Add Card
+</a>`;
+    } else if (state === false) {
+      html = `
+<a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard" title="Add Card">
+  <div class="is-icon fa fa-plus mr-2"></div>Add Card
+</a>`;
+    } else if (state === true) {
+      html = `
+<a href="#" class="uiGUI ko-Btn is-ghost rounded JsEditFlashcard" title="Edit Card">
+  <div class="is-icon fa fa-edit mr-2"></div>Edit Card
+</a>`;
+    }
+
+    this.elEditFlashcard!.innerHTML = html;
   },
 
   initDictionary(el: Element) {
@@ -119,38 +196,55 @@ export default {
     }
   },
 
-  onEditFlashcard(evt: Event, el: Element) {
-    let data = (el as HTMLElement).dataset;
-
-    function onMenuResponse(result: "added" | "deleted") {
-      // update icon to reflect new flashcard state
-      let z = { added: "1", deleted: "0" };
-      if (z.hasOwnProperty(result)) {
-        let div = el.parentElement!;
-        div.className = div.className.replace(
-          /\bis-toggle-\d\b/,
-          "is-toggle-" + z[result]
-        );
+  onClickFlashcardButton(evt: Event, el: Element) {
+    const onMenuResponse = (result: "added" | "deleted") => {
+      // reset button to "Add Card" state
+      if (result === "deleted") {
+        this.renderFlashcardButton(false, false);
+        this.hasFlashcard = false;
       }
-    }
+    };
 
-    function onMenuHide() {
-      // clear icon focus state when dialog closes
-      el.classList.remove(CLASS_ACTIVE);
-    }
+    // the current kanji
+    const ucsId = kk_globals_get("LASTVIEWED_UCS_ID");
 
-    el.classList.add(CLASS_ACTIVE);
+    if (!this.hasFlashcard) {
+      // set loading state for the button
+      this.renderFlashcardButton(false, true);
 
-    if (!this.oEditFlashcard) {
+      // make sure the loading state shows half a sec for visual feedback
+      const startTime = Date.now();
+      const minDelay = 500;
+
+      getApi()
+        .legacy.addCard(ucsId)
+        .then((tron) => {
+          const elapsed = Date.now() - startTime;
+          const remainingDelay = Math.max(0, minDelay - elapsed);
+
+          // Wait for the remaining time if needed
+          setTimeout(() => {
+            if (tron.isSuccess()) {
+              this.renderFlashcardButton(true, false);
+              this.hasFlashcard = true;
+
+              let notif = new KoNotification();
+              notif.show("Flashcard added");
+            }
+          }, remainingDelay);
+        })
+        .catch(() => {
+          // cancel loading state
+          this.renderFlashcardButton(false, false);
+        });
+    } else if (!this.oEditFlashcard) {
       this.oEditFlashcard = new EditFlashcardDialog(
-        data.uri!,
-        JSON.parse(data.param!),
+        `${baseUrl()}/flashcards/dialog`,
+        { ucs: ucsId },
         [this.elEditFlashcard, "tr", "br"],
         {
           events: {
             onMenuResponse: onMenuResponse,
-            onMenuHide: onMenuHide,
-            scope: this,
           },
         }
       );

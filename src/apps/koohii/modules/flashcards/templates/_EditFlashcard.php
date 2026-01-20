@@ -109,23 +109,9 @@ function get_dialog_menu($menu)
   else
   {
     // build menu
-    if (!$cardData)
-    {
-      add_menu_item($menu, 'Add flashcard', 'add');
-    }
-    else
+    if ($cardData)
     {
       echo flashcard_stats($cardData);
-    }
-
-    // Study : "Review new cards (n)" option to start a review of cards added with the menu
-    if (!$bReviewMode)
-    {
-      $countNewCards = ReviewsPeer::getCountUntested($sf_user->getUserId());
-      if ($countNewCards)
-      {
-        add_menu_item($menu, 'Review new cards ('.$countNewCards.')', 'page', ['data-uri' => $sf_context->getController()->genUrl('review/review?type=untested')]);
-      }
     }
 
     if ($cardData)

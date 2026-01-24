@@ -5,7 +5,7 @@ namespace Koohii\Mail;
 abstract class MailAbstract
 {
   // PHP   : builtin sendmail()
-  // SMTP  : SMTP via GMail with 2fa
+  // SMTP  : SMTP via MailerSend API
   public const PROTOCOL_PHP = 'PHP';
   public const PROTOCOL_SMTP = 'SMTP';
 
@@ -22,5 +22,10 @@ abstract class MailAbstract
 
   abstract public function setSubject($subject);
 
+  /**
+   * Attempt to send the email.
+   *
+   * @return boolean  return true if the email was sent, false on error
+   */
   abstract public function send(): bool;
 }

@@ -92,8 +92,16 @@ class rtkMail extends MailAbstractAPI
    */
   public function sendFeedbackMessage($subject, $from_addr, $from_name, $message)
   {
-    $this->setFrom($from_addr, $from_name);
+    $senderName = "{$from_name} via Kanji Koohii";
 
+    // From : must use the verified domain in MailerSend
+    $from = self::parseAddress(sfConfig::get('app_email_feedback_from'));
+    $this->setFrom($from['email'], $senderName);
+
+    // Reply To : the user provided email in the contact form
+    $this->addReplyTo($from_addr, $from_name);
+
+    // To : the Kanji Koohii email account
     $to = self::parseAddress(sfConfig::get('app_email_feedback_to'));
     $this->addTo($to['email'], $to['name']);
 

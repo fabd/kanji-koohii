@@ -2,8 +2,8 @@
 use_helper('Form', 'Markdown', 'Validation');
 $sf_request->setParameter('_homeFooter', true);
 
-$contactMailTo = rtkMail::parseAddress(sfConfig::get('app_email_feedback_to'));
-$email = $contactMailTo['email'];
+$address = rtkMail::parseAddress(sfConfig::get('app_email_feedback_to'));
+$email = $address['email'];
 
 $contactMailToEnts = utf8::toHtmlEntities('mailto:'.$email);
 
@@ -20,7 +20,7 @@ Hi, I'm Fabrice!
 
 Feedback is always appreciated, and can help motivate further developments. Thank you!
 
-Please note if you like, you can also:
+If you like, you can also:
 
 * Post **bugs and suggestions** directly to [fabd/kanji-koohii](https://github.com/fabd/kanji-koohii/issues) on Github
 
@@ -31,7 +31,7 @@ Please note if you like, you can also:
 <?= markdown_end(); ?>
   </div>
 
-<?php if (0 && $sf_user->isAuthenticated()): ?>
+<?php if ($sf_user->isAuthenticated()): ?>
 
   <p style="color:#484"><em><span class="required-legend">*</span> Please provide a valid email address, it will only be used to reply to your message.</em></p>
 
@@ -76,7 +76,7 @@ Please note if you like, you can also:
     </form>
   </div>
 
-<?php elseif($sf_user->isAuthenticated()): ?>
+<?php elseif(0 && $sf_user->isAuthenticated()): ?>
 
   <p style="color:#844">
       The <strong>contact form</strong> is currently disabled, please use the email shown above.

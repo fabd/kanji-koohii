@@ -59,6 +59,8 @@ all:
   # 
   # *from* address for account related emails (registration, password change, ...)
   email_robot:       'Kanji Koohii <admin@koohii.local>'
+  # *from* MUST be verified sender/domain on MailerSend
+  email_feedback_from: 'Kanji Koohii <contact@domain.com>'
   # *to*   address used by the Contact form
   email_feedback_to: 'Fabrice <fabrice@koohii.local>'
   # ----------------------------------------------------------------------------
@@ -69,8 +71,6 @@ all:
 
   # The full URL for the application
   website_url:       'http://localhost'
-  # The full URL for the Community forum (appears in navigation, comment out to hide the nav link)
-  forum_url:         'http://mybb.local'
 
   # name of cookie for user session
   cookie_name:     'RevTK'

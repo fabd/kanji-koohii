@@ -101,10 +101,11 @@ class homeActions extends sfActions
   /**
    * Contact/Feedback Form page.
    * 
+   * @param sfWebRequest $request
    */
   public function executeContact($request)
   {
-    if ($request->getMethod() != sfRequest::POST)
+    if ($request->getMethod() !== sfRequest::POST)
     {
       return;
     }
@@ -131,8 +132,8 @@ class homeActions extends sfActions
       $pathArray   = sfContext::getInstance()->getRequest()->getPathInfoArray();
 
       // fabd: help identify spam bots (March 2024 - not useful atm)
-      // $remote_addr = $pathArray['REMOTE_ADDR'];
-      // $message     = 'IP address: '.$remote_addr."\n\n".$message;
+      $remote_addr = $pathArray['REMOTE_ADDR'];
+      //$message     = 'IP address: '.$remote_addr."\n\n".$message;
 
       // (fabd) we need a reply-to we can copy, because free SMTP with GMail
       //   does not allow using a custom from address
@@ -141,7 +142,9 @@ class homeActions extends sfActions
         'email' => $from_addr,
       ]);
       $messageHeader = <<<END
+-----------------------------------------      
 REPLY-TO: {$formatReplyTo}
+-----------------------------------------      
 END;
       $message = "$messageHeader\n\n$message";
 
@@ -174,19 +177,18 @@ END;
 
       if (!KK_ENV_DEV)
       {
-        try
-        {
-          $mailer = new rtkMail();
-          $mailer->sendFeedbackMessage(
-            'Message from '.$from_name,
+        $message = $this->disableLinks($message);
+
+        $mailer = new rtkMail();
+        $result = $mailer->sendFeedbackMessage(
+          'Message from '.$from_name,
             $from_addr,
-            "$from_name via Kanji Koohii",
+            $from_name,
             $message
           );
-        }
-        catch(sfException $e)
-        {
-          $request->setError('smtp_mail', "I'm sorry, there was a problem sending the email. "
+        
+        if ($result !== true) {
+          $request->setError('smtp_mail', "Oops, there was a problem sending the email. "
                                           ."Please try again shortly.");
           return;
         }
@@ -194,6 +196,23 @@ END;
 
       return 'EmailSent';
     }
+  }
+
+  /**
+   * Make links in the message not clickable, just in case the message
+   * is sent by a bad bot and contains bad links.
+   *
+   * @param string $message
+   * @return string
+   */
+  private function disableLinks(string $message): string {
+    return preg_replace_callback(
+        '/https?:\/\/([^\s]+)/',
+        function($matches) {
+            return str_replace('.', '•', $matches[1]);
+        },
+        $message
+    );
   }
 
   /**

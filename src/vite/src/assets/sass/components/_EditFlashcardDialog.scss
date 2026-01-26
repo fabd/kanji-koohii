@@ -86,9 +86,9 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
 }
 
 .ko-StudyNewCount {
-  --ko-btn-bg: #F5eFE5;
-  --ko-btn-hover-bg: #F5eFE5;
-  --ko-btn-border: #cdc5af;
+  --ko-btn-bg: #{$--clr-bg-1};
+  --ko-btn-hover-bg: #{$--clr-bg-1};
+  --ko-btn-border: #{$--clr-bg-1};
   --ko-btn-hover-border: #cdc5af;
   --ko-btn-hover-text: #005cb1;
   font-weight: bold;

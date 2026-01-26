@@ -160,15 +160,12 @@ class ReviewsPeer extends coreDatabaseTable
   /**
    * Checks if a flashcard is "failed" (in the red stack/box 1)
    * 
-   * @param  int   $userId
-   * @param  int   $ucsId    UCS-2 code value.
-   *
+   * @param  array|false $cardData   Card data from getFlashcardData
+   * 
    * @return boolean
    */
-  public static function isFailedCard($userId, $ucsId)
+  public static function isFailedCard($cardData)
   {
-    $cardData = self::getFlashcardData($userId, $ucsId);
-
     return (
       is_array($cardData)
       && $cardData['leitnerbox'] == 1

@@ -178,11 +178,17 @@ abstract class coreDatabase
   }
 
   /**
-   * Fetches a row from the last query() result set.
+   * Fetches the next row from the last query() result set.
    *
-   * @param  mixed    Specify a fetch mode, or leave it to null to use the current mode.
+   * If no fetch mode is provided, it uses the last set or default fetch mode (FETCH_ASSOC).
    *
-   * @return mixed  The row as an array or object, or false when no more rows.
+   * @param int|null $fetchMode Optional. The fetch mode to use. Can be one of:
+   *                            - self::FETCH_NUM: Fetch as a numeric array
+   *                            - self::FETCH_OBJ: Fetch as an object
+   *                            - self::FETCH_ASSOC: Fetch as an associative array
+   *
+   * @return array|object|false Returns the fetched row as an array or object depending on 
+   *                            the fetch mode, or false if there are no more rows or on error.
    */
   abstract function fetch($fetchMode = null);
 

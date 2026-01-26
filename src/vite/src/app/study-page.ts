@@ -188,8 +188,8 @@ export default {
     if (!this.dictPanel) {
       // use inner div set in the php template
       let elMount = $elBody.down(".JsMount")[0];
-      let { vm } = VueInstance(KoohiiDictList, elMount);
-      let ucsId = parseInt($elBody[0].dataset.ucs!);
+      let { vm } = VueInstance(KoohiiDictList, elMount!);
+      let ucsId = parseInt($elBody[0]!.dataset.ucs!);
       (vm as TVueKoohiiDictList).load(ucsId);
 
       this.dictPanel = true;
@@ -277,7 +277,7 @@ export default {
     if (!char && (matches = /([\u4e00-\u9fff])/.exec(search))) {
       // if it is text and it has kanji in it, use the 1st kanji as the search
       // Regexp is equivalent of \p{InCJK_Unified_Ideographs}
-      char = matches[1];
+      char = matches[1] || null;
     }
 
     // if it isn't a sequence nr, or a UCS, let it pass through as is

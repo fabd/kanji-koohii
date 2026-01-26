@@ -61,9 +61,19 @@ class KoNotification {
   }
 }
 
+let cardData: Window["KK"]["STUDY_FLASHCARD"] = null;
+
+function hasCard() {
+  return cardData !== null;
+}
+
+function isNewCard() {
+  return cardData && cardData.leitnerBox === 1 && cardData.totalReviews === 0;
+}
+
 export default {
   elEditFlashcard: null as HTMLElement | null,
-  hasFlashcard: false,
+  newCount: 0,
 
   oEditFlashcard: null as EditFlashcardDialog | null,
 
@@ -139,9 +149,11 @@ export default {
   initFlashcardButton(el: HTMLElement) {
     this.elEditFlashcard = el;
 
-    this.hasFlashcard = el.dataset["hasCard"] === "1";
+    this.newCount = kk_globals_get("NEW_CARDS_COUNT");
 
-    this.renderFlashcardButton(this.hasFlashcard, false);
+    cardData = kk_globals_get("STUDY_FLASHCARD");
+
+    this.renderFlashcardButton(hasCard(), false);
 
     new EventDelegator(el).on(
       "click",
@@ -152,18 +164,29 @@ export default {
 
   renderFlashcardButton(state: boolean, loading: boolean) {
     let html = "";
-    if (loading) {
+
+    // the new cards indicator
+    if (this.newCount) {
       html = `
-<a href="#" class="uiGUI ko-Btn JsEditFlashcard is-loading flex items-center justify-center">
-  <div class="is-icon spinner mr-2"></div>
+<button class="ko-Btn ko-StudyNewCount tooltip" data-tooltip="New cards" tabindex="0"><i></i>${this.newCount}</button>
+    `;
+    }
+
+    // the Add/Edit Flashcard button
+    if (loading) {
+      html += `
+<a href="#" class="uiGUI ko-Btn JsEditFlashcard is-loading">
+  <div class="flex items-center justify-center">
+    <div class="is-icon spinner mr-2"></div>
+  </div>
 </a>`;
     } else if (state === false) {
-      html = `
+      html += `
 <a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard" title="Add Card">
   <div class="is-icon fa fa-plus mr-2"></div>Add Card
 </a>`;
     } else if (state === true) {
-      html = `
+      html += `
 <a href="#" class="uiGUI ko-Btn is-ghost rounded JsEditFlashcard" title="Edit Card">
   <div class="is-icon fa fa-edit mr-2"></div>Edit Card
 </a>`;
@@ -200,15 +223,22 @@ export default {
     const onMenuResponse = (result: "added" | "deleted") => {
       // reset button to "Add Card" state
       if (result === "deleted") {
+        // if it was a new card that was deleted, update the count
+        if (isNewCard()) {
+          this.newCount--;
+        }
+
         this.renderFlashcardButton(false, false);
-        this.hasFlashcard = false;
+
+        // update the state
+        cardData = null;
       }
     };
 
     // the current kanji
     const ucsId = kk_globals_get("LASTVIEWED_UCS_ID");
 
-    if (!this.hasFlashcard) {
+    if (!hasCard()) {
       // set loading state for the button
       this.renderFlashcardButton(false, true);
 
@@ -225,8 +255,17 @@ export default {
           // Wait for the remaining time if needed
           setTimeout(() => {
             if (tron.isSuccess()) {
+              // update the new cards count before rendering
+              this.newCount++;
+
               this.renderFlashcardButton(true, false);
-              this.hasFlashcard = true;
+
+              // update the state for the flashcard
+              cardData = {
+                ucsId: ucsId,
+                leitnerBox: 1,
+                totalReviews: 0,
+              };
 
               let notif = new KoNotification();
               notif.show("Flashcard added");

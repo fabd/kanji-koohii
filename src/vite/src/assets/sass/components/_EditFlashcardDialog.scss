@@ -57,11 +57,7 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
 
 /* Edit Flashcard button on the Study page */
 .ko-EditFlashcard {
-  position:absolute;
-  right:0;
-  top:0;
-
-  .ko-Btn {
+  .JsEditFlashcard {
     min-width: 120px;
   }
 
@@ -89,6 +85,29 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
   to { transform: rotate(360deg); }
 }
 
+.ko-StudyNewCount {
+  --ko-btn-bg: #F5eFE5;
+  --ko-btn-hover-bg: #F5eFE5;
+  --ko-btn-border: #cdc5af;
+  --ko-btn-hover-border: #cdc5af;
+  --ko-btn-hover-text: #005cb1;
+  font-weight: bold;
+  color: $--color-btn-primary;
+
+  // a little dot
+  i {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: #005cb1;
+    border-radius: 100%;
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    border: 3px solid $--clr-bg-body;
+  }
+}
+
 .ko-Notification {
   position: fixed;
   top: 20px;
@@ -110,5 +129,57 @@ a.uiIBtnAjax { padding:0 10px; -moz-user-select: none; -webkit-user-select: none
 
   &.hide {
     opacity: 0;
+  }
+}
+
+.tooltip {
+    position: relative;
+    transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    --tooltip-bg: #605c58;
+    --tooltip-fg: #fff;
+
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--tooltip-bg);
+    color: var(--tooltip-fg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    // font-size: 0.85em;
+    @apply text-xs whitespace-nowrap font-normal;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+    z-index: 1002;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: calc(125% - 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--tooltip-bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    z-index: 1002;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+  }
+
+  &:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
   }
 }

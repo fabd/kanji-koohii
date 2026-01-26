@@ -31,15 +31,28 @@
       'initStoryPublic' => (bool) ($storedStory && $storedStory->public),
       'initStoryView'   => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true)
     ];
+    
+    $cardData = ReviewsPeer::getflashcardData($userId, $ucsId);
 
     // IF ... on Study page, is in the red pile, is not yet "Added to learn list"
-    $isRestudyKanji   = ReviewsPeer::isFailedCard($userId, $ucsId);
+    $isRestudyKanji = ReviewsPeer::isFailedCard($cardData);   
     $isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
-    $showLearnButton    = /*!$reviewMode &&*/ $isRestudyKanji && !$isRelearnedKanji;
-    $showLearnedMessage = /*!$reviewMode &&*/ $isRestudyKanji && $isRelearnedKanji;
+    $showLearnButton = $isRestudyKanji && !$isRelearnedKanji;
+    $showLearnedMessage = $isRestudyKanji && $isRelearnedKanji;
+  
+    $jsCardData = null;
+    if (false !== $cardData) {
+      // normalize the flashcard data for the client side
+      $jsCardData = [
+        'ucsId' => (int)$cardData['ucs_id'],
+        'leitnerBox' => (int)$cardData['leitnerbox'],
+        'totalReviews' => (int)$cardData['totalreviews'],
+      ];
+    }
+    kk_globals_put('STUDY_FLASHCARD', $jsCardData);
   }
 
-  $has_flashcard = intval(ReviewsPeer::hasFlashcard($userId, $ucsId));
+  kk_globals_put('NEW_CARDS_COUNT', ReviewsPeer::getCountUntested($userId));
 ?>
 
 <div class="row">
@@ -66,10 +79,10 @@
 <?php else: ?>
 
   <div id="EditStoryComponent">
-    <div style="position:relative;">
-      <h2><?php echo $title; ?></h2>
+    <div class="flex items-center mb-2">
+      <h2 class="flex-1 text-[26px] m-0"><?php echo $title; ?></h2>
 <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)): ?>
-      <div class="ko-EditFlashcard" data-ucs="<?= $kanjiData->ucs_id ?>" data-has-card="<?= $has_flashcard ?>"></div>
+      <div class="ko-EditFlashcard"></div>
 <?php endif ?>
     </div>
 

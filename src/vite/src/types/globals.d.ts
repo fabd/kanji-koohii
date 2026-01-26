@@ -66,12 +66,16 @@ interface Window {
     // site-wide mobile nav, setup data from php with the correct urls
     MBL_NAV_DATA: Dictionary;
 
+    // (Study) for the search dropdown callback
     STUDY_SEARCH_URL: string;
-
-    // sets current page id for the Last Viewed component on Study page
+    // (Study) current page id for the Last Viewed component on Study page
     LASTVIEWED_UCS_ID: number;
-
+    // (Study) props for the EditStory Vue component
     EDITSTORY_PROPS: Dictionary;
+    // (Study) for the new cards count shown next to the Add Flashcard button
+    NEW_CARDS_COUNT: number;
+    //
+    STUDY_FLASHCARD: null | { ucsId: TUcsId; leitnerBox: number; totalReviews: number };
 
     REVIEW_OPTIONS: { fcrOptions: TReviewOptions; props: Dictionary };
     REVIEW_MODE: Dictionary;

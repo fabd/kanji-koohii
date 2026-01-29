@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
-    "@types/node": "^22.1.0",
+    "@types/node": "^25.1.0",
     "@types/wanakana": "^4.0.3",
     "cli-real-favicon": "^0.0.9",
     "element-plus": "^2.6.0",
@@ -31,15 +31,15 @@
     "wanakana": "^5.1.0"
   },
   "devDependencies": {
-    "@rollup/plugin-eslint": "^9.0.5",
+    "@rollup/plugin-eslint": "^9.2.0",
     "@rollup/plugin-strip": "^3.0.4",
-    "@typescript-eslint/eslint-plugin": "^7.1.x",
-    "@typescript-eslint/parser": "^7.1.x",
+    "@typescript-eslint/eslint-plugin": "^8.54.x",
+    "@typescript-eslint/parser": "^8.54.x",
     "@vitejs/plugin-vue": "^6.0.3",
     "autoprefixer": "^10.4.14",
     "axios": "^1.13.3",
     "eslint": "^8.37.0",
-    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-compat": "^4.1.2",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.27.0",

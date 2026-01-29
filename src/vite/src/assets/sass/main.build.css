@@ -155,20 +155,20 @@ a.admin-edit {
  *
  * Float the "rows per page" FilterStd widget to the left, and the pager to the right.
  */
-div.uiPagerDiv {
+.uiPagerDiv {
   margin: 0 0 5px;
 }
-div.uiPagerDiv div.uiFilterStd {
+.uiPagerDiv .uiFilterStd {
   float: left;
 }
-div.uiPagerDiv ul.uiPager {
+.uiPagerDiv .uiPager {
   float: right;
 }
 /* smaller */
-div.uiPagerDiv div.uiFilterStd .lbl {
+.uiPagerDiv .uiFilterStd .lbl {
   font: 11px/1.1em Arial, sans-serif;
 }
-div.uiPagerDiv div.uiFilterStd a {
+.uiPagerDiv .uiFilterStd a {
   padding: 4px 5px 4px;
 }
 

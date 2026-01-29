@@ -47,7 +47,6 @@
     "prettier": "^3.8.1",
     "stylelint": "^16.8.1",
     "stylelint-config-recommended-vue": "^1.5.0",
-    "stylelint-scss": "^6.4.1",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "unplugin-vue-components": "^0.27.3",

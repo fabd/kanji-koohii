@@ -26,17 +26,17 @@ td input { vertical-align:middle; }
       [
         'short' => 'Old Edition',
         'long'  => <<<END
-Volume 1 : 5th edition or earlier <samp class="ml-2 text-success-darker">#1-2042</samp><br/>
-Volume 3 : 1st or 2nd edition <samp class="ml-2 text-success-darker">#2043-3007</samp><br/>
-Newly Approved General-Use Kanji <samp class="ml-2 text-success-darker">#3008-3030</samp>
+Volume 1 : 5th edition or earlier <samp class="ml-2 text-[#2C892C]">#1-2042</samp><br/>
+Volume 3 : 1st or 2nd edition <samp class="ml-2 text-[#2C892C]">#2043-3007</samp><br/>
+Newly Approved General-Use Kanji <samp class="ml-2 text-[#2C892C]">#3008-3030</samp>
 END,
         'count' => '3030'
       ],
       [
         'short' => 'New Edition',
         'long'  => <<<END
-Volume 1 : 6th edition <samp class="ml-2 text-success-darker">#1-2200</samp><br/>
-Volume 3 : 3rd edition <samp class="ml-2 text-success-darker">#2201-3000</samp>
+Volume 1 : 6th edition <samp class="ml-2 text-[#2C892C]">#1-2200</samp><br/>
+Volume 3 : 3rd edition <samp class="ml-2 text-[#2C892C]">#2201-3000</samp>
 END,
         'count' => '3000'
       ]
@@ -72,7 +72,7 @@ END,
 <?php markdown_begin() ?>
 The selected edition affects the Heisig index numbers displayed in the Study pages and on the flashcards. It also changes the order in which characters are presented in the Study pages, and which kanji will be added to your flashcards when you enter Heisig indexes in the Manage pages.
 
-<span class="text-success-dark">**Switching between editions is safe**</span>.
+<span class="text-[#3a7c3a]">**Switching between editions is safe**</span>.
 Stories and flashcards are always linked to a unique character, regardless of what index is selected here. Any flashcards currently in your deck will remain as they are, and will continue to be scheduled in the SRS.
 
 **Keywords are always from the last edition!** This ensures everyone shares stories based on the same keywords. In particular please note with the 6th Edition errata Dr. Heisig swapped the keywords for "town" (now  町) and "village" (now 村).

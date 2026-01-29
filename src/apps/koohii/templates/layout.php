@@ -75,7 +75,7 @@
   echo $sf_content;
 } else { ?>
 <div id="main">
-  <div id="main_container" class="container">
+  <div id="main_container" class="ko-Container">
 <?php echo $sf_content ?>
   </div>
 </div>

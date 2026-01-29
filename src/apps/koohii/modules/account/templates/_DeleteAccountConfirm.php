@@ -7,7 +7,7 @@
 
 <?php /* <p>What did you think of the website? <?= link_to('Your feedback', '@contact', ['target' => '_blank']) ?> may help improve the site.</p> */ ?>
 
-<div class="ko-Box mb-8 ux-maxWidth360">
+<div class="ko-Box mb-8 max-w-[360px]">
 
   <?php
   echo form_tag('account/delete', ['class' => '', 'autocomplete' => 'off']);
@@ -28,7 +28,7 @@
   );
 
   ?>
-  <p class="mt-8 mb-2 text-danger">
+  <p class="mt-8 mb-2 text-[#9f0e0b]">
     <strong>Account deletion is final</strong>. There will be no way to restore your account.
   </p>
   <?php

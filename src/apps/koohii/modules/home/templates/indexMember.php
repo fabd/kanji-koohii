@@ -49,11 +49,11 @@
       <h3 class="ko-Box-title">Study</h3>
 
 <?php if ($isSequenceComplete): ?>
-      <div class="text-[15px] mb-3">
+      <div class="text-smx mb-3">
         <span class="text-[#2C892C] font-bold">Well done! <?= $sequenceName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 <?php else: ?>
-      <div class="text-[15px] mb-3">
+      <div class="text-smx mb-3">
         <strong><?= $flashcardCount; ?></strong> / <?= $studyMax; ?> kanji in <strong><?= $sequenceName; ?></strong>
         <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
@@ -102,7 +102,7 @@
 <?php if (!$hasFlashcards): ?>
   <div class="flex items-start mb-4">
     <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-[#42413d40] rounded-xs"/>
-    <div class="text-[15px] ml-4">
+    <div class="text-smx ml-4">
       <strong>Spaced Repetition</strong> will be available after you <?= link_to('add kanji flashcards', '@manage', ['class' => 'whitespace-nowrap']); ?>.
     </div> 
   </div>
@@ -134,7 +134,7 @@
 
       <div class="bg-[#c2bdaf] h-px mb-3"></div>
 
-      <p class="text-[15px] mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
+      <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 
       <?= link_to('Custom Review Modes'.'<i class="fa fa-arrow-right ml-2"></i>', 'review/custom', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
 

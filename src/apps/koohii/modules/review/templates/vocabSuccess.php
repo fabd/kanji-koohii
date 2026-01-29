@@ -5,7 +5,7 @@
 
 <h2>Vocab Shuffle</h2>
 
-<div class="text-[15px] mb-6">
+<div class="text-smx mb-6">
   <p><strong>A short, random flashcard session to discover new words, memorize readings, and test your kanji knowledge!</strong></p>
 
   <p>Each new test will display a selection from the <?php echo link_to('priority entries', '@learnmore#dictionary-sources') ?> as defined in Jim Breen's

@@ -18,8 +18,9 @@ domContentLoaded(() => {
 
   let elMount: HTMLElement;
 
-  elMount = domGetById("MyStoriesSelect")!;
-  elMount && VueInstance(MyStoriesTable, elMount);
+  if ((elMount = domGetById("MyStoriesSelect")!)) {
+    VueInstance(MyStoriesTable, elMount);
+  }
 
   StudyPage.initialize();
 });

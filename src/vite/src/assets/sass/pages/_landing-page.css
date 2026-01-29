@@ -34,8 +34,8 @@ section {
   }
 }
 
-/* Medium devices (desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+/* Medium devices (desktops) */
+@media only screen and (min-width: 1024px) {
   /* up lg */
   section {
     text-align: left;
@@ -145,7 +145,7 @@ section {
     /* up md */
     font-size: 53px;
   }
-  @media only screen and (min-width: 992px) {
+  @media only screen and (min-width: 1024px) {
     /* up lg */
     font-size: 53px;
   }

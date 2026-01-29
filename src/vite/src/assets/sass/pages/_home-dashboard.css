@@ -232,7 +232,7 @@
   @media only screen and (min-width: 768px) {
     --cards-per-row: 5;
   }
-  @media only screen and (min-width: 992px) {
+  @media only screen and (min-width: 1024px) {
     --cards-per-row: 6;
   }
 

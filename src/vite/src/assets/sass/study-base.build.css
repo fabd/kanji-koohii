@@ -13,14 +13,6 @@
   margin: 0 0 2em;
 }
 
-@media only screen and (max-width: calc(992px - 0.02px)) {
-  /* down lg */
-  .study-index #main_container,
-  .study-edit #main_container {
-    padding-top: 0;
-  }
-}
-
 .edition {
   padding-left: 0.5em;
   font-size: 0.83em; /* 10px */
@@ -297,7 +289,7 @@
   }
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1024px) {
   /* up lg */
   /* less contrating themes for desktop sidebar */
   #browse {
@@ -417,7 +409,7 @@
 }
 
 /* up lg */
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1024px) {
   /* less contrating themes for desktop sidebar */
   #browse {
     border-radius: 4px;

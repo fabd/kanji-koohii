@@ -3,7 +3,7 @@
 // ==================================================================== */
 
 .ko-DocNav {
-  @media only screen and (min-width: 992px) {
+  @media only screen and (min-width: 1024px) {
     /* up lg */
     @apply fixed min-w-[218px];
   }
@@ -64,7 +64,7 @@
     /* vertical separator & guiding line */
     @apply pl-4 border-l-[1px] border-[#e7e1d3];
   }
-  @media only screen and (min-width: 992px) {
+  @media only screen and (min-width: 1024px) {
     /* up lg */
     @apply pl-8;
   }

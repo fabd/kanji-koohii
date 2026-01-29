@@ -1,24 +1,14 @@
 /* ==================================================================== */
 /* LAYOUT */
 /* ==================================================================== */
-@media only screen and (min-width: 768px) { /* up md */ }
-@media only screen and (min-width: 992px) { /* up lg */ }
-@media only screen and (min-width: 1280px) { /* up xl */ }
+@media only screen and (width >= 48rem) { /* = tailwind md */ }
+@media only screen and (width >= 64rem) { /* = tailwind lg */ }
+@media only screen and (width >= 80rem) { /* = tailwind xl */ }
 
-@media only screen and (max-width: calc(768px - 0.02px)) { /* down md */ }
-@media only screen and (max-width: calc(992px - 0.02px)) { /* down lg */ }
-@media only screen and (max-width: calc(1280px - 0.02px)) { /* down xl */ }
-/*
-  breakpoint-up
-    md   @media only screen and (min-width: 768px) {
-    lg   @media only screen and (min-width: 992px) {
-    xl   @media only screen and (min-width: 1280px) {
+@media only screen and (width < 48rem) { /* = tailwind max-md */ }
+@media only screen and (width < 64rem) { /* = tailwind max-lg */ }
+@media only screen and (width < 80rem) { /* = tailwind max-xl */ }
 
-  breakpoint-down
-    md   @media only screen and (max-width: calc(768px - 0.02px)) {
-    lg   @media only screen and (max-width: calc(992px - 0.02px)) {
-    xl   @media only screen and (max-width: calc(1280px - 0.02px)) {
-*/
 /* -------------------------------------------------------------------- */
 /* Simple Bootstrap 3-style column layout */
 /* */
@@ -44,7 +34,7 @@
     width: var(--bp-md);
   }
 
-  @media only screen and (min-width: 992px) {
+  @media only screen and (min-width: 1024px) {
     width: 970px;
   }
 }
@@ -67,7 +57,7 @@
   padding-right: var(--GRID-GUTTER-X);
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1024px) {
   .col-lg-3 {
     @apply w-3/12;
   }

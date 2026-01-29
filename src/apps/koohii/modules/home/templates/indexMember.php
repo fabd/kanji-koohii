@@ -72,7 +72,7 @@
 ?>
 <?php else: ?>
 <?= link_to(
-  'Study <span class="mbl:hidden">Kanji </span>#'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
+  'Study <span class="max-lg:hidden">Kanji </span>#'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
   $urls['study-resume-url'],
   ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
 );

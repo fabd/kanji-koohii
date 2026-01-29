@@ -272,14 +272,14 @@
 /* ---------------------------- */
 
 /* for phone and tablet portrait ONLY */
-@media only screen and (max-width: calc(992px - 0.02px)) {
+@media only screen and (max-width: calc(1024px - 0.02px)) {
   #k-nav_d {
     display: none;
   }
 }
 
 /* for tablet landscape UP */
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1024px) {
   #k-nav_m {
     display: none;
   }

@@ -13,7 +13,7 @@
   /* "Medium" : tablets (portrait) */
   --bp-md: 768px; /* 768px = 48rem */
   /* "Large" : tablets (landscape), laptops and desktops in unmaximized browser windows */
-  --bp-lg: 992px; /* 992px = 62rem */
+  --bp-lg: 1024px; /* 1024px = 64rem */
   /* "Extra large" : wide laptop & desktop browser windows */
   --bp-xl: 1280px; /* 1280px = 80rem */
 

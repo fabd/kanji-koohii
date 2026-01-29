@@ -21,7 +21,7 @@
 @source "../../../../apps";
 
 /* Bootstrap 5 minimal build (forms) */
-/* @import "./vendor/_bootstrap.scss"; */
+@import "./vendor/_bootstrap.css";
 
 /* koohii specific resets (*after* Bootstrap/tailwind resets) */
 @import "./base/_base.css";

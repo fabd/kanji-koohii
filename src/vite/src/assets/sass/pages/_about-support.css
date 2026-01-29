@@ -18,14 +18,14 @@
   .ko-PatronsList-item {
     list-style: none;
     display: inline-block;
-    width: 33.33%;
+    width: 50%;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.5em;
 
-    @media only screen and (max-width: calc(768px - 0.02px)) { /* down md */
-      width: 50%;
-      font-size: 14px;
+    @media only screen and (min-width: 768px) { /* up md */
+      width: 33.33%;
+      font-size: 16px;
     }
   }
 

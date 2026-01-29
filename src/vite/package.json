@@ -22,7 +22,6 @@
   "dependencies": {
     "@types/node": "^22.1.0",
     "@types/wanakana": "^4.0.3",
-    "bootstrap": "^5.3.3",
     "cli-real-favicon": "^0.0.9",
     "element-plus": "^2.6.0",
     "esbuild": "^0.23.0",

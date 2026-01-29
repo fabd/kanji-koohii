@@ -2,8 +2,9 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css";
-@source "../../../../apps";
+
+/* tailwind customization */
+@import "./vendor/_tailwind.css";
 
 @import "./components/_EditKeywordDialog.css";
 @import "./components/_EditFlashcardDialog.css";
@@ -425,5 +426,11 @@
   }
 }
 
-/* See main.build.scss for Tailwind import explanation */
+/* --------------------------------------------------------------------
+// Our own utilities & Tailwind utilities
+//  imported last, so that we can override component styles (in CSS files)
+//  with utilities in the templates.
+// -------------------------------------------------------------------- */
 @import "./_utilities.css";
+
+@import "tailwindcss/utilities.css";

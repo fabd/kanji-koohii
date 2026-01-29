@@ -10,15 +10,13 @@
   bottom in our css, and we can override it with `mb-0` in template.
 
   *********************************************************************/
+
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css"; 
 
-/**********************************************************************
-  Parse the php templates for Tailwind classes.
-  *********************************************************************/
-@source "../../../../apps";
+/* tailwind customization */
+@import "./vendor/_tailwind.css";
 
 /* Bootstrap 5 minimal build (forms) */
 @import "./vendor/_bootstrap.css";
@@ -912,8 +910,10 @@ a:hover.subdued {
 }
 
 /* --------------------------------------------------------------------
-// (before-last) our own utilities
-//   We want to be able to override our component styles with utilities.
-//   For example font-size in `.Box-title` can be overridden by `.ux-text-lg`.
+// Our own utilities & Tailwind utilities
+//  imported last, so that we can override component styles (in CSS files)
+//  with utilities in the templates.
 // -------------------------------------------------------------------- */
 @import "./_utilities.css";
+
+@import "tailwindcss/utilities.css";

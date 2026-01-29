@@ -1,0 +1,32 @@
+/* ====================================================================
+// Landing page (master stylesheet bundle for the landing page ONLY)
+// ==================================================================== */
+
+/* See main.build.scss for Tailwind import explanation */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css"; 
+@source "../../../../apps";
+
+/* Bootstrap 5 minimal build (forms) */
+/* @import "./vendor/_bootstrap.scss"; */
+
+/* koohii specific resets (*after* Bootstrap/tailwind resets) */
+@import "./base/_base.css";
+@import "./abstracts/_variables.css";
+@import "./layout/_layout.css";
+
+/* components */
+@import "./components/_buttons.css";
+@import "./_navbar.css";
+
+/* pages */
+@import "./pages/_landing-page.css";
+
+/* --------------------------------------------------------------------
+// (before-last) our own utilities
+//   We want to be able to override our component styles with utilities.
+//   For example font-size in `.Box-title` can be overridden by `.ux-text-lg`.
+// -------------------------------------------------------------------- */
+@import "./_utilities.css";

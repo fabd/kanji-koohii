@@ -1,0 +1,41 @@
+/* ====================================================================
+// UTILITIES
+//
+//     ux-flexButtonRow         ... simple flex row with a small gap
+//
+//     ux-text-sm/md/lg/xl/2xl  ... responsive font sizes
+//
+// ==================================================================== */
+
+/* --------------------------------------------------------------------
+// FLEX / BUTTON ROW
+//
+//   Simple spacer for button rows
+//
+// -------------------------------------------------------------------- */
+.ux-flexButtonRow {
+  @apply flex flex-wrap items-center;
+  gap: 0.5rem;
+}
+
+/* --------------------------------------------------------------------
+// RESPONSIVE FONT SIZES
+//
+//   sm/md/lg/etc  should roughly match Tailwind's text-sm/md/etc
+//                 for desktop view.
+// -------------------------------------------------------------------- */
+.ux-text-sm {
+  font-size: min(11px + 0.33vw, 14px);
+}
+.ux-text-md {
+  font-size: min(12px + 0.41vw, 16px);
+}
+.ux-text-lg {
+  font-size: min(14px + 0.4vw, 18px);
+}
+.ux-text-xl {
+  font-size: min(16px + 0.4vw, 20px);
+}
+.ux-text-2xl {
+  font-size: min(20px + 1vw, 30px);
+}

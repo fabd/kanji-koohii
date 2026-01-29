@@ -1,0 +1,103 @@
+/* See main.build.scss for Tailwind import explanation */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@source "../../../../apps";
+
+
+/*
+// TODOS
+//   - [ ] mobile (likely sidepane will be a "drawer", with a css transition)
+//   - [ ] finalize design (figma)
+//   - [ ] add postcss-bem-linter ? (SuitCSS conventions)
+*/
+
+/* consistent corner radius FIXME : make a custom `rounded` tw var? */
+:root {
+  --rounded: 0.5rem;
+}
+
+.ko-Recognition-output {
+  @apply p-4;
+  font-size: 24px;
+  line-height: 1.6em;
+  background: #fff;
+  border-radius: var(--rounded);
+  color: #4f4f4f;
+  a {
+    font-style: normal;
+    font-weight: normal;
+    color: blue;
+    text-decoration: none;
+  }
+  a:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  .cj-k {
+    --tailwind-font-sans: ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+      "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
+
+    $custom: "Hiragino Sans";
+
+    font-family: "Hiragino Sans", var(--tailwind-font-sans);
+  }
+}
+
+.ko-Recognition-k,
+.ko-Recognition-u {
+  @apply inline-block;
+}
+.ko-Recognition-k span,
+.ko-Recognition-u span {
+}
+.ko-Recognition-k:hover span {
+  @apply rounded-sm cursor-pointer;
+  background: #faefc6;
+  color: #000;
+}
+.ko-Recognition-k.is-known span {
+  color: #0000ff;
+}
+
+.ko-Recognition-k.is-active span {
+  background-color: #ffca52;
+  color: #5e440a;
+}
+
+/* --------------------------------------------------------------------
+// the side pane
+// -------------------------------------------------------------------- */
+.ko-RecognitionPane {
+  @apply bg-[#e7e1d3] p-4;
+  border-radius: var(--rounded);
+}
+.ko-RecognitionPane-h3 {
+  @apply text-sm font-sans uppercase;
+  color: #737373;
+}
+
+.ko-RecognitionPane-kanji {
+  @apply block bg-[#fff] text-[55px];
+  @apply flex; /* flex auto margins trick */
+  border-radius: var(--rounded);
+  font-size: 55px;
+  width: 1.5em;
+  height: 1.5em;
+}
+.ko-RecognitionPane-kanjiChar {
+  @apply m-auto leading-none;
+}
+
+.ko-RecognitionPane-dict {
+  @apply -mx-4;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* See main.build.scss for Tailwind import explanation */
+@import "./_utilities.css";

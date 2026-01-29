@@ -1,0 +1,286 @@
+/**
+ * Responsive Nav (Nov 2016).
+ * 
+ */
+
+/* ---------------------------- */
+/* Desktop & Mobile */
+/* ---------------------------- */
+
+#body-navbar-holder {
+  width: 100%;
+  height: 46px;
+}
+
+#k-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+#k-nav nav {
+  margin: 0;
+  padding: 0;
+}
+
+#k-nav_d,
+#k-nav_m {
+  background: #0b486b;
+}
+
+/* hires logo, 105px = 33% */
+#k-nav .k-nav_brand {
+  display: block;
+  padding: 0;
+  width: 129px;
+  height: 46px;
+  margin: 0;
+  text-decoration: none;
+  /*background:url(/images/3.0/nav/__koohii-logo-hires.png) no-repeat 12px 8px / 105px auto;*/
+  background: url(/images/3.0/nav/koohii-logo.svg) no-repeat 12px 9px / 109px
+    auto;
+}
+
+#k-nav .k-nav_ft {
+  width: 100%;
+  font-size: 1px;
+  clear: both;
+}
+
+/* donate icons */
+#k-nav_d_pp {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: -2px 0.5em;
+  background: url("https://s3.amazonaws.com/patreon_public_assets/toolbox/patreon.png")
+    no-repeat 0px 0px / 70px auto;
+}
+#k-nav_d_pa {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: -2px 0.5em;
+  background: url("https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png")
+    no-repeat 1px 0px / 63px auto;
+}
+
+/* ---------------------------- */
+/* Mobile */
+/* ---------------------------- */
+
+/* nav#k-nav_m */
+#k-nav_m_bar {
+  height: 46px;
+}
+#k-nav_m .td-l {
+  width: 50px;
+}
+#k-nav_m .td-m {
+  text-align: center;
+}
+#k-nav_m .td-r {
+  width: 50px;
+}
+
+#k-nav_m .k-nav_btn {
+  display: block;
+  width: 50px;
+  height: 46px;
+  border: none;
+  padding: 0;
+  background-color: inherit;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+#k-nav_m .k-nav_btn .fa {
+  padding-top: 10px;
+  font-size: 24px;
+  color: #c1c8cc;
+}
+
+#k-nav_m .k-nav_brand {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: -65px;
+}
+
+/* ---------------------------- */
+/* Desktop */
+/* ---------------------------- */
+
+#k-nav_d {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  /* mobile: suppress default touch action like double-tap zoom */
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+#k-nav_d .k-nav_ft {
+  width: 100%;
+  background-color: var(--clr-bg-nav);
+  height: 5px;
+  border-bottom: 2px solid #d9d6bc;
+  font-size: 1px;
+}
+/* layout*/
+#k-nav_d .k-nav_brand {
+  float: left;
+}
+#k-nav_d ul {
+  float: left;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid #395269;
+}
+#k-nav_d ul.k-nav_right {
+  float: right;
+}
+#k-nav_d li {
+  float: left;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-right: 1px solid #395269;
+}
+#k-nav_d li a {
+  padding: 16px 19px;
+  display: block;
+  color: #c1c8cc;
+  font: 14px/1em Arial, sans-serif;
+  text-decoration: none;
+}
+
+/* highlighted tab */
+#k-nav_d .signed-in {
+  background: #11364b;
+} /* comes first */
+#k-nav_d .active,
+#k-nav_d .active a:hover {
+  background-color: var(--clr-bg-nav);
+}
+#k-nav_d .active a,
+#k-nav_d .k-nav_dropdown a {
+  color: #42413d;
+}
+
+/* hover states */
+#k-nav_d li a:hover,
+#k-nav_d li.active a.nav-home {
+  background-color: #11364b;
+}
+
+/* profile / sign up area */
+#k-nav_d .align-right {
+  float: right;
+}
+#k-nav_d .sign-up a {
+  background: #82b110;
+  color: #fff;
+}
+
+/* donate tab */
+#k-nav_d .donate a {
+  color: #e9575e;
+}
+#k-nav_d .donate a:hover {
+  color: #e70053;
+  background-color: #fc8dda;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+}
+
+/* account dropdown */
+/*#k-nav_d .signed-in > a { text-align:right; padding-left:25px; }*/
+#k-nav_d .signed-in .k-nav_dropdown {
+  left: auto;
+  right: 0;
+}
+
+/* dropdown menus */
+#k-nav_d li.JsHasDropdown {
+  position: relative;
+}
+#k-nav_d .k-nav_dropdown {
+  visibility: hidden;
+  position: absolute;
+  left: -1px;
+  z-index: 99;
+  padding: 0;
+  margin: 0;
+  line-height: 32px;
+  background: var(--clr-bg-nav);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  border-left: 1px solid #d5d4c4;
+  border-right: 1px solid #d5d4c4;
+}
+#k-nav_d .k-nav_dropdown li {
+  float: none;
+  white-space: nowrap;
+  @apply border-0 border-t border-[#d4cdba];
+}
+#k-nav_d .k-nav_dropdown li:first-child {
+  border-top: none;
+}
+#k-nav_d .k-nav_dropdown a {
+  padding: 15px 35px;
+}
+#k-nav_d .k-nav_dropdown a:hover {
+  background: #c7ecac;
+  color: #42413d;
+}
+#k-nav_d .k-nav_dropdown .fa {
+  vertical-align: text-top;
+  margin-left: 0.5em;
+}
+
+/* dropdown arrows */
+#k-nav_d .arrow {
+  border: 5px solid;
+  border-color: #6a8898 transparent transparent;
+  width: 0;
+  height: 0;
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  margin: 0 0 0 8px;
+}
+#k-nav_d .active .arrow {
+  border-top-color: #6e6c64;
+}
+
+/* ---------------------------- */
+/* MEDIA RULES (don't need to match Bootstrap grid) */
+/* ---------------------------- */
+@media (min-width: 366px) {
+  #k-nav_m .k-nav_dropdown li {
+    width: 33%;
+  }
+}
+
+/* ---------------------------- */
+/* MEDIA RULES (*must* match Bootstrap grid !) */
+/* ---------------------------- */
+
+/* for phone and tablet portrait ONLY */
+@media only screen and (max-width: calc(992px - 0.02px)) {
+  #k-nav_d {
+    display: none;
+  }
+}
+
+/* for tablet landscape UP */
+@media only screen and (min-width: 992px) {
+  #k-nav_m {
+    display: none;
+  }
+}

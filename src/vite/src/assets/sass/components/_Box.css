@@ -1,0 +1,50 @@
+/* ==================================================================== */
+/* Box - Simple card with rounded corners */
+/* */
+/*   Inherited properties: */
+/*   */
+/*     --ko-box-px */
+/*     --ko-box-py */
+/* */
+/* ==================================================================== */
+
+.ko-Box {
+  --ko-box-bg: var(--clr-bg-1);
+
+  background-color: var(--ko-box-bg);
+  border-color: var(--ko-box-bg);
+  border-width: 2px;
+  border-radius: var(--border-radius-lg);
+  padding: var(--ko-box-py, 14px) var(--ko-box-px, 14px);
+}
+/* a style of bordered box, clear filling */
+.ko-Box--stroke {
+  background: transparent;
+  border-width: 2px;
+  border-color: var(--ko-box-bg, transparent);
+}
+
+/* colors */
+.ko-Box--danger {
+  --ko-box-bg: #ffd1c9;
+  @apply text-[#D23C3C];
+}
+.ko-Box--danger .ko-Box-title {
+  @apply text-[#D23C3C];
+}
+.ko-Box--danger.ko-Box--stroke {
+  --ko-box-bg: #f2a5a5; /* slightly darker for border variant */
+}
+
+.ko-Box--success {
+  --ko-box-bg: #d1e2bb;
+  @apply text-[#3a7c3a];
+}
+.ko-Box--success .ko-Box-title {
+  @apply text-[#2C892C];
+}
+
+.ko-Box-title {
+  @apply font-bold text-[#42413d];
+  font-size: min(15px + 0.5vw, 18px);
+}

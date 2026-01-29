@@ -6,7 +6,7 @@
  */
 
 // stylesheets
-import "./assets/sass/study-base.build.scss";
+import "./assets/sass/study-base.build.css";
 
 import { domGetById, domContentLoaded } from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";

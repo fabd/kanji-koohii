@@ -1,0 +1,127 @@
+/**
+ * Styles for Markdown content (included by the main stylesheet)
+ *
+ * - Learn More page
+ * - NEW blog posts (Oct 2017) are stored in Markdown.
+ *
+ *
+ * DOCS
+ *
+ *   http://parsedown.org/tests/
+ *   https://github.com/erusev/parsedown
+ *   https://github.com/erusev/parsedown-extra
+ * 
+ *
+ * MARKDOWN EXTRA
+ *
+ *   - HTML can be used in Parsedown.
+ *   - to parse markdown inside html tag, use attribute <... markdown="1">&
+ *   - special attributes block {#id .class} for headers, images, links
+ * 
+ */
+
+/* ---------------------------- */
+/* Parsedown output */
+/* ---------------------------- */
+
+.markdown {
+  --vunit: 1.25rem;
+  font-size: 16px;
+  line-height: calc(var(--vunit) * 1.25);
+}
+
+.markdown blockquote,
+.markdown h2,
+.markdown h3,
+.markdown p,
+.markdown pre,
+.markdown code,
+.markdown table,
+.markdown .img-block {
+  margin-bottom: var(--vunit);
+}
+
+.markdown ol,
+.markdown li {
+  margin-bottom: calc(var(--vunit) / 2);
+}
+
+.markdown ul {
+  margin-bottom: calc(var(--vunit) * 1.5);
+  padding-left: 2em;
+}
+
+.markdown ol {
+  list-style-type: decimal;
+  margin-bottom: calc(var(--vunit) * 1.5);
+  padding-left: 2em;
+}
+
+// blockquote
+.markdown blockquote {
+  @apply text-[#7f7d75] pl-[2em] italic;
+}
+
+/* lists */
+.markdown ul li {
+  list-style: disc;
+}
+
+/* images */
+.markdown img {
+  padding: 3px;
+  border: 1px solid #c9c7b5;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+.markdown .img-block {
+  @apply border-[#d4cdba];
+}
+
+/* tables */
+.markdown table {
+  width: 100%;
+  border-left: 1px solid var(--clr-bg-1m);
+  border-collapse: collapse;
+}
+.markdown th {
+  background-color: var(--clr-bg-1);
+  border-top-width: 0;
+  color: #4f4e45;
+}
+.markdown th,
+.markdown td {
+  border-top: 1px solid #e8e5ca;
+  border-right: 1px solid #e8e5ca;
+  padding: 5px 10px;
+  text-align: left;
+}
+.markdown td {
+  background: var(--clr-bg-nav);
+}
+.markdown td a:link,
+.markdown td a:visited,
+.markdown td a:active {
+  font-weight: normal;
+}
+.markdown th a {
+  font-weight: bold;
+}
+
+/* code : applies to `this` */
+.markdown code {
+  background: var(--clr-bg-nav);
+  padding: 0.2em 0.5em;
+}
+/* code : applies to ```code blocks``` */
+.markdown pre {
+  background: var(--clr-bg-nav);
+  padding: calc(var(--vunit) / 2) 1em;
+  border-left: 4px solid var(--clr-bg-1);
+}
+.markdown pre code {
+  background: none;
+  padding: 0;
+}

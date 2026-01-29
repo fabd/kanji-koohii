@@ -187,7 +187,7 @@ export default {
 </a>`;
     } else if (state === true) {
       html += `
-<a href="#" class="uiGUI ko-Btn is-ghost rounded JsEditFlashcard" title="Edit Card">
+<a href="#" class="uiGUI ko-Btn is-ghost rounded-sm JsEditFlashcard" title="Edit Card">
   <div class="is-icon fa fa-edit mr-2"></div>Edit Card
 </a>`;
     }

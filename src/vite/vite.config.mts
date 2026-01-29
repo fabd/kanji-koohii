@@ -1,5 +1,6 @@
 import path from "path";
 import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import strip from "@rollup/plugin-strip";
 
@@ -131,16 +132,12 @@ export default defineConfig({
     // https://vitejs.dev/config/#css-preprocessoroptions
     // ---------------------------------------------------------------------------
     preprocessorOptions: {
-      scss: {
-        additionalData: `
-          @import "@/assets/sass/abstracts/_mixins.scss";
-          @import "@/assets/sass/abstracts/_variables.scss";
-        `,
-      },
     },
   },
 
   plugins: [
+    tailwindcss(),
+
     // ...
     Components({
       dirs: ['src/vue'],

@@ -1,0 +1,919 @@
+/* ==================================================================== */
+/* LEGACY main.build stylesheet                                         */
+/* ==================================================================== */
+
+/**********************************************************************
+  Following is equivalent to @import "tailwindcss";
+
+  We "pop" the utilities outside of a layer, so that Tailwind utilities
+  override our own css. So for example h3 can have a built in margin
+  bottom in our css, and we can override it with `mb-0` in template.
+
+  *********************************************************************/
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css"; 
+
+/**********************************************************************
+  Parse the php templates for Tailwind classes.
+  *********************************************************************/
+@source "../../../../apps";
+
+/* Bootstrap 5 minimal build (forms) */
+/* @import "./vendor/_bootstrap.scss"; */
+
+/* koohii specific resets (*after* Bootstrap/tailwind resets) */
+@import "./base/_base.css";
+@import "./abstracts/_variables.css";
+@import "./layout/_layout.css";
+
+/* components */
+@import "./components/_Box.css";
+@import "./components/_buttons.css";
+@import "./components/_KanjiCard.css";
+@import "./components/_mobile-nav.css";
+@import "./components/_RatioBox.css";
+@import "./components/_ReviewSummary.css";
+@import "./components/_transitions.css";
+@import "./components/_widgets.css";
+@import "./legacy/_widgets.css";
+@import "./_navbar.css";
+@import "./_markdown.css";
+
+/* pages */
+@import "./pages/_admin.css";
+@import "./pages/_about-support.css";
+@import "./pages/_home-dashboard.css";
+@import "./pages/_learn-more.css";
+@import "./pages/_review-home.css";
+
+
+/* Bootstrap 5 minimal build (forms) */
+
+.bg-confirm {
+  background-color: var(--clr-bg-gl);
+}
+.text-confirm {
+  color: var(--clr-bg-gd);
+}
+
+/* ---------------------------- */
+/* RESPONSIVE utilities */
+/* ---------------------------- */
+
+@include breakpoint-up(lg) {
+  .visible-xs-sm {
+    display: none;
+  }
+}
+
+@include breakpoint-down(lg) {
+  .visible-md-lg {
+    display: none;
+  }
+}
+
+/* when footer gradient is used */
+body.with-footer {
+  background: #f0ddd4;
+}
+body.with-footer #main {
+  background: var(--clr-bg-body);
+}
+
+/* SRS color coding used for text */
+.clr-srs-due {
+  color: var(--clr-srs-due);
+}
+.clr-srs-undue {
+  color: var(--clr-srs-undue);
+}
+.clr-srs-fail {
+  color: #f1311a;
+}
+.clr-srs-new {
+  color: #1c90d4;
+}
+
+/* gradients */
+.gdt-ocean-blue {
+  background: #deeef8; /* Old browsers */
+  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%);
+}
+
+/* ---------------------------- */
+/* common */
+/* ---------------------------- */
+
+a.action {
+  text-decoration: none;
+}
+a.action:hover {
+  text-decoration: underline;
+}
+
+a.admin-edit {
+  font-size: 80%;
+  letter-spacing: normal;
+  color: #408040;
+  text-decoration: none;
+  font-weight: normal;
+  padding-right: 0.5em;
+}
+
+/* development only */
+.dbg code {
+  font-weight: normal;
+  color: #000;
+}
+
+/* ---------------- */
+/* Container styles */
+/* ---------------- */
+
+/* subtle shadow */
+.css3-ssh {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------------------------- */
+/* UI */
+/* ---------------------------- */
+
+/* disable selection for GUI items */
+.uiGUI {
+  outline: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+/*.action_top-right { position:absolute; right:0; top:0; }*/
+
+/**
+ * ui_select_pager() helper
+ *
+ * Float the "rows per page" FilterStd widget to the left, and the pager to the right.
+ */
+div.uiPagerDiv {
+  margin: 0 0 5px;
+}
+div.uiPagerDiv div.uiFilterStd {
+  float: left;
+}
+div.uiPagerDiv ul.uiPager {
+  float: right;
+}
+/* smaller */
+div.uiPagerDiv div.uiFilterStd .lbl {
+  font: 11px/1.1em Arial, sans-serif;
+}
+div.uiPagerDiv div.uiFilterStd a {
+  padding: 4px 5px 4px;
+}
+
+/* tables, base rules */
+table.layout {
+  width: 100%;
+  border: none;
+  margin: 0 0 1em;
+}
+table.layout td {
+  vertical-align: top;
+  padding: 0;
+}
+
+table.shaded td {
+  padding: 5px 10px;
+  background: #f2efd7;
+}
+
+/* ---------------------------- */
+/* Forms */
+/* ---------------------------- */
+
+.panel-body .form-section {
+  padding: 1em 15px;
+  margin: 0 -15px 1em;
+  border-top: 1px solid #dad9c6;
+  border-bottom: 1px solid #dad9c6;
+}
+
+/* OLD CSS */
+form .valign input,
+form .valign span {
+  vertical-align: middle;
+}
+
+/* ---------------------------- */
+/* Gadgets */
+/* ---------------------------- */
+
+/* Sortable link lists */
+div.sortable a {
+  padding: 2px 4px;
+}
+div.sortable a.sortup,
+div.sortable a.sortdown {
+  padding-left: 14px;
+  background-repeat: no-repeat;
+  background-position: 0 60%;
+  text-decoration: none;
+  font-weight: bold;
+}
+div.sortable a.sortup:hover,
+div.sortable a.sortdown:hover {
+  text-decoration: underline;
+}
+div.sortable a.sortup,
+div.sortable a.sortup:hover {
+  background-image: url(/images/1.0/sorttable_down.gif);
+}
+div.sortable a.sortdown,
+div.sortable a.sortdown:hover {
+  background-image: url(/images/1.0/sorttable_up.gif);
+}
+
+/* Sortable tables */
+table.sortable {
+  margin: 0.5em 0 1em 0;
+  border: 1px solid #e8e5ca;
+  border-top: none;
+}
+table.sortable th {
+  border-bottom: 1px solid #afafaf;
+  background-color: #e8e5c9;
+  text-align: center;
+  white-space: nowrap;
+}
+table.sortable td {
+  border-top: 1px solid #e8e5ca;
+  padding: 2px 4px;
+  background-color: #f2efd7;
+  text-align: center;
+}
+table.sortable td a {
+  text-decoration: none;
+}
+table.sortable td a:hover {
+  text-decoration: underline;
+}
+/* th */
+table.sortable th a {
+  color: #444;
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+  height: 26px;
+  padding: 2px 10px;
+}
+table.sortable th a.sortup,
+.sortable th a.sortup:hover {
+  background: #d9e9f3 url(/images/1.0/sorttable_up.gif) no-repeat 50% 22px;
+}
+table.sortable th a.sortdown,
+.sortable th a.sortdown:hover {
+  background: #d9e9f3 url(/images/1.0/sorttable_down.gif) no-repeat 50% 22px;
+}
+table.sortable th a:hover {
+  background: url(/images/1.0/sorttable_down.gif) no-repeat 50% 22px;
+  text-decoration: none;
+}
+/* re-used styles */
+table.sortable tr.hover td {
+  background: #fcfaeb;
+  color: #000;
+}
+table.sortable td.k {
+  font: 20px "Ms Gothic", sans-serif;
+  color: #000;
+}
+table.sortable td.f,
+.sortable tr.hover td.f {
+  color: #c82222;
+  font-weight: bold;
+}
+
+/* 'blocky' tables */
+.blocky {
+  font-size: 14px;
+  line-height: 1.2;
+  width: 100%;
+  border-left: 1px solid var(--clr-bg-1m);
+  border-collapse: collapse;
+  text-align: left;
+
+  th {
+    background-color: var(--clr-bg-1);
+    border-top-width: 0;
+  }
+  th,
+  td {
+    border-top: 1px solid var(--clr-bg-1);
+    border-right: 1px solid var(--clr-bg-1);
+    padding: 0.7em 0.8em;
+  }
+  td {
+    background: var(--clr-bg-nav);
+  }
+}
+
+/* bulleted links */
+a.link-pdf {
+  padding: 2px 0 2px 22px;
+  background: url(/images/1.0/ico/link_pdf.png) no-repeat 0 50%;
+}
+
+/* ---------------------------- */
+/* LAYOUT */
+/* ---------------------------- */
+
+/* box styles */
+div.col-box {
+  position: relative;
+}
+div.col-box-bis {
+  margin-top: 10px;
+}
+
+.box-side {
+  border-radius: 3px;
+  background-color: var(--clr-bg-1);
+  padding: 15px 10px;
+}
+
+/* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
+.kkSymfonyCache {
+  border: 1px solid #f00;
+}
+
+/* ---------------------------- */
+/* Main Layout                  */
+/* ---------------------------- */
+#main_container {
+  padding-top: 24px;
+}
+
+/* ---------------------------- */
+/* Footer & Support (Nov 2016) */
+/* ---------------------------- */
+.k_bg_free {
+  /* http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
+  background: #f8c5e4; /* Old browsers */
+  background: linear-gradient(to bottom, #f8c5e4 0%, #f0ddd4 100%);
+}
+
+.with-footer #main {
+  padding-bottom: 5em;
+}
+
+#footer {
+  text-align: center;
+  padding: 0 0 5em;
+  font-size: 17px;
+  color: #8b1566;
+}
+#footer p {
+  line-height: 1.2em;
+  margin: 0 0 0.8em;
+}
+#footer .transition {
+  width: 100%;
+  height: 29px;
+  background: var(--clr-bg-body) url(/koohii/landing/bubbles_gdt.png) repeat-x 0 0;
+}
+#footer section {
+  padding-top: 24px;
+}
+#footer a {
+  color: #e400b1;
+  text-decoration: none;
+}
+
+/* links */
+#footer ul {
+  margin: 1.5em 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.4em;
+}
+#footer li {
+  display: inline-block;
+  margin: 0;
+  font-weight: normal;
+}
+#footer li a {
+  padding-left: 0.8em;
+  padding-right: 0.8em; /*tap target*/
+  color: #9c3d7b;
+  text-decoration: none;
+}
+#footer a:hover {
+  color: #e400b1;
+  text-decoration: underline;
+}
+
+/* fontawesome icons */
+#footer .fa {
+  color: #9c3d7b;
+  margin-right: 0.5em;
+}
+
+@media (max-width: 600px) {
+  #footer {
+    font-size: 15px;
+  }
+  #footer p a {
+    display: inline-block;
+    padding: 0.5em 0;
+  }
+  #footer .break {
+    display: block;
+  }
+  #footer .ne {
+    display: none;
+  } /* non essential links */
+  /*#footer #ft-tweet_btn { display:block; margin:1.5em 0 0; }*/
+}
+
+/* ---------------------------- */
+/* Markdown content */
+/* ---------------------------- */
+
+:root {
+  --color-blog-heading: #fa3d60;
+}
+
+/* Site news (posts using markdown) */
+#sitenews .markdown h2,
+#sitenews .markdown h3 {
+  color: #000;
+  font-weight: normal;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+#sitenews .markdown h2:not(:first-of-type),
+#sitenews .markdown h3:not(:first-of-type) {
+  margin-top: calc(var(--vunit) * 2);
+}
+
+/* ---------------------------- */
+/* Site news (old posts using raw html) */
+/* ---------------------------- */
+
+/*.layout-news span.news-date { font-size:16px; color:#69664E; white-space:nowrap; }*/
+
+#sitenews {
+  line-height: 1.5em;
+  font-family: Arial, sans-serif;
+}
+
+#sitenews_list {
+  list-style: none;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+/*#sitenews .content ul { margin:1em 0 1em 2em; }*/
+
+/* titles */
+#sitenews h2 {
+  font-size: 18px;
+  margin: 0 0 1.25em;
+  padding: 0.2em 0 0.5em;
+  border-bottom: 1px solid var(--color-blog-heading);
+}
+
+#sitenews h2 a {
+  color: var(--color-blog-heading);
+  text-decoration: none;
+  font-weight: bold;
+}
+#sitenews .newsdate {
+  font-size: 0.9em;
+  float: right;
+  padding: 4px 5px;
+  margin-top: -4px;
+  border-radius: 3px;
+  color: #568249;
+  background: #dff7d3;
+}
+
+#sitenews .hd a {
+  font-weight: bold;
+  color: #10348f;
+  text-decoration: none;
+}
+#sitenews .hd {
+  padding: 5px 0;
+  margin-bottom: 5px;
+  border: 0;
+  font-size: 17px;
+}
+#sitenews .bd {
+  margin: 0 0 25px;
+  padding: 0 0 2em; /*border-bottom:1px solid var(--clr-bg-1);*/
+  color: #3c3c3c;
+  clear: both;
+}
+
+#sitenews blockquote,
+#sitenews p.quote {
+  background: url(/images/1.0/news/blockquote_begin.gif) no-repeat 6px 4px;
+  margin: 0 0 1em;
+  padding: 0 0 0 36px;
+  font-style: italic;
+}
+#sitenews a.readmore {
+  color: #8fb052;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#sitenews .img-break {
+  padding: 10px 0;
+  margin: 0 0 1em;
+}
+
+#sitenews_back {
+  margin: 0 0 2em;
+}
+
+/* monthly archives */
+#news-by-month ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#news-by-month li {
+}
+#news-by-month a {
+  padding: 5px 10px;
+  display: block;
+  text-decoration: none;
+  @apply border-dotted border-[#d4cdba] border-b;
+}
+#news-by-month a:hover {
+  background-color: var(--clr-bg-1);
+}
+#news-by-month span {
+  color: #454545;
+}
+
+@include breakpoint-down(md) {
+  #sitenews_jpod img {
+    border-radius: 0;
+  }
+  #news-by-month ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #news-by-month a {
+    padding: 8px 15px;
+    font-size: 120%;
+  }
+}
+
+/* ---------------------------- */
+/* Confirmation & error boxes */
+/* ---------------------------- */
+
+.actionconfirmationmessage {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #ffffcc;
+  margin: 1em 0;
+}
+.actionconfirmationmessage p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.confirmwhatwasdone {
+  padding: 10px;
+  background: #cdecae;
+  margin: 1em 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgba(170, 165, 130, 0.3);
+  /* -webkit-transition:background-color 0.5s; transition:background-color 0.5s;*/
+}
+.confirmwhatwasdone p {
+  margin: 0 0 10px;
+  color: #262;
+}
+
+.rounded-css3 {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+.formerrormessage {
+  border: 1px solid #f5ab8f;
+  padding: 10px;
+  background: #ffe0a8;
+  margin: 1em 0;
+  color: #f33;
+}
+.formerrormessage p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.warningmessagebox {
+  border: 1px solid #f5ab8f;
+  padding: 10px;
+  background: #ffe0a8;
+  margin: 1em 0;
+}
+.warningmessagebox p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+/* debugging */
+#debugresponse {
+  border: 1px solid red;
+  padding: 10px;
+  background: #ffe0a8;
+  margin: 0;
+  width: auto;
+  font-size: 12px;
+  line-height: 1.2em;
+}
+#debugresponse p {
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+/* form responses */
+#debugresponse.success {
+  border: 1px solid #afe4a9;
+  background: #e6ffcc;
+  margin: 0 0 1em;
+}
+#debugresponse.error {
+  border: 1px solid #f5ab8f;
+  background: #ffe0a8;
+  margin: 0 0 1em;
+}
+
+/**
+ * Links bound to user interface actions.
+ */
+a.cancel,
+a.delete {
+  color: red;
+  padding: 1px;
+}
+a.cancel:hover,
+a.delete:hover {
+  color: white;
+  background: red;
+}
+
+a.proceed {
+  color: #005cb1;
+  padding: 1px;
+}
+a.proceed:hover {
+  color: white;
+  background: #005cb1;
+}
+
+a.subdued {
+  color: #666;
+  padding: 1px;
+}
+a:hover.subdued {
+  background: #666;
+  color: #fff;
+  padding: 1px;
+}
+
+/* ---------------------------- */
+/* Review Summary */
+/* ---------------------------- */
+
+.app-header {
+  border-bottom: 1px solid #cccccc;
+  position: relative;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+.app-header h2 {
+  float: left;
+  line-height: 1em;
+  margin: 0;
+  padding: 0 0 0.5em;
+  font-family: Georgia, serif;
+  font-size: 19px;
+  color: #10348f;
+}
+.app-header h2 a {
+  text-decoration: none;
+  font-weight: normal;
+}
+.app-header h2 a:hover {
+  text-decoration: underline;
+}
+.app-header h2 span {
+  color: #898989;
+}
+.app-header .links {
+  float: left;
+  width: 50%;
+  clear: left;
+  font-size: 12px;
+}
+.app-header .links a {
+  text-decoration: none;
+}
+.app-header .links a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------- */
+/* Full kanji list */
+/* ---------------------------- */
+
+.fullkanjilist .stats {
+  float: right;
+  width: 260px;
+  margin: 0 0 1em 1em;
+}
+
+/* ----------------------------
+ * Flashcard Review
+ * ---------------------------- */
+
+.ko-Box--customReview {
+  @extend .ko-Box;
+  font-size: 15px;
+}
+
+/* ------------------ */
+/* AjaxDialog         */
+/* ------------------ */
+@import "./legacy/ajaxdialog.css";
+
+/**
+ * Debugging Ajax Responses.
+ *
+ * @see App.AjaxFilter
+ */
+#AppAjaxFilterDebug {
+  background: #fff;
+  padding: 5px 10px;
+}
+#AppAjaxFilterDebug pre {
+  margin: 0;
+  padding: 0;
+  color: #444;
+  font: 12px/13px "Consolas", "Bitstream Vera Sans Mono", monospace;
+}
+
+/* Reset YUI Skin */
+
+.yui-skin-sam .yui-panel {
+  border: none;
+  background: rgba(0, 0, 0, 0.5); /* dark glassy effect */
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+.yui-skin-sam .yui-panel-container {
+  padding: 0;
+}
+
+/* IE fixes */
+.yui-skin-sam #ie .yui-panel {
+  background: #444; /* filter:alpha(opacity = 50); opacity:0.5; affects child elements! */
+}
+
+/* close icon */
+.yui-panel .container-close {
+  width: 24px;
+  height: 24px;
+  background: url(/images/ui/icons/yui-container-close.gif) no-repeat 50% 50%;
+  top: 6px;
+  right: 6px;
+  outline: none; /* fix for the "focus first" feature of YUI Panel */
+}
+
+/* dialog body */
+.rtk-skin-dlg .yui-panel {
+  outline: none;
+}
+.rtk-skin-dlg .yui-panel .hd,
+.rtk-mobl-dlg .yui-panel .hd {
+  font: 16px/1em Verdana, sans-serif;
+  color: #ddd;
+  padding: 10px 10px 0;
+  background: none;
+}
+.rtk-skin-dlg .yui-panel .bd {
+  padding: 10px 10px 10px;
+  background: none;
+  line-height: 19px;
+  @apply text-[#42413d];
+}
+.rtk-skin-dlg .yui-panel .ft {
+  padding: 5px 10px 10px;
+  background: none;
+  line-height: 1.2em;
+  @apply text-[#42413d];
+}
+
+/* dialog body wrapper for extra css styling (.rtk-skin-dlg .yui-panel .bd .body) */
+.rtk-skin-dlg .body {
+  background: #fff;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+}
+.rtk-mobl-dlg .body {
+  background: #fff;
+  padding: 10px;
+}
+
+/* dialog loading spinner with FontAwesome5 (see AjaxDialog.js -- selector must overwrite .rtk-xxxx-dlg .body) */
+.yui-panel .JsAjaxDlgLoading {
+  /* width is set in js! */
+  height: 150px;
+  background: #fff;
+  position: relative;
+}
+.yui-panel .JsAjaxDlgLoading .fa-spin {
+  font-size: 2em;
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  margin-left: -0.5em;
+  color: #888;
+}
+
+/* MOBILE DIALOGS use a different "skin" parameter that lets them extend from edge to edge */
+.rtk-mobl-dlg {
+  left: 0;
+  right: 0;
+}
+.rtk-mobl-dlg .yui-panel {
+  margin: 0 auto;
+  outline: none;
+}
+/*.rtk-mobl-dlg .yui-panel .hd {  }*/
+.rtk-mobl-dlg .yui-panel .bd {
+  background: none; /* space for the close icon without hd div */ /*padding-top:35px;*/
+}
+.rtk-mobl-dlg .yui-panel .ft {
+  padding: 0;
+}
+
+/* dialog buttons, vertically stacked (mobile & desktop) */
+.uiBMenu {
+  margin-bottom: -10px;
+} /* spacing of last button (assumes outer padding) */
+.uiBMenuItem {
+  margin: 10px 0;
+}
+
+/* ------------------ */
+/* CJK Fonts          */
+/* ------------------ */
+
+/* class names output by cjk_lang_ja() helper (changes depending on Kanji/Hanzi mode) */
+.cj-k {
+  font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝", serif;
+}
+.cj-s {
+  font-family: "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC", sans-serif;
+}
+.cj-t {
+  font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC",
+    serif;
+}
+
+/* -------------------------------------------------------------------- */
+/* Restudy List */
+/* -------------------------------------------------------------------- */
+.ko-RestudyList {
+  /* small "learned" tag in the Restudy List */
+  &-learned {
+    @apply px-[.4em] py-[.3em] rounded-sm;
+    @apply bg-[#6cbe6b] text-[#fff];
+  }
+}
+
+/* --------------------------------------------------------------------
+// (before-last) our own utilities
+//   We want to be able to override our component styles with utilities.
+//   For example font-size in `.Box-title` can be overridden by `.ux-text-lg`.
+// -------------------------------------------------------------------- */
+@import "./_utilities.css";

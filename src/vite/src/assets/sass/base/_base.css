@@ -1,0 +1,102 @@
+/* ==================================================================== */
+/* KOOHII BASE CSS */
+/* */
+/*   Koohii-specific resets - include *after* tailwind/Bootstrap resets. */
+/* */
+/*   The value of these resets is to set good defaults to simplify */
+/*   templates. */
+/*  */
+/*   These resets DO NOT use class selectors, so they can be overridden */
+/*   in any template by other custom css and/or tailwind. */
+/* */
+/*       <p>Use default margin</p> */
+/* */
+/*       <p class="mb-4">Overrides default margin</p> */
+/* */
+/* ==================================================================== */
+
+html {
+  /* font-family: Helvetica, Arial, freesans, clean, sans-serif; */
+}
+
+body {
+  background: var(--clr-bg-body);
+  color: #42413d;
+}
+
+blockquote {
+  font-size: inherit;
+  border-left: none;
+  color: #7f7d75;
+}
+
+/* tailwind fix - `bolder` doesn't look good, no idea */
+b,
+strong {
+  font-weight: bold;
+}
+
+/* links */
+a {
+  color: #005cb1;
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* type */
+p,
+ul {
+  margin-bottom: 1em;
+}
+
+abbr,
+acronym {
+  border-bottom: 1px dotted #dad8bd;
+  cursor: help;
+}
+
+/* headings */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #7f7d85;
+  font-weight: normal;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  /* */
+}
+
+h2 {
+  font-size: min(20px + 1vw, 30px);
+}
+
+h3 {
+  font-size: 18px;
+}
+
+/* misc. effects */
+kbd {
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
+  background: #ddd;
+  color: #333;
+  font: 100%/1em "Andale Mono", "Consolas", monospace;
+  margin: 2px 1px 2px 0;
+  min-width: 1em;
+  padding: 2px 5px;
+  text-align: center;
+  text-shadow: none;
+  white-space: nowrap;
+}

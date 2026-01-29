@@ -1,0 +1,7 @@
+@theme {
+  --text-smx: 15px;
+  --color-mint-500: powderblue;
+}
+
+/* parse the Symfony & php templates */
+@source "../../../../../apps";

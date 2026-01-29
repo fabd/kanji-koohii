@@ -44,8 +44,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.27.0",
     "npm-check-updates": "^17.0.2",
-    "postcss": "^8.4.x",
-    "postcss-html": "^1.5.0",
     "prettier": "2.8.7",
     "sass": "^1.71.1",
     "stylelint": "^16.8.1",

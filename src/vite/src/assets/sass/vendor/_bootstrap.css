@@ -1,25 +1,22 @@
 /* ====================================================================
-// Selective import of Bootstrap 5 * FORMS *.
+// FORMS
 //
-//   - we just want the forms, since styling forms is a PITA,
-//     and they are reset by tailwind's included `normalize`
+//   Inspired by Bootstrap 5
+//   https://getbootstrap.com/docs/5.3/forms/overview/
 //
-//   - we want to avoid most everything else in Bootstrap since it
-//     does not mix well with the atomic css approach of BEM/tailwind
 //
-//   - we DONT want Bootstrap's "reboot" since it is a fork of normalize,
-//     which is already included in tailwind
-//
-//   - design wise, Bootstrap's rounded input styles fits well on Koohii
-//
-//   @see https://getbootstrap.com/docs/5.0/customize/sass/
-//
+//   - Bootstrap & Sass were removed, so we are using only a small
+//     subset of BS5 styles.
 // ==================================================================== */
 
 :root {
-  --bs-primary: #337ab7;
-  --bs-success: #5cb85c;
+  /* custom properties named after those from Bootstrap 5 */
+  --bs-body-color: #202020;
+  --bs-body-bg: #fff;
+  --bs-border-width: 1px;
+  --bs-border-radius: 0.375rem;
   --bs-danger: #d9534f;
+  --bs-danger-rgb: 217, 83, 79;
   --form-label-font-size: 14px;
   --form-label-font-weight: bold;
   --form-text-color: #7f7d75;
@@ -30,6 +27,8 @@
   --input-font-size: 15px;
   --input-placeholder-color: #9b9b9b;
   --form-feedback-invalid-color: #a94442;
+  --bs-form-invalid-color: #a94442;
+  --bs-form-invalid-border-color: #a94442;
 
   /* generated with icones.js <3 */
   --form-feedback-icon-invalid: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="#e68683" d="M10 3h4v11h-4V3m0 18v-4h4v4h-4Z"></path></svg>');
@@ -40,26 +39,105 @@
 //   https://getbootstrap.com/docs/5.0/forms/validation/#map
 // -------------------------------------------------------------------- */
 
-/* --------------------------------------------------------------------
-// Overrides
-//   - prefer to set Bootstrap vars above for font styles/colors
-//   - prefer to put layout stuff in overrides below for more control
-// -------------------------------------------------------------------- */
+/* <label for="username" class="form-label">Username</label> */
 .form-label {
-  @apply inline-block;
+  display: inline-block;
   margin-bottom: 5px;
+  font-size: var(--form-label-font-size);
+  font-weight: 700;
 }
 
-/* help text under a form field - remember these are defaults, override with tailwind's */
+/* small text below inputs
+   <span class="form-text">Confirm your current password</span>
+   https://getbootstrap.com/docs/5.3/forms/form-control/#form-text */
 .form-text {
   display: block;
   margin-top: 5px;
   margin-bottom: 10px;
+  font-size: 0.875rem;
+  color: #7f7d75;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid #d4cdba;
+  border-radius: var(--bs-border-radius);
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #99bddb;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem #337ab740;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    border-color: var(--input-border-color);
+    opacity: 0.8;
+  }
+}
+
+.form-select {
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-image:
+    var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: var(--bs-border-width) solid #d4cdba;
+  border-radius: var(--bs-border-radius);
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    border-color: #99bddb;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem #337ab740;
+  }
 }
 
 /* space out sections of a form */
 .form-group {
   @apply mb-4;
+
+  input[type="checkbox"] {
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+  }
+
+  input[type="checkbox"] + span {
+    vertical-align: middle;
+    padding-left: 0.5em;
+    font-weight: normal;
+  }
 }
 
 /* next to label of optional inputs:
@@ -75,26 +153,37 @@
   vertical-align: middle;
 }
 
-/* Unlike BS5, we only output this div when there is an error, instead of
-//  relying on BS5 fancy selectors and regardless of parent/sibling divs,
-//  just show the div. */
+/*---------------------------------------------------------------------
+  Validation
+  ---------------------------------------------------------------------*/
+
+/* backend outputs this div when there is an error, instead of
+//  relying on BS5 fancy selectors to show/hide based on invalid state. */
 .invalid-feedback {
   display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--bs-form-invalid-color);
+}
+
+/* backend adds `.is-invalid` to invalid fields after a form is submitted */
+.form-control.is-invalid {
+  border-color: var(--bs-form-invalid-border-color);
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"%3e%3cpath fill="%23e68683" d="M10 3h4v11h-4V3m0 18v-4h4v4h-4Z"%3e%3c/path%3e%3c/svg%3e');
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+
+  &:focus {
+    border-color: var(--bs-form-invalid-border-color);
+    box-shadow: 0 0 0 .25rem rgba(var(--bs-danger-rgb),.25);
+  }
 }
 
 /* <textarea> : no invalid icon, and don't add unnecessary extra padding */
 textarea.form-control.is-invalid {
   padding-right: 0.75rem; /* remove extra padding for the invalid icon */
   background-image: none; /* remove the invalid icon */
-}
-
-.form-group input[type="checkbox"] {
-  vertical-align: middle;
-  margin: 0;
-  padding: 0;
-}
-.form-group input[type="checkbox"] + span {
-  vertical-align: middle;
-  padding-left: 0.5em;
-  font-weight: normal;
 }

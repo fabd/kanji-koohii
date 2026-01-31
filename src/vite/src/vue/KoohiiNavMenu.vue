@@ -60,9 +60,9 @@ export default defineComponent({
       item.isOpened() ? item.close() : item.open();
 
       // accordion
-      for (let itemId in this.menuItems) {
+      for (const itemId in this.menuItems) {
         if (itemId !== id) {
-          let menuItem = this.menuItems[itemId].oMenuItem;
+          const menuItem = this.menuItems[itemId]!.oMenuItem;
           // console.log('%s %o', itemId, menuItem.isOpened())
           if (item.isOpened() && menuItem.isOpened()) menuItem.close();
         }
@@ -77,8 +77,8 @@ export default defineComponent({
       // compute height of the collapsed items for proper "expand" animation
       // console.log('initCollapsedItems()')
 
-      for (let itemId in this.menuItems) {
-        let { oMenuItem, elHead } = this.menuItems[itemId];
+      for (const itemId in this.menuItems) {
+        const { oMenuItem, elHead } = this.menuItems[itemId]!;
 
         // store the height of the collapsed content on initial render
         if (oMenuItem.hasChildren) {

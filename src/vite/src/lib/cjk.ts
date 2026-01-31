@@ -96,8 +96,8 @@ export function toUnicode(text: string) {
  * @returns array of unique characters, or empty array
  */
 export function checkForUnsupportedUtf(text: string) {
-  let badChars: string[] = [];
-  for (let char of text) {
+  const badChars: string[] = [];
+  for (const char of text) {
     if (char.codePointAt(0)! >= 65536) {
       badChars.push(char);
     }

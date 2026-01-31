@@ -19,7 +19,7 @@
             <textarea
               ref="input"
               v-model="japaneseText"
-              class="w-full mb-2 p-2 min-h-[300px] border border-[#ddd] rounded-lg text-lg"
+              class="form-control w-full mb-2 p-2 min-h-[300px] border border-[#ddd] rounded-lg text-lg"
             ></textarea>
             <input
               type="submit"

@@ -15,7 +15,6 @@ alias kkweb="cd $KK_WEB"
 # --------------------------------------------------------------------
 
 # npm tools
-alias sass='./node_modules/.bin/sass'
 alias stylelint='./node_modules/.bin/stylelint'
 alias vite='./node_modules/.bin/vite'
 alias vue-tsc='./node_modules/.bin/vue-tsc'

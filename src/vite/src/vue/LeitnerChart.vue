@@ -200,5 +200,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "@/assets/sass/components/_LeitnerChart.scss";
+@import "@/assets/sass/components/_LeitnerChart.css";
 </style>

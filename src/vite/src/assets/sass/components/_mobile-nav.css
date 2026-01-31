@@ -1,0 +1,67 @@
+/* ====================================================================
+// The mobile navigation pane
+// ==================================================================== */
+
+.k-nav-menu {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 24px;
+}
+
+.k-nav-menu-item {
+  display: block;
+  list-style: none;
+  margin-bottom: 0.75rem;
+  color: #adb2b6;
+
+  a {
+    display: block;
+    color: #adb2b6;
+    outline: none;
+    text-decoration: none;
+  }
+
+  &:first-child {
+    margin-top: 0.75rem;
+  }
+}
+
+.k-nav-menu-item__label {
+  position: relative;
+  height: 3rem;
+  line-height: 3rem;
+  font-size: 100%;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow-x: hidden;
+  transition: color 0.3s ease-out;
+
+  /* alignment */
+  padding-left: 3.4em;
+
+  /* nav icons (left side) */
+  .fa {
+    position: absolute;
+    left: 1em;
+    top: 50%;
+    margin-top: -0.5em;
+    width: 1.41em;
+    text-align: center;
+  }
+}
+
+/* is-opened state & transition */
+.k-nav-menu-item.is-opened .k-nav-menu-item__label {
+  color: #fff;
+}
+
+/* applies to a collapse container WITHOUT any margins or padding */
+.k-fx-collapse__wrap {
+  will-change: height;
+  transition: height 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  overflow: hidden;
+  height: 0;
+}

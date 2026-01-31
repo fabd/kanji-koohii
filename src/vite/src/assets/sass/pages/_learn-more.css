@@ -1,0 +1,112 @@
+/* ====================================================================
+// Learn More page & markdown output formatting
+// ==================================================================== */
+
+.ko-DocNav {
+  @media only screen and (min-width: 1024px) {
+    /* up lg */
+    @apply fixed min-w-[218px];
+  }
+
+  /* base font size, use em downwards */
+  font-size: 1rem;
+
+  /* defaults */
+  ul {
+    a {
+      @apply block py-1;
+      @apply no-underline hover:underline;
+      @apply font-bold text-[#564e44];
+    }
+  }
+
+  /* level 1 */
+  ul {
+    @apply font-semibold;
+    @apply px-0;
+
+    li {
+      font-size: 0.95em;
+      font-weight: bold;
+    }
+
+    /* level 2 */
+    ul {
+      @apply ml-[1em] mb-0;
+
+      ul {
+        @apply ml-0;
+        a {
+          @apply pl-[2em];
+        }
+      }
+
+      a {
+        @apply pl-[1em] border-l-[1px] border-[#e7e1d3];
+        @apply text-[#42413d] font-normal;
+      }
+    }
+  }
+}
+
+/* note: this will be used also on dashboard "Welcome" section */
+.ko-RtkBook {
+  /* this selector overrides `.markdown img` when appearing in the Help page */
+  img {
+    @apply border-none p-0;
+    box-shadow: 7px 7px 0px 0px #c39a5cbd;
+  }
+}
+
+.ko-DocMain {
+  @media only screen and (min-width: 768px) {
+    /* up md */
+    /* vertical separator & guiding line */
+    @apply pl-4 border-l-[1px] border-[#e7e1d3];
+  }
+  @media only screen and (min-width: 1024px) {
+    /* up lg */
+    @apply pl-8;
+  }
+
+  /* fix the title positioning when clicking the sidebar links (#anchors) */
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: -4rem;
+    padding-top: 4.5rem;
+  }
+
+  /* improve vertical separation */
+  h2 {
+    border-bottom: 1px solid #d8d3ce;
+    padding-bottom: 0.3em;
+  }
+}
+.ko-DocMain-whatisrtk {
+  padding-top: 1.5em;
+  font-size: 16px;
+  line-height: 1.5em;
+
+  a {
+    @apply whitespace-nowrap;
+  }
+}
+
+.ko-DocMain-stacks {
+  @apply mb-6 p-6;
+  background-color: var(--clr-bg-nav);
+
+  dt {
+    float: left;
+    width: 43px;
+    height: 48px;
+    clear: left;
+    margin-bottom: 1em;
+  }
+  dd {
+    margin: 0 0 1em 60px;
+  }
+}

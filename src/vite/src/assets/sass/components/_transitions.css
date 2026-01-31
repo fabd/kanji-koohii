@@ -1,0 +1,23 @@
+/* ====================================================================
+// Vue transitions
+// ==================================================================== */
+
+/* --------------------------------------------------------------------
+// quick fade in for the Leitner bar chart, looks nicer when page load is slow
+// -------------------------------------------------------------------- */
+.chart-fade-enter-from {
+  opacity: 0;
+}
+.chart-fade-enter-active {
+  transition: opacity 0.3s;
+}
+
+/* --------------------------------------------------------------------
+// lesson view / fade in on expand
+// -------------------------------------------------------------------- */
+.lesson-fadein-enter-from {
+  opacity: 0;
+}
+.lesson-fadein-enter-active {
+  transition: opacity 0.2s;
+}

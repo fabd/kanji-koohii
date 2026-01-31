@@ -19,7 +19,7 @@
     </template>
 
     <div class="d-keyword flex items-center">
-      <div v-if="cardData.isAgain" class="text-[#aeaeae] text-md leading-1"><i class="fa fa-redo mr-2"></i></div>
+      <div v-if="cardData.isAgain" class="text-[#aeaeae] text-md leading-none"><i class="fa fa-redo mr-2"></i></div>
       <a :href="`/study/kanji/${cardData.kanji}`" title="Go to the Study page" target="blank" class="JsLink mr-2">{{
         cardData.keyword
       }}</a>

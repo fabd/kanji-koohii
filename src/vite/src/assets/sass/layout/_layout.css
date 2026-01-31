@@ -1,0 +1,114 @@
+/* ==================================================================== */
+/* LAYOUT */
+/* ==================================================================== */
+@media only screen and (width >= 48rem) { /* = tailwind md ( 768px) */ }
+@media only screen and (width >= 64rem) { /* = tailwind lg (1024px) */ }
+@media only screen and (width >= 80rem) { /* = tailwind xl (1280px) */ }
+
+@media only screen and (width < 48rem) { /* = tailwind max-md */ }
+@media only screen and (width < 64rem) { /* = tailwind max-lg */ }
+@media only screen and (width < 80rem) { /* = tailwind max-xl */ }
+
+/* -------------------------------------------------------------------- */
+/* Simple Bootstrap 3-style column layout */
+/* */
+/*   This is a subset of Boostrap 3's grid system that was sufficient */
+/*   for most pages that use a two-column layout on desktop. */
+/* */
+/*   TIPS */
+/*   - use tailwind `order-{x}` to push/pull columns */
+/*   - for a single centered column, use eg. `col-lg-10 mx-auto` */
+/* */
+/* -------------------------------------------------------------------- */
+:root {
+  --GRID-GUTTER-X: 15px;
+}
+
+.ko-Container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: var(--GRID-GUTTER-X);
+  padding-right: var(--GRID-GUTTER-X);
+
+  @media only screen and (min-width: 768px) {
+    width: var(--bp-md);
+  }
+
+  @media only screen and (min-width: 1024px) {
+    width: 970px;
+  }
+}
+
+.row {
+  @apply flex flex-wrap;
+  margin-left: calc(-1 * var(--GRID-GUTTER-X));
+  margin-right: calc(-1 * var(--GRID-GUTTER-X));
+}
+
+/* NOTE! how `col-lg-*` breakpoints match `mbl/dsk` in tailwind config */
+.col-lg-3,
+.col-lg-4,
+.col-lg-6,
+.col-lg-8,
+.col-lg-9,
+.col-lg-10 {
+  @apply grow-0 w-full;
+  padding-left: var(--GRID-GUTTER-X);
+  padding-right: var(--GRID-GUTTER-X);
+}
+
+@media only screen and (min-width: 1024px) {
+  .col-lg-3 {
+    @apply w-3/12;
+  }
+  .col-lg-4 {
+    @apply w-4/12;
+  }
+  .col-lg-6 {
+    @apply w-6/12;
+  }
+  .col-lg-8 {
+    @apply w-8/12;
+  }
+  .col-lg-9 {
+    @apply w-9/12;
+  }
+  .col-lg-10 {
+    @apply w-10/12;
+  }
+}
+
+/* A few places can afford columns in tablet portrait mode (md) */
+.col-md-3,
+.col-md-6,
+.col-md-9 {
+  @apply grow-0 w-full;
+  padding-left: var(--GRID-GUTTER-X);
+  padding-right: var(--GRID-GUTTER-X);
+}
+
+@media only screen and (min-width: 768px) {
+  .col-md-3 {
+    @apply w-3/12;
+  }
+  .col-md-6 {
+    @apply w-6/12;
+  }
+  .col-md-9 {
+    @apply w-9/12;
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* CANCEL GUTTERS */
+/*   Cancel the column gutter on small screens only. */
+/* */
+/*   Ideal for sections of content with a full width image or table, */
+/*   to gain extra space, spanning from edge to edge of the device. */
+/* -------------------------------------------------------------------- */
+@media only screen and (max-width: calc(768px - 0.02px)) {
+  .no-gutter-xs-sm {
+    margin-left: calc(-1 * var(--GRID-GUTTER-X));
+    margin-right: calc(-1 * var(--GRID-GUTTER-X));
+  }
+}

@@ -1,0 +1,35 @@
+/* ====================================================================
+// Landing page (master stylesheet bundle for the landing page ONLY)
+// ==================================================================== */
+
+/* See main.build.scss for Tailwind import explanation */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+
+/* tailwind customization */
+@import "./vendor/_tailwind.css";
+
+/* Bootstrap 5 minimal build (forms) */
+/* @import "./vendor/_bootstrap.scss"; */
+
+/* koohii specific resets (*after* Bootstrap/tailwind resets) */
+@import "./base/_base.css";
+@import "./abstracts/_variables.css";
+@import "./layout/_layout.css";
+
+/* components */
+@import "./components/_buttons.css";
+@import "./_navbar.css";
+
+/* pages */
+@import "./pages/_landing-page.css";
+
+/* --------------------------------------------------------------------
+// Our own utilities & Tailwind utilities
+//  imported last, so that we can override component styles (in CSS files)
+//  with utilities in the templates.
+// -------------------------------------------------------------------- */
+@import "./_utilities.css";
+
+@import "tailwindcss/utilities.css";

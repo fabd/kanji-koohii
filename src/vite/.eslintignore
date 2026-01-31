@@ -1,6 +1,0 @@
-# don't ever lint node_modules
-node_modules
-
-# (faB) ignore my local/private/obsolete files
-**/__*.js
-**/__*.vue

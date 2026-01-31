@@ -1,0 +1,338 @@
+/* ==================================================================== */
+/* Redesigned homepage dashboard (2022) */
+/* ==================================================================== */
+
+/* -------------------------------------------------------------------- */
+/* base class for the entire dashboard */
+/* -------------------------------------------------------------------- */
+.ko-Dash {
+  /* optimize the dashboard's boxes padding a little bit */
+  @media only screen and (max-width: calc(768px - 0.02px)) {
+    --ko-box-px: 10px;
+    --ko-box-py: 10px;
+  }
+}
+/*//////////////////////////////////////////////////////////////// */
+/* the little SRS isometric icons */
+/*//////////////////////////////////////////////////////////////// */
+.ko-Dash-srsIso {
+  --ko-srs-iso-w: 21px;
+}
+
+/*//////////////////////////////////////////////////////////////// */
+/* "new" and "due" SRS icons with labels - acting as buttons */
+/*//////////////////////////////////////////////////////////////// */
+.ko-Dash-srsIcoBtn {
+  /* note: the height of these "buttons" comes from the parent's `items-stretch` */
+  @apply text-smx text-[#42413d] no-underline cursor-pointer rounded-md;
+
+  &:hover {
+    @apply no-underline;
+
+    &.is-new,
+    &:focus.is-new {
+      background-color: #32b1fc4d; /* color.change(#40a8e5, $alpha: 0.3); */
+    }
+    &.is-due {
+      background-color: #ff982a6e; /*color.change(#f7a247, $alpha: 0.3); */
+    }
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* View All Lessons page */
+/* -------------------------------------------------------------------- */
+/* optimize the lessons list padding a little bit */
+.ko-ViewAllLessons {
+  @media only screen and (max-width: calc(768px - 0.02px)) {
+    --ko-box-px: 10px;
+    --ko-box-py: 10px;
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* -------------------------------------------------------------------- */
+.ko-LessonPane {
+  /* default card tag colors for the kanji grid */
+  --ko-cardmap-new: #a3a197;
+  --ko-cardmap-res: #ef5e4f;
+  --ko-cardmap-L1: #5cb85c; /*#83d37d; */
+  --ko-cardmap-L2: #5cb85c; /*#63b95c; */
+  --ko-cardmap-L3: #5cb85c; /*#4ea747; */
+  --ko-cardmap-L4: #5cb85c; /*#3b8f35; */
+}
+/*//////////////////////////////////////////////////////////////// */
+/* on the home page, use max-height and scrollbar, to limit the */
+/*  vertical space taken by long lessons */
+/*//////////////////////////////////////////////////////////////// */
+.ko-LessonPane--maxHeight {
+  max-height: 378px; /* approx. 2rows of cards + vert. margins */
+  overflow-x: clip;
+  overflow-y: auto;
+  padding-right: 1rem; /* breathing room between cards and scrollbar */
+
+  --trackColor: #c7c3ba;
+  --thumbColor: #f0f0f0;
+  --trackRadius: 6px;
+
+  /* Works on Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbColor) var(--trackColor);
+
+  /* Works on Chrome, Edge, and Safari */
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--trackColor);
+    border-radius: var(--trackRadius);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--thumbColor);
+    border-radius: var(--trackRadius);
+    width: 10px;
+    /* use inset shadow to pretend there is a gap between thumb & track */
+    box-shadow: inset 0 0 0 3px var(--trackColor);
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* the lesson "progress bar" */
+/* */
+/*   For testing colors and stuff in devtools: */
+/*   Array.from($('.ko-LessonMap-items').children).forEach(el => el.className = ['is-off','is-res','is-new','is-L1'][Math.floor(Math.random() * 4)]) */
+/* -------------------------------------------------------------------- */
+.ko-LessonMap {
+  --dotSm: 10px; /* smallest dot size, when there are many items */
+  --dotMd: 15px;
+  --dotLg: 20px; /* larger dots, for lessons with fewer items */
+
+  --ko-lmap-h: 41px;
+  --ko-lmap-p: 3px;
+  --ko-lmap-cell-h: calc(var(--ko-lmap-h) - 2 * var(--ko-lmap-p));
+
+  /*//////////////////////////////////////////////////////////////// */
+  /*//////////////////////////////////////////////////////////////// */
+  background-color: #696866;
+  padding: var(--ko-lmap-p);
+  height: var(--ko-lmap-h);
+  @apply rounded-md;
+}
+/*//////////////////////////////////////////////////////////////// */
+/* default for the cells */
+/*//////////////////////////////////////////////////////////////// */
+.ko-LessonMap-items {
+  @apply flex;
+  height: 100%;
+  gap: 1px;
+  color: #8f897c; /* color of the "off" items (empty cells) */
+  text-align: center;
+}
+
+.ko-LessonMap-items > div {
+  @apply flex-1 rounded-sm;
+
+  /* ----- @include card-tag-colors(); ----- */
+  /* classes that match getColorForCard() in JS */
+  &.is-new {
+    color: #fff;
+    background-color: var(--ko-cardmap-new);
+  }
+  &.is-res {
+    color: #fff;
+    background-color: var(--ko-cardmap-res);
+  }
+  &.is-L1 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L1);
+  }
+  &.is-L2 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L2);
+  }
+  &.is-L3 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L3);
+  }
+  &.is-L4 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L4);
+  }
+  /* --------------------------------------- */
+}
+
+.ko-LessonMap .is-off:before {
+  content: "•"; /* \2022 (bullet) */
+  font-size: var(--dotSm);
+  line-height: calc(var(--ko-lmap-cell-h) - 3px);
+}
+
+/*//////////////////////////////////////////////////////////////// */
+/* adapt layout if there are too many cells to fit */
+/*//////////////////////////////////////////////////////////////// */
+.ko-LessonMap {
+  container: KoLessonMap / inline-size;
+}
+@container KoLessonMap (width < 400px) {
+  .ko-LessonMap.is-sm .is-off:before {
+    font-size: var(--dotMd);
+  }
+
+  .ko-LessonMap.is-md .is-off:before {
+    font-size: var(--dotSm);
+  }
+}
+
+@container KoLessonMap (width < 600px) {
+  .ko-LessonMap.is-lg .is-off:before {
+    content: "";
+  }
+}
+
+@container KoLessonMap (width >= 400px) {
+  .ko-LessonMap.is-sm .ko-LessonMap-items,
+  .ko-LessonMap.is-md .ko-LessonMap-items {
+    gap: 2px;
+  }
+  .ko-LessonMap.is-sm .is-off:before {
+    font-size: var(--dotLg);
+  }
+  .ko-LessonMap.is-md .is-off:before {
+    font-size: var(--dotMd);
+  }
+  .ko-LessonMap.is-lg .is-off:before {
+    font-size: var(--dotSm);
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* -------------------------------------------------------------------- */
+.ko-KanjiGrid {
+  @apply flex flex-wrap;
+
+  /* 16px gutter */
+  margin-left: -8px;
+  margin-right: -8px;
+
+  > * {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 1rem;
+  }
+
+  /* ratio for the kanji cards */
+  --ko-ratiobox-ratio: 1 / 1.3;
+}
+
+/* -------------------------------------------------------------------- */
+/* -------------------------------------------------------------------- */
+.ko-KanjiCard {
+  /* calc width so that cards fit neatly into the space available */
+  --cards-per-row: 2;
+  @media only screen and (min-width: 768px) {
+    --cards-per-row: 5;
+  }
+  @media only screen and (min-width: 1024px) {
+    --cards-per-row: 6;
+  }
+
+  --ko-kanjicard-w: calc(
+    (100% - 16px * var(--cards-per-row)) / var(--cards-per-row)
+  );
+  width: var(--ko-kanjicard-w);
+}
+.ko-KanjiCard-inner {
+  padding: 6px 8px 8px;
+  @apply flex flex-col; /* do NOT use `items-center`! it breaks `text-overflow`! */
+  text-align: center;
+
+  background-color: transparent;
+  border: 1px dashed rgba(73, 70, 63, 0.2);
+  border-radius: 6px;
+}
+
+/* a flashcard exists for this kanji */
+.ko-KanjiCard.is-on .ko-KanjiCard-inner {
+  background: linear-gradient(
+    148.74deg,
+    #f8f7f6 0%,
+    #f8f8f8 80%,
+    #ffffff 93%,
+    #eaeaea 100%
+  );
+
+  border: 0;
+  border-bottom: 1px solid #bab6ae; /* hexa(#6c6c6c, .37) */
+  border-radius: 0;
+}
+
+/*//////////////////////////////////////////////////////////////// */
+/*//////////////////////////////////////////////////////////////// */
+
+.ko-KanjiCard-idx,
+.ko-KanjiCard-kwd {
+  @apply font-serif;
+  color: #3c3c3c;
+  font-size: 15px;
+  line-height: calc(19 / 15 * 1em);
+}
+
+.ko-KanjiCard-kwd {
+  a {
+    @apply block no-underline hover:underline;
+    /* text truncate */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.ko-KanjiCard-chr {
+  font-size: 60px;
+  line-height: 1;
+  color: #313130;
+  @apply mt-auto mb-auto; /* flex spacings */
+}
+
+.ko-KanjiCard-tag {
+  @apply rounded-md text-xs px-2 font-light;
+  height: 27px;
+  line-height: 27px;
+  background-color: #d7d1c4;
+  @apply text-[#42413d];
+}
+
+.ko-KanjiCard-tag {
+  /* ----- @include card-tag-colors(); ----- */
+  /* classes that match getColorForCard() in JS */
+  &.is-new {
+    color: #fff;
+    background-color: var(--ko-cardmap-new);
+  }
+  &.is-res {
+    color: #fff;
+    background-color: var(--ko-cardmap-res);
+  }
+  &.is-L1 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L1);
+  }
+  &.is-L2 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L2);
+  }
+  &.is-L3 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L3);
+  }
+  &.is-L4 {
+    color: #fff;
+    background-color: var(--ko-cardmap-L4);
+  }
+  /* ----------------------------------------- */
+}
+
+/* FIXME : cleanup, add mixin for button icons? */
+.ux-rotateIcon180 {
+  transform: rotate(180deg);
+}

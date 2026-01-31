@@ -37,7 +37,7 @@ export default {
    */
   show(options: KoohiiLoadingOptions) {
     console.log("koohiiloading::show()");
-    let target = options.target;
+    const target = options.target;
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 

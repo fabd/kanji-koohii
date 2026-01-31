@@ -50,7 +50,7 @@
 
 <?php if ($isSequenceComplete): ?>
       <div class="text-smx mb-3">
-        <span class="text-success-darker font-bold">Well done! <?= $sequenceName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
+        <span class="text-[#2C892C] font-bold">Well done! <?= $sequenceName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 <?php else: ?>
       <div class="text-smx mb-3">
@@ -62,7 +62,6 @@
       <div id="JsHomePctBar" class="mb-4"><!-- vue --></div>
 
       <div>
-
 <?php if ($isSequenceComplete): ?>
 <?= link_to(
   // generic study button when sequence is complete
@@ -73,7 +72,7 @@
 ?>
 <?php else: ?>
 <?= link_to(
-  'Study <span class="mbl:hidden">Kanji </span>#'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
+  'Study <span class="max-lg:hidden">Kanji </span>#'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
   $urls['study-resume-url'],
   ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
 );
@@ -102,7 +101,7 @@
 
 <?php if (!$hasFlashcards): ?>
   <div class="flex items-start mb-4">
-    <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-[#42413d40] rounded-sm"/>
+    <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-[#42413d40] rounded-xs"/>
     <div class="text-smx ml-4">
       <strong>Spaced Repetition</strong> will be available after you <?= link_to('add kanji flashcards', '@manage', ['class' => 'whitespace-nowrap']); ?>.
     </div> 
@@ -113,13 +112,13 @@
 <?php if ($hasFlashcards): ?>
       <div class="flex items-stretch mb-4">
         <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="<?= $urls['new']; ?>" title="Review new kanji cards">
-          <div class="ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2 leading-1"><?= $countSrsNew; ?> <strong>new</strong></span>
+          <div class="ko-SrsIso ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
+          <span class="ml-2 leading-none"><?= $countSrsNew; ?> <strong>new</strong></span>
         </a>
 
         <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-4" href="<?= $urls['due']; ?>" title="Review due kanji cards">
-          <div class="ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2 leading-1"><?= $countSrsDue; ?> <strong>due</strong></span>
+          <div class="ko-SrsIso ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
+          <span class="ml-2 leading-none"><?= $countSrsDue; ?> <strong>due</strong></span>
         </a>
 
         <?= _bs_button_to(
@@ -133,7 +132,7 @@
       </div>
 <?php endif; ?>
 
-      <div class="bg-dash-line h-px mb-3"></div>
+      <div class="bg-[#c2bdaf] h-px mb-3"></div>
 
       <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 
@@ -157,7 +156,7 @@
   </div><!-- /#main_container -->
 </div><!-- /#main -->
 <div id="main">
-  <div id="main_container" class="container">
+  <div id="main_container" class="ko-Container">
  */ ?>
 
 <?php

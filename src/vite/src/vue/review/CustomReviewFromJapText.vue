@@ -7,7 +7,7 @@
     <div class="form-group">
       <textarea v-model="japText" class="form-control mb-1" rows="5"></textarea>
       <div class="text-right text-warm">
-        <strong class="text-body">{{ countRtkKanji }}</strong> unique RTK kanji in text
+        <strong class="text-[#42413d]">{{ countRtkKanji }}</strong> unique RTK kanji in text
       </div>
     </div>
 

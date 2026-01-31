@@ -21,7 +21,7 @@ ARG USR=koohii
 
 WORKDIR /var/www/html
 
-# makes  the  default  answers  be used for all questions
+# Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install utils
@@ -60,7 +60,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # nodejs (required for Vite)
 # RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
-RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
 
 # Set locales
 RUN locale-gen en_US.UTF-8 en_GB.UTF-8

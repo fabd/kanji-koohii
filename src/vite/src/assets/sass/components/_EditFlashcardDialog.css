@@ -1,0 +1,184 @@
+/**
+ * EditFlashcardDialog CSS
+ *
+ */
+
+/**
+ * Edit Flashcard Dialog.
+ */
+#editflashcarddlg {
+  min-width: 270px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#editflashcarddlg .stats {
+  width: 100%;
+  padding: 10px 0;
+}
+#editflashcarddlg .stats th,
+#editflashcarddlg .stats td {
+  padding: 4px 5px 6px 0;
+  font-size: 14px;
+  line-height: 1.1em;
+  text-align: left;
+}
+#editflashcarddlg .stats th {
+  color: #737373;
+  width: 30%;
+  white-space: nowrap;
+}
+
+.uiBMenuMsg {
+  padding: 1em 0;
+  font: bold 16px/1.1em "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande",
+    Verdana, Arial, Helvetica, sans-serif;
+  color: #000;
+  text-decoration: none;
+}
+.uiBMenuMsg .note {
+  display: block;
+  padding: 1em 0 0;
+  color: #888;
+  font-weight: normal;
+}
+
+/* message colours (ie. "delete flashcard?" or "confirmation") */
+.uiBMenuRed {
+  color: red;
+}
+.uiBMenuGreen {
+  color: #2ba23b;
+  padding: 14px 0 12px 32px;
+  background: url(/images/ui/icons/uiBMenu-sprite.gif) no-repeat 0 14px;
+}
+
+/* Edit Flashcard button on the Study page */
+.ko-EditFlashcard {
+  .JsEditFlashcard {
+    min-width: 120px;
+  }
+
+  .is-loading {
+    background: #a19e97;
+    border-color: #a19e97;
+    cursor: not-allowed;
+  }
+
+  .is-icon {
+    /* make sure label doesnt move when .fa icon is replaced with spinner */
+    width: 15px;
+    height: 15px;
+  }
+
+  .spinner {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ko-StudyNewCount {
+  --ko-btn-bg: var(--clr-bg-1);
+  --ko-btn-hover-bg: var(--clr-bg-1);
+  --ko-btn-border: var(--clr-bg-1);
+  --ko-btn-hover-border: #cdc5af;
+  --ko-btn-hover-text: #005cb1;
+  font-weight: bold;
+  color: var(--color-btn-primary);
+
+  /* a little dot */
+  i {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: #005cb1;
+    border-radius: 100%;
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    border: 3px solid var(--clr-bg-body);
+  }
+}
+
+.ko-Notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background-color: #73ac50;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+  z-index: 1000;
+
+  &.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  &.hide {
+    opacity: 0;
+  }
+}
+
+.tooltip {
+  position: relative;
+  transition: color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  --tooltip-bg: #605c58;
+  --tooltip-fg: #fff;
+
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--tooltip-bg);
+    color: var(--tooltip-fg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    @apply text-xs whitespace-nowrap font-normal;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+    z-index: 1002;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: calc(125% - 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--tooltip-bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    z-index: 1002;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+  }
+
+  &:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+  }
+}

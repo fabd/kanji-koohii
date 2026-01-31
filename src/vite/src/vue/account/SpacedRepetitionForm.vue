@@ -38,14 +38,14 @@
           </label>
         </div>
 
-        <div class="bg-shaded rounded-lg p-4">
+        <div class="bg-[#e7e1d3] rounded-lg p-4">
           <transition name="lesson-fadein">
             <div v-if="showPreview" class="flex items-center justify-center">
               <template v-for="front in [1, 0]" :key="front">
                 <ko-ratio-box class="w-[140px]">
                   <div class="ko-FlashcardBg p-2 flex flex-col h-full">
                     <div>
-                      <span v-if="front && isSrsReverse" class="text-body-light"
+                      <span v-if="front && isSrsReverse" class="text-[#7f7d75]"
                         >&middot; &middot; &middot;</span
                       >
                       <span v-else class="text-link">apricot</span>
@@ -60,7 +60,7 @@
 
                     <div class="text-right">
                       <span v-if="!front">203</span>
-                      <span v-else class="text-body-light"
+                      <span v-else class="text-[#7f7d75]"
                         >&middot; &middot; &middot;</span
                       >
                     </div>
@@ -113,7 +113,7 @@
           <span
             v-for="(i, k) in intervals"
             :key="k"
-            class="mr-2 pt-2 pb-1 px-2 leading-1 font-mono bg-[#d7e0b5] text-[#485f27] border-b border-[#aab38a] rounded-md"
+            class="mr-2 pt-2 pb-1 px-2 leading-none font-mono bg-[#d7e0b5] text-[#485f27] border-b border-[#aab38a] rounded-md"
             >{{ i.days }}</span
           >
         </div>

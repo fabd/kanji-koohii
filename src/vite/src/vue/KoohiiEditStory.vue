@@ -45,7 +45,7 @@
                   <span v-html="formGetErrors()"></span>
                 </div>
 
-                <div v-if="cantsaveChars.length > 0" class="text-danger mb-4">
+                <div v-if="cantsaveChars.length > 0" class="text-[#9f0e0b] mb-4">
                   <span class="font-bold">
                     Sorry, the database currently is not able to store unicode
                     characters above hexadecimal 0xFFFF. Typically, this means
@@ -65,7 +65,7 @@
                   <span
                     v-for="(chr, i) in cantsaveChars"
                     :key="i"
-                    class="bg-danger bg-opacity-10 mr-1 p-[0.25em] rounded"
+                    class="bg-danger bg-opacity-10 mr-1 p-[0.25em] rounded-sm"
                     >{{ chr }}</span
                   >
                 </div>
@@ -353,7 +353,7 @@ export default defineComponent({
       // delete story from page if already shared
       let $elSharedStory = $$("#" + props.sharedStoryId);
       if ($elSharedStory.el()) {
-        $elSharedStory.el().closest(".rtkframe")!.remove();
+        $elSharedStory.el().closest(".rtkframe")?.remove();
       }
 
       if (!this.isReviewMode && props.isStoryShared) {

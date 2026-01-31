@@ -1,0 +1,58 @@
+.ko-PatronsList {
+  margin-top: -0.5em;
+  padding: 1em 0 0;
+  list-style: none;
+  border-top: 1px solid #e7e1d3;
+
+  a {
+    text-decoration: none;
+  }
+
+  a.is-patron {
+    /*background:#d6f6b7;*/
+    color: #159815;
+    font-weight: bold;
+    padding: 0.2em 0.8em;
+  }
+}
+  .ko-PatronsList-item {
+    list-style: none;
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5em;
+
+    @media only screen and (min-width: 768px) { /* up md */
+      width: 33.33%;
+      font-size: 16px;
+    }
+  }
+
+
+.ko-PaypalForm {
+  /* this fixes a vertical gap when paypal's `pixel.gif` is not yet loaded */
+  form > img[height="1"] {
+    width: 1px;
+    height: 1px;
+  }
+}
+
+/* extend our base buttons */
+.ko-Btn--patreon {
+  /* use Patreon's "Fiery Coral" https://www.patreon.com/brand */
+    --ko-btn-bg: #ff424d;
+    --ko-btn-border: #ff424d;
+    --ko-btn-text: #fff;
+    --ko-btn-bg-darker: #ff222f;
+    --ko-btn-hover-bg: #eb3741;
+    --ko-btn-hover-border: #eb3741;
+}
+
+.ko-Btn--paypal {
+    --ko-btn-bg: #40acda;
+    --ko-btn-border: #40acda;
+    --ko-btn-bg-darker: #27a2d7;
+    --ko-btn-hover-bg: #51b5df;
+    --ko-btn-hover-border: #51b5df;
+}

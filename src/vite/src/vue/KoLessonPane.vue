@@ -9,14 +9,14 @@
         <span class="font-normal">of {{ sequenceName }}</span>
       </h3>
 
-      <a v-if="allLessonsUrl" :href="allLessonsUrl" class="ml-4 leading-1"
+      <a v-if="allLessonsUrl" :href="allLessonsUrl" class="ml-4 leading-none"
         >View all lessons</a
       >
 
       <!-- <div class="text-warm text-lg ml-auto">{{ lessonPos }} / {{ lessonCount }} kanji</div> -->
 
       <div
-        class="px-2 py-1 rounded bg-[#E1FFC2] ux-text-lg text-success-dark font-bold leading-1 whitespace-nowrap ml-auto"
+        class="px-2 py-1 rounded-sm bg-[#E1FFC2] ux-text-lg text-[#3a7c3a] font-bold leading-none whitespace-nowrap ml-auto"
         >{{ `${kanjiCount} / ${lessonCount}` }}<span class="hidden md:inline"> kanji</span></div
       >
     </div>
@@ -31,7 +31,7 @@
         class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary"
         @click="isOpen = !isOpen"
       >
-        <span class="mbl:hidden mr-2">Show Kanji</span>
+        <span class="max-lg:hidden mr-2">Show Kanji</span>
         <i
           class="fa fa-chevron-down"
           :class="[isOpen ? 'ux-rotateIcon180' : '']"

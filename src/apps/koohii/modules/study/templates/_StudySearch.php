@@ -1,8 +1,8 @@
 
-<div id="browse" class="no-gutter-xs-sm md:mb-4">
-  <div class="mbl:flex items-center">
+<div id="browse" class="no-gutter-xs-sm lg:mb-4">
+  <div class="max-lg:flex items-center">
 
-    <div class="study-search_input mbl:grow dsk:mb-2">
+    <div class="study-search_input max-lg:grow lg:mb-2">
         <?php echo input_tag('search', '', [
           'class'       => 'form-control',
           'maxlength'   => 32,
@@ -11,7 +11,7 @@
         ]); ?>
     </div>
 
-    <div class="flex items-center -mx-1 mbl:w-[182px] mbl:ml-auto">
+    <div class="flex items-center -mx-1 max-lg:w-[182px] max-lg:ml-auto">
       <div class="w-1/2 mx-1">
 <?php
         $prev = $framenum > 1 ? $framenum - 1 : 1;

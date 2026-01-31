@@ -1,0 +1,120 @@
+/* ====================================================================
+// Styles used on the Review Summary
+// ==================================================================== */
+
+/* --------------------------------------------------------------------
+// LEGACY CSS - deleted cards
+// -------------------------------------------------------------------- */
+#FcSummaryDeld {
+  margin: 10px 0 0;
+  background-color: #fff9b3;
+}
+#FcSummaryDeld h3 {
+  font: italic bold 14px/1em Georgia, serif;
+  color: #a2442b;
+}
+#FcSummaryDeld h3 span {
+  font-style: normal;
+  font-weight: normal;
+}
+#FcSummaryDeld p {
+  color: #dd5d3a;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2em;
+}
+
+/* --------------------------------------------------------------------
+// LEGACY CSS - simple summary
+// -------------------------------------------------------------------- */
+#fm-summary {
+  margin: 10px 0 5px;
+  overflow: auto;
+  color: #716e57;
+}
+#fm-summary p {
+  margin: 0 0 20px;
+}
+#fm-summary ul {
+  margin: 0 -6px;
+  list-style: none;
+  padding: 0;
+}
+#fm-summary .card {
+  position: relative;
+  float: left;
+  padding: 10px 10px;
+  width: 109px;
+  height: 150px;
+  margin: 0 10px 23px;
+  text-align: center;
+}
+#fm-summary li a {
+  text-decoration: none;
+  display: block;
+  color: #000;
+}
+#fm-summary li a:hover {
+  color: #005cb1;
+}
+
+#fm-summary .rbn {
+  width: 30px;
+  height: 28px;
+  position: absolute;
+  left: -3px;
+  top: 9px;
+  background: url(/images/2.0/review/review-summary-sprites.gif) no-repeat 0 0;
+}
+#fm-summary li.fail .rbn {
+  background-position: 0 -29px;
+}
+#fm-summary .chr {
+  padding: 22px 0 10px;
+  font-size: 70px;
+  line-height: 1em;
+}
+#fm-summary .inf {
+  color: #888;
+  font-size: 12px;
+  line-height: 1.2em;
+}
+#fm-summary .inf em {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  padding: 6px 0 0;
+}
+
+/* --------------------------------------------------------------------
+// Flashcard Review Summary
+// -------------------------------------------------------------------- */
+.SummaryTableRating {
+  @apply px-[.5em] py-[.35em] rounded-sm;
+  --bg: #ccc;
+  --fg: #fff;
+
+  /* No and Again cards are both in the failed pile */
+  &.is-no,
+  &.is-again {
+    --bg: #a53000;
+  }
+
+  /* Again-* cards are lapsed (forgotten), slightly different shade of red */
+  &.is-again-hard,
+  &.is-again-yes,
+  &.is-again-easy {
+    --bg: #b84314;
+  }
+
+  &.is-hard,
+  &.is-yes,
+  &.is-easy {
+    /* --bg: #ea8212;   orange hard */
+    --bg: #5aa107;
+    /* --bg: #269189;  easy */
+  }
+
+  color: var(--fg);
+  background: var(--bg);
+}

@@ -8,7 +8,7 @@
  */
 
 // stylesheets
-import "./assets/sass/manage.build.scss";
+import "./assets/sass/manage.build.css";
 
 import $$, { domContentLoaded, domGetById } from "@lib/dom";
 import { getBodyED } from "@app/root-bundle";

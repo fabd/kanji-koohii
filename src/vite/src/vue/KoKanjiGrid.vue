@@ -9,8 +9,6 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 
-import { type TKanjiCardData } from "./KoKanjiCard.vue";
-
 import KoKanjiCard from "@/vue/KoKanjiCard.vue";
 
 export default defineComponent({

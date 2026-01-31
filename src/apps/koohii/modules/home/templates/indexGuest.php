@@ -1,5 +1,5 @@
 <div id="hero" class="k_bg_head text-center">
-  <header class="container">
+  <header class="ko-Container">
 
     <h1>Remember the&nbsp;kanji</h1>
     <div id="hero_display" class="mx-auto">
@@ -10,9 +10,9 @@
 </div>
 
 <div class="k_bg_odd">
-  <div class="container">
+  <div class="ko-Container">
     <section class="row">
-      <div class="col-lg-6 dsk:order-1">
+      <div class="col-lg-6 lg:order-1">
         <div class="f_text">
           <h2>Kanji mnemonics</h2>
           <p>
@@ -34,7 +34,7 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
 </div>
 
 <div class="k_bg_even">
-  <div class="container">
+  <div class="ko-Container">
     <section class="row">
       <div class="col-lg-6">
         <div class="f_text">
@@ -57,9 +57,9 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
 </div>
 
 <div class="k_bg_odd">
-  <div class="container">
+  <div class="ko-Container">
     <section class="row">
-      <div class="col-lg-6 dsk:order-1">
+      <div class="col-lg-6 lg:order-1">
         <div class="f_text">
     <h2>Beautiful kanji flashcards</h2>
     <p>
@@ -80,7 +80,7 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
 </div>
 
 <div class="k_bg_even">
-  <div class="container">
+  <div class="ko-Container">
     <section class="row">
       <div class="col-lg-6">
         <div class="f_text">
@@ -100,7 +100,7 @@ We recommend <em>Remembering the Kanji</em> by James Heisig to study with the we
 <div id="its-free">
   <div class="transition"></div>
   <div class="k_bg_free">
-    <div class="container">
+    <div class="ko-Container">
       <section class="text-center">
         
         <h2>It’s free!</h2>

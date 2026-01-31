@@ -18,7 +18,7 @@
   );
 ?>
 
-  <div class="ko-Box text-body text-sm italic mb-4">
+  <div class="ko-Box text-[#42413d] text-sm italic mb-4">
     Note! Adding flashcards here will always fill in the gaps if there are any
     missing cards.<br/>
     Use <?= link_to('Custom selection', 'manage/addcustom'); ?> if you do not plan to add all <?= _CJ('RTK'); ?> flashcards in order.

@@ -1,0 +1,73 @@
+/* ==================================================================== */
+/* VARIABLES */
+/* ==================================================================== */
+
+:root {
+  /* -------------------------------------------------------------------- */
+  /* Layout / breakpoints (used by breakpoint mixins) */
+  /* */
+  /*   References: */
+  /*   https://getbootstrap.com/docs/5.0/layout/breakpoints/#available-breakpoints */
+  /* */
+  /* -------------------------------------------------------------------- */
+  /* "Medium" : tablets (portrait) */
+  --bp-md: 768px; /* 768px = 48rem */
+  /* "Large" : tablets (landscape), laptops and desktops in unmaximized browser windows */
+  --bp-lg: 1024px; /* 1024px = 64rem */
+  /* "Extra large" : wide laptop & desktop browser windows */
+  --bp-xl: 1280px; /* 1280px = 80rem */
+
+  /* -------------------------------------------------------------------- */
+  /* Borders */
+  /* -------------------------------------------------------------------- */
+  --border-radius-md: 4px;
+  --border-radius-lg: 6px;
+
+  /* -------------------------------------------------------------------- */
+  /* Buttons */
+  /* -------------------------------------------------------------------- */
+  --button-font-size-sm: 14px;
+  --button-font-size-md: 14px;
+  --button-font-size-lg: 15px;
+  --button-font-size-xl: 18px;
+
+  /* -------------------------------------------------------------------- */
+  /* Colors / Brand  (should match tailwind config) */
+  /* -------------------------------------------------------------------- */
+  --color-btn-default: #8e8d8c;
+
+  /* main primary color (saturated blue/cyan) */
+  --color-btn-primary: #3272d1;
+
+  /* main red color */
+  --color-btn-danger: #ea5b5b; /*#d9534f; */
+
+  /* main green color */
+  --color-btn-success: #50ac50; /*#4ea84e; */
+
+  /* utilities */
+  --color-mix-white: #ffffff;
+
+  /* -------------------------------------------------------------------- */
+  /* Colors / Text */
+  /* -------------------------------------------------------------------- */
+  --color-text-body: #42413d;
+
+  /* -------------------------------------------------------------------- */
+  /* Colors ( legacy sass stuff - needs renaming/merging ) */
+  /* -------------------------------------------------------------------- */
+  --clr-bg-body: #f5efe5;
+  --clr-bg-1: #e7e1d3; /* shaded background 1 */
+  --clr-bg-nav: #ede8de; /* top nav background color */
+
+  --clr-bg-1m: #ede8de; /* subdued background 1 (lighter) */
+
+  --clr-bg-gl: #d7ebb4; /* green backgrounds & text */
+  --clr-bg-gd: #4c7424;
+  --clr-tbl-bg: #f8f6ef; /* widgets: table row (slightly brighter than CSS_BG_1) */
+
+  --clr-srs-due: #f7a247; /* text color for due/undue cards */
+  --clr-srs-undue: #72c569;
+
+  --clr-danger-bg: #d9534f;
+}

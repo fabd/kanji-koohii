@@ -6,7 +6,7 @@
  */
 
 // stylesheets
-import "./assets/sass/study-base.build.scss";
+import "./assets/sass/study-base.build.css";
 
 import { domGetById, domContentLoaded } from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";
@@ -18,8 +18,9 @@ domContentLoaded(() => {
 
   let elMount: HTMLElement;
 
-  elMount = domGetById("MyStoriesSelect")!;
-  elMount && VueInstance(MyStoriesTable, elMount);
+  if ((elMount = domGetById("MyStoriesSelect")!)) {
+    VueInstance(MyStoriesTable, elMount);
+  }
 
   StudyPage.initialize();
 });

@@ -1,0 +1,97 @@
+/* See main.build.scss for Tailwind import explanation */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+
+/* tailwind customization */
+@import "./vendor/_tailwind.css";
+
+/* this dialog is used in Manage > Edit Keywords table */
+@import "./components/_EditKeywordDialog.css";
+
+/**
+ * Manage Flashcards
+ */
+#manage-cards .app-header {
+  border: 0;
+  margin-bottom: 0;
+}
+
+#manage-cards em.note {
+  color: green;
+  font-style: italic;
+  display: inline-block;
+  margin: 0 0 0 1em;
+}
+
+/* view pane styles */
+.views,
+.views p {
+  color: #3f3f3b;
+}
+.views .warning {
+  color: red;
+  font-weight: bold;
+}
+
+/* remove flashcards list */
+.selection-table .uiTabular tbody td {
+  cursor: pointer;
+}
+.selection-table .uiTabular tr.selected td {
+  background: #fdf9d2;
+  color: #9b9878;
+}
+
+/* Pencil edit */
+.edit-icon {
+  padding: 4px 5px;
+  border-radius: 3px 3px;
+  -moz-border-radius: 3px 3px;
+  -webkit-border-radius: 3px 3px;
+  background-color: #f3f1dc;
+  cursor: pointer;
+}
+.edit-icon:hover {
+  background-color: #478ac0;
+}
+
+/* Character Selection list on the confirmation views with "lifelike" flashcards. */
+#mng-cards {
+  padding: 4px 4px;
+  margin: 0 0 1em;
+}
+#mng-cards .scroll {
+  padding: 10px 0 0;
+  max-height: 411px;
+  overflow-x: none;
+  overflow-y: scroll;
+}
+#mng-cards .fc {
+  width: 114px;
+  padding: 12px 0 15px;
+  margin: 0 7px 9px;
+  float: left;
+  text-align: center;
+}
+#mng-cards .cj-t,
+#mng-cards .cj-k {
+  display: block;
+  color: #000;
+  font-size: 72px;
+  line-height: 1em;
+  padding: 0 0 9px;
+}
+#mng-cards .n {
+  color: #888;
+  font: Verdana, Arial, sans-serif;
+}
+
+/* --------------------------------------------------------------------
+// Our own utilities & Tailwind utilities
+//  imported last, so that we can override component styles (in CSS files)
+//  with utilities in the templates.
+// -------------------------------------------------------------------- */
+@import "./_utilities.css";
+
+@import "tailwindcss/utilities.css";

@@ -14,7 +14,7 @@ use_helper('Widgets');
 <footer id="footer">
   <div class="transition"></div>
   <div class="k_bg_free">
-    <div class="container">
+    <div class="ko-Container">
       <section>
 <p>Made in Belgium since 2006 by&nbsp;Fabrice.</p>
 <?php if ($sf_user->isAuthenticated() && !KK_ENV_FORK): ?>

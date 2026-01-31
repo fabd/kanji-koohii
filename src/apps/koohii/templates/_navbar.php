@@ -67,7 +67,7 @@ function staging_marker() {
 
   <!-- desktop -->
   <nav id="k-nav_d" class="<?php echo staging_marker() ?>">
-    <div class="container">
+    <div class="ko-Container">
 <?php
 
     echo link_to('&nbsp;', '@homepage', ['class' => 'k-nav_brand']);

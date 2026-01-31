@@ -1,0 +1,31 @@
+/* See main.build.scss for Tailwind import explanation */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+
+/* tailwind customization */
+@import "./vendor/_tailwind.css";
+
+/* old css for components not using Vue */
+@import "./components/_EditKeywordDialog.css";
+@import "./components/_EditFlashcardDialog.css";
+@import "./components/_EditStory.css";
+
+/* old css for the "Flashcard Review" page */
+@import "./components/_Flashcard.css";
+
+/* old css for the "Kanji Flashcard" layout */
+@import "./components/_FlashcardKanji.css";
+
+body {
+  padding-top: 0;
+}
+
+/* --------------------------------------------------------------------
+// Our own utilities & Tailwind utilities
+//  imported last, so that we can override component styles (in CSS files)
+//  with utilities in the templates.
+// -------------------------------------------------------------------- */
+@import "./_utilities.css";
+
+@import "tailwindcss/utilities.css";

@@ -1,0 +1,321 @@
+/**
+ * LEGACY "Widgets"
+ * 
+ *   This should be Vue comps, if we refactor related pages, otherwise
+ *   they are "templated" via php.
+ *
+ * @see     /lib/helper/WidgetsHelper
+ * @see     /apps/revtk/lib/helper/GadgetsHelper
+ */
+
+@import "./_filterstd.css";
+@import "./_pager.css";
+@import "./_ui-select-table.css";
+
+/**
+ * uiIBtn - Inline Block Buttons
+ * 
+ * Example:
+ * 
+ *  <code>
+ *    <a href="#" class="uiIBtn uiIBtnDefault"><span><em>Button text</em></span></a>
+ *  </code>
+ *  
+ * Example adding an icon on the EM element:
+ * 
+ *  <code>
+ *   <a href="#" class="uiIBtn uiIBtnDefault"><span><em class="ico ico-cross">Delete</em></span></a>
+ *  </code>
+ *  
+ */
+
+.uiIBtn {
+  display: inline-block;
+  padding: 0 10px;
+  @apply outline-hidden select-none;
+}
+
+.uiIBtn span {
+  white-space: nowrap;
+}
+.uiIBtn,
+.uiIBtn:hover,
+.uiIBtn:hover span {
+  text-decoration: none;
+}
+
+/* em is used for adding an icon (optional) */
+.uiIBtn em {
+  font-style: normal;
+}
+
+/* uiIBtn :: default green */
+.uiIBtnDefault {
+  border-radius: 5px;
+  /* default colour */
+  background: #6fa300;
+  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
+
+  color: #fff;
+  font: bold 15px/34px Arial, sans-serif;
+  height: 34px;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+}
+.uiIBtn:hover {
+  color: #fff;
+}
+.uiIBtnDefault:hover {
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* uiIBtn :: additional colours */
+.uiIBtnRed {
+  background: #cb4b16;
+  background: linear-gradient(to bottom, #cb4b16 0%, #b74314 100%);
+}
+.uiIBtnGreen {
+  background: #6fa300;
+  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
+}
+.uiIBtnOrange {
+  background: #e68f06;
+  background: linear-gradient(to bottom, #e68f06 0%, #bb7404 100%);
+}
+
+/* --------------------------------------------------------------------
+// Colours used by Flashcard Review buttons (also in documentation)
+// -------------------------------------------------------------------- */
+/* No */
+.uiFcBtnAN {
+  background-image: linear-gradient(to bottom, #b83600 0%, #a53000 100%);
+}
+/* Again */
+.uiFcBtnAG {
+  background-image: linear-gradient(to bottom, #ca4a15 0%, #b84314 100%);
+}
+/* Flip Card */
+.uiFcBtnAF {
+  background-color: #268bd2;
+  background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
+}
+/* "Continue" button (Vocab Shuffle) */
+.uiFcBtnAC {
+  width: 100%;
+  background: #6fa300;
+  background: -webkit-linear-gradient(top, #6fa300 0%, #649300 100%);
+  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
+}
+/* Easy */
+.uiFcBtnAE {
+  background-color: #2aa198;
+  background-image: linear-gradient(to bottom, #2aa198 0%, #269189 100%);
+}
+
+/* uiIBtn :: default disabled (30px) */
+.uiIBtnDisabled {
+}
+
+/* larger buttons for dialogs (for touch devices) */
+.uiBMenuItem .uiIBtn {
+  display: block;
+  width: auto;
+  text-align: center;
+}
+.uiBMenuItem .uiIBtn span {
+  display: block;
+  width: auto;
+}
+.uiBMenuItem .uiIBtnDefault {
+  font-size: 16px;
+  line-height: 41px;
+  height: 42px;
+} /* larger buttons for touch/mobile */
+
+/**
+ * uiTabbedView - base styles.
+ * 
+ */
+.uiTabbedBody {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-top: none;
+  background: #fff;
+}
+
+/**
+ * uiChartVs
+ * 
+ * Set the class to a container without padding (create a nested div if needed).
+ * 
+ */
+.uiChartVs {
+  width: 100%;
+  height: 85px;
+  overflow: visible;
+  position: relative;
+}
+.uiChartVs .shadow {
+  position: absolute;
+  width: 100%;
+  left: 5px;
+  bottom: 0;
+  height: 56px;
+  background: #c1bea3;
+}
+.uiChartVs p {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+}
+.uiChartVs p .ttl {
+  display: block;
+  font: bold italic 14px/1em Georgia, serif;
+  color: #4b4b4b;
+}
+.uiChartVs p .zero {
+  color: #979797;
+} /* gray out title */
+.uiChartVs em {
+  font-weight: normal;
+  font-style: normal;
+}
+.uiChartVs p.left {
+  float: left;
+}
+.uiChartVs p.right {
+  float: right;
+  text-align: right;
+}
+.uiChartVs .pct {
+  position: absolute;
+  bottom: 5px;
+  height: 50px;
+  border-bottom: 8px solid #fff;
+  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.uiChartVs a.pct {
+  text-decoration: none;
+}
+.uiChartVs .left .pct {
+  left: 0;
+  background: #b1fe66;
+  border-bottom-color: #82ba4b;
+}
+.uiChartVs .right .pct {
+  right: 0;
+  background: #dd5d3a;
+  border-bottom-color: #a2442b;
+}
+.uiChartVs .pct span {
+  position: absolute;
+  top: 7px;
+  font: 27px/1em Georgia, serif;
+  color: #000;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.4);
+}
+.uiChartVs .left .pct span {
+  left: 10px;
+}
+.uiChartVs .right .pct span {
+  right: 10px;
+}
+.uiChartVs .pct span em {
+  font-size: 17px;
+}
+
+/**
+ * uiProgressBar
+ * 
+ * Reference markup:
+ * 
+ *  <code>
+ *   <div class="uiProgressBar">
+ *    <div>
+ *      <span class="g" title="30 of 50" style="width:60%">30 of 50</span>
+ *      <span class="r" title="5 of 50" style="width:10%">5 of 50</span>
+ *    </div>
+ *   </div>
+ *  </code>
+ *
+ * @see   dev/index (internal uri)
+ * @see   GadgetsHelper
+ */
+.uiProgressBar {
+  margin: 0 1px;
+  padding: 1px 0;
+  background: #a1a1a1;
+}
+.uiProgressBar div {
+  position: relative;
+  height: 19px;
+  margin: 0 -1px;
+  border-left: 1px solid #a1a1a1;
+  border-right: 1px solid #a1a1a1;
+}
+.uiProgressBar span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-indent: -5000px;
+  font-size: 1px;
+  line-height: 1px;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.uiProgressBar div,
+.uiProgressBar span {
+  background: #5a5a5a url(/assets/legacy/gadgets-progressbar.gif) repeat-x 0 0;
+}
+.uiProgressBar span.g /*green*/ {
+  background-color: #72a311;
+  background-position: 0 -32px;
+}
+.uiProgressBar span.r /*red*/ {
+  background-color: #a32011;
+  background-position: 0 -64px;
+}
+
+/**
+ * Side tabs navigation.
+ */
+.side-menu {
+  @apply border border-[#d4cdba] rounded-sm mb-4 text-sm;
+}
+.side-menu h2 {
+  padding: 8px 10px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  background-color: var(--clr-bg-1);
+  border-bottom: 1px solid var(--clr-bg-1m);
+  color: #525150;
+}
+.side-menu ul {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+.side-menu li {
+  margin: 0;
+  border-bottom: 1px solid var(--clr-bg-1m);
+}
+.side-menu li:last-child {
+  border-bottom: none;
+}
+.side-menu li a {
+  display: block;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+.side-menu li a:hover {
+  background-color: var(--clr-bg-1);
+}
+.side-menu li.active {
+}
+.side-menu li.active a {
+  border-left: 3px solid #8c8;
+  color: #222;
+  font-weight: bold;
+}

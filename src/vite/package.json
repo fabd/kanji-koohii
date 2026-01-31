@@ -15,9 +15,7 @@
     "build": "vue-tsc --noEmit && ../batch/build-prod.sh",
     "buildfast": "../batch/build-prod.sh",
     "watch": "vite build --watch",
-    "test": "vite build && vite preview --port 8080",
-    "lint": "eslint './src/**/*.{js,ts,vue}'",
-    "disable-warnings": "sed -i 's/\\s\\swarnExperimental/\\/\\/warnExperimental/g' node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js ; sed -i 's/\\s\\s_log\\.default\\.warn/\\/\\/DISABLED/g' node_modules/tailwindcss/lib/index.js"
+    "lint": "eslint './src/**/*.{js,ts,vue}'"
   },
   "dependencies": {
     "@eslint/js": "^9.39.2",

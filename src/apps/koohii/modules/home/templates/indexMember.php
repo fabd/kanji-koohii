@@ -113,12 +113,12 @@
       <div class="flex items-stretch mb-4">
         <a class="ko-Dash-srsIcoBtn is-new flex items-center" href="<?= $urls['new']; ?>" title="Review new kanji cards">
           <div class="ko-SrsIso ko-Dash-srsIso is-new"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2 leading-[1]"><?= $countSrsNew; ?> <strong>new</strong></span>
+          <span class="ml-2 leading-none"><?= $countSrsNew; ?> <strong>new</strong></span>
         </a>
 
         <a class="ko-Dash-srsIcoBtn is-due flex items-center ml-4" href="<?= $urls['due']; ?>" title="Review due kanji cards">
           <div class="ko-SrsIso ko-Dash-srsIso is-due"><em class="is-top"></em><em class="is-side"></em></div>
-          <span class="ml-2 leading-[1]"><?= $countSrsDue; ?> <strong>due</strong></span>
+          <span class="ml-2 leading-none"><?= $countSrsDue; ?> <strong>due</strong></span>
         </a>
 
         <?= _bs_button_to(

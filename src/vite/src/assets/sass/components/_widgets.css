@@ -10,7 +10,7 @@
 }
 
 .ko-LastViewed-link {
-  @apply leading-[1] no-underline hover:no-underline;
+  @apply leading-none no-underline hover:no-underline;
   @apply rounded-sm;
   @apply flex items-center h-[1.75em];
 

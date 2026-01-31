@@ -1,5 +1,5 @@
 
-<div id="browse" class="no-gutter-xs-sm md:mb-4">
+<div id="browse" class="no-gutter-xs-sm lg:mb-4">
   <div class="max-lg:flex items-center">
 
     <div class="study-search_input max-lg:grow lg:mb-2">

@@ -354,6 +354,13 @@ div.col-box-bis {
   padding-top: 24px;
 }
 
+@media only screen and (width < 64rem) { /* = tailwind max-lg */ 
+  .study-index #main_container, .study-edit #main_container {
+    padding-top:0;
+  }
+}
+
+
 /* ---------------------------- */
 /* Footer & Support (Nov 2016) */
 /* ---------------------------- */

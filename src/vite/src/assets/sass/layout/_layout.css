@@ -1,9 +1,9 @@
 /* ==================================================================== */
 /* LAYOUT */
 /* ==================================================================== */
-@media only screen and (width >= 48rem) { /* = tailwind md */ }
-@media only screen and (width >= 64rem) { /* = tailwind lg */ }
-@media only screen and (width >= 80rem) { /* = tailwind xl */ }
+@media only screen and (width >= 48rem) { /* = tailwind md ( 768px) */ }
+@media only screen and (width >= 64rem) { /* = tailwind lg (1024px) */ }
+@media only screen and (width >= 80rem) { /* = tailwind xl (1280px) */ }
 
 @media only screen and (width < 48rem) { /* = tailwind max-md */ }
 @media only screen and (width < 64rem) { /* = tailwind max-lg */ }

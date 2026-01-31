@@ -19,7 +19,7 @@
         <li>... there is a lot of legacy CSS going all the way back to 2006 that does not follow these conventions, it is replaced/rewritten little by little over time</li>
         <li>state aka "modifier" classes use `is-` prefix, eg. `is-active`</li>
         <li>whenever we need a hook between JS and CSS we prefix the class with `Js`, eg `&lt;div id="JsMyComponent"...`. This helps to find related code and template, and refactor. These classes should NOT be styled with CSS</li>
-        <li>preferably keep the component styles under @/assets/sass/, since components styles are not truly independent, but rely on a global stylesheet as well as
+        <li>preferably keep the component styles under @/assets/css/, since components styles are not truly independent, but rely on a global stylesheet as well as
           global tokens and css variables, it's easier to maintain and edit files
           when all the stylesheets are grouped together
         </li>

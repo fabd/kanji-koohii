@@ -137,5 +137,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "@/assets/sass/components/DictList.css";
+@import "@/assets/css/components/DictList.css";
 </style>

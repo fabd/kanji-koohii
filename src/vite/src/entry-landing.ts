@@ -8,7 +8,7 @@
  */
 
 // stylesheets
-import "./assets/sass/home.build.css";
+import "./assets/css/home.build.css";
 
 import rootBundleInit from "@app/root-bundle";
 rootBundleInit();

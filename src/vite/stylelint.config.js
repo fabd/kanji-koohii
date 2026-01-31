@@ -5,7 +5,7 @@ module.exports = {
 
   ignoreFiles: [
     // ignore legacy stylesheets (see README in that folder)
-    "src/assets/sass/legacy/**/*.css",
+    "src/assets/css/legacy/**/*.css",
   ],
 
   rules: {

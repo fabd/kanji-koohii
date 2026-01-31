@@ -7,7 +7,7 @@
  */
 
 // import legacy stylesheets
-import "./assets/sass/kanji-review.build.css";
+import "./assets/css/kanji-review.build.css";
 
 import $$, { domContentLoaded } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";

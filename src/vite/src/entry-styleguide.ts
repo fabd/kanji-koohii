@@ -3,7 +3,7 @@
 import { domGetById, domContentLoaded } from "@lib/dom";
 import VueInstance from "@lib/helpers/vue-instance";
 
-import "@/assets/sass/pages/styleguide/docs.scss";
+import "@/assets/css/pages/styleguide/docs.scss";
 
 import UxIndex from "@/vue/styleguide/ux-index.vue";
 

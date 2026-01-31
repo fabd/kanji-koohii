@@ -141,7 +141,7 @@ export default defineComponent({
       }, 10);
     },
 
-    onMenuItemClick(event: Event, id: string) {
+    onMenuItemClick(event: Event) {
       // console.log('onMenuItemClick(%s)', id);
 
       // handle folder

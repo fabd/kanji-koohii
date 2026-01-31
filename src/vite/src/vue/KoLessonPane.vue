@@ -42,7 +42,7 @@
     <!-- --- -->
     <!-- MID -->
     <!-- --- -->
-    <div v-if="isOpen" class="mt-5 pt-4 border-t border-dash-line">
+    <div v-if="isOpen" class="mt-5 pt-4 border-t border-[#c2bdaf]">
       <transition appear name="lesson-fadein">
         <div
           :class="{

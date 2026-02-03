@@ -1,7 +1,9 @@
+type AnyFunction = (...args: any[]) => any;
+
 export default {
   isArray: (o: any): boolean => Array.isArray(o),
   isBoolean: (o: any): o is boolean => typeof o === "boolean",
-  isFunction: (f: any): f is Function => typeof f === "function",
+  isFunction: (f: unknown): f is AnyFunction => typeof f === "function",
   isNumber: (s: any): s is number => typeof s === "number",
   isNull: (o: any): o is null => o === null,
   isObject: (o: any): o is object => typeof o === "object",

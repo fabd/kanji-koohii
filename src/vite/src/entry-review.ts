@@ -46,9 +46,9 @@ domContentLoaded(() => {
 
     // initialize the correct review mode based on existing `fc_view` option
     if (reviewMode.fc_view === "kanji") {
-      window.Koohii.Refs.KanjiReview = new KanjiReview(fcrOptions, props);
+      window.Koohii.Refs.KanjiReview = new KanjiReview(fcrOptions, props as TKanjiReviewProps);
     } else if (reviewMode.fc_view === "vocabshuffle") {
-      new VocabReview(fcrOptions, props);
+      new VocabReview(fcrOptions, props as TVocabReviewProps);
     }
   }
 });

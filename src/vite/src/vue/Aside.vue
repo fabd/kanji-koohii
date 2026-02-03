@@ -61,6 +61,8 @@ function getScrollBarWidth() {
 }
 
 export default defineComponent({
+  name: "KoohiiAside",
+
   data() {
     return {
       show: false,

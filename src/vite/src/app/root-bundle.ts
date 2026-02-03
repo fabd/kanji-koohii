@@ -36,7 +36,7 @@ function focusOnLoad() {
   }
 }
 
-const kkGlobalsHas = (name: string) => window.KK.hasOwnProperty(name);
+const kkGlobalsHas = (name: string) =>  Object.hasOwn(window.KK, name);
 
 /**
  * Helper makes it easier to find code where values are shared between php/js.

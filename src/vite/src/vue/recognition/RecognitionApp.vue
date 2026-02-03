@@ -202,7 +202,6 @@ import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import { urlForStudy } from "@/lib/koohii";
 import * as wanakana from "wanakana";
-import * as CJK from "@/lib/cjk";
 import * as RTK from "@/lib/rtk";
 import CacheDictResults from "@/app/dict/CacheDictResults";
 
@@ -316,7 +315,7 @@ export default defineComponent({
       console.log("CDR results", results);
 
       if (!results) {
-        CDR.cacheResultsFor(charData.kanji, (items) => {
+        CDR.cacheResultsFor(charData.kanji, (_items) => {
           const results = CDR.getResultsForUCS(ucsId);
           console.assert(!!results); // should be cached now, always
           this.dictItems = results!;

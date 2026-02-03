@@ -152,7 +152,7 @@ export default class AjaxTable {
    * This is a placeholder to prevent default FORM submission of AjaxPanel.
    *
    */
-  onSubmitForm(ev) {
+  onSubmitForm() {
     return false;
   }
 }

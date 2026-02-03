@@ -15,7 +15,6 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 import KoLessonPane from "@/vue/KoLessonPane.vue";
-import * as USER from "@/lib/user";
 
 type TLessonsChartLesson = {
   id: number; // lesson number, starts at 1

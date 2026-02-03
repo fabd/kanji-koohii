@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * EXTREMELY OUTDATED dropdown search completion - to be refactored to VueJs.
  *  

@@ -1,6 +1,5 @@
 import {
   createApp,
-  type DefineComponent,
   type ComponentPublicInstance,
 } from "vue";
 import Lang from "@lib/lang";
@@ -22,7 +21,6 @@ const fnVueInstance = (
   if (replace) {
     // NOTE! seems to work, but unsure if side effects
     const fragment = document.createDocumentFragment();
-    const elParent = el.parentElement;
     vm = app.mount(fragment as Node as Element);
     el.parentNode!.replaceChild(fragment, el);
   } else {

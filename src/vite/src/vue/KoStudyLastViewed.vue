@@ -84,7 +84,7 @@ export default defineComponent({
         try {
           const data = JSON.parse(json);
           store = data;
-        } catch (e) {
+        } catch {
           // shouldn't happen - but just in case, avoid breaking the rest of the Study page
           console.warn("JSON.parse() error");
         }
@@ -109,7 +109,7 @@ export default defineComponent({
 
       try {
         persistData = JSON.stringify(data);
-      } catch (e) {
+      } catch {
         console.warn("saveState() JSON.stringify() fails");
       }
 

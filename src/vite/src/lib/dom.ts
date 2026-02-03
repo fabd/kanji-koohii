@@ -88,11 +88,10 @@
 
 // types
 type StringHash = { [key: string]: string };
-type StringOrStringArray = string | string[];
 
 // helpers
-const inDocument = (el: Node | null) => document.documentElement.contains(el);
-const isArray = (o: any): boolean => Array.isArray(o);
+// const inDocument = (el: Node | null) => document.documentElement.contains(el);
+// const isArray = (o: any): boolean => Array.isArray(o);
 const isFunction = (f: any): f is Function => typeof f === "function";
 const isNode = (el: any): boolean => el instanceof Node;
 const isString = (s: any): s is string => typeof s === "string";
@@ -157,7 +156,6 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @param selector string
    */
   down(selector: DomJSSelector): DomJS<EL> {
-    const el = this[0] as Element;
     return factory<EL>(selector, this[0]);
   }
 
@@ -368,7 +366,7 @@ export function getStyle(element: HTMLElement, styleName: string): string | null
   try {
     const computed = document.defaultView!.getComputedStyle(element, "");
     return element.style.getPropertyValue(styleName) || computed ? computed.getPropertyValue(styleName) : null;
-  } catch (e) {
+  } catch {
     return element.style.getPropertyValue(styleName);
   }
 }

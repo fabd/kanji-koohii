@@ -6,9 +6,9 @@
  *   Could be useful later for SPA-style study page.
  */
 import { getApi } from "@app/api/api";
-import type { GetDictCacheFor } from "@app/api/models";
+// import type { GetDictCacheFor } from "@app/api/models";
 
-import * as CJK from "@/lib/cjk";
+// import * as CJK from "@/lib/cjk";
 
 class CacheDictResults {
   //

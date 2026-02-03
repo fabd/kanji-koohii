@@ -281,9 +281,7 @@ export default class AjaxRequest {
     //console.log('*** ' + this.getHttpHeader(o, 'Content-Type'));
 
     if (fn) {
-      var contentType = this.getHttpHeader(o, "Content-Type") || "",
-        json = null,
-        tron;
+      var contentType = this.getHttpHeader(o, "Content-Type") || "";
 
       // set responseJSON
       if (
@@ -292,7 +290,7 @@ export default class AjaxRequest {
       ) {
         try {
           o.responseJSON = JSON.parse(o.responseText);
-        } catch (e) {
+        } catch {
           console.warn("AjaxRequest::handleSuccess()  Could not parse JSON.");
           o.responseJSON = null;
 

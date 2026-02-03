@@ -105,7 +105,7 @@ export default {
       };
 
       // clicking in quick search box selects the text
-      $$(this.elSearch).on("focus", (evt: Event) => {
+      $$(this.elSearch).on("focus", (_evt: Event) => {
         if (this.elSearch.value !== "") {
           this.elSearch.select();
         }
@@ -197,13 +197,13 @@ export default {
     this.elEditFlashcard!.innerHTML = html;
   },
 
-  initDictionary(el: Element) {
+  initDictionary(_el: Element) {
     $$("#DictHead").on("click", this.toggleDictionary.bind(this));
     this.dictVisible = false;
     this.dictPanel = false;
   },
 
-  toggleDictionary(evt: Event) {
+  toggleDictionary(_evt: Event) {
     const visible = !this.dictVisible;
     const $elBody = $$<HTMLElement>("#JsDictBody");
 
@@ -221,7 +221,7 @@ export default {
     }
   },
 
-  onClickFlashcardButton(evt: Event, el: Element) {
+  onClickFlashcardButton(_evt: Event, _el: Element) {
     const onMenuResponse = (result: "added" | "deleted") => {
       // reset button to "Add Card" state
       if (result === "deleted") {

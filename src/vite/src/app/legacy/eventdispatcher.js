@@ -82,11 +82,11 @@ export default class EventDispatcher {
    * Notifies all listeners of a given event.
    *
    * @param {string} name  An event name
-   * @param {...any=} params  An arbitrary set of parameters to pass to the handler.
+   * @param {...any=} _params  An arbitrary set of parameters to pass to the handler.
    *
    * @return {boolean|null} false  False if one of the subscribers returned false, true otherwise
    */
-  notify(name, params) {
+  notify(name, _params) {
     var args = Array.prototype.slice.call(arguments, 1),
       callables,
       i,

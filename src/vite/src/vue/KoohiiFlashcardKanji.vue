@@ -156,7 +156,7 @@ export default defineComponent({
       });
     },
 
-    removeVocab(item) {
+    removeVocab(_item) {
       // console.log('removeVocab(%o)', item)
       this.clearVocab();
       this.updateSourceCard(this.vocab);

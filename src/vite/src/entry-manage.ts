@@ -71,7 +71,7 @@ class ManagePage {
     const el = $$(".selection-table", this.viewDiv)[0];
     if (el) {
       // clear checkboxes in case of page refresh
-      $$<HTMLFormElement>(".checkbox", el).each((el, i) => {
+      $$<HTMLFormElement>(".checkbox", el).each((el) => {
         el.checked = false;
       });
 
@@ -86,7 +86,7 @@ class ManagePage {
     }
   }
 
-  onSubmitForm(oEvent: Event) {
+  onSubmitForm(_oEvent: Event) {
     const data = this.selectionTable ? this.selectionTable.getPostData() : {};
     this.viewPanel!.post(data);
 

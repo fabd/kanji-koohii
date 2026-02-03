@@ -22,7 +22,7 @@ export default {
   },
 
   onDropdown: function (ev, el) {
-    var data, elDropdown;
+    var elDropdown;
 
     elDropdown = $$("ul", el)[0];
 
@@ -96,9 +96,9 @@ export default {
   /**
    * this event handler clears the dropdown if clicking/tapping outside
    * 
-   * @param {Event} ev
+   * @param {Event} _ev
    */
-  onClick: function (ev) {
+  onClick: function (_ev) {
     if (this.dropdown) {
       this.toggleDropdown(false);
     }

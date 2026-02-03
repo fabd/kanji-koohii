@@ -184,7 +184,7 @@ export default class AjaxQueue {
    * @param {String} eventType
    * @param {Object} args
    */
-  onAjaxStart(eventType, args) {
+  onAjaxStart(_eventType, _args) {
     $$(this.ajaxIndicator).css({
       position: "absolute",
       zIndex: 1000,
@@ -198,7 +198,7 @@ export default class AjaxQueue {
    * @param {string} eventType
    * @param {Object} args
    */
-  onAjaxComplete(eventType, args) {
+  onAjaxComplete(_eventType, _args) {
     $$(this.ajaxIndicator).css({
       display: "none",
     });

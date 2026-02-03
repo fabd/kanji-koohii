@@ -452,7 +452,7 @@ export default class AjaxPanel {
    * @param {String} eventType
    * @param {Object} args
    */
-  ajaxOnComplete(_eventType, args) {
+  ajaxOnComplete(_eventType, _args) {
     //console.log('AjaxPanel.ajaxOnComplete(%o)', args);
     //var response = args[0];
   }

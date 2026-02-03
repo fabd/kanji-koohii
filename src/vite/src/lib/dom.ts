@@ -86,16 +86,15 @@
  *
  */
 
+import Lang from "@lib/lang";
+
 // types
 type StringHash = { [key: string]: string };
 
-// helpers
-// const inDocument = (el: Node | null) => document.documentElement.contains(el);
-// const isArray = (o: any): boolean => Array.isArray(o);
-const isFunction = (f: any): f is Function => typeof f === "function";
-const isNode = (el: any): boolean => el instanceof Node;
-const isString = (s: any): s is string => typeof s === "string";
-const isWindow = (o: any): o is Window => o === window;
+const isFunction = Lang.isFunction;
+const isNode = Lang.isNode;
+const isString = Lang.isString; 
+const isWindow = Lang.isWindow; 
 
 //
 type $Event = {

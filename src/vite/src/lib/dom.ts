@@ -180,7 +180,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @param  callback
    */
   on(events: string | string[], callback: EventListener) {
-    const el = this[0];
+    const el = this[0]!;
     // console.assert(el === window || isNode(el), "on() el is invalid");
 
     if (isString(events)) {

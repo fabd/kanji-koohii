@@ -12,7 +12,7 @@ const fnVueInstance = (
   props?: TVuePropsData,
   replace = false
 ): TVueInstanceRef => {
-  const el = Lang.isString(mount) ? document.querySelectorAll(mount)[0] : mount;
+  const el = Lang.isString(mount) ? document.querySelectorAll(mount)[0]! : mount;
   console.assert(Lang.isNode(el), "VueInstance() : mount is invalid");
 
   const app = createApp(component, props);

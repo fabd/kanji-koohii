@@ -285,7 +285,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
 
     // set one or more styles
     for (const prop in styles) {
-      element.style.setProperty(prop, styles[prop]);
+      element.style.setProperty(prop, styles[prop]!);
     }
   }
 

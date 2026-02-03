@@ -108,7 +108,7 @@ class ManagePage {
 
       // get the custkeyword td
       const tr = el.closest("tr")!;
-      const td = $$(".JSCkwTd", tr)[0];
+      const td = $$(".JSCkwTd", tr)[0]!;
       td.innerHTML = keyword;
 
       // force reload

@@ -236,8 +236,8 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
     // console.assert(isFunction(fn), "once() : fn is not a function");
     // console.assert(el === window || isNode(el), "once() : el is invalid");
 
-    const listener = (...args: any[]) => {
-      (fn as Function).apply(this, args);
+    const listener = (evt: Event) => {
+      fn.apply(this, [evt]);
       this.off(listener);
     };
 
@@ -378,8 +378,8 @@ export function getNode<EL extends Element>(sel: EL | string): EL | null {
   return node;
 }
 
-export const domContentLoaded = (fn: Function) => {
-  window.addEventListener("DOMContentLoaded", fn as any);
+export const domContentLoaded = (fn: EventListener) => {
+  window.addEventListener("DOMContentLoaded", fn);
 };
 
 /**

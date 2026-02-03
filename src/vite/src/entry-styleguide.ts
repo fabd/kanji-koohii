@@ -10,5 +10,7 @@ import UxIndex from "@/vue/styleguide/ux-index.vue";
 domContentLoaded(() => {
   console.log("@entry-styleguide");
   const elMount = domGetById("JsStyleguideApp")!;
-  elMount && VueInstance(UxIndex, elMount);
+  if (elMount) {
+    VueInstance(UxIndex, elMount);
+  }
 });

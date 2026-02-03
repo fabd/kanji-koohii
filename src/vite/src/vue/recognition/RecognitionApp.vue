@@ -263,7 +263,9 @@ export default defineComponent({
   },
 
   mounted() {
-    this.isStateEdit && this.focusInput();
+    if (this.isStateEdit) {
+      this.focusInput();
+    }
   },
 
   beforeMount() {

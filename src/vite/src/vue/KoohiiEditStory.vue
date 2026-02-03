@@ -440,7 +440,9 @@ export default defineComponent({
         el.innerHTML = keyword;
 
         // invalidate cached dialog
-        this.oEditKeyword && this.oEditKeyword.destroy();
+        if (this.oEditKeyword) {
+          this.oEditKeyword.destroy();
+        }
         this.oEditKeyword = null;
       };
 

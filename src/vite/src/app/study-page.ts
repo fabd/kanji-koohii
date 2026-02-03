@@ -133,7 +133,9 @@ export default {
     }
 
     const elDictStudy = domGetById("DictStudy");
-    elDictStudy && this.initDictionary(elDictStudy);
+    if (elDictStudy) {
+      this.initDictionary(elDictStudy);
+    }
 
     const elSharedStories = domGetById("SharedStoriesComponent");
     if (elSharedStories) {

@@ -25,7 +25,9 @@ function focusOnLoad() {
   const elForm = $$(".JsFocusOnLoadError")[0];
   if (elForm) {
     elHasError = $$<HTMLElement>(".has-error", elForm)[0];
-    elHasError && elHasError.focus();
+    if (elHasError) {
+      elHasError.focus();
+    }
   }
 
   let elFocus;

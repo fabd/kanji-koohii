@@ -85,7 +85,10 @@ export default class DictLookupDialog {
     return false;
   }
 
-  onDialogDestroy() {}
+  /*
+  onDialogDestroy() {
+  }
+  */
 
   /** @return {boolean} */
   isVisible() {

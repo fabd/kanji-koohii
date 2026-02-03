@@ -81,8 +81,7 @@ export default defineComponent({
   data() {
     return {};
   },
-  computed: {},
-  mounted() {},
+  computed: {}
 });
 </script>
 

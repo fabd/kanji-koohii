@@ -6,7 +6,7 @@
   ///////////////////////////////////////////////////////////////////////////////
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   // exclude folders for IntelliSense performance, exclude build files
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "src/**/__*"],
   //
   "compilerOptions": {
     /* Type Checking */

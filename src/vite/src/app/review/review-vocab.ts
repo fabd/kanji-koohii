@@ -1,38 +1,32 @@
-// FIXME: refactor into a single class for srs/free/vocab modes
-// @ts-check
-
-import $$, { DomJS, asHtmlElement, hasClass } from "@lib/dom";
+import $$, { DomJS, hasClass } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 
 export default class VocabReview {
-  /** @type {TVocabReviewProps} */
-  options;
+  options: TVocabReviewProps;
 
-  /** @type {FlashcardReview} */
-  oReview;
+  oReview: FlashcardReview;
 
-  /** @type {DomJS<Element>}*/
-  $elStats;
-  /** @type {HTMLElement} */
-  elProgressBar;
+  $elStats: DomJS<Element>;
+  elProgressBar: HTMLElement;
+  elsCount: DomJS<Element>;
+  reviewPage: ReviewPage;
 
   /**
    *
-   * @param {TReviewOptions} fcrOptions ... options for FlashcardReview instance
-   * @param {TVocabReviewProps} props ... props for Vue component (TBD refactor)
+   * @param fcrOptions ... options for FlashcardReview instance
+   * @param props ... props for Vue component (TBD refactor)
    */
-  constructor(fcrOptions, props) {
+  constructor(fcrOptions: TReviewOptions, props: TVocabReviewProps) {
     // set options
     this.options = props;
 
     fcrOptions.events = {
-      onEndReview: this.onEndReview,
-      onFlashcardCreate: this.onFlashcardCreate,
-      onFlashcardDestroy: this.onFlashcardDestroy,
-      onFlashcardState: this.onFlashcardState,
+      onEndReview: this.onEndReview.bind(this),
+      onFlashcardCreate: this.onFlashcardCreate.bind(this),
+      onFlashcardDestroy: this.onFlashcardDestroy.bind(this),
+      onFlashcardState: this.onFlashcardState.bind(this),
     };
-    fcrOptions.scope = this;
 
     this.oReview = new FlashcardReview(fcrOptions);
 
@@ -44,25 +38,23 @@ export default class VocabReview {
     // stats panel
     this.$elStats = $$("#uiFcStats");
     this.elsCount = $$("#uiFcProgressBar .count"); //array
-    this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
+    this.elProgressBar = $$("#review-progress span")[0] as HTMLElement;
   }
 
   /**
    * Returns an option value
    *
-   * @param {keyof TVocabReviewProps} name
    */
-  getOption(name) {
+  getOption(name: keyof TVocabReviewProps) {
     return this.options[name];
   }
 
   /**
    * proxy which *always* returns a valid card
    *
-   * @return {TVocabCardData}
    */
-  getFlashcardData() {
-    return /**@type {any}*/ (this.oReview.getFlashcardData());
+  getFlashcardData(): TVocabCardData {
+    return this.oReview.getFlashcardData() as unknown as TVocabCardData;
   }
 
   /**
@@ -90,8 +82,11 @@ export default class VocabReview {
 
     // set the google search url
     const searchTerm = this.getFlashcardData().compound;
-    const searchUrl = "http://www.google.co.jp/search?hl=ja&q=" + encodeURIComponent(searchTerm);
-    /**@type{HTMLAnchorElement}*/ ($$("#search-google-jp")[0]).href = searchUrl;
+    const searchUrl =
+      "http://www.google.co.jp/search?hl=ja&q=" +
+      encodeURIComponent(searchTerm);
+    const elLink = $$("#search-google-jp")[0] as HTMLAnchorElement;
+    elLink.href = searchUrl;
   }
 
   /**
@@ -103,18 +98,17 @@ export default class VocabReview {
     $$("#uiFcButtons1").display(false);
   }
 
-  /** @param {number} iState */
-  onFlashcardState(iState) {
+  onFlashcardState(iState: number) {
     $$("#uiFcButtons0").display(iState === 0);
     $$("#uiFcButtons1").display(iState !== 0);
   }
 
   /**
    *
-   * @param {string} sActionId cf. eventdispatcher
-   * @param {Event} oEvent ...
+   * @param sActionId cf. eventdispatcher
+   * @param oEvent ...
    */
-  onAction(sActionId, oEvent) {
+  onAction(sActionId: string, oEvent: Event) {
     console.log("VocabReview.onAction(%o)", sActionId);
 
     // flashcard is loading or something..
@@ -130,7 +124,10 @@ export default class VocabReview {
         break;
 
       case "flip":
-        if (oEvent.type === "click" && hasClass(asHtmlElement(oEvent.target), "JsLink")) {
+        if (
+          oEvent.type === "click" &&
+          hasClass(oEvent.target as Element, "JsLink")
+        ) {
           // pass through so the link functions
           return true;
         }
@@ -140,9 +137,6 @@ export default class VocabReview {
           this.oReview.forward();
         }
         break;
-
-      case "search-google-jp":
-        break;
     }
 
     return false;
@@ -150,16 +144,16 @@ export default class VocabReview {
 
   updateStatsPanel() {
     //  console.log('VocabReview.updateStatsPanel()');
-    var items = this.oReview.getItems(),
+    const items = this.oReview.getItems(),
       num_items = items.length,
       position = this.oReview.getPosition();
 
     // update review count
-    this.elsCount[0].innerHTML = "" + Math.min(position + 1, num_items);
-    this.elsCount[1].innerHTML = "" + num_items;
+    this.elsCount[0]!.innerHTML = "" + Math.min(position + 1, num_items);
+    this.elsCount[1]!.innerHTML = "" + num_items;
 
     // update progress bar
-    var pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;
+    let pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;
     pct = Math.min(pct, 100);
     this.elProgressBar.style.width = (pct > 0 ? pct : 0) + "%";
   }
@@ -167,10 +161,8 @@ export default class VocabReview {
   /**
    * Sets buttons (children of element) to default state, or disabled state
    *
-   * @param {HTMLElement} elParent
-   * @param {boolean} bEnabled
    */
-  setButtonState(elParent, bEnabled) {
+  setButtonState(elParent: HTMLElement, bEnabled: boolean) {
     $$(".uiIBtn", elParent).each((el) => {
       el.classList.toggle("uiFcBtnDisabled", bEnabled);
     });

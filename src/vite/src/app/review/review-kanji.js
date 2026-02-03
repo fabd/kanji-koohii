@@ -354,7 +354,7 @@ export default class KanjiReview {
     const cardData = this.getFlashcardData();
 
     /** @type {TCardAnswer} */
-    let answer = { id: cardData.id, r: rating };
+    const answer = { id: cardData.id, r: rating };
 
     this.oReview.answerCard(answer);
     this.updateAnswerStats(answer.id, rating, false);
@@ -370,11 +370,11 @@ export default class KanjiReview {
    *
    */
   flashcardMenu() {
-    let el = /** @type {HTMLElement} */ ($$("#uiFcMenu")[0]);
+    const el = /** @type {HTMLElement} */ ($$("#uiFcMenu")[0]);
 
-    let data = /** @type {{uri: string, param: string}} */ (el.dataset);
+    const data = /** @type {{uri: string, param: string}} */ (el.dataset);
 
-    let oCardData = /** @type {TCardData}*/ (this.oReview.getFlashcardData());
+    const oCardData = /** @type {TCardData}*/ (this.oReview.getFlashcardData());
 
     const onMenuHide = () => {
       // clear icon focus state when dialog closes
@@ -435,8 +435,8 @@ export default class KanjiReview {
     // review progress (don't show "4 of 3" after answering last card)
     const pos = Math.min(this.oReview.numRated + 1, this.oReview.numCards);
 
-    let elCount = $$("#uiFcProgressBar h3")[0];
-    let text =
+    const elCount = $$("#uiFcProgressBar h3")[0];
+    const text =
       `Card <em>${pos}&nbsp;of&nbsp;${this.oReview.numCards}</em>` +
       (this.oReview.numAgain ? `&nbsp;&nbsp;(Again <em>${this.oReview.numAgain}</em>)` : "");
     elCount.innerHTML = text;

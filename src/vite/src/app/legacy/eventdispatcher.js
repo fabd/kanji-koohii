@@ -65,11 +65,11 @@ export default class EventDispatcher {
     // if listener is undefined, delete all listeners
     const deleteAll = !fn;
 
-    let callables = this.listeners[name];
-    let l = callables.length;
+    const callables = this.listeners[name];
+    const l = callables.length;
 
     for (let i = l - 1; i >= 0; i--) {
-      let s = callables[i];
+      const s = callables[i];
       if (deleteAll || s.fn === fn) {
         callables.splice(i, 1);
       }

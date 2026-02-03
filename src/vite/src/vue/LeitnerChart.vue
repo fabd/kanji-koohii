@@ -84,7 +84,7 @@ export default defineComponent({
   computed: {
     // less than ideal solution due to device orientation switch
     numDisplayBoxes(): number {
-      let numSrsBoxes = this.chartData.boxes.length;
+      const numSrsBoxes = this.chartData.boxes.length;
 
       let el,
         containerWidth =
@@ -94,15 +94,15 @@ export default defineComponent({
 
       // console.log('container width: %d     num boxes: %d', containerWidth, numSrsBoxes)
 
-      let isWide = containerWidth >= 500;
+      const isWide = containerWidth >= 500;
 
-      let maxVisibleBoxes = isWide ? 11 : 8;
+      const maxVisibleBoxes = isWide ? 11 : 8;
 
       return Math.min(maxVisibleBoxes, numSrsBoxes);
     },
 
     displayBoxes(): TLeitnerBox[] {
-      let maxBox = this.numDisplayBoxes,
+      const maxBox = this.numDisplayBoxes,
         boxes = [] as TLeitnerBox[];
 
       this.chartData.boxes.map((box, i) => {
@@ -118,8 +118,8 @@ export default defineComponent({
     },
 
     maxHeight(): number {
-      let stacks = this.displayBoxes.flat();
-      let counts = stacks.map((s) => s.value);
+      const stacks = this.displayBoxes.flat();
+      const counts = stacks.map((s) => s.value);
       return Math.max(...counts);
     },
   },
@@ -149,7 +149,7 @@ export default defineComponent({
     },
 
     onClick(event: Event, bar: TLeitnerStack) {
-      let url = this.getBarUrl(bar);
+      const url = this.getBarUrl(bar);
 
       // console.log('bar %d  type %s   go to %s' , bar.index, bar.type, url)
       if (url !== "") {

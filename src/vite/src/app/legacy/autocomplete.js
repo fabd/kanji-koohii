@@ -342,7 +342,7 @@ const actb = function(obj, ca)
       if (actb_bool[i]) 
       {
         counter++;
-        let r = a.insertRow(-1);
+        const r = a.insertRow(-1);
         if (first && !actb_tomake) 
         {
           r.className = 'highlight';
@@ -358,7 +358,7 @@ const actb = function(obj, ca)
           r.className = 'inactive';
         }
         r.id = 'tat_tr' + (j);
-        let c = r.insertCell(-1);
+        const c = r.insertCell(-1);
         c.innerHTML = actb_self.actb_extracolumns(i) + actb_parse(actb_self.actb_keywords[i]);
         c.id = 'tat_td' + (j);
         c.setAttribute('pos', j);
@@ -372,9 +372,9 @@ const actb = function(obj, ca)
       
       if (j - 1 == actb_self.actb_lim && j < actb_total) 
       {
-        let r = a.insertRow(-1);
+        const r = a.insertRow(-1);
         r.className = 'inactive';
-        let c = r.insertCell(-1);
+        const c = r.insertCell(-1);
         c.className = 'more';
         replaceHTML(c, '...');
         if (actb_self.actb_mouse) 
@@ -415,9 +415,9 @@ const actb = function(obj, ca)
     var j = 1;
     if (actb_rangeu > 1) 
     {
-      let r = a.insertRow(-1);
+      const r = a.insertRow(-1);
       r.className = 'inactive';
-      let c = r.insertCell(-1);
+      const c = r.insertCell(-1);
       c.className = 'more';
       replaceHTML(c, '...');
       if (actb_self.actb_mouse) 
@@ -431,10 +431,10 @@ const actb = function(obj, ca)
       {
         if (j >= actb_rangeu && j <= actb_ranged) 
         {
-          let r = a.insertRow(-1);
+          const r = a.insertRow(-1);
           r.className = 'inactive';
           r.id = 'tat_tr' + (j);
-          let c = r.insertCell(-1);
+          const c = r.insertCell(-1);
           c.innerHTML = actb_self.actb_extracolumns(i) + actb_parse(actb_self.actb_keywords[i]);
           c.id = 'tat_td' + (j);
           c.setAttribute('pos', j);
@@ -454,9 +454,9 @@ const actb = function(obj, ca)
     }
     if (j - 1 < actb_total) 
     {
-      let r = a.insertRow(-1);
+      const r = a.insertRow(-1);
       r.className = 'inactive';
-      let c = r.insertCell(-1);
+      const c = r.insertCell(-1);
       c.className = 'more';
       replaceHTML(c, '...');
       if (actb_self.actb_mouse) 
@@ -626,7 +626,7 @@ const actb = function(obj, ca)
     }
 
     // set the kanji as the search term (fix #288)
-    let searchTerm = KK.SEQ_KANJIS[i];
+    const searchTerm = KK.SEQ_KANJIS[i];
 
     // insert word in the search box
     actb_elem.value = searchTerm;

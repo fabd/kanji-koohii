@@ -62,7 +62,7 @@ export default defineComponent({
 
     this.list = [];
     if (store) {
-      for (let ucsId of store.lastViewed) {
+      for (const ucsId of store.lastViewed) {
         const index = RTK.getIndexForUCS(ucsId);
         const kanji = String.fromCodePoint(ucsId);
         const keyword = index ? RTK.getKeywordForUCS(ucsId) : "???";
@@ -79,10 +79,10 @@ export default defineComponent({
 
     // KISS for now, we don't store other things on localStorage
     loadState() {
-      let json = storage.getItem(KOOHII_LOCALSTORAGE_KEY);
+      const json = storage.getItem(KOOHII_LOCALSTORAGE_KEY);
       if (json) {
         try {
-          let data = JSON.parse(json);
+          const data = JSON.parse(json);
           store = data;
         } catch (e) {
           // shouldn't happen - but just in case, avoid breaking the rest of the Study page
@@ -128,7 +128,7 @@ export default defineComponent({
         return;
       }
 
-      let pos = store.lastViewed.findIndex((ucsId) => ucsId === currentUcsId);
+      const pos = store.lastViewed.findIndex((ucsId) => ucsId === currentUcsId);
 
       if (pos < 0) {
         store.lastViewed.unshift(currentUcsId);

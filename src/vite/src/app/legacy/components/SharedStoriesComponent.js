@@ -41,7 +41,7 @@ class SharedStoriesComponent {
   onUnhide(ev, el) {
     console.log("SharedStoriesComponent::onUnhide");
     if (ev.type === "click") {
-      let storyDiv = el.closest(".sharedstory");      
+      const storyDiv = el.closest(".sharedstory");      
       if (storyDiv) {
         storyDiv.classList.remove(CLASS_HIDDEN_STORY);
         $$(el).display(false);
@@ -115,8 +115,8 @@ class SharedStoriesComponent {
     }
 
     // eg. "story-14266-22679"
-    let elActions = el.closest(".JsAction");
-    let storyIds = elActions.dataset;
+    const elActions = el.closest(".JsAction");
+    const storyIds = elActions.dataset;
 
     // userid, ucs_id
     var params = {

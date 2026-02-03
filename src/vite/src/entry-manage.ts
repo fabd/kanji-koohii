@@ -107,8 +107,8 @@ class ManagePage {
       console.log("EditKeywordDialog callback");
 
       // get the custkeyword td
-      let tr = el.closest("tr")!;
-      let td = $$(".JSCkwTd", tr)[0];
+      const tr = el.closest("tr")!;
+      const td = $$(".JSCkwTd", tr)[0];
       td.innerHTML = keyword;
 
       // force reload
@@ -117,9 +117,9 @@ class ManagePage {
 
       if (next) {
         console.log("Edit next keyword...", tr);
-        let nextRow = tr.nextElementSibling;
+        const nextRow = tr.nextElementSibling;
         if (nextRow) {
-          let nextEl = $$(".JSEditKeyword", nextRow)[0] as HTMLElement;
+          const nextEl = $$(".JSEditKeyword", nextRow)[0] as HTMLElement;
           window.setTimeout(() => {
             this.onEditKeyword(null, nextEl);
           }, 200);

@@ -269,7 +269,7 @@ export default class AjaxQueue {
    */
   setErrorDialog(sErrorMessage) {
     if (sErrorMessage) {
-      let el = this.$elAjaxError.down(".uiFcAjaxError_msg")[0];
+      const el = this.$elAjaxError.down(".uiFcAjaxError_msg")[0];
       el.innerHTML = sErrorMessage;
     }
 

@@ -119,7 +119,7 @@ export default {
 
     const elEditStory = domGetById("JsEditStoryInst")!;
     if (elEditStory) {
-      let { vm } = VueInstance(
+      const { vm } = VueInstance(
         KoohiiEditStory,
         elEditStory,
         kk_globals_get("EDITSTORY_PROPS")
@@ -210,9 +210,9 @@ export default {
 
     if (!this.dictPanel) {
       // use inner div set in the php template
-      let elMount = $elBody.down(".JsMount")[0];
-      let { vm } = VueInstance(KoohiiDictList, elMount!);
-      let ucsId = parseInt($elBody[0]!.dataset.ucs!);
+      const elMount = $elBody.down(".JsMount")[0];
+      const { vm } = VueInstance(KoohiiDictList, elMount!);
+      const ucsId = parseInt($elBody[0]!.dataset.ucs!);
       (vm as TVueKoohiiDictList).load(ucsId);
 
       this.dictPanel = true;
@@ -267,7 +267,7 @@ export default {
                 totalReviews: 0,
               };
 
-              let notif = new KoNotification();
+              const notif = new KoNotification();
               notif.show("Flashcard added");
             }
           }, remainingDelay);

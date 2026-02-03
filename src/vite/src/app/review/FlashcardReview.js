@@ -433,7 +433,7 @@ export default class FlashcardReview {
     this.notify("onFlashcardCreate");
 
     // we have a cached item for current position
-    let cardData = /** @type TCardData */ (this.getFlashcardData());
+    const cardData = /** @type TCardData */ (this.getFlashcardData());
 
     //
     cardData.isAgain = this.position >= this.numCards;
@@ -472,7 +472,7 @@ export default class FlashcardReview {
    */
   syncReview(bFlushData) {
     /** @type {TReviewSyncRequest} */
-    let syncData = {};
+    const syncData = {};
 
     const syncNow =
       // start of review
@@ -484,8 +484,8 @@ export default class FlashcardReview {
     if (syncNow && !this.isCacheFull) {
       //
       if (!this.isAwaitingCards) {
-        let from = this.cacheEnd;
-        let to = Math.min(from + PREFETCH_CARDS, this.numCards);
+        const from = this.cacheEnd;
+        const to = Math.min(from + PREFETCH_CARDS, this.numCards);
         syncData.get = this.items.slice(from, to);
         this.isAwaitingCards = true;
       }
@@ -497,9 +497,9 @@ export default class FlashcardReview {
     if ((syncNow || bFlushData) && this.options.put_request) {
       // if flush, post all, otherwise post in small batches, and leave
       //  some cards behind for the under feature
-      let syncEnd = bFlushData ? this.position : Math.max(0, this.position - this.max_undo);
+      const syncEnd = bFlushData ? this.position : Math.max(0, this.position - this.max_undo);
 
-      let aPostData = this.postCache.slice(this.postCacheFrom, syncEnd);
+      const aPostData = this.postCache.slice(this.postCacheFrom, syncEnd);
       this.postCacheFrom = syncEnd;
 
       if (aPostData.length > 0) {
@@ -538,7 +538,7 @@ export default class FlashcardReview {
    * @param {number | 'end'} argument ... 'end' if completing review
    */
   onAjaxSuccess(o, argument) {
-    let syncResponse = o.responseJSON;
+    const syncResponse = o.responseJSON;
 
     console.log("FlashcardReview::onAjaxSuccess(%o)", o);
 
@@ -650,7 +650,7 @@ export default class FlashcardReview {
   unanswerCard() {
     console.assert(this.postCache.length);
 
-    let answer = /** @type {TCardAnswer}*/ (this.postCache.pop());
+    const answer = /** @type {TCardAnswer}*/ (this.postCache.pop());
 
     // if it was a "again" card, remove its duplicata from the end of items[]
     if (answer.r === FCRATE.AGAIN) {
@@ -663,7 +663,7 @@ export default class FlashcardReview {
     }
 
     // whether we are seeing the card again, in the same review session
-    let isRepeatCard = this.position >= this.numCards;
+    const isRepeatCard = this.position >= this.numCards;
 
     // if undo-ing an "again >> hard/yes/easy/etc" card, re-count it as "again" answer
     if (isRepeatCard) {

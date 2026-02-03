@@ -30,12 +30,12 @@ export function getKanjiCardDataForRange(
   from: number,
   to: number
 ): TKanjiCardData[] {
-  let cards: TKanjiCardData[] = [];
-  let userKanji = getUserKanji();
+  const cards: TKanjiCardData[] = [];
+  const userKanji = getUserKanji();
 
   for (let index = from; index <= to; index++) {
-    let ucsId = RTK.getUCSForIndex(index) as number;
-    let userCard = userKanji.get(ucsId);
+    const ucsId = RTK.getUCSForIndex(index) as number;
+    const userCard = userKanji.get(ucsId);
 
     cards.push({
       ucsId: ucsId,

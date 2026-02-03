@@ -69,7 +69,7 @@ export default function () {
 
   domContentLoaded(() => {
     // init site-wide mobile navigation
-    let $elAside = $$("#k-slide-nav-btn");
+    const $elAside = $$("#k-slide-nav-btn");
     if ($elAside.el()) {
       $elAside.on("click", () => {
         KoohiiAside.open({ navOptionsMenu: kk_globals_get("MBL_NAV_DATA") });

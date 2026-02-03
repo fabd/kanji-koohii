@@ -80,8 +80,8 @@ export function isCJKUnifiedUCS(ucsId: number): boolean {
 
 export function toUnicode(text: string) {
   const chars = getKanjiArray(text);
-  let ucsIds = [];
-  for (let char of chars) {
+  const ucsIds = [];
+  for (const char of chars) {
     ucsIds.push(char.charCodeAt(0));
   }
   return ucsIds;

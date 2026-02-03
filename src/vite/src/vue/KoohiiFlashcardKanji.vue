@@ -129,7 +129,7 @@ export default defineComponent({
   beforeMount() {
     // console.log('KoohiiFlashcardKanji::beforeMount()')
 
-    let VocabPickArray = this.cardData.vocab || [];
+    const VocabPickArray = this.cardData.vocab || [];
 
     // VocabPickArray.forEach((o) => { o.r =  })
 

@@ -46,8 +46,8 @@ export default defineComponent({
   },
   computed: {
     currentView() {
-      let hash = this.currentPath.slice(1) || "/";
-      let view = routes[hash] || UxNotFound;
+      const hash = this.currentPath.slice(1) || "/";
+      const view = routes[hash] || UxNotFound;
       console.log("currentView hash", hash);
       return view;
     },

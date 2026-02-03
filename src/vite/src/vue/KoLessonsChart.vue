@@ -48,7 +48,7 @@ export default defineComponent({
   },
 
   beforeMount() {
-    let lessonsArr = [] as TLessonsChartLesson[];
+    const lessonsArr = [] as TLessonsChartLesson[];
 
     this.lessons.forEach((value: TSeqLessonData, key: TSeqLessonId) => {
       // FIXME - hardcoded for now, we skip RTK Volume 3 in Old/New Editions

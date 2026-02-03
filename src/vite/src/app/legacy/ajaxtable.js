@@ -45,7 +45,7 @@ export default class AjaxTable {
    * @param {{ errorDiv: string}} options   See documentation.
    */
   constructor(container, options = {}) {
-    this.options = !!options ? options : {};
+    this.options = options ? options : {};
 
     this.container = domGetById(container);
     this.oAjaxPanel = new AjaxPanel(this.container, {

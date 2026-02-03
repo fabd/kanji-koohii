@@ -119,8 +119,8 @@ export default defineComponent({
       if (!this.KanjiReview) {
         return null;
       }
-      let vm = this.KanjiReview!.oReview!.getFlashcard()!;
-      let inst = vm.getChild() as TVueKoohiiFlashcard;
+      const vm = this.KanjiReview!.oReview!.getFlashcard()!;
+      const inst = vm.getChild() as TVueKoohiiFlashcard;
       return inst;
     },
 

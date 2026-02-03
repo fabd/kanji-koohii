@@ -308,14 +308,14 @@ export default defineComponent({
       };
 
       //
-      let CDR = CacheDictResults.getInstance();
-      let ucsId = charData.ucsId;
-      let results = CDR.getResultsForUCS(ucsId);
+      const CDR = CacheDictResults.getInstance();
+      const ucsId = charData.ucsId;
+      const results = CDR.getResultsForUCS(ucsId);
       console.log("CDR results", results);
 
       if (!results) {
         CDR.cacheResultsFor(charData.kanji, (items) => {
-          let results = CDR.getResultsForUCS(ucsId);
+          const results = CDR.getResultsForUCS(ucsId);
           console.assert(!!results); // should be cached now, always
           this.dictItems = results!;
         });
@@ -341,10 +341,10 @@ export default defineComponent({
     },
 
     parseText() {
-      let out: TRecKanji[] = [];
+      const out: TRecKanji[] = [];
 
-      for (let char of this.japaneseText) {
-        let ucsId = char.charCodeAt(0);
+      for (const char of this.japaneseText) {
+        const ucsId = char.charCodeAt(0);
         // console.log(strKanji, kanjiInfo);
 
         const heisigNr = RTK.getIndexForUCS(ucsId);

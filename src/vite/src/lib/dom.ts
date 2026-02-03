@@ -157,7 +157,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @param selector string
    */
   down(selector: DomJSSelector): DomJS<EL> {
-    let el = this[0] as Element;
+    const el = this[0] as Element;
     return factory<EL>(selector, this[0]);
   }
 

@@ -89,8 +89,8 @@ export default class VocabReview {
     this.updateStatsPanel();
 
     // set the google search url
-    let searchTerm = this.getFlashcardData().compound;
-    let searchUrl = "http://www.google.co.jp/search?hl=ja&q=" + encodeURIComponent(searchTerm);
+    const searchTerm = this.getFlashcardData().compound;
+    const searchUrl = "http://www.google.co.jp/search?hl=ja&q=" + encodeURIComponent(searchTerm);
     /**@type{HTMLAnchorElement}*/ ($$("#search-google-jp")[0]).href = searchUrl;
   }
 

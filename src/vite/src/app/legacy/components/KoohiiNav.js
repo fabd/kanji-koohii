@@ -14,7 +14,7 @@ export default {
     // console.log("KoohiiNav::init()");
 
     // desktop nav
-    let eventDel = new EventDelegator(document.body);
+    const eventDel = new EventDelegator(document.body);
     eventDel.on(
       ["click", "touchend", "mouseover", "mouseout"],
       ".JsHasDropdown", this.onDropdown, this);
@@ -107,7 +107,7 @@ export default {
   },
 
   toggleDropdown: function (bVisible) {
-    let $dropdown = $$(this.dropdown);
+    const $dropdown = $$(this.dropdown);
     $dropdown.css("visibility", bVisible ? "visible" : "hidden");
     if (!bVisible) {
       this.dropdown = null;

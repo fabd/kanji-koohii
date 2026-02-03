@@ -113,6 +113,15 @@ export default tsEslint.config([
       // --------------------------------------------------------------
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-empty-function": "warn",
+
+      // shims-tsx.d.ts ...
+      "@typescript-eslint/no-empty-object-type": [
+        "error",
+        {
+          "allowInterfaces": 'with-single-extends'
+        }
+      ],
+        
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {

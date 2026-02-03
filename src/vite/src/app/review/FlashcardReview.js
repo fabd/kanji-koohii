@@ -604,7 +604,9 @@ export default class FlashcardReview {
 
   /** @param {number} state */
   setFlashcardState(state) {
-    this.curCard && this.curCard.vm.setState(state);
+    if (this.curCard) {
+      this.curCard.vm.setState(state);
+    }
     this.notify("onFlashcardState", state);
   }
 

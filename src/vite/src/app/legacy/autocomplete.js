@@ -633,7 +633,9 @@ const actb = function(obj, ca)
     actb_mouse_on_list = 0;
     actb_removedisp();
 
-    actb_self.onPressEnterCallback && actb_self.onPressEnterCallback(searchTerm);
+    if (actb_self.onPressEnterCallback) {
+      actb_self.onPressEnterCallback(searchTerm);
+    }
   }
   function actb_removedisp()
   {

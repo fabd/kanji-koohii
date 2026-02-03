@@ -86,11 +86,8 @@ export default defineComponent({
     numDisplayBoxes(): number {
       const numSrsBoxes = this.chartData.boxes.length;
 
-      let el,
-        containerWidth =
-          ((el = document.getElementById(this.containerId)) &&
-            el.offsetWidth) ||
-          0;
+      const el = document.getElementById(this.containerId);
+      const containerWidth = (el && el.offsetWidth) || 0;
 
       // console.log('container width: %d     num boxes: %d', containerWidth, numSrsBoxes)
 
@@ -172,8 +169,8 @@ export default defineComponent({
     },
 
     getBarType(bar: TLeitnerStack) {
-      let i = bar.index,
-        type: TLeitnerStackId;
+      const i = bar.index;
+      let type: TLeitnerStackId;
 
       if (!bar.value) {
         type = "nill";

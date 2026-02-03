@@ -315,6 +315,8 @@ export default class AjaxRequest {
    * @param {Object=} scope
    */
   handleFailure(o, fn, scope) {
-    fn && fn.apply(scope || window, [o]);
+    if (fn) {
+      fn.apply(scope || window, [o]);
+    }
   }
 }

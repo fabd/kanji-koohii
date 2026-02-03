@@ -1,3 +1,4 @@
+/* global YAHOO */
 /**
  * AjaxRequest is a wrapper for YUI's Connection manager.
  *

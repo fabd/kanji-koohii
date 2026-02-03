@@ -1,3 +1,4 @@
+/* global YAHOO */
 /**
  * AjaxDialog handles dialogs with Ajax (loads markup) or pre existing markup.
  * Dialog interaction is either submit of the form, handled via ajax through AjaxPanel,

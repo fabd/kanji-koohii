@@ -1,3 +1,4 @@
+/* global YAHOO, Koohii */
 // FIXME: legacy componet, should become a Vue at some point
 
 import $$, { domGetById, insertBefore } from "@lib/dom";

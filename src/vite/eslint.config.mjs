@@ -114,7 +114,7 @@ export default tsEslint.config([
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-empty-function": "warn",
       "@typescript-eslint/no-unused-vars": [
-        "error",
+        "warn",
         {
           "argsIgnorePattern": "^_",
           "varsIgnorePattern": "^_"

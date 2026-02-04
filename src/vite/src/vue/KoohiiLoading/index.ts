@@ -23,7 +23,7 @@ const setMaskStyle = (
 };
 
 let component: TVueInstanceOf<typeof KoohiiLoading> | null;
-let componentUnmount: Function;
+let componentUnmount: () => void;
 
 export type KoohiiLoadingOptions = { target: HTMLElement; background?: string };
 

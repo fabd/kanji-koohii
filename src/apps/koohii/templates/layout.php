@@ -20,25 +20,6 @@
   include_fontawesome();
 ?>
 
-<?php if($pageId === 'home-index'): ?>
-<!-- Happy New Year! -->
-<script type="text/javascript" src="/koohii/snow.js?v=20260111" defer="1"></script>
-<style>
-#k-nav_d, #k-nav_m { background: linear-gradient(45deg, #0b626b, #882761) !important; }
-.snowflake {
-    position: absolute;
-    background-color: white;
-    border-radius: 50%;
-    opacity: 0.7;
-    pointer-events: none; /* Allow clicking through snowflakes */
-    z-index: 1007;
-    will-change: transform; /* Optimization for smooth animation */
-    top: 0;
-    left: 0;
-}
-</style>
-<?php endif ?>
-
   <!-- thx realfavicongenerator.net -->
   <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=20170121">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=20170121">

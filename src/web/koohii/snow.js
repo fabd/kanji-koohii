@@ -1,3 +1,30 @@
+/*
+  Christmas & Happy New Year - Snow animation for the homepage.
+
+  Insert the code below into layout.php to activate the effect:
+  -------------------------------------------------------------------
+<?php if($pageId === 'home-index'): ?>
+<!-- Happy New Year! -->
+<script type="text/javascript" src="/koohii/snow.js?v=20260111" defer="1"></script>
+<style>
+#k-nav_d, #k-nav_m { background: linear-gradient(45deg, #0b626b, #882761) !important; }
+.snowflake {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 1007;
+    will-change: transform;
+    top: 0;
+    left: 0;
+}
+</style>
+<?php endif ?>
+  -------------------------------------------------------------------
+ 
+ */
+
 let snowWidth = window.innerWidth;
 let snowHeight = window.innerHeight;
 

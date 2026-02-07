@@ -89,7 +89,7 @@ export default defineComponent({
   computed: {
     // formatted dict list items for templating
     listItems(): DictListEntryExt[] {
-      let items = this.sortItemsByKnownKanji(this.items, this.knownKanji);
+      const items = this.sortItemsByKnownKanji(this.items, this.knownKanji);
       this.formatDictItems(items);
       this.applySelectedItems(items, this.selectedItems);
       return items;
@@ -112,9 +112,9 @@ export default defineComponent({
       });
 
       // sort known vocab first
-      let knownItems = items.filter((o) => o.known === true);
-      let unkownItems = items.filter((o) => o.known === false);
-      let sortedItems = knownItems.concat(unkownItems);
+      const knownItems = items.filter((o) => o.known === true);
+      const unkownItems = items.filter((o) => o.known === false);
+      const sortedItems = knownItems.concat(unkownItems);
 
       return sortedItems;
     },

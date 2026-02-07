@@ -237,9 +237,9 @@ export default defineComponent({
 
     srs_mult_values() {
       let m = 130;
-      let options = [];
+      const options = [];
       while (m <= 400) {
-        let label = m === 205 ? "2.05 (default)" : Number(m / 100).toFixed(2);
+        const label = m === 205 ? "2.05 (default)" : Number(m / 100).toFixed(2);
         options.push([m, label]);
         m += 5;
       }
@@ -247,10 +247,10 @@ export default defineComponent({
     },
 
     intervals() {
-      let values = [];
+      const values = [];
 
       for (let n = 1; n <= this.srs_max_box; n++) {
-        let days = this.nthInterval(n);
+        const days = this.nthInterval(n);
         values.push({ days: days });
       }
 
@@ -277,8 +277,8 @@ export default defineComponent({
     },
 
     nthInterval(n) {
-      let first = 3;
-      let mult = 1.0 * Number(this.srs_mult / 100).toFixed(2); // 205 => 2.05
+      const first = 3;
+      const mult = 1.0 * Number(this.srs_mult / 100).toFixed(2); // 205 => 2.05
       return Math.ceil(first * Math.pow(mult, n - 1));
     },
   },

@@ -65,11 +65,11 @@ export default class EventDispatcher {
     // if listener is undefined, delete all listeners
     const deleteAll = !fn;
 
-    let callables = this.listeners[name];
-    let l = callables.length;
+    const callables = this.listeners[name];
+    const l = callables.length;
 
     for (let i = l - 1; i >= 0; i--) {
-      let s = callables[i];
+      const s = callables[i];
       if (deleteAll || s.fn === fn) {
         callables.splice(i, 1);
       }
@@ -82,11 +82,11 @@ export default class EventDispatcher {
    * Notifies all listeners of a given event.
    *
    * @param {string} name  An event name
-   * @param {...any=} params  An arbitrary set of parameters to pass to the handler.
+   * @param {...any=} _params  An arbitrary set of parameters to pass to the handler.
    *
    * @return {boolean|null} false  False if one of the subscribers returned false, true otherwise
    */
-  notify(name, params) {
+  notify(name, _params) {
     var args = Array.prototype.slice.call(arguments, 1),
       callables,
       i,

@@ -42,7 +42,7 @@ type TReviewOptions = {
   params?: Dictionary;
   max_undo?: number;
   events: {
-    /* eslint-disable-next-line @typescript-eslint/ban-types */
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-function-type */
     [name: string]: Function;
   };
   scope: any;

@@ -113,7 +113,23 @@ export default tsEslint.config([
       // --------------------------------------------------------------
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-empty-function": "warn",
-      "@typescript-eslint/no-unused-vars": "warn",
+
+      // shims-tsx.d.ts ...
+      "@typescript-eslint/no-empty-object-type": [
+        "error",
+        {
+          "allowInterfaces": 'with-single-extends'
+        }
+      ],
+        
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ],
+
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",

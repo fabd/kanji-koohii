@@ -317,7 +317,7 @@ export default class AjaxPanel {
    * @param {Event} e
    * @param {Element} el
    */
-  onPanelSubmit(e, el) {
+  onPanelSubmit(e, _el) {
     if (this.getForm()) {
       // handle onSubmitForm listener, if any is set
       this.submitFormEvent.call(this, e);
@@ -442,7 +442,7 @@ export default class AjaxPanel {
    * @param {String} eventType
    * @param {Object} args
    */
-  ajaxOnStart(eventType, args) {
+  ajaxOnStart(_eventType, _args) {
     //console.log('AjaxPanel.ajaxOnStart(%o)', args);
   }
 
@@ -452,7 +452,7 @@ export default class AjaxPanel {
    * @param {String} eventType
    * @param {Object} args
    */
-  ajaxOnComplete(eventType, args) {
+  ajaxOnComplete(_eventType, _args) {
     //console.log('AjaxPanel.ajaxOnComplete(%o)', args);
     //var response = args[0];
   }
@@ -465,8 +465,7 @@ export default class AjaxPanel {
   ajaxOnSuccess(o) {
     console.log("AjaxPanel.ajaxOnSuccess(%o)", o);
 
-    var html,
-      tron = o.responseTRON;
+    var tron = o.responseTRON;
 
     console.assert("AjaxPanel::ajaxOnSuccess()  Require TRON response.");
 
@@ -520,7 +519,7 @@ export default class AjaxPanel {
     var elMessage = this.ajaxErrorIndicator.getElement();
     var elRetryLink = elMessage.getElementsByTagName("a")[0];
 
-    const retry = (oEvent) => {
+    const retry = (_oEvent) => {
       console.log("AjaxPanel.ajaxRetryEvent()");
       this.ajaxErrorIndicator.destroy();
       this.connect();

@@ -8,7 +8,7 @@
     <div
       v-once
       class="k-nav-menu-item__label"
-      @click="onMenuItemClick($event, sm.id)"
+      @click="onMenuItemClick($event)"
     >
       <i v-if="sm.icon" :class="['fa', sm.icon]"></i><span v-html="sm.label" />
     </div>
@@ -126,7 +126,7 @@ export default defineComponent({
       this.opened = false;
 
       const $elWrap = $$(this.refContentWrap());
-      this.contentHeight = $elWrap[0].scrollHeight;
+      this.contentHeight = $elWrap[0]!.scrollHeight;
       // console.log('elWrap scroll height is  %d', this.contentHeight)
 
       $elWrap.css("height", px(this.contentHeight));

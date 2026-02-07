@@ -15,7 +15,6 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 import KoLessonPane from "@/vue/KoLessonPane.vue";
-import * as USER from "@/lib/user";
 
 type TLessonsChartLesson = {
   id: number; // lesson number, starts at 1
@@ -48,7 +47,7 @@ export default defineComponent({
   },
 
   beforeMount() {
-    let lessonsArr = [] as TLessonsChartLesson[];
+    const lessonsArr = [] as TLessonsChartLesson[];
 
     this.lessons.forEach((value: TSeqLessonData, key: TSeqLessonId) => {
       // FIXME - hardcoded for now, we skip RTK Volume 3 in Old/New Editions

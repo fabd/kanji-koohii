@@ -44,7 +44,7 @@ export default class EditKeywordDialog {
     this.options = options;
     this.callback = callback;
 
-    let dlgopts = {
+    const dlgopts = {
       requestUri: url,
       requestData: options.params,
       skin: "rtk-skin-dlg",
@@ -75,7 +75,7 @@ export default class EditKeywordDialog {
   }
 
   focus() {
-    let el = this.getInput();
+    const el = this.getInput();
     el.focus();
     el.select();
   }
@@ -120,12 +120,12 @@ export default class EditKeywordDialog {
   // Copy keyword back into the main page
   // If JsTron property "next" is returned, the callback for the Manage page edits the next keyword
   onSuccess(t: TRON.TronInst<EditKeywordSuccessResponse>) {
-    let props = t.getProps();
+    const props = t.getProps();
     this.callback(props.keyword, props.next);
   }
 
   onReset() {
-    let input = this.getInput();
+    const input = this.getInput();
     input.value = this.props!.orig_keyword;
     input.focus();
     return false;

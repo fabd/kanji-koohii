@@ -5,7 +5,6 @@
  */
 
 import { KoohiiAPI } from "@lib/core/api";
-import Vue from "vue";
 
 declare module "vue/types/vue" {
   interface Vue {

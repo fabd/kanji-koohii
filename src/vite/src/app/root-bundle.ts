@@ -25,7 +25,9 @@ function focusOnLoad() {
   const elForm = $$(".JsFocusOnLoadError")[0];
   if (elForm) {
     elHasError = $$<HTMLElement>(".has-error", elForm)[0];
-    elHasError && elHasError.focus();
+    if (elHasError) {
+      elHasError.focus();
+    }
   }
 
   let elFocus;
@@ -34,7 +36,7 @@ function focusOnLoad() {
   }
 }
 
-const kkGlobalsHas = (name: string) => window.KK.hasOwnProperty(name);
+const kkGlobalsHas = (name: string) =>  Object.hasOwn(window.KK, name);
 
 /**
  * Helper makes it easier to find code where values are shared between php/js.
@@ -69,7 +71,7 @@ export default function () {
 
   domContentLoaded(() => {
     // init site-wide mobile navigation
-    let $elAside = $$("#k-slide-nav-btn");
+    const $elAside = $$("#k-slide-nav-btn");
     if ($elAside.el()) {
       $elAside.on("click", () => {
         KoohiiAside.open({ navOptionsMenu: kk_globals_get("MBL_NAV_DATA") });

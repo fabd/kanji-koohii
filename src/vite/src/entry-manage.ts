@@ -71,7 +71,7 @@ class ManagePage {
     const el = $$(".selection-table", this.viewDiv)[0];
     if (el) {
       // clear checkboxes in case of page refresh
-      $$<HTMLFormElement>(".checkbox", el).each((el, i) => {
+      $$<HTMLFormElement>(".checkbox", el).each((el) => {
         el.checked = false;
       });
 
@@ -86,7 +86,7 @@ class ManagePage {
     }
   }
 
-  onSubmitForm(oEvent: Event) {
+  onSubmitForm(_oEvent: Event) {
     const data = this.selectionTable ? this.selectionTable.getPostData() : {};
     this.viewPanel!.post(data);
 
@@ -107,8 +107,8 @@ class ManagePage {
       console.log("EditKeywordDialog callback");
 
       // get the custkeyword td
-      let tr = el.closest("tr")!;
-      let td = $$(".JSCkwTd", tr)[0];
+      const tr = el.closest("tr")!;
+      const td = $$(".JSCkwTd", tr)[0]!;
       td.innerHTML = keyword;
 
       // force reload
@@ -117,9 +117,9 @@ class ManagePage {
 
       if (next) {
         console.log("Edit next keyword...", tr);
-        let nextRow = tr.nextElementSibling;
+        const nextRow = tr.nextElementSibling;
         if (nextRow) {
-          let nextEl = $$(".JSEditKeyword", nextRow)[0] as HTMLElement;
+          const nextEl = $$(".JSEditKeyword", nextRow)[0] as HTMLElement;
           window.setTimeout(() => {
             this.onEditKeyword(null, nextEl);
           }, 200);

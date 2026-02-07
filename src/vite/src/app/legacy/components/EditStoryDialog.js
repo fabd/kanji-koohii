@@ -36,7 +36,7 @@ export default class EditStoryDialog {
     this.requestUri = url;
 
     /** @type {AjaxDialogOpts} */
-    let dlgopts = {
+    const dlgopts = {
       requestUri: this.requestUri,
       requestData: { ucsCode: ucsId, reviewMode: true },
       skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
@@ -143,7 +143,7 @@ export default class EditStoryDialog {
     };
 
     // note! mounting the component will also remove (overwrite) our "loading" div
-    let elMount = this.dialog.getBody();
+    const elMount = this.dialog.getBody();
 
     this.editStory = VueInstance(KoohiiEditStory, elMount, propsData);
   }

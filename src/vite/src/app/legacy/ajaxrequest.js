@@ -1,3 +1,4 @@
+/* global YAHOO */
 /**
  * AjaxRequest is a wrapper for YUI's Connection manager.
  *
@@ -281,9 +282,7 @@ export default class AjaxRequest {
     //console.log('*** ' + this.getHttpHeader(o, 'Content-Type'));
 
     if (fn) {
-      var contentType = this.getHttpHeader(o, "Content-Type") || "",
-        json = null,
-        tron;
+      var contentType = this.getHttpHeader(o, "Content-Type") || "";
 
       // set responseJSON
       if (
@@ -292,7 +291,7 @@ export default class AjaxRequest {
       ) {
         try {
           o.responseJSON = JSON.parse(o.responseText);
-        } catch (e) {
+        } catch {
           console.warn("AjaxRequest::handleSuccess()  Could not parse JSON.");
           o.responseJSON = null;
 
@@ -315,6 +314,8 @@ export default class AjaxRequest {
    * @param {Object=} scope
    */
   handleFailure(o, fn, scope) {
-    fn && fn.apply(scope || window, [o]);
+    if (fn) {
+      fn.apply(scope || window, [o]);
+    }
   }
 }

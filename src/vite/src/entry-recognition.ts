@@ -7,8 +7,10 @@ import RecognitionApp from "@/vue/recognition/RecognitionApp.vue";
 
 class RecognitionPage {
   constructor() {
-    let elMount = domGetById("JsRecognitionApp")!;
-    elMount && VueInstance(RecognitionApp, elMount);
+    const elMount = domGetById("JsRecognitionApp")!;
+    if (elMount) {
+      VueInstance(RecognitionApp, elMount);
+    }
   }
 }
 

@@ -351,7 +351,7 @@ export default defineComponent({
       // update/add/remove a shared story dynamically
       //
       // delete story from page if already shared
-      let $elSharedStory = $$("#" + props.sharedStoryId);
+      const $elSharedStory = $$("#" + props.sharedStoryId);
       if ($elSharedStory.el()) {
         $elSharedStory.el().closest(".rtkframe")?.remove();
       }
@@ -361,13 +361,13 @@ export default defineComponent({
         const elMount = document.createElement("div");
         insertAfter(elMount, getNode("#sharedstories-new .title")!);
 
-        let propsData = {
+        const propsData = {
           profileLink: props.sharedStoryAuthor,
           story: this.postStoryView.replace(/<br\/>/g, " "), // remove the line breaks
           divId: props.sharedStoryId,
         };
 
-        let { vm } = VueInstance(KoohiiSharedStory, elMount, propsData) as any;
+        const { vm } = VueInstance(KoohiiSharedStory, elMount, propsData) as any;
         this.vmStoryPublished = vm;
       }
     },
@@ -387,7 +387,7 @@ export default defineComponent({
         // $$('#main_container')[0].scrollIntoView(true)
 
         // scroll to top of window
-        let dx =
+        const dx =
           window.pageXOffset ||
           document.documentElement.scrollLeft ||
           document.body.scrollLeft ||
@@ -440,7 +440,9 @@ export default defineComponent({
         el.innerHTML = keyword;
 
         // invalidate cached dialog
-        this.oEditKeyword && this.oEditKeyword.destroy();
+        if (this.oEditKeyword) {
+          this.oEditKeyword.destroy();
+        }
         this.oEditKeyword = null;
       };
 
@@ -457,7 +459,7 @@ export default defineComponent({
 
     setCaretToEnd(element: HTMLInputElement | HTMLTextAreaElement) {
       element.focus();
-      let length = element.value.length;
+      const length = element.value.length;
       element.setSelectionRange(length, length);
     },
   },

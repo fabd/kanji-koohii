@@ -21,7 +21,6 @@
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 import AjaxTable from "@old/ajaxtable";
-import AjaxPanel from "@old/ajaxpanel";
 
 let ajaxTable: AjaxTable;
 

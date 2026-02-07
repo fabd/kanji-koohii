@@ -50,7 +50,7 @@ abstract class HttpClient {
 
   // generic axios request() which handles the catch() and always resolves to a TRON message
   protected request<T>(uri: string, config: ApiRequestConfig) {
-    let requestConfig: AxiosRequestConfig = {
+    const requestConfig: AxiosRequestConfig = {
       method: config.method || "get",
       url: uri,
       params: config.params || null, // url parameters
@@ -74,7 +74,7 @@ abstract class HttpClient {
       .catch((error) => {
         // we basically never want to fail, and always return a valid tron message
 
-        let t = TRON.Inst<T>({ status: TRON.STATUS.FAILED });
+        const t = TRON.Inst<T>({ status: TRON.STATUS.FAILED });
 
         // The request was made and the server responded with a status code that falls out of the range of 2xx
         if (error.response) {

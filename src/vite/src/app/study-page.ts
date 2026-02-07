@@ -105,7 +105,7 @@ export default {
       };
 
       // clicking in quick search box selects the text
-      $$(this.elSearch).on("focus", (evt: Event) => {
+      $$(this.elSearch).on("focus", (_evt: Event) => {
         if (this.elSearch.value !== "") {
           this.elSearch.select();
         }
@@ -119,7 +119,7 @@ export default {
 
     const elEditStory = domGetById("JsEditStoryInst")!;
     if (elEditStory) {
-      let { vm } = VueInstance(
+      const { vm } = VueInstance(
         KoohiiEditStory,
         elEditStory,
         kk_globals_get("EDITSTORY_PROPS")
@@ -133,7 +133,9 @@ export default {
     }
 
     const elDictStudy = domGetById("DictStudy");
-    elDictStudy && this.initDictionary(elDictStudy);
+    if (elDictStudy) {
+      this.initDictionary(elDictStudy);
+    }
 
     const elSharedStories = domGetById("SharedStoriesComponent");
     if (elSharedStories) {
@@ -195,13 +197,13 @@ export default {
     this.elEditFlashcard!.innerHTML = html;
   },
 
-  initDictionary(el: Element) {
+  initDictionary(_el: Element) {
     $$("#DictHead").on("click", this.toggleDictionary.bind(this));
     this.dictVisible = false;
     this.dictPanel = false;
   },
 
-  toggleDictionary(evt: Event) {
+  toggleDictionary(_evt: Event) {
     const visible = !this.dictVisible;
     const $elBody = $$<HTMLElement>("#JsDictBody");
 
@@ -210,16 +212,16 @@ export default {
 
     if (!this.dictPanel) {
       // use inner div set in the php template
-      let elMount = $elBody.down(".JsMount")[0];
-      let { vm } = VueInstance(KoohiiDictList, elMount!);
-      let ucsId = parseInt($elBody[0]!.dataset.ucs!);
+      const elMount = $elBody.down(".JsMount")[0];
+      const { vm } = VueInstance(KoohiiDictList, elMount!);
+      const ucsId = parseInt($elBody[0]!.dataset.ucs!);
       (vm as TVueKoohiiDictList).load(ucsId);
 
       this.dictPanel = true;
     }
   },
 
-  onClickFlashcardButton(evt: Event, el: Element) {
+  onClickFlashcardButton(_evt: Event, _el: Element) {
     const onMenuResponse = (result: "added" | "deleted") => {
       // reset button to "Add Card" state
       if (result === "deleted") {
@@ -267,7 +269,7 @@ export default {
                 totalReviews: 0,
               };
 
-              let notif = new KoNotification();
+              const notif = new KoNotification();
               notif.show("Flashcard added");
             }
           }, remainingDelay);

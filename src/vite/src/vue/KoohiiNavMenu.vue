@@ -57,7 +57,11 @@ export default defineComponent({
         return;
       }
 
-      item.isOpened() ? item.close() : item.open();
+      if (item.isOpened()) {
+        item.close();
+      } else {
+        item.open();
+      }
 
       // accordion
       for (const itemId in this.menuItems) {

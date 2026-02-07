@@ -6,9 +6,9 @@
  *   Could be useful later for SPA-style study page.
  */
 import { getApi } from "@app/api/api";
-import type { GetDictCacheFor } from "@app/api/models";
+// import type { GetDictCacheFor } from "@app/api/models";
 
-import * as CJK from "@/lib/cjk";
+// import * as CJK from "@/lib/cjk";
 
 class CacheDictResults {
   //
@@ -37,13 +37,13 @@ class CacheDictResults {
   cacheResultsFor(chars: string, callback: { (items: DictResults): void }) {
     // const codes = CJK.toUnicode(chars);
 
-/*test*/let ucsId = chars.charCodeAt(0);
+/*test*/const ucsId = chars.charCodeAt(0);
 
     getApi()
       .legacy.getDictCacheFor(chars)
       .then((tron) => {
         if (tron.isSuccess()) {
-          let { items } = tron.getProps();
+          const { items } = tron.getProps();
 
           // FIXME  cache entries
           console.log("CDR :: set entries for ", ucsId, items);

@@ -119,8 +119,8 @@ export default defineComponent({
       if (!this.KanjiReview) {
         return null;
       }
-      let vm = this.KanjiReview!.oReview!.getFlashcard()!;
-      let inst = vm.getChild() as TVueKoohiiFlashcard;
+      const vm = this.KanjiReview!.oReview!.getFlashcard()!;
+      const inst = vm.getChild() as TVueKoohiiFlashcard;
       return inst;
     },
 
@@ -139,14 +139,18 @@ export default defineComponent({
           .then((tron) => {
             KoohiiLoading.hide();
             // success:  show vocab onto the flashcard, and close the dictionary
-            tron.isSuccess() && this.onVocabPickResponse(item);
+            if (tron.isSuccess()) {
+              this.onVocabPickResponse(item);
+            }
           });
       } else {
         getApi()
           .legacy.deleteVocabForCard(this.ucsId)
           .then((tron) => {
             KoohiiLoading.hide();
-            tron.isSuccess() && this.onVocabDeleteResponse(item);
+            if (tron.isSuccess()) {
+              this.onVocabDeleteResponse(item);
+            }
           });
       }
     },
@@ -163,7 +167,9 @@ export default defineComponent({
     onVocabDeleteResponse(item: DictListEntry) {
       this.setVocabPick(item.id, false);
       this.getKanjiCard()!.removeVocab(item);
-      this.KanjiReview && this.KanjiReview.toggleDictDialog();
+      if (this.KanjiReview) {
+        this.KanjiReview.toggleDictDialog();
+      }
     },
 
     onVocabPickResponse(item: DictListEntry) {
@@ -173,7 +179,9 @@ export default defineComponent({
         reading: item.r,
         gloss: item.g,
       });
-      this.KanjiReview && this.KanjiReview.toggleDictDialog();
+      if (this.KanjiReview) {
+        this.KanjiReview.toggleDictDialog();
+      }
     },
 
     load(ucsId: number) {
@@ -200,7 +208,9 @@ export default defineComponent({
           .legacy.getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
           .then((tron) => {
             KoohiiLoading.hide();
-            tron.isSuccess() && this.onDictLoadResponse(ucsId, tron.getProps());
+            if (tron.isSuccess()) {
+              this.onDictLoadResponse(ucsId, tron.getProps());
+            }
           });
       };
 

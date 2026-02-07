@@ -23,7 +23,7 @@ const setMaskStyle = (
 };
 
 let component: TVueInstanceOf<typeof KoohiiLoading> | null;
-let componentUnmount: Function;
+let componentUnmount: () => void;
 
 export type KoohiiLoadingOptions = { target: HTMLElement; background?: string };
 
@@ -41,7 +41,7 @@ export default {
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 
-    let { vm, unmount } = VueInstance(KoohiiLoading, document.createElement("div"), options);
+    const { vm, unmount } = VueInstance(KoohiiLoading, document.createElement("div"), options);
     component = vm as TVueInstanceOf<typeof KoohiiLoading>;
     componentUnmount = unmount;
 

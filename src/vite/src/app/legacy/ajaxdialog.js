@@ -1,3 +1,4 @@
+/* global YAHOO */
 /**
  * AjaxDialog handles dialogs with Ajax (loads markup) or pre existing markup.
  * Dialog interaction is either submit of the form, handled via ajax through AjaxPanel,
@@ -389,7 +390,9 @@ export default class AjaxDialog {
     if (this.options.autoclose) {
       getBodyED().onRoot("click", (ev) => {
         // we intentionally check ev.target which is YUI2's modal mask layer, not doc.body
-        hasClass(ev.target, "mask") && this.hide();
+        if (hasClass(ev.target, "mask")) {
+          this.hide();
+        }
       });
     }
   }
@@ -593,7 +596,9 @@ export default class AjaxDialog {
    */
   setElementFocus() {
     var el = $$(".JSDialogFocus", this.yPanel.body)[0];
-    el && el.focus();
+    if (el) {
+      el.focus();
+    }
   }
 
   /**

@@ -86,17 +86,15 @@
  *
  */
 
+import Lang from "@lib/lang";
+
 // types
 type StringHash = { [key: string]: string };
-type StringOrStringArray = string | string[];
 
-// helpers
-const inDocument = (el: Node | null) => document.documentElement.contains(el);
-const isArray = (o: any): boolean => Array.isArray(o);
-const isFunction = (f: any): f is Function => typeof f === "function";
-const isNode = (el: any): boolean => el instanceof Node;
-const isString = (s: any): s is string => typeof s === "string";
-const isWindow = (o: any): o is Window => o === window;
+const isFunction = Lang.isFunction;
+const isNode = Lang.isNode;
+const isString = Lang.isString; 
+const isWindow = Lang.isWindow; 
 
 //
 type $Event = {
@@ -157,7 +155,6 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @param selector string
    */
   down(selector: DomJSSelector): DomJS<EL> {
-    let el = this[0] as Element;
     return factory<EL>(selector, this[0]);
   }
 
@@ -183,7 +180,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @param  callback
    */
   on(events: string | string[], callback: EventListener) {
-    const el = this[0];
+    const el = this[0]!;
     // console.assert(el === window || isNode(el), "on() el is invalid");
 
     if (isString(events)) {
@@ -239,8 +236,8 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
     // console.assert(isFunction(fn), "once() : fn is not a function");
     // console.assert(el === window || isNode(el), "once() : el is invalid");
 
-    const listener = (...args: any[]) => {
-      (fn as Function).apply(this, args);
+    const listener = (evt: Event) => {
+      fn.apply(this, [evt]);
       this.off(listener);
     };
 
@@ -288,7 +285,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
 
     // set one or more styles
     for (const prop in styles) {
-      element.style.setProperty(prop, styles[prop]);
+      element.style.setProperty(prop, styles[prop]!);
     }
   }
 
@@ -368,7 +365,7 @@ export function getStyle(element: HTMLElement, styleName: string): string | null
   try {
     const computed = document.defaultView!.getComputedStyle(element, "");
     return element.style.getPropertyValue(styleName) || computed ? computed.getPropertyValue(styleName) : null;
-  } catch (e) {
+  } catch {
     return element.style.getPropertyValue(styleName);
   }
 }
@@ -381,8 +378,8 @@ export function getNode<EL extends Element>(sel: EL | string): EL | null {
   return node;
 }
 
-export const domContentLoaded = (fn: Function) => {
-  window.addEventListener("DOMContentLoaded", fn as any);
+export const domContentLoaded = (fn: EventListener) => {
+  window.addEventListener("DOMContentLoaded", fn);
 };
 
 /**

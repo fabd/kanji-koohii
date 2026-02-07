@@ -37,7 +37,7 @@ const toQueryString = function(obj, name) {
   var begin = name ? name + "[" : "",
     end = name ? "]" : "";
   for (i in obj) {
-    if (obj.hasOwnProperty(i)) {
+    if (Object.hasOwn(obj, i)) {
       s.push(toQueryString(obj[i], begin + i + end));
     }
   }

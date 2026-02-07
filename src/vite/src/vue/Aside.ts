@@ -13,11 +13,11 @@ export default {
 
     if (!instance) {
       // render off-document and append afterwards
-      let { vm } = VueInstance(AsideComponent, "#aside-component");
+      const { vm } = VueInstance(AsideComponent, "#aside-component");
       instance = vm;
 
       // render nav
-      let { vm: navMenuVm } = VueInstance(
+      const { vm: navMenuVm } = VueInstance(
         KoohiiNavMenu,
         instance.$refs.navContent,
         {

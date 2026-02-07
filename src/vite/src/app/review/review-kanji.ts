@@ -7,9 +7,8 @@
  *   end_url       Url to redirect to at the end of the review
  *
  */
-// @ts-check
 
-import $$, { DomJS, asHtmlElement, domGetById, hasClass } from "@lib/dom";
+import $$, { DomJS, asHtmlElement, hasClass } from "@lib/dom";
 import AjaxDialog from "@old/ajaxdialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
@@ -18,47 +17,45 @@ import FlashcardReview, { FCRATE } from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 
 export default class KanjiReview {
-  /** @type {TKanjiReviewProps} */
-  options;
+  options: TKanjiReviewProps;
 
-  /** @type {FlashcardReview} */
-  oReview;
+  oReview: FlashcardReview;
 
-  /** @type {DomJS<Element>}*/
-  $elStats;
-  /** @type {HTMLElement} */
-  elProgressBar;
+  $elStats: DomJS<Element>;
+  elProgressBar: HTMLElement;
+  elsCount: DomJS<Element>;
 
-  /** @type {DictLookupDialog?} */
-  dictDialog = null;
+  dictDialog: DictLookupDialog | null = null;
+  oEditFlashcard: EditFlashcardDialog | null = null;
+  oEditFlashcardId: TUcsId = 0;
+  editStoryDialog: EditStoryDialog | null = null;
 
-  /** @type {EditFlashcardDialog?} */
-  oEditFlashcard = null;
-  /** @type {TUcsId} */
-  oEditFlashcardId = 0;
+  deletedCards: number[] = [];
 
-  /** @type {EditStoryDialog?} */
-  editStoryDialog = null;
+  elAnswerPass: Element;
+  elAnswerFail: Element;
+  countYes: number;
+  countNo: number;
+  countDeleted: number;
 
-  /** @type {number[]} */
-  deletedCards = [];
+  elFinish: HTMLElement;
+  reviewPage: ReviewPage;
 
   /**
    *
-   * @param {TReviewOptions} fcrOptions ... options for FlashcardReview instance
-   * @param {TKanjiReviewProps} props ... props for Vue component (TBD refactor)
+   * @param fcrOptions ... options for FlashcardReview instance
+   * @param props ... props for Vue component (TBD refactor)
    */
-  constructor(fcrOptions, props) {
+  constructor(fcrOptions: TReviewOptions, props: TKanjiReviewProps) {
     this.options = props;
 
     fcrOptions.events = {
-      onEndReview: this.onEndReview,
-      onFlashcardCreate: this.onFlashcardCreate,
-      onFlashcardDestroy: this.onFlashcardDestroy,
-      onFlashcardState: this.onFlashcardState,
-      onFlashcardUndo: this.onFlashcardUndo,
+      onEndReview: this.onEndReview.bind(this),
+      onFlashcardCreate: this.onFlashcardCreate.bind(this),
+      onFlashcardDestroy: this.onFlashcardDestroy.bind(this),
+      onFlashcardState: this.onFlashcardState.bind(this),
+      onFlashcardUndo: this.onFlashcardUndo.bind(this),
     };
-    fcrOptions.scope = this;
 
     this.oReview = new FlashcardReview(fcrOptions);
 
@@ -110,8 +107,8 @@ export default class KanjiReview {
     this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
 
     // answer stats
-    this.elAnswerPass = this.$elStats.down(".JsPass")[0];
-    this.elAnswerFail = this.$elStats.down(".JsFail")[0];
+    this.elAnswerPass = $$("#uiFcStats .JsPass")[0]!;
+    this.elAnswerFail = $$("#uiFcStats .JsFail")[0]!;
     this.countYes = 0;
     this.countNo = 0;
 
@@ -125,27 +122,24 @@ export default class KanjiReview {
   /**
    * Returns an option value
    *
-   * @param {keyof TKanjiReviewProps} name
    */
-  getOption(name) {
+  getOption(name: keyof TKanjiReviewProps) {
     return this.options[name];
   }
 
   /**
    *
-   * @param {keyof TKanjiReviewProps} name
    */
-  getOptionAsStr(name) {
-    return /** @type {string}*/ (this.options[name]);
+  getOptionAsStr(name: keyof TKanjiReviewProps): string {
+    return this.options[name] as string;
   }
 
-  //
   /**
    * proxy which typecasts the card data, and *always* returns a valid card
    *
    */
-  getFlashcardData() {
-    return /**@type {TCardData}*/ (this.oReview.getFlashcardData());
+  getFlashcardData(): TCardData {
+    return this.oReview.getFlashcardData() as TCardData;
   }
 
   /**
@@ -158,12 +152,12 @@ export default class KanjiReview {
 
     this.updateStatsPanel();
 
-    var elFrm = /**@type {HTMLFormElement}*/ (domGetById("uiFcRedirectForm"));
+    const elFrm = $$("#uiFcRedirectForm")[0] as HTMLFormElement;
 
     // set form data and redirect to summary with POST
     elFrm.method = "post";
     elFrm.action = this.getOptionAsStr("end_url");
-    /**@type{HTMLInputElement}*/ (elFrm.elements.namedItem("fc_deld")).value = this.deletedCards.join(",");
+    (elFrm.elements.namedItem("fc_deld") as HTMLInputElement).value = this.deletedCards.join(",");
     elFrm.submit();
   }
 
@@ -190,16 +184,11 @@ export default class KanjiReview {
     $$("#uiFcButtons1").display(false);
   }
 
-  /**
-   *
-   * @param {TCardAnswer} answer
-   */
-  onFlashcardUndo(answer) {
+  onFlashcardUndo(answer: TCardAnswer) {
     this.updateAnswerStats(answer.id, answer.r, true);
   }
 
-  /** @param {number} iState */
-  onFlashcardState(iState) {
+  onFlashcardState(iState: number) {
     // console.log("onFlashcardState(%d)", iState);
     $$("#uiFcButtons0").display(iState === 0);
     $$("#uiFcButtons1").display(iState !== 0);
@@ -207,18 +196,17 @@ export default class KanjiReview {
 
   /**
    *
-   * @param {string} sActionId cf. eventdispatcher
-   * @param {Event} oEvent ...
+   * @param sActionId cf. eventdispatcher
+   * @param oEvent ...
    */
-  onAction(sActionId, oEvent) {
-    /** @type {TReviewRating=} */
-    let cardRating;
+  onAction(sActionId: string, oEvent: Event) {
+    let cardRating: TReviewRating | undefined;
 
     console.log("KanjiReview.onAction(%o)", sActionId);
 
     // help dialog
     if (sActionId === "help") {
-      var dlg = new AjaxDialog("#JsFcHelpDlg", {
+      const dlg = new AjaxDialog("#JsFcHelpDlg", {
         useMarkup: true,
         context: ["JsBtnHelp", "tl", "bl", null, [0, 0]],
         skin: "rtk-skin-dlg",
@@ -348,13 +336,11 @@ export default class KanjiReview {
   /**
    * Rate card (or mark action like delete/skip), then forward.
    *
-   * @param {TReviewRating} rating
    */
-  rateCard(rating) {
+  rateCard(rating: TReviewRating) {
     const cardData = this.getFlashcardData();
 
-    /** @type {TCardAnswer} */
-    let answer = { id: cardData.id, r: rating };
+    const answer: TCardAnswer = { id: cardData.id, r: rating };
 
     this.oReview.answerCard(answer);
     this.updateAnswerStats(answer.id, rating, false);
@@ -370,19 +356,18 @@ export default class KanjiReview {
    *
    */
   flashcardMenu() {
-    let el = /** @type {HTMLElement} */ ($$("#uiFcMenu")[0]);
+    const el = $$("#uiFcMenu")[0] as HTMLElement;
 
-    let data = /** @type {{uri: string, param: string}} */ (el.dataset);
+    const data = el.dataset as { uri: string; param: string };
 
-    let oCardData = /** @type {TCardData}*/ (this.oReview.getFlashcardData());
+    const oCardData = this.oReview.getFlashcardData() as TCardData;
 
     const onMenuHide = () => {
       // clear icon focus state when dialog closes
       el.classList.remove("active");
     };
 
-    /** @param {string} menuid */
-    const onMenuItem = (menuid) => {
+    const onMenuItem = (menuid: string) => {
       if (menuid === "confirm-delete") {
         // set flashcard answer that tells server to delete the card
         this.rateCard("delete");
@@ -409,7 +394,7 @@ export default class KanjiReview {
     }
 
     if (!this.oEditFlashcard) {
-      var params = {
+      const params = {
         ...JSON.parse(data.param),
         ...{ ucs: oCardData.id },
       };
@@ -435,11 +420,11 @@ export default class KanjiReview {
     // review progress (don't show "4 of 3" after answering last card)
     const pos = Math.min(this.oReview.numRated + 1, this.oReview.numCards);
 
-    let elCount = $$("#uiFcProgressBar h3")[0];
-    let text =
+    const elCount = $$("#uiFcProgressBar h3")[0];
+    const text =
       `Card <em>${pos}&nbsp;of&nbsp;${this.oReview.numCards}</em>` +
       (this.oReview.numAgain ? `&nbsp;&nbsp;(Again <em>${this.oReview.numAgain}</em>)` : "");
-    elCount.innerHTML = text;
+    if (elCount) elCount.innerHTML = text;
 
     // update progress bar
     let pct = pos > 0 ? Math.ceil((pos * 100) / total) : 0;
@@ -449,11 +434,9 @@ export default class KanjiReview {
 
   /**
    *
-   * @param  {TUcsId} id ... the card's id (the kanji UCS code)
-   * @param {TReviewRating} rating
-   * @param  {boolean} isUndo
+   * @param id ... the card's id (the kanji UCS code)
    */
-  updateAnswerStats(id, rating, isUndo) {
+  updateAnswerStats(id: TUcsId, rating: TReviewRating, isUndo: boolean) {
     // cf. FlashcardReview.php const
     let yes = [FCRATE.YES, FCRATE.AGAIN_YES, FCRATE.EASY, FCRATE.AGAIN_EASY].includes(rating) ? 1 : 0;
     let no = [FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD].includes(rating) ? 1 : 0;
@@ -475,12 +458,7 @@ export default class KanjiReview {
     }
   }
 
-  /**
-   *
-   * @param {TUcsId} ucsId
-   * @param {number} count
-   */
-  updateDeletedCards(ucsId, count) {
+  updateDeletedCards(ucsId: TUcsId, count: number) {
     this.countDeleted += count;
 
     if (count > 0) {
@@ -490,8 +468,10 @@ export default class KanjiReview {
     }
 
     $$("#uiFcStDeld").display(this.countDeleted > 0);
-    $$("#uiFcStDeld em")[0].innerHTML = "" + this.countDeleted;
-    $$("#uiFcStDeldK span")[0].innerHTML = this.getDeletedCards();
+    const elCount = $$("#uiFcStDeld em")[0];
+    if (elCount) elCount.innerHTML = "" + this.countDeleted;
+    const elDeleted = $$("#uiFcStDeldK span")[0];
+    if (elDeleted) elDeleted.innerHTML = this.getDeletedCards();
   }
 
   getDeletedCards() {
@@ -501,10 +481,8 @@ export default class KanjiReview {
   /**
    * Sets buttons (children of element) to default state, or disabled state
    *
-   * @param {HTMLElement} elParent
-   * @param {boolean} bEnabled
    */
-  setButtonState(elParent, bEnabled) {
+  setButtonState(elParent: HTMLElement, bEnabled: boolean) {
     $$(".uiIBtn", elParent).each((el) => {
       el.classList.toggle("uiFcBtnDisabled", bEnabled);
     });

@@ -92,8 +92,8 @@ interface Window {
     SEQ_LESSONS: TSeqLessonsMeta;
 
     // User data (someday/maybe we may have a global user state on the JS side)
-    USER_KEYWORDS_MAP: Dictionary;
-    USER_KANJI_CARDS: TUserKanjiCard[];
+    USER_KEYWORDS_MAP: [TUcsId, string][];
+    USER_KANJI_CARDS: [TUcsId, TUserKanjiCard][];
   };
 
   Koohii: {

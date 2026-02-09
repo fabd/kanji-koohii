@@ -205,7 +205,7 @@ export default class FlashcardReview {
   constructor(options) {
     console.log("FlashcardReview::init(%o)", options);
 
-    console.assert(options.items && options.items.length, "No flashcard items in this selection.");
+    console.assert(options.items?.length > 0, "No flashcard items in this selection.");
 
     // set options and fix defaults
     options.put_request = options.put_request === false ? false : true;

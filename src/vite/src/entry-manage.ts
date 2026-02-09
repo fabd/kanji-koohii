@@ -129,7 +129,7 @@ class ManagePage {
 
     // just show dialog if clicking the same keyword twice, otherwise load
 
-    const ucsId = el.dataset.id!;
+    const ucsId = (el as HTMLElement).dataset.id!;
     if (!this.oEditKeyword || ucsId !== this.editKeywordId) {
       const contextEl = el.closest("td");
 

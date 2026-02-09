@@ -74,7 +74,7 @@ export default function () {
     const $elAside = $$("#k-slide-nav-btn");
     if ($elAside.el()) {
       $elAside.on("click", () => {
-        KoohiiAside.open({ navOptionsMenu: kk_globals_get("MBL_NAV_DATA") });
+        KoohiiAside.open(kk_globals_get("MBL_NAV_DATA"));
       });
     }
 

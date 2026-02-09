@@ -120,7 +120,7 @@
 
 import { kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
-import EventDispatcher from "@old/eventdispatcher";
+import EventDispatcher from "@lib/EventDispatcher";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";

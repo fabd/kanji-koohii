@@ -184,7 +184,7 @@ import * as TRON from "@lib/tron";
 import { getBodyED } from "@app/root-bundle";
 import AjaxPanel from "@old/ajaxpanel";
 import EventDelegator from "@lib/EventDelegator";
-import EventDispatcher from "@old/eventdispatcher";
+import EventDispatcher from "@lib/EventDispatcher";
 
 /** @typedef {import("@/lib/tron").TronInst} TronInst */
 

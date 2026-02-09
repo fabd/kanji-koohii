@@ -1,3 +1,4 @@
+/* globals module */
 module.exports = {
   extends: [
     "stylelint-config-recommended-vue"

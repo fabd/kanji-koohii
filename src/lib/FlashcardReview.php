@@ -23,7 +23,7 @@
  *   config($options)             optional get/put handlers (cf. below)
  *   start()                      clear the cached answers at start of review
  * 
- *   handleRequest($request)      handle request object sent by FlashcardReview.js
+ *   handleRequest($request)      handle request object sent by FlashcardReview.ts
  * 
  *   getCachedAnswers()
  *   getStats()
@@ -39,7 +39,7 @@
  *   fn_get_flashcard(int $id, object $options)
  *                      Returns flashcard data as associative array or object.
  *                      Returns null if the data can not be retrieved (id invalid, ...).
- *                      Returned "id" property must be integer! (cf. FlashcardReview.js)
+ *                      Returned "id" property must be integer! (cf. FlashcardReview.ts)
  *
  *   fn_put_flashcard(int $id, object $data)
  *                      Update the flashcard status, and anything else based on data

@@ -43,7 +43,7 @@ class LeitnerSRS
   public const DEFAULT_SRS_MAX_BOX = 7;
   public const DEFAULT_SRS_HARD_BOX = 0;
 
-  // flashcard ratings (@see FlashcardReview.js, flashcards.d.ts)
+  // flashcard ratings (@see FlashcardReview.ts, flashcards.d.ts)
   public const RATE_NO = 'no';
   public const RATE_HARD = 'hard';
   public const RATE_YES = 'yes';

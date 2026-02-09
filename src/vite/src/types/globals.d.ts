@@ -5,6 +5,8 @@
  *
  */
 
+type AnyFunction = (...args: any[]) => any;
+
 // legacy class
 type AjaxPanelOpts = {
   form?: string | false;

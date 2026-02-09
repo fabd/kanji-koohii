@@ -152,7 +152,7 @@ export default class EventDelegator {
         this.eventTypes.add(type);
       }
 
-      const listener = {
+      const listener: EDListener = {
         type,
         selector,
         callback,

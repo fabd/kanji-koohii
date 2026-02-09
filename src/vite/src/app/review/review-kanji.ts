@@ -438,8 +438,8 @@ export default class KanjiReview {
    */
   updateAnswerStats(id: TUcsId, rating: TReviewRating, isUndo: boolean) {
     // cf. FlashcardReview.php const
-    let yes = [FCRATE.YES, FCRATE.AGAIN_YES, FCRATE.EASY, FCRATE.AGAIN_EASY].includes(rating) ? 1 : 0;
-    let no = [FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD].includes(rating) ? 1 : 0;
+    let yes = ([FCRATE.YES, FCRATE.AGAIN_YES, FCRATE.EASY, FCRATE.AGAIN_EASY] as string[]).includes(rating) ? 1 : 0;
+    let no = ([FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD] as string[]).includes(rating) ? 1 : 0;
     let deld = rating === FCRATE.DELETE ? 1 : 0;
 
     if (isUndo) {

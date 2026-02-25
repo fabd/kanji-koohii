@@ -106,8 +106,9 @@ export default defineComponent({
         if (i < maxBox) {
           boxes.push(box);
         } else {
-          boxes[maxBox - 1][0].value += box[0].value;
-          boxes[maxBox - 1][1].value += box[1].value;
+          const lastBox = boxes[maxBox - 1]!;
+          lastBox[0].value += box[0].value;
+          lastBox[1].value += box[1].value;
         }
       });
 

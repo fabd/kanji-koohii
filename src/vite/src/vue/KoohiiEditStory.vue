@@ -423,7 +423,7 @@ export default defineComponent({
 
       // note:AFTER toggling isEditing,order is important!
       nextTick(() => {
-        const elTextArea = $$<HTMLTextAreaElement>("#frmStory")[0];
+        const elTextArea = $$<HTMLTextAreaElement>("#frmStory")[0]!;
         // DOM is now updated
         this.setCaretToEnd(elTextArea);
       });

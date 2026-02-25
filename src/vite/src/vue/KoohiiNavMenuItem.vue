@@ -29,7 +29,7 @@
 <script lang="ts">
 import { defineComponent, type ComponentPublicInstance } from "vue";
 import $$, { px } from "@lib/dom";
-import KoohiiNavMenu from "@/vue/KoohiiNavMenu.vue";
+import KoohiiNavMenu, { type TMenuItem }  from "@/vue/KoohiiNavMenu.vue";
 
 // fix for circular reference (can't type return value of rootMenu())
 type TKoohiiNavMenu = TVueInstanceOf<typeof KoohiiNavMenu>;
@@ -63,7 +63,7 @@ export default defineComponent({
       while (parent.$options.name !== "KoohiiNavMenu") {
         parent = parent.$parent!;
       }
-      return parent;
+      return parent as TKoohiiNavMenu;
     },
   },
 
@@ -83,10 +83,10 @@ export default defineComponent({
   mounted() {
     // top level items
     if (this.rootMenu === this.$parent) {
-      (this.rootMenu as TKoohiiNavMenu).menuItems[this.sm.id] = {
+      this.rootMenu.menuItems[this.sm.id] = {
         oMenuItem: this,
         elHead: this.refContentWrap(),
-      };
+      } as TMenuItem;
     }
   },
 
@@ -148,7 +148,7 @@ export default defineComponent({
 
       // handle folder
       if (this.hasChildren) {
-        (this.rootMenu as TKoohiiNavMenu).handleSelect(this.sm.id, this);
+        this.rootMenu.handleSelect(this.sm.id, this as TVueInstanceOf<typeof this>);
 
         event.preventDefault();
         event.stopPropagation();

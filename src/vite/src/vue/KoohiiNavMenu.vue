@@ -11,7 +11,7 @@ import { defineComponent } from "vue";
 import $$ from "@lib/dom";
 import KoohiiNavMenuItem from "@/vue/KoohiiNavMenuItem.vue";
 
-type TMenuItem = {
+export type TMenuItem = {
   oMenuItem: TVueInstanceOf<typeof KoohiiNavMenuItem>;
   elHead: HTMLElement;
 };

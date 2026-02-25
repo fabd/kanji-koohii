@@ -20,6 +20,7 @@
 
 /* components */
 @import "./components/_buttons.css";
+@import "./components/_mobile-nav.css";
 @import "./_navbar.css";
 
 /* pages */

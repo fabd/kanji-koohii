@@ -120,7 +120,7 @@ export default class EventDelegator {
     callback: EDCallback,
     scope?: any
   ) {
-    console.assert(selector.length);
+    console.assert(selector.length > 0);
     return this._on(types, selector, callback, scope);
   }
 
@@ -152,7 +152,7 @@ export default class EventDelegator {
         this.eventTypes.add(type);
       }
 
-      const listener = {
+      const listener: EDListener = {
         type,
         selector,
         callback,

@@ -79,7 +79,7 @@ export default defineConfig({
           // For the entries (top level), we must explicitly return the entry name,
           // otherwise Rollup will create a duplicate chunk (same name, different hash)
           if (entryPoints.length === 0) {
-            let entryName = `${
+            const entryName = `${
               id
                 .split("/")
                 .slice(-1)[0]
@@ -90,7 +90,7 @@ export default defineConfig({
 
           // If there is a unique entry, we bundle the code with that entry
           if (entryPoints.length === 1) {
-            let entryName = `${
+            const entryName = `${
               entryPoints[0]
                 .split("/")
                 .slice(-1)[0]

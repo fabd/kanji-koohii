@@ -104,7 +104,7 @@ import AjaxIndicator from "@old/ajaxindicator";
 import AjaxRequest from "@old/ajaxrequest";
 import EventCache from "@lib/EventCache";
 import EventDelegator from "@lib/EventDelegator";
-import EventDispatcher from "@old/eventdispatcher";
+import EventDispatcher from "@lib/EventDispatcher";
 
 /** @typedef {import("@/lib/tron").TronInst} TronInst */
 

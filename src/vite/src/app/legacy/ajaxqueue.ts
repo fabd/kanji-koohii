@@ -50,7 +50,7 @@
 
 import $$, { DomJS, domGetById, stopEvent } from "@lib/dom";
 import AjaxRequest from "@old/ajaxrequest";
-import EventDispatcher from "@old/eventdispatcher";
+import EventDispatcher from "@lib/EventDispatcher";
 
 type RequestBlob = { url: string; options: Dictionary };
 

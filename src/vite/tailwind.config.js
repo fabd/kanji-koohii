@@ -1,3 +1,4 @@
+/* globals module */
 module.exports = {
   content: [
     "./src/**/*.{js,ts,vue}",

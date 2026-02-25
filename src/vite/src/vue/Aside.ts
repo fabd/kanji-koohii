@@ -8,7 +8,7 @@ let navMenu: any = null;
 
 export default {
   // options.navOptionsmenu (cf. apps/koohii/templates/layout.php)
-  open(options: Dictionary<any> = {}) {
+  open(mobileNavData: Dictionary) {
     console.log("Aside open()");
 
     if (!instance) {
@@ -21,7 +21,7 @@ export default {
         KoohiiNavMenu,
         instance.$refs.navContent,
         {
-          menu: options.navOptionsMenu,
+          menu: mobileNavData,
         }
       );
       navMenu = navMenuVm;

@@ -116,11 +116,9 @@
  *
  *
  */
-// @ts-check
-
 import { kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
-import EventDispatcher from "@old/eventdispatcher";
+import EventDispatcher, { type ListenerFn } from "@lib/EventDispatcher";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
@@ -138,32 +136,27 @@ export const FCRATE = {
   DELETE: "delete",
   SKIP: "skip",
   HARD: "hard",
-};
+} as const;
 
 export default class FlashcardReview {
-  /** @type {TReviewOptions} */
-  options;
+  options: TReviewOptions;
 
   // flashcard selection as an array of flashcard ids
-  /** @type {TUcsId[]} */
-  items;
+  items: TUcsId[];
 
   // handle unique items vs repeat items
   numCards = 0;
   // how many cards are rated (not counting "again" answers)
   numRated = 0;
-  /** @type {Map<number, true>} */
-  againCards;
+  againCards: Map<number, true>;
 
   // review position, from 0 to items.length-1
   position = 0;
 
   /**
    * Cache of flashcard data. The key is the kanji (UCS code).
-   *
-   * @type {{ [key: number]: TCardData }}
    */
-  cache = {};
+  cache: { [key: TUcsId]: TCardData } = {};
 
   // cacheEnd indicate the range of valid flashcard data in the cache array.
   cacheEnd = 0;
@@ -172,40 +165,34 @@ export default class FlashcardReview {
 
   /**
    * Flashcard answers in the same order than items[].
-   *
-   * @type {TCardAnswer[]}
    */
-  postCache = [];
+  postCache: TCardAnswer[] = [];
 
   //
   postCacheFrom = 0;
 
   // max items to cache for undo
-  /** @type {number} */
-  max_undo;
+  max_undo: number;
 
   // current undo level (number of steps backward)
-  /** @type {number} */
   undoLevel = 0;
 
-  /** @type {EventDispatcher} */
-  eventDispatcher;
+  eventDispatcher: EventDispatcher;
 
-  /** @type {AjaxQueue} */
-  ajaxQueue;
+  ajaxQueue: AjaxQueue;
 
-  /** @type {TVueInstanceRef?} */
-  curCard = null;
+  curCard: TVueInstanceRef | null = null;
 
   /**
    * Initialize the front end Flashcard Review component.
-   *
-   * @param {TReviewOptions} options
    */
-  constructor(options) {
+  constructor(options: TReviewOptions) {
     console.log("FlashcardReview::init(%o)", options);
 
-    console.assert(options.items && options.items.length, "No flashcard items in this selection.");
+    console.assert(
+      options.items?.length > 0,
+      "No flashcard items in this selection."
+    );
 
     // set options and fix defaults
     options.put_request = options.put_request === false ? false : true;
@@ -222,8 +209,12 @@ export default class FlashcardReview {
     // register listeners
     this.eventDispatcher = new EventDispatcher();
     const scope = options.scope;
-    for (var sEvent in options.events) {
-      this.eventDispatcher.connect(sEvent, options.events[sEvent], scope);
+    for (const sEvent in options.events) {
+      this.eventDispatcher.connect(
+        sEvent,
+        options.events[sEvent]!,
+        scope
+      );
     }
 
     // init ajax
@@ -299,32 +290,29 @@ export default class FlashcardReview {
   /**
    * EventDispatcher proxy.
    *
-   * @param {string}    name     The type of event (the event's name)
-   * @param {Function}  fn       A javascript callable
-   * @param {Object=}    context  Context (this) for the event. Default value: the window object.
+   * @param name     The type of event (the event's name)
+   * @param fn       A javascript callable
+   * @param context  Context (this) for the event. Default value: the window object.
    */
-  connect(name, fn, context) {
+  connect(name: string, fn: ListenerFn, context?: any) {
     this.eventDispatcher.connect(name, fn, context);
   }
 
   /**
    * EventDispatcher proxy.
    *
-   * @param {string}    name   An event name
-   * @param {Function=}  fn     A javascript callable (optional)
+   * @param name   An event name
+   * @param fn     A javascript callable (optional)
    */
-  disconnect(name, fn) {
+  disconnect(name: string, fn?: ListenerFn) {
     this.eventDispatcher.disconnect(name, fn);
   }
 
   /**
    * EventDispatcher proxy.
-   *
-   * @param {string} name
-   * @param {...*} params
    */
-  notify(name, ...params) {
-    return this.eventDispatcher.notify(name, ...params);
+  notify(name: string, ...args: any[]) {
+    return this.eventDispatcher.notify(name, ...args);
   }
 
   /**
@@ -411,7 +399,10 @@ export default class FlashcardReview {
    * "ungo range" flushed out to the server.
    */
   undo() {
-    console.assert(this.undoLevel < this.max_undo, "FlashcardReview::backward() undoLevel >= max_undo");
+    console.assert(
+      this.undoLevel < this.max_undo,
+      "FlashcardReview::backward() undoLevel >= max_undo"
+    );
     if (this.undoLevel >= this.max_undo) {
       return;
     }
@@ -433,7 +424,7 @@ export default class FlashcardReview {
     this.notify("onFlashcardCreate");
 
     // we have a cached item for current position
-    const cardData = /** @type TCardData */ (this.getFlashcardData());
+    const cardData = this.getFlashcardData()!;
 
     //
     cardData.isAgain = this.position >= this.numCards;
@@ -468,11 +459,10 @@ export default class FlashcardReview {
   /**
    * Check if there are cards to prefetch, and/or answers to post.
    *
-   * @param {boolean=} bFlushData ... At end of review, force flush all remaining items in postCache.
+   * @param bFlushData ... At end of review, force flush all remaining items in postCache.
    */
-  syncReview(bFlushData) {
-    /** @type {TReviewSyncRequest} */
-    const syncData = {};
+  syncReview(bFlushData?: boolean) {
+    const syncData: TReviewSyncRequest = {};
 
     const syncNow =
       // start of review
@@ -497,7 +487,9 @@ export default class FlashcardReview {
     if ((syncNow || bFlushData) && this.options.put_request) {
       // if flush, post all, otherwise post in small batches, and leave
       //  some cards behind for the under feature
-      const syncEnd = bFlushData ? this.position : Math.max(0, this.position - this.max_undo);
+      const syncEnd = bFlushData
+        ? this.position
+        : Math.max(0, this.position - this.max_undo);
 
       const aPostData = this.postCache.slice(this.postCacheFrom, syncEnd);
       this.postCacheFrom = syncEnd;
@@ -534,11 +526,11 @@ export default class FlashcardReview {
    * Cache items returned by the server,
    * determine next position to start prefetch based on how many items were received.
    *
-   * @param {{responseJSON: TReviewSyncResponse}} o ... The YUI Connect object (extended by AjaxRequest)
-   * @param {number | 'end'} argument ... 'end' if completing review
+   * @param o ... The YUI Connect object (extended by AjaxRequest)
+   * @param argument ... 'end' if completing review
    */
-  onAjaxSuccess(o, argument) {
-    const syncResponse = o.responseJSON;
+  onAjaxSuccess(o: any, argument?: string) {
+    const syncResponse = o.responseJSON as TReviewSyncResponse;
 
     console.log("FlashcardReview::onAjaxSuccess(%o)", o);
 
@@ -570,8 +562,7 @@ export default class FlashcardReview {
     }
   }
 
-  /** @param {TCardData} cardData */
-  cacheItem(cardData) {
+  cacheItem(cardData: TCardData) {
     this.cache[cardData.id] = cardData;
   }
 
@@ -579,19 +570,16 @@ export default class FlashcardReview {
     return this.position;
   }
 
-  /** @return {TVueInstanceOf<typeof KoohiiFlashcard>?} */
-  getFlashcard() {
+  getFlashcard(): TVueInstanceOf<typeof KoohiiFlashcard> | null {
     return (this.curCard && this.curCard.vm) || null;
   }
 
   /**
    * The returned object needs to be cast based on the given Flashcard review mode.
-   *
-   * @return {TCardData | null}
    */
-  getFlashcardData() {
-    var id = this.items[this.position];
-    return id ? this.cache[id] : null;
+  getFlashcardData(): TCardData | null {
+    const id = this.items[this.position];
+    return id ? this.cache[id]! : null;
   }
 
   getNumUndos() {
@@ -602,8 +590,7 @@ export default class FlashcardReview {
     return this.items;
   }
 
-  /** @param {number} state */
-  setFlashcardState(state) {
+  setFlashcardState(state: number) {
     if (this.curCard) {
       this.curCard.vm.setState(state);
     }
@@ -621,9 +608,8 @@ export default class FlashcardReview {
    * - append answer at end of postCache[]
    * - append a copy of the card at end of items[], if using "again"
    *
-   * @param {TCardAnswer} answer
    */
-  answerCard(answer) {
+  answerCard(answer: TCardAnswer) {
     // keep track of repeat cards
     if (answer.r === FCRATE.AGAIN) {
       // add a copy of this card to the end of the review pile
@@ -650,9 +636,9 @@ export default class FlashcardReview {
    * @return {TCardAnswer} Flashcard answer (cf. answerCard()) that is "undone"
    */
   unanswerCard() {
-    console.assert(this.postCache.length);
+    console.assert(this.postCache.length > 0);
 
-    const answer = /** @type {TCardAnswer}*/ (this.postCache.pop());
+    const answer = this.postCache.pop()!;
 
     // if it was a "again" card, remove its duplicata from the end of items[]
     if (answer.r === FCRATE.AGAIN) {

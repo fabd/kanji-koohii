@@ -26,7 +26,7 @@
  */
 
 import AjaxDialog from "@old/ajaxdialog";
-import EventDispatcher from "@old/eventdispatcher";
+import EventDispatcher from "@lib/EventDispatcher";
 
 const isMobile = window.innerWidth <= 720;
 

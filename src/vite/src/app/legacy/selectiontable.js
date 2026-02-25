@@ -21,9 +21,9 @@ export default class SelectionTable {
    */
   constructor(container) {
     this.oAjaxTable = new AjaxTable(container);
-    this.oAjaxTable.evtDel.on("checkbox", this.onCheckBox, this);
-    this.oAjaxTable.evtDel.on("chkAll", this.onCheckAll, this);
-    this.oAjaxTable.evtDel.onDefault(this.onClick, this);
+    this.oAjaxTable.evtDel.on("click", ".checkbox", this.onCheckBox, this);
+    this.oAjaxTable.evtDel.on("click", ".chkAll", this.onCheckAll, this);
+    this.oAjaxTable.evtDel.onRoot("click", this.onClick, this);
   }
 
   destroy() {

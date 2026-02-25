@@ -1,5 +1,3 @@
-type AnyFunction = (...args: any[]) => any;
-
 export default {
   isArray: (o: any): boolean => Array.isArray(o),
   isBoolean: (o: any): o is boolean => typeof o === "boolean",

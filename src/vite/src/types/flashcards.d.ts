@@ -34,7 +34,7 @@ type TVocabReviewProps = {
   back_url: string;
 };
 
-// @see FlashcardReview.js
+// @see FlashcardReview.ts
 type TReviewOptions = {
   items: TUcsId[];
   ajax_url: string;
@@ -42,8 +42,7 @@ type TReviewOptions = {
   params?: Dictionary;
   max_undo?: number;
   events: {
-    /* eslint-disable-next-line @typescript-eslint/no-unsafe-function-type */
-    [name: string]: Function;
+    [name: string]: AnyFunction;
   };
   scope: any;
   put_request?: boolean;

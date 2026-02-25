@@ -131,7 +131,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
     }
 
     for (let i = 0, l = (this.length = nodes.length); i < l; i++) {
-      this[i] = nodes[i];
+      this[i] = nodes[i]!;
     }
   }
 

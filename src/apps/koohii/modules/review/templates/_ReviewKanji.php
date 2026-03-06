@@ -67,27 +67,27 @@
 
       <div class="uiFcButtons" id="uiFcButtons">
         
-        <div id="uiFcButtons0" class="-mx-1" style="display:none">
-          <h3>Press Spacebar or F to flip card</h3>
+        <div id="uiFcButtons0" class="" style="display:none">
+          <div class="uiFcButtons-prompt">Press Spacebar or F to flip card</div>
 <button 
-  class="uiIBtn uiIBtnDefault uiFcBtnAF uiFcAction w-full"
+  class="ko-Btn ko-Btn--review uiFcBtnAF uiFcAction w-full"
   data-action="flip">
   <span><u>F</u>lip Card</span>
 </button>
         </div>
     
         <div id="uiFcButtons1"<?= $freemode ? '' : ' class="three-buttons"'; ?> style="display:none">
-          <h3>Do you remember this kanji?</h3>
+          <div class="uiFcButtons-prompt">Do you remember this kanji?</div>
 
           <div class="flex items-center justify-between -mx-1">
 <button
-  class="uiIBtn uiIBtnDefault uiIBtnRed uiFcBtnAN uiFcAction flex-1"
+  class="ko-Btn ko-Btn--review uiFcBtnAN uiFcAction flex-1 mx-1"
   data-action="no" title="Forgotten">
   <span><u>N</u>o</span>
 </button>
 <?php if (1 /*!$freemode*/) { ?>
 <button
-  class="uiIBtn uiIBtnDefault uiFcAction uiFcBtnAG flex-1"
+  class="ko-Btn ko-Btn--review uiFcAction uiFcBtnAG flex-1 mx-1"
   data-action="again" title="Repeat card">
   <u>A</u>gain
 </button>
@@ -95,17 +95,17 @@
 
 <?php if (!$freemode) { ?>
 <button
- class="uiFcAction uiIBtn uiIBtnDefault uiIBtnOrange flex-2" 
+ class="ko-Btn ko-Btn--review uiFcBtnAH uiFcAction flex-2 mx-1" 
  data-action="hard" title="Hard">
   <span class="px-1"><u>H</u>ard</span>
 </button>
 <?php } ?>
-<button class="uiFcAction uiIBtn uiIBtnDefault uiFcBtnAY flex-2"
+<button class="ko-Btn ko-Btn--review uiFcAction uiFcBtnAY flex-2 mx-1"
   data-action="yes" title="Remembered with some effort">
   <span class="px-2"><u>Y</u>es</span>
 </button>
 <?php if (!$freemode) { ?>
-<button class="uiFcAction uiIBtn uiIBtnDefault uiFcBtnAE flex-2"
+<button class="ko-Btn ko-Btn--review uiFcAction uiFcBtnAE flex-2 mx-1"
   data-action="easy" title="Remembered easily">
   <span class="px-1"><u>E</u>asy</span>
 </button>

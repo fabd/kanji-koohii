@@ -47,13 +47,21 @@
       <div class="uiFcButtons" id="uiFcButtons">
         
         <div id="uiFcButtons0" style="display:none">
-          <h3>Press Spacebar to continue</h3>
-          <a href="#" class="uiIBtn uiIBtnDefault uiFcBtnAF uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
+          <div class="uiFcButtons-prompt">Press Spacebar to continue</div>
+<button
+  class="ko-Btn ko-Btn--review uiFcBtnAF uiFcAction w-full"
+  data-action="flip">
+  <span><u>F</u>lip Card</span>
+</button>
         </div>
     
         <div id="uiFcButtons1" style="display:none">
-          <h3>Press Spacebar to continue</h3>
-          <?= ui_ibtn('Continue', '/', ['class' => 'uiFcBtnAC uiFcAction', 'data-action' => 'flip']) ?>
+          <div class="uiFcButtons-prompt">Press Spacebar to continue</div>
+<button
+  class="ko-Btn ko-Btn--review uiFcBtnAC uiFcAction w-full"
+  data-action="flip">
+  <span>Continue</span>
+</button>
         </div>
       
       </div><!-- uiFcButtons -->

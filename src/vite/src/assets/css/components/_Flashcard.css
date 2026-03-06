@@ -105,19 +105,12 @@
   height: 42px;
 } /* larger buttons for touch/mobile */
 
-#uiFcButtons .uiIBtn {
-  @apply mx-1;
-  font-weight: normal;
-  margin: 0 0.25rem;
-}
-
 /* flashcard answer area */
 .uiFcButtons {
   padding: 15px 0 25px;
-  margin: 0 auto;
   text-align: center;
 }
-.uiFcButtons h3 {
+.uiFcButtons-prompt {
   font: 17px/33px Arial, sans-serif;
   color: #408fc6;
   text-align: center;
@@ -340,9 +333,11 @@
   #uiFcButtons u {
     text-decoration: none;
   } /* hide the keyboard shortcut hints */
-  #uiFcButtons h3 {
+  
+  /* remove prompts to save space */
+  .uiFcButtons-prompt {
     display: none;
-  } /* remove prompts to save space */
+  }
 
   #uiFcReview {
     width: auto;

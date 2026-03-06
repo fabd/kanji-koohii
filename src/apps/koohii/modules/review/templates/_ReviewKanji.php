@@ -69,7 +69,11 @@
         
         <div id="uiFcButtons0" class="-mx-1" style="display:none">
           <h3>Press Spacebar or F to flip card</h3>
-          <a href="#" class="uiIBtn uiIBtnDefault uiFcBtnAF uiFcAction w-full" data-action="flip"><span><u>F</u>lip Card</span></a>
+<button 
+  class="uiIBtn uiIBtnDefault uiFcBtnAF uiFcAction w-full"
+  data-action="flip">
+  <span><u>F</u>lip Card</span>
+</button>
         </div>
     
         <div id="uiFcButtons1"<?= $freemode ? '' : ' class="three-buttons"'; ?> style="display:none">

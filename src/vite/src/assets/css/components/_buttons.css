@@ -65,6 +65,11 @@
     text-decoration: none; /* when applied to <a> */
   }
 
+  /* visual feedback for pressed state */
+  &:active {
+    transform: scale(0.975, 0.95);
+  }
+
   /* */
   &.is-disabled {
     &,

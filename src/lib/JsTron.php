@@ -97,7 +97,21 @@ class JsTron extends sfParameterHolder
 
   public function setError($message)
   {
-    $this->errors = [$message];
+    $this->errors[] = $message;
+  }
+
+  /**
+   * Set errors from the Request errors (eg. from form validation).
+   *
+   * @param coreRequest $request
+   * @return void
+   */
+  public function setErrorsFromRequest(coreRequest $request)
+  {
+    $errors = $request->getErrors();
+    foreach ($errors as $key => $message) {
+      $this->setError($message);
+    }
   }
 
   public function getErrors()

@@ -264,10 +264,6 @@ export default defineComponent({
     displayKeyword(): string {
       return this.custKeyword || this.kanjiData.keyword;
     },
-
-    editKeywordUrl(): string {
-      return "/study/editkeyword/id/" + this.kanjiData.ucs_id;
-    },
   },
 
   beforeUnmount() {
@@ -447,9 +443,8 @@ export default defineComponent({
       };
 
       if (!this.oEditKeyword) {
-        const url = this.editKeywordUrl;
         const options = { context: ["my-story", "tr", "tr", null, [-6, 6]] };
-        this.oEditKeyword = new EditKeywordDialog(url, options, callback);
+        this.oEditKeyword = new EditKeywordDialog(this.kanjiData.ucs_id, options, callback);
       } else {
         this.oEditKeyword.show();
       }

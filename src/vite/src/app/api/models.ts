@@ -67,3 +67,7 @@ export type PostUserStoryResponse = {
   // author link in the "shared story" template
   sharedStoryAuthor: string; // html link
 };
+
+export type PostUserKeywordResponse = {
+  keyword?: string;
+};

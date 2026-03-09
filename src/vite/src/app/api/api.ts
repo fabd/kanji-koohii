@@ -4,6 +4,7 @@ import type {
   GetDictListForUCS,
   GetDictCacheFor,
   PostUserStoryResponse,
+  PostUserKeywordResponse,
   PostVoteStoryRequest,
   PostVoteStoryResponse,
 } from "./models";
@@ -132,6 +133,17 @@ export class LegacyApi extends HttpClient {
       reviewMode,
       postStoryEdit: txtStory,
       postStoryPublic: isPublic,
+    });
+  }
+
+  // Edit Custom Keyword dialog
+  postUserKeyword(
+    ucsId: number,
+    keyword: string
+  ) {
+    return this.post<PostUserKeywordResponse>("/study/editkeyword", {
+      ucsId,
+      keyword
     });
   }
 

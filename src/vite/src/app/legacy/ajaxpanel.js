@@ -180,15 +180,10 @@ export default class AjaxPanel {
       }
     }
 
-    if (options.loadContent) {
-      // load panel contents on instancing
-      this.prepareConnect(null, "get", options.loadContent);
-    } else {
-      // assume content is already there
-      this.serializeForm = this.getForm();
-      if (this.options.initContent) {
-        this.initContent();
-      }
+    this.serializeForm = this.getForm();
+
+    if (this.options.initContent) {
+      this.initContent();
     }
   }
 
@@ -233,7 +228,7 @@ export default class AjaxPanel {
   replaceContent(tron) {
     var html = tron.getHtml();
 
-    console.log("AjaxPanel.replaceContent(html %s)", html ? "YES" : "NO");
+    console.log("AjaxPanel::replaceContent(html %s)", html ? "YES" : "NO");
 
     if (html) {
       this.evtCache.destroy();
@@ -271,7 +266,7 @@ export default class AjaxPanel {
    */
   getForm() {
     if (this.options.form === true) {
-      return $$("form", this.container)[0];
+      return $$("form", this.container)[0] || null;
     } else if (Lang.isString(this.options.form)) {
       // return the first form that matches the class name
       var form = $$(this.options.form, this.container)[0];

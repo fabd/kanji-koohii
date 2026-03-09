@@ -23,6 +23,15 @@
         />
 
         <div class="mt-4 flex items-center justify-end">
+          <div class="mr-auto pl-2">
+            Characters left:
+            <koohii-chars-left
+              :text="keyword"
+              :max-length="32"
+              :warning-limit="5"
+            />
+          </div>
+
           <a
             href="#"
             class="inline-block text-[#f37200] hover:text-[#f37200] mr-4"
@@ -50,10 +59,15 @@ import { getApi } from "@app/api/api";
 import { type TronInst } from "@lib/tron";
 import { type PostUserKeywordResponse } from "@app/api/models";
 
+import KoohiiCharsLeft from "@/vue/KoohiiCharsLeft.vue";
 import KoohiiLoading from "@/vue/KoohiiLoading";
 
 export default defineComponent({
   name: "KoEditKeyword",
+
+  components: {
+    KoohiiCharsLeft,
+  },
 
   data() {
     return {
@@ -68,7 +82,10 @@ export default defineComponent({
     origKeyword: { type: String, required: true },
     userKeyword: { type: String, required: true },
     isManagePage: { type: Boolean, required: true },
-    onSuccess: { type: Function as PropType<(keyword: string, tabKey?: boolean) => void>, required: true },
+    onSuccess: {
+      type: Function as PropType<(keyword: string, tabKey?: boolean) => void>,
+      required: true,
+    },
   },
 
   mounted() {

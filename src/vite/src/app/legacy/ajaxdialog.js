@@ -534,6 +534,11 @@ export default class AjaxDialog {
   onPanelResponse(tron) {
     //console.log("onPanelResponse(%o)", tron);
 
+    const props = tron.getProps();
+    if (props.dialogTitle) {
+      this.yPanel.setHeader(props.dialogTitle);
+    }
+
     this.eventDispatcher.notify("onDialogResponse", tron);
 
     // handle the dialog status events for JSON response
@@ -556,11 +561,6 @@ export default class AjaxDialog {
     // realign if using context alignment
     if (this.options.context) {
       this.yPanel.cfg.setProperty("context", this.options.context);
-    }
-
-    const props = tron && tron.getProps() || {};
-    if (props.dialogTitle) {
-      this.yPanel.setHeader(props.dialogTitle);
     }
 
     // manually center after panel content is loaded

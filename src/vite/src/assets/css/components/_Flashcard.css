@@ -132,8 +132,6 @@
 } /* used on Vocab Shuffle */
 
 .uiFcStBox {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
   border-radius: 5px;
   background-color: #94d3ff;
   padding: 5px;

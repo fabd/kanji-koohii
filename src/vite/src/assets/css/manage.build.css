@@ -47,8 +47,6 @@
 .edit-icon {
   padding: 4px 5px;
   border-radius: 3px 3px;
-  -moz-border-radius: 3px 3px;
-  -webkit-border-radius: 3px 3px;
   background-color: #f3f1dc;
   cursor: pointer;
 }

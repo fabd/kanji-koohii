@@ -133,8 +133,6 @@ a.admin-edit {
 /* subtle shadow */
 .css3-ssh {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 /* ---------------------------- */
@@ -144,8 +142,7 @@ a.admin-edit {
 /* disable selection for GUI items */
 .uiGUI {
   outline: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
+  user-select: none;
 }
 
 /*.action_top-right { position:absolute; right:0; top:0; }*/
@@ -614,7 +611,6 @@ div.col-box-bis {
 
 .rounded-css3 {
   border-radius: 5px;
-  -moz-border-radius: 5px;
 }
 
 .formerrormessage {
@@ -790,8 +786,6 @@ a:hover.subdued {
   border: none;
   background: rgba(0, 0, 0, 0.5); /* dark glassy effect */
   border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
 }
 .yui-skin-sam .yui-panel-container {
   padding: 0;

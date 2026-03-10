@@ -85,11 +85,7 @@ h3 {
 /* misc. effects */
 kbd {
   border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
   background: #ddd;
   color: #333;
   font: 100%/1em "Andale Mono", "Consolas", monospace;

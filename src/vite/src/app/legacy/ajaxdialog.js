@@ -636,7 +636,7 @@ export default class AjaxDialog {
    * @return {boolean}  True if the dialog is closed
    */
   handleDialogStatus(dialogStatus, tron) {
-    console.log("AjaxDialog.handleDialogStatus(%o)", dialogStatus);
+    // console.log("AjaxDialog.handleDialogStatus(%o)", dialogStatus);
 
     if (dialogStatus === AjaxDialog.STATUS_SUCCESS) {
       // success : dismiss dialog, notify event

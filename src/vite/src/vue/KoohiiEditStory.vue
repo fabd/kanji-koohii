@@ -275,7 +275,7 @@ export default defineComponent({
   },
 
   created() {
-    console.log("KoohiiEditStory::created()");
+    // console.log("KoohiiEditStory::created()");
 
     this.isFavoriteStory = !!this.initFavoriteStory;
 

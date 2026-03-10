@@ -143,7 +143,7 @@ export default class AjaxPanel {
    * @param {AjaxPanelOpts} options                   See class doc
    */
   constructor(container, options = {}) {
-    console.log("AjaxPanel.init() options %o ", options);
+    // console.log("AjaxPanel.init() options %o ", options);
 
     // set defaults
     this.options = {

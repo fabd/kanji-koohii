@@ -422,15 +422,8 @@
     padding: 0 0 9px;
   }
 
-  /* javascript based dialogs */
-  #editflashcarddlg {
-    width: auto;
-  }
   .uiBMenuBody {
     box-shadow: none;
-  }
-  #editflashcarddlg .uiBMenuItem {
-    width: auto;
   }
 }
 

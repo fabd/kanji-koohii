@@ -16,6 +16,8 @@ type EditKeywordResponse = {
 
 export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
 
+const isMobile = window.innerWidth <= 700;
+
 export default class EditKeywordDialog {
   private options: any;
 
@@ -47,18 +49,24 @@ export default class EditKeywordDialog {
     this.options = options;
     this.callback = callback;
 
-    const dlgopts = {
+    const dlgopts: AjaxDialogOpts = {
       requestUri: `/study/editkeyword/id/${ucsId}`,
       requestData: options.params,
-      skin: "rtk-skin-dlg",
-      context: options.context,
-      width: 380,
+      skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+      mobile: isMobile,
+      close: !isMobile,
+      width: 380, // make sure this matches width set in CSS
       scope: this,
       events: {
         onDialogResponse: this.onDialogResponse,
         onDialogHide: this.onHide,
       },
     };
+
+    // position dialog
+    if (!isMobile) {
+      dlgopts.context = options.context;
+    }
 
     this.dialog = new AjaxDialog(null, dlgopts);
     this.dialog.show();

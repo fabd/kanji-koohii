@@ -1,5 +1,5 @@
 <template>
-  <div id="edit-keyword" class="body w-[380px]" ref="loadingMask">
+  <div class="ko-EditKeywordDlg body" ref="loadingMask">
     <div class="text-sm mb-4">
       <p>Press <kbd>Enter</kbd> to save and close the dialog.</p>
 

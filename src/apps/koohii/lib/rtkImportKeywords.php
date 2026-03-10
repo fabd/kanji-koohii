@@ -15,7 +15,7 @@ class rtkImportKeywords
     $keywords   = [];
 
   const
-    MAX_KEYWORD = 40;
+    MAX_KEYWORD = 32;
   
   /**
    * 

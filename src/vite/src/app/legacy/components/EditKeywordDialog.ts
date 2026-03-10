@@ -11,6 +11,7 @@ type EditKeywordResponse = {
   ucs_id: TUcsId;
   orig_keyword: string;
   user_keyword: string;
+  max_length: number;
 };
 
 export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
@@ -85,6 +86,7 @@ export default class EditKeywordDialog {
       ucsId: props.ucs_id,
       origKeyword: props.orig_keyword,
       userKeyword: props.user_keyword,
+      maxLength: props.max_length,
       isManagePage: this.options.isManagePage || false,
       onSuccess: (keyword: string, tabKey: boolean) => {
         this.dialog?.hide();

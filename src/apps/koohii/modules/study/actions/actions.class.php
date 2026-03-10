@@ -598,12 +598,14 @@ class studyActions extends sfActions
 
     if ($request->getMethod() !== sfRequest::POST)
     {
+      // GET request from the AjaxDialog opening
       $tron->add([
         'dialogWidth'   => 387,
         'dialogTitle'   => "Customize Keyword for {$chardata->kanji}",
         'ucs_id'        => $chardata->ucs_id,
         'orig_keyword'  => $chardata->keyword,
         'user_keyword'  => $custom_keyword ?? $chardata->keyword,
+        'max_length'    => rtkImportKeywords::MAX_KEYWORD,
       ]);
     }
     else

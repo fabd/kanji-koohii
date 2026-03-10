@@ -27,7 +27,7 @@
             Characters left:
             <koohii-chars-left
               :text="keyword"
-              :max-length="32"
+              :max-length="maxLength"
               :warning-limit="5"
             />
           </div>
@@ -81,6 +81,7 @@ export default defineComponent({
     ucsId: { type: Number, required: true },
     origKeyword: { type: String, required: true },
     userKeyword: { type: String, required: true },
+    maxLength: { type: Number, required: true },
     isManagePage: { type: Boolean, required: true },
     onSuccess: {
       type: Function as PropType<(keyword: string, tabKey?: boolean) => void>,

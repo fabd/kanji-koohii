@@ -17,7 +17,7 @@
           type="text"
           name="keyword"
           v-model="keyword"
-          class="form-control bg-amber-100"
+          class="form-control bg-amber-100 focus:bg-amber-100"
           autocomplete="off"
           @keydown="onKeyDown($event)"
         />

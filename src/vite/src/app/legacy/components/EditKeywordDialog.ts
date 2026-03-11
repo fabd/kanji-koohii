@@ -1,6 +1,3 @@
-// FIXME: legacy Edit Keyword dialog, should be a Vue
-
-import $$ from "@lib/dom";
 import { type TronInst } from "@lib/tron";
 import AjaxDialog from "@old/ajaxdialog";
 import VueInstance from "@lib/helpers/vue-instance";

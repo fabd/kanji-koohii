@@ -99,7 +99,7 @@ function getIndexToUcsMap(): TMapIndexToUcs {
 const getUserKeywords = function () {
   userKeywordsMap ??= new Map(
     kk_globals_get("USER_KEYWORDS_MAP")
-  ) as TKeywordMap;
+  );
 
   return userKeywordsMap;
 };

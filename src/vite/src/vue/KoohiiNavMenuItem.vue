@@ -14,9 +14,9 @@
     </div>
     <div ref="contentWrap" class="k-fx-collapse__wrap">
       <div ref="content">
-        <ul v-if="menuChildren.length" class="k-nav-menu">
+        <ul v-if="sm.children && sm.children.length" class="k-nav-menu">
           <koohii-nav-menu-item
-            v-for="$item in menuChildren"
+            v-for="$item in sm.children"
             :key="$item.id"
             :sm="$item"
           />
@@ -50,12 +50,8 @@ export default defineComponent({
   },
 
   computed: {
-    menuChildren(): any[] {
-      return this.sm.children || [];
-    },
-
     hasChildren(): boolean {
-      return this.menuChildren.length > 0;
+      return this.sm.children && this.sm.children.length > 0;
     },
 
     rootMenu() {
@@ -71,7 +67,6 @@ export default defineComponent({
     // console.log('KoohiiNavMenuItem::created()')
 
     //this.rootMenu.menuItems[this.sm.id] = this;
-
 
     // set initial open state
     this.opened =

@@ -14,7 +14,7 @@ let userKanji: TUserKanjiMap;
  * @see ReviewsPeer::getUserKanjiCardsJS()
  */
 export function getUserKanji() {
-  userKanji ??= new Map(kk_globals_get("USER_KANJI_CARDS")) as TUserKanjiMap;
+  userKanji ??= new Map(kk_globals_get("USER_KANJI_CARDS"));
 
   return userKanji;
 }

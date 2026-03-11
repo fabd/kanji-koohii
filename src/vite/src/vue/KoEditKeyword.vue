@@ -1,6 +1,6 @@
 <template>
   <div class="ko-EditKeywordDlg body" ref="loadingMask">
-    <div class="text-sm mb-4">
+    <div class="text-sm">
       <p>Press <kbd>Enter</kbd> to save and close the dialog.</p>
 
       <p v-if="isManagePage">

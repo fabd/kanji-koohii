@@ -210,86 +210,67 @@ div.col-box-bis {
 
 
 /* ---------------------------- */
-/* Footer & Support (Nov 2016) */
+/* Footer & Support             */
 /* ---------------------------- */
-.k_bg_free {
+.ko-PageFooter-grad {
   /* http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
   background: #f8c5e4; /* Old browsers */
   background: linear-gradient(to bottom, #f8c5e4 0%, #f0ddd4 100%);
 }
 
-.with-footer #main {
-  padding-bottom: 5em;
-}
-
-#footer {
+.ko-PageFooter {
   text-align: center;
   padding: 0 0 5em;
   font-size: 17px;
   color: #8b1566;
+
+  a {
+    color: #e400b1;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #e400b1;
+    text-decoration: underline;
+  }
+
+  /* fontawesome icons */
+  .fa {
+    color: #9c3d7b;
+    margin-right: 0.5em;
+  }
 }
-#footer p {
-  line-height: 1.2em;
-  margin: 0 0 0.8em;
+
+.ko-PageFooter-links {
+  a {
+    padding-left: 0.8em;
+    padding-right: 0.8em; /*tap target*/
+    color: #9c3d7b;
+    text-decoration: none;
+  }
 }
-#footer .transition {
+
+.ko-PageFooter-dots {
   width: 100%;
   height: 29px;
-  background: var(--clr-bg-body) url(/koohii/landing/bubbles_gdt.png) repeat-x 0 0;
-}
-#footer section {
-  padding-top: 24px;
-}
-#footer a {
-  color: #e400b1;
-  text-decoration: none;
-}
-
-/* links */
-#footer ul {
-  margin: 1.5em 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: 14px;
-  line-height: 1.4em;
-}
-#footer li {
-  display: inline-block;
-  margin: 0;
-  font-weight: normal;
-}
-#footer li a {
-  padding-left: 0.8em;
-  padding-right: 0.8em; /*tap target*/
-  color: #9c3d7b;
-  text-decoration: none;
-}
-#footer a:hover {
-  color: #e400b1;
-  text-decoration: underline;
-}
-
-/* fontawesome icons */
-#footer .fa {
-  color: #9c3d7b;
-  margin-right: 0.5em;
+  background: var(--clr-bg-body) url(/koohii/landing/bubbles_gdt.png) repeat-x 0
+    0;
 }
 
 @media (max-width: 600px) {
-  #footer {
+  .ko-PageFooter {
     font-size: 15px;
   }
-  #footer p a {
+  .ko-PageFooter p a {
     display: inline-block;
     padding: 0.5em 0;
   }
-  #footer .break {
+  .ko-PageFooter .break {
     display: block;
   }
-  #footer .ne {
+  .ko-PageFooter .ne {
     display: none;
-  } /* non essential links */
-  /*#footer #ft-tweet_btn { display:block; margin:1.5em 0 0; }*/
+  }
 }
 
 /* ---------------------------- */

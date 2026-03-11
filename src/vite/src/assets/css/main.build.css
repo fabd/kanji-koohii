@@ -198,16 +198,27 @@ div.col-box-bis {
 /* ---------------------------- */
 /* Main Layout                  */
 /* ---------------------------- */
-#main_container {
-  padding-top: 24px;
+
+/* extend the footer end of gradient color to bottom of page */
+body.with-footer {
+  background: #f0ddd4;
+}
+main {
+  background: var(--clr-bg-body);
 }
 
-@media only screen and (width < 64rem) { /* = tailwind max-lg */ 
-  .study-index #main_container, .study-edit #main_container {
-    padding-top:0;
-  }
+main {
+  padding-bottom: 5em;
 }
 
+.ko-MainContainer {
+  @apply pt-6;
+}
+
+.study-index .ko-MainContainer,
+.study-edit .ko-MainContainer {
+  @apply max-lg:pt-0;
+}
 
 /* ---------------------------- */
 /* Footer & Support             */

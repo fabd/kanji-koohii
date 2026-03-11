@@ -55,11 +55,11 @@
 <?php if ($isLandingPage) {
   echo $sf_content;
 } else { ?>
-<div id="main">
-  <div id="main_container" class="ko-Container">
+<main>
+  <div class="ko-MainContainer ko-Container">
 <?php echo $sf_content ?>
   </div>
-</div>
+</main>
 <?php if ($sf_request->getParameter('_homeFooter')) { include_partial('home/homeFooter'); } ?>
 <?php } ?>
 

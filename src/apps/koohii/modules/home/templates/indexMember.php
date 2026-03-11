@@ -152,13 +152,6 @@
   </div>
 <?php endif ?>
 
-<?php /* PURPOSELY CLOSE THE MAIN CONTAINER cf. layout.php
-  </div><!-- /#main_container -->
-</div><!-- /#main -->
-<div id="main">
-  <div id="main_container" class="ko-Container">
- */ ?>
-
 <?php
   include_partial('news/recent');
 

@@ -1,6 +1,6 @@
 1. [First Time Setup](#first-time-setup)
 2. [Running the website](#running-the-website)
-3. [Development & Production Builds](#development--production-builds)
+3. [Development \& Production Builds](#development--production-builds)
    1. [The Symfony 1 Project Structure](#the-symfony-1-project-structure)
 4. [The Php/Apache container](#the-phpapache-container)
    1. [Solving file permission issues with a Linux host](#solving-file-permission-issues-with-a-linux-host)
@@ -207,12 +207,11 @@ Most YAML (`.yml`) configuration changes are picked up automatically (for exampl
 
 Recommended setup:
 
-- ESLint [link](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- Prettier [link](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- Stylelint [link](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
-- Tailwind CSS IntelliSense [link](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
-- TypeScript Vue Plugin (Volar) [link](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
-- Vue Language Features (Volar) [link](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- ESLint
+- Prettier - Code formatter
+- Stylelint - Official Stylelint extension for Visual Studio Code
+- Tailwind CSS IntelliSense
+- Vue (Official) - Language Support for Vue
 
 ## Docker
 

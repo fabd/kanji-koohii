@@ -112,7 +112,7 @@ DROP TABLE IF EXISTS kanjis;
 
 CREATE TABLE `kanjis` (
   `ucs_id`       SMALLINT UNSIGNED NOT NULL,
-  `keyword`      CHAR(32) NOT NULL DEFAULT '',
+  `keyword`      CHAR(40) NOT NULL DEFAULT '',
   `kanji`        CHAR(1) NOT NULL DEFAULT '',
   `onyomi`       VARCHAR(50) NOT NULL DEFAULT '',
   `idx_olded`    SMALLINT UNSIGNED NOT NULL,

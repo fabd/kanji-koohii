@@ -558,25 +558,35 @@ class studyActions extends sfActions
   }
 
   /**
-   * EditKeyword (ajax).
+   * Endpoint for the EditKeyword dialog.
+   * 
+   * /study/editkeyword/id/{ucsId}
+   * 
+   * GET
+   *   id     int      UCS-2 code
    *
-   * Request parameters:
-   *   int   id   UCS-2 code.
+   * POST request parameters (JSON):
+   *   ucsId    int     UCS-2 code
+   *   keyword  string
    */
-  public function executeEditkeyword($request)
+  public function executeEditkeyword(coreRequest $request)
   {
-    $success = false;
-
-    $ucsId = intval($request->getParameter('id'));
-
-    // sanitize
-    if (!BaseValidators::validateInteger($ucsId))
-    {
-      throw new rtkAjaxException('Bad request.');
+    // legacy AjaxDialog's GET request doesn't use JSON...
+    if ($request->hasParameter('id'))  {
+      $json = (object) [
+        'ucsId' => $request->getParameter('id'),
+      ];
+    }
+    else {
+      $json = $request->getContentJson();
     }
 
+// sleep(1);
+    $ucsId = (int) $json->ucsId;
+
     // filter disallowed characters
-    if (!CJK::isCJKUnifiedUCS($ucsId) || false === ($chardata = KanjisPeer::getKanjiByUCS($ucsId)))
+    $chardata = KanjisPeer::getKanjiByUCS($ucsId);
+    if (!CJK::isCJKUnifiedUCS($ucsId) || false === $chardata)
     {
       throw new rtkAjaxException('Invalid character.');
     }
@@ -584,23 +594,27 @@ class studyActions extends sfActions
     $custom_keyword = CustkeywordsPeer::getCustomKeyword($this->getUser()->getUserId(), $chardata->ucs_id);
 
     $tron = new JsTron();
-    $tron->add([
-      'dialogWidth'   => 387,
-      'dialogTitle'   => 'Customize Keyword for '.$chardata->kanji,
-      'orig_keyword'  => $chardata->keyword,
-      'cust_keyword'  => $custom_keyword
-    ]);
     $tron->setStatus(JsTron::STATUS_PROGRESS);
 
     if ($request->getMethod() !== sfRequest::POST)
     {
-
+      // GET request from the AjaxDialog opening
+      $tron->add([
+        'dialogWidth'   => 387,
+        'dialogTitle'   => "Customize Keyword for {$chardata->kanji}",
+        'ucs_id'        => $chardata->ucs_id,
+        'orig_keyword'  => $chardata->keyword,
+        'user_keyword'  => $custom_keyword ?? $chardata->keyword,
+        'max_length'    => rtkImportKeywords::MAX_KEYWORD,
+      ]);
     }
     else
     {
       mb_internal_encoding('utf-8');
 
-      $keyword         = trim($request->getParameter('keyword', ''));
+      $success = false;
+
+      $keyword = trim($json->keyword);
       $default_keyword = $chardata->keyword;
 
       // let empty keyword revert to the default
@@ -617,23 +631,33 @@ class studyActions extends sfActions
           $success = true;
         }
       }
-      else if (rtkImportKeywords::validateKeyword($keyword, $request))
+      else
       {
-        // update keyword
-        if (CustkeywordsPeer::updateCustomKeyword($this->getUser()->getUserId(), $ucsId, $keyword))
-        {
-          $success = true;
+        $is_valid = rtkImportKeywords::validateKeyword($keyword, $request);
+    
+        // add validation errors to the TRON response
+        if ($request->hasErrors()) {
+          $tron->setErrorsFromRequest($request);
+          $tron->setStatus(JsTron::STATUS_FAILED);
         }
-        else
+
+        if ($is_valid)
         {
-          $request->setError('x', 'Update error.');
+          if (CustkeywordsPeer::updateCustomKeyword($this->getUser()->getUserId(), $ucsId, $keyword))
+          {
+            $success = true;
+          }
+          else
+          {
+            $tron->setError('Oops, update failed.');
+            $tron->setStatus(JsTron::STATUS_FAILED);
+          }
         }
       }
     
       // success response with edited keyword, and flag for chain editing
       if (true === $success)
       {
-        $tron = new JsTron();
         $tron->setStatus(JsTron::STATUS_SUCCESS);
         $tron->set('keyword', $keyword);
           
@@ -642,16 +666,10 @@ class studyActions extends sfActions
         {
           $tron->set('next', true);
         }
-
-        return $tron->renderJson($this);
       }
     }
 
-    return $tron->renderPartial($this, 'EditKeyword', [
-      'ucs_id'       => $chardata->ucs_id,
-      'keyword'      => $custom_keyword !== null ? $custom_keyword : $chardata->keyword,
-      'orig_keyword' => $chardata->keyword
-    ]);
+    return $tron->renderJson($this);
   }
 
   /**

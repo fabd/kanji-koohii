@@ -8,7 +8,7 @@ import AjaxDialog from "@old/ajaxdialog";
 import VueInstance from "@lib/helpers/vue-instance";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 
-const isMobile = window.innerWidth <= 720;
+const isMobile = window.innerWidth <= 700;
 
 const LOADING_WIDTH = 500;
 

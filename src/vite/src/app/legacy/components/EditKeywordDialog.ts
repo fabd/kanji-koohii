@@ -1,72 +1,81 @@
 // FIXME: legacy Edit Keyword dialog, should be a Vue
 
-import $$, { stopEvent } from "@lib/dom";
-import * as TRON from "@lib/tron";
-import EventCache from "@lib/EventCache";
+import $$ from "@lib/dom";
+import { type TronInst } from "@lib/tron";
 import AjaxDialog from "@old/ajaxdialog";
+import VueInstance from "@lib/helpers/vue-instance";
+
+import KoEditKeyword from "@/vue/KoEditKeyword.vue";
 
 type EditKeywordResponse = {
+  ucs_id: TUcsId;
   orig_keyword: string;
-  cust_keyword: string | null;
-};
-
-type EditKeywordSuccessResponse = {
-  keyword: string;
-  next?: boolean;
+  user_keyword: string;
+  max_length: number;
 };
 
 export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
 
+const isMobile = window.innerWidth <= 700;
+
 export default class EditKeywordDialog {
   private options: any;
+
+  private ucsId: TUcsId;
 
   private callback: EditKeywordCallback;
 
   private dialog: AjaxDialog | null = null;
 
-  private evtCache: EventCache | null = null;
-
-  private props: EditKeywordResponse | null = null;
+  private vueInst: TVueInstanceRef | null = null;
 
   /**
    *
    * Options:
    *   context    Sets the context element to align the dialog (see YUI2 Overlay).
-   *   params     Request data for AjaxDialog: id => ucs code, manage => enable chain editing
    *
-   * @param {string} uri  request uri
-   * @param {any} options   params (AjaxDialog requestData), context (YUI2 Panel option)
-   * @param {function} callback   Callback to insert the updated keyword back into the page
+   * @param ucsId
+   * @param options   params (AjaxDialog requestData), context (YUI2 Panel option)
+   * @param callback   Callback to insert the updated keyword back into the page
    */
-  constructor(url: string, options: Dictionary, callback: EditKeywordCallback) {
-    console.log("EditKeywordDialog(%s, %o)", url, options);
+  constructor(
+    ucsId: TUcsId,
+    options: Dictionary,
+    callback: EditKeywordCallback
+  ) {
+    console.log("EditKeywordDialog(%d %o)", ucsId, options);
 
+    this.ucsId = ucsId;
     this.options = options;
     this.callback = callback;
 
-    const dlgopts = {
-      requestUri: url,
+    const dlgopts: AjaxDialogOpts = {
+      requestUri: `/study/editkeyword/id/${ucsId}`,
       requestData: options.params,
-      skin: "rtk-skin-dlg",
-      context: options.context,
+      skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+      mobile: isMobile,
+      close: !isMobile,
+      width: 380, // make sure this matches width set in CSS
       scope: this,
       events: {
-        onDialogInit: this.onInit,
-        onDialogDestroy: this.onDestroy,
-        onDialogSuccess: this.onSuccess,
+        onDialogResponse: this.onDialogResponse,
         onDialogHide: this.onHide,
       },
     };
 
+    // position dialog
+    if (!isMobile) {
+      dlgopts.context = options.context;
+    }
+
     this.dialog = new AjaxDialog(null, dlgopts);
-    this.dialog.on("click", ".JsReset", this.onReset, this);
     this.dialog.show();
   }
 
   // Show again, after it is closed with the YUI close button.
   show() {
     this.dialog!.show();
-    this.focus();
+    this.vueInst?.vm.focusInput();
   }
 
   destroy() {
@@ -74,64 +83,31 @@ export default class EditKeywordDialog {
     this.dialog = null;
   }
 
-  focus() {
-    const el = this.getInput();
-    el.focus();
-    el.select();
-  }
+  onDialogResponse(tron: TronInst<EditKeywordResponse>) {
+    console.log("EditKeywordDialog::onDialogResponse()");
+    const elMount = this.dialog!.getBody();
+    const props = tron.getProps();
 
-  onInit(t: TRON.TronInst<EditKeywordResponse>) {
-    this.props = t.getProps();
+    // if (this.vueInst) this.vueInst.unmount();
 
-    // listener for the TAB key (chain edit on the Manage page)
-    this.evtCache = new EventCache();
-    this.evtCache.addEvent(
-      this.getInput(),
-      "keydown",
-      this.onKeyDown.bind(this)
-    );
-
-    this.focus();
-  }
-
-  onDestroy() {
-    this.evtCache!.destroy();
-    this.evtCache = null;
-  }
-
-  onKeyDown(e: Event) {
-    const kbdEvent = <KeyboardEvent>e;
-
-    // TAB key
-    if (kbdEvent.keyCode === 9) {
-      this.dialog!.getAjaxPanel().post({ doNext: true });
-      stopEvent(e);
-      return false;
-    }
-
-    return true;
-  }
-
-  onHide() {
-    // keep the dialog in the page
-    return false;
+    this.vueInst = VueInstance(KoEditKeyword, elMount, {
+      ucsId: props.ucs_id,
+      origKeyword: props.orig_keyword,
+      userKeyword: props.user_keyword,
+      maxLength: props.max_length,
+      isManagePage: this.options.isManagePage || false,
+      onSuccess: (keyword: string, tabKey: boolean) => {
+        this.dialog?.hide();
+        this.callback(keyword, tabKey);
+      }
+    });
   }
 
   // Copy keyword back into the main page
   // If JsTron property "next" is returned, the callback for the Manage page edits the next keyword
-  onSuccess(t: TRON.TronInst<EditKeywordSuccessResponse>) {
-    const props = t.getProps();
-    this.callback(props.keyword, props.next);
-  }
 
-  onReset() {
-    const input = this.getInput();
-    input.value = this.props!.orig_keyword;
-    input.focus();
+  onHide() {
+    // keep the dialog in the page
     return false;
-  }
-
-  getInput(): HTMLInputElement {
-    return $$(".JsEditKeywordTxt", this.dialog!.getBody())[0] as HTMLInputElement;
   }
 }

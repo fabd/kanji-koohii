@@ -23,7 +23,7 @@ class ManagePage {
   private selectionTable: SelectionTable | null = null;
 
   private editKeywordUri: string = "";
-  private editKeywordId: string = "";
+  private editKeywordId: number = 0;
   private oEditKeyword?: EditKeywordDialog | null;
 
   constructor() {
@@ -102,8 +102,8 @@ class ManagePage {
    * Open the Edit Keyword dialog for keywords in the Manage > Edit Keywords table.
    *
    */
-  onEditKeyword(e: Event | null, el: Element): boolean {
-    const callback: EditKeywordCallback = (keyword, next) => {
+  onEditKeyword(_ev: Event | null, el: Element): boolean {
+    const callback: EditKeywordCallback = (keyword, tabKey) => {
       console.log("EditKeywordDialog callback");
 
       // get the custkeyword td
@@ -115,7 +115,7 @@ class ManagePage {
       this.oEditKeyword!.destroy();
       this.oEditKeyword = null;
 
-      if (next) {
+      if (tabKey) {
         console.log("Edit next keyword...", tr);
         const nextRow = tr.nextElementSibling;
         if (nextRow) {
@@ -129,22 +129,23 @@ class ManagePage {
 
     // just show dialog if clicking the same keyword twice, otherwise load
 
-    const ucsId = (el as HTMLElement).dataset.id!;
+    const ucsId = parseInt((el as HTMLElement).dataset.id!);
+
     if (!this.oEditKeyword || ucsId !== this.editKeywordId) {
       const contextEl = el.closest("td");
 
       const options = {
         context: [contextEl, "tr", "tr", null, [0, 0]],
+        isManagePage: true,
         params: {
           id: ucsId,
-          manage: true,
-        } /* manage: use the "Save & Next" chain editing */,
+        } 
       };
 
       // FIXME ideally should call this.oEditKeyword.destroy() here if it is set
 
       this.oEditKeyword = new EditKeywordDialog(
-        this.editKeywordUri,
+        ucsId,
         options,
         callback
       );

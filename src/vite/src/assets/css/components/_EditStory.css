@@ -47,7 +47,6 @@
   }
   .keyword {
     font: 20px Georgia, Times New Roman, sans-serif;
-    letter-spacing: 2px;
     text-align: right;
     .edition {
       font-size: 0.6em;

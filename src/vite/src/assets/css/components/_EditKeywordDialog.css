@@ -5,30 +5,15 @@
  *
  */
 
-/* dialog body */
-#edit-keyword {
-  min-width: 367px;
-
-  p {
-    margin: 0 0 8px;
-  }
-
-  .JsEditKeywordTxt {
-    background: #fffde7;
-    font: 19px/1em Georgia, serif;
-  }
-
-  @media screen and (max-width: 700px) {
-    width: auto;
-  }
+/* (desktop) dialog size - should match width set in AjaxDialog options */
+.rtk-skin-dlg .ko-EditKeywordDlg {
+  width: 380px;
 }
 
 /* Editable keyword highlight */
 .JSEditKeyword {
   padding: 2px 5px;
   border-radius: 3px 3px;
-  -moz-border-radius: 3px 3px;
-  -webkit-border-radius: 3px 3px;
 }
 .JSEditKeyword:hover {
   background: #e9e9e9;

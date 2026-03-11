@@ -53,7 +53,7 @@ class EditFlashcardDialog {
       skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
       mobile: isMobile,
       close: true, //!isMobile,
-      width: 270,
+      width: 300,
       scope: this,
       events: {
         onDialogHide: this.onHide,

@@ -48,6 +48,9 @@ export default class EventCache {
     }
   }
 
+  /**
+   * Remove all event listeners.
+   */
   destroy() {
     while (this.cache.length) {
       const evt = this.cache.pop()!;

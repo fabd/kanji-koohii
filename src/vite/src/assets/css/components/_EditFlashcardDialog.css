@@ -3,13 +3,9 @@
  *
  */
 
-/**
- * Edit Flashcard Dialog.
- */
-#editflashcarddlg {
-  min-width: 270px;
-  padding-top: 0;
-  padding-bottom: 0;
+/* (desktop) dialog width */
+.rtk-skin-dlg #editflashcarddlg {
+  width: 300px;
 }
 
 #editflashcarddlg .stats {

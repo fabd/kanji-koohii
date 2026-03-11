@@ -534,13 +534,18 @@ export default class AjaxDialog {
   onPanelResponse(tron) {
     //console.log("onPanelResponse(%o)", tron);
 
+    const props = tron.getProps();
+    if (props.dialogTitle) {
+      this.yPanel.setHeader(props.dialogTitle);
+    }
+
     this.eventDispatcher.notify("onDialogResponse", tron);
 
     // handle the dialog status events for JSON response
     this.handleTRONStatus(tron);
   }
 
-  /** @param {TronInst} tron */
+  /** @param {TronInst|undefined} tron */
   onPanelInit(tron) {
     //console.log('AjaxDialog::onPanelInit()');
 
@@ -552,31 +557,10 @@ export default class AjaxDialog {
     this.eventDispatcher.notify("onDialogInit", tron);
 
     // resize and recenter the dialog with new content
-    var tv = tron.getProps();
-    /*
-      if (tv.dialogWidth) {
-        if (!this.donelala) {
-          this.yPanel.cfg.setProperty('width', parseInt(tv.dialogWidth, 10) + DIALOG_PADDING_W + 'px');
-          if (tv.dialogHeight) {
-            this.yPanel.cfg.setProperty('height', parseInt(tv.dialogHeight, 10) + DIALOG_PADDING_H + 'px');
-          }
-        } else {
-          this.donelala = true;
-        }
-      }
-      else {
-        // reset width to auto so that styled content adjusts the dialog width
-        this.yPanel.cfg.setProperty('width', 'auto');
-      }
-      */
 
     // realign if using context alignment
     if (this.options.context) {
       this.yPanel.cfg.setProperty("context", this.options.context);
-    }
-
-    if (tv.dialogTitle) {
-      this.yPanel.setHeader(tv.dialogTitle);
     }
 
     // manually center after panel content is loaded
@@ -652,7 +636,7 @@ export default class AjaxDialog {
    * @return {boolean}  True if the dialog is closed
    */
   handleDialogStatus(dialogStatus, tron) {
-    console.log("AjaxDialog.handleDialogStatus(%o)", dialogStatus);
+    // console.log("AjaxDialog.handleDialogStatus(%o)", dialogStatus);
 
     if (dialogStatus === AjaxDialog.STATUS_SUCCESS) {
       // success : dismiss dialog, notify event

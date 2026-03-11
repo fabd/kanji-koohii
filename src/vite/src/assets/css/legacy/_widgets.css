@@ -162,8 +162,7 @@
   bottom: 5px;
   height: 50px;
   border-bottom: 8px solid #fff;
-  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 .uiChartVs a.pct {
   text-decoration: none;

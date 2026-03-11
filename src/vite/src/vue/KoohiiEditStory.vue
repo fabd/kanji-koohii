@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[100px]">
+  <div class="min-h-[100px] max-md:-mx-[5px]">
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
       <input :value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
@@ -264,10 +264,6 @@ export default defineComponent({
     displayKeyword(): string {
       return this.custKeyword || this.kanjiData.keyword;
     },
-
-    editKeywordUrl(): string {
-      return "/study/editkeyword/id/" + this.kanjiData.ucs_id;
-    },
   },
 
   beforeUnmount() {
@@ -279,7 +275,7 @@ export default defineComponent({
   },
 
   created() {
-    console.log("KoohiiEditStory::created()");
+    // console.log("KoohiiEditStory::created()");
 
     this.isFavoriteStory = !!this.initFavoriteStory;
 
@@ -447,9 +443,8 @@ export default defineComponent({
       };
 
       if (!this.oEditKeyword) {
-        const url = this.editKeywordUrl;
         const options = { context: ["my-story", "tr", "tr", null, [-6, 6]] };
-        this.oEditKeyword = new EditKeywordDialog(url, options, callback);
+        this.oEditKeyword = new EditKeywordDialog(this.kanjiData.ucs_id, options, callback);
       } else {
         this.oEditKeyword.show();
       }

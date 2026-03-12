@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <div class="bookstyle">
+        <div class="ko-BookStyle">
           <div class="story"><?php echo $S['story'] ?></div>
         </div>
 

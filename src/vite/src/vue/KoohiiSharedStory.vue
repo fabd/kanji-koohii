@@ -3,7 +3,7 @@
     <div class="sharedstory rtkframe" lang="ja">
       <div class="sharedstory_author" v-html="profileLink"></div>
 
-      <div class="bookstyle">
+      <div class="ko-BookStyle">
         <div class="story" v-html="story"></div>
       </div>
 

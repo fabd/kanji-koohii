@@ -11,8 +11,8 @@
     return esc_specialchars($s).$append;
   }
 ?>
-  <div id="my-story" lang="ja">
-    <div class="padding rtkframe">
+  <div class="ko-MyStory" lang="ja">
+    <div class="rtkframe">
 
       <div class="left">
         <div class="framenum" title="Frame number"><?= $kanjiData->framenum ?></div>
@@ -27,10 +27,10 @@
           <span class="JSEditKeyword"><?= (null !== $custKeyword) ? esc_specialchars($custKeyword) : formatEditionKeyword($kanjiData->keyword) ?></span>
         </div>
 
-        <div id="storybox">
-          <div id="storyview">
+        <div class="ko-MyStoryBox mt-4">
+          <div class="ko-MyStoryView">
 
-            <div id="sv-textarea" class="bookstyle">
+            <div class="ko-MyStoryView-textarea ko-BookStyle">
               <?= $formattedStory ?: '<div class="empty">[ click here to enter your story ]</div>' ?>
             </div>
             

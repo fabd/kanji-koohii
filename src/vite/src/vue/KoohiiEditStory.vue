@@ -1,19 +1,19 @@
 <template>
-  <div class="min-h-[100px] max-md:-mx-[5px]">
+  <div class="min-h-[100px]">
     <form name="EditStory" method="post" action="/study/kanji/1">
       <!-- we still need this for the "Add to learned list" submit which is NOT ajax -->
       <input :value="kanjiData.ucs_id" type="hidden" name="ucs_code" />
       <input :value="fromRestudyList" type="hidden" name="fromRestudyList" />
 
-      <div id="my-story" lang="ja">
-        <div ref="maskArea" class="padding rtkframe flex">
+      <div class="ko-MyStory" lang="ja">
+        <div ref="maskArea" class="rtkframe pb-0 flex">
           <!-- left -->
           <div class="w-[68px] mr-4 text-center">
             <div class="framenum" title="Frame number">{{
               kanjiData.framenum
             }}</div>
 
-            <div :class="{ kanji: true, onhover: isReviewMode }">
+            <div class="kanji" :class="{ onhover: isReviewMode }">
               <cjk-lang-ja>{{ kanjiData.kanji }}</cjk-lang-ja>
             </div>
 
@@ -37,11 +37,11 @@
               >
             </div>
 
-            <div id="storybox">
+            <div class="ko-MyStoryBox mt-4">
               <!-- view / edit story -->
 
-              <div v-if="isEditing" id="storyedit">
-                <div v-if="formHasErrors()" class="formerrormessage">
+              <div v-if="isEditing">
+                <div v-if="formHasErrors()" class="text-red-500 mb-4">
                   <span v-html="formGetErrors()"></span>
                 </div>
 
@@ -71,6 +71,7 @@
                 </div>
 
                 <textarea
+                  class="ko-MyStoryEdit-textarea"
                   id="frmStory"
                   v-model="postStoryEdit"
                   name="txtStory"
@@ -92,6 +93,7 @@
                       :text="postStoryEdit"
                       :max-length="512"
                       :warning-limit="20"
+                      class="mr-2"
                     />
                     <input
                       type="button"
@@ -112,10 +114,9 @@
                 </div>
               </div>
 
-              <div v-else id="storyview">
+              <div v-else class="ko-MyStoryView">
                 <div
-                  id="sv-textarea"
-                  class="bookstyle"
+                  class="ko-MyStoryView-textarea ko-BookStyle"
                   title="Click to edit your story"
                   @click="onEditStory"
                 >
@@ -128,7 +129,7 @@
                   </template>
 
                   <template v-else>
-                    <div class="empty">[ click here to enter your story ]</div>
+                    <div class="text-[#888]">[ click here to enter your story ]</div>
                   </template>
                 </div>
 
@@ -165,7 +166,7 @@
 
         <div class="bottom"></div>
       </div>
-      <!-- /#my-story -->
+      <!-- /.ko-MyStory -->
     </form>
 
     <template v-if="isReviewMode">
@@ -380,8 +381,6 @@ export default defineComponent({
       this.editStory(storyText);
 
       nextTick(function () {
-        // $$('#main_container')[0].scrollIntoView(true)
-
         // scroll to top of window
         const dx =
           window.pageXOffset ||

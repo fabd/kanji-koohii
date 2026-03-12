@@ -36,13 +36,15 @@
 
       ul {
         @apply ml-0;
+
+        /* stylelint-disable-next-line max-nesting-depth */
         a {
           @apply pl-[2em];
         }
       }
 
       a {
-        @apply pl-[1em] border-l-[1px] border-[#e7e1d3];
+        @apply pl-[1em] border-l border-[#e7e1d3];
         @apply text-[#42413d] font-normal;
       }
     }
@@ -62,7 +64,7 @@
   @media only screen and (min-width: 768px) {
     /* up md */
     /* vertical separator & guiding line */
-    @apply pl-4 border-l-[1px] border-[#e7e1d3];
+    @apply pl-4 border-l border-[#e7e1d3];
   }
   @media only screen and (min-width: 1024px) {
     /* up lg */

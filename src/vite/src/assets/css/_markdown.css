@@ -63,7 +63,7 @@
 }
 
 /* lists */
-.markdown ul li {
+.markdown li {
   list-style: disc;
 }
 
@@ -101,26 +101,21 @@
 .markdown td {
   background: var(--clr-bg-nav);
 }
-.markdown td a:link,
-.markdown td a:visited,
-.markdown td a:active {
-  font-weight: normal;
-}
-.markdown th a {
-  font-weight: bold;
-}
 
 /* code : applies to `this` */
 .markdown code {
   background: var(--clr-bg-nav);
   padding: 0.2em 0.5em;
 }
+
 /* code : applies to ```code blocks``` */
 .markdown pre {
   background: var(--clr-bg-nav);
   padding: calc(var(--vunit) / 2) 1em;
   border-left: 4px solid var(--clr-bg-1);
 }
+
+/* stylelint-disable-next-line selector-max-type */
 .markdown pre code {
   background: none;
   padding: 0;

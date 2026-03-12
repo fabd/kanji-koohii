@@ -456,25 +456,6 @@ a:hover.subdued {
 /* ------------------ */
 @import "./legacy/ajaxdialog.css";
 
-/**
- * Debugging Ajax Responses.
- *
- * @see App.AjaxFilter
- */
-#AppAjaxFilterDebug {
-  background: #fff;
-  padding: 5px 10px;
-}
-#AppAjaxFilterDebug pre {
-  margin: 0;
-  padding: 0;
-  color: #444;
-  font:
-    12px/13px "Consolas",
-    "Bitstream Vera Sans Mono",
-    monospace;
-}
-
 /* Reset YUI Skin */
 
 .yui-skin-sam .yui-panel {

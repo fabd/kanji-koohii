@@ -170,7 +170,7 @@ export default {
     // the new cards indicator
     if (this.newCount) {
       html = `
-<button class="ko-Btn ko-StudyNewCount tooltip" data-tooltip="New cards" tabindex="0"><i></i>${this.newCount}</button>
+<button class="ko-Btn ko-StudyNewCount ko-Tooltip" data-tooltip="New cards" tabindex="0"><i></i>${this.newCount}</button>
     `;
     }
 

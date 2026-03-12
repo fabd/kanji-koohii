@@ -4,39 +4,47 @@
  */
 
 /* (desktop) dialog width */
-.rtk-skin-dlg #editflashcarddlg {
+.rtk-skin-dlg .ko-EditFlashcardDlg {
   width: 300px;
 }
 
-#editflashcarddlg .stats {
+.ko-EditFlashcardDlg-stats {
   width: 100%;
   padding: 10px 0;
-}
-#editflashcarddlg .stats th,
-#editflashcarddlg .stats td {
-  padding: 4px 5px 6px 0;
-  font-size: 14px;
-  line-height: 1.1em;
-  text-align: left;
-}
-#editflashcarddlg .stats th {
-  color: #737373;
-  width: 30%;
-  white-space: nowrap;
+
+  th,
+  td {
+    padding: 4px 5px 6px 0;
+    font-size: 14px;
+    line-height: 1.1em;
+    text-align: left;
+  }
+  th {
+    color: #737373;
+    width: 30%;
+    white-space: nowrap;
+  }
 }
 
 .uiBMenuMsg {
   padding: 1em 0;
-  font: bold 16px/1.1em "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande",
-    Verdana, Arial, Helvetica, sans-serif;
+  font:
+    bold 16px/1.1em "Lucida Sans Unicode",
+    "Lucida Sans",
+    "Lucida Grande",
+    Verdana,
+    Arial,
+    Helvetica,
+    sans-serif;
   color: #000;
   text-decoration: none;
-}
-.uiBMenuMsg .note {
-  display: block;
-  padding: 1em 0 0;
-  color: #888;
-  font-weight: normal;
+
+  .note {
+    display: block;
+    padding: 1em 0 0;
+    color: #888;
+    font-weight: normal;
+  }
 }
 
 /* message colours (ie. "delete flashcard?" or "confirmation") */
@@ -115,7 +123,9 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   opacity: 0;
-  transition: transform 0.4s ease, opacity 0.3s ease;
+  transition:
+    transform 0.4s ease,
+    opacity 0.3s ease;
   z-index: 1000;
 
   &.show {
@@ -128,7 +138,7 @@
   }
 }
 
-.tooltip {
+.ko-Tooltip {
   position: relative;
   transition: color 0.3s ease;
   -webkit-tap-highlight-color: transparent;
@@ -149,7 +159,9 @@
     @apply text-xs whitespace-nowrap font-normal;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.1s ease, transform 0.1s ease;
+    transition:
+      opacity 0.1s ease,
+      transform 0.1s ease;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
     z-index: 1002;
   }
@@ -164,7 +176,9 @@
     border-top-color: var(--tooltip-bg);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.1s ease, transform 0.1s ease;
+    transition:
+      opacity 0.1s ease,
+      transform 0.1s ease;
     z-index: 1002;
   }
 

@@ -261,21 +261,17 @@ main {
 /* Markdown content */
 /* ---------------------------- */
 
-:root {
-  --color-blog-heading: #fa3d60;
-}
-
 /* Site news (posts using markdown) */
-#sitenews .markdown h2,
-#sitenews .markdown h3 {
+.ko-SiteNews .markdown h2,
+.ko-SiteNews .markdown h3 {
   color: #000;
   font-weight: normal;
   font-size: 1.2em;
   margin-bottom: 1em;
 }
 
-#sitenews .markdown h2:not(:first-of-type),
-#sitenews .markdown h3:not(:first-of-type) {
+.ko-SiteNews .markdown h2:not(:first-of-type),
+.ko-SiteNews .markdown h3:not(:first-of-type) {
   margin-top: calc(var(--vunit) * 2);
 }
 
@@ -285,33 +281,31 @@ main {
 
 /*.layout-news span.news-date { font-size:16px; color:#69664E; white-space:nowrap; }*/
 
-#sitenews {
+.ko-SiteNews {
+  --color-blog-heading: #fa3d60;
   line-height: 1.5em;
   font-family: Arial, sans-serif;
 }
 
-#sitenews_list {
+.ko-SiteNews-list {
   list-style: none;
   margin: 0 0 20px 0;
   padding: 0;
 }
 
-/*#sitenews .content ul { margin:1em 0 1em 2em; }*/
+/*.ko-SiteNews .content ul { margin:1em 0 1em 2em; }*/
 
-/* titles */
-#sitenews h2 {
+.ko-SiteNews-hd {
   font-size: 18px;
-  margin: 0 0 1.25em;
-  padding: 0.2em 0 0.5em;
   border-bottom: 1px solid var(--color-blog-heading);
 }
 
-#sitenews h2 a {
+.ko-SiteNews-hd a {
   color: var(--color-blog-heading);
   text-decoration: none;
   font-weight: bold;
 }
-#sitenews .newsdate {
+.ko-SiteNews-date {
   font-size: 0.9em;
   float: right;
   padding: 4px 5px;
@@ -321,44 +315,29 @@ main {
   background: #dff7d3;
 }
 
-#sitenews .hd a {
-  font-weight: bold;
-  color: #10348f;
-  text-decoration: none;
-}
-#sitenews .hd {
-  padding: 5px 0;
-  margin-bottom: 5px;
-  border: 0;
-  font-size: 17px;
-}
-#sitenews .bd {
+.ko-SiteNews-body {
   margin: 0 0 25px;
   padding: 0 0 2em; /*border-bottom:1px solid var(--clr-bg-1);*/
   color: #3c3c3c;
   clear: both;
 }
 
-#sitenews blockquote,
-#sitenews p.quote {
+.ko-SiteNews blockquote,
+.ko-SiteNews p.quote {
   background: url(/images/1.0/news/blockquote_begin.gif) no-repeat 6px 4px;
   margin: 0 0 1em;
   padding: 0 0 0 36px;
   font-style: italic;
 }
-#sitenews a.readmore {
+.ko-SiteNews a.readmore {
   color: #8fb052;
   font-weight: bold;
   text-decoration: none;
 }
 
-#sitenews .img-break {
+.ko-SiteNews .img-break {
   padding: 10px 0;
   margin: 0 0 1em;
-}
-
-#sitenews_back {
-  margin: 0 0 2em;
 }
 
 /* monthly archives */
@@ -383,9 +362,6 @@ main {
 }
 
 @include breakpoint-down(md) {
-  #sitenews_jpod img {
-    border-radius: 0;
-  }
   #news-by-month ul {
     display: flex;
     flex-wrap: wrap;

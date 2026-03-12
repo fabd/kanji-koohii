@@ -18,7 +18,7 @@
 
 <?php endif ?>
 
-    <div id="sitenews_back">
+    <div class="mb-8">
       <?php echo _bs_button_to('&laquo; Back', '@homepage', ['class' => 'ko-Btn ko-Btn--success']) ?>
       <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()): ?>
         <?php echo '&nbsp;&nbsp;'.link_to('<i class="fa fa-edit"></i> Edit Post', "news/post?post_id=$post_id", ['class' => 'ko-Btn is-ghost']) ?>

@@ -128,17 +128,6 @@
 }
 
 /* ---------------------------- */
-/* Forms */
-/* ---------------------------- */
-
-.panel-body .form-section {
-  padding: 1em 15px;
-  margin: 0 -15px 1em;
-  border-top: 1px solid #dad9c6;
-  border-bottom: 1px solid #dad9c6;
-}
-
-/* ---------------------------- */
 /* Gadgets */
 /* ---------------------------- */
 
@@ -166,7 +155,7 @@
   }
 }
 
-/* bulleted links */
+/* used for the link to the RTK Supplement in Account > RTK Edition */
 a.link-pdf {
   padding: 2px 0 2px 22px;
   background: url(/images/1.0/ico/link_pdf.png) no-repeat 0 50%;
@@ -232,8 +221,8 @@ main {
 .ko-PageFooter {
   text-align: center;
   padding: 0 0 5em;
-  font-size: 17px;
   color: #8b1566;
+  @apply text-smx sm:text-base;
 
   a {
     color: #e400b1;
@@ -266,22 +255,6 @@ main {
   height: 29px;
   background: var(--clr-bg-body) url(/koohii/landing/bubbles_gdt.png) repeat-x 0
     0;
-}
-
-@media (max-width: 600px) {
-  .ko-PageFooter {
-    font-size: 15px;
-  }
-  .ko-PageFooter p a {
-    display: inline-block;
-    padding: 0.5em 0;
-  }
-  .ko-PageFooter .break {
-    display: block;
-  }
-  .ko-PageFooter .ne {
-    display: none;
-  }
 }
 
 /* ---------------------------- */
@@ -610,7 +583,10 @@ a:hover.subdued {
   margin: 0;
   padding: 0;
   color: #444;
-  font: 12px/13px "Consolas", "Bitstream Vera Sans Mono", monospace;
+  font:
+    12px/13px "Consolas",
+    "Bitstream Vera Sans Mono",
+    monospace;
 }
 
 /* Reset YUI Skin */
@@ -645,7 +621,9 @@ a:hover.subdued {
 }
 .rtk-skin-dlg .yui-panel .hd,
 .rtk-mobl-dlg .yui-panel .hd {
-  font: 16px/1em Verdana, sans-serif;
+  font:
+    16px/1em Verdana,
+    sans-serif;
   color: #ddd;
   padding: 10px 10px 0;
   background: none;
@@ -722,14 +700,19 @@ a:hover.subdued {
 
 /* class names output by cjk_lang_ja() helper (changes depending on Kanji/Hanzi mode) */
 .cj-k {
-  font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝", serif;
+  font-family:
+    "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝",
+    serif;
 }
 .cj-s {
-  font-family: "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC", sans-serif;
+  font-family:
+    "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC",
+    sans-serif;
 }
 .cj-t {
-  font-family: "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW", "Microsoft JhengHei", "Heiti TC",
-    serif;
+  font-family:
+    "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW",
+    "Microsoft JhengHei", "Heiti TC", serif;
 }
 
 /* -------------------------------------------------------------------- */

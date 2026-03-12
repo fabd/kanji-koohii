@@ -19,7 +19,7 @@ use_helper('Widgets');
 
         <?php if ($sf_user->isAuthenticated() && !KK_ENV_FORK): ?>
 <p class="is-support mb-4">
-  <strong>Support my work</strong> with <?php echo link_to('Patreon, PayPal', 'about/support') ?>, <span class="break">and affiliate <?php use_helper('__Sponsor'); echo link_to_jpod101('JapanesePod101.com') ?>.</span>
+  <strong>Support my work</strong> with <?php echo link_to('Patreon, PayPal', 'about/support') ?>, <span class="max-sm:block">and affiliate <?php use_helper('__Sponsor'); echo link_to_jpod101('JapanesePod101.com') ?>.</span>
 </p>
         <?php endif ?>
 

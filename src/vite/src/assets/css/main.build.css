@@ -341,34 +341,22 @@ main {
 }
 
 /* monthly archives */
-#news-by-month ul {
+.ko-NewsByMonth {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-#news-by-month li {
-}
-#news-by-month a {
-  padding: 5px 10px;
-  display: block;
-  text-decoration: none;
-  @apply border-dotted border-[#d4cdba] border-b;
-}
-#news-by-month a:hover {
-  background-color: var(--clr-bg-1);
-}
-#news-by-month span {
-  color: #454545;
-}
 
-@include breakpoint-down(md) {
-  #news-by-month ul {
-    display: flex;
-    flex-wrap: wrap;
+  a {
+    padding: 5px 10px;
+    display: block;
+    text-decoration: none;
+    @apply border-dotted border-[#d4cdba] border-b;
+    &:hover {
+      background-color: var(--clr-bg-1);
+    }
   }
-  #news-by-month a {
-    padding: 8px 15px;
-    font-size: 120%;
+  span {
+    color: #454545;
   }
 }
 

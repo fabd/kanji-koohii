@@ -467,11 +467,6 @@ a:hover.subdued {
   padding: 0;
 }
 
-/* IE fixes */
-.yui-skin-sam #ie .yui-panel {
-  background: #444; /* filter:alpha(opacity = 50); opacity:0.5; affects child elements! */
-}
-
 /* close icon */
 .yui-panel .container-close {
   width: 24px;

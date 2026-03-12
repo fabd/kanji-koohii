@@ -32,7 +32,7 @@
 <div class="row mb-6">
   <div class="col-lg-6">
 
-    <div class="ko-Box ko-Box--customReview mb-4">
+    <div class="ko-Box text-smx mb-4">
 
       <?= form_tag('review/free', ['method' => 'get']); ?>
       
@@ -80,7 +80,7 @@
 <?php
   // OBSOLETE?
   /*
-    <div class="ko-Box ko-Box--customReview mb-4">
+    <div class="ko-Box text-smx mb-4">
 
       <h3 class="mb-4">Review from learned kanji</h3>
 

@@ -15,7 +15,7 @@
 <div class="row">
   <div class="col-lg-6">
 
-    <div class="ko-Box ko-Box--customReview mb-4">
+    <div class="ko-Box text-smx mb-4">
     
       <h3 class="ko-Box-title">Discover words based on RTK index</h3>
 
@@ -48,7 +48,7 @@
   </div><!-- /col -->       
   <div class="col-lg-6">
 
-    <div class="ko-Box ko-Box--customReview mb-4">
+    <div class="ko-Box text-smx mb-4">
       
       <h3 class="ko-Box-title">Discover words made only of learned kanji</h3>
 

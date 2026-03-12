@@ -451,15 +451,6 @@ a:hover.subdued {
   padding: 1px;
 }
 
-/* ----------------------------
- * Flashcard Review
- * ---------------------------- */
-
-.ko-Box--customReview {
-  @extend .ko-Box;
-  font-size: 15px;
-}
-
 /* ------------------ */
 /* AjaxDialog         */
 /* ------------------ */

@@ -418,33 +418,6 @@ main {
   padding: 0;
 }
 
-/* debugging */
-#debugresponse {
-  border: 1px solid red;
-  padding: 10px;
-  background: #ffe0a8;
-  margin: 0;
-  width: auto;
-  font-size: 12px;
-  line-height: 1.2em;
-}
-#debugresponse p {
-  margin: 0 0 10px;
-  padding: 0;
-}
-
-/* form responses */
-#debugresponse.success {
-  border: 1px solid #afe4a9;
-  background: #e6ffcc;
-  margin: 0 0 1em;
-}
-#debugresponse.error {
-  border: 1px solid #f5ab8f;
-  background: #ffe0a8;
-  margin: 0 0 1em;
-}
-
 /**
  * Links bound to user interface actions.
  */
@@ -476,48 +449,6 @@ a:hover.subdued {
   background: #666;
   color: #fff;
   padding: 1px;
-}
-
-/* ---------------------------- */
-/* Review Summary */
-/* ---------------------------- */
-
-.app-header {
-  border-bottom: 1px solid #cccccc;
-  position: relative;
-  padding-bottom: 8px;
-  margin-bottom: 12px;
-}
-.app-header h2 {
-  float: left;
-  line-height: 1em;
-  margin: 0;
-  padding: 0 0 0.5em;
-  font-family: Georgia, serif;
-  font-size: 19px;
-  color: #10348f;
-}
-.app-header h2 a {
-  text-decoration: none;
-  font-weight: normal;
-}
-.app-header h2 a:hover {
-  text-decoration: underline;
-}
-.app-header h2 span {
-  color: #898989;
-}
-.app-header .links {
-  float: left;
-  width: 50%;
-  clear: left;
-  font-size: 12px;
-}
-.app-header .links a {
-  text-decoration: none;
-}
-.app-header .links a:hover {
-  text-decoration: underline;
 }
 
 /* ----------------------------

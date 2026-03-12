@@ -14,8 +14,6 @@ a { color:#005CB1; font-weight:normal; text-decoration:underline; }
 a:hover { text-decoration:underline; }
 p, ul { margin:0 0 1em; }
 .clear { clear:both; overflow:hidden; height:0; }
-.app-header { width:100%; border-bottom:1px solid #CCCCCC; position:relative; padding-bottom:8px; margin-bottom:12px; }
-.app-header h2 { line-height:1em; margin:0; font:normal 19px/1em Georgia, serif; color:#101C8F; text-transform:none; letter-spacing:normal; }
 .main {
 	position:relative; padding:20px 20px 1em; width:510px; margin:0 0 0 194px;
 	background:#fffde7; border-right:1px solid #e8e5c9; border-left:1px solid #e8e5c9; border-bottom:1px solid #d1cfb5;

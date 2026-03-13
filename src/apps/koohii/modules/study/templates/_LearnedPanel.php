@@ -1,17 +1,17 @@
 <?php
   $ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
 ?>
-<div class="ko-Box ko-Box--success no-gutter-xs-sm lg:mb-4 max-lg:rounded-none">
-  <div class="flex items-center mb-2">
-    <h3 class="text-[#3a7c3a] font-bold leading-none mb-0">Learned</h3>
-    <?= link_to('List', 'study/failedlist', ['class' => 'text-sm leading-none ml-auto max-lg:ml-4']); ?>
-  </div>
-  <div class="max-lg:flex flex-wrap items-center justify-between">
-    <p class="text-[#2C892C] text-sm mb-2 max-lg:mb-0">
+<div class="ko-Box ko-Box--success lg:mb-4 max-lg:flex max-lg:items-center max-lg:px-2 max-lg:py-2">
+  <div class="lg:mb-2">
+    <h3 class="text-[#3a7c3a] font-bold leading-none inline-block mb-0">Learned</h3>
+    <?= link_to('List', 'study/failedlist', ['class' => 'text-sm leading-none  ml-2 max-lg:ml-4']); ?>
+    <div class="text-[#2C892C] text-sm">
       <strong><?= $learnedCount; ?></strong>
       of
       <strong><?= $restudyCount; ?></strong> Forgotten Kanji
-    </p>
+    </div>
+  </div>
+  <div class="ml-auto">
 <?php
       if ($learnedCount)
       {

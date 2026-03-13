@@ -46,7 +46,6 @@
   transition: none;
 
   border-radius: var(--border-radius-md);
-  padding: 0.375rem 0.75rem;
 
   /* apply colors */
   background-color: var(--ko-btn-bg);

@@ -27,6 +27,7 @@
   }
 }
 .ko-Admin-main {
+  background-color: var(--admin-bg);
   padding: calc(var(--main-px) * 1.25) var(--main-px) 5rem;
 }
 

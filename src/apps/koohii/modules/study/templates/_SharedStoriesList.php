@@ -27,7 +27,7 @@
         <?php if ($evil_story): ?><a href="#" class="JsUnhide">Unhide</a><?php endif ?>
       </div>
 
-      <div class="bookstyle">
+      <div class="ko-BookStyle">
         <div class="story"><?php echo $o->text ?></div>
       </div>
 

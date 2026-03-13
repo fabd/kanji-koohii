@@ -96,7 +96,7 @@ CREATE TABLE `custkeywords` (
   `userid`       MEDIUMINT(4) UNSIGNED NOT NULL,
   `ucs_id`       SMALLINT(5)  UNSIGNED NOT NULL,
   `keyword`      VARCHAR(32) NOT NULL DEFAULT '',
-  `created_on`   TIMESTAMP NOT NULL DEFAULT 0,
+  `created_on`   TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_on`   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`userid`, `ucs_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -163,7 +163,7 @@ DROP TABLE IF EXISTS reviews;
 CREATE TABLE `reviews` (
   `userid`       MEDIUMINT(4) UNSIGNED NOT NULL,
   `ucs_id`       SMALLINT UNSIGNED NOT NULL,
-  `created_on`   TIMESTAMP NOT NULL DEFAULT 0,
+  `created_on`   TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `lastreview`   TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `expiredate`   DATE NOT NULL DEFAULT '0000-00-00',
   `totalreviews` SMALLINT(4) UNSIGNED NOT NULL,
@@ -206,7 +206,7 @@ CREATE TABLE `sitenews` (
   `created_on`   DATE DEFAULT NULL,
   `updated_on`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
-  KEY 'main_sort' (`created_on`)
+  KEY `main_sort` (`created_on`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -297,7 +297,7 @@ CREATE TABLE `users` (
   `lastlogin`    DATETIME DEFAULT NULL,
   `email`        VARCHAR(100) NOT NULL DEFAULT '',
   `location`     VARCHAR(32) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  'regip'        VARCHAR(45) NOT NULL DEFAULT '',
+  `regip`        VARCHAR(45) NOT NULL DEFAULT '',
   `timezone`     FLOAT NOT NULL DEFAULT '-6',
   `opt_sequence` tinyint(3) unsigned NOT NULL DEFAULT 0,
   
@@ -323,7 +323,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `users_settings` (
   `userid`       MEDIUMINT(4) UNSIGNED NOT NULL,
-  `created_on`   TIMESTAMP NOT NULL DEFAULT 0,
+  `created_on`   TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_on`   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   `no_shuffle`   TINYINT(1) UNSIGNED NOT NULL,

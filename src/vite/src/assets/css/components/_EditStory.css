@@ -1,16 +1,12 @@
 /* Used on Study page & Edit Story Dialog (review page) */
 
 /* self story */
-#my-story {
+.ko-MyStory {
   position: relative;
   background: #fff;
   border: 1px solid #e8e5c9;
   box-shadow: 0 1px 2px 0px rgba(170, 165, 130, 0.3);
-  .rtkframe {
-    border: none;
-    padding: 16px 17px 0;
-    background: none;
-  }
+
   .bottom {
     width: 100%;
     height: 23px;
@@ -18,9 +14,6 @@
     clear: both;
     background: #fff;
     background: linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
-  }
-  .ko-charsleft {
-    margin: 0 0.5em 0 0;
   }
 }
 
@@ -33,7 +26,7 @@
   .framenum {
     font-size: 14px;
     line-height: 1em;
-    margin: 0 0 20px;
+    margin: 8px 0 10px;
   }
   .kanji {
     width: 100%;
@@ -46,27 +39,14 @@
     color: #8e8e8e;
   }
   .keyword {
-    font: 20px Georgia, Times New Roman, sans-serif;
+    font:
+      20px Georgia,
+      Times New Roman,
+      sans-serif;
     text-align: right;
     .edition {
       font-size: 0.6em;
     }
-  }
-
-  #storybox {
-    padding: 14px 0 0;
-  }
-  #sv-textarea {
-    padding: 5px;
-    height: auto;
-    min-height: 100px;
-    &:hover {
-      background: #f5f5f5;
-    }
-  }
-
-  .bookstyle .empty {
-    color: #888;
   }
 
   .favstory {
@@ -80,15 +60,22 @@
   }
 }
 
-.rtkframe #storyedit {
-  textarea {
-    width: 100%;
-    height: 153px;
-    padding: 5px;
-    border: 1px solid #e8e5c9;
+.ko-MyStoryView-textarea {
+  padding: 5px;
+  height: auto;
+  min-height: 100px;
+  &:hover {
     background: #f5f5f5;
-    box-sizing: border-box;
   }
+}
+
+.ko-MyStoryEdit-textarea {
+  width: 100%;
+  height: 153px;
+  padding: 5px;
+  border: 1px solid #e8e5c9;
+  background: #f5f5f5;
+  box-sizing: border-box;
 }
 
 .viewtoggle a {
@@ -104,20 +91,18 @@
 
 /* story content styling (My Stories and Shared Stories) */
 
-.rtkframe .bookstyle {
+.ko-BookStyle {
   color: #100800;
-  font-size: 14px;
+  @apply text-sm md:text-base;
   line-height: 1.5em;
   text-align: justify;
   /*ie fix expandbox*/
   word-wrap: break-word;
-}
 
-.bookstyle em {
-  letter-spacing: 0.05em;
-}
+  em {
+    letter-spacing: 0.05em;
+  }
 
-.rtkframe .bookstyle {
   a {
     font-weight: normal;
     text-decoration: none;
@@ -125,27 +110,15 @@
       text-decoration: underline;
     }
   }
-  .frnr {
+
+  .is-framenr {
     color: #484;
     font-family: sans-serif;
   }
 }
 
-#storyview .bookstyle {
-  line-height: 1.5em;
-}
-
-@media (min-width: 600px) {
-  .rtkframe {
-    .bookstyle,
-    textarea {
-      font-size: 16px;
-    }
-  }
-}
-
 /* Story popup (flashcard review page) kanji shows on mouseover */
-#my-story .onhover {
+.ko-MyStory .onhover {
   span {
     visibility: hidden;
     color: #fff;
@@ -159,56 +132,33 @@
       background: #fff;
     }
   }
-
-  /* Story edit form errors */
-  .formerrormessage {
-    background: none;
-    margin: 0.5em 0;
-    padding: 0 5px;
-    border: none;
-  }
 }
 
 /* DIALOG mode */
 
 /* desktop dialog : use a fixed width (looks nicer), hide the big close button */
-.rtk-skin-dlg {
-  #my-story {
-    width: 500px;
-    border: none;
-  }
-  .editstory-close {
-    display: none;
-  }
+.rtk-skin-dlg .ko-MyStory {
+  width: 500px;
+  border: none;
+}
+.rtk-skin-dlg .editstory-close {
+  display: none;
 }
 
-/* mobile dialog */
+/* Edit Story dialog / mobile view */
 .rtk-mobl-dlg {
-  #my-story {
+  .ko-MyStory {
     box-shadow: none;
     border: none;
-    /* remove decorations */
-    .rtkframe {
-      padding: 16px 10px 0;
-    }
-    .right {
-      margin-left: 0;
-    }
-
-    #sv-textarea {
-      border: 1px solid #fff;
-      background: #f5f5f5;
-      border-radius: 5px;
-    }
   }
 
-  .left {
-    width: 50px;
-    display: none;
+  .rtkframe {
+    padding-inline: 10px; /* reduce side padding */
   }
 
-  /* hint edit box by default for touch */
-  #JSEditStoryLoading {
-    width: auto;
+  .ko-MyStoryView-textarea {
+    /* make the story edit area visible for touch */
+    background: #f5f5f5;
+    border-radius: 5px;
   }
 }

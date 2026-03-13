@@ -1,5 +1,5 @@
 <template>
-  <div class="ko-Box ko-Box--customReview mb-4">
+  <div class="ko-Box text-smx mb-4">
     <h3 class="ko-Box-title mb-4">Create a Review Deck from Japanese Text</h3>
 
     <p>Paste <strong>japanese text</strong> (or any selection of kanji) below :</p>

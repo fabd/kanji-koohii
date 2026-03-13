@@ -36,7 +36,7 @@
 
     <?php include_partial('news/list', ['posts' => $posts]) ?>
 
-    <div id="sitenews_back">
+    <div class="mb-8">
       <?php echo _bs_button_to('&laquo; Back', '@homepage', ['class' => 'ko-Btn ko-Btn--success']) ?>
     </div>
 

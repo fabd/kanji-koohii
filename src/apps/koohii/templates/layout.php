@@ -48,18 +48,16 @@
 
 <div id="aside-component"></div><!-- fabd : FIXME?? TS refactor Vue3 -->
 
-<!--[if lt IE 9]><div id="ie"><![endif]--> 
-
 <?php include_partial('global/navbar', ['pageId' => $pageId]) ?>
 
 <?php if ($isLandingPage) {
   echo $sf_content;
 } else { ?>
-<div id="main">
-  <div id="main_container" class="ko-Container">
+<main>
+  <div class="ko-MainContainer ko-Container">
 <?php echo $sf_content ?>
   </div>
-</div>
+</main>
 <?php if ($sf_request->getParameter('_homeFooter')) { include_partial('home/homeFooter'); } ?>
 <?php } ?>
 
@@ -76,9 +74,6 @@
   });
 </script>
 <?php endif ?>
-
-
-<!--[if IE]></div><![endif]--> 
 
 <div id="__debug_log"></div>
 <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()) {

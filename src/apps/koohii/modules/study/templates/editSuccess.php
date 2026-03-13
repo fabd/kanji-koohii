@@ -125,7 +125,7 @@
           <?php echo link_to_member($o->username) ?>
         </div>
 
-        <div class="bookstyle">
+        <div class="ko-BookStyle">
           <div class="story"><?php echo $o->text ?></div>
         </div>
 

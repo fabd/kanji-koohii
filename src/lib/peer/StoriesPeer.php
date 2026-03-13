@@ -267,7 +267,7 @@ class StoriesPeer extends coreDatabaseTable
     $frameNr = rtkIndex::getIndexForChar($id);
     if (false !== $frameNr)
     {
-      $link .= ' (<span class="frnr">#'.$frameNr.'</span>)';
+      $link .= ' (<span class="is-framenr">#'.$frameNr.'</span>)';
     }
 
     /* old code

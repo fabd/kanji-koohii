@@ -2,7 +2,7 @@
 <div id="browse" class="no-gutter-xs-sm mb-4 lg:rounded-[6px]">
   <div class="max-lg:flex items-center">
 
-    <div class="study-search_input max-lg:mr-1 lg:mb-2">
+    <div class="max-lg:grow max-lg:mr-1 lg:mb-2">
         <?php echo input_tag('search', '', [
           'class'       => 'form-control',
           'maxlength'   => 32,

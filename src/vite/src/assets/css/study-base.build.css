@@ -292,11 +292,6 @@
 
 @media only screen and (min-width: 1024px) {
   /* up lg */
-  /* less contrating themes for desktop sidebar */
-  .study-search_btn {
-    @apply bg-[#d4cdba];
-  }
-
   #study-restudy,
   #study-learned {
     border-radius: 4px;
@@ -310,7 +305,7 @@
 #browse {
   background: var(--clr-bg-1);
   padding: 10px 15px;
-  border-bottom: 1px solid #e1dac8;
+  border-bottom: 1px solid #daccb1;
 }
 
 #txtSearch {
@@ -328,6 +323,21 @@
   --ko-btn-hover-bg: #cbc4b3;
   --ko-btn-hover-border: #cbc4b3;
   --ko-btn-hover-text: #42413d;
+}
+
+/* switch search box to dark mode in mobile */
+@media only screen and (max-width: 1023px) {
+  #browse {
+    background-color: #434241;
+  }
+  .ko-Btn--search {
+    --bg: #322f2c;
+    --ko-btn-text: #7b7975;
+    --ko-btn-bg: var(--bg);
+    --ko-btn-border: var(--bg);
+    --ko-btn-hover-bg: #020100;
+    --ko-btn-hover-border: #020100;
+  }
 }
 
 /* ------------------ */

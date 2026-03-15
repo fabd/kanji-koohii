@@ -53,7 +53,7 @@
 
 <?php
     $go_back = $fc_free ? 'review/custom' : 'review/index';
-    echo _bs_button_to('<i class="fa fa-arrow-left mr-2"></i>Back', $go_back, ['class' => 'ko-Btn ko-Btn--primary']);
+    echo _bs_button_to('<i class="fa fa-arrow-left mr-2"></i>Back', $go_back, ['class' => 'ko-Btn is-ghost']);
     
     echo $repeat_button_html;
 ?>

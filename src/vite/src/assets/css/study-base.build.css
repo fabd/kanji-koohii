@@ -292,15 +292,6 @@
 
 @media only screen and (min-width: 1024px) {
   /* up lg */
-  /* less contrating themes for desktop sidebar */
-  #browse {
-    border-radius: 4px;
-    background: var(--clr-bg-1);
-  }
-  .study-search_btn {
-    @apply bg-[#d4cdba];
-  }
-
   #study-restudy,
   #study-learned {
     border-radius: 4px;
@@ -312,29 +303,42 @@
 /* ------------------ */
 
 #browse {
+  background: var(--clr-bg-1);
   padding: 10px 15px;
-  background: #444342;
+  border-bottom: 1px solid #daccb1;
 }
 
-.study-search_input {
+#txtSearch {
+  padding: 10px 12px;
+  height: 37px; /* same height as the < > buttons */
+  line-height: 1;
 }
-.study-search_input input {
+
+.ko-Btn--search {
+  @apply block;
+  --ko-btn-text: #62615d;
+  --ko-btn-bg: #dbd4c3;
+  --ko-btn-border: #dbd4c3;
+  --ko-btn-bg-darker: #e83d3d;
+  --ko-btn-hover-bg: #cbc4b3;
+  --ko-btn-hover-border: #cbc4b3;
+  --ko-btn-hover-text: #42413d;
 }
-.study-search_btn {
-  display: block;
-  min-width: 42px;
-  height: 34px;
-  text-align: center;
-  color: #6b6762;
-  font-size: 1rem;
-  line-height: 34px;
-  background-color: #322f2c;
+
+/* switch search box to dark mode in mobile */
+@media only screen and (max-width: 1023px) {
+  #browse {
+    background-color: #434241;
+  }
+  .ko-Btn--search {
+    --bg: #322f2c;
+    --ko-btn-text: #7b7975;
+    --ko-btn-bg: var(--bg);
+    --ko-btn-border: var(--bg);
+    --ko-btn-hover-bg: #020100;
+    --ko-btn-hover-border: #020100;
+  }
 }
-.study-search_btn:hover {
-  background: var(--clr-bg-gl);
-}
-/*.study-search_btn.is-prev {  }*/
-/*.study-search_btn.is-next {  }*/
 
 /* ------------------ */
 /* Learned            */
@@ -407,13 +411,6 @@
 /* up lg */
 @media only screen and (min-width: 1024px) {
   /* less contrating themes for desktop sidebar */
-  #browse {
-    border-radius: 4px;
-    background: var(--clr-bg-1);
-  }
-  .study-search_btn {
-    @apply bg-[#d4cdba];
-  }
 
   #study-restudy,
   #study-learned {

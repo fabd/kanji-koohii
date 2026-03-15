@@ -12,7 +12,7 @@
   $cur_kanji = $kanjiData ? $kanjiData->kanji : '1';
 ?>
 
-<div class="col-lg-3 mb-3">
+<div class="col-lg-3 mb-4">
 <?php
   include_partial('study/StudySearch', ['framenum' => $framenum]);
 

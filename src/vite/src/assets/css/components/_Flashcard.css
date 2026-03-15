@@ -12,7 +12,7 @@
   position: absolute;
   right: 22px;
   top: 3px;
-  z-index: 1000;
+  z-index: var(--z-toast);
   padding: 0.5em 0.8em;
   background: #4a9dd6;
   border-radius: 3px;
@@ -30,7 +30,7 @@
   position: absolute;
   right: 22px;
   top: 3px;
-  z-index: 1000;
+  z-index: var(--z-toast);
   padding: 0.5em 0.8em;
   background: #c0392b;
   border-radius: 3px;
@@ -391,7 +391,6 @@
     position: absolute;
     right: 22px;
     top: 3px;
-    z-index: 1000;
   }
   #uiFcAjaxLoading span {
     /* hide "loading" label */
@@ -403,7 +402,6 @@
     position: absolute;
     right: 22px;
     top: 3px;
-    z-index: 1000;
   }
 
   /* secondary stats boxes (bottom) */

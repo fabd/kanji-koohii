@@ -70,4 +70,15 @@
   --clr-srs-undue: #72c569;
 
   --clr-danger-bg: #d9534f;
+
+  /* -------------------------------------------------------------------- */
+  /* z-index tokens   ( https://css-tricks.com/the-value-of-z-index/ ) */
+  /* -------------------------------------------------------------------- */
+  --z-top: 1; /* use for local stacking context */
+  --z-base: 0;
+  --z-navbar: 1; /* the top navigation bar, both mobile and desktop */
+  /* (dialogs): 1; note: we can not change the YUI2 dialog z-index, starts at 1 */
+  --z-overlay: 100; /* tooltips, popovers etc */
+  --z-aside: 200; /* the mobile nav */
+  --z-toast: 300; /* notifications */
 }

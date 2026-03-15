@@ -17,7 +17,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: var(--z-navbar);
 
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
@@ -214,7 +214,7 @@
   visibility: hidden;
   position: absolute;
   left: -1px;
-  z-index: 99;
+  z-index: var(--z-navbar);
   padding: 0;
   margin: 0;
   line-height: 32px;

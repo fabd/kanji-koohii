@@ -64,7 +64,7 @@ export default defineComponent({
 .ko-loading-mask {
   /* the mask is appended asa child, the parent element is position:relative, this covers the area */
   position: absolute;
-  z-index: 2000;
+  z-index: calc(var(--z-base) + 1);
   background-color: hsla(0, 0%, 100%, 0.9);
   margin: 0;
   top: 0;

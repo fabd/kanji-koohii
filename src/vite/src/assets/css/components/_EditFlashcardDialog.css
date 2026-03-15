@@ -126,7 +126,7 @@
   transition:
     transform 0.4s ease,
     opacity 0.3s ease;
-  z-index: 1000;
+  z-index: var(--z-toast);
 
   &.show {
     transform: translateX(-50%) translateY(0);
@@ -163,7 +163,7 @@
       opacity 0.1s ease,
       transform 0.1s ease;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-    z-index: 1002;
+    z-index: var(--z-overlay);
   }
 
   &::after {
@@ -179,7 +179,7 @@
     transition:
       opacity 0.1s ease,
       transform 0.1s ease;
-    z-index: 1002;
+    z-index: var(--z-overlay);
   }
 
   &:hover::before {

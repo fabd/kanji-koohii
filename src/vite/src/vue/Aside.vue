@@ -114,7 +114,7 @@ export default defineComponent({
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 1002;
+  z-index: var(--z-aside);
   overflow: auto;
   background: #2b3034;
   width: 320px;
@@ -185,7 +185,7 @@ export default defineComponent({
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1001;
+  z-index: calc(var(--z-aside) - 1);
   background-color: #000;
 
   opacity: 0.5;

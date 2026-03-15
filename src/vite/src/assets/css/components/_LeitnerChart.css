@@ -70,7 +70,7 @@
   font-weight: normal;
   white-space: nowrap;
   text-align: center;
-  z-index: 1; /* fix "due" label overlapped by a taller "undue" bar */
+  z-index: var(--z-overlay); /* fix "due" label overlapped by a taller "undue" bar */
 }
 .box .val-zero {
   color: #a09a8b;

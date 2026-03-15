@@ -112,7 +112,6 @@
   background: #f2f2f2;
   text-decoration: none;
   text-align: center;
-  z-index: 1; /* clickable on top of .pad */
 }
 #uiFcMenu .fa {
   font-size: 18px;

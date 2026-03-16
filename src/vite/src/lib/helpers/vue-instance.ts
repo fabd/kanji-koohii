@@ -1,22 +1,22 @@
 import {
   createApp,
-  type ComponentPublicInstance,
+  type Component,
 } from "vue";
 import Lang from "@lib/lang";
 
-export type { ComponentPublicInstance };
-
-const fnVueInstance = (
-  component: any,
+export default <C extends Component>(
+  component: C,
   mount: string | Element,
   props?: TVuePropsData,
   replace = false
-): TVueInstanceRef => {
+): TVueInstanceRef<C> => {
   const el = Lang.isString(mount) ? document.querySelectorAll(mount)[0]! : mount;
   console.assert(Lang.isNode(el), "VueInstance() : mount is invalid");
 
   const app = createApp(component, props);
-  let vm;
+
+  // vm is TVueInstanceOf<typeof C>
+  let vm: any;
 
   if (replace) {
     // NOTE! seems to work, but unsure if side effects
@@ -34,5 +34,3 @@ const fnVueInstance = (
 
   return { vm, unmount };
 };
-
-export default fnVueInstance;

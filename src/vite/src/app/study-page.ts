@@ -215,7 +215,7 @@ export default {
       const elMount = $elBody.down(".JsMount")[0];
       const { vm } = VueInstance(KoohiiDictList, elMount!);
       const ucsId = parseInt($elBody[0]!.dataset.ucs!);
-      (vm as TVueKoohiiDictList).load(ucsId);
+      vm.load(ucsId);
 
       this.dictPanel = true;
     }

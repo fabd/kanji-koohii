@@ -24,7 +24,7 @@ export default class EditKeywordDialog {
 
   private dialog: AjaxDialog | null = null;
 
-  private vueInst: TVueInstanceRef | null = null;
+  private vueInst: TVueInstanceOf<typeof KoEditKeyword> | null = null;
 
   /**
    *
@@ -72,7 +72,7 @@ export default class EditKeywordDialog {
   // Show again, after it is closed with the YUI close button.
   show() {
     this.dialog!.show();
-    this.vueInst?.vm.focusInput();
+    this.vueInst?.focusInput();
   }
 
   destroy() {
@@ -87,7 +87,7 @@ export default class EditKeywordDialog {
 
     // if (this.vueInst) this.vueInst.unmount();
 
-    this.vueInst = VueInstance(KoEditKeyword, elMount, {
+    const { vm } = VueInstance(KoEditKeyword, elMount, {
       ucsId: props.ucs_id,
       origKeyword: props.orig_keyword,
       userKeyword: props.user_keyword,
@@ -98,6 +98,8 @@ export default class EditKeywordDialog {
         this.callback(keyword, tabKey);
       }
     });
+
+    this.vueInst = vm;
   }
 
   // Copy keyword back into the main page

@@ -244,7 +244,7 @@ export default defineComponent({
       isFavoriteStory: false,
 
       // holds instance of a KoohiiSharedStory component (visual feedback for sharing a story)
-      vmStoryPublished: null,
+      vmStoryPublished: null as TVueInstanceOf<typeof KoohiiSharedStory> | null,
 
       // keep a copy to cancel changes
       uneditedStory: "",
@@ -364,7 +364,7 @@ export default defineComponent({
           divId: props.sharedStoryId,
         };
 
-        const { vm } = VueInstance(KoohiiSharedStory, elMount, propsData) as any;
+        const { vm } = VueInstance(KoohiiSharedStory, elMount, propsData);
         this.vmStoryPublished = vm;
       }
     },

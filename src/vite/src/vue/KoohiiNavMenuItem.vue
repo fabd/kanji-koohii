@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type ComponentPublicInstance } from "vue";
+import { defineComponent } from "vue";
 import $$, { px } from "@lib/dom";
 import KoohiiNavMenu, { type TMenuItem }  from "@/vue/KoohiiNavMenu.vue";
 
@@ -55,7 +55,7 @@ export default defineComponent({
     },
 
     rootMenu() {
-      var parent = this.$parent as ComponentPublicInstance;
+      let parent = this.$parent!;
       while (parent.$options.name !== "KoohiiNavMenu") {
         parent = parent.$parent!;
       }

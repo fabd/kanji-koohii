@@ -206,7 +206,7 @@ export default class KanjiReview {
     if (sActionId === "help") {
       const dlg = new AjaxDialog("#JsFcHelpDlg", {
         useMarkup: true,
-        context: ["JsBtnHelp", "tl", "bl", null, [0, 0]],
+        context: [$$(".JSBtnHelp")[0], "tl", "bl", null, [0, 0]],
         skin: "rtk-skin-dlg",
         mobile: true,
         close: false,

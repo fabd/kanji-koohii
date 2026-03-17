@@ -316,9 +316,10 @@
       "Droid Sans Japanese", "Droid Serif", serif;
   }
 
-  #JsBtnHelp {
+  /* hide the keyboard shortcuts help */
+  .JSBtnHelp {
     display: none;
-  } /* hide the keyboard shortcuts help */
+  } 
 
   /* error messages */
   #uiFcAjaxLoading {

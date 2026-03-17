@@ -9,7 +9,6 @@ export default class VocabReview {
 
   $elStats: DomJS<Element>;
   elProgressBar: HTMLElement;
-  elsCount: DomJS<Element>;
   reviewPage: ReviewPage;
 
   /**
@@ -37,7 +36,6 @@ export default class VocabReview {
 
     // stats panel
     this.$elStats = $$("#uiFcStats");
-    this.elsCount = $$("#uiFcProgressBar .count"); //array
     this.elProgressBar = $$("#review-progress span")[0] as HTMLElement;
   }
 
@@ -149,8 +147,9 @@ export default class VocabReview {
       position = this.oReview.getPosition();
 
     // update review count
-    this.elsCount[0]!.innerHTML = "" + Math.min(position + 1, num_items);
-    this.elsCount[1]!.innerHTML = "" + num_items;
+    const elsCount = $$(".JSCardsCount em"); //array
+    elsCount[0]!.innerHTML = "" + Math.min(position + 1, num_items);
+    elsCount[1]!.innerHTML = "" + num_items;
 
     // update progress bar
     let pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;

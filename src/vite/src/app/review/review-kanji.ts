@@ -23,7 +23,6 @@ export default class KanjiReview {
 
   $elStats: DomJS<Element>;
   elProgressBar: HTMLElement;
-  elsCount: DomJS<Element>;
 
   dictDialog: DictLookupDialog | null = null;
   oEditFlashcard: EditFlashcardDialog | null = null;
@@ -103,7 +102,6 @@ export default class KanjiReview {
 
     // stats panel
     this.$elStats = $$("#uiFcStats");
-    this.elsCount = $$("#uiFcProgressBar .count");
     this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
 
     // answer stats
@@ -420,7 +418,7 @@ export default class KanjiReview {
     // review progress (don't show "4 of 3" after answering last card)
     const pos = Math.min(this.oReview.numRated + 1, this.oReview.numCards);
 
-    const elCount = $$("#uiFcProgressBar h3")[0];
+    const elCount = $$(".JSCardsCount")[0];
     const text =
       `Card <em>${pos}&nbsp;of&nbsp;${this.oReview.numCards}</em>` +
       (this.oReview.numAgain ? `&nbsp;&nbsp;(Again <em>${this.oReview.numAgain}</em>)` : "");

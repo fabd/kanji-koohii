@@ -47,18 +47,18 @@
 
 <div id="fr-body">
 
-  <div id="rd-tops">
+  <div class="ko-FCR-tops">
     <div id="uiFcProgressBar">
-      <div class="uiFcStBox">
-        <div class="uiFcPrBarMod">
+      <div class="ko-FcStBox">
+        <div class="pt-0 md:pt-6">
           <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']); ?>
         </div>
-        <h3>Cards left: <em class="count">.</em></h3>
+        <h3 class="ko-FcStBox-label JSCardsCount">Cards left: <em>.</em></h3>
       </div>
     </div>
   </div>
 
-  <div id="rd-main">
+  <div class="ko-FCR-main">
     <div id="uiFcReview">
 
       <div id="uiFcMain">
@@ -120,19 +120,15 @@
 
 
   <?php // Stats panel (displays when first card is loaded)?>
-  <div id="rd-side">
+  <div class="ko-FCR-side">
     <div id="uiFcStats" class="uiFcStats" style="display:none">
 
-      <div id="uiFcPiles" class="stacks">
-        <div class="td stack" title="Cards remembered"><i class="fa fa-check"></i><span class="JsPass">0</span></div>
-        <div class="td stack" title="Cards forgotten"><i class="fa fa-times"></i><span class="JsFail">0</span></div>
-      </div>
+      <div class="flex items-center mb-4">
+        <div class="w-[33%] ko-FcStCnt" title="Cards remembered"><i class="fa fa-check"></i><span class="JsPass">0</span></div>
+        <div class="w-[33%] ko-FcStCnt" title="Cards forgotten"><i class="fa fa-times"></i><span class="JsFail">0</span></div>
       
-      <div id="uiFcEnd" class="">
-        <a href="#" class="uiFcStBox JsFinish uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
+        <a href="#" class="ko-FcStEnd ml-auto JsFinish uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
       </div>
-
-  <div class="clear-both"></div>
 
       <div id="uiFcStDeld" class="uiFcStBox" style="display:none">
         <h3>Deleted: <em class="count">0</em></h3>

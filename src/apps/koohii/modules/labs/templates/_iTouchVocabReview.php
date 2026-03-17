@@ -25,18 +25,18 @@
 
 <div id="fr-body" class="fr-mode-vshuffle">
 
-  <div id="rd-tops">
+  <div class="ko-FCR-tops">
     <div id="uiFcProgressBar">
-      <div class="uiFcStBox">
-        <div class="uiFcPrBarMod">
+      <div class="ko-FcStBox">
+        <div class="pt-0 md:pt-6">
           <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']) ?>
         </div>
-        <h3>Reviewing: <em class="count">.</em> of <em class="count">.</em></h3>
+        <h3 class="ko-FcStBox-label JSCardsCount">Reviewing: <em>.</em> of <em>.</em></h3>
       </div>
     </div>
   </div>
 
-  <div id="rd-main">
+  <div class="ko-FCR-main">
     <div id="uiFcReview">
 
       <div id="uiFcMain">
@@ -70,7 +70,7 @@
 
 
   <?php # Stats panel (displays when first card is loaded) ?>
-  <div id="rd-side">
+  <div class="ko-FCR-side">
     <div id="uiFcStats" class="uiFcStats" style="display:none">
 
        <?= link_to('Search on google.co.jp', '/',

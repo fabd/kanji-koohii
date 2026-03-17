@@ -23,7 +23,7 @@
   <div class="clear-both"></div>
 </div>
 
-<div id="fr-body" class="fr-mode-vshuffle">
+<div class="ko-FCR-body fr-mode-vshuffle">
 
   <div class="ko-FCR-tops">
     <div id="uiFcProgressBar">
@@ -71,17 +71,17 @@
 
   <?php # Stats panel (displays when first card is loaded) ?>
   <div class="ko-FCR-side">
-    <div id="uiFcStats" class="uiFcStats" style="display:none">
+    <div class="JSFcStats" style="display:none">
 
        <?= link_to('Search on google.co.jp', '/',
         ['id' => 'search-google-jp',
         'class' => 'ko-Btn ko-Btn--success block uiFcBtnAY', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
 
-    </div><!-- uiFcStats -->    
+    </div><!-- /JSFcStats -->    
   </div>
 
   <div class="clear-both"></div>
-</div><!-- fr-body -->
+</div><!-- /ko-FCR-body -->
 
 <?php
   $reviewOptions = [

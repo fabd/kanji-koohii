@@ -208,9 +208,9 @@
 /* ----------------------------------------------------- */
 /* MAIN PAGE LAYOUT  */
 /* ----------------------------------------------------- */
-#fr-body {
+.ko-FCR-body {
   width: 720px;
-  margin: 50px auto 0;
+  @apply mt-13 mx-auto;
   padding: 0 10px;
 }
 
@@ -236,7 +236,7 @@
   position: relative;
 }
 
-#uiFcStats {
+.JSFcStats {
   font-family: Arial, sans-serif;
 }
 
@@ -256,7 +256,7 @@
 /* ================================================================================= */
 @media screen and (max-width: 767px) {
   /* overwrite the response layout of the desktop (including the media query styles) */
-  #fr-body {
+  .ko-FCR-body {
     width: auto;
     margin-top: 0;
   }
@@ -307,13 +307,6 @@
   }
   .ko-FcStBox-label em {
     color: #fff;
-  }
-
-  /* target additional fonts for Android */
-  .cj-k {
-    font-family:
-      "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝",
-      "Droid Sans Japanese", "Droid Serif", serif;
   }
 
   /* hide the keyboard shortcuts help */

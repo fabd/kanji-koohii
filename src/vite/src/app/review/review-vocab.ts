@@ -7,7 +7,7 @@ export default class VocabReview {
 
   oReview: FlashcardReview;
 
-  $elStats: DomJS<Element>;
+  elStats: HTMLElement;
   elProgressBar: HTMLElement;
   reviewPage: ReviewPage;
 
@@ -35,7 +35,7 @@ export default class VocabReview {
     this.reviewPage.addShortcutKey("b", "back");
 
     // stats panel
-    this.$elStats = $$("#uiFcStats");
+    this.elStats = $$<HTMLElement>(".JSFcStats")[0]!;
     this.elProgressBar = $$("#review-progress span")[0] as HTMLElement;
   }
 
@@ -70,7 +70,7 @@ export default class VocabReview {
 
     // Show panels when first card is loaded
     if (this.oReview.getPosition() === 0) {
-      this.$elStats.display();
+      this.elStats.style.display = "block";
     }
 
     // Show undo action if available

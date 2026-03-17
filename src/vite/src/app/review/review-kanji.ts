@@ -21,7 +21,6 @@ export default class KanjiReview {
 
   oReview: FlashcardReview;
 
-  $elStats: DomJS<Element>;
   elProgressBar: HTMLElement;
 
   dictDialog: DictLookupDialog | null = null;
@@ -37,6 +36,7 @@ export default class KanjiReview {
   countNo: number;
   countDeleted: number;
 
+  elStats: HTMLElement;
   elFinish: HTMLElement;
   reviewPage: ReviewPage;
 
@@ -101,12 +101,12 @@ export default class KanjiReview {
     // this.elFlashcard = $$('.uiFcCard')[0];
 
     // stats panel
-    this.$elStats = $$("#uiFcStats");
+    this.elStats = $$<HTMLElement>(".JSFcStats")[0]!;
     this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
 
     // answer stats
-    this.elAnswerPass = $$("#uiFcStats .JsPass")[0]!;
-    this.elAnswerFail = $$("#uiFcStats .JsFail")[0]!;
+    this.elAnswerPass = $$(".JSCountPass")[0]!;
+    this.elAnswerFail = $$(".JSCountFail")[0]!;
     this.countYes = 0;
     this.countNo = 0;
 
@@ -114,7 +114,7 @@ export default class KanjiReview {
     this.deletedCards = [];
 
     // end review div
-    this.elFinish = asHtmlElement(this.$elStats.down(".JsFinish")[0]);
+    this.elFinish = $$<HTMLElement>(".JSEndButton")[0]!;
   }
 
   /**
@@ -155,7 +155,8 @@ export default class KanjiReview {
     // set form data and redirect to summary with POST
     elFrm.method = "post";
     elFrm.action = this.getOptionAsStr("end_url");
-    (elFrm.elements.namedItem("fc_deld") as HTMLInputElement).value = this.deletedCards.join(",");
+    (elFrm.elements.namedItem("fc_deld") as HTMLInputElement).value =
+      this.deletedCards.join(",");
     elFrm.submit();
   }
 
@@ -164,7 +165,7 @@ export default class KanjiReview {
 
     // Show panels when first card is loaded
     if (this.oReview.getPosition() === 0) {
-      this.$elStats.display();
+      this.elStats.style.display = "block";
     }
 
     // Show undo action if available
@@ -242,7 +243,10 @@ export default class KanjiReview {
         break;
 
       case "flip":
-        if (oEvent.type === "click" && hasClass(asHtmlElement(oEvent.target), "JsLink")) {
+        if (
+          oEvent.type === "click" &&
+          hasClass(asHtmlElement(oEvent.target), "JsLink")
+        ) {
           // pass through so the link functions
           return true;
         }
@@ -307,7 +311,10 @@ export default class KanjiReview {
         // initialize Story Window and its position
         //var left = this.elFlashcard.offsetLeft + (this.elFlashcard.offsetWidth /2) - (520/2);
         //var top = this.elFlashcard.offsetTop + 61;
-        this.editStoryDialog = new EditStoryDialog(this.getOptionAsStr("editstory_url"), oCardData.id);
+        this.editStoryDialog = new EditStoryDialog(
+          this.getOptionAsStr("editstory_url"),
+          oCardData.id
+        );
       } else {
         this.editStoryDialog.load(oCardData.id);
         this.editStoryDialog.show();
@@ -398,12 +405,17 @@ export default class KanjiReview {
       };
       // console.log("zomg %o", params);return false;
 
-      this.oEditFlashcard = new EditFlashcardDialog(data.uri, params, [el, "tr", "br"], {
-        events: {
-          onMenuHide: onMenuHide,
-          onMenuItem: onMenuItem,
-        },
-      });
+      this.oEditFlashcard = new EditFlashcardDialog(
+        data.uri,
+        params,
+        [el, "tr", "br"],
+        {
+          events: {
+            onMenuHide: onMenuHide,
+            onMenuItem: onMenuItem,
+          },
+        }
+      );
     } else {
       this.oEditFlashcard.show();
     }
@@ -421,7 +433,9 @@ export default class KanjiReview {
     const elCount = $$(".JSCardsCount")[0];
     const text =
       `Card <em>${pos}&nbsp;of&nbsp;${this.oReview.numCards}</em>` +
-      (this.oReview.numAgain ? `&nbsp;&nbsp;(Again <em>${this.oReview.numAgain}</em>)` : "");
+      (this.oReview.numAgain
+        ? `&nbsp;&nbsp;(Again <em>${this.oReview.numAgain}</em>)`
+        : "");
     if (elCount) elCount.innerHTML = text;
 
     // update progress bar
@@ -436,8 +450,16 @@ export default class KanjiReview {
    */
   updateAnswerStats(id: TUcsId, rating: TReviewRating, isUndo: boolean) {
     // cf. FlashcardReview.php const
-    let yes = ([FCRATE.YES, FCRATE.AGAIN_YES, FCRATE.EASY, FCRATE.AGAIN_EASY] as string[]).includes(rating) ? 1 : 0;
-    let no = ([FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD] as string[]).includes(rating) ? 1 : 0;
+    let yes = (
+      [FCRATE.YES, FCRATE.AGAIN_YES, FCRATE.EASY, FCRATE.AGAIN_EASY] as string[]
+    ).includes(rating)
+      ? 1
+      : 0;
+    let no = ([FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD] as string[]).includes(
+      rating
+    )
+      ? 1
+      : 0;
     let deld = rating === FCRATE.DELETE ? 1 : 0;
 
     if (isUndo) {

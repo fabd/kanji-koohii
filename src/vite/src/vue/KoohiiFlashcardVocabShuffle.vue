@@ -46,12 +46,12 @@ export default defineComponent({
 /* =============================== */
 
 /* side buttons */
-.fr-mode-vshuffle .uiFcStats .uiIBtn {
+.fr-mode-vshuffle .JSFcStats .uiIBtn {
   text-align: center;
   font-weight: normal;
   margin: 0 0 0.5em;
 }
-.fr-mode-vshuffle .uiFcStats .uiIBtn span {
+.fr-mode-vshuffle .JSFcStats .uiIBtn span {
   font-size: 14px;
   font-weight: normal;
 }

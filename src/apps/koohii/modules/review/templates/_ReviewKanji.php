@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div id="fr-body">
+<div class="ko-FCR-body">
 
   <div class="ko-FCR-tops">
     <div id="uiFcProgressBar">
@@ -121,13 +121,13 @@
 
   <?php // Stats panel (displays when first card is loaded)?>
   <div class="ko-FCR-side">
-    <div id="uiFcStats" class="uiFcStats" style="display:none">
+    <div class="JSFcStats" style="display:none">
 
       <div class="flex items-center mb-4">
-        <div class="w-[33%] ko-FcStCnt" title="Cards remembered"><i class="fa fa-check"></i><span class="JsPass">0</span></div>
-        <div class="w-[33%] ko-FcStCnt" title="Cards forgotten"><i class="fa fa-times"></i><span class="JsFail">0</span></div>
+        <div class="w-[33%] ko-FcStCnt" title="Cards remembered"><i class="fa fa-check"></i><span class="JSCountPass">0</span></div>
+        <div class="w-[33%] ko-FcStCnt" title="Cards forgotten"><i class="fa fa-times"></i><span class="JSCountFail">0</span></div>
       
-        <a href="#" class="ko-FcStEnd ml-auto JsFinish uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
+        <a href="#" class="ko-FcStEnd ml-auto JSEndButton uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
       </div>
 
       <div id="uiFcStDeld" class="uiFcStBox" style="display:none">
@@ -135,11 +135,11 @@
         <p id="uiFcStDeldK"><?= cjk_lang_ja('&nbsp;'); ?></p>
       </div>
 
-    </div><!-- uiFcStats -->    
+    </div><!-- /JSFcStats -->    
   </div>
 
   <div class="clear-both"></div>
-</div><!-- fr-body -->
+</div><!-- /ko-FCR-body -->
 
 <?php
   // Form to redirect to Review Summary with POST

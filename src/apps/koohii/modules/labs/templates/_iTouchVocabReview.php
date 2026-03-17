@@ -73,9 +73,6 @@
   <div id="rd-side">
     <div id="uiFcStats" class="uiFcStats" style="display:none">
 
-       <?= link_to('Exit', $exit_url,
-        ['class' => 'ko-Btn ko-Btn--success block uiFcBtnAY mb-2']); ?>
-
        <?= link_to('Search on google.co.jp', '/',
         ['id' => 'search-google-jp',
         'class' => 'ko-Btn ko-Btn--success block uiFcBtnAY', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>

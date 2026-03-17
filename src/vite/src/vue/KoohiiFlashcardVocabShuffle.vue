@@ -45,17 +45,6 @@ export default defineComponent({
 /* refactor of Vocab Shuffle bundle, affects elements rom the php template, put here for now */
 /* =============================== */
 
-/* side buttons */
-.fr-mode-vshuffle .JSFcStats .uiIBtn {
-  text-align: center;
-  font-weight: normal;
-  margin: 0 0 0.5em;
-}
-.fr-mode-vshuffle .JSFcStats .uiIBtn span {
-  font-size: 14px;
-  font-weight: normal;
-}
-
 /* =============================== */
 /* component styles */
 /* =============================== */

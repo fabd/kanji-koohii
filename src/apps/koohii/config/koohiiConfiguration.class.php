@@ -45,7 +45,6 @@ class koohiiConfiguration extends sfApplicationConfiguration
 
       // FIXME obsolete, clean up
       define('CJ_MODE', 'rtk');
-      define('CJ_HANZI', false);
       // translate between kanji/hanzi sites, FIXME @obsolete
       function _CJ($sid)
       {

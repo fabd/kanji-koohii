@@ -6,22 +6,6 @@ td label { white-space:nowrap; }
 td input { vertical-align:middle; }
 <?php end_slot() ?>
 <?php 
-  // FIXME  Attention!! Must match sequences info in rtkIndex.php
-  if (CJ_HANZI) {
-    $eds = [
-      [
-        'short' => 'Traditional Hanzi',
-        'long'  => 'Volume 1 (1500 characters) +<br/>Volume 2 (1535 characters).',
-        'count' => '3035'
-      ],
-      [
-        'short' => 'Simplified Hanzi',
-        'long'  => 'Volume 1 (1500 characters) +<br/>Volume 2 (1518 characters).',
-        'count' => '3018'
-      ]
-    ];
-  }
-  else {
     $eds = [
       [
         'short' => 'Old Edition',
@@ -41,7 +25,6 @@ END,
         'count' => '3000'
       ]
     ];
-  }
 ?>
 
 <?php decorate_start('SideTabs', ['active' => 'sequence']) ?>

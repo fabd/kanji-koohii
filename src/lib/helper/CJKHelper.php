@@ -20,8 +20,7 @@ function cjk_lang_ja($html, $classNames = [])
 
 function cjk_lang_attrs($classNames)
 {
-  $lang = CJ_HANZI ? 'zh-Hant' : 'ja';
-  array_push($classNames, CJ_HANZI ? 'cj-t' : 'cj-k');
+  array_push($classNames, 'cj-k');
 
-  return 'class="'.implode(' ', $classNames).'" lang="'.$lang.'" ';
+  return 'class="'.implode(' ', $classNames).'" lang="ja" ';
 }

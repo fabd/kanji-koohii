@@ -73,9 +73,12 @@
   <div id="rd-side">
     <div id="uiFcStats" class="uiFcStats" style="display:none">
 
-       <?= ui_ibtn('Exit', $exit_url, ['class' => 'uiIBtnGreen']); ?>
+       <?= link_to('Exit', $exit_url,
+        ['class' => 'ko-Btn ko-Btn--success block uiFcBtnAY mb-2']); ?>
 
-       <?= ui_ibtn('Search on google.co.jp', '/', ['id' => 'search-google-jp', 'class' => 'uiIBtnGreen', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
+       <?= link_to('Search on google.co.jp', '/',
+        ['id' => 'search-google-jp',
+        'class' => 'ko-Btn ko-Btn--success block uiFcBtnAY', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
 
     </div><!-- uiFcStats -->    
   </div>

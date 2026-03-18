@@ -27,11 +27,11 @@
 
   <div class="ko-FCR-tops">
     <div id="uiFcProgressBar">
-      <div class="ko-FcStBox">
+      <div class="ko-FcStBox max-md:p-0 max-md:bg-transparent">
         <div class="pt-0 md:pt-6">
           <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']) ?>
         </div>
-        <h3 class="ko-FcStBox-label JSCardsCount">Reviewing: <em>.</em> of <em>.</em></h3>
+        <h3 class="ko-FcStBox-hd JSCardsCount">Reviewing: <em>.</em> of <em>.</em></h3>
       </div>
     </div>
   </div>

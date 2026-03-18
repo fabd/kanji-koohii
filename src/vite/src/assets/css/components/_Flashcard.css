@@ -134,17 +134,20 @@
   padding: 5px;
 }
 
-.ko-FcStBox-label {
+.ko-FcStBox-hd {
   @apply text-sm text-[#408fc6] text-center leading-none;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.ko-FcStBox-hd em {
+  font-style: normal;
+  color: #0a3e62;
+}
+
+#uiFcProgressBar .ko-FcStBox-hd {
   margin: 0;
   @apply absolute w-full top-0;
   @apply pt-[3px] md:pt-2;
-}
-
-.ko-FcStBox-label em {
-  font-style: normal;
-  color: #0a3e62;
 }
 
 /* -------------------------------------------------------- */
@@ -241,13 +244,12 @@
 }
 
 /* Deleted Cards box */
-#uiFcStDeldK {
+.ko-FcStDeldK {
   padding: 0 5px 5px;
   margin: 0;
-  width: 165px;
   font-size: 18px;
   line-height: 1.2em;
-  letter-spacing: 0px;
+  letter-spacing: 4px;
   color: red;
 }
 
@@ -297,22 +299,18 @@
     position: relative;
   }
 
-  .ko-FcStBox {
-    padding: 0;
-    background: none; /* remove padding so it aligns neatly */
-  }
-  .ko-FcStBox-label {
+  #uiFcProgressBar .ko-FcStBox-hd {
     color: #ddd;
     font-weight: normal;
   }
-  .ko-FcStBox-label em {
+  #uiFcProgressBar .ko-FcStBox-hd em {
     color: #fff;
   }
 
   /* hide the keyboard shortcuts help */
   .JSBtnHelp {
     display: none;
-  } 
+  }
 
   /* error messages */
   #uiFcAjaxLoading {

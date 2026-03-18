@@ -49,11 +49,11 @@
 
   <div class="ko-FCR-tops">
     <div id="uiFcProgressBar">
-      <div class="ko-FcStBox">
+      <div class="ko-FcStBox max-md:p-0 max-md:bg-transparent">
         <div class="pt-0 md:pt-6">
           <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']); ?>
         </div>
-        <h3 class="ko-FcStBox-label JSCardsCount">Cards left: <em>.</em></h3>
+        <h3 class="ko-FcStBox-hd JSCardsCount">Cards left: <em>.</em></h3>
       </div>
     </div>
   </div>
@@ -130,9 +130,9 @@
         <a href="#" class="ko-FcStEnd ml-auto JSEndButton uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
       </div>
 
-      <div id="uiFcStDeld" class="uiFcStBox" style="display:none">
-        <h3>Deleted: <em class="count">0</em></h3>
-        <p id="uiFcStDeldK"><?= cjk_lang_ja('&nbsp;'); ?></p>
+      <div class="JSFcDeleted ko-FcStBox" style="display:none">
+        <h3 class="ko-FcStBox-hd">Deleted: <em>0</em></h3>
+        <p class="ko-FcStDeldK JSFcDeletedK"><?= cjk_lang_ja('&nbsp;'); ?></p>
       </div>
 
     </div><!-- /JSFcStats -->    

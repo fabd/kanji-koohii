@@ -487,10 +487,10 @@ export default class KanjiReview {
       this.deletedCards.pop();
     }
 
-    $$("#uiFcStDeld").display(this.countDeleted > 0);
-    const elCount = $$("#uiFcStDeld em")[0];
+    $$(".JSFcDeleted").display(this.countDeleted > 0);
+    const elCount = $$(".JSFcDeleted em")[0];
     if (elCount) elCount.innerHTML = "" + this.countDeleted;
-    const elDeleted = $$("#uiFcStDeldK span")[0];
+    const elDeleted = $$(".JSFcDeletedK span")[0];
     if (elDeleted) elDeleted.innerHTML = this.getDeletedCards();
   }
 

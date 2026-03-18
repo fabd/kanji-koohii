@@ -102,7 +102,7 @@ export default class KanjiReview {
 
     // stats panel
     this.elStats = $$<HTMLElement>(".JSFcStats")[0]!;
-    this.elProgressBar = asHtmlElement($$("#review-progress span")[0]);
+    this.elProgressBar = $$<HTMLElement>("#review-progress span")[0]!;
 
     // answer stats
     this.elAnswerPass = $$(".JSCountPass")[0]!;

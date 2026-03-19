@@ -42,30 +42,29 @@
           <transition name="lesson-fadein">
             <div v-if="showPreview" class="flex items-center justify-center">
               <template v-for="front in [1, 0]" :key="front">
-                <ko-ratio-box class="w-[140px]">
-                  <div class="ko-FlashcardBg p-2 flex flex-col h-full">
-                    <div>
-                      <span v-if="front && isSrsReverse" class="text-[#7f7d75]"
-                        >&middot; &middot; &middot;</span
-                      >
-                      <span v-else class="text-link">apricot</span>
-                    </div>
-
-                    <div class="text-center my-auto text-[80px]"
-                      ><span v-if="!front || isSrsReverse" title="杏"
-                        >&#26447;</span
-                      >
-                      <span v-else class="my-auto">&nbsp;</span>
-                    </div>
-
-                    <div class="text-right">
-                      <span v-if="!front">203</span>
-                      <span v-else class="text-[#7f7d75]"
-                        >&middot; &middot; &middot;</span
-                      >
-                    </div>
+                <div class="ko-FlashcardBg p-2 w-[140px]">
+                  <div>
+                    <span v-if="front && isSrsReverse" class="text-[#7f7d75]"
+                      >&middot; &middot; &middot;</span
+                    >
+                    <span v-else class="text-link">apricot</span>
                   </div>
-                </ko-ratio-box>
+
+                  <div
+                    class="text-center my-auto text-[80px] leading-none py-[20px]"
+                    ><span v-if="!front || isSrsReverse" title="杏"
+                      >&#26447;</span
+                    >
+                    <span v-else class="my-auto">&nbsp;</span>
+                  </div>
+
+                  <div class="text-right">
+                    <span v-if="!front">203</span>
+                    <span v-else class="text-[#7f7d75]"
+                      >&middot; &middot; &middot;</span
+                    >
+                  </div>
+                </div>
 
                 <span v-if="front" class="mx-8 text-[86px] text-[#DCD7CB]"
                   ><i class="fa fa-chevron-right"></i
@@ -183,14 +182,8 @@
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
 
-import KoRatioBox from "@/vue/KoRatioBox.vue";
-
 export default defineComponent({
   name: "SpacedRepetitionForm",
-
-  components: {
-    KoRatioBox,
-  },
 
   data() {
     return {

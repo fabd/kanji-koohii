@@ -293,7 +293,7 @@ export default class KanjiReview {
 
     if (cardRating) {
       // "No" answer doesn't require flipping the card first (issue #163)
-      if (this.oReview.getFlashcardState() > 0 || sActionId === "no") {
+      if (this.oReview.getFlashcardState() === 1 || sActionId === "no") {
         this.rateCard(cardRating);
       }
     }

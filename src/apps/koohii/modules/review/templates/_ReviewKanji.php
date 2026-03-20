@@ -13,7 +13,7 @@
 
 <div id="uiFcOptions" class="uiFcOptions">
   <?= link_to('<span>Exit</span>', $exit_url, ['absolute' => 'true', 'class' => 'uiFcOptBtn uiFcOptBtnExit', 'title' => 'Exit flashcard review']); ?>
-  <a href="#" id="JsBtnHelp" class="uiFcOptBtn uiFcOptBtnHelp uiFcAction" data-action="help" title="Shows help dialog."><span>Help</span></a>
+  <a href="#" class="JSBtnHelp uiFcOptBtn uiFcOptBtnHelp uiFcAction" data-action="help" title="Shows help dialog."><span>Help</span></a>
   <a href="#" class="uiFcOptBtn uiFcOptBtnStory uiFcAction" data-action="story" title="View/Edit story for this flashcard"><span><u>S</u>tory</span></a>
   <a href="#" id="JsBtnDict" class="uiFcOptBtn uiFcOptBtnDict uiFcAction" data-action="dict" title="Dictionary lookup"><span><u>D</u>ict</span></a>
   
@@ -45,20 +45,20 @@
   </div>
 </div>
 
-<div id="fr-body">
+<div class="ko-FCR-body">
 
-  <div id="rd-tops">
+  <div class="ko-FCR-tops">
     <div id="uiFcProgressBar">
-      <div class="uiFcStBox">
-        <div class="uiFcPrBarMod">
+      <div class="ko-FcStBox max-md:p-0 max-md:bg-transparent">
+        <div class="pt-0 md:pt-6">
           <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']); ?>
         </div>
-        <h3>Cards left: <em class="count">.</em></h3>
+        <h3 class="ko-FcStBox-hd JSCardsCount">Cards left: <em>.</em></h3>
       </div>
     </div>
   </div>
 
-  <div id="rd-main">
+  <div class="ko-FCR-main">
     <div id="uiFcReview">
 
       <div id="uiFcMain">
@@ -120,30 +120,26 @@
 
 
   <?php // Stats panel (displays when first card is loaded)?>
-  <div id="rd-side">
-    <div id="uiFcStats" class="uiFcStats" style="display:none">
+  <div class="ko-FCR-side">
+    <div class="JSFcStats" style="display:none">
 
-      <div id="uiFcPiles" class="stacks">
-        <div class="td stack" title="Cards remembered"><i class="fa fa-check"></i><span class="JsPass">0</span></div>
-        <div class="td stack" title="Cards forgotten"><i class="fa fa-times"></i><span class="JsFail">0</span></div>
-      </div>
+      <div class="flex items-center mb-4">
+        <div class="w-[33%] ko-FcStCnt" title="Cards remembered"><i class="fa fa-check"></i><span class="JSCountPass">0</span></div>
+        <div class="w-[33%] ko-FcStCnt" title="Cards forgotten"><i class="fa fa-times"></i><span class="JSCountFail">0</span></div>
       
-      <div id="uiFcEnd" class="">
-        <a href="#" class="uiFcStBox JsFinish uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
+        <a href="#" class="ko-FcStEnd ml-auto JSEndButton uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
       </div>
 
-  <div class="clear-both"></div>
-
-      <div id="uiFcStDeld" class="uiFcStBox" style="display:none">
-        <h3>Deleted: <em class="count">0</em></h3>
-        <p id="uiFcStDeldK"><?= cjk_lang_ja('&nbsp;'); ?></p>
+      <div class="JSFcDeleted ko-FcStBox" style="display:none">
+        <h3 class="ko-FcStBox-hd">Deleted: <em>0</em></h3>
+        <p class="ko-FcStDeldK JSFcDeletedK"><?= cjk_lang_ja('&nbsp;'); ?></p>
       </div>
 
-    </div><!-- uiFcStats -->    
+    </div><!-- /JSFcStats -->    
   </div>
 
   <div class="clear-both"></div>
-</div><!-- fr-body -->
+</div><!-- /ko-FCR-body -->
 
 <?php
   // Form to redirect to Review Summary with POST

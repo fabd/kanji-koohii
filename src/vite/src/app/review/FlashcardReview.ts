@@ -181,7 +181,7 @@ export default class FlashcardReview {
 
   ajaxQueue: AjaxQueue;
 
-  curCard: TVueInstanceRef | null = null;
+  curCard: TVueInstanceRef<typeof KoohiiFlashcard> | null = null;
 
   /**
    * Initialize the front end Flashcard Review component.

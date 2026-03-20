@@ -31,7 +31,6 @@
 @import "./components/_buttons.css";
 @import "./components/_KanjiCard.css";
 @import "./components/_mobile-nav.css";
-@import "./components/_RatioBox.css";
 @import "./components/_ReviewSummary.css";
 @import "./components/_transitions.css";
 @import "./components/_widgets.css";
@@ -560,21 +559,11 @@ a:hover.subdued {
 /* CJK Fonts          */
 /* ------------------ */
 
-/* class names output by cjk_lang_ja() helper (changes depending on Kanji/Hanzi mode) */
+/* class name output by cjk_lang_ja() helper */
 .cj-k {
   font-family:
     "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝",
-    serif;
-}
-.cj-s {
-  font-family:
-    "Kaiti", "STKaiti", "Kai", "AR PL UKai CN", "Microsoft YaHei", "Heiti SC",
-    sans-serif;
-}
-.cj-t {
-  font-family:
-    "TW-Kai", "TW-Moe-Std-Kai", "DFKai-SB", "BiauKai", "AR PL UKai TW",
-    "Microsoft JhengHei", "Heiti TC", serif;
+    "Droid Sans Japanese", "Droid Serif", serif;
 }
 
 /* -------------------------------------------------------------------- */

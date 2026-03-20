@@ -15,17 +15,10 @@ import KoohiiLoading from "./KoohiiLoading.vue";
 import { getStyle } from "@lib/dom";
 import Lang from "@lib/lang";
 
-const setMaskStyle = (
-  parent: HTMLElement,
-  component: TVueInstanceOf<typeof KoohiiLoading>
-) => {
-  component.originalPosition = getStyle(parent, "position")!;
-};
-
 let component: TVueInstanceOf<typeof KoohiiLoading> | null;
 let componentUnmount: () => void;
 
-export type KoohiiLoadingOptions = { target: HTMLElement; background?: string };
+export type KoohiiLoadingProps = { target: HTMLElement; background?: string };
 
 export default {
   /**
@@ -33,19 +26,19 @@ export default {
    *   target     {HTMLElement}     target to cover with mask
    *   background {String}          background color of the mask
    *
-   * @param {} options
+   * @param {} props
    */
-  show(options: KoohiiLoadingOptions) {
+  show(props: KoohiiLoadingProps) {
     console.log("koohiiloading::show()");
-    const target = options.target;
+    const target = props.target;
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 
-    const { vm, unmount } = VueInstance(KoohiiLoading, document.createElement("div"), options);
-    component = vm as TVueInstanceOf<typeof KoohiiLoading>;
+    const { vm, unmount } = VueInstance(KoohiiLoading, document.createElement("div"), props);
+    component = vm;
     componentUnmount = unmount;
 
-    setMaskStyle(target, component);
+    component.originalPosition = getStyle(target, "position")!;
 
     if (
       component.originalPosition !== "absolute" &&

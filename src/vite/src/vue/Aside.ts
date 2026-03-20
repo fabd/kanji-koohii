@@ -3,8 +3,8 @@ import VueInstance from "@lib/helpers/vue-instance";
 import AsideComponent from "@/vue/Aside.vue";
 import KoohiiNavMenu from "@/vue/KoohiiNavMenu.vue";
 
-let instance: any = null;
-let navMenu: any = null;
+let instance: TVueInstanceOf<typeof AsideComponent> | null = null;
+let navMenu: TVueInstanceOf<typeof KoohiiNavMenu> | null = null;
 
 export default {
   // options.navOptionsmenu (cf. apps/koohii/templates/layout.php)
@@ -19,7 +19,7 @@ export default {
       // render nav
       const { vm: navMenuVm } = VueInstance(
         KoohiiNavMenu,
-        instance.$refs.navContent,
+        (instance.$refs as any).navContent,
         {
           menu: mobileNavData,
         }
@@ -36,12 +36,12 @@ export default {
 
   close() {
     console.log("Aside close()");
-    instance.show = false;
+    instance!.show = false;
   },
 
   toggle() {
-    console.assert(instance, "Aside not instanced before calling toggle()");
-    if (!instance.show) {
+    console.assert(instance !== null, "Aside not instanced before calling toggle()");
+    if (instance && !instance.show) {
       instance.show = true;
     } else {
       this.close();

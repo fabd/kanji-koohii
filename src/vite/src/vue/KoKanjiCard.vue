@@ -1,7 +1,6 @@
 <template>
-  <ko-ratio-box
+  <div
     class="ko-KanjiCard"
-    :inner="'ko-KanjiCard-inner'"
     :class="[{ 'is-on': card.box }]"
   >
     <div class="ko-KanjiCard-idx">
@@ -19,14 +18,13 @@
     <div class="ko-KanjiCard-tag" :class="getTagCss()">
       <span>{{ getTagText() }}</span>
     </div>
-  </ko-ratio-box>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 import * as RTK from "@/lib/rtk";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
-import KoRatioBox from "@/vue/KoRatioBox.vue";
 
 export class SRS {
   static isCardNew = (card: TKanjiCardData) => card.isNew;
@@ -52,7 +50,6 @@ export default defineComponent({
 
   components: {
     CjkLangJa,
-    KoRatioBox,
   },
 
   props: {

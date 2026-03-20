@@ -195,56 +195,66 @@
 }
 
 /**
- * uiProgressBar
+ * Striped Progress Bar
  * 
  * Reference markup:
  * 
  *  <code>
- *   <div class="uiProgressBar">
+ *   <div class="ko-StripedProgressBar">
  *    <div>
  *      <span class="g" title="30 of 50" style="width:60%">30 of 50</span>
- *      <span class="r" title="5 of 50" style="width:10%">5 of 50</span>
+ *      <span class="x"></span>
  *    </div>
  *   </div>
  *  </code>
  *
- * @see   dev/index (internal uri)
- * @see   GadgetsHelper
+ * @see   ui_progress_bar()
  */
-.uiProgressBar {
-  margin: 0 1px;
-  padding: 1px 0;
-  background: #a1a1a1;
-}
-.uiProgressBar div {
-  position: relative;
-  height: 19px;
-  margin: 0 -1px;
-  border-left: 1px solid #a1a1a1;
-  border-right: 1px solid #a1a1a1;
-}
-.uiProgressBar span {
-  position: absolute;
-  left: 0;
-  top: 0;
-  text-indent: -5000px;
-  font-size: 1px;
-  line-height: 1px;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.uiProgressBar div,
-.uiProgressBar span {
-  background: #5a5a5a url(/assets/legacy/gadgets-progressbar.gif) repeat-x 0 0;
-}
-.uiProgressBar span.g /*green*/ {
-  background-color: #72a311;
-  background-position: 0 -32px;
-}
-.uiProgressBar span.r /*red*/ {
-  background-color: #a32011;
-  background-position: 0 -64px;
+.ko-StripedProgressBar {
+  --border-radius: 4px;
+  border-radius: var(--border-radius);
+  
+  box-shadow: 0 4px 10px #4448;
+
+  /* the dark gray background with stripe motif */
+  div {
+    position: relative;
+    height: 20px;
+    border-radius: var(--border-radius);
+
+    background-attachment: fixed;
+    background-image: repeating-linear-gradient(
+      -45deg, #222, #222 10px, #444 10px, #444 20px
+    );
+  }
+
+  /* the green progress bar part with stripe motif */
+  span.g {
+    border-radius: var(--border-radius);
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-indent: -5000px;
+    font-size: 1px;
+    line-height: 1px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    
+    background-attachment: fixed;
+    background-color: #72a311;
+    background-image: repeating-linear-gradient(
+      -45deg, #5db200, #5db200 10px, #73df00 10px, #73df00 20px
+    );
+  }
+
+  /* the gloss effect overlay */
+  span.x {
+    @apply absolute left-0 top-0 w-full h-full;
+    background: linear-gradient( #b7d468, #666 9px, #222 9px, #444 20px );
+    border-radius: var(--border-radius);
+    opacity: 0.5;
+  }
 }
 
 /**

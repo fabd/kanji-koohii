@@ -7,9 +7,8 @@ export default class VocabReview {
 
   oReview: FlashcardReview;
 
-  $elStats: DomJS<Element>;
+  elStats: HTMLElement;
   elProgressBar: HTMLElement;
-  elsCount: DomJS<Element>;
   reviewPage: ReviewPage;
 
   /**
@@ -36,8 +35,7 @@ export default class VocabReview {
     this.reviewPage.addShortcutKey("b", "back");
 
     // stats panel
-    this.$elStats = $$("#uiFcStats");
-    this.elsCount = $$("#uiFcProgressBar .count"); //array
+    this.elStats = $$<HTMLElement>(".JSFcStats")[0]!;
     this.elProgressBar = $$("#review-progress span")[0] as HTMLElement;
   }
 
@@ -72,7 +70,7 @@ export default class VocabReview {
 
     // Show panels when first card is loaded
     if (this.oReview.getPosition() === 0) {
-      this.$elStats.display();
+      this.elStats.style.display = "block";
     }
 
     // Show undo action if available
@@ -149,8 +147,9 @@ export default class VocabReview {
       position = this.oReview.getPosition();
 
     // update review count
-    this.elsCount[0]!.innerHTML = "" + Math.min(position + 1, num_items);
-    this.elsCount[1]!.innerHTML = "" + num_items;
+    const elsCount = $$(".JSCardsCount em"); //array
+    elsCount[0]!.innerHTML = "" + Math.min(position + 1, num_items);
+    elsCount[1]!.innerHTML = "" + num_items;
 
     // update progress bar
     let pct = position > 0 ? Math.ceil((position * 100) / num_items) : 0;

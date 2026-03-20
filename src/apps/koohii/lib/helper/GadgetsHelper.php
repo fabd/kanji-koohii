@@ -50,7 +50,7 @@ function ui_chart_vs(array $options)
 }
 
 /**
- * uiProgressBar
+ * ko-StripedProgressBar
  * 
  * Generate markup for a progress bar.
  * 
@@ -83,18 +83,19 @@ function ui_progress_bar(array $bars, $maxValue, $options = [])
   }
   
   // border color for the bar, override border-color from the stylesheet
+  
   $innerDivOptions = [];
   if(isset($options['borderColor']))
   {
     // override background color on outer div
-    $options['style'] = "background:${options['borderColor']};";
+    $options['style'] = "border-color:{$options['borderColor']};";
     // override border-color on inner div
-    $innerDivOptions['style'] = "border-color:${options['borderColor']};";
+    // $innerDivOptions['style'] = "border-color:{$options['borderColor']};";
     unset($options['borderColor']);
   }
   
   // merge widget class name
-  $options['class'] = merge_html_classes($options['class'] ?? [], ['uiProgressBar']);
+  $options['class'] = merge_html_classes($options['class'] ?? [], ['ko-StripedProgressBar']);
   
   // generate the bars as SPANs
   $spans = [];
@@ -108,15 +109,18 @@ function ui_progress_bar(array $bars, $maxValue, $options = [])
     if ($bar['value'] >= 0)
     {
       $percent = $bar['value'] > 0 ? ceil($bar['value'] / $maxValue * 100) : 0; 
-      $label = isset($bar['label']) ? $bar['label'] : "${bar['value']}/${maxValue}";
+      $label = isset($bar['label']) ? $bar['label'] : "{$bar['value']}/{$maxValue}";
       $spanOptions = [
         'class' => isset($bar['class']) ? $bar['class'] : "g",
         'title' => $label,
-        'style' => "width:${percent}%;"
+        'style' => "width:{$percent}%;"
       ];
       array_push($spans, content_tag('span', $label, $spanOptions));
     }
   }
+
+  // span for the gloss overlay
+  $spans[] = '<span class="x"></span>';
   
   $content = content_tag('div', implode('', $spans), $innerDivOptions);
 

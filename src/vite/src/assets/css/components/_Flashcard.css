@@ -48,8 +48,8 @@
 .uiFcLayout {
   /* http://colorzilla.com/gradient-editor/#c4e6ff+0,92c3e4+100 */
   background: #92c3e4;
-  background: #92c3e4 linear-gradient(to bottom, #c4e6ff 0%, #92c3e4 100%) 100%/200%
-    no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #92c3e4 linear-gradient(to bottom, #c4e6ff 0%, #92c3e4 100%)
+    100%/200% no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 /* top row of option buttons */
@@ -63,7 +63,9 @@
   height: 37px;
   padding: 5px 15px 0;
   margin: -5px 5px 0 0;
-  font: bold 14px/36px Arial, sans-serif;
+  font:
+    bold 14px/36px Arial,
+    sans-serif;
   color: #fff;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
   -webkit-border-radius: 5px;
@@ -111,7 +113,9 @@
   text-align: center;
 }
 .uiFcButtons-prompt {
-  font: 17px/33px Arial, sans-serif;
+  font:
+    17px/33px Arial,
+    sans-serif;
   color: #408fc6;
   text-align: center;
   margin: 0;
@@ -121,83 +125,78 @@
   margin: 0 10px;
 }
 
-/* stats panel */
-.uiFcStats {
-  width: 185px;
-  margin: 0 0 0 10%;
-  color: #408fc6;
-}
-.uiFcStats .uiIBtn {
-  display: block;
-} /* used on Vocab Shuffle */
-
-.uiFcStBox {
+/* -------------------------------------------------------- */
+/* Counter & Progress Bar box */
+/* -------------------------------------------------------- */
+.ko-FcStBox {
   border-radius: 5px;
   background-color: #94d3ff;
   padding: 5px;
 }
-.uiFcStBox h3 {
-  font: 14px/21px Arial, sans-serif;
-  color: #408fc6;
-  padding: 0 0 4px;
-  text-align: center;
+
+.ko-FcStBox-hd {
+  @apply text-sm text-[#408fc6] text-center leading-none;
+  font-family: Arial, Helvetica, sans-serif;
 }
-.uiFcStBox em {
+
+.ko-FcStBox-hd em {
   font-style: normal;
   color: #0a3e62;
 }
-.uiFcStBoxClear {
-  width: 100%;
-  clear: both;
-  padding: 0 0 9px;
+
+#uiFcProgressBar .ko-FcStBox-hd {
+  margin: 0;
+  @apply absolute w-full top-0;
+  @apply pt-[3px] md:pt-2;
 }
 
-#uiFcPiles {
-  display: table;
-  height: 43px;
-}
-#uiFcPiles .td {
-  display: table-cell;
-  vertical-align: middle;
-}
-#uiFcPiles .stack {
+/* -------------------------------------------------------- */
+/* Pass/Fail counters */
+/* -------------------------------------------------------- */
+.ko-FcStCnt {
   font-size: 21px;
-  line-height: 1em;
+  line-height: 1;
   color: #0a3e62;
-}
-#uiFcPiles .stack .fa {
-  font-size: 24px;
-  margin-right: 0.2em;
-}
-#uiFcPiles .stack span {
-  color: #474747;
-}
-#uiFcPiles .fa-check {
-  color: #27ae60;
-}
-#uiFcPiles .fa-times {
-  color: #c0392b;
+
+  .fa {
+    font-size: 24px;
+    margin-right: 0.2em;
+  }
+  span {
+    color: #474747;
+  }
+  .fa-check {
+    color: #27ae60;
+  }
+  .fa-times {
+    color: #c0392b;
+  }
 }
 
+/* -------------------------------------------------------- */
 /* finish review button ("End") */
-#uiFcEnd {
-  padding: 1px 0 0;
-}
-#uiFcEnd a {
+/* -------------------------------------------------------- */
+.ko-FcStEnd {
   display: block;
   text-align: center;
-  font: bold 14px/29px Arial, sans-serif;
+  font:
+    bold 14px/29px Arial,
+    sans-serif;
   color: #0097ff;
+  background-color: #94d3ff;
+  border-radius: 6px;
+  @apply px-3 py-1;
   text-decoration: none;
   /* make it look like a button! */
   border-bottom: 4px solid #268bd2;
-}
-#uiFcEnd a:active,
-#uiFcEnd a:hover {
-  margin-top: 2px;
-  border-bottom-width: 2px;
-  background-color: #7dc2f3;
-  color: #fff;
+
+  &:active,
+  &:hover {
+    margin-top: 2px;
+    border-bottom-width: 2px;
+    background-color: #7dc2f3;
+    color: #fff;
+  }
 }
 
 /* Help dialog */
@@ -209,34 +208,27 @@
   font-size: 14px;
 }
 
+/* ----------------------------------------------------- */
 /* MAIN PAGE LAYOUT  */
-
-#fr-body {
-  width: 900px;
-  margin: 50px auto 0;
+/* ----------------------------------------------------- */
+.ko-FCR-body {
+  width: 720px;
+  @apply mt-13 mx-auto;
   padding: 0 10px;
 }
 
-#rd-tops {
+.ko-FCR-tops {
   float: right;
   width: 175px;
-  padding: 0 0 12px;
+  margin-bottom: 12px;
 }
 
-#rd-main {
+.ko-FCR-main {
   float: left;
   width: 500px;
-  margin: 0 0 0 175px;
 }
 
-#uiFcReview {
-  width: 500px;
-}
-#uiFcButtons {
-  width: 100%;
-}
-
-#rd-side {
+.ko-FCR-side {
   float: right;
   width: 175px;
 }
@@ -246,92 +238,56 @@
   margin: 0 auto;
   position: relative;
 }
-.uiFcPrBarMod {
-  padding: 24px 0 0;
-} /* space for h3 above bar */
-#uiFcProgressBar h3 {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  padding: 4px 0 0;
-}
 
-#uiFcStats {
-  width: 100%;
-  margin: 0 auto;
-}
-#uiFcPiles {
-  margin-bottom: 1em;
-}
-#uiFcPiles {
-  width: 64%;
-  float: left;
-  padding-right: 0;
-}
-#uiFcEnd {
-  width: 28%;
-  float: right;
-}
-#uiFcStDeld {
-  margin: 1em 0 0;
-}
-
-/* responsive layout */
-@media screen and (max-width: 900px) {
-  #fr-body {
-    width: 700px;
-  }
-  #rd-main {
-    margin-left: 0;
-  }
-}
-
-/* typography */
-#uiFcProgressBar,
-#uiFcStats {
+.JSFcStats {
   font-family: Arial, sans-serif;
 }
 
 /* Deleted Cards box */
-#uiFcStDeldK {
+.ko-FcStDeldK {
   padding: 0 5px 5px;
   margin: 0;
-  width: 165px;
   font-size: 18px;
   line-height: 1.2em;
-  letter-spacing: 0px;
+  letter-spacing: 4px;
   color: red;
 }
 
 /* ================================================================================= */
 /* MOBILE LAYOUT (common styles) */
 /* ================================================================================= */
-
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 767px) {
   /* overwrite the response layout of the desktop (including the media query styles) */
-  #fr-body {
+  .ko-FCR-body {
     width: auto;
     margin-top: 0;
   }
 
-  #rd-tops {
+  .ko-FCR-tops {
     float: none;
     width: 100%;
     padding-top: 4px;
   }
 
-  #rd-main {
+  .ko-FCR-main {
     float: none;
     width: 100%;
     margin: 0;
   }
+
+  .ko-FCR-side {
+    float: none;
+    width: 250px;
+    margin: 0 auto;
+  }
+
   #uiFcButtons {
     padding: 12px 0 15px;
   }
   #uiFcButtons u {
     text-decoration: none;
   } /* hide the keyboard shortcut hints */
-  
+
   /* remove prompts to save space */
   .uiFcButtons-prompt {
     display: none;
@@ -343,47 +299,18 @@
     position: relative;
   }
 
-  #rd-side {
-    float: none;
-    width: 250px;
-    margin: 0 auto;
-  }
-  #uiFcStats {
-    width: 100%;
-  }
-
-  #uiFcOptions {
-  }
-
-  /* use a "minified" version of progress bar with text overlaid on top */
-  #uiFcProgressBar {
-  }
-  .uiFcPrBarMod {
-    padding: 0;
-  }
-  #uiFcProgressBar .uiFcStBox {
-    padding: 0;
-    background: none; /* remove padding so it aligns neatly */
-  }
-  #uiFcProgressBar h3 {
-    line-height: 21px;
+  #uiFcProgressBar .ko-FcStBox-hd {
     color: #ddd;
-    padding: 0;
     font-weight: normal;
   }
-  #uiFcProgressBar em {
+  #uiFcProgressBar .ko-FcStBox-hd em {
     color: #fff;
   }
 
-  /* target additional fonts for Android */
-  .cj-k {
-    font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝",
-      "ＭＳ Ｐ明朝", "Droid Sans Japanese", "Droid Serif", serif;
-  }
-
-  #JsBtnHelp {
+  /* hide the keyboard shortcuts help */
+  .JSBtnHelp {
     display: none;
-  } /* hide the keyboard shortcuts help */
+  }
 
   /* error messages */
   #uiFcAjaxLoading {
@@ -402,22 +329,6 @@
     position: absolute;
     right: 22px;
     top: 3px;
-  }
-
-  /* secondary stats boxes (bottom) */
-  .uiFcStats {
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  #uiFcStDeld {
-    margin: 1em 0 0;
-  }
-
-  .uiFcStBoxClear {
-    width: 100%;
-    clear: both;
-    padding: 0 0 9px;
   }
 
   .uiBMenuBody {

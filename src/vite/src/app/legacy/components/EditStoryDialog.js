@@ -22,7 +22,7 @@ export default class EditStoryDialog {
   /** @type {AjaxDialog} */
   dialog;
 
-  /** @type {TVueInstanceRef?} */
+  /** @type {TVueInstanceRef<KoohiiEditStory>?} */
   editStory = null;
 
   /**

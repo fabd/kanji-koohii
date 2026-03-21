@@ -37,7 +37,10 @@ class AjaxIndicator {
   show() {
     // create the element
     if (!this.indicator) {
-      const { top, left } = this.container.getBoundingClientRect();
+      let { top, left } = this.container.getBoundingClientRect();
+
+      left += window.scrollX;
+      top += window.scrollY;
 
       this.indicator = document.createElement("span");
       $$(this.indicator).css({

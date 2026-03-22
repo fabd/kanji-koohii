@@ -17,6 +17,7 @@ import Lang from "@lib/lang";
 
 let component: TVueInstanceOf<typeof KoohiiLoading> | null;
 let componentUnmount: () => void;
+let target: HTMLElement | null;
 
 export type KoohiiLoadingProps = { target: HTMLElement; background?: string };
 
@@ -30,7 +31,7 @@ export default {
    */
   show(props: KoohiiLoadingProps) {
     console.log("koohiiloading::show()");
-    const target = props.target;
+    target = props.target;
 
     console.assert(Lang.isNode(target), "KoohiiLoading() : target is invalid");
 
@@ -40,12 +41,7 @@ export default {
 
     component.originalPosition = getStyle(target, "position")!;
 
-    if (
-      component.originalPosition !== "absolute" &&
-      component.originalPosition !== "fixed"
-    ) {
-      target.classList.add("ko-loading-target--relative");
-    }
+    target.classList.add("ko-loading-target--relative");  
 
     target.appendChild(component.$el);
     nextTick(() => {
@@ -56,7 +52,8 @@ export default {
   hide() {
     console.log("koohiiloading::hide()");
     if (component) {
-      component.close();
+      target!.classList.remove("ko-loading-target--relative");
+
       componentUnmount();
       component = null;
     }

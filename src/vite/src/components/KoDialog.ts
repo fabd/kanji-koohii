@@ -72,9 +72,6 @@ export default class KoDialog {
     if (this.options.mask) {
       this.mask = document.createElement("div");
       this.mask.className = "modal-mask";
-      if (this.options.dismiss) {
-        this.mask.onclick = () => this.destroy();
-      }
       document.body.appendChild(this.mask);
     }
 
@@ -172,7 +169,7 @@ export default class KoDialog {
     // from immediately triggering the dismiss logic.
     setTimeout(() => {
       this.dismissHandler = (e: Event) => {
-        if (this.dialog!.contains(e.target as HTMLElement)) {
+        if (!this.dialog!.contains(e.target as HTMLElement)) {
           this.hide();
         }
       };

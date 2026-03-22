@@ -46,6 +46,7 @@ export default class EditKeywordDialog {
 
     const dlgopts: KoDialogOptions = {
       align: align,
+      dismiss: true,
       mask: true,
       mobile: isMobile,
       close: true,

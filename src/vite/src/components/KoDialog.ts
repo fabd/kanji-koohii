@@ -31,6 +31,7 @@ export type KoDialogAnchor = [
   anchor: HTMLElement | null,
   alignAnchor: AlignCorner,
   alignDialog: AlignCorner,
+  offset?: [number, number],
 ];
 
 export type KoDialogOptions = {
@@ -51,7 +52,7 @@ export default class KoDialog {
   private evtCache: EventCache;
   private eventDel: EventDelegator;
   private dismissHandler: EventListener | null = null;
-  private isVisible: boolean = false;
+  private isShown: boolean = false;
 
   constructor(options: KoDialogOptions) {
     this.options = {
@@ -66,6 +67,8 @@ export default class KoDialog {
     };
 
     // create mask
+    //  It is appended to the document BEFORE the dialog, so it shows underneath
+    //  even if z-index is same as the dialog.
     if (this.options.mask) {
       this.mask = document.createElement("div");
       this.mask.className = "modal-mask";
@@ -138,7 +141,7 @@ export default class KoDialog {
     document.body.appendChild(dialog);
 
     // handle built-in events
-    this.eventDel = new EventDelegator(elBody);
+    this.eventDel = new EventDelegator(dialog);
     this.eventDel
       .on("click", ".JSDialogClose", () => {
         this.destroy();
@@ -185,6 +188,10 @@ export default class KoDialog {
     return this.dialog!.querySelector(".modal-body")!;
   }
 
+  getFooter(): HTMLElement {
+    return this.dialog!.querySelector(".modal-footer")!;
+  }
+
   private transitionBegin(el: HTMLElement) {
     el.classList.remove("fadein-enter-active");
     el.classList.add("fadein-enter-from");
@@ -202,7 +209,7 @@ export default class KoDialog {
     nextTick(() => {
       if (this.mask) this.mask.style.display = "block";
       this.transitionEnd(this.dialog!);
-      this.isVisible = true;
+      this.isShown = true;
     });
 
     if (this.options.dismiss) {
@@ -213,12 +220,16 @@ export default class KoDialog {
   hide() {
     this.dialog!.style.display = "none";
     if (this.mask) this.mask.style.display = "none";
-    this.isVisible = false;
+    this.isShown = false;
 
     if (this.dismissHandler) {
       document.removeEventListener("click", this.dismissHandler);
       this.dismissHandler = null;
     }
+  }
+
+  isVisible() {
+    return this.isShown;
   }
 
   private setupDragging(header: HTMLElement, dialog: HTMLElement) {
@@ -293,12 +304,14 @@ export default class KoDialog {
     if (dialogCorner === "bl" || dialogCorner === "br")
       top -= dialogRect.height;
 
-    dialog.style.left = `${left + window.scrollX}px`;
-    dialog.style.top = `${top + window.scrollY}px`;
+    const offset = align[3] || [0, 0];
+
+    dialog.style.left = `${left + window.scrollX + offset[0]}px`;
+    dialog.style.top = `${top + window.scrollY + offset[1]}px`;
   }
 
   destroy() {
-    if (this.isVisible) {
+    if (this.isShown) {
       this.hide();
     }
 

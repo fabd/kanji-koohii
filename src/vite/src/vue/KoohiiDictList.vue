@@ -18,15 +18,6 @@
         <ko-dict-empty :ucs-id="ucsId" />
       </template>
     </div>
-
-    <!-- (legacy code) "Close" button for mobile portait will be handled by KoohiiDialog if/when we implement that -->
-    <div v-if="isMobile" class="uiBMenu">
-      <div class="uiBMenuItem">
-        <a class="uiFcBtnGreen JSDialogHide uiIBtn uiIBtnDefault" href="#">
-          <span>Close</span>
-        </a>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -92,11 +83,6 @@ export default defineComponent({
     KanjiReview(): KanjiReview | undefined {
       return window.Koohii.Refs.KanjiReview;
     },
-
-    isMobile(): boolean {
-      // (legacy code) cf. lib/front/corejs/ui/mobile.js
-      return window.innerWidth <= 720;
-    },
   },
 
   created() {
@@ -124,7 +110,13 @@ export default defineComponent({
       return inst;
     },
 
-    onVocabSelect({ item, selected }: { item: DictListEntry; selected: boolean }) {
+    onVocabSelect({
+      item,
+      selected,
+    }: {
+      item: DictListEntry;
+      selected: boolean;
+    }) {
       console.log("onVocabSelect %o", item);
 
       if (!this.KanjiReview) return;

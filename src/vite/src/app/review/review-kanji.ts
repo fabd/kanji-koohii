@@ -229,7 +229,7 @@ export default class KanjiReview {
       case "flip":
         if (
           oEvent.type === "click" &&
-          hasClass((oEvent.target as HTMLElement), "JsLink")
+          hasClass(oEvent.target as HTMLElement, "JsLink")
         ) {
           // pass through so the link functions
           return true;
@@ -304,8 +304,7 @@ export default class KanjiReview {
     if (this.dictDialog && this.dictDialog.isVisible()) {
       this.dictDialog.hide();
     } else {
-      const oCardData = this.getFlashcardData();
-      const ucsId = oCardData.id;
+      const { id: ucsId } = this.getFlashcardData();
 
       if (!this.dictDialog) {
         this.dictDialog = new DictLookupDialog();

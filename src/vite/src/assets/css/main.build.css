@@ -515,22 +515,6 @@ a:hover.subdued {
   padding: 10px;
 }
 
-/* dialog loading spinner with FontAwesome5 (see AjaxDialog.js -- selector must overwrite .rtk-xxxx-dlg .body) */
-.yui-panel .JsAjaxDlgLoading {
-  /* width is set in js! */
-  height: 150px;
-  background: #fff;
-  position: relative;
-}
-.yui-panel .JsAjaxDlgLoading .fa-spin {
-  font-size: 2em;
-  position: absolute;
-  left: 50%;
-  top: 60px;
-  margin-left: -0.5em;
-  color: #888;
-}
-
 /* MOBILE DIALOGS use a different "skin" parameter that lets them extend from edge to edge */
 .rtk-mobl-dlg {
   left: 0;

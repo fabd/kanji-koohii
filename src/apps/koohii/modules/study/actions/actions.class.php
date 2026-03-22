@@ -440,12 +440,6 @@ class studyActions extends sfActions
     $storedStory = StoriesPeer::getStory($userId, $ucsId);
     $storyCurrentlyShared = $storedStory && (bool)$storedStory->public;
 
-    // for the AjaxDialog (legacy code)
-    if ($reviewMode) {
-      $tron->setStatus(JsTron::STATUS_PROGRESS);
-      $tron->add( ['dialogTitle' => 'Edit Story'] );
-    }
-
     if ($request->getMethod() === sfRequest::GET)
     {
       $postStoryEdit = ($storedStory ? $storedStory->text : '');
@@ -456,7 +450,7 @@ class studyActions extends sfActions
         'initStoryPublic' => (bool) ($storedStory && $storedStory->public)
       ]);
 
-      // Flashcard Review page feayure -- get "favorite" story, if user's edit story is empty
+      // Flashcard Review page feature -- get "favorite" story, if user's edit story is empty
       if (!$storedStory && $reviewMode)
       {
         if (false !== ($favStory = StoriesPeer::getFavouriteStory($userId, $ucsId)))

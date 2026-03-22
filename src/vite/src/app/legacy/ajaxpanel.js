@@ -125,9 +125,6 @@ export default class AjaxPanel {
   /** @type EventDispatcher */
   eventDispatcher = null;
 
-  /** @type EventDelegator */
-  eventDel = null;
-
   // Custom Events instances
   events = {};
 
@@ -165,10 +162,6 @@ export default class AjaxPanel {
     this.evtCache = new EventCache();
 
     this.ajaxRequest = null;
-
-    // event delegator to handle clicks in the panel
-    this.eventDel = new EventDelegator(this.container);
-    this.eventDel.on("click", ".JSDialogSubmit", this.onPanelSubmit, this); // legacy support from AjaxDialog refactor
 
     // register events
     this.eventDispatcher = new EventDispatcher();

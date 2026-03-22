@@ -4,7 +4,7 @@
 .ko-MyStory {
   position: relative;
   background: #fff;
-  --ko-loading-bg: #fffc;
+  --ko-loading-bg: var(--ko-loading-bg-white);
   border: 1px solid #e8e5c9;
   box-shadow: 0 1px 2px 0px rgba(170, 165, 130, 0.3);
 

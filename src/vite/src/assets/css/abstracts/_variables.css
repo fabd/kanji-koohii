@@ -72,6 +72,11 @@
   --clr-danger-bg: #d9534f;
 
   /* -------------------------------------------------------------------- */
+  /* background color for the loading mask used in dialogs & ajax panels */
+  /* -------------------------------------------------------------------- */
+  --ko-loading-bg-white: #fffc;
+
+  /* -------------------------------------------------------------------- */
   /* z-index tokens   ( https://css-tricks.com/the-value-of-z-index/ ) */
   /* -------------------------------------------------------------------- */
   --z-top: 1; /* use for local stacking context */

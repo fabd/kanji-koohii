@@ -52,10 +52,12 @@
 }
 
 .modal-body {
+  /* background for the KoohiiLoading mask when AjaxPanel is used in the dialog */
+  --ko-loading-bg: var(--ko-loading-bg-white);
+
   font-size: 14px;
   line-height: 1.4;
   
-  --ko-loading-bg: #fffc; /* background for the loading mask */
   background: #fff;
   border-radius: 3px;
 

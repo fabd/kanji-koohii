@@ -163,3 +163,13 @@
     border-radius: 5px;
   }
 }
+
+/* Editable keyword highlight */
+.ko-MyStory-keyword {
+  padding: 2px 5px;
+  border-radius: 3px 3px;
+
+  &:hover {
+    background: #e9e9e9;
+  }
+}

@@ -24,7 +24,7 @@
 
       <div class="right">
         <div class="keyword">
-          <span class="JSEditKeyword"><?= (null !== $custKeyword) ? esc_specialchars($custKeyword) : formatEditionKeyword($kanjiData->keyword) ?></span>
+          <span class="ko-MyStory-keyword"><?= (null !== $custKeyword) ? esc_specialchars($custKeyword) : formatEditionKeyword($kanjiData->keyword) ?></span>
         </div>
 
         <div class="ko-MyStoryBox mt-4">

@@ -30,7 +30,7 @@
           <div class="flex-1">
             <div class="keyword">
               <span
-                class="JSEditKeyword"
+                class="ko-MyStory-keyword"
                 title="Click to edit the keyword"
                 @click="onKeyword"
                 >{{ displayKeyword }}</span

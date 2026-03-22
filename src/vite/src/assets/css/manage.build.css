@@ -6,9 +6,6 @@
 /* tailwind customization */
 @import "./vendor/_tailwind.css";
 
-/* this dialog is used in Manage > Edit Keywords table */
-@import "./components/_EditKeywordDialog.css";
-
 /**
  * Manage Flashcards
  */

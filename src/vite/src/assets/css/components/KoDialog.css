@@ -5,7 +5,9 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.25);
-  z-index: calc(var(--z-overlay) - 1);
+  /* the mask is created before the dialog, so it shows behind the dialog even
+     if it is on the same z-index */
+  z-index: var(--z-overlay);
 }
 
 .modal-dialog {

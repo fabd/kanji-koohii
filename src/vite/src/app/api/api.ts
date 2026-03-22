@@ -12,6 +12,8 @@ import * as TRON from "@lib/tron";
 
 const API_DEFAULT_TIMEOUT = 5000;
 
+export const API_URL_STUDY_EDITSTORY = "/study/editstory";
+
 // In the future with a proper API we may have: stories, users, etc.
 //  for now, `legacy` means the old ajax endpoints (not a standalone API)
 export type KoohiiAPI = {
@@ -128,7 +130,7 @@ export class LegacyApi extends HttpClient {
     isPublic: boolean,
     reviewMode: boolean
   ) {
-    return this.post<PostUserStoryResponse>("/study/editstory", {
+    return this.post<PostUserStoryResponse>(API_URL_STUDY_EDITSTORY, {
       ucsCode: ucsId,
       reviewMode,
       postStoryEdit: txtStory,

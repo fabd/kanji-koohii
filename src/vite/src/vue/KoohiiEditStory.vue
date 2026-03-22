@@ -168,16 +168,6 @@
       </div>
       <!-- /.ko-MyStory -->
     </form>
-
-    <template v-if="isReviewMode">
-      <div class="uiBMenu">
-        <div class="uiBMenuItem">
-          <a class="JSDialogHide uiIBtn uiIBtnDefault" href="#">
-            <span>Close</span>
-          </a>
-        </div>
-      </div>
-    </template>
   </div>
 </template>
 

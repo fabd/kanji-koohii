@@ -301,23 +301,17 @@ export default class KanjiReview {
   }
 
   toggleEditStory() {
-    if (this.editStoryDialog && this.editStoryDialog.isVisible()) {
+    if (this.editStoryDialog && this.editStoryDialog.isOpen()) {
       this.editStoryDialog.hide();
     } else {
-      const oCardData = this.getFlashcardData();
+      const cardData = this.getFlashcardData();
 
       if (!this.editStoryDialog) {
-        // initialize Story Window and its position
-        //var left = this.elFlashcard.offsetLeft + (this.elFlashcard.offsetWidth /2) - (520/2);
-        //var top = this.elFlashcard.offsetTop + 61;
-        this.editStoryDialog = new EditStoryDialog(
-          this.getOptionAsStr("editstory_url"),
-          oCardData.id
-        );
-      } else {
-        this.editStoryDialog.load(oCardData.id);
-        this.editStoryDialog.show();
+        this.editStoryDialog = new EditStoryDialog();
       }
+
+      this.editStoryDialog.load(cardData.id);
+      this.editStoryDialog.show();
     }
   }
 

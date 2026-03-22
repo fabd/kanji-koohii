@@ -159,7 +159,6 @@
     // @see TReviewProps
     'props' => [
       'end_url' => url_for('@review_summary', true),
-      'editstory_url' => url_for('study/editstory'),
       'freemode' => $freemode,
     ],
 

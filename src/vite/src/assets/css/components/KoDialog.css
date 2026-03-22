@@ -63,3 +63,9 @@
 
   box-shadow: inset 0 1px 3px #0003;
 }
+
+.modal-footer {
+  &:not(:empty) {
+    margin-top: var(--dialog-padding);
+  }
+}

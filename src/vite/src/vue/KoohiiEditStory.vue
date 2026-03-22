@@ -108,7 +108,7 @@
                       name="cancel"
                       title="Cancel changes"
                       class="ko-Btn is-ghost"
-                      @click="onCancel"
+                      @click.stop="onCancel"
                     />
                   </div>
                 </div>
@@ -118,7 +118,7 @@
                 <div
                   class="ko-MyStoryView-textarea ko-BookStyle"
                   title="Click to edit your story"
-                  @click="onEditStory"
+                  @click.stop="onEditStory"
                 >
                   <template v-if="postStoryView.length">
                     <div v-html="postStoryView"></div>

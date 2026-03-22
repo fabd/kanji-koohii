@@ -1,0 +1,63 @@
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: calc(var(--z-overlay) - 1);
+}
+
+.modal-dialog {
+  --dialog-bg: #0008;
+  --dialog-radius: 8px;
+  --dialog-padding: 10px;
+
+  position: absolute;
+  background: var(--dialog-bg);
+  border-radius: var(--dialog-radius);
+  padding: var(--dialog-padding);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: var(--z-overlay);
+  backdrop-filter: blur(4px);
+}
+
+.modal-header {
+  height: 26px;
+  padding-bottom: 10px;
+
+  @apply flex items-center content-between;
+
+  /* Prevent text selection while dragging */
+  user-select: none;
+  /* Indicate draggability */
+  cursor: move;
+}
+.modal-header-title {
+  font:
+    16px/1em Verdana,
+    sans-serif;
+  color: #ddd;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  margin-left: auto; /* flex > right align */
+}
+
+.modal-body {
+  font-size: 14px;
+  line-height: 1.4;
+  
+  --ko-loading-bg: #fffc; /* background for the loading mask */
+  background: #fff;
+  border-radius: 3px;
+
+  box-shadow: inset 0 1px 3px #0003;
+}

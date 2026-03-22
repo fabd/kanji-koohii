@@ -21,3 +21,13 @@
 .lesson-fadein-enter-active {
   transition: opacity 0.2s;
 }
+
+/* --------------------------------------------------------------------
+// quick fade in transition for dialogs & popovers
+// -------------------------------------------------------------------- */
+.fadein-enter-active {
+  transition: opacity 0.15s linear;
+}
+.fadein-enter-from {
+  opacity: 0;
+}

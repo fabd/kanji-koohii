@@ -30,6 +30,7 @@
 @import "./components/_Box.css";
 @import "./components/_buttons.css";
 @import "./components/_KanjiCard.css";
+@import "./components/KoDialog.css";
 @import "./components/_mobile-nav.css";
 @import "./components/_ReviewSummary.css";
 @import "./components/_transitions.css";

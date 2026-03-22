@@ -27,9 +27,8 @@
   <div class="clear-both"></div>
 </div>
 
-<div id="JsFcHelpDlg" style="display:none">
-  <div class="bd">
-    <div class="uiFcHelpDlg body JSDialogClose">
+<template id="JsFcHelpDlg">
+    <div class="p-[10px] JSDialogClose">
       <h3>Keyboard Shortcuts</h3>
 
       <p><kbd>SPACE</kbd> or <kbd>F</kbd> or <kbd>Numpad 0</kbd> to flip card.</p>
@@ -40,10 +39,8 @@
       <p><kbd>S</kbd> to open/close the <strong>Edit Story</strong> window.</p>
       <p><kbd>D</kbd> to open/close the <strong>Dictionary</strong> window.</p>
       <p><kbd>U</kbd> to <strong>undo</strong> the last answer.</p>
-
     </div>
-  </div>
-</div>
+</template>
 
 <div class="ko-FCR-body">
 

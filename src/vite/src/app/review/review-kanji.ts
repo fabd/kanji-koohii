@@ -9,7 +9,7 @@
  */
 
 import $$, { DomJS, asHtmlElement, hasClass } from "@lib/dom";
-import AjaxDialog from "@old/ajaxdialog";
+import KoDialog from "@/components/KoDialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
@@ -205,14 +205,13 @@ export default class KanjiReview {
 
     // help dialog
     if (sActionId === "help") {
-      const dlg = new AjaxDialog("#JsFcHelpDlg", {
-        useMarkup: true,
-        context: [$$(".JSBtnHelp")[0], "tl", "bl", null, [0, 0]],
-        skin: "rtk-skin-dlg",
-        mobile: true,
-        close: false,
+      const dialog = new KoDialog({
+        template: "#JsFcHelpDlg",
+        align: [$$<HTMLElement>(".JSBtnHelp")[0]!, "bl", "tl"],
+        dismiss: true,
+        mask: true,
       });
-      dlg.show();
+      dialog.show();
 
       return false;
     }

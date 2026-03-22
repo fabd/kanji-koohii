@@ -25,10 +25,19 @@ export default class EventCache {
     this.cache = [];
   }
 
-  addEvent(target: Node, type: string, callback: EventListener) {
-    target.addEventListener(type, callback);
-    this.cache.push({ target, type, callback });
+  addEvent<K extends keyof HTMLElementEventMap>(
+    target: HTMLElement,
+    event: K,
+    listener: (e: HTMLElementEventMap[K]) => void
+  ) {
+    target.addEventListener(event, listener);
+    this.cache.push({ target, type: event, callback: listener as EventListener});
   }
+
+  // addEvent(target: Node, type: string, callback: EventListener) {
+  //   target.addEventListener(type, callback);
+  //   this.cache.push({ target, type, callback });
+  // }
 
   /**
    * Bind multiple events to one listener.

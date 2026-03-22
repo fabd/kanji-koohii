@@ -8,7 +8,7 @@
  *
  */
 
-import $$, { DomJS, asHtmlElement, hasClass } from "@lib/dom";
+import $$, { hasClass } from "@lib/dom";
 import KoDialog from "@/components/KoDialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
@@ -43,7 +43,7 @@ export default class KanjiReview {
   /**
    *
    * @param fcrOptions ... options for FlashcardReview instance
-   * @param props ... props for Vue component (TBD refactor)
+   * @param props ... props for Vue component (TODO)
    */
   constructor(fcrOptions: TReviewOptions, props: TKanjiReviewProps) {
     this.options = props;
@@ -67,7 +67,7 @@ export default class KanjiReview {
     this.reviewPage.addShortcutKey("n", "no");
     this.reviewPage.addShortcutKey("a", "again");
     this.reviewPage.addShortcutKey("y", "yes");
-    if (!this.getOption("freemode")) {
+    if (!this.options.freemode) {
       this.reviewPage.addShortcutKey("h", "hard");
       this.reviewPage.addShortcutKey("e", "easy");
     }
@@ -75,7 +75,7 @@ export default class KanjiReview {
     // added number keys to answer with just left hand
     this.reviewPage.addShortcutKey("1", "no");
     this.reviewPage.addShortcutKey("3", "yes");
-    if (!this.getOption("freemode")) {
+    if (!this.options.freemode) {
       this.reviewPage.addShortcutKey("2", "hard");
       this.reviewPage.addShortcutKey("4", "easy");
     }
@@ -118,21 +118,6 @@ export default class KanjiReview {
   }
 
   /**
-   * Returns an option value
-   *
-   */
-  getOption(name: keyof TKanjiReviewProps) {
-    return this.options[name];
-  }
-
-  /**
-   *
-   */
-  getOptionAsStr(name: keyof TKanjiReviewProps): string {
-    return this.options[name] as string;
-  }
-
-  /**
    * proxy which typecasts the card data, and *always* returns a valid card
    *
    */
@@ -154,7 +139,7 @@ export default class KanjiReview {
 
     // set form data and redirect to summary with POST
     elFrm.method = "post";
-    elFrm.action = this.getOptionAsStr("end_url");
+    elFrm.action = this.options.end_url;
     (elFrm.elements.namedItem("fc_deld") as HTMLInputElement).value =
       this.deletedCards.join(",");
     elFrm.submit();
@@ -244,7 +229,7 @@ export default class KanjiReview {
       case "flip":
         if (
           oEvent.type === "click" &&
-          hasClass(asHtmlElement(oEvent.target), "JsLink")
+          hasClass((oEvent.target as HTMLElement), "JsLink")
         ) {
           // pass through so the link functions
           return true;

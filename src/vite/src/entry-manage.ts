@@ -132,22 +132,15 @@ class ManagePage {
     const ucsId = parseInt((el as HTMLElement).dataset.id!);
 
     if (!this.oEditKeyword || ucsId !== this.editKeywordId) {
-      const contextEl = el.closest("td");
-
-      const options = {
-        context: [contextEl, "tr", "tr", null, [0, 0]],
-        isManagePage: true,
-        params: {
-          id: ucsId,
-        } 
-      };
+      const elAnchor = el.closest("td");
 
       // FIXME ideally should call this.oEditKeyword.destroy() here if it is set
 
       this.oEditKeyword = new EditKeywordDialog(
         ucsId,
-        options,
-        callback
+        [elAnchor, "tr", "tr"],
+        callback,
+        true
       );
       this.editKeywordId = ucsId;
     } else {

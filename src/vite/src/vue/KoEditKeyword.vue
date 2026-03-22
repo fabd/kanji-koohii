@@ -1,5 +1,5 @@
 <template>
-  <div class="ko-EditKeywordDlg body" ref="loadingMask">
+  <div class="ko-EditKeywordDlg p-[10px] body" ref="loadingMask">
     <div class="text-sm">
       <p>Press <kbd>Enter</kbd> to save and close the dialog.</p>
 
@@ -134,6 +134,8 @@ export default defineComponent({
     },
 
     onSubmit() {
+      (this.$refs.input as HTMLInputElement).blur();
+
       KoohiiLoading.show({ target: this.$refs.loadingMask as HTMLElement });
 
       getApi()

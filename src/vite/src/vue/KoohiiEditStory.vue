@@ -442,8 +442,11 @@ export default defineComponent({
       };
 
       if (!this.oEditKeyword) {
-        const options = { context: [$$(".ko-MyStory")[0], "tr", "tr", null, [-6, 6]] };
-        this.oEditKeyword = new EditKeywordDialog(this.kanjiData.ucs_id, options, callback);
+        this.oEditKeyword = new EditKeywordDialog(
+          this.kanjiData.ucs_id,
+          [$$<HTMLElement>(".ko-MyStory")[0]!, "tr", "tr"],
+          callback
+        );
       } else {
         this.oEditKeyword.show();
       }

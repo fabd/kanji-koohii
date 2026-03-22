@@ -1,5 +1,6 @@
 import { type TronInst } from "@lib/tron";
-import AjaxDialog from "@old/ajaxdialog";
+import AjaxPanel from "@old/ajaxpanel";
+import KoDialog, { type KoDialogAnchor, type KoDialogOptions } from "@/components/KoDialog";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import KoEditKeyword from "@/vue/KoEditKeyword.vue";
@@ -16,14 +17,10 @@ export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
 const isMobile = window.innerWidth <= 700;
 
 export default class EditKeywordDialog {
-  private options: any;
-
+  private isManagePage: boolean;
   private ucsId: TUcsId;
-
   private callback: EditKeywordCallback;
-
-  private dialog: AjaxDialog | null = null;
-
+  private dialog: KoDialog | null = null;
   private vueInst: TVueInstanceOf<typeof KoEditKeyword> | null = null;
 
   /**
@@ -37,35 +34,37 @@ export default class EditKeywordDialog {
    */
   constructor(
     ucsId: TUcsId,
-    options: Dictionary,
-    callback: EditKeywordCallback
+    align: KoDialogAnchor,
+    callback: EditKeywordCallback,
+    isManagePage: boolean = false
   ) {
-    console.log("EditKeywordDialog(%d %o)", ucsId, options);
+    console.log("EditKeywordDialog(%d)", ucsId);
 
     this.ucsId = ucsId;
-    this.options = options;
     this.callback = callback;
+    this.isManagePage = isManagePage;
 
-    const dlgopts: AjaxDialogOpts = {
-      requestUri: `/study/editkeyword/id/${ucsId}`,
-      requestData: options.params,
-      skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+    const dlgopts: KoDialogOptions = {
+      align: align,
+      mask: true,
       mobile: isMobile,
-      close: !isMobile,
-      width: 380, // make sure this matches width set in CSS
-      scope: this,
-      events: {
-        onDialogResponse: this.onDialogResponse,
-        onDialogHide: this.onHide,
-      },
+      close: true,
+      title: `Customize Keyword for ${String.fromCodePoint(ucsId)}`,
+      width: "380px",
     };
 
-    // position dialog
-    if (!isMobile) {
-      dlgopts.context = options.context;
-    }
+    this.dialog = new KoDialog(dlgopts);
 
-    this.dialog = new AjaxDialog(null, dlgopts);
+    const elBody = this.dialog.getBody();
+
+    const ajaxPanel = new AjaxPanel(elBody, {
+      events: {
+        onResponse: this.onDialogResponse.bind(this),
+      },
+    });
+
+    ajaxPanel.get(null, `/study/editkeyword/id/${ucsId}`);
+    
     this.dialog.show();
   }
 
@@ -92,11 +91,11 @@ export default class EditKeywordDialog {
       origKeyword: props.orig_keyword,
       userKeyword: props.user_keyword,
       maxLength: props.max_length,
-      isManagePage: this.options.isManagePage || false,
+      isManagePage: this.isManagePage,
       onSuccess: (keyword: string, tabKey: boolean) => {
         this.dialog?.hide();
         this.callback(keyword, tabKey);
-      }
+      },
     });
 
     this.vueInst = vm;

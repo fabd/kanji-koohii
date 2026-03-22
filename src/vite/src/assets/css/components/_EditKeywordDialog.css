@@ -5,11 +5,6 @@
  *
  */
 
-/* (desktop) dialog size - should match width set in AjaxDialog options */
-.rtk-skin-dlg .ko-EditKeywordDlg {
-  width: 380px;
-}
-
 /* Editable keyword highlight */
 .JSEditKeyword {
   padding: 2px 5px;

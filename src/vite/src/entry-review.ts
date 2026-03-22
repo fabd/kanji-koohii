@@ -48,7 +48,7 @@ domContentLoaded(() => {
     if (reviewMode.fc_view === "kanji") {
       window.Koohii.Refs.KanjiReview = new KanjiReview(fcrOptions, props as TKanjiReviewProps);
     } else if (reviewMode.fc_view === "vocabshuffle") {
-      new VocabReview(fcrOptions, props as TVocabReviewProps);
+      new VocabReview(fcrOptions, props as any as TVocabReviewProps);
     }
   }
 });

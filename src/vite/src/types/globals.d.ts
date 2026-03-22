@@ -79,7 +79,7 @@ interface Window {
     //
     STUDY_FLASHCARD: null | { ucsId: TUcsId; leitnerBox: number; totalReviews: number };
 
-    REVIEW_OPTIONS: { fcrOptions: TReviewOptions; props: Dictionary };
+    REVIEW_OPTIONS: { fcrOptions: TReviewOptions; props: TKanjiReviewProps };
     REVIEW_MODE: Dictionary;
 
     // study > My Stories

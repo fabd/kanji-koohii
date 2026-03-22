@@ -105,6 +105,7 @@ import AjaxRequest from "@old/ajaxrequest";
 import EventCache from "@lib/EventCache";
 import EventDelegator from "@lib/EventDelegator";
 import EventDispatcher from "@lib/EventDispatcher";
+import KoohiiLoading from "@/vue/KoohiiLoading";
 
 /** @typedef {import("@/lib/tron").TronInst} TronInst */
 
@@ -147,12 +148,11 @@ export default class AjaxPanel {
 
     // set defaults
     this.options = {
-      ...{
-        form: true,
-        bUseLayer: true,
-        bUseShading: false,
-        initContent: false,
-      },
+      form: true,
+      bUseLayer: true,
+      bUseShading: false,
+      initContent: false,
+      timeout: 5000,
       ...options,
     };
 
@@ -281,7 +281,7 @@ export default class AjaxPanel {
 
   /**
    *
-   * @param {Object} e   native event
+   * @param {SubmitEvent} evt
    */
   submitFormEvent(evt) {
     var form,
@@ -323,7 +323,7 @@ export default class AjaxPanel {
   /**
    * Do a GET request with optional parameters to add to the request.
    *
-   * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
+   * @param {Object?} oData   A hash with variables, or a query string, or undefined (optional)
    * @param {String} sUrl    Request uri (optional), if specifed overrides the form action!
    */
   get(oData, sUrl) {
@@ -354,7 +354,7 @@ export default class AjaxPanel {
 
   /**
    *
-   * @param {Object} oData    A hash with post variables, or a query string, otherwise set to falsy value
+   * @param {Object?} oData    A hash with post variables, or a query string, otherwise set to falsy value
    * @param {string} sMethod  Method name 'post' or 'get'
    * @param {string} sUrl     Request uri (optional), if specifed overrides the form!
    */
@@ -410,6 +410,7 @@ export default class AjaxPanel {
 
     console.assert(this.connection, "AjaxPanel::connect() No connection object.");
 
+
     //console.log("connect ",this.options,oConnect);
     var options = {
       method: this.connection.method,
@@ -428,7 +429,19 @@ export default class AjaxPanel {
       scope: this,
     };
 
+    this.showLoading();
+
     this.ajaxRequest = new AjaxRequest(this.connection.url, options);
+  }
+
+  showLoading() {
+    // this.container.style.opacity = "0.5";
+    KoohiiLoading.show({ target: this.container });
+  }
+
+  hideLoading() {
+    // this.container.style.opacity = "";
+    KoohiiLoading.hide();
   }
 
   /**
@@ -459,6 +472,8 @@ export default class AjaxPanel {
    */
   ajaxOnSuccess(o) {
     console.log("AjaxPanel.ajaxOnSuccess(%o)", o);
+    
+    this.hideLoading();
 
     var tron = o.responseTRON;
 
@@ -481,6 +496,8 @@ export default class AjaxPanel {
    */
   ajaxOnFailure(o) {
     console.log("AjaxPanel.ajaxOnFailure(%o)", o);
+
+    this.hideLoading();
 
     // transaction aborted (timeout)
     if (o.status === -1) {

@@ -11,9 +11,7 @@
         href="#"
         title="Edit Flashcard"
         class="uiGUI uiFcAction"
-        data-action="fcmenu"
-        :data-uri="reviewMode.fc_edit_uri"
-        :data-param="reviewMode.fc_edit_params"
+        data-action="JSFcMenu"
         ><i class="fa fa-bars"></i
       ></a>
     </template>

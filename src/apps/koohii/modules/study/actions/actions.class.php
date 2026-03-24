@@ -565,7 +565,7 @@ class studyActions extends sfActions
    */
   public function executeEditkeyword(coreRequest $request)
   {
-    // legacy AjaxDialog's GET request doesn't use JSON...
+    // legacy AjaxPanel GET request doesn't use JSON
     if ($request->hasParameter('id'))  {
       $json = (object) [
         'ucsId' => $request->getParameter('id'),
@@ -592,7 +592,7 @@ class studyActions extends sfActions
 
     if ($request->getMethod() !== sfRequest::POST)
     {
-      // GET request from the AjaxDialog opening
+      // GET request when Edit Keyword dialog opens
       $tron->add([
         'ucs_id'        => $chardata->ucs_id,
         'orig_keyword'  => $chardata->keyword,

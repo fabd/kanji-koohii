@@ -278,19 +278,19 @@ export default {
           // cancel loading state
           this.renderFlashcardButton(false, false);
         });
-    } else if (!this.oEditFlashcard) {
+    }
+
+    if (hasCard() && this.oEditFlashcard) {
+      this.oEditFlashcard.show();
+      return;
+    }
+
+    if (hasCard() && !this.oEditFlashcard) {
       this.oEditFlashcard = new EditFlashcardDialog(
-        `${baseUrl()}/flashcards/dialog`,
-        { ucs: ucsId },
-        [this.elEditFlashcard, "tr", "br"],
-        {
-          events: {
-            onMenuResponse: onMenuResponse,
-          },
-        }
+        ucsId,
+        [this.elEditFlashcard, "br", "tr"],
+        false
       );
-    } else {
-      (this.oEditFlashcard as any).show();
     }
 
     return false;

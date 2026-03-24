@@ -219,7 +219,7 @@ export default class KanjiReview {
     }
 
     switch (sActionId) {
-      case "fcmenu":
+      case "JSFcMenu":
         this.flashcardMenu();
         break;
       case "delete":
@@ -376,22 +376,10 @@ export default class KanjiReview {
     }
 
     if (!this.oEditFlashcard) {
-      const params = {
-        ...JSON.parse(data.param),
-        ...{ ucs: oCardData.id },
-      };
-      // console.log("zomg %o", params);return false;
-
       this.oEditFlashcard = new EditFlashcardDialog(
-        data.uri,
-        params,
-        [el, "tr", "br"],
-        {
-          events: {
-            onMenuHide: onMenuHide,
-            onMenuItem: onMenuItem,
-          },
-        }
+        oCardData.id,
+        [el, "br", "tr"],
+        true
       );
     } else {
       this.oEditFlashcard.show();

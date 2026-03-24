@@ -175,11 +175,6 @@
     'freemode' => $freemode,
     'fc_reverse' => $fc_reverse,
     'fc_view' => 'kanji',
-
-    // (NOT freemode) edit flashcard menu
-    'fc_edit_uri' => $sf_context->getController()->genUrl('flashcards/dialog'),
-    // Edit Flashcard menu, data-param (json)
-    'fc_edit_params' => '{"review": 1}',
   ];
 
   kk_globals_put([

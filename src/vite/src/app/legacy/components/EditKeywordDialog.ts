@@ -26,11 +26,10 @@ export default class EditKeywordDialog {
   /**
    *
    * Options:
-   *   context    Sets the context element to align the dialog (see YUI2 Overlay).
    *
-   * @param ucsId
-   * @param options   params (AjaxDialog requestData), context (YUI2 Panel option)
-   * @param callback   Callback to insert the updated keyword back into the page
+   * @param ucsId     UCS code
+   * @param align     alignment for the dialog
+   * @param callback  callback to insert the updated keyword back into the page
    */
   constructor(
     ucsId: TUcsId,

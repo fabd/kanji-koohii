@@ -38,6 +38,38 @@ class flashcardsActions extends sfActions
   }
 
   /**
+   * Used by the Flashcard Edit Dialog.
+   *
+   *
+   * Request parameters:
+   *   ucs      UCS-2 code value of the character.
+   * 
+   * @return void
+   */
+  public function executeEdit(sfRequest $request)
+  {
+// sleep(2);
+    $userId = $this->getUser()->getUserId();
+    $ucsId  = BaseValidators::sanitizeInteger($request->getParameter('ucs'));
+    $kanjiData = KanjisPeer::getKanjiByUCS($ucsId);
+    $this->forward404If(!$kanjiData);
+    $cardData = ReviewsPeer::getFlashcardData($userId, $ucsId);
+    
+    $tron = new JsTron();
+    
+    if ($request->getMethod()===sfRequest::GET)
+    {
+      // GET request when dialog opens
+      $tron->add([
+        'kanjiData' => $kanjiData,
+        'cardData' => $cardData,
+      ]);
+    }
+
+    return $tron->renderJson($this);
+  }
+
+  /**
    * Returns body of the Flashcard Edit Dialog on the Study page.
    *
    * Displays flashcard stats, and menu options to add, delete, fail, and
@@ -50,7 +82,7 @@ class flashcardsActions extends sfActions
    * 
    * @return void
    */
-  public function executeDialog($request)
+  public function executeDialog(sfRequest $request)
   {
     $userId = $this->getUser()->getUserId();
 

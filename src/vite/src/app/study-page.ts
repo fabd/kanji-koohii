@@ -177,21 +177,21 @@ export default {
     // the Add/Edit Flashcard button
     if (loading) {
       html += `
-<a href="#" class="uiGUI ko-Btn JsEditFlashcard is-loading">
+<button class="uiGUI ko-Btn JsEditFlashcard is-loading">
   <div class="flex items-center justify-center">
     <div class="is-icon spinner mr-2"></div>
   </div>
-</a>`;
+</button>`;
     } else if (state === false) {
       html += `
-<a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard" title="Add Card">
+<button class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard" title="Add Card">
   <div class="is-icon fa fa-plus mr-2"></div>Add Card
-</a>`;
+</button>`;
     } else if (state === true) {
       html += `
-<a href="#" class="uiGUI ko-Btn is-ghost rounded-sm JsEditFlashcard" title="Edit Card">
+<button class="uiGUI ko-Btn is-ghost rounded-sm JsEditFlashcard" title="Edit Card">
   <div class="is-icon fa fa-edit mr-2"></div>Edit Card
-</a>`;
+</button>`;
     }
 
     this.elEditFlashcard!.innerHTML = html;

@@ -856,12 +856,6 @@ class ReviewsPeer extends coreDatabaseTable
       // skip flashcard : just ignore it (pretend it's been handled)
       $result = true;
     }
-    elseif ($oData->r === LeitnerSRS::RATE_DELETE)
-    {
-      $result = self::deleteFlashcards($userId, [$ucsId]) > 0;
-      
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update'));
-    }
     else
     {
       $curData = self::getFlashcardData($userId, $ucsId);
@@ -882,8 +876,7 @@ class ReviewsPeer extends coreDatabaseTable
         && ($oData->r === LeitnerSRS::RATE_HARD ||
             $oData->r === LeitnerSRS::RATE_YES  ||
             $oData->r === LeitnerSRS::RATE_NO   ||
-            $oData->r === LeitnerSRS::RATE_EASY ||
-            $oData->r === LeitnerSRS::RATE_DELETE))
+            $oData->r === LeitnerSRS::RATE_EASY))
     {
       LearnedKanjiPeer::clearKanji($userId, $ucsId);
     }

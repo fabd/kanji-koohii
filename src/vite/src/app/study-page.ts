@@ -179,7 +179,7 @@ export default {
       html += `
 <button class="uiGUI ko-Btn JsEditFlashcard is-loading">
   <div class="flex items-center justify-center">
-    <div class="is-icon spinner mr-2"></div>
+    <div class="is-icon is-spinner mr-2"></div>
   </div>
 </button>`;
     } else if (state === false) {

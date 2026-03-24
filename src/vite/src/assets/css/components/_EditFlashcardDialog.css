@@ -39,7 +39,7 @@
     height: 15px;
   }
 
-  .spinner {
+  .is-spinner {
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-top-color: white;
     border-radius: 50%;

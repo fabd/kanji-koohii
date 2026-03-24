@@ -294,7 +294,7 @@ export default class FlashcardReview {
    * @param fn       A javascript callable
    * @param context  Context (this) for the event. Default value: the window object.
    */
-  connect(name: string, fn: ListenerFn, context?: any) {
+  private connect(name: string, fn: ListenerFn, context?: any) {
     this.eventDispatcher.connect(name, fn, context);
   }
 
@@ -304,14 +304,14 @@ export default class FlashcardReview {
    * @param name   An event name
    * @param fn     A javascript callable (optional)
    */
-  disconnect(name: string, fn?: ListenerFn) {
+  private disconnect(name: string, fn?: ListenerFn) {
     this.eventDispatcher.disconnect(name, fn);
   }
 
   /**
    * EventDispatcher proxy.
    */
-  notify(name: string, ...args: any[]) {
+  private notify(name: string, ...args: any[]) {
     return this.eventDispatcher.notify(name, ...args);
   }
 

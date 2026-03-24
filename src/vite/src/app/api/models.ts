@@ -9,7 +9,7 @@
  *
  */
 
-// cf. KanjisPeer::getKanjiByUCS()
+// From the database, see KanjisPeer::getKanjiByUCS()
 export type KanjiData = {
   framenum: number;
   kanji: TKanjiChar;
@@ -17,6 +17,16 @@ export type KanjiData = {
   keyword: string;
   onyomi: string;
   strokecount: number;
+};
+
+// From the database, see ReviewsPeer::getFlashcardData()
+export type ReviewData = {
+  ucs_id: TUcsId;
+  failurecount: number;
+  successcount: number;
+  leitnerbox: number;
+  totalreviews: number;
+  ts_lastreview: number; /* timestamp */
 };
 
 // TODO : this is 3 api responses combined (dictresults, USER_VOCAB_PICKS, USER_KNOWN_KANJI)

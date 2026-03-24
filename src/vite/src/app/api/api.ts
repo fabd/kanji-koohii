@@ -3,12 +3,14 @@ import { baseUrl } from "@/lib/koohii";
 import type {
   GetDictListForUCS,
   GetDictCacheFor,
+  PostEditFlashcardResponse,
   PostUserStoryResponse,
   PostUserKeywordResponse,
   PostVoteStoryRequest,
   PostVoteStoryResponse,
 } from "./models";
 import * as TRON from "@lib/tron";
+import { urlFor } from "@/lib/koohii";
 
 const API_DEFAULT_TIMEOUT = 5000;
 
@@ -124,6 +126,13 @@ export class LegacyApi extends HttpClient {
     return this.instance;
   }
 
+  postEditFlashcard(ucsId: number, action: "delete" | "restudy") {
+    return this.post<PostEditFlashcardResponse>(urlFor("/flashcards/edit"), {
+      ucs: ucsId,
+      action,
+    });
+  }
+
   postUserStory(
     ucsId: number,
     txtStory: string,
@@ -139,13 +148,10 @@ export class LegacyApi extends HttpClient {
   }
 
   // Edit Custom Keyword dialog
-  postUserKeyword(
-    ucsId: number,
-    keyword: string
-  ) {
+  postUserKeyword(ucsId: number, keyword: string) {
     return this.post<PostUserKeywordResponse>("/study/editkeyword", {
       ucsId,
-      keyword
+      keyword,
     });
   }
 
@@ -157,8 +163,8 @@ export class LegacyApi extends HttpClient {
   //
   addCard(ucsId: TUcsId) {
     return this.post("/flashcards/add", {
-      ucs: ucsId
-    })
+      ucs: ucsId,
+    });
   }
 
   // get vocab entries for the Dictionary (example words for given kanji)

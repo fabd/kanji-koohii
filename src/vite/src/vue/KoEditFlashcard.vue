@@ -1,36 +1,52 @@
 <template>
-  <div class="p-[10px]">
+  <div class="p-[10px]" ref="maskArea">
     <template v-if="action === 'view-card'">
       <table class="ko-EditFlashcardDlg-stats">
+        <tbody>
         <tr><th>Box</th><td><span v-html="statsBox"></span></td></tr>
         <tr><th>Passed</th><td><strong>{{ cardData.successcount }}</strong> time(s)</td></tr>
         <tr><th>Failed</th><td><strong>{{ cardData.failurecount }}</strong> time(s)</td></tr>
         <tr><th>Last review</th><td>{{ lastReview }}</td></tr>
+        </tbody>
       </table>
+
+      <div v-if="hasErrors()" class="text-red-500 mb-4">
+        <span v-html="getErrors()"></span>
+      </div>
+
+      <div v-if="canDeleteCard()">
+        <button class="ko-Btn ko-Btn--success" @click.stop="action = 'delete'">Delete flashcard</button>
+      </div>
+
+      <div v-if="canFailCard()">
+        <button class="ko-Btn ko-Btn--success" @click.stop="onRestudy">Move card to restudy pile</button>
+      </div>
     </template>
 
-    <div v-if="hasErrors()" class="text-red-500 mb-4">
-      <span v-html="getErrors()"></span>
-    </div>
+    <template v-if="action === 'delete'">
+      <p class="text-md font-bold text-red-500 mb-2">Delete flashcard for {{ kanjiData.kanji }} (#{{ kanjiData.framenum }}) ?</p>
+      <p class="italic">Note: only the flashcard is deleted, stories are not affected.</p>
 
-    <template v-if="action == 'confirm-delete'">
-      <p class="text-red-500">{{ message }}</p>
-      <button class="ko-Btn ko-Btn--danger">Delete</button>
-      <button class="ko-Btn is-ghost">Cancel</button>
+      <div class="text-right">
+      <button class="ko-Btn ko-Btn--danger mr-2" @click.stop="onDelete">Delete</button>
+      <button class="ko-Btn is-ghost" @click.stop="action = 'view-card'">Cancel</button>
+      </div>
     </template>
 
-    <template v-if="action == 'show-message'">
-      <p class="">{{ message }}</p>
-      <button class="ko-Btn ko-Btn--success">Ok</button>
+    <template v-if="action === 'delete-done'">
+      <p class="text-md mb-2">Flashcard deleted.</p>
+      <div class="text-center">
+        <button class="ko-Btn ko-Btn--success w-[8rem] JSDialogHide">Close</button>
+      </div>
     </template>
 
-    <template v-if="canFailCard()">
-      <button class="ko-Btn ko-Btn--success">Move card to restudy pile</button>
+    <template v-if="action === 'restudy-done'">
+      <p class="text-md mb-2">Flashcard moved to restudy pile.</p>
+      <div class="text-center">
+        <button class="ko-Btn ko-Btn--success w-[8rem] JSDialogHide">Close</button>
+      </div>
     </template>
 
-    <template v-if="canDeleteCard()">
-      <button class="ko-Btn ko-Btn--success">Delete flashcard</button>
-    </template>
   </div>
 </template>
 
@@ -40,6 +56,9 @@ import { getApi } from "@app/api/api";
 import { type ReviewData } from "@/app/api/models";
 import { type KanjiData } from "@/app/api/models";
 import KoohiiLoading from "@/vue/KoohiiLoading";
+import eventBus from "@/lib/EventBus";
+import { type TronInst } from "@/lib/tron";
+import { type PostEditFlashcardResponse } from "@/app/api/models";
 
 export default defineComponent({
   name: "KoEditFlashcard",
@@ -111,12 +130,48 @@ export default defineComponent({
     },
 
     canFailCard() {
-      console.log("CANFAILLLLLL", this.reviewMode)
-      return !this.reviewMode && this.cardData.leitnerbox > 1;
+      // not review mode, not a card already in restudy pile
+      return !this.reviewMode
+        && this.cardData.leitnerbox > 1
+        || this.cardData.totalreviews === 0;
     },
 
     canDeleteCard() {
-      return true;
+      return !this.reviewMode;
+    },
+
+    onDelete() {
+      KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
+
+      getApi()
+        .legacy.postEditFlashcard(this.kanjiData.ucs_id, "delete")
+        .then((tron: TronInst<PostEditFlashcardResponse>) => {
+          this.errors = tron.getErrors();
+          if (tron.isSuccess()) {
+            this.action = "delete-done"
+            eventBus.notify("kk.flashcard.deleted");
+          }
+        })
+        .finally(() => {
+          KoohiiLoading.hide();
+        });    
+    },
+
+    onRestudy() {
+      KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
+
+      getApi()
+        .legacy.postEditFlashcard(this.kanjiData.ucs_id, "restudy")
+        .then((tron: TronInst<PostEditFlashcardResponse>) => {
+          this.errors = tron.getErrors();
+          if (tron.isSuccess()) {
+            this.action = "restudy-done"
+            eventBus.notify("kk.flashcard.restudy");
+          }
+        })
+        .finally(() => {
+          KoohiiLoading.hide();
+        });    
     }
   },
 });

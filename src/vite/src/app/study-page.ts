@@ -1,21 +1,18 @@
-// FIXME: this is the legacy study-page.js, should be a master Vue component someday
+// this is the legacy study-page.js, could be a master Vue component someday
 
 import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
 import * as RTK from "@/lib/rtk";
 import { getApi } from "@app/api/api";
-import { baseUrl } from "@/lib/koohii";
-
-import VueInstance from "@lib/helpers/vue-instance";
-
 import actb from "@old/autocomplete.js";
-
+import eventBus from "@/lib/EventBus";
 import EventDelegator from "@lib/EventDelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
+import VueInstance from "@lib/helpers/vue-instance";
 
 type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
 
@@ -74,13 +71,10 @@ function isNewCard() {
 export default {
   elEditFlashcard: null as HTMLElement | null,
   newCount: 0,
-
   oEditFlashcard: null as EditFlashcardDialog | null,
-
+  resetFlashcardDialog: false,
   elSearch: null as any as HTMLInputElement,
-
   dictVisible: false,
-
   dictPanel: false,
 
   initialize() {
@@ -145,6 +139,8 @@ export default {
     const elEditFlashcard = $$<HTMLElement>(".ko-EditFlashcard")[0];
     if (elEditFlashcard) {
       this.initFlashcardButton(elEditFlashcard);
+      eventBus.connect("kk.flashcard.deleted", this.onDeleteFlashcard, this);
+      eventBus.connect("kk.flashcard.restudy", this.onRestudyFlashcard, this);
     }
   },
 
@@ -222,20 +218,7 @@ export default {
   },
 
   onClickFlashcardButton(_evt: Event, _el: Element) {
-    const onMenuResponse = (result: "added" | "deleted") => {
-      // reset button to "Add Card" state
-      if (result === "deleted") {
-        // if it was a new card that was deleted, update the count
-        if (isNewCard()) {
-          this.newCount--;
-        }
-
-        this.renderFlashcardButton(false, false);
-
-        // update the state
-        cardData = null;
-      }
-    };
+    _evt.preventDefault();
 
     // the current kanji
     const ucsId = kk_globals_get("LASTVIEWED_UCS_ID");
@@ -280,6 +263,13 @@ export default {
         });
     }
 
+    // invalidate the dialog, reload
+    if (this.resetFlashcardDialog) {
+      this.resetFlashcardDialog = false;
+      this.oEditFlashcard?.destroy();
+      this.oEditFlashcard = null;
+    }
+
     if (hasCard() && this.oEditFlashcard) {
       this.oEditFlashcard.show();
       return;
@@ -292,8 +282,34 @@ export default {
         false
       );
     }
+  },
 
-    return false;
+  onDeleteFlashcard() {
+    this.resetFlashcardDialog = true;
+
+    // deleted the new card, update new card count
+    if (isNewCard()) {
+      this.newCount--;
+    }
+
+    // reset button to "Add Card" state
+    this.renderFlashcardButton(false, false); 
+    cardData = null;
+  },
+
+  onRestudyFlashcard() {
+    this.resetFlashcardDialog = true;
+    
+    // if it was a new card that moved to restudy pile, update new card count
+    if (isNewCard()) {
+      this.newCount--;
+    }
+
+    // FIXME - just want to update the New Cards indicator
+    this.renderFlashcardButton(true, false);
+    
+    // reload the dialog contents
+    this.resetFlashcardDialog = true;
   },
 
   /**

@@ -743,7 +743,7 @@ class studyActions extends sfActions
     if (true === $json->reqKnownKanji) {
       $tron->set('knownKanji', $this->getUser()->getUserKnownKanji());
     }
-// sleep(1);
+
     return $tron->renderJson($this);
   }
 
@@ -790,7 +790,6 @@ class studyActions extends sfActions
       $tron->setError('Oops, update failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
-// sleep(1);
 
     return $tron->renderJson($this);
   }
@@ -809,7 +808,6 @@ class studyActions extends sfActions
       $tron->setError('Oops, delete failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
-// sleep(1);
 
     return $tron->renderJson($this);
   }

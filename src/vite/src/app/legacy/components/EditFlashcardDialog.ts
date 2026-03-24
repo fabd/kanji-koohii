@@ -13,7 +13,7 @@ type EditFlashcardResponse = {
 
 export default class EditFlashcardDialog {
   private dialog: KoDialog | null = null;
-  private vueInst: TVueInstanceOf<typeof KoEditFlashcard> | null = null;
+  private vueInst: TVueInstanceRef<typeof KoEditFlashcard> | null = null;
   private isReviewMode: boolean;
 
   constructor(
@@ -27,9 +27,7 @@ export default class EditFlashcardDialog {
       align: align,
       dismiss: true,
       mask: true,
-      close: true,
-      title: `Edit Flashcard`,
-      width: "300px",
+      width: "280px",
     };
 
     this.dialog = new KoDialog(dlgopts);
@@ -45,11 +43,6 @@ export default class EditFlashcardDialog {
     ajaxPanel.get({ ucs: ucsId }, urlFor("/flashcards/edit"));
     
     this.dialog.show();
-  }
-
-  destroy() {
-    this.dialog!.destroy();
-    this.dialog = null;
   }
 
   show() {
@@ -73,13 +66,17 @@ export default class EditFlashcardDialog {
     const props = tron.getProps();
     const elMount = this.dialog!.getBody();
 
-    const { vm } = VueInstance(KoEditFlashcard, elMount, {
+    this.vueInst = VueInstance(KoEditFlashcard, elMount, {
       kanjiData: props.kanjiData,
       cardData: props.cardData,
       reviewMode: this.isReviewMode
     });
+  }
 
-    this.vueInst = vm;
+  destroy() {
+    this.vueInst?.unmount();
+    this.dialog!.destroy();
+    this.dialog = null;
   }
 }
 

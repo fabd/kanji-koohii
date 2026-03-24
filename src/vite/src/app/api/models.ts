@@ -45,6 +45,10 @@ export type GetDictCacheFor = {
   items: DictListEntry[];
 }
 
+export type PostEditFlashcardResponse = {
+  result?: string; //placeholder
+};
+
 export type PostVoteStoryRequest = {
   request: "star" | "report" | "copy";
   uid: number;

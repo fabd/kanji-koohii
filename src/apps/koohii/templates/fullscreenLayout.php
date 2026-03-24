@@ -42,7 +42,7 @@ body { padding-top:0;  }
 <?php } ?>
 
 </head>
-<body class="uiFcLayout yui-skin-sam">
+<body class="uiFcLayout">
 
 <?php echo $sf_content; ?>
 

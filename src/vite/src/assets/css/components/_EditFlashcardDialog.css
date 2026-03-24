@@ -3,11 +3,6 @@
  *
  */
 
-/* (desktop) dialog width */
-.rtk-skin-dlg .ko-EditFlashcardDlg {
-  width: 300px;
-}
-
 .ko-EditFlashcardDlg-stats {
   width: 100%;
   padding: 10px 0;
@@ -24,37 +19,6 @@
     width: 30%;
     white-space: nowrap;
   }
-}
-
-.uiBMenuMsg {
-  padding: 1em 0;
-  font:
-    bold 16px/1.1em "Lucida Sans Unicode",
-    "Lucida Sans",
-    "Lucida Grande",
-    Verdana,
-    Arial,
-    Helvetica,
-    sans-serif;
-  color: #000;
-  text-decoration: none;
-
-  .note {
-    display: block;
-    padding: 1em 0 0;
-    color: #888;
-    font-weight: normal;
-  }
-}
-
-/* message colours (ie. "delete flashcard?" or "confirmation") */
-.uiBMenuRed {
-  color: red;
-}
-.uiBMenuGreen {
-  color: #2ba23b;
-  padding: 14px 0 12px 32px;
-  background: url(/images/ui/icons/uiBMenu-sprite.gif) no-repeat 0 14px;
 }
 
 /* Edit Flashcard button on the Study page */

@@ -43,7 +43,7 @@
 <?php if (KK_ENV_PROD) { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
 </head>
 <body
-  class="<?php echo $withFooter ?>yui-skin-sam <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
+  class="<?php echo $withFooter ?> <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
   <div id="body-navbar-holder"></div>
 
 <div id="aside-component"></div><!-- fabd : FIXME?? TS refactor Vue3 -->

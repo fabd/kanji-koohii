@@ -62,7 +62,9 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
-   * Returns flashcard status for given user and character id.
+   * Returns flashcard data for given user and character id.
+   * 
+   * NOTE! All numeric fields are cast to integers.
    * 
    * @param int $userId
    * @param int $ucsId
@@ -81,7 +83,19 @@ class ReviewsPeer extends coreDatabaseTable
     $select->query();
 
     $db = self::getInstance()->getDb();
-    return $db->fetch();
+    $row = $db->fetch();
+
+    if ($row !== false) {
+      // FIXME : could use mysqli_options($mysqli, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+      $row['ucs_id'] = (int)$row['ucs_id'];
+      $row['leitnerbox'] = (int)$row['leitnerbox'];
+      $row['failurecount'] = (int)$row['failurecount'];
+      $row['successcount'] = (int)$row['successcount'];
+      $row['totalreviews'] = (int)$row['totalreviews'];
+      $row['ts_lastreview'] = (int)$row['ts_lastreview'];
+    }
+    
+    return $row;
   }
 
   /**

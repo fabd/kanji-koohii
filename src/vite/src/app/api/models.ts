@@ -45,6 +45,11 @@ export type GetDictCacheFor = {
   items: DictListEntry[];
 }
 
+export type GetEditFlashcardResponse = {
+  kanjiData: KanjiData;
+  cardData: ReviewData;
+};
+
 export type PostEditFlashcardResponse = {
   result?: string; //placeholder
 };

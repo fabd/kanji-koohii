@@ -3,6 +3,7 @@ import { baseUrl } from "@/lib/koohii";
 import type {
   GetDictListForUCS,
   GetDictCacheFor,
+  GetEditFlashcardResponse,
   PostEditFlashcardResponse,
   PostUserStoryResponse,
   PostUserKeywordResponse,
@@ -126,8 +127,14 @@ export class LegacyApi extends HttpClient {
     return this.instance;
   }
 
+  getEditFlashcard(ucsId: TUcsId) {
+    return this.get<GetEditFlashcardResponse>("/flashcards/edit", {
+      ucs: ucsId,
+    });
+  }
+
   postEditFlashcard(ucsId: number, action: "delete" | "restudy") {
-    return this.post<PostEditFlashcardResponse>(urlFor("/flashcards/edit"), {
+    return this.post<PostEditFlashcardResponse>("/flashcards/edit", {
       ucs: ucsId,
       action,
     });

@@ -25,8 +25,10 @@ export default class EditFlashcardDialog {
 
     const dlgopts: KoDialogOptions = {
       align: align,
+      close: true,
       dismiss: true,
       mask: true,
+      title: "Edit Flashcard",
       width: "280px",
     };
 

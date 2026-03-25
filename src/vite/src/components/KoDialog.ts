@@ -71,23 +71,23 @@ export default class KoDialog {
     //  even if z-index is same as the dialog.
     if (this.options.mask) {
       this.mask = document.createElement("div");
-      this.mask.className = "modal-mask";
+      this.mask.className = "ko-Dialog-mask";
       document.body.appendChild(this.mask);
     }
 
     // create dialog shell
     const dialog = document.createElement("div");
-    dialog.classList.add("modal-dialog");
+    dialog.classList.add("ko-Dialog");
     this.transitionBegin(dialog);
 
     let header = "";
     if (this.options.title || this.options.close) {
       header = `
-        <div class="modal-header" data-header>
-            <span class="modal-header-title">${this.options.title}</span>
+        <div class="ko-Dialog-header" data-header>
+            <span class="ko-Dialog-header-title">${this.options.title}</span>
             ${
               this.options.close
-                ? '<button class="modal-close-btn" data-close>&times;</button>'
+                ? '<button class="ko-Dialog-closeBtn" data-close>&times;</button>'
                 : ""
             }
         </div>
@@ -96,12 +96,12 @@ export default class KoDialog {
 
     dialog.innerHTML = `
       ${header}
-      <div class="modal-body"></div>
-      <div class="modal-footer"></div>
+      <div class="ko-Dialog-body"></div>
+      <div class="ko-Dialog-footer"></div>
     `;
 
     // resolve and Inject Content
-    const elBody = dialog.querySelector<HTMLElement>(".modal-body")!;
+    const elBody = dialog.querySelector<HTMLElement>(".ko-Dialog-body")!;
 
     // fix width, useful for ajax loading content
     //  not for mobile (extends edge to edge)
@@ -182,11 +182,11 @@ export default class KoDialog {
    *
    */
   getBody(): HTMLElement {
-    return this.dialog!.querySelector(".modal-body")!;
+    return this.dialog!.querySelector(".ko-Dialog-body")!;
   }
 
   getFooter(): HTMLElement {
-    return this.dialog!.querySelector(".modal-footer")!;
+    return this.dialog!.querySelector(".ko-Dialog-footer")!;
   }
 
   private transitionBegin(el: HTMLElement) {

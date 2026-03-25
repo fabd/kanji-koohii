@@ -287,7 +287,7 @@ export default defineComponent({
       return this.formErrors.length > 0;
     },
 
-    formHandleResponse(tron: TRON.TronInst) {
+    formHandleResponse(tron: TRON.TronInst<any>) {
       this.formErrors = tron.getErrors();
     },
 

@@ -70,10 +70,16 @@ export type PostVoteStoryResponse = {
   kicks: number;
 };
 
-export type GetUserStoryResponse = {
-  initStoryEdit?: string;
-  initStoryPublic?: boolean;
-  initFavoriteStory?: boolean; // if true, postStoryView is a "starred" story
+export type EditStoryResponse = {
+  kanjiData: KanjiData;
+  custKeyword: string;
+
+  isReviewMode: boolean;
+  initFavoriteStory: boolean; /* the user's story is empty, display favorite story */
+
+  initStoryEdit: string; /* the current saved story (edit mode) */
+  initStoryPublic: boolean; /* whether the current story is public */
+  initStoryView: string; /* the formatted story (view mode) */
 };
 
 export type PostUserStoryResponse = {

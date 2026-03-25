@@ -5,17 +5,15 @@ import type {
   GetDictCacheFor,
   GetEditFlashcardResponse,
   PostEditFlashcardResponse,
+  EditStoryResponse,
   PostUserStoryResponse,
   PostUserKeywordResponse,
   PostVoteStoryRequest,
   PostVoteStoryResponse,
 } from "./models";
 import * as TRON from "@lib/tron";
-import { urlFor } from "@/lib/koohii";
 
 const API_DEFAULT_TIMEOUT = 5000;
-
-export const API_URL_STUDY_EDITSTORY = "/study/editstory";
 
 // In the future with a proper API we may have: stories, users, etc.
 //  for now, `legacy` means the old ajax endpoints (not a standalone API)
@@ -140,13 +138,20 @@ export class LegacyApi extends HttpClient {
     });
   }
 
+  getEditStory(ucsCode: TUcsId, reviewMode: boolean) {
+    return this.get<EditStoryResponse>("/study/editstory", {
+      ucsCode,
+      reviewMode,
+    });
+  }
+
   postUserStory(
     ucsId: number,
     txtStory: string,
     isPublic: boolean,
     reviewMode: boolean
   ) {
-    return this.post<PostUserStoryResponse>(API_URL_STUDY_EDITSTORY, {
+    return this.post<PostUserStoryResponse>("/study/editstory", {
       ucsCode: ucsId,
       reviewMode,
       postStoryEdit: txtStory,

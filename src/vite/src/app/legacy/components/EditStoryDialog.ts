@@ -5,31 +5,18 @@
 
 import VueInstance from "@lib/helpers/vue-instance";
 import $$ from "@/lib/dom";
-import AjaxPanel from "@old/ajaxpanel";
 import { type TronInst } from "@/lib/tron";
-import KoDialog, { type KoDialogOptions } from "@/components/KoDialog";
+import KoDialog from "@/components/KoDialog";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
-import { type KanjiData } from "@/app/api/models";
-import { API_URL_STUDY_EDITSTORY } from "@/app/api/api";
-
-type EditStoryResponse = {
-  kanjiData: KanjiData;
-  custKeyword: string;
-
-  isReviewMode: boolean;
-  initFavoriteStory: boolean; /* the user's story is empty, display favorite story */
-
-  initStoryEdit: string; /* the current saved story (edit mode) */
-  initStoryPublic: boolean; /* whether the current story is public */
-  initStoryView: string; /* the formatted story (view mode) */
-};
+import { getApi } from "@/app/api/api";
+import { type EditStoryResponse } from "@/app/api/models";
+import KoohiiLoading from "@/vue/KoohiiLoading";
 
 export default class EditStoryDialog {
   // unique id to find when we need to reload the dialog
   ucsId: number = 0;
   dialog: KoDialog;
   editStory: TVueInstanceRef<typeof KoohiiEditStory> | null = null;
-  ajaxPanel: AjaxPanel | null = null;
 
   /**
    * @param url - The URL to load the dialog content from.
@@ -61,21 +48,36 @@ export default class EditStoryDialog {
       return;
     }
 
-    if (!this.ajaxPanel) {
-      this.ajaxPanel = new AjaxPanel(this.dialog.getBody(), {
-        events: {
-          onResponse: this.onPanelResponse.bind(this),
-        },
-      });
-    }
+    const elBody = this.dialog.getBody();
 
     // clear the contents so it doesn't show behind the loading mask
-    this.dialog.getBody().innerHTML = "";
+    elBody.innerHTML = "";
 
-    this.ajaxPanel.get(
-      { ucsCode: ucsId, reviewMode: true },
-      API_URL_STUDY_EDITSTORY
-    );
+    KoohiiLoading.show({ target: elBody });
+
+    getApi()
+      .legacy.getEditStory(ucsId, true)
+      .then((tron: TronInst<EditStoryResponse>) => {
+        const props = tron.getProps();
+        // unmount last Vue instance
+        this.destroy();
+
+        const vueProps = {
+          kanjiData: props.kanjiData,
+          custKeyword: props.custKeyword,
+          isReviewMode: true,
+          initFavoriteStory: props.initFavoriteStory,
+          initStoryEdit: props.initStoryEdit,
+          initStoryView: props.initStoryView,
+          initStoryPublic: props.initStoryPublic,
+        };
+
+        const elMount = this.dialog.getBody();
+        this.editStory = VueInstance(KoohiiEditStory, elMount, vueProps);
+      })
+      .finally(() => {
+        KoohiiLoading.hide();
+      });
 
     this.dialog.getFooter().innerHTML = `
       <button class="ko-Btn ko-Btn--large ko-Btn--lime w-full JSDialogHide">Close</button>
@@ -84,51 +86,13 @@ export default class EditStoryDialog {
     this.ucsId = ucsId;
   }
 
-  /** Shows the dialog. */
   show(): void {
     console.log("EditStoryDialog::show()");
     this.dialog.show();
   }
 
-  /** Hides the dialog. */
   hide(): void {
     this.dialog.hide();
-  }
-
-  /** Called when the dialog is hidden; keeps the dialog in the page. */
-  onDialogHide(): false {
-    console.log("EditStoryDialog::hide()");
-
-    // fabd: removed "cancel edit mode"... what if user edited, then closed by mistake,
-    //   not really necessary to undo edit mode when the Edit Story dialog is hidden.
-
-    // keep the dialog in the page
-    return false;
-  }
-
-  onPanelResponse(tron: TronInst<EditStoryResponse>) {
-    // console.log('ondialogresponse tron %o', tron);
-
-    // unmount last Vue instance
-    this.destroy();
-
-    const props = tron.getProps();
-
-    const propsData = {
-      kanjiData: props.kanjiData,
-      custKeyword: props.custKeyword,
-
-      isReviewMode: true,
-      initFavoriteStory: props.initFavoriteStory,
-
-      initStoryEdit: props.initStoryEdit,
-      initStoryView: props.initStoryView,
-      initStoryPublic: props.initStoryPublic,
-    };
-
-    const elMount = this.dialog.getBody();
-
-    this.editStory = VueInstance(KoohiiEditStory, elMount, propsData);
   }
 
   destroy() {

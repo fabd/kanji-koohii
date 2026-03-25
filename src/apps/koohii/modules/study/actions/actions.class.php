@@ -400,16 +400,17 @@ class studyActions extends sfActions
   }
 
   /**
-   * EditStory Vue ajax handler.
+   * EditStory ajax handler (EditStoryDialog & EditStory Vue component).
    * 
-   * Request parameters:
-   * 
+   * GET
    *   ucsCode            number
-   *   
-   *   reviewMode         boolean    True if used from the Review page EditStory window.
-   *   
+   *   reviewMode         boolean    True if used from the Review page (EditStory dialog)
+   * 
+   * POST
+   *   ucsCode            number
    *   postStoryEdit      string
    *   postStoryPublic    boolean
+   *   reviewMode         boolean
    * 
    * See study/edit action (parameters) and EditStoryDialog.js
    *

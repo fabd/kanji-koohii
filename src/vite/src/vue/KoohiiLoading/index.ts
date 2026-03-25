@@ -19,8 +19,6 @@ let component: TVueInstanceOf<typeof KoohiiLoading> | null;
 let componentUnmount: () => void;
 let target: HTMLElement | null;
 
-export type KoohiiLoadingProps = { target: HTMLElement; background?: string };
-
 export default {
   /**
    *
@@ -29,7 +27,7 @@ export default {
    *
    * @param {} props
    */
-  show(props: KoohiiLoadingProps) {
+  show(props: { target: HTMLElement; background?: string }) {
     console.log("koohiiloading::show()");
     target = props.target;
 

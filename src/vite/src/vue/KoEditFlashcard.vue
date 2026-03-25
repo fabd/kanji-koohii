@@ -15,11 +15,11 @@
       </div>
 
       <div v-if="canDeleteCard()">
-        <button class="ko-Btn ko-Btn--success" @click.stop="action = 'delete'">Delete flashcard</button>
+        <button class="ko-Btn ko-Btn--danger block w-full" @click.stop="action = 'delete'"><i class="fa fa-times mr-2"></i>Delete flashcard</button>
       </div>
 
-      <div v-if="canFailCard()">
-        <button class="ko-Btn ko-Btn--success" @click.stop="onRestudy">Move card to restudy pile</button>
+      <div v-if="canFailCard()" class="mt-2">
+        <button class="ko-Btn ko-Btn--success block w-full" @click.stop="onRestudy"><i class="fa fa-arrow-left mr-2"></i>Move card to restudy pile</button>
       </div>
     </template>
 
@@ -34,16 +34,16 @@
     </template>
 
     <template v-if="action === 'delete-done'">
-      <p class="text-md mb-2">Flashcard deleted.</p>
+      <p class="text-md text-green-700 mb-2"><i class="fa fa-check mr-2"></i>Flashcard deleted.</p>
       <div class="text-center">
-        <button class="ko-Btn ko-Btn--success w-[8rem] JSDialogHide">Close</button>
+        <button class="ko-Btn ko-Btn--success block w-full JSDialogHide">Close</button>
       </div>
     </template>
 
     <template v-if="action === 'restudy-done'">
       <p class="text-md mb-2">Flashcard moved to restudy pile.</p>
       <div class="text-center">
-        <button class="ko-Btn ko-Btn--success w-[8rem] JSDialogHide">Close</button>
+        <button class="ko-Btn ko-Btn--success block w-full JSDialogHide">Close</button>
       </div>
     </template>
 

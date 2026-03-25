@@ -87,7 +87,7 @@ export default class KoDialog {
             <span class="ko-Dialog-header-title">${this.options.title}</span>
             ${
               this.options.close
-                ? '<button class="ko-Dialog-closeBtn" data-close>&times;</button>'
+                ? '<button class="ko-Dialog-closeBtn" data-close></button>'
                 : ""
             }
         </div>

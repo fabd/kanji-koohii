@@ -36,7 +36,7 @@ abstract class HttpClient {
   }
 
   // axios.get() proxy
-  public get<T = TRON.TronProps>(uri: string, params: any) {
+  public get<T extends object>(uri: string, params: any) {
     const config: ApiRequestConfig = {
       method: "get",
       params,
@@ -45,7 +45,7 @@ abstract class HttpClient {
   }
 
   // axios.post() proxy
-  public post<T = TRON.TronProps>(uri: string, data: any) {
+  public post<T extends object>(uri: string, data: any) {
     const config: ApiRequestConfig = {
       method: "post",
       data,
@@ -54,7 +54,7 @@ abstract class HttpClient {
   }
 
   // generic axios request() which handles the catch() and always resolves to a TRON message
-  protected request<T>(uri: string, config: ApiRequestConfig) {
+  protected request<T extends object>(uri: string, config: ApiRequestConfig) {
     const requestConfig: AxiosRequestConfig = {
       method: config.method || "get",
       url: uri,

@@ -50,14 +50,14 @@ export enum STATUS {
 
 export type TronProps = Dictionary<unknown>;
 
-export type TronMessage<T = TronProps> = {
+export type TronMessage<T extends object> = {
   status: STATUS;
   props: T;
   html: string;
   errors: string[];
 };
 
-export type TronInst<T = TronProps> = {
+export type TronInst<T extends object> = {
   isEmpty(): boolean;
   isSuccess(): boolean;
   isFailed(): boolean;
@@ -69,29 +69,28 @@ export type TronInst<T = TronProps> = {
   setErrors(...errors: string[]): void;
 };
 
-function Inst<T = TronProps>(message: Partial<TronMessage>): TronInst<T> {
+function Inst<T extends object>(message: Partial<TronMessage<T>>): TronInst<T> {
   console.assert(Lang.isObject(message), "TRON() : json is not an object");
 
-  const emptyTronMsg: TronMessage = {
+  const tronObj = {
     status: STATUS.EMPTY,
     props: {},
-    html: "",
     errors: [],
-  };
-  const tronObj: TronMessage = { ...emptyTronMsg, ...message };
+    ...message,
+  } as TronMessage<T>;
 
   // validate TRON message
   console.assert(Lang.isNumber(tronObj.status), "TRON status is not a number");
   console.assert(Lang.isObject(tronObj.props), "TRON props is not an object");
   console.assert(Lang.isArray(tronObj.errors), "TRON errors is not an array");
 
-  const inst = {
+  const inst: TronInst<T> = {
     isEmpty: () => tronObj.status === STATUS.EMPTY,
     isSuccess: () => tronObj.status === STATUS.SUCCESS,
     isFailed: () => tronObj.status === STATUS.FAILED,
 
     getStatus: (): STATUS => tronObj.status,
-    getProps: (): T => (tronObj.props as unknown) as T,
+    getProps: (): T => tronObj.props,
     getHtml: (): string => tronObj.html,
 
     getErrors: () => tronObj.errors,

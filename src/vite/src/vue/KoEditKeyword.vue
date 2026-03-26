@@ -139,7 +139,7 @@ export default defineComponent({
       KoohiiLoading.show({ target: this.$refs.loadingMask as HTMLElement });
 
       getApi()
-        .legacy.postUserKeyword(this.ucsId, this.keyword)
+        .postUserKeyword(this.ucsId, this.keyword)
         .then((tron: TronInst<PostUserKeywordResponse>) => {
           KoohiiLoading.hide();
 

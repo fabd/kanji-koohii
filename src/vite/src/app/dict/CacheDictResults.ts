@@ -40,7 +40,7 @@ class CacheDictResults {
 /*test*/const ucsId = chars.charCodeAt(0);
 
     getApi()
-      .legacy.getDictCacheFor(chars)
+      .getDictCacheFor(chars)
       .then((tron) => {
         if (tron.isSuccess()) {
           const { items } = tron.getProps();

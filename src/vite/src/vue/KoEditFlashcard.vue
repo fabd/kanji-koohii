@@ -144,7 +144,7 @@ export default defineComponent({
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
       getApi()
-        .legacy.postEditFlashcard(this.kanjiData.ucs_id, "delete")
+        .postEditFlashcard(this.kanjiData.ucs_id, "delete")
         .then((tron: TronInst<PostEditFlashcardResponse>) => {
           this.errors = tron.getErrors();
           if (tron.isSuccess()) {
@@ -161,7 +161,7 @@ export default defineComponent({
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
       getApi()
-        .legacy.postEditFlashcard(this.kanjiData.ucs_id, "restudy")
+        .postEditFlashcard(this.kanjiData.ucs_id, "restudy")
         .then((tron: TronInst<PostEditFlashcardResponse>) => {
           this.errors = tron.getErrors();
           if (tron.isSuccess()) {

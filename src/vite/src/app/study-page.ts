@@ -232,7 +232,7 @@ export default {
       const minDelay = 500;
 
       getApi()
-        .legacy.addCard(ucsId)
+        .addCard(ucsId)
         .then((tron) => {
           const elapsed = Date.now() - startTime;
           const remainingDelay = Math.max(0, minDelay - elapsed);

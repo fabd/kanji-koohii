@@ -28,7 +28,7 @@ export default class EditFlashcardDialog {
     KoohiiLoading.show({ target: mount });
 
     getApi()
-      .legacy.getEditFlashcard(ucsId)
+      .getEditFlashcard(ucsId)
       .then((tron: TronInst<GetEditFlashcardResponse>) => {
         const { kanjiData, cardData } = tron.getProps();
 

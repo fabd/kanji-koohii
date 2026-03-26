@@ -127,7 +127,7 @@ export default defineComponent({
 
       if (!selected) {
         getApi()
-          .legacy.setVocabForCard(this.ucsId, item.id)
+          .setVocabForCard(this.ucsId, item.id)
           .then((tron) => {
             KoohiiLoading.hide();
             // success:  show vocab onto the flashcard, and close the dictionary
@@ -137,7 +137,7 @@ export default defineComponent({
           });
       } else {
         getApi()
-          .legacy.deleteVocabForCard(this.ucsId)
+          .deleteVocabForCard(this.ucsId)
           .then((tron) => {
             KoohiiLoading.hide();
             if (tron.isSuccess()) {
@@ -197,7 +197,7 @@ export default defineComponent({
         // CDR.cacheResultsFor(ucsId)
 
         getApi()
-          .legacy.getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
+          .getDictListForUCS(ucsId, true !== this.isSetKnownKanji)
           .then((tron) => {
             KoohiiLoading.hide();
             if (tron.isSuccess()) {

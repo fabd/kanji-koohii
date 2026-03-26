@@ -56,7 +56,7 @@ export default class EditStoryDialog {
     KoohiiLoading.show({ target: elBody });
 
     getApi()
-      .legacy.getEditStory(ucsId, true)
+      .getEditStory(ucsId, true)
       .then((tron: TronInst<EditStoryResponse>) => {
         const props = tron.getProps();
         // unmount last Vue instance

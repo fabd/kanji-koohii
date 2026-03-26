@@ -131,7 +131,7 @@ class SharedStoriesComponent {
       const elSharedStory = this.getStoryParentDiv(elActions);
 
       getApi()
-        .legacy.ajaxSharedStory(params)
+        .ajaxSharedStory(params)
         .then((tron) => {
           this.onAjaxResponse(tron, elSharedStory);
         });

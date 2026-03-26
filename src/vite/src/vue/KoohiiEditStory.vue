@@ -307,7 +307,7 @@ export default defineComponent({
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
       getApi()
-        .legacy.postUserStory(
+        .postUserStory(
           this.kanjiData.ucs_id,
           this.postStoryEdit,
           this.postStoryPublic,

@@ -12,13 +12,10 @@ import type {
   PostVoteStoryResponse,
 } from "./models";
 
-// In the future with a proper API we may have: stories, users, etc.
-//  for now, `legacy` means the old ajax endpoints (not a standalone API)
-export type KoohiiAPI = {
-  legacy: LegacyApi;
-};
-
-// a singleton class api for the legacy ajax endpoints, *always* resolves to TRON message
+/**
+ * A singleton class api for the legacy ajax endpoints,
+ *  it uses HttpClient, so it always resolves to a TRON message.
+ */
 export class LegacyApi extends HttpClient {
   private static instance?: LegacyApi;
 
@@ -115,10 +112,8 @@ export class LegacyApi extends HttpClient {
   }
 }
 
-export function getApi(): KoohiiAPI {
+export function getApi(): LegacyApi {
   const apiBaseUrl = baseUrl();
 
-  return {
-    legacy: LegacyApi.getInstance(apiBaseUrl),
-  };
+  return LegacyApi.getInstance(apiBaseUrl);
 }

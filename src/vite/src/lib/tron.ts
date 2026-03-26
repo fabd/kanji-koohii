@@ -103,9 +103,4 @@ function Inst<T extends object>(message: Partial<TronMessage<T>>): TronInst<T> {
   return inst;
 }
 
-// constants used by old frontend code
-Inst.STATUS_FAILED = STATUS.FAILED;
-Inst.STATUS_PROGRESS = STATUS.PROGRESS;
-Inst.STATUS_SUCCESS = STATUS.SUCCESS;
-
 export { Inst };

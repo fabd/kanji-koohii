@@ -299,7 +299,7 @@ export default class AjaxRequest {
         }
       }
 
-      o.responseTRON = o.responseJSON ? new TRON.Inst(o.responseJSON) : null;
+      o.responseTRON = o.responseJSON ? new TRON.Tron(o.responseJSON) : null;
       // console.log("responseTRON ...", o.responseTRON);
 
       fn.apply(scope || window, [o]);

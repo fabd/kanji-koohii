@@ -1,5 +1,5 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
 import { baseUrl } from "@/lib/koohii";
+import { HttpClient } from "./http-client";
 import type {
   GetDictListForUCS,
   GetDictCacheFor,
@@ -11,103 +11,12 @@ import type {
   PostVoteStoryRequest,
   PostVoteStoryResponse,
 } from "./models";
-import * as TRON from "@lib/tron";
-
-const API_DEFAULT_TIMEOUT = 5000;
 
 // In the future with a proper API we may have: stories, users, etc.
 //  for now, `legacy` means the old ajax endpoints (not a standalone API)
 export type KoohiiAPI = {
   legacy: LegacyApi;
 };
-
-type ApiRequestConfig = Pick<AxiosRequestConfig, "method" | "params" | "data">;
-
-// HttpClient() is a wrapper for axios, which never fails & always returns a TRON message
-abstract class HttpClient {
-  protected readonly axiosInst: AxiosInstance;
-
-  public constructor(baseURL: string) {
-    this.axiosInst = axios.create({
-      baseURL: baseURL,
-      timeout: API_DEFAULT_TIMEOUT,
-    });
-  }
-
-  // axios.get() proxy
-  public get<T extends object>(uri: string, params: any) {
-    const config: ApiRequestConfig = {
-      method: "get",
-      params,
-    };
-    return this.request<T>(uri, config);
-  }
-
-  // axios.post() proxy
-  public post<T extends object>(uri: string, data: any) {
-    const config: ApiRequestConfig = {
-      method: "post",
-      data,
-    };
-    return this.request<T>(uri, config);
-  }
-
-  // generic axios request() which handles the catch() and always resolves to a TRON message
-  protected request<T extends object>(uri: string, config: ApiRequestConfig) {
-    const requestConfig: AxiosRequestConfig = {
-      method: config.method || "get",
-      url: uri,
-      params: config.params || null, // url parameters
-      data: config.data || null, // request body, only PUT/POST/DELETE/PATCH
-    };
-
-    return this.axiosInst
-      .request(requestConfig)
-      .then((res) => {
-        const t = TRON.Inst<T>(res.data as any);
-
-        // helps debugging during development
-        if (t.getStatus() === TRON.STATUS.FAILED || t.hasErrors()) {
-          console.warn(
-            "HttpClient() TRON error(s): \n" + t.getErrors().join("\n")
-          );
-        }
-
-        return t;
-      })
-      .catch((error) => {
-        // we basically never want to fail, and always return a valid tron message
-
-        const t = TRON.Inst<T>({ status: TRON.STATUS.FAILED });
-
-        // The request was made and the server responded with a status code that falls out of the range of 2xx
-        if (error.response) {
-          console.warn(
-            "HttpClient(response error): status code ",
-            error.response.status
-          );
-          t.setErrors(
-            `Oops! Server responded with error ${error.response.status}`
-          );
-        }
-        // The request was made but no response was received -- `error.request` is an instance of XMLHttpRequest in the browser
-        else if (error.request) {
-          console.warn("HttpClient(request error): ", error);
-          t.setErrors(
-            `Oops! The request timed out, please try again in a moment.`
-          );
-        }
-
-        // Something happened in setting up the request that triggered an Error
-        else {
-          console.warn("HttpClient(unknown error): ", error.message);
-          t.setErrors("Request error");
-        }
-
-        return Promise.resolve(t);
-      });
-  }
-}
 
 // a singleton class api for the legacy ajax endpoints, *always* resolves to TRON message
 export class LegacyApi extends HttpClient {

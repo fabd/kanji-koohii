@@ -15,7 +15,7 @@
  *
  * Methods:
  *
- *   TRON(json)        Factory function, sanitizes & always returns a valid TRON message
+ *   Tron(json)        Factory function, sanitizes & always returns a valid TRON message
  *
  *   isEmpty()         If true this means this instance is not created from a JSON response
  *                     that uses the TRON format.
@@ -23,13 +23,13 @@
  *   isSuccess()
  *   getStatus()
  *
- *   getProps()        @return {Object}
+ *   getProps()        Returns an object
  *
  *   getHtml()         Returns embedded html, otherwise an empty string (falsy).
  *
- *   getErrors()       @return {Array}
+ *   getErrors()       Returns an array of error messages
  *   hasErrors()
- *   setErrors()       @param {...string}   One or more error messages
+ *   setErrors()       Set one or more error messages
  *
  */
 
@@ -50,7 +50,7 @@ export enum STATUS {
 
 export type TronProps = Dictionary<unknown>;
 
-export type TronMessage<T extends object> = {
+export type TronMsg<T extends object> = {
   status: STATUS;
   props: T;
   html: string;
@@ -69,15 +69,15 @@ export type TronInst<T extends object> = {
   setErrors(...errors: string[]): void;
 };
 
-function Inst<T extends object>(message: Partial<TronMessage<T>>): TronInst<T> {
-  console.assert(Lang.isObject(message), "TRON() : json is not an object");
+export function Tron<T extends object>(msg: Partial<TronMsg<T>>): TronInst<T> {
+  console.assert(Lang.isObject(msg), "TRON() : json is not an object");
 
   const tronObj = {
     status: STATUS.EMPTY,
     props: {},
     errors: [],
-    ...message,
-  } as TronMessage<T>;
+    ...msg,
+  } as TronMsg<T>;
 
   // validate TRON message
   console.assert(Lang.isNumber(tronObj.status), "TRON status is not a number");
@@ -102,5 +102,3 @@ function Inst<T extends object>(message: Partial<TronMessage<T>>): TronInst<T> {
 
   return inst;
 }
-
-export { Inst };

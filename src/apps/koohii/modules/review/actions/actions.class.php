@@ -331,7 +331,7 @@ class reviewActions extends sfActions
    */
   private function handleFlashcardRequest($request, $options)
   {
-    $fcrData = json_decode($request->getParameter('json', '{}'));
+    $fcrData = $request->getContentJson();
 
     if (empty($fcrData))
     {

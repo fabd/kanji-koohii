@@ -8,10 +8,6 @@
  *
  * Notes:
  *
- * - During the Ajax communication, the portion of the page is covered with a
- *   layer that blocks mouse clicks. By default it is not visible (fully transparent),
- *   but can be set to shading with option 'bUseShading'.
- *
  * - Content cant be sent as a typical HTTP request or as JSON data.
  * - The response can be JSON or HTML.
  *
@@ -47,8 +43,6 @@
  *                    To use another FORM, pass a selector (string).
  *                    Use false to disable form serializing, even if one is present.
  *   events           Handlers for notifications to subscribe to (see below)
- *   bUseLayer        Cover the area with a layer that blocks mouse clicks during ajax (defaults TRUE)
- *   bUseShading      If set and true, the container is darkened with a opacity layer while ajax is
  *                    in process, otherwise a transparent layer is used (defaults FALSE).
  *   initContent      Set to true to fire onContentInit when the panel is instanced (defaults FALSE).
  *   autoFocus        Make the first INPUT .text focused during content init phase (defaults FALSE)
@@ -56,27 +50,24 @@
  *
  * Notifications:
  *
- *   onResponse(t)                   Ajax response received, BEFORE html content replace
- *                                    (t is TRON)
- *   onFailure(o)                    Ajax response received with HTTP code NOT 2xx, AFTER the display of the error/retry message.
- *                                    (o is YUI Connect response object WITHOUT responseJSON or responseTRON!)
- *   onContentInit(t)                Called after html replacement (t.getHtml()), initialize content of the panel.
- *                                   Note that TRON (t) is undefined the first time, if using initContent option, since
- *                                   there was no response.
- *   onContentDestroy()              Called before content is replaced, cleanup widgets, events, etc.
- *   onSubmitForm(e)                 A form is submitted (e is the event object). Use e.target
- *                                   to identify the form element if needed. Return false to cancel the default submission,
- *                                   (the listener may do a manual get/post/send with extra parameters), return a truthy value
- *                                   to proceed with the default form submission.
+ *   onResponse(tron)            Response received, BEFORE html content replace
+ *                                   
+ *   onFailure(error)            Response received with HTTP code NOT 2xx, AFTER the display of the error/retry message.
+ *                                    
+ *   onContentInit(tron)         Called after html replacement (t.getHtml()), initialize content of the panel.
+ *                               Note that TRON (t) is undefined the first time, if using initContent option, since there was no response.
+ *   onContentDestroy()          Called before content is replaced, cleanup widgets, events, etc.
+ *   onSubmitForm(e)             A form is submitted (e is the event object). Use
+ *                               e.target to identify the form element if needed.
+ *                               Return false to cancel the form submission.
  *
  * Methods:
- *   getForm()                       Returns the form element that is currently observed.
- *   setForm(form)                   Set form to serialize with the next get/post/send() request (string id | HTMLElement)
- *   get(oData[, sUrl])              Do a GET request, accepts additional parameters in hash or query string format
- *   post(oData[, sUrl])             Do a POST request, accepts additional parameters in hash or query string format
- *   send(oData)                     Do either a GET or POST depending on the form's method attribute, accepts additional parameters
- *                                   This method requires a form present in the panel!
- *   connect()                       Call after a failed request (get, post, send) to retry the last request
+ *   getForm()                   Returns the form element that is currently observed.
+ *   get(oData[, sUrl])          Do a GET request, accepts additional parameters in hash or query string format
+ *   post(oData[, sUrl])         Do a POST request, accepts additional parameters in hash or query string format
+ *   send(oData)                 Do either a GET or POST depending on the form's method attribute, accepts additional parameters
+ *                               This method requires a form present in the panel!
+ *   connect()                   Call after a failed request (get, post, send) to retry the last request
  *
  *
  * Event chain:
@@ -98,14 +89,14 @@
  *
  */
 
-import $$, { domGetById, stopEvent } from "@lib/dom";
+import $$, { domGetById } from "@lib/dom";
 import Lang from "@lib/lang";
 import AjaxIndicator from "@old/ajaxindicator";
-import AjaxRequest from "@old/ajaxrequest";
 import EventCache from "@lib/EventCache";
-import EventDelegator from "@lib/EventDelegator";
 import EventDispatcher from "@lib/EventDispatcher";
 import KoohiiLoading from "@/vue/KoohiiLoading";
+import AjaxRequest from "./AjaxRequest";
+import { Tron } from "@/lib/tron";
 
 /** @typedef {import("@/lib/tron").TronInst} TronInst */
 
@@ -118,9 +109,6 @@ export default class AjaxPanel {
 
   /** @type EventCache */
   evtCache = null;
-
-  /** @type AjaxRequest*/
-  ajaxRequest = null;
 
   /** @type EventDispatcher */
   eventDispatcher = null;
@@ -146,8 +134,6 @@ export default class AjaxPanel {
     // set defaults
     this.options = {
       form: true,
-      bUseLayer: true,
-      bUseShading: false,
       initContent: false,
       timeout: 5000,
       ...options,
@@ -238,24 +224,9 @@ export default class AjaxPanel {
   }
 
   /**
-   * Sets form to use with the next request (serialize data & action attribute).
-   *
-   * @param  {String|HTMLElement}  elForm   Form id or element
-   */
-  setForm(elForm) {
-    elForm = domGetById(elForm);
-    console.assert(
-      elForm.nodeName && elForm.nodeName.toLowerCase() === "form",
-      "setForm() argument 0 is not a form element"
-    );
-
-    this.serializeForm = elForm;
-  }
-
-  /**
    * Returns the form element that is currently observed.
    *
-   * @return mixed  FORM element, or null if none is observed
+   * @return {HTMLFormElement|null}  FORM element, or null if none is observed
    */
   getForm() {
     if (this.options.form === true) {
@@ -264,7 +235,11 @@ export default class AjaxPanel {
       // return the first form that matches the class name
       var form = $$(this.options.form, this.container)[0];
 
-      console.assert(form, "AjaxPanel::getForm() form not found: `%s`", this.options.form);
+      console.assert(
+        form,
+        "AjaxPanel::getForm() form not found: `%s`",
+        this.options.form
+      );
 
       return form;
     }
@@ -277,10 +252,9 @@ export default class AjaxPanel {
    * @param {SubmitEvent} evt
    */
   submitFormEvent(evt) {
-    var form,
-      skipSubmit = false;
+    let skipSubmit = false;
 
-    console.log("AjaxPanel.submitFormEvent(%o) Form %o", evt, evt.target);
+    console.log("AjaxPanel.submitFormEvent() Form %o", evt.target);
 
     // if listener exists, and it returns false, do not auto-submit
     if (this.eventDispatcher.hasListeners("onSubmitForm")) {
@@ -288,36 +262,18 @@ export default class AjaxPanel {
     }
 
     if (!skipSubmit) {
-      // set the form to serialize in the next request
-      form = this.getForm();
-      this.setForm(form);
-
       this.send();
     }
 
-    stopEvent(evt);
-  }
-
-  /**
-   * EventDelegator handler for mouse clicks on elements styled
-   * liked form submit buttons.
-   *
-   * @param {Event} e
-   * @param {Element} el
-   */
-  onPanelSubmit(e, _el) {
-    if (this.getForm()) {
-      // handle onSubmitForm listener, if any is set
-      this.submitFormEvent.call(this, e);
-    }
-    return false;
+    evt.preventDefault();
+    evt.stopPropagation();
   }
 
   /**
    * Do a GET request with optional parameters to add to the request.
    *
-   * @param {Object?} oData   A hash with variables, or a query string, or undefined (optional)
-   * @param {String} sUrl    Request uri (optional), if specifed overrides the form action!
+   * @param {Object|URLSearchParams=} oData   Request parameters (optional)
+   * @param {String=} sUrl    Request uri (optional), if specifed overrides the form action!
    */
   get(oData, sUrl) {
     this.prepareConnect(oData, "get", sUrl);
@@ -326,7 +282,7 @@ export default class AjaxPanel {
   /**
    * Do a POST request with optional parameters to add to the request.
    *
-   * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
+   * @param {Object|URLSearchParams=} oData   Request parameters (optional)
    * @param {string=} sUrl    Request uri (optional), if specifed overrides the form action!
    */
   post(oData, sUrl) {
@@ -336,7 +292,7 @@ export default class AjaxPanel {
   /**
    * Do a GET or POST request, using the active form's "method" attribute.
    *
-   * @param {Object} oData   A hash with variables, or a query string, or undefined (optional)
+   * @param {Object|URLSearchParams=} oData   Request parameters (optional)
    */
   send(oData) {
     var form = this.getForm();
@@ -347,9 +303,9 @@ export default class AjaxPanel {
 
   /**
    *
-   * @param {Object?} oData    A hash with post variables, or a query string, otherwise set to falsy value
+   * @param {Object|URLSearchParams=} oData   Request parameters (optional)
    * @param {string} sMethod  Method name 'post' or 'get'
-   * @param {string} sUrl     Request uri (optional), if specifed overrides the form!
+   * @param {string=} sUrl     Request uri (optional), if specifed overrides the form!
    */
   prepareConnect(oData, sMethod, sUrl) {
     var url,
@@ -367,20 +323,15 @@ export default class AjaxPanel {
     }
 
     url = sUrl || (form ? form.action : false);
-    console.assert(url, "AjaxPanel::prepareConnect() No url argument and no FORM specified.");
-
-    // dont send multiple requests at the same time
-    if (this.ajaxRequest && this.ajaxRequest.isCallInProgress()) {
-      console.warn("Previous AjaxRequest still in progress (or bug?)");
-      return;
-    }
+    console.assert(
+      url,
+      "AjaxPanel::prepareConnect() No url argument and no FORM specified."
+    );
 
     //  console.log('AjaxPanel.prepareConnect(%o, %s) FORM %o', oData, sMethod, form);
-
     connectObj.url = url;
     connectObj.method = sMethod;
 
-    // start connection
     this.connect(connectObj);
   }
 
@@ -401,111 +352,58 @@ export default class AjaxPanel {
       this.connection = oConnect;
     }
 
-    console.assert(this.connection, "AjaxPanel::connect() No connection object.");
-
-
-    //console.log("connect ",this.options,oConnect);
-    var options = {
-      method: this.connection.method,
-      form: this.connection.form,
-      parameters: this.connection.parameters,
-      nocache: true,
-      timeout: this.options.timeout,
-
-      success: this.ajaxOnSuccess,
-      failure: this.ajaxOnFailure,
-
-      customevents: {
-        onStart: this.ajaxOnStart,
-        onComplete: this.ajaxOnComplete,
-      },
-      scope: this,
-    };
+    console.assert(
+      this.connection,
+      "AjaxPanel::connect() No connection object."
+    );
 
     this.showLoading();
 
-    this.ajaxRequest = new AjaxRequest(this.connection.url, options);
+    AjaxRequest(this.connection.url, {
+      method: this.connection.method,
+      params: this.connection.parameters,
+      form: this.connection.form,
+      timeout: this.options.timeout,
+    })
+      .then((res) => {
+        this.hideLoading();
+
+        console.assert(!!res.status, "AjaxPanel(): not a TRON response.");
+        const tron = new Tron(res.data);
+
+        // handle TRON response
+        this.eventDispatcher.notify("onResponse", tron);
+
+        // handle HTML response (if any)
+        this.replaceContent(tron);
+      })
+      .catch((error) => {
+        this.hideLoading();
+
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          const msg = `Oops! Error ${error.response.status}.`;
+          this.showErrorMessage(msg);
+        }
+        
+        if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest
+          this.showErrorMessage("Oops! Timed out.");
+          return;
+        }
+
+        this.eventDispatcher.notify("onFailure", error);
+      });
   }
 
   showLoading() {
-    // this.container.style.opacity = "0.5";
     KoohiiLoading.show({ target: this.container });
   }
 
   hideLoading() {
-    // this.container.style.opacity = "";
     KoohiiLoading.hide();
-  }
-
-  /**
-   * YUI Connect custom event.
-   *
-   * @param {String} eventType
-   * @param {Object} args
-   */
-  ajaxOnStart(_eventType, _args) {
-    //console.log('AjaxPanel.ajaxOnStart(%o)', args);
-  }
-
-  /**
-   * YUI Connect custom event.
-   *
-   * @param {String} eventType
-   * @param {Object} args
-   */
-  ajaxOnComplete(_eventType, _args) {
-    //console.log('AjaxPanel.ajaxOnComplete(%o)', args);
-    //var response = args[0];
-  }
-
-  /**
-   * Success handler.
-   *
-   * @param {Object} o   YUI Connect response object, augmented by AjaxRequest (responseJSON, ...)
-   */
-  ajaxOnSuccess(o) {
-    console.log("AjaxPanel.ajaxOnSuccess(%o)", o);
-    
-    this.hideLoading();
-
-    var tron = o.responseTRON;
-
-    console.assert("AjaxPanel::ajaxOnSuccess()  Require TRON response.");
-
-    // handle TRON response
-    this.eventDispatcher.notify("onResponse", tron);
-
-    // handle HTML response (if any)
-    this.replaceContent(tron);
-
-    // cleanup
-    this.ajaxRequest = null;
-  }
-
-  /**
-   * Failure handler.
-   *
-   * @param {Object} oAjaxResponse   YUI Connect response object WITHOUT responseJSON or responseTRON.
-   */
-  ajaxOnFailure(o) {
-    console.log("AjaxPanel.ajaxOnFailure(%o)", o);
-
-    this.hideLoading();
-
-    // transaction aborted (timeout)
-    if (o.status === -1) {
-      // show the timeout message
-      this.showErrorMessage("Oops! Timed out.");
-      return;
-    }
-
-    var sMessage = "Oops! Error " + o.status + ' "' + o.statusText + '".';
-    this.showErrorMessage(sMessage);
-
-    this.eventDispatcher.notify("onFailure", o);
-
-    // cleanup
-    this.ajaxRequest = null;
   }
 
   /**
@@ -517,7 +415,9 @@ export default class AjaxPanel {
   showErrorMessage(sMessage) {
     this.ajaxErrorIndicator = new AjaxIndicator({
       container: this.container,
-      message: sMessage + ' <a href="#" style="font-weight:bold;color:yellow;">Retry</a>',
+      message:
+        sMessage +
+        ' <a href="#" style="font-weight:bold;color:yellow;">Retry</a>',
     });
     this.ajaxErrorIndicator.show();
 

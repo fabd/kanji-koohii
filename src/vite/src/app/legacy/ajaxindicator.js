@@ -12,8 +12,6 @@
 
 import $$, { domGetById, px } from "@lib/dom";
 
-const DEFAULT_ZINDEX = 100;
-
 const DEFAULT_MESSAGE = "Loading...";
 
 class AjaxIndicator {
@@ -51,7 +49,7 @@ class AjaxIndicator {
         position: "absolute",
         left: px(left),
         top: px(top),
-        "z-index": DEFAULT_ZINDEX,
+        "z-index": "var(--z-toast)",
         display: "block",
       });
       this.indicator.innerHTML = this.message;

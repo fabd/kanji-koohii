@@ -20,9 +20,12 @@
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
-}
-#uiFcAjaxLoading i {
-  margin-right: 0.3em;
+  
+  @apply flex items-center;
+
+  .fa {
+    margin-right: 0.3em;
+  }
 }
 
 /* Error message */

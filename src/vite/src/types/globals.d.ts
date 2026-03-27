@@ -18,7 +18,6 @@ type AjaxPanelOpts = {
     onSubmitForm?: any;
   };
   bUseLayer?: boolean;
-  bUseShading?: boolean;
   initContent?: boolean;
   [key: string]: any;
 };

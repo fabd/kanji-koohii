@@ -53,7 +53,6 @@ class ManagePage {
 
     if (elView) {
       this.viewPanel = new AjaxPanel(elView, {
-        bUseShading: false,
         initContent: true,
         form: ".main-form",
         events: {

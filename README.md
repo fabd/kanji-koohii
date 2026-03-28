@@ -44,7 +44,6 @@ This list is not exhaustive and may be updated from time to time. The main purpo
 * Symfony 1.4 (main framework)
 * Zend Framework (bits and pieces)
 * [Vue.js](https://vuejs.org/)
-* [YUI2](http://yui.github.io/yui2/) (legacy Javascript being phased out)
 * [UTF-8 to Code Point Array Converter in PHP](https://hsivonen.fi/php-utf8/) by Henri Sivonen
 * FontAwesome (icons)
 

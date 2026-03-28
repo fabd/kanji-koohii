@@ -1,20 +1,10 @@
 <h1>Development Notes</h1>
 
-1. [VSCode Setup](#vscode-setup)
-2. [Vite Usage Notes](#vite-usage-notes)
-   1. [USE_DEV_SERVER true / false](#use_dev_server-true--false)
+1. [Vite Usage Notes](#vite-usage-notes)
+   1. [USE\_DEV\_SERVER true / false](#use_dev_server-true--false)
    2. [Static asset handling](#static-asset-handling)
    3. [Versioning of CSS/JS not handled by Vite](#versioning-of-cssjs-not-handled-by-vite)
-3. [Scripts execution](#scripts-execution)
-4. [Refactoring Roadmap](#refactoring-roadmap)
-      1. [Remove all YUI2 dependencies](#remove-all-yui2-dependencies)
-
-# VSCode Setup
-
-- **Volar**
-  - disable builtin TS/JS Language Support (disable in workspace only)
-    https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669
-
+2. [Scripts execution](#scripts-execution)
 
 # Vite Usage Notes
 
@@ -93,27 +83,3 @@ The `htaccess` rule will match the pattern, and get the original file, add far f
 4. **DOMContentLoaded events firing**
    <br>(a) any `DOMContentLoaded` events set up via `<script>` tag in php template will execute first since they were parsed as part of the document
    <br>(b) followed by `DOMContentLoaded` events set up in ESM modules, in the order they were included in the page
-
-# Refactoring Roadmap
-
-### Remove all YUI2 dependencies
-
-`yui2-bundle.min.js` contains code mainly used in `AjaxDialog` (draggable dialogs
-as seen on flashcard review page, "edit flashcard", "edit story" dialogs):
-
-`./web/build/yui2/yui2-bundle.min.js` is 165 kb !
-
-    yahoo-dom-event.js (38 kb !)
-    /animation/animation-min.js (14 kb)
-    /connection/connection-min.js (13 kb)
-    /container/container-min.js (77 kb !!)
-    /dragdrop/dragdrop-min.js (24 kb !)
-
-Note! `yahoo-dom-event.js` can only be removed last, as it's a dependency for YUI2's Container, DragDrop etc.
-
-| Status   | What                                                                                                                                                                     |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **DONE** | remove all references to YUI2 **Dom**, **Event** in own bundles                                                                                                          |
-| ...      | remove YUI2 **Connect** (`connection-min.js` 13.3 kb) : refactor AjaxRequest to use Axios?                                                                               |
-| ...      | remove YUI2 **Animation** : I'm not sure it's even used anymore, it was at some point used to add a slight fade in/fade out to the dialogs (same as Vue's "transitions") |
-| ...      | remove YUI2 **Container**, **DragDrop** : replace all dialogs with a new Vue-based dialog, maybe element-plus ?                                                          |

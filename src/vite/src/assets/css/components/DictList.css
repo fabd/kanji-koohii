@@ -76,14 +76,6 @@
   overflow-y: auto;
 }
 
-/* desktop & wider screens */
-@media screen and (min-width: 701px) {
-  /* Review page only: fix the width inside the dialog from getting too wide */
-  .yui-panel .dict-panel {
-    width: 400px;
-  }
-}
-
 .dict-list_info {
   padding: 1em 20px 1px;
   color: #838279;

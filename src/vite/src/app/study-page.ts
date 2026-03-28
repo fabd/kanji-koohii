@@ -134,7 +134,7 @@ export default {
 </div>`;
     } else if (state === "loading") {
       html += `
-<button href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard is-loading">
+<button href="#" class="uiGUI ko-Btn ko-Btn--success is-loading">
   <div class="flex items-center justify-center">
     <div class="is-icon is-spinner mr-2"></div>Add Card
   </div>
@@ -254,21 +254,27 @@ export default {
     }
 
     // reset button to "Add Card" state
-    this.renderFlashcardButton(false, false); 
+    this.renderFlashcardButton("add");
     cardData = null;
   },
 
   onRestudyFlashcard() {
     this.resetFlashcardDialog = true;
-    
+
     // if it was a new card that moved to restudy pile, update new card count
     if (isNewCard()) {
       this.newCount--;
     }
 
+    // update card state
+    if (cardData) {
+      cardData.leitnerBox = 1;
+      cardData.totalReviews = 1; // isNewCard() is false
+    }
+
     // FIXME - just want to update the New Cards indicator
-    this.renderFlashcardButton(true, false);
-    
+    this.renderFlashcardButton("edit");
+
     // reload the dialog contents
     this.resetFlashcardDialog = true;
   },

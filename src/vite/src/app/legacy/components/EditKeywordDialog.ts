@@ -63,7 +63,7 @@ export default class EditKeywordDialog {
       },
     });
 
-    ajaxPanel.get(null, `/study/editkeyword/id/${ucsId}`);
+    ajaxPanel.get(undefined, `/study/editkeyword/id/${ucsId}`);
     
     this.dialog.show();
   }

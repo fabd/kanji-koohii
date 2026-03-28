@@ -31,3 +31,13 @@
 .fadein-enter-from {
   opacity: 0;
 }
+
+/* --------------------------------------------------------------------
+// SLOW fade in.
+// -------------------------------------------------------------------- */
+.slow-fadein-enter-from {
+  opacity: 0;
+}
+.slow-fadein-enter-active {
+  transition: opacity 1s linear;
+}

@@ -1,4 +1,4 @@
-import $$, { DomJS, hasClass } from "@lib/dom";
+import $$, { hasClass } from "@lib/dom";
 import FlashcardReview from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 

@@ -17,50 +17,6 @@ import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
-type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
-
-class KoNotification {
-  private element: HTMLElement;
-  private static hideTimeout: NodeJS.Timeout | null = null;
-
-  constructor() {
-    // Create the div only once
-    let div = $$<HTMLElement>(".ko-Notification")[0];
-    if (!div) {
-      div = document.createElement("div");
-      div.className = "ko-Notification";
-      document.body.appendChild(div);
-    }
-
-    this.element = div;
-  }
-
-  public show(message: string): void {
-    // Clear any existing timeout
-    if (KoNotification.hideTimeout) {
-      clearTimeout(KoNotification.hideTimeout);
-    }
-
-    // Set the message and show the notification
-    this.element.textContent = message;
-    this.element.classList.remove("hide");
-
-    // Trigger reflow to ensure the transition works
-    void this.element.offsetWidth;
-
-    this.element.classList.add("show");
-
-    // Hide after 3 seconds
-    KoNotification.hideTimeout = setTimeout(() => {
-      this.hide();
-    }, 3000);
-  }
-
-  public hide(): void {
-    this.element.classList.add("hide");
-  }
-}
-
 let cardData: Window["KK"]["STUDY_FLASHCARD"] = null;
 
 function hasCard() {
@@ -155,7 +111,7 @@ export default {
 
     cardData = kk_globals_get("STUDY_FLASHCARD");
 
-    this.renderFlashcardButton(hasCard(), false);
+    this.renderFlashcardButton(hasCard() ? "edit" : "add");
 
     new EventDelegator(el).on(
       "click",
@@ -164,7 +120,7 @@ export default {
     );
   },
 
-  renderFlashcardButton(state: boolean, loading: boolean) {
+  renderFlashcardButton(state: "add" | "edit" | "loading" | "confirm") {
     let html = "";
 
     // the new cards indicator
@@ -175,19 +131,24 @@ export default {
     }
 
     // the Add/Edit Flashcard button
-    if (loading) {
+    if (state === "confirm") {
       html += `
-<a href="#" class="uiGUI ko-Btn JsEditFlashcard is-loading">
+<div class="ko-Btn ko-Btn--success">
+  <i class="fa fa-check mr-2"></i>Flashcard added
+</a>`;
+    } else if (state === "loading") {
+      html += `
+<a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard is-loading">
   <div class="flex items-center justify-center">
-    <div class="is-icon spinner mr-2"></div>
+    <div class="is-icon spinner mr-2"></div>Add Card
   </div>
 </a>`;
-    } else if (state === false) {
+    } else if (state === "add") {
       html += `
 <a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard" title="Add Card">
   <div class="is-icon fa fa-plus mr-2"></div>Add Card
 </a>`;
-    } else if (state === true) {
+    } else if (state === "edit") {
       html += `
 <a href="#" class="uiGUI ko-Btn is-ghost rounded-sm JsEditFlashcard" title="Edit Card">
   <div class="is-icon fa fa-edit mr-2"></div>Edit Card
@@ -230,7 +191,7 @@ export default {
           this.newCount--;
         }
 
-        this.renderFlashcardButton(false, false);
+        this.renderFlashcardButton("add");
 
         // update the state
         cardData = null;
@@ -242,7 +203,7 @@ export default {
 
     if (!hasCard()) {
       // set loading state for the button
-      this.renderFlashcardButton(false, true);
+      this.renderFlashcardButton("loading");
 
       // make sure the loading state shows half a sec for visual feedback
       const startTime = Date.now();
@@ -260,7 +221,10 @@ export default {
               // update the new cards count before rendering
               this.newCount++;
 
-              this.renderFlashcardButton(true, false);
+              this.renderFlashcardButton("confirm");
+              window.setTimeout(() => {
+                this.renderFlashcardButton("edit");
+              }, 1500);
 
               // update the state for the flashcard
               cardData = {
@@ -268,15 +232,12 @@ export default {
                 leitnerBox: 1,
                 totalReviews: 0,
               };
-
-              const notif = new KoNotification();
-              notif.show("Flashcard added");
             }
           }, remainingDelay);
         })
         .catch(() => {
           // cancel loading state
-          this.renderFlashcardButton(false, false);
+          this.renderFlashcardButton("add");
         });
     } else if (!this.oEditFlashcard) {
       this.oEditFlashcard = new EditFlashcardDialog(

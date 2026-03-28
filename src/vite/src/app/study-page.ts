@@ -17,7 +17,6 @@ import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 
-type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
 
 class KoNotification {
   private element: HTMLElement;

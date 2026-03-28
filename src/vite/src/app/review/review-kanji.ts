@@ -8,7 +8,7 @@
  *
  */
 
-import $$, { DomJS, asHtmlElement, hasClass } from "@lib/dom";
+import $$, { asHtmlElement, hasClass } from "@lib/dom";
 import AjaxDialog from "@old/ajaxdialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";

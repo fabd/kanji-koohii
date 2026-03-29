@@ -2,17 +2,17 @@
 #  Configs
 #
 #    Php inis
-#      /etc/php/8.1/apache2/conf.d/koohii.php.ini
+#      /etc/php/8.3/apache2/conf.d/koohii.php.ini
 #
 #    Php mods
-#      /etc/php/8.1/mods-available/
+#      /etc/php/8.3/mods-available/
 #
 #    Apache sites
 #      /etc/apache2/sites-enabled/000-default.conf
 #
 #
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # The UID/GID of the user in the host - to fix file permissions in the /src folder
 ARG UID=1000
@@ -36,7 +36,7 @@ RUN apt-get update -y && \
     # sudo \
     vim
 
-# Install Apache + PHP
+# Install Apache + PHP 8.3 (default on Ubuntu 24.04)
 RUN apt-get install -y --no-install-recommends \
     apache2 \
     libapache2-mod-php \
@@ -44,12 +44,10 @@ RUN apt-get install -y --no-install-recommends \
     php-cli \
     php-curl \
     php-intl \
-    php-json \
     php-mbstring \
     php-mysql \
     php-xml \
     php-zip \
-    # Configure Apache + PHP
     && a2enmod rewrite \
     && a2enmod expires \
     # Clean
@@ -59,7 +57,6 @@ RUN apt-get install -y --no-install-recommends \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # nodejs (required for Vite)
-# RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
 
 # Set locales
@@ -70,17 +67,13 @@ ENV TZ=Europe/Brussels
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Create a custom user to run PHP as - to solve file permission issues
-RUN adduser --system --no-create-home --group --shell /bin/bash --uid ${UID} ${USR} && \
-    # usermod -aG sudo ${USR} && \
-    # echo "${USR} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USR} && \
-    # chmod 0440 /etc/sudoers.d/${USR} && \
+RUN userdel -r ubuntu && \
+    addgroup --gid ${GID} ${USR} && \
+    adduser --disabled-password --uid ${UID} --ingroup ${USR} --no-create-home --shell /bin/bash ${USR} && \
     sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=${USR}/g" /etc/apache2/envvars && \
     sed -i "s/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=${USR}/g" /etc/apache2/envvars
 
-# USER ${USR}
-
-# Configure PHP
-ADD ./php/koohii.php.ini /etc/php/7.4/apache2/conf.d/
+ADD ./php/koohii.php.ini /etc/php/8.3/apache2/conf.d/
 
 # Configure vhost
 ADD ./php/koohii.conf /etc/apache2/sites-available/

@@ -40,7 +40,7 @@ export abstract class HttpClient {
   }
 
   // generic axios request() which handles the catch() and always resolves to a TRON message
-  protected request<T extends object>(uri: string, config: ApiRequestConfig) {
+  public request<T extends object>(uri: string, config: ApiRequestConfig) {
     const requestConfig: AxiosRequestConfig = {
       method: config.method || "get",
       url: uri,
@@ -81,7 +81,7 @@ export abstract class HttpClient {
         else if (error.request) {
           console.warn("HttpClient(request error): ", error);
           t.setErrors(
-            `Oops! The request timed out, please try again in a moment.`
+            `Oops! The request timed out.`
           );
         }
 

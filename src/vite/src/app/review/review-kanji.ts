@@ -27,6 +27,7 @@ export default class KanjiReview {
   oEditFlashcard: EditFlashcardDialog | null = null;
   oEditFlashcardId: TUcsId = 0;
   editStoryDialog: EditStoryDialog | null = null;
+  editStoryDialogId: TUcsId = 0;
 
   elAnswerPass: Element;
   elAnswerFail: Element;
@@ -275,13 +276,12 @@ export default class KanjiReview {
     if (this.editStoryDialog && this.editStoryDialog.isOpen()) {
       this.editStoryDialog.hide();
     } else {
-      const cardData = this.getFlashcardData();
-
-      if (!this.editStoryDialog) {
-        this.editStoryDialog = new EditStoryDialog();
+      const { id: ucsId } = this.getFlashcardData();
+      if (!this.editStoryDialog || ucsId !== this.editStoryDialogId) {
+        this.editStoryDialog?.destroy();
+        this.editStoryDialog = new EditStoryDialog(ucsId);
       }
-
-      this.editStoryDialog.load(cardData.id);
+      this.editStoryDialogId = ucsId;
       this.editStoryDialog.show();
     }
   }
@@ -325,31 +325,13 @@ export default class KanjiReview {
    */
   flashcardMenu() {
     const el = $$("#uiFcMenu")[0] as HTMLElement;
-
-    const data = el.dataset as { uri: string; param: string };
-
-    const oCardData = this.oReview.getFlashcardData() as TCardData;
-
-    const onMenuHide = () => {
-      // clear icon focus state when dialog closes
-      el.classList.remove("active");
-    };
-
-    const onMenuItem = (menuid: string) => {
-      if (menuid === "skip") {
-        this.rateCard("skip");
-        return true;
-      }
-
-      // does not close dialog
-      return false;
-    };
+    const { id: ucsId } = this.oReview.getFlashcardData()!;
 
     el.classList.add("active");
 
     // reload the edit flashcard menu when changed flashcard
-    if (oCardData.id !== this.oEditFlashcardId) {
-      this.oEditFlashcardId = oCardData.id;
+    if (ucsId !== this.oEditFlashcardId) {
+      this.oEditFlashcardId = ucsId;
 
       if (this.oEditFlashcard) {
         this.oEditFlashcard.destroy();
@@ -359,7 +341,7 @@ export default class KanjiReview {
 
     if (!this.oEditFlashcard) {
       this.oEditFlashcard = new EditFlashcardDialog(
-        oCardData.id,
+        ucsId,
         [el, "br", "tr"],
         true
       );

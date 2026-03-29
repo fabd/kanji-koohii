@@ -31,11 +31,11 @@ export class LegacyApi extends HttpClient {
     return this.instance;
   }
 
-  getEditFlashcard(ucsId: TUcsId) {
+  /*getEditFlashcard(ucsId: TUcsId) {
     return this.get<GetEditFlashcardResponse>("/flashcards/edit", {
       ucs: ucsId,
     });
-  }
+  }*/
 
   postEditFlashcard(ucsId: number, action: "delete" | "restudy") {
     return this.post<PostEditFlashcardResponse>("/flashcards/edit", {
@@ -44,12 +44,12 @@ export class LegacyApi extends HttpClient {
     });
   }
 
-  getEditStory(ucsCode: TUcsId, reviewMode: boolean) {
+  /*getEditStory(ucsCode: TUcsId, reviewMode: boolean) {
     return this.get<EditStoryResponse>("/study/editstory", {
       ucsCode,
       reviewMode,
     });
-  }
+  }*/
 
   postUserStory(
     ucsId: number,

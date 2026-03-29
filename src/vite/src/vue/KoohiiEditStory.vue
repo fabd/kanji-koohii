@@ -173,19 +173,15 @@
 
 <script lang="ts">
 import { defineComponent, nextTick } from "vue";
-
 import $$, { insertAfter, getNode } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import type { KanjiData, PostUserStoryResponse } from "@app/api/models";
 import * as TRON from "@lib/tron";
 import { checkForUnsupportedUtf } from "@/lib/cjk";
-
 import VueInstance from "@lib/helpers/vue-instance";
-
-// legacy component (js, also used in "Edit Keywords" manage page)
 import EditKeywordDialog from "@old/components/EditKeywordDialog";
 
-// comps
+// components
 import KoohiiCharsLeft from "@/vue/KoohiiCharsLeft.vue";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 import KoohiiSharedStory from "@/vue/KoohiiSharedStory.vue";

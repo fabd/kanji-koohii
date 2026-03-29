@@ -1,6 +1,6 @@
 import { type TronInst } from "@lib/tron";
-import AjaxPanel from "@old/ajaxpanel";
-import KoDialog, { type KoDialogAnchor, type KoDialogOptions } from "@/components/KoDialog";
+import { KoAjaxDialog } from "@/components/KoAjaxDialog";
+import { type KoDialogAnchor, type KoDialogOptions } from "@/components/KoDialog";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import KoEditKeyword from "@/vue/KoEditKeyword.vue";
@@ -14,14 +14,9 @@ type EditKeywordResponse = {
 
 export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
 
-const isMobile = window.innerWidth <= 700;
-
 export default class EditKeywordDialog {
-  private isManagePage: boolean;
-  private ucsId: TUcsId;
-  private callback: EditKeywordCallback;
-  private dialog: KoDialog | null = null;
-  private vueInst: TVueInstanceOf<typeof KoEditKeyword> | null = null;
+  private dialog: KoAjaxDialog | null = null;
+  private vue: TVueInstanceRef<typeof KoEditKeyword> | null = null;
 
   /**
    *
@@ -37,11 +32,7 @@ export default class EditKeywordDialog {
     callback: EditKeywordCallback,
     isManagePage: boolean = false
   ) {
-    console.log("EditKeywordDialog(%d)", ucsId);
-
-    this.ucsId = ucsId;
-    this.callback = callback;
-    this.isManagePage = isManagePage;
+    const isMobile = window.innerWidth <= 700;
 
     const dlgopts: KoDialogOptions = {
       align: align,
@@ -53,59 +44,42 @@ export default class EditKeywordDialog {
       width: "380px",
     };
 
-    this.dialog = new KoDialog(dlgopts);
+    this.dialog = new KoAjaxDialog(
+      `/study/editkeyword/id/${ucsId}`,
+      null,
+      dlgopts,
+      (tron: TronInst<EditKeywordResponse>) => {
+        const mount = this.dialog!.getBody();
+        const props = tron.getProps();
 
-    const elBody = this.dialog.getBody();
+        this.vue = VueInstance(KoEditKeyword, mount, {
+          ucsId: props.ucs_id,
+          origKeyword: props.orig_keyword,
+          userKeyword: props.user_keyword,
+          maxLength: props.max_length,
+          isManagePage,
+          onSuccess: (keyword: string, tabKey: boolean) => {
+            this.dialog?.hide();
+            callback(keyword, tabKey);
+          },
+        });
+      }
+    );
 
-    const ajaxPanel = new AjaxPanel(elBody, {
-      events: {
-        onResponse: this.onDialogResponse.bind(this),
-      },
-    });
-
-    ajaxPanel.get(undefined, `/study/editkeyword/id/${ucsId}`);
-    
     this.dialog.show();
   }
 
-  // Show again, after it is closed with the YUI close button.
   show() {
     this.dialog!.show();
-    this.vueInst?.focusInput();
+    this.vue?.vm.focusInput();
   }
 
   destroy() {
+    if (this.vue) {
+      this.vue.unmount();
+      this.vue = null;
+    }
     this.dialog!.destroy();
     this.dialog = null;
-  }
-
-  onDialogResponse(tron: TronInst<EditKeywordResponse>) {
-    console.log("EditKeywordDialog::onDialogResponse()");
-    const elMount = this.dialog!.getBody();
-    const props = tron.getProps();
-
-    // if (this.vueInst) this.vueInst.unmount();
-
-    const { vm } = VueInstance(KoEditKeyword, elMount, {
-      ucsId: props.ucs_id,
-      origKeyword: props.orig_keyword,
-      userKeyword: props.user_keyword,
-      maxLength: props.max_length,
-      isManagePage: this.isManagePage,
-      onSuccess: (keyword: string, tabKey: boolean) => {
-        this.dialog?.hide();
-        this.callback(keyword, tabKey);
-      },
-    });
-
-    this.vueInst = vm;
-  }
-
-  // Copy keyword back into the main page
-  // If JsTron property "next" is returned, the callback for the Manage page edits the next keyword
-
-  onHide() {
-    // keep the dialog in the page
-    return false;
   }
 }

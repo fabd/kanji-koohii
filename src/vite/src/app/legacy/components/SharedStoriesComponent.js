@@ -1,10 +1,11 @@
-/* global YAHOO, Koohii */
+/* global Koohii */
 // FIXME: legacy componet, should become a Vue at some point
 
 import $$, { domGetById, insertBefore } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import AjaxTable from "@old/ajaxtable";
 import EventDelegator from "@lib/EventDelegator";
+import { applyCssTransition } from "@lib/dom";
 
 // story in collapsed view with small "Unhide" link
 const CLASS_HIDDEN_STORY = "is-moderated";
@@ -131,7 +132,7 @@ class SharedStoriesComponent {
       const elSharedStory = this.getStoryParentDiv(elActions);
 
       getApi()
-        .legacy.ajaxSharedStory(params)
+        .ajaxSharedStory(params)
         .then((tron) => {
           this.onAjaxResponse(tron, elSharedStory);
         });
@@ -209,11 +210,20 @@ class SharedStoriesComponent {
     }
   }
 
-  // helper that returns the main div (parent element) of a Shared Story
+  /**
+   * helper that returns the main div (parent element) of a Shared Story
+   * @param {HTMLElement} el 
+   * @returns {HTMLElement}
+   */
   getStoryParentDiv(el) {
     return el.closest(".sharedstory");
   }
 
+  /**
+   * 
+   * @param {HTMLElement} elSharedStory 
+   * @param {string} storyId 
+   */
   moveStoryToFavourites(elSharedStory, storyId) {
     var elFavourites = domGetById("sharedstories-top");
 
@@ -233,16 +243,9 @@ class SharedStoriesComponent {
     }
 
     // then move the Shared Story div to the favourites section
-    $$(elSharedStory).css({ opacity: 0.1 });
-    var anim = new YAHOO.util.Anim(
-      elSharedStory,
-      { opacity: { /*from:0.1,*/ to: 1.0 } },
-      /* duration */ 1
-    );
+    applyCssTransition(elSharedStory, "slow-fadein-enter");
 
     elFavourites.appendChild(elSharedStory);
-
-    anim.animate();
   }
 
   moveStoryId(storyId) {

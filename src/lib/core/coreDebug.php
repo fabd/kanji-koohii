@@ -133,10 +133,16 @@ class DBG
   /**
    * Output the Request parameters for debugging.
    * 
+   * @param bool $return  If set to true, the output is returned instead of echo'ed.
+   * 
    */
-  public static function request()
+  public static function request(bool $return = false)
   {
     $request = sfContext::getInstance()->getRequest();
-    echo '<pre>'.print_r($request->getParameterHolder()->getAll(), true).'</pre>';
+    $out = '<pre>'.print_r($request->getParameterHolder()->getAll(), true).'</pre>';
+    if ($return) {
+      return $out;
+    }
+    echo $out;
   }
 }

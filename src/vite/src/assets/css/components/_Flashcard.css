@@ -20,9 +20,12 @@
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
-}
-#uiFcAjaxLoading i {
-  margin-right: 0.3em;
+  
+  @apply flex items-center;
+
+  .fa {
+    margin-right: 0.3em;
+  }
 }
 
 /* Error message */
@@ -243,16 +246,6 @@
   font-family: Arial, sans-serif;
 }
 
-/* Deleted Cards box */
-.ko-FcStDeldK {
-  padding: 0 5px 5px;
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.2em;
-  letter-spacing: 4px;
-  color: red;
-}
-
 /* ================================================================================= */
 /* MOBILE LAYOUT (common styles) */
 /* ================================================================================= */
@@ -329,10 +322,6 @@
     position: absolute;
     right: 22px;
     top: 3px;
-  }
-
-  .uiBMenuBody {
-    box-shadow: none;
   }
 }
 

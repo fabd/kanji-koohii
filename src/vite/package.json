@@ -14,8 +14,9 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && ../batch/build-prod.sh",
     "buildfast": "../batch/build-prod.sh",
-    "watch": "vite build --watch",
-    "lint": "eslint './src/**/*.{js,ts,vue}'"
+    "lint": "eslint './src/**/*.{js,ts,vue}'",
+    "type-check": "vue-tsc --noEmit",
+    "watch": "vite build --watch"
   },
   "dependencies": {
     "@eslint/js": "^9.39.2",

@@ -1,65 +1,18 @@
-// FIXME: this is the legacy study-page.js, should be a master Vue component someday
+// this is the legacy study-page.js, could be a master Vue component someday
 
 import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
 import * as RTK from "@/lib/rtk";
 import { getApi } from "@app/api/api";
-import { baseUrl } from "@/lib/koohii";
-
-import VueInstance from "@lib/helpers/vue-instance";
-
 import actb from "@old/autocomplete.js";
-
+import eventBus from "@/lib/EventBus";
 import EventDelegator from "@lib/EventDelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
-
-type TVueKoohiiDictList = TVueInstanceOf<typeof KoohiiDictList>;
-
-class KoNotification {
-  private element: HTMLElement;
-  private static hideTimeout: NodeJS.Timeout | null = null;
-
-  constructor() {
-    // Create the div only once
-    let div = $$<HTMLElement>(".ko-Notification")[0];
-    if (!div) {
-      div = document.createElement("div");
-      div.className = "ko-Notification";
-      document.body.appendChild(div);
-    }
-
-    this.element = div;
-  }
-
-  public show(message: string): void {
-    // Clear any existing timeout
-    if (KoNotification.hideTimeout) {
-      clearTimeout(KoNotification.hideTimeout);
-    }
-
-    // Set the message and show the notification
-    this.element.textContent = message;
-    this.element.classList.remove("hide");
-
-    // Trigger reflow to ensure the transition works
-    void this.element.offsetWidth;
-
-    this.element.classList.add("show");
-
-    // Hide after 3 seconds
-    KoNotification.hideTimeout = setTimeout(() => {
-      this.hide();
-    }, 3000);
-  }
-
-  public hide(): void {
-    this.element.classList.add("hide");
-  }
-}
+import VueInstance from "@lib/helpers/vue-instance";
 
 let cardData: Window["KK"]["STUDY_FLASHCARD"] = null;
 
@@ -74,13 +27,10 @@ function isNewCard() {
 export default {
   elEditFlashcard: null as HTMLElement | null,
   newCount: 0,
-
   oEditFlashcard: null as EditFlashcardDialog | null,
-
+  resetFlashcardDialog: false,
   elSearch: null as any as HTMLInputElement,
-
   dictVisible: false,
-
   dictPanel: false,
 
   initialize() {
@@ -145,6 +95,8 @@ export default {
     const elEditFlashcard = $$<HTMLElement>(".ko-EditFlashcard")[0];
     if (elEditFlashcard) {
       this.initFlashcardButton(elEditFlashcard);
+      eventBus.connect("kk.flashcard.deleted", this.onDeleteFlashcard, this);
+      eventBus.connect("kk.flashcard.restudy", this.onRestudyFlashcard, this);
     }
   },
 
@@ -155,7 +107,7 @@ export default {
 
     cardData = kk_globals_get("STUDY_FLASHCARD");
 
-    this.renderFlashcardButton(hasCard(), false);
+    this.renderFlashcardButton(hasCard() ? "edit" : "add");
 
     new EventDelegator(el).on(
       "click",
@@ -164,7 +116,7 @@ export default {
     );
   },
 
-  renderFlashcardButton(state: boolean, loading: boolean) {
+  renderFlashcardButton(state: "add" | "edit" | "loading" | "confirm") {
     let html = "";
 
     // the new cards indicator
@@ -175,23 +127,28 @@ export default {
     }
 
     // the Add/Edit Flashcard button
-    if (loading) {
+    if (state === "confirm") {
       html += `
-<a href="#" class="uiGUI ko-Btn JsEditFlashcard is-loading">
+<div class="ko-Btn ko-Btn--success">
+  <i class="fa fa-check mr-2"></i>Flashcard added
+</div>`;
+    } else if (state === "loading") {
+      html += `
+<button href="#" class="uiGUI ko-Btn ko-Btn--success is-loading">
   <div class="flex items-center justify-center">
-    <div class="is-icon spinner mr-2"></div>
+    <div class="is-icon is-spinner mr-2"></div>Add Card
   </div>
-</a>`;
-    } else if (state === false) {
+</button>`;
+    } else if (state === "add") {
       html += `
-<a href="#" class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard" title="Add Card">
+<button class="uiGUI ko-Btn ko-Btn--success JsEditFlashcard" title="Add Card">
   <div class="is-icon fa fa-plus mr-2"></div>Add Card
-</a>`;
-    } else if (state === true) {
+</button>`;
+    } else if (state === "edit") {
       html += `
-<a href="#" class="uiGUI ko-Btn is-ghost rounded-sm JsEditFlashcard" title="Edit Card">
+<button class="uiGUI ko-Btn is-ghost rounded-sm JsEditFlashcard" title="Edit Card">
   <div class="is-icon fa fa-edit mr-2"></div>Edit Card
-</a>`;
+</button>`;
     }
 
     this.elEditFlashcard!.innerHTML = html;
@@ -222,34 +179,21 @@ export default {
   },
 
   onClickFlashcardButton(_evt: Event, _el: Element) {
-    const onMenuResponse = (result: "added" | "deleted") => {
-      // reset button to "Add Card" state
-      if (result === "deleted") {
-        // if it was a new card that was deleted, update the count
-        if (isNewCard()) {
-          this.newCount--;
-        }
-
-        this.renderFlashcardButton(false, false);
-
-        // update the state
-        cardData = null;
-      }
-    };
+    _evt.preventDefault();
 
     // the current kanji
     const ucsId = kk_globals_get("LASTVIEWED_UCS_ID");
 
     if (!hasCard()) {
       // set loading state for the button
-      this.renderFlashcardButton(false, true);
+      this.renderFlashcardButton("loading");
 
       // make sure the loading state shows half a sec for visual feedback
       const startTime = Date.now();
       const minDelay = 500;
 
       getApi()
-        .legacy.addCard(ucsId)
+        .addCard(ucsId)
         .then((tron) => {
           const elapsed = Date.now() - startTime;
           const remainingDelay = Math.max(0, minDelay - elapsed);
@@ -260,7 +204,10 @@ export default {
               // update the new cards count before rendering
               this.newCount++;
 
-              this.renderFlashcardButton(true, false);
+              this.renderFlashcardButton("confirm");
+              window.setTimeout(() => {
+                this.renderFlashcardButton("edit");
+              }, 1500);
 
               // update the state for the flashcard
               cardData = {
@@ -268,32 +215,68 @@ export default {
                 leitnerBox: 1,
                 totalReviews: 0,
               };
-
-              const notif = new KoNotification();
-              notif.show("Flashcard added");
             }
           }, remainingDelay);
         })
         .catch(() => {
           // cancel loading state
-          this.renderFlashcardButton(false, false);
+          this.renderFlashcardButton("add");
         });
-    } else if (!this.oEditFlashcard) {
-      this.oEditFlashcard = new EditFlashcardDialog(
-        `${baseUrl()}/flashcards/dialog`,
-        { ucs: ucsId },
-        [this.elEditFlashcard, "tr", "br"],
-        {
-          events: {
-            onMenuResponse: onMenuResponse,
-          },
-        }
-      );
-    } else {
-      (this.oEditFlashcard as any).show();
     }
 
-    return false;
+    // invalidate the dialog, reload
+    if (this.resetFlashcardDialog) {
+      this.resetFlashcardDialog = false;
+      this.oEditFlashcard?.destroy();
+      this.oEditFlashcard = null;
+    }
+
+    if (hasCard() && this.oEditFlashcard) {
+      this.oEditFlashcard.show();
+      return;
+    }
+
+    if (hasCard() && !this.oEditFlashcard) {
+      this.oEditFlashcard = new EditFlashcardDialog(
+        ucsId,
+        [this.elEditFlashcard, "br", "tr"],
+        false
+      );
+    }
+  },
+
+  onDeleteFlashcard() {
+    this.resetFlashcardDialog = true;
+
+    // deleted the new card, update new card count
+    if (isNewCard()) {
+      this.newCount--;
+    }
+
+    // reset button to "Add Card" state
+    this.renderFlashcardButton("add");
+    cardData = null;
+  },
+
+  onRestudyFlashcard() {
+    this.resetFlashcardDialog = true;
+
+    // if it was a new card that moved to restudy pile, update new card count
+    if (isNewCard()) {
+      this.newCount--;
+    }
+
+    // update card state
+    if (cardData) {
+      cardData.leitnerBox = 1;
+      cardData.totalReviews = 1; // isNewCard() is false
+    }
+
+    // FIXME - just want to update the New Cards indicator
+    this.renderFlashcardButton("edit");
+
+    // reload the dialog contents
+    this.resetFlashcardDialog = true;
   },
 
   /**

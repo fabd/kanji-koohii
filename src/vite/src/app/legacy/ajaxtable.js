@@ -93,7 +93,7 @@ export default class AjaxTable {
     }
 
     if ((query = el.getAttribute("href")) && (pos = query.indexOf("?")) >= 0) {
-      params = query.substr(pos + 1);
+      params = new URLSearchParams(query.substr(pos + 1));
       this.oAjaxPanel.send(params);
 
       this.ajaxInProgress = true;

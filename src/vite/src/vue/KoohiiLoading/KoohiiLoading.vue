@@ -34,20 +34,6 @@ export default defineComponent({
   // },
 
   methods: {
-    close() {
-      // afterLeave(this, () => {
-      const target = this.target;
-
-      if (target) {
-        target.classList.remove("ko-loading-target--relative");
-      }
-
-      // remove vue from page
-      if (this.$el && this.$el.parentNode) {
-        this.$el.parentNode.removeChild(this.$el);
-      }
-    },
-
     setVisible(value: boolean) {
       this.isVisible = value;
     },
@@ -56,16 +42,20 @@ export default defineComponent({
 </script>
 
 <style>
+/* class added to the parent element of KoohiiLoading  */
 .ko-loading-target--relative {
-  /* class added by the mixin to the target element covered by the mask (the mask being appended as a child) */
+  /* for the absolute positioning of the loading mask */
   position: relative;
+  /* set min-height for when container is empty (eg. ajax loading) */
+  min-height: 100px;
 }
 
 .ko-loading-mask {
   /* the mask is appended asa child, the parent element is position:relative, this covers the area */
   position: absolute;
   z-index: calc(var(--z-base) + 1);
-  background-color: hsla(0, 0%, 100%, 0.9);
+  background-color: var(--ko-loading-bg, #fff8);
+  border-radius: 3px;
   margin: 0;
   top: 0;
   right: 0;

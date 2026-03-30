@@ -49,6 +49,7 @@
 
   /* apply colors */
   background-color: var(--ko-btn-bg);
+  background-image: var(--ko-btn-image, none);
   border-color: var(--ko-btn-border);
   color: var(--ko-btn-text);
 
@@ -136,14 +137,24 @@
   --ko-btn-bg: var(--color-btn-success);
   --ko-btn-border: var(--color-btn-success);
   --ko-btn-bg-darker: #449e44;
-  --ko-btn-hover-bg: #48a248;
-  --ko-btn-hover-border: #48a248;
+  --ko-btn-hover-bg: color-mix(in srgb, var(--color-btn-success), #020 5%);
+  --ko-btn-hover-border: color-mix(in srgb, var(--color-btn-success), #020 5%);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-success);
     --ko-btn-text: color-mix(in srgb, var(--color-btn-success), #000 5%);
     --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), #000 10%);
     --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), #000 10%);
   }
+}
+
+/* when we want a more "golf" green */
+.ko-Btn--lime {
+  --ko-btn-bg: var(--clr-lime-600);
+  --ko-btn-image: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
+  --ko-btn-border: #649300;
+  --ko-btn-bg-darker: #449e44;
+  --ko-btn-hover-bg: color-mix(in srgb, var(--clr-lime-600), #020 5%);
+  --ko-btn-hover-border: color-mix(in srgb, var(--clr-lime-600), #020 5%);
 }
 
 /* -------------------------------------------------------------------- */

@@ -73,13 +73,6 @@
     </div>
 <?php } ?>
 
-<?php if (count($deletedCards)) { ?>
-    <div id="FcSummaryDeld" class="ko-Box">
-      <h3>Deleted flashcards <span>(<?= count($deletedCards); ?>)</span></h3>
-      <p><?= cjk_lang_ja('&#'.implode(';&#', $deletedCards)); ?></p>
-    </div>
-<?php } ?>
-
   </div>
 </div><!-- /row -->
 

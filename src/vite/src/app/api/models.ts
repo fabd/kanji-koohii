@@ -9,7 +9,7 @@
  *
  */
 
-// cf. KanjisPeer::getKanjiByUCS()
+// From the database, see KanjisPeer::getKanjiByUCS()
 export type KanjiData = {
   framenum: number;
   kanji: TKanjiChar;
@@ -17,6 +17,16 @@ export type KanjiData = {
   keyword: string;
   onyomi: string;
   strokecount: number;
+};
+
+// From the database, see ReviewsPeer::getFlashcardData()
+export type ReviewData = {
+  ucs_id: TUcsId;
+  failurecount: number;
+  successcount: number;
+  leitnerbox: number;
+  totalreviews: number;
+  ts_lastreview: number; /* timestamp */
 };
 
 // TODO : this is 3 api responses combined (dictresults, USER_VOCAB_PICKS, USER_KNOWN_KANJI)
@@ -35,6 +45,15 @@ export type GetDictCacheFor = {
   items: DictListEntry[];
 }
 
+export type GetEditFlashcardResponse = {
+  kanjiData: KanjiData;
+  cardData: ReviewData;
+};
+
+export type PostEditFlashcardResponse = {
+  result?: string; //placeholder
+};
+
 export type PostVoteStoryRequest = {
   request: "star" | "report" | "copy";
   uid: number;
@@ -51,10 +70,16 @@ export type PostVoteStoryResponse = {
   kicks: number;
 };
 
-export type GetUserStoryResponse = {
-  initStoryEdit?: string;
-  initStoryPublic?: boolean;
-  initFavoriteStory?: boolean; // if true, postStoryView is a "starred" story
+export type EditStoryResponse = {
+  kanjiData: KanjiData;
+  custKeyword: string;
+
+  isReviewMode: boolean;
+  initFavoriteStory: boolean; /* the user's story is empty, display favorite story */
+
+  initStoryEdit: string; /* the current saved story (edit mode) */
+  initStoryPublic: boolean; /* whether the current story is public */
+  initStoryView: string; /* the formatted story (view mode) */
 };
 
 export type PostUserStoryResponse = {

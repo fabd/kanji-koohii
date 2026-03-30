@@ -62,7 +62,9 @@ class ReviewsPeer extends coreDatabaseTable
   }
 
   /**
-   * Returns flashcard status for given user and character id.
+   * Returns flashcard data for given user and character id.
+   * 
+   * NOTE! All numeric fields are cast to integers.
    * 
    * @param int $userId
    * @param int $ucsId
@@ -81,7 +83,19 @@ class ReviewsPeer extends coreDatabaseTable
     $select->query();
 
     $db = self::getInstance()->getDb();
-    return $db->fetch();
+    $row = $db->fetch();
+
+    if ($row !== false) {
+      // FIXME : could use mysqli_options($mysqli, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+      $row['ucs_id'] = (int)$row['ucs_id'];
+      $row['leitnerbox'] = (int)$row['leitnerbox'];
+      $row['failurecount'] = (int)$row['failurecount'];
+      $row['successcount'] = (int)$row['successcount'];
+      $row['totalreviews'] = (int)$row['totalreviews'];
+      $row['ts_lastreview'] = (int)$row['ts_lastreview'];
+    }
+    
+    return $row;
   }
 
   /**
@@ -842,12 +856,6 @@ class ReviewsPeer extends coreDatabaseTable
       // skip flashcard : just ignore it (pretend it's been handled)
       $result = true;
     }
-    elseif ($oData->r === LeitnerSRS::RATE_DELETE)
-    {
-      $result = self::deleteFlashcards($userId, [$ucsId]) > 0;
-      
-      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update'));
-    }
     else
     {
       $curData = self::getFlashcardData($userId, $ucsId);
@@ -868,8 +876,7 @@ class ReviewsPeer extends coreDatabaseTable
         && ($oData->r === LeitnerSRS::RATE_HARD ||
             $oData->r === LeitnerSRS::RATE_YES  ||
             $oData->r === LeitnerSRS::RATE_NO   ||
-            $oData->r === LeitnerSRS::RATE_EASY ||
-            $oData->r === LeitnerSRS::RATE_DELETE))
+            $oData->r === LeitnerSRS::RATE_EASY))
     {
       LearnedKanjiPeer::clearKanji($userId, $ucsId);
     }

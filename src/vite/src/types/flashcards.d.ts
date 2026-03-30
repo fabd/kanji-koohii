@@ -27,7 +27,6 @@ type TReviewPageActionFn = (actionId: string, event: Event) => boolean;
 // props for KanjiReview/VocabReview instance (to be a Vue component)
 type TKanjiReviewProps = {
   end_url: string;
-  editstory_url: string;
   freemode: boolean;
 };
 type TVocabReviewProps = {

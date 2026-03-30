@@ -35,12 +35,6 @@ class coreWebResponse extends sfWebResponse
 
     $isLandingPage = $request->getParameter('isLandingPage');
 
-    // FIXME : obsolete YUI2 dependency to be phased out
-    if (!$isLandingPage)
-    {
-      $this->addJavascript('/build/yui2/yui2-bundle.20211019.js', self::FIRST, ['defer' => true]);
-    }
-
     if (KK_ENV_DEV && self::USE_DEV_SERVER && false === $viteClientLoaded)
     {
       $this->addViteClient();

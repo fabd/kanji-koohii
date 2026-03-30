@@ -400,16 +400,17 @@ class studyActions extends sfActions
   }
 
   /**
-   * EditStory Vue ajax handler.
+   * EditStory ajax handler (EditStoryDialog & EditStory Vue component).
    * 
-   * Request parameters:
-   * 
+   * GET
    *   ucsCode            number
-   *   
-   *   reviewMode         boolean    True if used from the Review page EditStory window.
-   *   
+   *   reviewMode         boolean    True if used from the Review page (EditStory dialog)
+   * 
+   * POST
+   *   ucsCode            number
    *   postStoryEdit      string
    *   postStoryPublic    boolean
+   *   reviewMode         boolean
    * 
    * See study/edit action (parameters) and EditStoryDialog.js
    *
@@ -440,12 +441,6 @@ class studyActions extends sfActions
     $storedStory = StoriesPeer::getStory($userId, $ucsId);
     $storyCurrentlyShared = $storedStory && (bool)$storedStory->public;
 
-    // for the AjaxDialog (legacy code)
-    if ($reviewMode) {
-      $tron->setStatus(JsTron::STATUS_PROGRESS);
-      $tron->add( ['dialogTitle' => 'Edit Story'] );
-    }
-
     if ($request->getMethod() === sfRequest::GET)
     {
       $postStoryEdit = ($storedStory ? $storedStory->text : '');
@@ -456,7 +451,7 @@ class studyActions extends sfActions
         'initStoryPublic' => (bool) ($storedStory && $storedStory->public)
       ]);
 
-      // Flashcard Review page feayure -- get "favorite" story, if user's edit story is empty
+      // Flashcard Review page feature -- get "favorite" story, if user's edit story is empty
       if (!$storedStory && $reviewMode)
       {
         if (false !== ($favStory = StoriesPeer::getFavouriteStory($userId, $ucsId)))
@@ -571,7 +566,7 @@ class studyActions extends sfActions
    */
   public function executeEditkeyword(coreRequest $request)
   {
-    // legacy AjaxDialog's GET request doesn't use JSON...
+    // legacy AjaxPanel GET request doesn't use JSON
     if ($request->hasParameter('id'))  {
       $json = (object) [
         'ucsId' => $request->getParameter('id'),
@@ -598,10 +593,8 @@ class studyActions extends sfActions
 
     if ($request->getMethod() !== sfRequest::POST)
     {
-      // GET request from the AjaxDialog opening
+      // GET request when Edit Keyword dialog opens
       $tron->add([
-        'dialogWidth'   => 387,
-        'dialogTitle'   => "Customize Keyword for {$chardata->kanji}",
         'ucs_id'        => $chardata->ucs_id,
         'orig_keyword'  => $chardata->keyword,
         'user_keyword'  => $custom_keyword ?? $chardata->keyword,
@@ -751,7 +744,7 @@ class studyActions extends sfActions
     if (true === $json->reqKnownKanji) {
       $tron->set('knownKanji', $this->getUser()->getUserKnownKanji());
     }
-// sleep(1);
+
     return $tron->renderJson($this);
   }
 
@@ -798,7 +791,6 @@ class studyActions extends sfActions
       $tron->setError('Oops, update failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
-// sleep(1);
 
     return $tron->renderJson($this);
   }
@@ -817,7 +809,6 @@ class studyActions extends sfActions
       $tron->setError('Oops, delete failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
-// sleep(1);
 
     return $tron->renderJson($this);
   }

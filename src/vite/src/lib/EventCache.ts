@@ -5,7 +5,6 @@
  * Methods:
  *
  *   addEvent(target, type, callback);
- *   addEvents(target, types, callback);
  *   destroy()
  *
  * Examples:
@@ -25,19 +24,13 @@ export default class EventCache {
     this.cache = [];
   }
 
-  addEvent(target: Node, type: string, callback: EventListener) {
-    target.addEventListener(type, callback);
-    this.cache.push({ target, type, callback });
-  }
-
-  /**
-   * Bind multiple events to one listener.
-   *
-   */
-  addEvents(target: Node, types: string[], callback: EventListener) {
-    for (const type of types) {
-      this.addEvent(target, type, callback);
-    }
+  addEvent<K extends keyof HTMLElementEventMap>(
+    target: HTMLElement,
+    event: K,
+    listener: (e: HTMLElementEventMap[K]) => void
+  ) {
+    target.addEventListener(event, listener);
+    this.cache.push({ target, type: event, callback: listener as EventListener});
   }
 
   /**

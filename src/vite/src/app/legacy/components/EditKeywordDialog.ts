@@ -1,5 +1,6 @@
 import { type TronInst } from "@lib/tron";
-import AjaxDialog from "@old/ajaxdialog";
+import { KoAjaxDialog } from "@/components/KoAjaxDialog";
+import { type KoDialogAnchor, type KoDialogOptions } from "@/components/KoDialog";
 import VueInstance from "@lib/helpers/vue-instance";
 
 import KoEditKeyword from "@/vue/KoEditKeyword.vue";
@@ -13,100 +14,72 @@ type EditKeywordResponse = {
 
 export type EditKeywordCallback = (keyword: string, next?: boolean) => void;
 
-const isMobile = window.innerWidth <= 700;
-
 export default class EditKeywordDialog {
-  private options: any;
-
-  private ucsId: TUcsId;
-
-  private callback: EditKeywordCallback;
-
-  private dialog: AjaxDialog | null = null;
-
-  private vueInst: TVueInstanceOf<typeof KoEditKeyword> | null = null;
+  private dialog: KoAjaxDialog | null = null;
+  private vue: TVueInstanceRef<typeof KoEditKeyword> | null = null;
 
   /**
    *
    * Options:
-   *   context    Sets the context element to align the dialog (see YUI2 Overlay).
    *
-   * @param ucsId
-   * @param options   params (AjaxDialog requestData), context (YUI2 Panel option)
-   * @param callback   Callback to insert the updated keyword back into the page
+   * @param ucsId     UCS code
+   * @param align     alignment for the dialog
+   * @param callback  callback to insert the updated keyword back into the page
    */
   constructor(
     ucsId: TUcsId,
-    options: Dictionary,
-    callback: EditKeywordCallback
+    align: KoDialogAnchor,
+    callback: EditKeywordCallback,
+    isManagePage: boolean = false
   ) {
-    console.log("EditKeywordDialog(%d %o)", ucsId, options);
+    const isMobile = window.innerWidth <= 700;
 
-    this.ucsId = ucsId;
-    this.options = options;
-    this.callback = callback;
-
-    const dlgopts: AjaxDialogOpts = {
-      requestUri: `/study/editkeyword/id/${ucsId}`,
-      requestData: options.params,
-      skin: isMobile ? "rtk-mobl-dlg" : "rtk-skin-dlg",
+    const dlgopts: KoDialogOptions = {
+      align: align,
+      dismiss: true,
+      mask: true,
       mobile: isMobile,
-      close: !isMobile,
-      width: 380, // make sure this matches width set in CSS
-      scope: this,
-      events: {
-        onDialogResponse: this.onDialogResponse,
-        onDialogHide: this.onHide,
-      },
+      close: true,
+      title: `Customize Keyword for ${String.fromCodePoint(ucsId)}`,
+      width: "380px",
     };
 
-    // position dialog
-    if (!isMobile) {
-      dlgopts.context = options.context;
-    }
+    this.dialog = new KoAjaxDialog(
+      `/study/editkeyword/id/${ucsId}`,
+      null,
+      dlgopts,
+      (tron: TronInst<EditKeywordResponse>) => {
+        const mount = this.dialog!.getBody();
+        const props = tron.getProps();
 
-    this.dialog = new AjaxDialog(null, dlgopts);
+        this.vue = VueInstance(KoEditKeyword, mount, {
+          ucsId: props.ucs_id,
+          origKeyword: props.orig_keyword,
+          userKeyword: props.user_keyword,
+          maxLength: props.max_length,
+          isManagePage,
+          onSuccess: (keyword: string, tabKey: boolean) => {
+            this.dialog?.hide();
+            callback(keyword, tabKey);
+          },
+        });
+      }
+    );
+
     this.dialog.show();
   }
 
-  // Show again, after it is closed with the YUI close button.
   show() {
     this.dialog!.show();
-    this.vueInst?.focusInput();
+    this.vue?.vm.focusInput();
   }
 
   destroy() {
+    if (this.vue) {
+      this.vue.unmount();
+      this.vue = null;
+    }
     this.dialog!.destroy();
     this.dialog = null;
-  }
-
-  onDialogResponse(tron: TronInst<EditKeywordResponse>) {
-    console.log("EditKeywordDialog::onDialogResponse()");
-    const elMount = this.dialog!.getBody();
-    const props = tron.getProps();
-
-    // if (this.vueInst) this.vueInst.unmount();
-
-    const { vm } = VueInstance(KoEditKeyword, elMount, {
-      ucsId: props.ucs_id,
-      origKeyword: props.orig_keyword,
-      userKeyword: props.user_keyword,
-      maxLength: props.max_length,
-      isManagePage: this.options.isManagePage || false,
-      onSuccess: (keyword: string, tabKey: boolean) => {
-        this.dialog?.hide();
-        this.callback(keyword, tabKey);
-      }
-    });
-
-    this.vueInst = vm;
-  }
-
-  // Copy keyword back into the main page
-  // If JsTron property "next" is returned, the callback for the Manage page edits the next keyword
-
-  onHide() {
-    // keep the dialog in the page
-    return false;
   }
 }

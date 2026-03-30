@@ -3,10 +3,10 @@
  *
  * Methods:
  *
- *   connect(name, fn [, scope])  Subscribe to a custom event.
- *   disconnect(name[, fn])       Unsubscribe fn, or all listeners from the event.
- *   notify(name [, args...])     Notify all listeners about a custom event.
- *   hasListeners(name)           Check whether there are any listeners to a custom event.
+ *   connect(name, fn [, scope])
+ *   disconnect(name[, fn])
+ *   notify(name [, args...])
+ *   hasListeners(name)
  *
  */
 
@@ -14,11 +14,11 @@ export type ListenerFn = (...args: any[]) => any;
 
 type ListenerInfo = {
   fn: ListenerFn;
-  scope: any;
+  scope: object | undefined;
 };
 
 export default class EventDispatcher {
-  listeners: Dictionary<ListenerInfo[]> = {};
+  private listeners: Record<string, ListenerInfo[]>;
 
   constructor() {
     this.listeners = {};
@@ -29,51 +29,40 @@ export default class EventDispatcher {
   }
 
   /**
-   * Connects a listener to a given event name.
+   * Subscribe to a custom event.
    *
    * @param name     The type of event (the event's name)
    * @param fn       A javascript callable
-   * @param context  Context (this) for the event. Default value: the window object.
+   * @param scope    Context (this) for the event, optional.
    */
-  connect(name: string, fn: ListenerFn, context?: any) {
+  connect(name: string, fn: ListenerFn, scope?: object) {
     if (!this.listeners[name]) {
       this.listeners[name] = [];
     }
 
-    this.listeners[name].push({
-      fn: fn,
-      scope: context || window,
-    });
+    this.listeners[name].push({ fn, scope });
   }
 
   /**
-   * Disconnects a listener, or all listeners, for an event.
+   * Unsubscribe listener from an event.
    *
    * If fn is not specified, then all listeners for this event are unsubscribed.
    *
    * @param name   An event name
    * @param fn     A javascript callable (optional)
    *
-   * @return Number of listeners unsubscribed, or null the listener is not found
    */
-  disconnect(name: string, fn?: ListenerFn): number | null {
+  disconnect(name: string, fn?: ListenerFn): void {
     if (!this.listeners[name]) {
-      return null;
+      return;
     }
 
-    // if listener is undefined, delete all listeners
     const deleteAll = !fn;
+    const listeners = this.listeners[name];
 
-    const callables = this.listeners[name];
-    const l = callables.length;
-    for (let i = 0; i < l; i++) {
-      const listener = callables[i]!;
-      if (deleteAll || listener.fn === fn) {
-        callables.splice(i, 1);
-      }
-    }
-
-    return l;
+    this.listeners[name] = deleteAll
+      ? []
+      : listeners.filter((l) => l.fn !== fn);
   }
 
   /**
@@ -82,25 +71,23 @@ export default class EventDispatcher {
    * @param name   An event name.
    * @param args   An arbitrary set of arguments to pass to the listener.
    *
-   * @return  False if one of the subscribers returned false, true otherwise
+   * @return  False if one of the subscribers returned false, or there are no listeners for this event, otherwise true.
    */
-  notify(name: string, ...args: any[]): boolean | null {
+  notify(name: string, ...args: any[]): boolean {
     const callables = this.listeners[name] ?? [];
 
     if (!callables.length) {
-      return null;
+      return false;
     }
 
-    let ret;
+    let result = true;
     for (let i = 0; i < callables.length; i++) {
       const subscriber = callables[i]!;
-      ret = subscriber.fn.apply(subscriber.scope, args.length ? args : []);
-      if (false === ret) {
-        break;
-      }
+      const ret = subscriber.fn.apply(subscriber.scope, args);
+      result = result && ret !== false;
     }
 
-    return ret !== false;
+    return result;
   }
 
   /**
@@ -111,6 +98,6 @@ export default class EventDispatcher {
    * @return true if some listeners are connected, false otherwise
    */
   hasListeners(name: string): boolean {
-    return (this.listeners[name] && this.listeners[name].length > 0) || false;
+    return (this.listeners[name]?.length ?? 0) > 0;
   }
 }

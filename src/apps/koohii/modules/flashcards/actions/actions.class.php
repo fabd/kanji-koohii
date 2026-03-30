@@ -2,6 +2,9 @@
 /**
  * Flashcards actions.
  * 
+ * Actions:
+ *   executeAdd()
+ *   executeEdit()
  * 
  */
 
@@ -38,108 +41,65 @@ class flashcardsActions extends sfActions
   }
 
   /**
-   * Returns body of the Flashcard Edit Dialog on the Study page.
+   * Used by the Flashcard Edit Dialog.
    *
-   * Displays flashcard stats, and menu options to add, delete, fail, and
-   * review cards.
-   *
-   * Request parameters:
+   * GET params
    *   ucs      UCS-2 code value of the character.
-   *   menu     Option selected in the menu (menuid attribute of the clicked
-   *            menu item) (OPTIONAL)
+   * 
+   * POST params
+   *   ucs
+   *   action
    * 
    * @return void
    */
-  public function executeDialog($request)
+  public function executeEdit(sfRequest $request)
   {
     $userId = $this->getUser()->getUserId();
 
-    // character data
-    $ucsId  = BaseValidators::sanitizeInteger($request->getParameter('ucs'));
-    $charData = KanjisPeer::getKanjiByUCS($ucsId);
-    $this->forward404If($charData === false);
-    $extFrameNum = rtkIndex::getIndexForUCS($charData->ucs_id);
-    
-    // flashcard data, or false if flashcard does not exist
-    $cardData = ReviewsPeer::getFlashcardData($userId, $ucsId);
+    // FUUUU legacy YUI2 Connect VS API post using JSON
+    if ($request->hasParameter('ucs'))  {
+      $json = (object) ['ucs' => $request->getParameter('ucs')];
+    }
+    else {
+      $json = $request->getContentJson();
+    }
 
-    $result = '';                // result send back to the client
-    $message = false;            // confirmation message, if any
-    $confirm = false;            // if confirming an action, display Ok/Cancel and pass this id to menuitem as "data-action"
+    $ucsId  = BaseValidators::sanitizeInteger($json->ucs);
+    
     $tron = new JsTron();
-    $tron->add([
-      'dialogTitle'   => 'Edit Flashcard'
-    ]);
-    $tron->setStatus(JsTron::STATUS_PROGRESS);
     
-    sfProjectConfiguration::getActive()->loadHelpers('CJK');
-
-    // handle menu action
-    $menu = $request->getParameter('menu');
-    if ($menu === 'fail' && $this->menuFlashcardFail($request, $userId, $ucsId))
+    if ($request->getMethod()===sfRequest::GET)
     {
-      $result  = 'failed';
-      $message = 'Flashcard moved to the restudy pile. The page will reload.';
-      // tell client to load this page
-      $tron->set('reload', $this->getController()->genUrl('@study_edit?id='.$extFrameNum));
+      // GET request when dialog opens
+      $kanjiData = KanjisPeer::getKanjiByUCS($ucsId);
+      $this->forward404If(!$kanjiData);
+      $cardData = ReviewsPeer::getFlashcardData($userId, $ucsId);
+
+      $tron->add([
+        'kanjiData' => $kanjiData,
+        'cardData' => $cardData,
+      ]);
     }
-    elseif ($menu === 'delete')
-    {
-      $message = 'Delete flashcard for '.cjk_lang_ja($charData->kanji).' (#'.$extFrameNum.') ?'.
-                 '<span class="note">Note: only the flashcard is deleted, stories are not affected.</span>';
-      $result  = true;     // just for state change
-      $confirm = 'delete';
-    }    
-    elseif ($menu === 'confirm-delete' && $this->menuFlashcardDelete($request, $userId, $ucsId))
-    {
-      $result  = 'deleted';
-      $message = 'Deleted flashcard for '.cjk_lang_ja($charData->kanji).' (#'.$extFrameNum.')';
-    }
+    else {
+      $action = $json->action;
+      
+      if ($action === "delete") {
+        $result = ReviewsPeer::deleteSelection($userId, [$ucsId]);
+        if (empty($result)) {
+          $tron->setError("Error deleting flashcard.");
+          $tron->setStatus(JsTron::STATUS_FAILED);
+        }
+      }
 
-    if ($request->hasErrors())
-    {
-      // if an error occured, it is likely the state changed in another tab/window
-      // set a non empty result to tell client to refresh the dialog state
-      $result = 'error';
-    }
-
-    // data for the client
-    $tron->set('result', $result);
-//sleep( 3);
-    return $tron->renderPartial($this, 'EditFlashcard', [
-      'charData'     => $charData,
-      'cardData'     => $cardData,
-      'message'      => $message,
-      'confirm'      => $confirm           
-    ]);
-  }
-
-  private function menuFlashcardFail($request, $userId, $ucsId)
-  {
-    if (ReviewsPeer::hasFlashcard($userId, $ucsId))
-    {
-      if (false !== ReviewsPeer::failFlashcard($userId, $ucsId))
-      {
-        return true;
+      if ($action === "restudy") {
+        $result = ReviewsPeer::failFlashcard($userId, $ucsId);
+        if (!$result) {
+          $tron->setError("Woops. Could not update flashcard.");
+          $tron->setStatus(JsTron::STATUS_FAILED);
+        }
       }
     }
 
-    // not expected to be seen by user
-    $request->setError('x', __METHOD__);
-    return false;
-  }
-
-  private function menuFlashcardDelete($request, $userId, $ucsId)
-  {
-    $deleted = ReviewsPeer::deleteSelection($userId, [$ucsId]);
-
-    if (count($deleted) === 1)
-    {
-      return true;
-    }
-
-    // not expected to be seen by user
-    $request->setError('x', __METHOD__);
-    return false;
+    return $tron->renderJson($this);
   }
 }

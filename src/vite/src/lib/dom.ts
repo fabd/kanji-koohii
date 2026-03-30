@@ -20,6 +20,8 @@
  *
  *   px(value)                         ... format value for css property eg. `45` => `45px`
  *
+ *   applyCssTransition(el, class)     ... trigger a CSS transition
+ *
  *
  * METHODS
  *
@@ -93,8 +95,8 @@ type StringHash = { [key: string]: string };
 
 const isFunction = Lang.isFunction;
 const isNode = Lang.isNode;
-const isString = Lang.isString; 
-const isWindow = Lang.isWindow; 
+const isString = Lang.isString;
+const isWindow = Lang.isWindow;
 
 //
 type $Event = {
@@ -114,7 +116,10 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
   constructor(selector: DomJSSelector, context?: Element) {
     let nodes: ArrayLike<EL>;
 
-    console.assert(!context || isNode(context), "DomJS(): invalid `context` argument");
+    console.assert(
+      !context || isNode(context),
+      "DomJS(): invalid `context` argument"
+    );
 
     if (isString(selector)) {
       nodes = (context || window.document).querySelectorAll(selector);
@@ -216,7 +221,11 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
     // .off()  (remove all events)
 
     $Events = $Events.filter((e) => {
-      if (e.el === el && (!callback || callback === e.fn) && (!events || (events as string[]).includes(e.type))) {
+      if (
+        e.el === el &&
+        (!callback || callback === e.fn) &&
+        (!events || (events as string[]).includes(e.type))
+      ) {
         e.el.removeEventListener(e.type, e.fn);
         return false;
       }
@@ -267,7 +276,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    *
    */
   css(props: string | StringHash, value?: string): any {
-    const element = (this[0] as any) as HTMLElement;
+    const element = this[0] as any as HTMLElement;
     let styles: StringHash;
 
     if (isString(props)) {
@@ -297,7 +306,7 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
    * @returns void
    */
   display(show: boolean = true): void {
-    const element = (this[0] as any) as HTMLElement;
+    const element = this[0] as any as HTMLElement;
     element.style.display = show ? "" : "none";
   }
 
@@ -310,7 +319,10 @@ export class DomJS<EL extends Element> implements ArrayLike<EL> {
   }
 }
 
-const factory = <EL extends Element>(selector: DomJSSelector, context?: Element): DomJS<EL> => {
+const factory = <EL extends Element>(
+  selector: DomJSSelector,
+  context?: Element
+): DomJS<EL> => {
   return new DomJS<EL>(selector, context);
 };
 
@@ -334,7 +346,10 @@ export function asHtmlElement(el: any) {
  * @returns The added child node
  */
 export function insertAfter(newNode: Element, refNode: Element): Element | null {
-  console.assert(isNode(newNode) && isNode(refNode), "insertAfter() : newNode and/or refNode is invalid");
+  console.assert(
+    isNode(newNode) && isNode(refNode),
+    "insertAfter() : newNode and/or refNode is invalid"
+  );
   console.assert(!!refNode.parentNode, "refNode needs a parent element");
   return refNode.insertAdjacentElement("afterend", newNode);
 }
@@ -351,7 +366,8 @@ export function insertBefore(newNode: Element, refNode: Element): Element | null
 }
 
 /**
- * getStyle()
+ * Return the final computed value of a CSS property on the element.
+ * (note: element.style.* only returns the *inline* styles).
  *
  *   styleName    MUST be camelCase form!
  */
@@ -364,7 +380,10 @@ export function getStyle(element: HTMLElement, styleName: string): string | null
   }
   try {
     const computed = document.defaultView!.getComputedStyle(element, "");
-    return element.style.getPropertyValue(styleName) || computed ? computed.getPropertyValue(styleName) : null;
+    return (
+      element.style.getPropertyValue(styleName) ||
+      (computed ? computed.getPropertyValue(styleName) : null)
+    );
   } catch {
     return element.style.getPropertyValue(styleName);
   }
@@ -435,3 +454,21 @@ export const stopEvent = (evt: Event): void => {
 export const px = (n: number): string => {
   return `${n}px`;
 };
+
+/**
+ * Trigger a CSS transition, using class named similar to Vue.
+ *
+ *   .(classname)-from { opacity: 0; }
+ *   .(classname)-active { transition: opacity 1s linear; }
+ *
+ */
+export function applyCssTransition(el: HTMLElement, className: string) {
+  const from = `${className}-from`;
+  const to = `${className}-active`;
+  el.classList.add(from);
+  el.classList.remove(to);
+  window.setTimeout(() => {
+    el.classList.remove(from);
+    el.classList.add(to);
+  }, 1);
+}

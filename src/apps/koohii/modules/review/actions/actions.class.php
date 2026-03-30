@@ -241,7 +241,6 @@ class reviewActions extends sfActions
    * POST (from form in _ReviewKanji.php which is submitted at end of review):
    *
    *   ts_start
-   *   fc_deld
    *   fc_free      Is "1" if Custom Review mode (not SRS)
    * 
    * If Custom Review mode (not SRS):
@@ -255,10 +254,6 @@ class reviewActions extends sfActions
     // free mode review flag
     $this->fc_free = $request->getParameter('fc_free', 0);
     $this->fc_rept = $request->getParameter('fc_rept', '');
-  
-    // deleted cards
-    $deletedCards = $request->getParameter('fc_deld');
-    $this->deletedCards = $deletedCards ? explode(',', $deletedCards) : [];
 
     // POST request is initiated by the end of a review session
     if ($request->getMethod() === sfRequest::POST)
@@ -336,7 +331,7 @@ class reviewActions extends sfActions
    */
   private function handleFlashcardRequest($request, $options)
   {
-    $fcrData = json_decode($request->getParameter('json', '{}'));
+    $fcrData = $request->getContentJson();
 
     if (empty($fcrData))
     {

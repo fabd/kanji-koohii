@@ -20,6 +20,17 @@ const baseUrlFor = () => {
 export const baseUrl = () => baseUrlFor().replace(/\/$/, "");
 
 /**
+ * Returns an absolute URL using KK.BASE_URL to account for dev/test environments.
+ *
+ * eg. /foo/bar  ==>  http://localhost/index_dev.php/foo/bar
+ *
+ * @param path   A path starting /with/slash
+ */
+export const urlFor = (path: string) => {
+  return `${baseUrl()}${path}`;
+};
+
+/**
  * Return a URL for a kanji study page.
  *
  * @param kanji A single utf8 charactcer

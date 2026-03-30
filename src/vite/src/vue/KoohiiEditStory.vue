@@ -30,7 +30,7 @@
           <div class="flex-1">
             <div class="keyword">
               <span
-                class="JSEditKeyword"
+                class="ko-MyStory-keyword"
                 title="Click to edit the keyword"
                 @click="onKeyword"
                 >{{ displayKeyword }}</span
@@ -108,7 +108,7 @@
                       name="cancel"
                       title="Cancel changes"
                       class="ko-Btn is-ghost"
-                      @click="onCancel"
+                      @click.stop="onCancel"
                     />
                   </div>
                 </div>
@@ -118,7 +118,7 @@
                 <div
                   class="ko-MyStoryView-textarea ko-BookStyle"
                   title="Click to edit your story"
-                  @click="onEditStory"
+                  @click.stop="onEditStory"
                 >
                   <template v-if="postStoryView.length">
                     <div v-html="postStoryView"></div>
@@ -168,34 +168,20 @@
       </div>
       <!-- /.ko-MyStory -->
     </form>
-
-    <template v-if="isReviewMode">
-      <div class="uiBMenu">
-        <div class="uiBMenuItem">
-          <a class="JSDialogHide uiIBtn uiIBtnDefault" href="#">
-            <span>Close</span>
-          </a>
-        </div>
-      </div>
-    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick } from "vue";
-
 import $$, { insertAfter, getNode } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import type { KanjiData, PostUserStoryResponse } from "@app/api/models";
 import * as TRON from "@lib/tron";
 import { checkForUnsupportedUtf } from "@/lib/cjk";
-
 import VueInstance from "@lib/helpers/vue-instance";
-
-// legacy component (js, also used in "Edit Keywords" manage page)
 import EditKeywordDialog from "@old/components/EditKeywordDialog";
 
-// comps
+// components
 import KoohiiCharsLeft from "@/vue/KoohiiCharsLeft.vue";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 import KoohiiSharedStory from "@/vue/KoohiiSharedStory.vue";
@@ -297,7 +283,7 @@ export default defineComponent({
       return this.formErrors.length > 0;
     },
 
-    formHandleResponse(tron: TRON.TronInst) {
+    formHandleResponse(tron: TRON.TronInst<any>) {
       this.formErrors = tron.getErrors();
     },
 
@@ -317,7 +303,7 @@ export default defineComponent({
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
       getApi()
-        .legacy.postUserStory(
+        .postUserStory(
           this.kanjiData.ucs_id,
           this.postStoryEdit,
           this.postStoryPublic,
@@ -442,8 +428,11 @@ export default defineComponent({
       };
 
       if (!this.oEditKeyword) {
-        const options = { context: [$$(".ko-MyStory")[0], "tr", "tr", null, [-6, 6]] };
-        this.oEditKeyword = new EditKeywordDialog(this.kanjiData.ucs_id, options, callback);
+        this.oEditKeyword = new EditKeywordDialog(
+          this.kanjiData.ucs_id,
+          [$$<HTMLElement>(".ko-MyStory")[0]!, "tr", "tr"],
+          callback
+        );
       } else {
         this.oEditKeyword.show();
       }

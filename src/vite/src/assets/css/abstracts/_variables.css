@@ -43,7 +43,7 @@
   --color-btn-danger: #ea5b5b; /*#d9534f; */
 
   /* main green color */
-  --color-btn-success: #50ac50; /*#4ea84e; */
+  --color-btn-success: #58ac50; /*#6fa300;*/
 
   /* utilities */
   --color-mix-white: #ffffff;
@@ -70,6 +70,13 @@
   --clr-srs-undue: #72c569;
 
   --clr-danger-bg: #d9534f;
+
+  --clr-lime-600: #6fa300;
+
+  /* -------------------------------------------------------------------- */
+  /* background color for the loading mask used in dialogs & ajax panels */
+  /* -------------------------------------------------------------------- */
+  --ko-loading-bg-white: #fffc;
 
   /* -------------------------------------------------------------------- */
   /* z-index tokens   ( https://css-tricks.com/the-value-of-z-index/ ) */

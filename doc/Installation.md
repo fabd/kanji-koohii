@@ -119,16 +119,18 @@ The global layout is in `apps/koohii/templates/layout.php`.
 
 # The Php/Apache container
 
-This is how I usually work with the docker locally:
+This is how I usually work with docker locally:
 
-- I run VSCode, Sublime Merge, Vim, git etc. **from the host**
-- all `npm` scripts, including the Vite client are run **from the container**
+- I run VSCode, Sublime Merge, Vim, git etc. **from the host**<br>
+  (assumes the user on the host has gid/uid that matches the one in the Dockerfile)
+- **npm** and **vite** are run from the container
+
 
 ## Solving file permission issues with a Linux host
 
 On a Linux host there may be file permission issues with the `/src` folder. The file permissions are "imported" by the docker volume. To solve this a custom user is created with uid/gid that matches the permissions of your user in the Linux host. Apache is then configured to run as that user (instead of the default `www-data`).
 
-If you are seeing php errors related to writing to files - check your uid/gid with the `id` command (in the host), and make sure it matches those in the Dockerfile (then rebuild the container with `dc down ; dc build ; dc up -d`):
+If you are seeing php errors related to writing to files - check your uid/gid with the `id` command (in the host), and make sure it matches those in the Dockerfile (then rebuild the container):
 
     ARG UID=1000
     ARG GID=1000

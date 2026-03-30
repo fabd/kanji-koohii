@@ -120,8 +120,8 @@ import { kk_globals_get } from "@app/root-bundle";
 import AjaxQueue from "@old/ajaxqueue";
 import EventDispatcher, { type ListenerFn } from "@lib/EventDispatcher";
 import VueInstance from "@lib/helpers/vue-instance";
-
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
+import { type AxiosResponse } from "axios";
 
 const PREFETCH_CARDS = 10;
 
@@ -210,20 +210,14 @@ export default class FlashcardReview {
     this.eventDispatcher = new EventDispatcher();
     const scope = options.scope;
     for (const sEvent in options.events) {
-      this.eventDispatcher.connect(
-        sEvent,
-        options.events[sEvent]!,
-        scope
-      );
+      this.eventDispatcher.connect(sEvent, options.events[sEvent]!, scope);
     }
 
     // init ajax
     this.ajaxQueue = new AjaxQueue({
-      elError: "uiFcAjaxError",
-      elLoading: "uiFcAjaxLoading",
-      events: {
-        onSuccess: this.onAjaxSuccess.bind(this),
-      },
+      elError: "#uiFcAjaxError",
+      elLoading: "#uiFcAjaxLoading",
+      onSuccess: this.onAjaxSuccess.bind(this),
     });
 
     this.beginReview();
@@ -294,7 +288,7 @@ export default class FlashcardReview {
    * @param fn       A javascript callable
    * @param context  Context (this) for the event. Default value: the window object.
    */
-  connect(name: string, fn: ListenerFn, context?: any) {
+  private connect(name: string, fn: ListenerFn, context?: any) {
     this.eventDispatcher.connect(name, fn, context);
   }
 
@@ -304,14 +298,14 @@ export default class FlashcardReview {
    * @param name   An event name
    * @param fn     A javascript callable (optional)
    */
-  disconnect(name: string, fn?: ListenerFn) {
+  private disconnect(name: string, fn?: ListenerFn) {
     this.eventDispatcher.disconnect(name, fn);
   }
 
   /**
    * EventDispatcher proxy.
    */
-  notify(name: string, ...args: any[]) {
+  private notify(name: string, ...args: any[]) {
     return this.eventDispatcher.notify(name, ...args);
   }
 
@@ -507,11 +501,15 @@ export default class FlashcardReview {
         syncData.opt = this.options.params;
       }
 
-      this.ajaxQueue.add(this.options.ajax_url, {
-        method: "post",
-        json: syncData,
-        argument: bFlushData ? "end" : "continue",
-      });
+      this.ajaxQueue.add(
+        this.options.ajax_url,
+        {
+          method: "post",
+          params: syncData,
+          useJSON: true,
+        },
+        bFlushData ? "end" : "continue"
+      );
       this.ajaxQueue.start();
 
       return true;
@@ -526,13 +524,13 @@ export default class FlashcardReview {
    * Cache items returned by the server,
    * determine next position to start prefetch based on how many items were received.
    *
-   * @param o ... The YUI Connect object (extended by AjaxRequest)
+   * @param response ... AxiosResponse
    * @param argument ... 'end' if completing review
    */
-  onAjaxSuccess(o: any, argument?: string) {
-    const syncResponse = o.responseJSON as TReviewSyncResponse;
+  onAjaxSuccess(response: AxiosResponse, argument?: string) {
+    console.log("FlashcardReview::onAjaxSuccess(%o)", response, argument);
 
-    console.log("FlashcardReview::onAjaxSuccess(%o)", o);
+    const syncResponse = response.data as TReviewSyncResponse;
 
     if (syncResponse) {
       const cardsData = syncResponse.get;

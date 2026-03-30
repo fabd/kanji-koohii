@@ -8,8 +8,8 @@
  *
  */
 
-import $$, { DomJS, asHtmlElement, hasClass } from "@lib/dom";
-import AjaxDialog from "@old/ajaxdialog";
+import $$, { hasClass } from "@lib/dom";
+import KoDialog from "@/components/KoDialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
@@ -27,14 +27,12 @@ export default class KanjiReview {
   oEditFlashcard: EditFlashcardDialog | null = null;
   oEditFlashcardId: TUcsId = 0;
   editStoryDialog: EditStoryDialog | null = null;
-
-  deletedCards: number[] = [];
+  editStoryDialogId: TUcsId = 0;
 
   elAnswerPass: Element;
   elAnswerFail: Element;
   countYes: number;
   countNo: number;
-  countDeleted: number;
 
   elStats: HTMLElement;
   elFinish: HTMLElement;
@@ -43,7 +41,7 @@ export default class KanjiReview {
   /**
    *
    * @param fcrOptions ... options for FlashcardReview instance
-   * @param props ... props for Vue component (TBD refactor)
+   * @param props ... props for Vue component (TODO)
    */
   constructor(fcrOptions: TReviewOptions, props: TKanjiReviewProps) {
     this.options = props;
@@ -67,7 +65,7 @@ export default class KanjiReview {
     this.reviewPage.addShortcutKey("n", "no");
     this.reviewPage.addShortcutKey("a", "again");
     this.reviewPage.addShortcutKey("y", "yes");
-    if (!this.getOption("freemode")) {
+    if (!this.options.freemode) {
       this.reviewPage.addShortcutKey("h", "hard");
       this.reviewPage.addShortcutKey("e", "easy");
     }
@@ -75,7 +73,7 @@ export default class KanjiReview {
     // added number keys to answer with just left hand
     this.reviewPage.addShortcutKey("1", "no");
     this.reviewPage.addShortcutKey("3", "yes");
-    if (!this.getOption("freemode")) {
+    if (!this.options.freemode) {
       this.reviewPage.addShortcutKey("2", "hard");
       this.reviewPage.addShortcutKey("4", "easy");
     }
@@ -94,9 +92,6 @@ export default class KanjiReview {
     this.reviewPage.addShortcutKey("k", "skip");
     this.reviewPage.addShortcutKey(110, "skip"); // NUMPAD_DECIMAL
 
-    // Disabled because it's next to (F)lip Card
-    //this.reviewPage.addShortcutKey('d', 'delete');
-
     // flashcad container
     // this.elFlashcard = $$('.uiFcCard')[0];
 
@@ -110,26 +105,8 @@ export default class KanjiReview {
     this.countYes = 0;
     this.countNo = 0;
 
-    this.countDeleted = 0;
-    this.deletedCards = [];
-
     // end review div
     this.elFinish = $$<HTMLElement>(".JSEndButton")[0]!;
-  }
-
-  /**
-   * Returns an option value
-   *
-   */
-  getOption(name: keyof TKanjiReviewProps) {
-    return this.options[name];
-  }
-
-  /**
-   *
-   */
-  getOptionAsStr(name: keyof TKanjiReviewProps): string {
-    return this.options[name] as string;
   }
 
   /**
@@ -154,9 +131,7 @@ export default class KanjiReview {
 
     // set form data and redirect to summary with POST
     elFrm.method = "post";
-    elFrm.action = this.getOptionAsStr("end_url");
-    (elFrm.elements.namedItem("fc_deld") as HTMLInputElement).value =
-      this.deletedCards.join(",");
+    elFrm.action = this.options.end_url;
     elFrm.submit();
   }
 
@@ -205,14 +180,13 @@ export default class KanjiReview {
 
     // help dialog
     if (sActionId === "help") {
-      const dlg = new AjaxDialog("#JsFcHelpDlg", {
-        useMarkup: true,
-        context: [$$(".JSBtnHelp")[0], "tl", "bl", null, [0, 0]],
-        skin: "rtk-skin-dlg",
-        mobile: true,
-        close: false,
+      const dialog = new KoDialog({
+        template: "#JsFcHelpDlg",
+        align: [$$<HTMLElement>(".JSBtnHelp")[0]!, "bl", "tl"],
+        dismiss: true,
+        mask: true,
       });
-      dlg.show();
+      dialog.show();
 
       return false;
     }
@@ -235,17 +209,14 @@ export default class KanjiReview {
     }
 
     switch (sActionId) {
-      case "fcmenu":
+      case "JSFcMenu":
         this.flashcardMenu();
-        break;
-      case "delete":
-        this.rateCard("delete");
         break;
 
       case "flip":
         if (
           oEvent.type === "click" &&
-          hasClass(asHtmlElement(oEvent.target), "JsLink")
+          hasClass(oEvent.target as HTMLElement, "JsLink")
         ) {
           // pass through so the link functions
           return true;
@@ -302,23 +273,16 @@ export default class KanjiReview {
   }
 
   toggleEditStory() {
-    if (this.editStoryDialog && this.editStoryDialog.isVisible()) {
+    if (this.editStoryDialog && this.editStoryDialog.isOpen()) {
       this.editStoryDialog.hide();
     } else {
-      const oCardData = this.getFlashcardData();
-
-      if (!this.editStoryDialog) {
-        // initialize Story Window and its position
-        //var left = this.elFlashcard.offsetLeft + (this.elFlashcard.offsetWidth /2) - (520/2);
-        //var top = this.elFlashcard.offsetTop + 61;
-        this.editStoryDialog = new EditStoryDialog(
-          this.getOptionAsStr("editstory_url"),
-          oCardData.id
-        );
-      } else {
-        this.editStoryDialog.load(oCardData.id);
-        this.editStoryDialog.show();
+      const { id: ucsId } = this.getFlashcardData();
+      if (!this.editStoryDialog || ucsId !== this.editStoryDialogId) {
+        this.editStoryDialog?.destroy();
+        this.editStoryDialog = new EditStoryDialog(ucsId);
       }
+      this.editStoryDialogId = ucsId;
+      this.editStoryDialog.show();
     }
   }
 
@@ -326,8 +290,7 @@ export default class KanjiReview {
     if (this.dictDialog && this.dictDialog.isVisible()) {
       this.dictDialog.hide();
     } else {
-      const oCardData = this.getFlashcardData();
-      const ucsId = oCardData.id;
+      const { id: ucsId } = this.getFlashcardData();
 
       if (!this.dictDialog) {
         this.dictDialog = new DictLookupDialog();
@@ -339,7 +302,7 @@ export default class KanjiReview {
   }
 
   /**
-   * Rate card (or mark action like delete/skip), then forward.
+   * Rate card (or mark action like skip), then forward.
    *
    */
   rateCard(rating: TReviewRating) {
@@ -362,35 +325,13 @@ export default class KanjiReview {
    */
   flashcardMenu() {
     const el = $$("#uiFcMenu")[0] as HTMLElement;
-
-    const data = el.dataset as { uri: string; param: string };
-
-    const oCardData = this.oReview.getFlashcardData() as TCardData;
-
-    const onMenuHide = () => {
-      // clear icon focus state when dialog closes
-      el.classList.remove("active");
-    };
-
-    const onMenuItem = (menuid: string) => {
-      if (menuid === "confirm-delete") {
-        // set flashcard answer that tells server to delete the card
-        this.rateCard("delete");
-        return true;
-      } else if (menuid === "skip") {
-        this.rateCard("skip");
-        return true;
-      }
-
-      // does not close dialog
-      return false;
-    };
+    const { id: ucsId } = this.oReview.getFlashcardData()!;
 
     el.classList.add("active");
 
     // reload the edit flashcard menu when changed flashcard
-    if (oCardData.id !== this.oEditFlashcardId) {
-      this.oEditFlashcardId = oCardData.id;
+    if (ucsId !== this.oEditFlashcardId) {
+      this.oEditFlashcardId = ucsId;
 
       if (this.oEditFlashcard) {
         this.oEditFlashcard.destroy();
@@ -399,22 +340,10 @@ export default class KanjiReview {
     }
 
     if (!this.oEditFlashcard) {
-      const params = {
-        ...JSON.parse(data.param),
-        ...{ ucs: oCardData.id },
-      };
-      // console.log("zomg %o", params);return false;
-
       this.oEditFlashcard = new EditFlashcardDialog(
-        data.uri,
-        params,
-        [el, "tr", "br"],
-        {
-          events: {
-            onMenuHide: onMenuHide,
-            onMenuItem: onMenuItem,
-          },
-        }
+        ucsId,
+        [el, "br", "tr"],
+        true
       );
     } else {
       this.oEditFlashcard.show();
@@ -460,42 +389,16 @@ export default class KanjiReview {
     )
       ? 1
       : 0;
-    let deld = rating === FCRATE.DELETE ? 1 : 0;
 
     if (isUndo) {
       yes = -yes;
       no = -no;
-      deld = -deld;
     }
 
     this.countYes += yes;
     this.countNo += no;
     this.elAnswerPass.innerHTML = "" + this.countYes;
     this.elAnswerFail.innerHTML = "" + this.countNo;
-
-    if (deld !== 0) {
-      this.updateDeletedCards(id, deld);
-    }
-  }
-
-  updateDeletedCards(ucsId: TUcsId, count: number) {
-    this.countDeleted += count;
-
-    if (count > 0) {
-      this.deletedCards.push(ucsId);
-    } else if (count < 0) {
-      this.deletedCards.pop();
-    }
-
-    $$(".JSFcDeleted").display(this.countDeleted > 0);
-    const elCount = $$(".JSFcDeleted em")[0];
-    if (elCount) elCount.innerHTML = "" + this.countDeleted;
-    const elDeleted = $$(".JSFcDeletedK span")[0];
-    if (elDeleted) elDeleted.innerHTML = this.getDeletedCards();
-  }
-
-  getDeletedCards() {
-    return "&#" + this.deletedCards.join(";&#") + ";";
   }
 
   /**

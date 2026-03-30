@@ -7,7 +7,6 @@
 @import "./vendor/_tailwind.css";
 
 /* old css for components not using Vue */
-@import "./components/_EditKeywordDialog.css";
 @import "./components/_EditFlashcardDialog.css";
 @import "./components/_EditStory.css";
 

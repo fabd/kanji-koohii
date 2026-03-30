@@ -79,7 +79,7 @@ class FlashcardListBinding implements uiSelectTableBinding
           "colData":  "onyomi"
         },
         {
-          "caption":  "<span class=\"visible-xs-sm\">S</span><span class=\"visible-md-lg\">Strokecount</span>",
+          "caption":  "Strokecount",
           "width":    15,
           "cssClass": "text-center",
           "colData":  "strokecount"

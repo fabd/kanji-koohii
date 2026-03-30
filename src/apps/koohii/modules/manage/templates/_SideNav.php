@@ -34,7 +34,7 @@ function manageSideNav($id, $text, $internal_uri)
       </ul>
     </div>
       
-    <div class="side-menu visible-md-lg">
+    <div class="side-menu">
       <h2>Export</h2>
       <ul>
         <?php echo manageSideNav('exportflashcards', 'Export flashcards', 'manage/export') ?></li>

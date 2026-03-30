@@ -55,22 +55,6 @@
   color: var(--clr-bg-gd);
 }
 
-/* ---------------------------- */
-/* RESPONSIVE utilities */
-/* ---------------------------- */
-
-@include breakpoint-up(lg) {
-  .visible-xs-sm {
-    display: none;
-  }
-}
-
-@include breakpoint-down(lg) {
-  .visible-md-lg {
-    display: none;
-  }
-}
-
 /* SRS color coding used for text */
 .clr-srs-due {
   color: var(--clr-srs-due);

@@ -10,7 +10,7 @@
 <div class="row">
   <div class="col-lg-9 mx-auto">
 
-    <h2>Support Kanji Koohii<span class="visible-md-lg"> Development</span></h2>
+    <h2>Support Kanji Koohii Development</h2>
 
     <p class="mb-8">
       Maintaining and developing new features takes a considerable amount of time. Your support is very important and could allow me to free up more time for development. <em>Thank you!</em>

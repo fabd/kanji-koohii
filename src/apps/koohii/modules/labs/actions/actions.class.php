@@ -56,7 +56,7 @@ class labsActions extends sfActions
    */
   public function executeAjax($request)
   {
-    $fcrData = json_decode($request->getParameter('json', '{}'));
+    $fcrData = $request->getContentJson();
 
     if (empty($fcrData)) {
       throw new rtkAjaxException('Empty JSON Request.');

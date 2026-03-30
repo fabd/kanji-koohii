@@ -132,8 +132,8 @@ export default defineComponent({
     canFailCard() {
       // not review mode, not a card already in restudy pile
       return !this.reviewMode
-        && this.cardData.leitnerbox > 1
-        || this.cardData.totalreviews === 0;
+        && (this.cardData.leitnerbox > 1
+        || this.cardData.totalreviews === 0);
     },
 
     canDeleteCard() {

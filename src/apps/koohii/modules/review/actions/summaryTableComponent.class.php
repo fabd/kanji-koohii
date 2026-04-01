@@ -6,6 +6,7 @@ const RATING_LABELS = [
   LeitnerSRS::RATE_HARD => 'Hard',
   LeitnerSRS::RATE_YES => 'Yes',
   LeitnerSRS::RATE_EASY => 'Easy',
+  LeitnerSRS::RATE_DELETE => 'Delete',
   LeitnerSRS::RATE_SKIP => '(skipped)',
   LeitnerSRS::RATE_AGAIN => 'Again',
   LeitnerSRS::RATE_AGAIN_HARD => 'Again > Hard',

@@ -61,7 +61,7 @@
   
   <div class="col-lg-6">
 <?php if ($fcr_total > 0) { ?>
-    <div class="ko-Box">
+    <div class="ko-Box mb-4">
 
       <?= ui_chart_vs([
         'valueLeft' => $fcr_pass,
@@ -70,6 +70,15 @@
         'labelRight' => 'Forgotten',
       ]); ?>
 
+    </div>
+<?php } ?>
+
+<?php if (count($deletedCards)) { ?>
+    <div class="ko-Box ko-Box--danger ko-Box--stroke">
+      <h3 class="ko-Box-title">Deleted flashcards <span>(<?= count($deletedCards); ?>)</span></h3>
+      <div class="text-[2rem] leading-none">
+        <?= cjk_lang_ja('&#'.implode(';&#', $deletedCards)); ?>
+      </div>
     </div>
 <?php } ?>
 

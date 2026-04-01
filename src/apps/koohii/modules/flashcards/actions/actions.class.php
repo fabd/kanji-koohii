@@ -56,7 +56,7 @@ class flashcardsActions extends sfActions
   {
     $userId = $this->getUser()->getUserId();
 
-    // FUUUU legacy YUI2 Connect VS API post using JSON
+    // the GET request is not JSON
     if ($request->hasParameter('ucs'))  {
       $json = (object) ['ucs' => $request->getParameter('ucs')];
     }

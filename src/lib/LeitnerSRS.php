@@ -48,6 +48,7 @@ class LeitnerSRS
   public const RATE_HARD = 'hard';
   public const RATE_YES = 'yes';
   public const RATE_EASY = 'easy';
+  public const RATE_DELETE = 'delete';
   public const RATE_SKIP = 'skip';
   public const RATE_AGAIN = 'again';
   public const RATE_AGAIN_HARD = 'again-hard';

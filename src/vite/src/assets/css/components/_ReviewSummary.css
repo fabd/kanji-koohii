@@ -3,28 +3,6 @@
 // ==================================================================== */
 
 /* --------------------------------------------------------------------
-// LEGACY CSS - deleted cards
-// -------------------------------------------------------------------- */
-#FcSummaryDeld {
-  margin: 10px 0 0;
-  background-color: #fff9b3;
-}
-#FcSummaryDeld h3 {
-  font: italic bold 14px/1em Georgia, serif;
-  color: #a2442b;
-}
-#FcSummaryDeld h3 span {
-  font-style: normal;
-  font-weight: normal;
-}
-#FcSummaryDeld p {
-  color: #dd5d3a;
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.2em;
-}
-
-/* --------------------------------------------------------------------
 // LEGACY CSS - simple summary
 // -------------------------------------------------------------------- */
 #fm-summary {

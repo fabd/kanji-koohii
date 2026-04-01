@@ -14,6 +14,10 @@
         <span v-html="getErrors()"></span>
       </div>
 
+      <div v-if="reviewMode" class="mb-2">
+        <button class="ko-Btn ko-Btn--success block w-full" @click.stop="onSkip"><i class="fa fa-angles-right mr-2"></i>Skip this flashcard</button>
+      </div>
+
       <div v-if="canDeleteCard()">
         <button class="ko-Btn ko-Btn--danger block w-full" @click.stop="action = 'delete'"><i class="fa fa-times mr-2"></i>Delete flashcard</button>
       </div>
@@ -137,10 +141,19 @@ export default defineComponent({
     },
 
     canDeleteCard() {
-      return !this.reviewMode;
+      return true;
+    },
+
+    onSkip() {
+      eventBus.notify("kk.review.skip");
     },
 
     onDelete() {
+      if (this.reviewMode) {
+        eventBus.notify("kk.review.delete");
+        return;
+      }
+
       KoohiiLoading.show({ target: this.$refs.maskArea as HTMLElement });
 
       getApi()

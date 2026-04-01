@@ -127,6 +127,11 @@
         <a href="#" class="ko-FcStEnd ml-auto JSEndButton uiFcAction" data-action="end" title="Finish - go to review summary">End</a>
       </div>
 
+      <div class="JSFcDeleted ko-FcStBox" style="display:none">
+        <h3 class="ko-FcStBox-hd">Deleted: <em>0</em></h3>
+        <p class="ko-FcStDeldK JSFcDeletedK"><?= cjk_lang_ja('&nbsp;'); ?></p>
+      </div>
+
     </div><!-- /JSFcStats -->    
   </div>
 
@@ -139,6 +144,7 @@
     url_for('@review_summary'),
     [
       'ts_start' => $ts_start,
+      'fc_deld' => 0, // this is set by JS at end of review before submit
       'fc_free' => (int) $freemode,
       'fc_rept' => $fc_rept ?? '',
     ],

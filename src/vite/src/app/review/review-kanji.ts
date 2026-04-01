@@ -30,10 +30,13 @@ export default class KanjiReview {
   editStoryDialog: EditStoryDialog | null = null;
   editStoryDialogId: TUcsId = 0;
 
+  deletedCards: number[] = [];
+
   elAnswerPass: Element;
   elAnswerFail: Element;
   countYes: number;
   countNo: number;
+  countDeleted: number;
 
   elStats: HTMLElement;
   elFinish: HTMLElement;
@@ -92,7 +95,10 @@ export default class KanjiReview {
     // skip flashcard (110 = comma)
     this.reviewPage.addShortcutKey("k", "skip");
     this.reviewPage.addShortcutKey(110, "skip"); // NUMPAD_DECIMAL
-    eventBus.connect("kk.flashcard.skip", this.onFlashcardSkip.bind(this));
+    
+    // event listeners for the flashcard menu
+    eventBus.connect("kk.review.skip", this.onFlashcardSkip.bind(this));
+    eventBus.connect("kk.review.delete", this.onFlashcardDelete.bind(this));
 
     // flashcad container
     // this.elFlashcard = $$('.uiFcCard')[0];
@@ -106,6 +112,8 @@ export default class KanjiReview {
     this.elAnswerFail = $$(".JSCountFail")[0]!;
     this.countYes = 0;
     this.countNo = 0;
+    this.countDeleted = 0;
+    this.deletedCards = [];
 
     // end review div
     this.elFinish = $$<HTMLElement>(".JSEndButton")[0]!;
@@ -134,6 +142,8 @@ export default class KanjiReview {
     // set form data and redirect to summary with POST
     elFrm.method = "post";
     elFrm.action = this.options.end_url;
+    (elFrm.elements.namedItem("fc_deld") as HTMLInputElement).value =
+      this.deletedCards.join(",");
     elFrm.submit();
   }
 
@@ -213,7 +223,7 @@ export default class KanjiReview {
     switch (sActionId) {
       case "JSFcMenu":
         this.flashcardMenu();
-        break;
+        break;    
 
       case "flip":
         if (
@@ -304,7 +314,7 @@ export default class KanjiReview {
   }
 
   /**
-   * Rate card (or mark action like skip), then forward.
+   * Rate card (or mark action like delete/skip), then forward.
    *
    */
   rateCard(rating: TReviewRating) {
@@ -323,6 +333,12 @@ export default class KanjiReview {
    */
   onFlashcardSkip() {
     this.rateCard("skip");
+    this.oEditFlashcard?.destroy(); // close the dialog
+    this.oEditFlashcard = null;
+  }
+
+  onFlashcardDelete() {
+    this.rateCard("delete");
     this.oEditFlashcard?.destroy(); // close the dialog
     this.oEditFlashcard = null;
   }
@@ -395,6 +411,7 @@ export default class KanjiReview {
     ).includes(rating)
       ? 1
       : 0;
+    let deld = rating === FCRATE.DELETE ? 1 : 0;
     let no = ([FCRATE.NO, FCRATE.HARD, FCRATE.AGAIN_HARD] as string[]).includes(
       rating
     )
@@ -404,12 +421,37 @@ export default class KanjiReview {
     if (isUndo) {
       yes = -yes;
       no = -no;
+      deld = -deld;
     }
 
     this.countYes += yes;
     this.countNo += no;
     this.elAnswerPass.innerHTML = "" + this.countYes;
     this.elAnswerFail.innerHTML = "" + this.countNo;
+
+    if (deld !== 0) {
+      this.updateDeletedCards(id, deld);
+    }
+  }
+
+  updateDeletedCards(ucsId: TUcsId, count: number) {
+    this.countDeleted += count;
+
+    if (count > 0) {
+      this.deletedCards.push(ucsId);
+    } else if (count < 0) {
+      this.deletedCards.pop();
+    }
+
+    $$(".JSFcDeleted").display(this.countDeleted > 0);
+    const elCount = $$(".JSFcDeleted em")[0];
+    if (elCount) elCount.innerHTML = "" + this.countDeleted;
+    const elDeleted = $$(".JSFcDeletedK span")[0];
+    if (elDeleted) elDeleted.innerHTML = this.getDeletedCards();
+  }
+
+  getDeletedCards() {
+    return "&#" + this.deletedCards.join(";&#") + ";";
   }
 
   /**

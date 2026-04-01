@@ -29,7 +29,7 @@
  *   getStats()
  *
  *
- * Options (constructor):
+ * config() options:
  *
  *  WHEN HANDLING AJAX REQUESTS FOR CARDS (Post requests)
  *
@@ -258,6 +258,7 @@ class FlashcardReview
       1 => LeitnerSRS::RATE_NO,
       2 => LeitnerSRS::RATE_YES,
       3 => LeitnerSRS::RATE_EASY,
+      4 => LeitnerSRS::RATE_DELETE,
       5 => LeitnerSRS::RATE_SKIP,
       'h' => LeitnerSRS::RATE_HARD,
     ];
@@ -339,6 +340,7 @@ class FlashcardReview
       }
 
       if (!in_array($rating, [
+        LeitnerSRS::RATE_DELETE,
         LeitnerSRS::RATE_SKIP,
       ]))
       {

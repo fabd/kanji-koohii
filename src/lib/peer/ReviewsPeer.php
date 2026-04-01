@@ -856,6 +856,12 @@ class ReviewsPeer extends coreDatabaseTable
       // skip flashcard : just ignore it (pretend it's been handled)
       $result = true;
     }
+    elseif ($oData->r === LeitnerSRS::RATE_DELETE)
+    {
+      $result = self::deleteFlashcards($userId, [$ucsId]) !== false;
+      
+      sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(null, 'flashcards.update'));
+    }
     else
     {
       $curData = self::getFlashcardData($userId, $ucsId);
@@ -876,7 +882,8 @@ class ReviewsPeer extends coreDatabaseTable
         && ($oData->r === LeitnerSRS::RATE_HARD ||
             $oData->r === LeitnerSRS::RATE_YES  ||
             $oData->r === LeitnerSRS::RATE_NO   ||
-            $oData->r === LeitnerSRS::RATE_EASY))
+            $oData->r === LeitnerSRS::RATE_EASY ||
+            $oData->r === LeitnerSRS::RATE_DELETE))
     {
       LearnedKanjiPeer::clearKanji($userId, $ucsId);
     }
@@ -1076,9 +1083,9 @@ class ReviewsPeer extends coreDatabaseTable
    * Delete a set of flashcards.
    *
    * @param  int    $userId
-   * @param  array  $cards    Array of flashcard ids (UCS-2)
+   * @param  int[]  $cards    Array of flashcard ids (UCS-2)
    * 
-   * @return array  Returns an array of succesfully deleted flashcard ids or false
+   * @return int[]|false  Returns an array of succesfully deleted flashcard ids or false
    */
   private static function deleteFlashcards($userId, $cards)
   {

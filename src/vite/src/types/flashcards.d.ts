@@ -47,7 +47,7 @@ type TReviewOptions = {
   put_request?: boolean;
 };
 
-// make sure this matches RATE_* in FlashcardReview.php
+// make sure this matches RATE_* in LeitnerSRS.php
 type TReviewRating =
   | "no"
   | "again"

@@ -31,6 +31,7 @@
     "wanakana": "^5.3.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0",
     "@rollup/plugin-eslint": "^9.2.0",
     "@rollup/plugin-strip": "^3.0.4",
     "@typescript-eslint/eslint-plugin": "^8.54.x",
@@ -42,7 +43,9 @@
     "eslint-plugin-compat": "^6.1.0",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-vue": "^9.33.0",
+    "fontawesome-subset": "^4.6.0",
     "globals": "^17.2.0",
+    "lightningcss": "^1.32.0",
     "npm-check-updates": "^19.3.2",
     "postcss-html": "^1.8.1",
     "prettier": "^3.8.1",

@@ -383,11 +383,11 @@ function include_fontawesome()
   if (KK_ENV_FORK)
   {
     // use the free, CDN version
-    echo '<link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">';
+    echo '<link href="https://use.fontawesome.com/releases/v7.2.0/css/all.css" rel="stylesheet">';
   }
   else
   {
-    // use the pro "subset" version for reduced file sizes
+    // use the self hosted subset version (only the icons we need)
     echo '<link href="/fonts/fa5sub/css/all.min.css" rel="stylesheet">';
   }
 }

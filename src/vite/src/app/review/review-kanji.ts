@@ -15,6 +15,7 @@ import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";
 import FlashcardReview, { FCRATE } from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
+import eventBus from "@/lib/EventBus";
 
 export default class KanjiReview {
   options: TKanjiReviewProps;
@@ -91,6 +92,7 @@ export default class KanjiReview {
     // skip flashcard (110 = comma)
     this.reviewPage.addShortcutKey("k", "skip");
     this.reviewPage.addShortcutKey(110, "skip"); // NUMPAD_DECIMAL
+    eventBus.connect("kk.flashcard.skip", this.onFlashcardSkip.bind(this));
 
     // flashcad container
     // this.elFlashcard = $$('.uiFcCard')[0];
@@ -314,6 +316,15 @@ export default class KanjiReview {
     this.updateAnswerStats(answer.id, rating, false);
 
     this.oReview.forward();
+  }
+
+  /**
+   * Event handler for Flashcard Menu > Skip.
+   */
+  onFlashcardSkip() {
+    this.rateCard("skip");
+    this.oEditFlashcard?.destroy(); // close the dialog
+    this.oEditFlashcard = null;
   }
 
   /**

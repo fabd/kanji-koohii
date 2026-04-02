@@ -1,9 +1,10 @@
 <h1>Development Notes</h1>
 
 1. [Vite Usage Notes](#vite-usage-notes)
-   1. [USE\_DEV\_SERVER true / false](#use_dev_server-true--false)
-   2. [Static asset handling](#static-asset-handling)
-   3. [Versioning of CSS/JS not handled by Vite](#versioning-of-cssjs-not-handled-by-vite)
+   1. [Analyzing bundles](#analyzing-bundles)
+   2. [USE\_DEV\_SERVER true / false](#use_dev_server-true--false)
+   3. [Static asset handling](#static-asset-handling)
+   4. [Versioning of CSS/JS not handled by Vite](#versioning-of-cssjs-not-handled-by-vite)
 2. [Scripts execution](#scripts-execution)
 
 # Vite Usage Notes
@@ -28,6 +29,15 @@ $ vite
 **Vite's HMR** works out of the box, and the page should refresh automatically after editing any of the dependencies of the Vite entry file(s) used on the current page.
 
 **Tailwind JIT** is available in all js/ts/vue and php files! Note: Tailwind JIT doesn't watch php files when using `vite build --watch`. Either restart `vite build`, or figure something with `nodemon`. This isn't really an issue as most tailwind use will be inside Vue components.
+
+## Analyzing bundles
+
+In the web container `npx vite-bundle-visualizer --output stats.html`
+
+Then in the host `xdg-open ./stats.html`
+
+Or, in the container follow with `npx serve .` to view the stats file.
+
 
 ## USE_DEV_SERVER true / false
 

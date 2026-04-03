@@ -8,7 +8,7 @@
 }
 
 .ko-StudySearchDD-item {
-  @apply px-4 py-2 border-b last:border-b-0 border-gray-100 transition-colors;
+  @apply px-[10px] py-2 border-b last:border-b-0 border-gray-100 transition-colors;
 
   display: flex;
   align-items: center;
@@ -26,12 +26,13 @@
 .ko-StudySearchDD-keyword {
   width: 60%;
   font-size: 16px;
+  line-height: 1.2em;
   font-family: serif;
-  color: #444;
+  color: var(--color-text-body);
 }
 
 .ko-StudySearchDD-kanji {
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1;
   color: #222;
 }

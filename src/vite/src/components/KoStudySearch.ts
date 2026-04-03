@@ -96,7 +96,7 @@ export default class AutoComplete {
 
       li.innerHTML =
         `<span class="ko-StudySearchDD-keyword">${before}<em>${middle}</em>${after}</span>` +
-        `<span class="ko-StudySearchDD-kanji">${item.kanji}</span>` +
+        `<span class="ko-StudySearchDD-kanji cj-k" lang="ja">${item.kanji}</span>` +
         `<span class="ko-StudySearchDD-index">${item.index}</span>`;
 
       li.dataset.kanji = item.kanji;

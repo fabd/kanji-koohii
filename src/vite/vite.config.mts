@@ -3,29 +3,36 @@ import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import strip from "@rollup/plugin-strip";
-
-import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-
-// bundle all node_modules into a vendor chunk
-const ROLLUP_VENDOR_CHUNK = "vendor";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+// import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
-  // base: "/build/dist/",
-
   build: {
+    /**
+     * Note: with the default value the website doesn't display correctly
+     * on my iPad Air 2 Safari. Looks like some css or js are not loaded
+     * it might have to do with imports?
+     *
+     *   es2020   no issues displaying on iPad Air 2 Safari
+     *   es2022   Vue components don't show!
+     */
+    target: "es2020",
+
     // output dir for production build
     outDir: path.resolve(__dirname, "../web/build/dist"),
+
+    // outDir is outside root, confirm it can be emptied on build
     emptyOutDir: true,
 
-    // emit manifest so PHP can find the hashed files
+    // generate manifest file so PHP can render links to css/js
     manifest: true,
 
     // `false` currently doesn't output css in manifest.json
     cssCodeSplit: true,
 
-    // custom entry points  https://rollupjs.org/guide/en/#input
-    rollupOptions: {
+    // custom entry points
+    rolldownOptions: {
       input: [
         "./src/entry-account.ts",
         "./src/entry-common.ts",
@@ -39,70 +46,19 @@ export default defineConfig({
       ],
 
       output: {
-        /**
-         * Create a "vendor" and a "common" bundles.
-         *
-         * This is similar to the default Vite/Rollup build, except that Rollup
-         * won't create multiple chunks for shared code. All the shared functions
-         * and components are grouped in a single "common" js/css files.
-         *
-         * This reduces the number of css/js includes generated in the php page,
-         * based on Vite's manifest.json
-         *
-         * Based on example from https://rollupjs.org/guide/en/#outputmanualchunks
-         * 
-         * FIXME?  Entries/modules should have only one dot, use "foo-bar.js"
-         *         not "foo.bar.js" -- or fix the name splitting code below.
-         */
-        manualChunks: (id, { getModuleInfo }) => {
-          if (/\/node_modules\//.test(id)) {
-            return ROLLUP_VENDOR_CHUNK;
-          }
-
-          const entryPoints = [];
-
-          // We use a Set here so we handle each module at most once. This
-          // prevents infinite loops in case of circular dependencies
-          const idsToHandle = new Set(getModuleInfo(id).importers);
-
-          for (const moduleId of idsToHandle) {
-            const { isEntry, importers } = getModuleInfo(moduleId);
-            if (isEntry) {
-              entryPoints.push(moduleId);
-            }
-
-            // The Set iterator is intelligent enough to iterate over elements that
-            // are added during iteration
-            for (const importerId of importers) idsToHandle.add(importerId);
-          }
-
-          // For the entries (top level), we must explicitly return the entry name,
-          // otherwise Rollup will create a duplicate chunk (same name, different hash)
-          if (entryPoints.length === 0) {
-            const entryName = `${
-              id
-                .split("/")
-                .slice(-1)[0]
-                .split(".")[0]
-            }`;
-            return entryName;
-          }
-
-          // If there is a unique entry, we bundle the code with that entry
-          if (entryPoints.length === 1) {
-            const entryName = `${
-              entryPoints[0]
-                .split("/")
-                .slice(-1)[0]
-                .split(".")[0]
-            }`;
-            return entryName;
-          }
-
-          // For multiple entries, we put it into a "shared" chunk
-          if (entryPoints.length > 1) {
-            return ROLLUP_VENDOR_CHUNK;
-          }
+        // attempt to reduce number of chunks...
+        codeSplitting: {
+          minSize: 10000,
+          groups: [
+            {
+              name: "vendor",
+              test: /node_modules/,
+            },
+            {
+              name: "vue",
+              test: /src\/vue/,
+            },
+          ],
         },
       },
     },
@@ -127,20 +83,14 @@ export default defineConfig({
     ],
   },
 
-  css: {
-    // ---------------------------------------------------------------------------
-    // https://vitejs.dev/config/#css-preprocessoroptions
-    // ---------------------------------------------------------------------------
-    preprocessorOptions: {
-    },
-  },
-
   plugins: [
+    // visualizer(),
+
     tailwindcss(),
 
     // ...
     Components({
-      dirs: ['src/vue'],
+      dirs: ["src/vue"],
       resolvers: [ElementPlusResolver()],
     }),
 

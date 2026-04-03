@@ -20,12 +20,13 @@
   },
   "dependencies": {
     "@eslint/js": "^9.39.2",
-    "@tailwindcss/vite": "^4.1.18",
-    "@types/node": "^25.1.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/node": "^25.5.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "cli-real-favicon": "^0.0.9",
-    "element-plus": "^2.13.2",
+    "element-plus": "^2.13.6",
     "esbuild": "^0.27.2",
+    "tailwindcss": "^4.2.2",
     "vue": "^3.5.27",
     "vue-tsc": "^3.2.4",
     "wanakana": "^5.3.1"
@@ -36,7 +37,7 @@
     "@rollup/plugin-strip": "^3.0.4",
     "@typescript-eslint/eslint-plugin": "^8.54.x",
     "@typescript-eslint/parser": "^8.54.x",
-    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue": "^6.0.5",
     "axios": "^1.13.4",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -49,13 +50,13 @@
     "npm-check-updates": "^19.3.2",
     "postcss-html": "^1.8.1",
     "prettier": "^3.8.1",
+    "rollup-plugin-visualizer": "^7.0.1",
     "stylelint": "^17.1.0",
     "stylelint-config-recommended-vue": "^1.6.1",
-    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.54.0",
-    "unplugin-vue-components": "^31.0.0",
-    "vite": "^7.3.1"
+    "unplugin-vue-components": "^32.0.0",
+    "vite": "^8.0.3"
   },
   "browserslist": [
     "defaults",

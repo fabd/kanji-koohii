@@ -1,0 +1,23 @@
+.ux-Docs {
+  --borderColor: #d8d1c2;
+}
+
+.ux-DocNav-list {
+  a:not(:first-child) {
+    border-left: solid 1px var(--borderColor);
+    margin-left: 0.5em;
+    padding-left: 0.5em;
+  }
+}
+
+.ux-docDemoblock {
+  border: 1px solid var(--borderColor);
+  padding: 1.5rem;
+  border-radius: 3px;
+  transition: 0.2s;
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    border: 1px solid #c1b7a2;
+  }
+}

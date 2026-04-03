@@ -136,7 +136,7 @@ export default class AutoComplete {
   private updateVisualSelection() {
     const items = this.dropdown.querySelectorAll<HTMLLIElement>("li");
     items.forEach((item, index) => {
-      item.classList.toggle("active", index === this.activeIndex);
+      item.classList.toggle("is-active", index === this.activeIndex);
     });
   }
 

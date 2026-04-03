@@ -8,7 +8,7 @@
 }
 
 .ko-StudySearchDD-item {
-  &.active {
+  &.is-active {
     background-color: #dbeafe;
     border-left: 4px solid #3b82f6;
   }

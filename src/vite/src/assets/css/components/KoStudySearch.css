@@ -1,0 +1,19 @@
+.ko-StudySearchDD {
+  /* the search term highlighted part  */
+  em {
+    font-style: normal;
+    font-weight: 800;
+    color: #1d4ed8;
+  }
+}
+
+.ko-StudySearchDD-item {
+  &.active {
+    background-color: #dbeafe;
+    border-left: 4px solid #3b82f6;
+  }
+  &:hover {
+    background-color: #f3f4f6;
+    cursor: pointer;
+  }
+}

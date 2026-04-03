@@ -37,14 +37,6 @@ export default {
 
     // search autocomplete
     if (elStudySearch) {
-      const latinWords: string[] = [
-        "absum", "accipio", "adsum", "aeternus", "ager", "albus", "alter", "altus", "amicitia", "amicus",
-        "amittere", "amo", "amor", "animus", "annus", "ante", "antiquus", "aqua", "arbitror", "arbor",
-        "arma", "ars", "audio", "aura", "aurum", "autem", "beatus", "bellum", "bene", "brevis",
-        "cado", "caelum", "canis", "capio", "caput", "caritas", "carmen", "carus", "causa", "celer",
-        "cerno", "certus", "cibus", "civilis", "clamo", "clarus", "cogito", "cognosco", "colo", "comes"
-      ];
-
       elStudySearch.innerHTML = `
 <input type="text" name="search" value="" class="form-control" maxlength="32" id="txtSearch" placeholder="Enter number, kanji or keyword" autocomplete="off" />
 <ul class="ko-StudySearchDD absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl hidden overflow-hidden"></ul>
@@ -58,29 +50,15 @@ export default {
       new AutoComplete({
         inputElement: elInput,
         dropdownElement: elDropdown,
-        data: latinWords,
+        keywords: kk_globals_get("SEQ_KEYWORDS"),
+        kanjis: kk_globals_get("SEQ_KANJIS"),
         maxResults: 10,
-        onSelect: (word: string) => { this.onSearch(word); }
+        onSelect: (word: string) => {
+          this.onSearch(word);
+        },
       });
 
-      /*
-      const seqKeywords = kk_globals_get("SEQ_KEYWORDS");
-      const seqKanjis = kk_globals_get("SEQ_KANJIS");
-
-      const actb1 = new actb(elSearch, seqKeywords);
-      actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
-      actb1.onPressEnterCallback = this.quicksearchOnChangeCallback.bind(this);
-
-      actb1.actb_extracolumns = function (iRow) {
-        return `<span class="f">${
-          iRow + 1
-        }</span><span class="k cj-k" lang="ja" xml:lang="ja">&#${seqKanjis.charCodeAt(
-          iRow
-        )};</span>`;
-      };
-      */
-
-      // clicking in quick search box selects the text
+      // clicking in the search box selects the text
       $$(elInput).on("focus", (_evt: Event) => {
         if (elInput.value !== "") {
           elInput.select();

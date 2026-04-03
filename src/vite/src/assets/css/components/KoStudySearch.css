@@ -8,6 +8,11 @@
 }
 
 .ko-StudySearchDD-item {
+  @apply px-4 py-2 border-b last:border-b-0 border-gray-100 transition-colors;
+
+  display: flex;
+  align-items: center;
+
   &.is-active {
     background-color: #dbeafe;
     border-left: 4px solid #3b82f6;
@@ -16,4 +21,24 @@
     background-color: #f3f4f6;
     cursor: pointer;
   }
+}
+
+.ko-StudySearchDD-keyword {
+  width: 60%;
+  font-size: 16px;
+  font-family: serif;
+  color: #444;
+}
+
+.ko-StudySearchDD-kanji {
+  font-size: 20px;
+  line-height: 1;
+  color: #222;
+}
+
+.ko-StudySearchDD-index {
+  margin-left: auto;
+  font-size: 14px;
+  font-family: sans-serif;
+  color: #888;
 }

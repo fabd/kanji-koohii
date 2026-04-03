@@ -1,26 +1,36 @@
 // The Study page search box autocomplete
 
+export interface IAutoCompleteItem {
+  keyword: string;
+  kanji: string;
+  index: number;
+}
+
 interface IAutoCompleteOptions {
   inputElement: HTMLInputElement;
   dropdownElement: HTMLElement;
-  data: string[];
+  /** parallel arrays: keywords[i] corresponds to kanjis[i], index is i+1 */
+  keywords: string[];
+  kanjis: string;
   maxResults?: number;
-  onSelect: (word: string) => void;
+  onSelect: (value: string) => void;
 }
 
 export default class AutoComplete {
   private input: HTMLInputElement;
   private dropdown: HTMLElement;
-  private data: string[];
+  private keywords: string[];
+  private kanjis: string;
   private maxResults: number;
   private activeIndex: number;
-  private filteredItems: string[];
-  private onSelect: (word: string) => void;
+  private filteredItems: IAutoCompleteItem[];
+  private onSelect: (value: string) => void;
 
   constructor(options: IAutoCompleteOptions) {
     this.input = options.inputElement;
     this.dropdown = options.dropdownElement;
-    this.data = options.data;
+    this.keywords = options.keywords;
+    this.kanjis = options.kanjis;
     this.maxResults = options.maxResults ?? 10;
 
     this.activeIndex = 0;
@@ -46,11 +56,18 @@ export default class AutoComplete {
       return;
     }
 
-    // FIXME : this could be optimized to exit early when maxResults matches found
-    //  instead of using slice()
-    this.filteredItems = this.data
-      .filter((word) => word.toLowerCase().includes(query))
-      .slice(0, this.maxResults);
+    const matched: IAutoCompleteItem[] = [];
+    for (let i = 0; i < this.keywords.length; i++) {
+      if (this.keywords[i]!.toLowerCase().includes(query)) {
+        matched.push({
+          keyword: this.keywords[i]!,
+          kanji: this.kanjis[i]!,
+          index: i + 1,
+        });
+        if (matched.length === this.maxResults) break;
+      }
+    }
+    this.filteredItems = matched;
 
     if (this.filteredItems.length === 0) {
       this.hideDropdown();
@@ -63,24 +80,26 @@ export default class AutoComplete {
   private render(query: string) {
     this.dropdown.innerHTML = "";
 
-    this.filteredItems.forEach((word, index) => {
+    this.filteredItems.forEach((item, index) => {
       const li = document.createElement("li");
-      li.className =
-        "ko-StudySearchDD-item px-4 py-2 border-b last:border-b-0 border-gray-100 text-gray-700 transition-colors";
+      li.className = "ko-StudySearchDD-item";
 
       if (index === this.activeIndex) {
-        li.classList.add("active");
+        li.classList.add("is-active");
       }
 
-      // Highlight matching text
-      const startIndex = word.toLowerCase().indexOf(query);
-      const before = word.substring(0, startIndex);
-      const middle = word.substring(startIndex, startIndex + query.length);
-      const after = word.substring(startIndex + query.length);
+      // Highlight matching part of keyword
+      const startIndex = item.keyword.toLowerCase().indexOf(query);
+      const before = item.keyword.substring(0, startIndex);
+      const middle = item.keyword.substring(startIndex, startIndex + query.length);
+      const after = item.keyword.substring(startIndex + query.length);
 
-      li.innerHTML = `${before}<em>${middle}</em>${after}`;
+      li.innerHTML =
+        `<span class="ko-StudySearchDD-keyword">${before}<em>${middle}</em>${after}</span>` +
+        `<span class="ko-StudySearchDD-kanji">${item.kanji}</span>` +
+        `<span class="ko-StudySearchDD-index">${item.index}</span>`;
 
-      li.dataset.word = word; // for the dropdown click event
+      li.dataset.kanji = item.kanji;
 
       this.dropdown.appendChild(li);
     });
@@ -90,8 +109,8 @@ export default class AutoComplete {
 
   private onClickItem(e: Event) {
     e.preventDefault();
-    const word = (e.target as HTMLElement).dataset.word!;
-    this.selectWord(word);
+    const li = (e.target as HTMLElement).closest<HTMLElement>("li");
+    if (li?.dataset.kanji) this.selectItem(li.dataset.kanji);
   }
 
   private onKeyDown(e: KeyboardEvent) {
@@ -115,16 +134,16 @@ export default class AutoComplete {
       case "Tab":
         if (isVisible) {
           e.preventDefault();
-          this.selectWord(this.filteredItems[this.activeIndex]!);
+          this.selectItem(this.filteredItems[this.activeIndex]!.kanji);
         }
         break;
       case "Enter": {
         if (isVisible) {
-          this.selectWord(this.filteredItems[this.activeIndex]!);
+          this.selectItem(this.filteredItems[this.activeIndex]!.kanji);
           break;
         }
         const searchText = this.input.value.trim();
-        if (searchText) this.onSelect(this.input.value.trim());
+        if (searchText) this.onSelect(searchText);
         break;
       }
       case "Escape":
@@ -140,10 +159,10 @@ export default class AutoComplete {
     });
   }
 
-  private selectWord(word: string) {
-    this.input.value = word;
+  private selectItem(kanji: string) {
+    this.input.value = kanji;
     this.hideDropdown();
-    this.onSelect(word);
+    this.onSelect(kanji);
   }
 
   private hideDropdown() {

@@ -5,6 +5,7 @@ interface IAutoCompleteOptions {
   dropdownElement: HTMLElement;
   data: string[];
   maxResults?: number;
+  onSelect: (word: string) => void;
 }
 
 export default class AutoComplete {
@@ -14,6 +15,7 @@ export default class AutoComplete {
   private maxResults: number;
   private activeIndex: number;
   private filteredItems: string[];
+  private onSelect: (word: string) => void;
 
   constructor(options: IAutoCompleteOptions) {
     this.input = options.inputElement;
@@ -23,6 +25,7 @@ export default class AutoComplete {
 
     this.activeIndex = 0;
     this.filteredItems = [];
+    this.onSelect = options.onSelect;
 
     this.init();
   }
@@ -93,31 +96,39 @@ export default class AutoComplete {
 
   private onKeyDown(e: KeyboardEvent) {
     const isVisible = !this.dropdown.classList.contains("hidden");
-    if (!isVisible) return;
-    console.log("handleKeyDown", e.key);
 
     switch (e.key) {
       case "ArrowDown":
+        if (!isVisible) break;
         e.preventDefault();
         this.activeIndex = (this.activeIndex + 1) % this.filteredItems.length;
         this.updateVisualSelection();
         break;
       case "ArrowUp":
+        if (!isVisible) break;
         e.preventDefault();
         this.activeIndex =
           (this.activeIndex - 1 + this.filteredItems.length) %
           this.filteredItems.length;
         this.updateVisualSelection();
         break;
-      case "Enter":
       case "Tab":
-        if (this.filteredItems[this.activeIndex]) {
-          if (e.key === "Tab") e.preventDefault();
+        if (isVisible) {
+          e.preventDefault();
           this.selectWord(this.filteredItems[this.activeIndex]!);
         }
         break;
+      case "Enter": {
+        if (isVisible) {
+          this.selectWord(this.filteredItems[this.activeIndex]!);
+          break;
+        }
+        const searchText = this.input.value.trim();
+        if (searchText) this.onSelect(this.input.value.trim());
+        break;
+      }
       case "Escape":
-        this.hideDropdown();
+        if (isVisible) this.hideDropdown();
         break;
     }
   }
@@ -132,6 +143,7 @@ export default class AutoComplete {
   private selectWord(word: string) {
     this.input.value = word;
     this.hideDropdown();
+    this.onSelect(word);
   }
 
   private hideDropdown() {

@@ -60,6 +60,7 @@ export default {
         dropdownElement: elDropdown,
         data: latinWords,
         maxResults: 10,
+        onSelect: (word: string) => { this.onSearch(word); }
       });
 
       /*
@@ -313,7 +314,7 @@ export default {
    *  - if user enters a unicode like `19968`, convert it to kanji where possible
    *
    */
-  quicksearchOnChangeCallback(search: string) {
+  onSearch(search: string) {
     const frameNum = search.trim();
     let char: string | null = "";
     let matches: RegExpExecArray | null;

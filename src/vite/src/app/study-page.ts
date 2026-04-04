@@ -39,7 +39,7 @@ export default {
     if (elStudySearch) {
       elStudySearch.innerHTML = `
 <input type="text" name="search" value="" class="form-control" maxlength="32" id="txtSearch" placeholder="Enter number, kanji or keyword" autocomplete="off" />
-<ul class="ko-StudySearchDD absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl hidden overflow-hidden"></ul>
+<ul class="ko-StudySearchDD absolute hidden overflow-hidden"></ul>
       `;
 
       const elInput = elStudySearch.querySelector("input")!;

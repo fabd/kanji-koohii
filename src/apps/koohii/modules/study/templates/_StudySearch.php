@@ -4,7 +4,9 @@
 
     <div class="max-lg:grow max-lg:mr-1 lg:mb-2">
       <div class="ko-StudySearch relative">
-        <div class="w-full h-[37px]"><!-- placeholder till JS kicks in --></div>
+        <div class="w-full h-[37px]">
+          <!-- input box placeholder to avoid vertical jitter when JS kicks in -->
+        </div>
       </div>
     </div>
 

@@ -1,9 +1,17 @@
 .ko-StudySearchDD {
+  --color-highlight: #1d4ed8;
+
+  /* slightly wider than the search box above */
+  width: 250px;
+
+  @apply mt-1 bg-white border border-gray-200 rounded-lg shadow-xl;
+  z-index: var(--z-overlay);
+
   /* the search term highlighted part  */
   em {
     font-style: normal;
     font-weight: 800;
-    color: #1d4ed8;
+    color: var(--color-highlight); /*#1d4ed8;*/
   }
 }
 
@@ -16,6 +24,10 @@
   &.is-active {
     background-color: #dbeafe;
     border-left: 4px solid #3b82f6;
+
+    .ko-StudySearchDD-index {
+      color: var(--color-highlight);
+    }
   }
   &:hover {
     background-color: #f3f4f6;
@@ -24,10 +36,9 @@
 }
 
 .ko-StudySearchDD-keyword {
-  width: 60%;
+  width: 74%;
   font-size: 16px;
   line-height: 1.2em;
-  font-family: serif;
   color: var(--color-text-body);
 }
 
@@ -40,6 +51,5 @@
 .ko-StudySearchDD-index {
   margin-left: auto;
   font-size: 14px;
-  font-family: sans-serif;
   color: #888;
 }

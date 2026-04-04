@@ -56,6 +56,22 @@ export default class AutoComplete {
       return;
     }
 
+    // Digit-only query: exact lookup by frame index
+    if (/^\d+$/.test(query)) {
+      const i = parseInt(query, 10) - 1;
+      if (i >= 0 && i < this.keywords.length) {
+        this.filteredItems = [{
+          keyword: this.keywords[i]!,
+          kanji: this.kanjis[i]!,
+          index: i + 1,
+        }];
+        this.render(query);
+      } else {
+        this.hideDropdown();
+      }
+      return;
+    }
+
     const matched: IAutoCompleteItem[] = [];
     for (let i = 0; i < this.keywords.length; i++) {
       if (this.keywords[i]!.toLowerCase().includes(query)) {
@@ -88,14 +104,20 @@ export default class AutoComplete {
         li.classList.add("is-active");
       }
 
-      // Highlight matching part of keyword
+      // Highlight matching part of keyword (startIndex is -1 for digit queries)
       const startIndex = item.keyword.toLowerCase().indexOf(query);
-      const before = item.keyword.substring(0, startIndex);
-      const middle = item.keyword.substring(startIndex, startIndex + query.length);
-      const after = item.keyword.substring(startIndex + query.length);
+      let keywordHtml: string;
+      if (startIndex === -1) {
+        keywordHtml = item.keyword;
+      } else {
+        const before = item.keyword.substring(0, startIndex);
+        const middle = item.keyword.substring(startIndex, startIndex + query.length);
+        const after = item.keyword.substring(startIndex + query.length);
+        keywordHtml = `${before}<em>${middle}</em>${after}`;
+      }
 
       li.innerHTML =
-        `<span class="ko-StudySearchDD-keyword">${before}<em>${middle}</em>${after}</span>` +
+        `<span class="ko-StudySearchDD-keyword">${keywordHtml}</span>` +
         `<span class="ko-StudySearchDD-kanji cj-k" lang="ja">${item.kanji}</span>` +
         `<span class="ko-StudySearchDD-index">${item.index}</span>`;
 

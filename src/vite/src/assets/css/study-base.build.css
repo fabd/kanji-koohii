@@ -6,6 +6,8 @@
 /* tailwind customization */
 @import "./vendor/_tailwind.css";
 
+@import "./components/KoStudySearch.css";
+
 @import "./components/_EditFlashcardDialog.css";
 @import "./components/_EditStory.css";
 

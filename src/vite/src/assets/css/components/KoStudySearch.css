@@ -1,0 +1,57 @@
+.ko-StudySearchDD {
+  --color-highlight: #1d4ed8;
+
+  @apply mt-1 bg-white border border-gray-200 rounded-lg shadow-xl;
+  z-index: var(--z-overlay);
+
+  /* slightly wider, and larger font size on smartphone */
+  @apply w-[250px] max-sm:w-[300px];
+  /* note we set base font size to scale the dropdown content with ems */
+  @apply text-md max-sm:text-lg;
+
+  /* the search term highlighted part  */
+  em {
+    font-style: normal;
+    font-weight: 800;
+    color: var(--color-highlight); /*#1d4ed8;*/
+  }
+}
+
+.ko-StudySearchDD-item {
+  @apply px-4 py-2 border-b last:border-b-0 border-gray-100 transition-colors;
+
+  display: flex;
+  align-items: center;
+
+  &.is-active {
+    background-color: #dbeafe;
+    border-left: 4px solid #3b82f6;
+
+    .ko-StudySearchDD-index {
+      color: var(--color-highlight);
+    }
+  }
+  &:hover {
+    background-color: #f3f4f6;
+    cursor: pointer;
+  }
+}
+
+.ko-StudySearchDD-keyword {
+  width: 74%;
+  font-size: 1em;
+  line-height: 1.2em;
+  color: var(--color-text-body);
+}
+
+.ko-StudySearchDD-kanji {
+  font-size: calc(24 / 16 * 1em);
+  line-height: 1;
+  color: #222;
+}
+
+.ko-StudySearchDD-index {
+  margin-left: auto;
+  font-size: 0.875em;
+  color: #888;
+}

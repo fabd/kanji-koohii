@@ -3,12 +3,11 @@
   <div class="max-lg:flex items-center">
 
     <div class="max-lg:grow max-lg:mr-1 lg:mb-2">
-        <?php echo input_tag('search', '', [
-          'class'       => 'form-control',
-          'maxlength'   => 32,
-          'id'          => 'txtSearch',
-          'placeholder' =>  'Enter number, kanji or keyword'
-        ]); ?>
+      <div class="ko-StudySearch relative">
+        <div class="w-full h-[37px]">
+          <!-- input box placeholder to avoid vertical jitter when JS kicks in -->
+        </div>
+      </div>
     </div>
 
     <div class="flex items-center -mx-1 max-lg:w-[182px] max-lg:ml-auto">

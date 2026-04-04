@@ -25,7 +25,6 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "cli-real-favicon": "^0.0.9",
     "element-plus": "^2.13.6",
-    "esbuild": "^0.27.2",
     "tailwindcss": "^4.2.2",
     "vue": "^3.5.27",
     "vue-tsc": "^3.2.4",

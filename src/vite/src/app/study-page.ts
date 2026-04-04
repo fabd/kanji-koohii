@@ -4,7 +4,6 @@ import $$, { domGetById } from "@lib/dom";
 import { kk_globals_get } from "@app/root-bundle";
 import * as RTK from "@/lib/rtk";
 import { getApi } from "@app/api/api";
-import actb from "@old/autocomplete.js";
 import eventBus from "@/lib/EventBus";
 import EventDelegator from "@lib/EventDelegator";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
@@ -13,6 +12,7 @@ import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 import VueInstance from "@lib/helpers/vue-instance";
+import AutoComplete from "@/components/KoStudySearch";
 
 let cardData: Window["KK"]["STUDY_FLASHCARD"] = null;
 
@@ -29,42 +29,46 @@ export default {
   newCount: 0,
   oEditFlashcard: null as EditFlashcardDialog | null,
   resetFlashcardDialog: false,
-  elSearch: null as any as HTMLInputElement,
   dictVisible: false,
   dictPanel: false,
 
   initialize() {
-    // references
-    this.elSearch = domGetById<HTMLInputElement>("txtSearch")!;
+    const elStudySearch = $$<HTMLElement>(".ko-StudySearch")[0];
 
-    // quick search autocomplete
-    if (this.elSearch) {
-      const seqKeywords = kk_globals_get("SEQ_KEYWORDS");
-      const seqKanjis = kk_globals_get("SEQ_KANJIS");
+    // search autocomplete
+    if (elStudySearch) {
+      elStudySearch.innerHTML = `
+<input type="text" name="search" value="" class="form-control" maxlength="32" id="txtSearch" placeholder="Enter number, kanji or keyword" autocomplete="off" />
+<ul class="ko-StudySearchDD absolute hidden overflow-hidden"></ul>
+      `;
 
-      const actb1 = new actb(this.elSearch, seqKeywords);
-      actb1.onChangeCallback = this.quicksearchOnChangeCallback.bind(this);
-      actb1.onPressEnterCallback = this.quicksearchOnChangeCallback.bind(this);
+      const elInput = elStudySearch.querySelector("input")!;
+      const elDropdown = elStudySearch.querySelector("ul")!;
 
-      actb1.actb_extracolumns = function (iRow) {
-        return `<span class="f">${
-          iRow + 1
-        }</span><span class="k cj-k" lang="ja" xml:lang="ja">&#${seqKanjis.charCodeAt(
-          iRow
-        )};</span>`;
-      };
+      console.assert(elInput !== null && elDropdown !== null);
 
-      // clicking in quick search box selects the text
-      $$(this.elSearch).on("focus", (_evt: Event) => {
-        if (this.elSearch.value !== "") {
-          this.elSearch.select();
+      new AutoComplete({
+        inputElement: elInput,
+        dropdownElement: elDropdown,
+        keywords: kk_globals_get("SEQ_KEYWORDS"),
+        kanjis: kk_globals_get("SEQ_KANJIS"),
+        maxResults: 10,
+        onSelect: (word: string) => {
+          this.onSearch(word);
+        },
+      });
+
+      // clicking in the search box selects the text
+      $$(elInput).on("focus", (_evt: Event) => {
+        if (elInput.value !== "") {
+          elInput.select();
         }
       });
-    }
 
-    // auto focus search box
-    if (this.elSearch && this.elSearch.value === "") {
-      this.elSearch.focus();
+      // auto focus search box
+      if (elInput.value === "") {
+        elInput.focus();
+      }
     }
 
     const elEditStory = domGetById("JsEditStoryInst")!;
@@ -288,7 +292,7 @@ export default {
    *  - if user enters a unicode like `19968`, convert it to kanji where possible
    *
    */
-  quicksearchOnChangeCallback(search: string) {
+  onSearch(search: string) {
     const frameNum = search.trim();
     let char: string | null = "";
     let matches: RegExpExecArray | null;

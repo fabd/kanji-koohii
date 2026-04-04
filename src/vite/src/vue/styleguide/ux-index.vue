@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="ux-Docs">
     <div class="flex">
       <div class="whitespace-nowrap flex-1">&laquo; <a :href="baseUrl" class="mr-8">Back to Koohii</a></div>
       <nav class="ux-DocNav-list mb-4">

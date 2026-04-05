@@ -33,7 +33,7 @@ You can buy the book on [Amazon](https://www.amazon.com/Remembering-Kanji-Comple
 
 The Study area is where you begin your kanji journey! Start with the character ["one"](/study/kanji/1). Edit your mnemonic (also called a "story") or use one shared by the community. Then add a flashcard with the button in the top right. When you are done studying a few characters go to the [Spaced Repetition System (SRS)](/main) and click the blue pile to review new cards.
 
-<img class="img-block img-responsive" src="/koohii/help/help-study-edit-story.png" />
+<img class="img-block img-responsive" src="/koohii/help/help-study-edit-story-20260405.png" />
 
 If you choose to publicly share your story, it will appear in the list below. You can vote for stories that work well, copy a story from another member (you can use it as is, or you may want to edit it).
 
@@ -71,7 +71,7 @@ You can edit many keywords ate once, and review your changes in **Manage Flashca
 
 Currently _known kanji_ means a kanji for which the user added a flashcard. This simple requirement is the most flexible for various needs. New cards will be learned soon, and failed cards are meant to be re-studied eventually so this works out.
 
-<img class="img-block img-responsive" src="/koohii/help/help-dict-example-21.png" />
+<img class="img-block img-responsive" src="/koohii/help/help-dict-example-21-20260405.png" />
 
 In the screenshot above the user has studied kanji #1 to #50. The second word "合唱" is not highlighted yet, since
 the user has not yet learned 合 which is kanji #269 and will be seen later. Yet on kanji 21 already the dictionary can highlight a vocabulary entry (the verb "唱える") which is based on the user's previous knowledge.
@@ -227,7 +227,7 @@ long term memory, therefore it is not possible to select the green piles. Often 
 
 Clicking any of the stacks in the Leitner graph will take you to the reviewing screen :
 
-<img class="img-block img-responsive" src="/images/2.0/learnmore/review-flashcard-rtk2.png" />
+<img class="img-block img-responsive" src="/koohii/help/help-review-20260405.png" />
 
 Depending on how many cards are in the stack the reviewing session could be very short or very long. Keep in mind that you can test as many or as few cards as you like, and you may leave the Review screen whenever you want!
 
@@ -243,7 +243,7 @@ Reviewing is done from the keyword to the character, and not the other way aroun
 
 Write down the character on a sheet of paper, or trace it in the palm of your hand, then press the <kbd>Spacebar</kbd> key or click "Flip Card" to verify your answer :
 
-<img class="img-block img-responsive" src="/images/2.0/learnmore/review-editstory.gif" />
+<img class="img-block img-responsive" src="/koohii/help/review-editstory-20260405.png" />
 
 Note that you can edit a story <kbd>S</kbd> during a review, and even the keyword (click the keyword).
 
@@ -285,7 +285,7 @@ The "Stats" panel shows you how many kanji you have been testing in this session
 
 Once you have completed a review (or when you click the "End" button), you will be taken to the **Review Summary** screen :
 
-<img class="img-block img-responsive" src="/koohii/help/help-review-summary-cards.png" />
+<img class="img-block img-responsive" src="/koohii/help/help-review-summary-20260405.png" />
 
 The Review Summary lists the kanji that were not answered correctly during the review session.
 

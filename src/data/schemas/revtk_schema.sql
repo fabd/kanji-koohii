@@ -2,8 +2,6 @@
 --
 -- KANJI KOOHII - Database Schema
 --
--- This schema needs to be kept up to date with data/schemas/incremental/*
---
 -- ----------------------------------------------------------------------------
 
 -- ----------------------------------------------------------------------------
@@ -16,8 +14,8 @@ ALTER DATABASE DEFAULT CHARACTER SET 'utf8';
 -- ----------------------------------------------------------------------------
 -- active_guests
 -- ----------------------------------------------------------------------------
--- Simple table that keeps track of recent visitors with unique ips, who are
--- not signed in. The old site footer used to display "30 members, 5 guests" ..
+-- This table keeps track of recent visitors with unique ips, who are
+-- not signed in. Currently unused.
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS active_guests;
@@ -33,25 +31,23 @@ CREATE TABLE `active_guests` (
 -- active_members
 -- ----------------------------------------------------------------------------
 --
--- This table stores information from an active user that can be looked up
--- easily later and save querries, for example on the active members list.
+-- This table stores aggregated activity data for a use, which can be used
+-- in place of more complex queries.
 --
--- Not all data is updated at once, and not always in the same order,
--- because of this, the DEFAULT values are what the logic needs to identify
--- information that was not already set for the user.
+-- On create/update not all columns may be set, so each column has to have
+-- a default value.
 -- 
--- The main use for this table for now is to allow to revist the flashcard
+-- The main use for this table for now is to allow to revisit the flashcard
 -- review summary without a POST request. So long as another review was not
--- started, the last review (lastrs_*) info can be used. There is code somewhere
--- that clears this data after a while.
+-- started, the last review timestamp can be used to find flashcards updated
+-- in the last review.
+--
+-- This table is also used to display a list of users who have review in the
+-- last N days, each with their total flashcard count.
 -- 
 --  userid
---  fc_count      Flashcard count
---  last_review   Most recent single flashcard review
---  lastrs_start  Last review session start time (TIMESTAMP value) (Review Summary)
---                This integer value must match the lastreview timestamp of the flashcard review table
---  lastrs_pass   Last review session pass count (Review Summary)
---  lastrs_fail   Last review session fail count (Review Summary)
+--  fc_count      Total flashcards for this user
+--  last_review   Timestamp of beginning of the last flashcard review
 --
 -- ----------------------------------------------------------------------------
 
@@ -70,8 +66,7 @@ CREATE TABLE `active_members` (
 -- ----------------------------------------------------------------------------
 -- active_users
 -- ----------------------------------------------------------------------------
--- Simple table that keeps track of recently signed in users. It used to show
--- in the footer of the old site, not usre if it is still used..
+-- This table keeps track of recently signed in users. Currently unused.
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS active_users;
@@ -86,8 +81,15 @@ CREATE TABLE `active_users` (
 -- ----------------------------------------------------------------------------
 -- custkeywords
 -- ----------------------------------------------------------------------------
--- Custom keywords that replace the default kanji keywords. Not all
--- framenumbers need be replaced in this table.
+-- A custom keyword is a keyword edited by the user, which replaces the default
+-- keyword (the default keywords come from the `kanjis` table).
+-- 
+-- Typically, the keyword displayed to a user in the app is obtained in a query
+-- by using the COALESCE function.
+-- eg. `COALESCE(custkeywords.keyword, kanjis.keyword)`.
+--
+--   ucs_id    UCS-2 code of the kanji for which the custom keyword applies
+--
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS custkeywords;
@@ -95,7 +97,7 @@ DROP TABLE IF EXISTS custkeywords;
 CREATE TABLE `custkeywords` (
   `userid`       MEDIUMINT(4) UNSIGNED NOT NULL,
   `ucs_id`       SMALLINT(5)  UNSIGNED NOT NULL,
-  `keyword`      VARCHAR(32) NOT NULL DEFAULT '',
+  `keyword`      VARCHAR(40) NOT NULL DEFAULT '',
   `created_on`   TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_on`   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`userid`, `ucs_id`)
@@ -105,7 +107,19 @@ CREATE TABLE `custkeywords` (
 -- ----------------------------------------------------------------------------
 -- kanjis
 -- ----------------------------------------------------------------------------
--- Perl script not in repo yet, load data from the data/table_kanjis.utf8
+-- This table is only read from. It contains the data for all the kanjis in the
+-- CJK Unified Ideographs range. The data is derived from KANJIDIC2 xml file.
+-- The kanjis_table.php script parses KANJIDIC2 and outputs a csv file with just
+-- the data we need. The csv file is imported in this table with a LOAD DATA
+-- statement.
+-- 
+--   ucs_id     UCS-2 code for the kanji, uniquely identifying a character
+--   keyword    The default english keyword associated with this kanji
+--   onyomi     one of the main on-yomi readings (in katakana, eg. `ショウ`)
+--   idx_olded  RTK index, from old edition of RTK books (up to 5th edition)
+--   idx_newed  RTK index from the most recent edition of RTK (aka "6th edition")
+--   strokecount  The stroke count for this kanji (displayed on Study pages)
+--
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS kanjis;
@@ -123,14 +137,13 @@ CREATE TABLE `kanjis` (
   UNIQUE KEY `idx_newed` (`idx_newed`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 -- ----------------------------------------------------------------------------
 -- learnedkanji
 -- ----------------------------------------------------------------------------
--- This table maintains the list of kanji that the user has (re)"learned" by
--- clicking the "learn" button in the Study page. The selection then allows to
--- review just those learned kanji. The kanji are cleared during succesful review
--- or when the user chooses "clear" in the Study page to empty the list.
+-- This table keeps a list of kanji that the user has "learned" by
+-- clicking the "learn" button in the Study page, as part of the "Restudy" flow.
+-- The user is then able to review just this selection of kanji. Whenever user
+-- reviews a kanji, it is cleared from the learned list.
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS learnedkanji;
@@ -141,21 +154,28 @@ CREATE TABLE `learnedkanji` (
   PRIMARY KEY  (`userid`,`ucs_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 -- ----------------------------------------------------------------------------
 -- reviews
 -- ----------------------------------------------------------------------------
---  userid        : from users table
---  ucs_id        : UCS-2 code value (16 bit).
---                  LEFT JOIN kanjis to get Heisig frame numbers.
---  lastreview    : timestamp of last review date for this kanji
---  expiredate    : scheduled date for review of this kanji
---  totalreviews  : total number of reviews for the kanji
---  leitnerbox    : Leitner (flashcard system) box slot number 1-8
---  failurecount  : total number of times answered 'no'
---  successcount  : total number of times answered 'yes'
---  leitnerbox = 1 && totalreviews = 0 : untested cards
---  leitnerbox = 1 && totalreviews > 0 : failed cards
+-- This table stores the flashcard data for the user's kanji flashcards. User
+-- can create a flashcard for any kanji in the CJK Unified Ideographs unicode
+-- range. Each flashcard has a timestamp of last review, as well as spaced
+-- repetition scheduling data.
+--
+-- Note!
+--   - Forgotten cards (red color) have leitnerbox 1 and totalreviews > 0
+--   - New cards (blue color) have leitnerbox 1  and totalreviews === 0
+--   - New cards move to leitnerbox 2 after 1st review, leitnerbox 3 after
+--     2nd succesful review, and so on.
+--
+--  userid
+--  ucs_id        : UCS-2 code for the kanji
+--  lastreview    : timestamp of last time this card was reviewed
+--  expiredate    : scheduled date for next review of this kanji
+--  totalreviews  : total number of reviews
+--  leitnerbox    : Leitner box
+--  failurecount  : total number of times card was rated No (forgotten)
+--  successcount  : total number of times card was rated Hard/Yes/Easy (remembered)
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS reviews;
@@ -175,26 +195,27 @@ CREATE TABLE `reviews` (
   KEY `lastreview` (`lastreview`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
 -- ----------------------------------------------------------------------------
 -- sfs_activitylog
+--   Keeps a log related to failed registration attempts, to diagnose issues
+--   with registration, or sources of spam. Displayed in the admin dashboard.
 -- ----------------------------------------------------------------------------
--- See  data/schemas/incremental/rtk_0006_stopforumspam.sql;
+-- See  data/schemas/incremental/__rtk_0006_stopforumspam.sql;
 
 -- ----------------------------------------------------------------------------
 -- sfs_blockedips
+--   This table logs registration attempts where StopForumSpam service flagged
+--   the email or IP address as spam. Displayed in the admin dashboard.
 -- ----------------------------------------------------------------------------
--- See  data/schemas/incremental/rtk_0006_stopforumspam.sql;
-
+-- See  data/schemas/incremental/__rtk_0006_stopforumspam.sql;
 
 -- ----------------------------------------------------------------------------
 -- sitenews
 -- ----------------------------------------------------------------------------
--- Simplistic news posts displayed on the site's home page.  Should really
--- replace this with a lightweight blog so people can post comments...
--- Note: news posts can be edited in the administration area (nothing fancy),
--- this admin area (the "backend" app) is not included.
+-- The news blog displayed on the home page. Only admin can edit these posts.
+-- 
+--   subject     Title for this news post
+--   text        Contents of the post in Markdown format
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS sitenews;
@@ -213,17 +234,23 @@ CREATE TABLE `sitenews` (
 -- ----------------------------------------------------------------------------
 -- stories
 -- ----------------------------------------------------------------------------
--- The primary key is useful for update queries (userid, ucs_id constants).
+-- This is one of the largest tables in the database, typically 8 million+ rows.
+-- It holds stories edited
+-- by all users, both private and public stories. Stories can be individually
+-- deleted only if the user edits a story with empty text.
 --
---  * Use VARCHAR and not TEXT to avoid on disk temporary tables (ideally, we avoid "Using temporary" altogether)
+-- Using VARCHAR to store the user's story should be more performant than TEXT
+-- when content is < 768 bytes (stored inline in the row).
 --
---  * Use a small PRIMARY KEY for stories (sid) for InnoDB, may be useful later for JOINs & Join Decomposition
+-- Storage and index performance is paramount with this table.
 --
+--   sid      Unique id for the story (across all users)
+--   ucs_id   UCS-2 code of the kanji associated with this story
+--   public   1 = story is shared (display to other users), 0 = private
+--   text     Story with light custom formatting (eg. `*italic text*`)
 --
---  ABANDONED (not supported on web host)
---  
---  * Add PARTITION by "public" value : this lets us prune all the non-public stories from the Shared Stories
---    queries, and potentially hold it in memory since this partition is less than 100 MB instead of 1 GB
+-- ----------------------------------------------------------------------------
+
 
 DROP TABLE IF EXISTS stories;
 
@@ -245,11 +272,13 @@ CREATE TABLE `stories` (
 -- ----------------------------------------------------------------------------
 -- stories_shared
 -- ----------------------------------------------------------------------------
--- NEW SCHEMA  stories_shared
---  * Improve the shared stories index so it can be used for sorting (no "filesort" step)
---  * Used as the main table for Shared Stories queries, JOIN with stories USING sid
---  * Summary table for the stars/reports counts
---  * Restricts the indexes for the main sort, and the "newest stories" sorts to only the public stories
+-- Used as the main table for displaying Shared Stories on the Study page, for
+-- any given kanji. JOIN with stories USING sid to get the corresponding story
+-- text.
+--
+-- This table also aggregates a count of stars and reports, to simplify the
+-- Shared Stories query.
+-- ----------------------------------------------------------------------------
 
 CREATE TABLE `stories_shared` (
   `sid`        int(10) unsigned NOT NULL,
@@ -268,6 +297,21 @@ CREATE TABLE `stories_shared` (
 -- ----------------------------------------------------------------------------
 -- storyvotes
 -- ----------------------------------------------------------------------------
+-- This table stores all unique upvotes and reports from users issued in the
+-- Shared Stories list. When user clicks the star button, a record is created
+-- with vote === 1. When user reports a story, a record is created with
+-- vote === 2. A story can not have a star and a report at the same time.
+-- 
+-- The stars and reports from all users for any given story is aggregated
+-- in the stories_shared table (stars, reports).
+--
+-- A story here is uniquely identified by (authorid, ucs_id). Perhaps a better
+-- design would have been to use stories.sid instead.
+-- 
+--   authorid   User id of the story being upvoted or reported
+--   userid     User id of the user voting
+--   vote       1 = starred (counts as a +1 vote)   2 = report (counts as -1 vote)
+-- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS storyvotes;
 
@@ -281,9 +325,24 @@ CREATE TABLE `storyvotes` (
   KEY `count_votes` (`authorid`,`ucs_id`,`vote`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 -- ----------------------------------------------------------------------------
 -- users
+-- ----------------------------------------------------------------------------
+-- The users table. Currently user level (role) is very simple: there is only
+-- one admin (level 9), all other users are level 1. There is currently no
+-- intermediate levels (eg. moderator).
+--
+--   password     Encrypted password
+--   userlevel    9 = admin , 1 = all other users
+--   location     Optional, from the "Where do you live?" question on signup
+--                eg. "Spain", or "Tokyo, Japan"
+--   regip        IP at registration time, IPv4 dotted-decimal notation
+--                eg. `172.18.0.1`
+--   timezone     The user's timezone (editable in Account Settings), is used
+--                to determine when new flashcards have become due for review
+--                (midnight time adjusted by timezone).
+--   opt_sequence RTK index edition (0 = old edition, 1 = new edition) determines
+--                whether to use idx_olded or idx_newed in the kanjis table.
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS users;
@@ -306,19 +365,19 @@ CREATE TABLE `users` (
   KEY `regip` (`regip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
 -- ----------------------------------------------------------------------------
 -- users_settings
 -- ----------------------------------------------------------------------------
--- This table stores application related settings, which otherwise have builtin
--- defaults in the code. The data is retrieved and cached the first time the
--- code wants one of these values (rt:User::getUserSetting()).
+-- User's settings the user can change in Account Settings. If there is no record
+-- the app uses default values.
 --
---  no_shuffle     do not shuffle new cards (blue pile)
---
---  srs_max_box    Leitner box (typically 5 to 10)
---  srs_mult       Multiplier float x.xx stored as integer (eg. 205 = 2.05)
---  srs_hard_box   Leitner box (within srs_max_box range)
+--  no_shuffle     1 = do not shuffle new cards (blue pile)
+--  srs_max_box    Number of Leitner boxes (excluding the first one with forgotten
+--                 and new cards). 5 to 10, default is 7
+--  srs_mult       SRS review interval multiplier, float x.xx stored as integer
+--                 (eg. 205 = 2.05). Default is 205 (2.05)
+--  srs_hard_box   Maximum box for cards marked 'Hard' (0 to 9)
+--  srs_reverse    0 = keyword to kanji, 1 = kanji to keyword
 -- ----------------------------------------------------------------------------
 
 CREATE TABLE `users_settings` (

@@ -1,3 +1,4 @@
 # those are created locally (see Installation.md)
 db/.bash_history
+db/history/.mysql_history
 php/.bash_history

@@ -40,6 +40,7 @@ services:
       MYSQL_USER:          koohii
       MYSQL_PASSWORD:      koohii
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_HISTFILE:      /root/.history/.mysql_history
 
     image: kk_mysql_img
     
@@ -59,3 +60,6 @@ services:
 
       # preserve bash history
       - ./docker/db/.bash_history:/root/.bash_history
+
+      # preserve mysql history (needs to mount a folder because mysql renames *.TMP file)
+      - ./docker/db/history:/root/.history

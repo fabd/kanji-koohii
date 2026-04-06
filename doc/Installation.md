@@ -24,9 +24,11 @@
 - Install [Docker Engine](https://docs.docker.com/install/) on Ubuntu, or [Docker Desktop](https://docs.docker.com/desktop/mac/install/) on Macs.
 - `docker` and `docker compose` are available in your terminal
 
-**Init bash history files** which are persisted through Docker volumes:
+**Init history files** which are persisted through Docker volumes:
 
     touch docker/db/.bash_history docker/php/.bash_history
+    mkdir -p docker/db/history
+    touch docker/db/history/.mysql_history
 
 **Build the containers**.
 

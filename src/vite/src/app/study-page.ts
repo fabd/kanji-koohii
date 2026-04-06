@@ -50,7 +50,6 @@ export default {
       new AutoComplete({
         inputElement: elInput,
         dropdownElement: elDropdown,
-        keywords: kk_globals_get("SEQ_KEYWORDS"),
         kanjis: kk_globals_get("SEQ_KANJIS"),
         maxResults: 10,
         onSelect: (word: string) => {

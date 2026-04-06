@@ -1,5 +1,7 @@
 // The Study page search box autocomplete
 
+import { getKeywordForUCS } from "@/lib/rtk";
+
 export interface IAutoCompleteItem {
   keyword: string;
   kanji: string;
@@ -9,8 +11,7 @@ export interface IAutoCompleteItem {
 interface IAutoCompleteOptions {
   inputElement: HTMLInputElement;
   dropdownElement: HTMLElement;
-  /** parallel arrays: keywords[i] corresponds to kanjis[i], index is i+1 */
-  keywords: string[];
+  /** kanji string where kanjis[i] is the kanji for frame index i+1 */
   kanjis: string;
   maxResults?: number;
   onSelect: (value: string) => void;
@@ -19,7 +20,6 @@ interface IAutoCompleteOptions {
 export default class AutoComplete {
   private input: HTMLInputElement;
   private dropdown: HTMLElement;
-  private keywords: string[];
   private kanjis: string;
   private maxResults: number;
   private activeIndex: number;
@@ -29,7 +29,6 @@ export default class AutoComplete {
   constructor(options: IAutoCompleteOptions) {
     this.input = options.inputElement;
     this.dropdown = options.dropdownElement;
-    this.keywords = options.keywords;
     this.kanjis = options.kanjis;
     this.maxResults = options.maxResults ?? 10;
 
@@ -59,10 +58,11 @@ export default class AutoComplete {
     // Digit-only query: exact lookup by frame index
     if (/^\d+$/.test(query)) {
       const i = parseInt(query, 10) - 1;
-      if (i >= 0 && i < this.keywords.length) {
+      if (i >= 0 && i < this.kanjis.length) {
+        const kanji = this.kanjis[i]!;
         this.filteredItems = [{
-          keyword: this.keywords[i]!,
-          kanji: this.kanjis[i]!,
+          keyword: getKeywordForUCS(kanji.codePointAt(0)!),
+          kanji,
           index: i + 1,
         }];
         this.render(query);
@@ -73,11 +73,13 @@ export default class AutoComplete {
     }
 
     const matched: IAutoCompleteItem[] = [];
-    for (let i = 0; i < this.keywords.length; i++) {
-      if (this.keywords[i]!.toLowerCase().includes(query)) {
+    for (let i = 0; i < this.kanjis.length; i++) {
+      const kanji = this.kanjis[i]!;
+      const keyword = getKeywordForUCS(kanji.codePointAt(0)!);
+      if (keyword.toLowerCase().includes(query)) {
         matched.push({
-          keyword: this.keywords[i]!,
-          kanji: this.kanjis[i]!,
+          keyword,
+          kanji,
           index: i + 1,
         });
         if (matched.length === this.maxResults) break;

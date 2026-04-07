@@ -1,0 +1,10 @@
+parameters:
+    level: 3
+    paths:
+        - lib/
+        - apps/koohii/lib/
+        - apps/koohii/modules/
+    excludePaths:
+        - vendor/
+    bootstrapFiles:
+        - vendor/autoload.php

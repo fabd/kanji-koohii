@@ -2,6 +2,9 @@
   "name": "fabd/koohii",
   "type": "project",
   "description": "Kanji Koohii web app",
+  "scripts": {
+    "phpstan": "phpstan analyse --memory-limit=256M"
+  },
   "require": {
     "erusev/parsedown": "1.7.4",
     "erusev/parsedown-extra": "0.8.1",
@@ -31,5 +34,8 @@
     "allow-plugins": {
       "php-http/discovery": true
     }
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.1"
   }
 }

@@ -105,12 +105,21 @@ When naming CSS classes, use the following conventions:
 
 Used throughout code, comments, and variable names:
 
-| Term         | Meaning                                                          |
-| ------------ | ---------------------------------------------------------------- |
-| RTK          | *Remembering the Kanji* — book series by James Heisig            |
-| frame number | RTK index for a kanji (e.g. 一 = 1, 二 = 2)                       |
-| UCS / ucsId  | Unicode code point identifying a kanji (UCS-2)                   |
-| userId       | Integer value uniquely identifying a user                        |
+| Term         | Meaning                                               |
+| ------------ | ----------------------------------------------------- |
+| RTK          | *Remembering the Kanji* — book series by James Heisig |
+| frame number | RTK index for a kanji (e.g. 一 = 1, 二 = 2)           |
+| UCS / ucsId  | Unicode code point identifying a kanji (UCS-2)        |
+| userId       | Integer value uniquely identifying a user             |
+
+## Documentation
+
+Read the following docs if it is relevant to your task, before you start working:
+
+| Document                          | Contents                       |
+| --------------------------------- | ------------------------------ |
+| src/data/schemas/revtk_schema.sql | The database schema            |
+| agent_docs/core-database-orm.md   | Reference for the database ORM |
 
 ## External References
 

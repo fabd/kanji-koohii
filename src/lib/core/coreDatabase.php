@@ -294,6 +294,24 @@ abstract class coreDatabase
    */
   abstract function quote($value);
 
+  /**
+   * Creates a SQL string of selected columns or expressions.
+   * Array keys become AS aliases: ['alias' => 'expr'] → "expr AS alias"
+   *
+   * @param  string|array $columns
+   * @return string
+   */
+  abstract function aliases($columns);
+
+  /**
+   * Bind and quote parameters into a query string.
+   * Each '?' placeholder is replaced by the corresponding quoted parameter.
+   *
+   * @param  string       $query
+   * @param  mixed|null   $bindParams  Single value or array of values
+   * @return string
+   */
+  abstract function bind($query, $bindParams);
 
   /**
    * Output a html table with the resultset (or single rowdata), including column names

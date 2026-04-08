@@ -249,13 +249,6 @@ class coreDatabaseMySQL extends coreDatabase
     return $s;
   }
 
-  /**
-   * Aliases creates a SQL string of selected columns or expressions, key => value pairs become aliases.
-   * eg. "column1 AS c1,NOW() AS thetimeisnow"
-   *
-   * @param $query Object
-   * @param $values Object
-   */
   public function aliases($columns)
   {
     // single column
@@ -278,12 +271,6 @@ class coreDatabaseMySQL extends coreDatabase
     return implode(',', $parts);
   }
 
-  /**
-   * Bind and quote parameters into a query string, each '?' character is bound to one parameter
-   *
-   * @param $query Object
-   * @param $params Object
-   */
   public function bind($query, $bindParams)
   {
     if (is_null($bindParams))

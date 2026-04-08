@@ -105,17 +105,10 @@ class coreDatabaseMySQL extends coreDatabase
     return $result !== null ? $result : false;
   }
   
-  public function fetchObject($class = 'stdClass', array $params = [])
+  public function fetchObject($class = 'stdClass', array $constructor_args = [])
   {
-    $obj = new $class($params);
-    $row = $this->fetch(self::FETCH_ASSOC);
-    if (!is_array($row)) {
-        return false;
-    }
-    foreach ($row as $key => $val) {
-        $obj->$key = $val;
-    }
-    return $obj;
+    $result = @mysqli_fetch_object($this->result, $class, $constructor_args);
+    return $result !== null ? $result : false;
   }
   
   /**

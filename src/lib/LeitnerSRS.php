@@ -7,6 +7,7 @@
  */
 function koohiiGetUserSettingsSRS()
 {
+  /** @var rtkUser */
   $user = sfContext::getInstance()->getUser();
 
   $opts = [
@@ -320,7 +321,6 @@ class LeitnerSRS
    */
   private function calcVariance()
   {
-    assert(isset($this->intervals));
     $variance = [0];
 
     for ($i = 1; $i <= $this->optMaxBox; ++$i)

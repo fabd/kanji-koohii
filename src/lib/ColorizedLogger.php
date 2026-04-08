@@ -112,12 +112,11 @@ class LOG
   }
 
   /**
-   * @param mixed $message Message -- or variable to dump if only 1 argument
-   * @param mixed $vardump Optional variable to dump (if 1st arg is the message)
+   * @param mixed ...$args Message string, or variable to dump if only 1 argument.
+   *                       Optionally pass a 2nd argument to dump alongside the message.
    */
-  public static function info()
+  public static function info(mixed ...$args)
   {
-    $args = func_get_args();
 
     // in case we mistakenly committed a LOG::info() somewhere
     //  (cf. koohiiConfiguration.class.php)

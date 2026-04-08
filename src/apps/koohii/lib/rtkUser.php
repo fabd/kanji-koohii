@@ -198,7 +198,7 @@ class rtkUser extends sfBasicSecurityUser
   /**
    * Return the LocalPrefs instance.
    *
-   * @return
+   * @return LocalPrefs
    */
   public function getLocalPrefs()
   {
@@ -210,7 +210,7 @@ class rtkUser extends sfBasicSecurityUser
    *
    * @param array $user UsersPeer row
    *
-   * @return
+   * @return void
    */
   public function signIn($user)
   {
@@ -273,7 +273,7 @@ class rtkUser extends sfBasicSecurityUser
   /**
    * Clears the persistent session cookie.
    *
-   * @return
+   * @return void
    */
   public function clearRememberMeCookie()
   {
@@ -283,9 +283,8 @@ class rtkUser extends sfBasicSecurityUser
   /**
    * Update the user password in the main site and forum databases.
    *
-   * @param string $user
+   * @param string $username
    * @param string $raw_password
-   * @param mixed  $username
    */
   public function changePassword($username, $raw_password)
   {
@@ -306,8 +305,7 @@ class rtkUser extends sfBasicSecurityUser
    *   salt VARCHAR(32)      =>  md5(rand(100000, 999999).$this->getNickname().$this->getEmail());
    *   password VARCHAR(40)  =>  sha1($salt.$raw_password)
    *
-   * @param string $password     non-encrypted password
-   * @param mixed  $raw_password
+   * @param string $raw_password  non-encrypted password
    */
   public function getSaltyHashedPassword($raw_password)
   {
@@ -322,8 +320,7 @@ class rtkUser extends sfBasicSecurityUser
    *   username => Fill in the user name of the login form
    *   referer  => Page to return the user to after signing in
    *
-   * @param array $params  Options to pass to the login page
-   * @param mixed $options
+   * @param array $options  Options to pass to the login page
    */
   public function redirectToLogin($options = [])
   {

@@ -175,7 +175,7 @@ class JsTron extends sfParameterHolder
   /**
    * Render the TRON response with html set from partial.
    *
-   * @param  coreAction $action 
+   * @param  sfAction $action 
    * @param  string     $partialName    Partial name (same as get_partial() helper)
    * @param  mixed      $vars           Partial vars
    *
@@ -191,7 +191,7 @@ class JsTron extends sfParameterHolder
   /**
    * Render the TRON response with html set from a component.
    * 
-   * @param  coreAction $action
+   * @param  sfAction $action
    * @param  string     $moduleName     module name
    * @param  string     $componentName  component name
    * @param  array      $vars           vars

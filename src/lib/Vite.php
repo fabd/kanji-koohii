@@ -49,7 +49,7 @@ class Vite
         if (!isset($imported[$importChunk]))
         {
           $imported[$importChunk] = true;
-          $deps[] = $parseChunk($manifest[$importChunk], $deps, $css);
+          $deps[] = $parseChunk($manifest[$importChunk]);
         }
       }
 

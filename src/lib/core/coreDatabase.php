@@ -307,20 +307,17 @@ abstract class coreDatabase
  * (such as SQL expressions).
  *
  * Example:
- *   $db->insert($tblName, array('name' => 'John', 'updated_on' => new coreDbExpr('NOW()')));
+ *   $db->insert($tblName, ['name' => 'John', 'updated_on' => new coreDbExpr('NOW()')]);
  */
-class coreDbExpr
+class coreDbExpr implements Stringable
 {
-  protected $_expression;
+  public function __construct(
+    private readonly string $expression,
+  ) {}
 
-  public function __construct($expression)
+  public function __toString(): string
   {
-    $this->_expression = (string) $expression;
-  }
-
-  public function __toString()
-  {
-    return $this->_expression;
+    return $this->expression;
   }
 }
 

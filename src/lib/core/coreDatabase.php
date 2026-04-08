@@ -37,7 +37,8 @@ abstract class coreDatabase
   protected
     $parameterHolder = null,
     $connection      = null,
-    $profiler        = null;
+    $profiler        = null,
+    $fetchMode       = self::FETCH_ASSOC;
     
   /**
    * Class constructor.

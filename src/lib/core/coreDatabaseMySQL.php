@@ -10,8 +10,7 @@
 class coreDatabaseMySQL extends coreDatabase
 {
   protected
-    $fetchMode   = coreDatabase::FETCH_ASSOC,
-    $result      = null;
+    $result = null;
 
   public function connect()
   {

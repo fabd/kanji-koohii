@@ -63,16 +63,15 @@
 
 .uiFcOptBtn {
   float: left;
-  height: 37px;
-  padding: 5px 15px 0;
-  margin: -5px 5px 0 0;
+  padding: 10px 15px 10px;
+  margin-right: 5px;
   font:
-    bold 14px/36px Arial,
+    bold 14px/1em Arial,
     sans-serif;
   color: #fff;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
   -webkit-border-radius: 5px;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
   background-color: #50abeb;
   background-image: linear-gradient(to bottom, #50abeb 0%, #489ad4 100%);
 }

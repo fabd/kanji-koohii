@@ -6,6 +6,10 @@ Kanji Koohii is a web app for Japanese language learners to study and review kan
 
 ## Commands
 
+`dcweb` is an alias for `docker exec web bash`.
+
+Running commands with `dcweb` defaults to `/var/www/html` in the container, which maps to the `src/` folder on the host.
+
 All npm scripts must be run from `src/vite/` (where `package.json` lives).
 
 ```bash
@@ -14,6 +18,8 @@ npm run build        # Type-check + production build
 npm run buildfast    # Production build (skip type-check)
 npm run lint         # Lint .js/.ts/.vue files with ESLint
 npm run type-check   # Type check Typescript code (including .vue files)
+
+dcweb -c "./vendor/bin/phpstan file.php"   # use PHPStan (from the Docker container)
 ```
 
 Production build calls `src/batch/build-prod.sh`, which runs Vite then parses the manifest into `src/config/vite-build.inc.php` for PHP template injection.

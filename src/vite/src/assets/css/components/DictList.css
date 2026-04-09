@@ -24,15 +24,11 @@
   font-weight: normal;
   font-size: 26px;
 }
-.dict-list .dl_t .c {
-  font-size: 1em;
-  padding: 5px 8px 3px;
-}
 .dict-list .dl_t .r {
   font-size: 0.8em;
   padding: 0;
   display: inline-block;
-  margin: 0 0 0 1em;
+  margin-left: 0.5rem;
   color: #543;
 }
 
@@ -89,7 +85,7 @@
 /* box-ing the compound for separation */
 .vocab_c {
   display: inline-block;
-  padding: 3px 8px;
+  padding: 3px 8px 4px;
   border-radius: 8px;
   background: #efeeed;
   color: #210;

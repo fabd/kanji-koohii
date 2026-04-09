@@ -1,7 +1,7 @@
 <template>
   <div
+    class="h-full"
     :class="{
-      'fc-kanji': true,
       'with-yomi': hasVocab,
     }"
   >
@@ -16,43 +16,41 @@
       ></a>
     </template>
 
-    <div class="d-keyword flex items-center">
-      <div v-if="cardData.isAgain" class="text-[#aeaeae] text-md leading-none"><i class="fa fa-redo mr-2"></i></div>
-      <a :href="`/study/kanji/${cardData.kanji}`" title="Go to the Study page" target="blank" class="JsLink mr-2">{{
-        cardData.keyword
-      }}</a>
-    </div>
-
     <div class="d-strokec" title="Stroke count">
-      <cjk-lang-ja html="&#30011;&#25968;" class="kanji" /> <span>{{ cardData.strokecount }}</span>
+      <cjk-lang-ja html="&#30011;&#25968;" class="kanji" />
+      <span>{{ cardData.strokecount }}</span>
     </div>
 
     <div class="d-framenr" v-html="cardData.framenum"></div>
 
-    <!-- inner content -->
-    <div class="uiFcInner">
-      <template v-if="!hasVocab">
-        <div class="uiFcHalf d-kanji">
+    <!-- col layout [ keyword / ( kanji vocab ) ] -->
+    <div class="flex flex-nowrap flex-col h-full">
+      <div class="d-keyword flex-grow-0">
+        <div
+          v-if="cardData.isAgain"
+          class="text-[#aeaeae] text-md leading-none inline-block"
+          ><i class="fa fa-redo mr-2"></i
+        ></div>
+        <a
+          :href="`/study/kanji/${cardData.kanji}`"
+          title="Go to the Study page"
+          target="blank"
+          class="JsLink mr-2"
+          >{{ cardData.keyword }}</a
+        >
+      </div>
+
+      <!-- body of the card [  kanji  /  vocab  ] -->
+      <div
+        class="fc-middle pb-[40px] h-full flex flex-col md:flex-row flex-nowrap flex-1"
+      >
+        <div class="uiFcHalf d-kanji w-full py-4">
           <!-- do this for now, until we position everything dynamically -->
-          <div class="tb">
-            <div class="td">
-              <cjk-lang-ja :html="cardData.kanji" />
-            </div>
-          </div>
-        </div>
-      </template>
-      <template v-if="hasVocab">
-        <!-- k-note :: force Vue to refresh -- fixes a flex reflow issue (#149) -->
-        <div class="uiFcHalf d-kanji" k-note="fix-reflow">
-          <div class="tb">
-            <div class="td">
-              <cjk-lang-ja :html="cardData.kanji" />
-            </div>
-          </div>
+          <cjk-lang-ja :html="cardData.kanji" />
         </div>
 
-        <div class="uiFcHalf d-yomi">
-          <div class="d-yomi_pad">
+        <div v-if="hasVocab" class="uiFcHalf d-yomi">
+          <div class="px-2">
             <transition name="uiFcYomi-fadein" appear>
               <div>
                 <div
@@ -61,23 +59,27 @@
                   class="uiFcYomi"
                   @click.stop="onVocabClick"
                 >
-                  <div>
+                  <div :class="textSizeForText($item.compound)">
                     <cjk-lang-ja
-                      class="vyc vocab_c"
+                      class="vocab_c text-[1.5em] inline-block"
                       :html="formatCompound($item.compound)"
                     ></cjk-lang-ja>
                     <cjk-lang-ja
-                      class="vyr vocab_r"
+                      class="vocab_r text-[1em] whitespace-nowrap ml-2"
                       :html="formatReading($item.reading)"
                     ></cjk-lang-ja>
                   </div>
-                  <div class="vyg">{{ $item.gloss }}</div>
+                  <div
+                    class="vyg text-[#858280] italic text-xl leading-[1.2em] pl-3 max-sm:ml-2 mt-4"
+                  >
+                    {{ $item.gloss }}
+                  </div>
                 </div>
               </div>
             </transition>
           </div>
         </div>
-      </template>
+      </div>
     </div>
   </div>
 </template>
@@ -169,6 +171,10 @@ export default defineComponent({
       this.cardData.vocab = DictEntryArray;
     },
 
+    textSizeForText(text) {
+      return text.length > 4 ? "text-xl" : "text-2xl";
+    },
+
     // format compound depending on card side
     formatCompound(str) {
       const isFront = this.$parent.getState() === 0;
@@ -177,10 +183,7 @@ export default defineComponent({
       // console.log("formatCompound %s %s %o", str, kanji, isFront);
 
       if (isFront) {
-        str = str.replace(
-          kanji,
-          '<span class="cloze"><u>' + kanji + "</u></span>"
-        );
+        str = str.replace(kanji, '<span class="cloze"><u>' + kanji + "</u></span>");
       }
 
       return str;

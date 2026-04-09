@@ -6,42 +6,55 @@
 // ==================================================================== */
 
 /* Kanji flashcard layout */
-.fc-kanji .d-keyword {
+.d-keyword {
   font-size: 1.5em;
-  padding: 4px 40px 0 8px;
+  padding: 4px 0 0 8px;
   min-height: 40px;
-}
-.fc-kanji .d-keyword a {
-  text-decoration: none;
-}
-.fc-kanji .d-keyword a:hover {
-  text-decoration: underline;
+
+  /* prevent overlapping by flashcard menu icon top right */
+  margin-right: 40px;
+
+  /* do not word break CJK text */
+  word-break: keep-all;
+
+  /* balance number of characters per line */
+  text-wrap: balance;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
-.fc-kanji .d-kanji {
+.d-kanji {
   text-align: center;
   font-size: 150px;
   line-height: 1em;
 }
-.fc-kanji .d-kanji .cj-k {
-  display: block; /* v align */
-  padding: 0 0 0.2em;
-}
 
-.fc-kanji .d-strokec {
+.d-strokec {
   position: absolute;
   left: 8px;
   bottom: 0.5rem;
-  font: 14px/1em Georgia, Times New Roman, sans-serif;
+  font:
+    14px/1em Georgia,
+    Times New Roman,
+    sans-serif;
   color: #a0a0a0;
 }
-.fc-kanji .d-strokec .kanji {
+.d-strokec .kanji {
   font-size: 20pt;
   line-height: 1;
 }
 
-.fc-kanji .d-framenr {
-  font: 14px/1em Georgia, Times New Roman, sans-serif;
+.d-framenr {
+  font:
+    14px/1em Georgia,
+    Times New Roman,
+    sans-serif;
   position: absolute;
   bottom: 0.5rem;
   right: 8px;
@@ -49,47 +62,47 @@
 }
 
 /* states :: default review mode */
-.uiFcState-0 .fc-kanji .d-keyword {
+.uiFcState-0 .d-keyword {
   color: #000;
 }
-.uiFcState-0 .fc-kanji .d-kanji {
+.uiFcState-0 .d-kanji {
   visibility: hidden;
   color: #fff;
 }
-.uiFcState-0 .fc-kanji .d-strokec {
+.uiFcState-0 .d-strokec {
   visibility: hidden;
 }
-.uiFcState-0 .fc-kanji .d-framenr {
+.uiFcState-0 .d-framenr {
   visibility: hidden;
 }
-.uiFcState-0 .fc-kanji .d-yomi {
+.uiFcState-0 .d-yomi {
   /*display:block;*/
 }
 
-.uiFcState-1 .fc-kanji .d-keyword {
+.uiFcState-1 .d-keyword {
   color: #a0a0a0;
 }
-.uiFcState-1 .fc-kanji .d-kanji {
+.uiFcState-1 .d-kanji {
   visibility: visible;
   color: #000;
 }
-.uiFcState-1 .fc-kanji .d-strokec {
+.uiFcState-1 .d-strokec {
   visibility: visible;
 }
-.uiFcState-1 .fc-kanji .d-framenr {
+.uiFcState-1 .d-framenr {
   visibility: visible;
 }
-/*.uiFcState-1 .fc-kanji .d-yomi      { display:block; } */
+/*.uiFcState-1  .d-yomi      { display:block; } */
 
 /* states :: kanji to keyword (explicitly override the defaults above) */
-.uiFcState-0.is-reverse .fc-kanji .d-keyword {
+.uiFcState-0.is-reverse .d-keyword {
   visibility: hidden;
 }
-.uiFcState-0.is-reverse .fc-kanji .d-kanji {
+.uiFcState-0.is-reverse .d-kanji {
   visibility: visible;
   color: #000;
 }
-.uiFcState-0.is-reverse .fc-kanji .d-yomi {
+.uiFcState-0.is-reverse .d-yomi {
   display: block;
 }
 
@@ -130,35 +143,8 @@
   overflow-y: auto;
 }
 
-/* kanji reading highlight */
-.d-yomi .cj-em em {
-}
-
-.d-yomi_pad {
-  padding: 8px;
-}
-
 .d-yomi .cj-k {
   line-height: 1em;
-}
-.d-yomi .vyc {
-  font-size: 1.5em;
-  display: inline-block;
-} /* also DictList.vue .vocab_c */
-.d-yomi .vyr {
-  font-size: 22px;
-  padding: 7px 3px;
-  display: inline-block;
-  margin: 0 0 0 1em;
-}
-
-.d-yomi .vyg {
-  font-size: 0.85em;
-  line-height: 1.1em;
-  font-style: italic;
-  font-family: sans-serif;
-  color: #888;
-  padding: 8px 0 0;
 }
 
 /* cloze deletion <span.cloze><u>(kanji)</u></span> */
@@ -192,43 +178,52 @@
   border-radius: 8px;
 }
 
+/* -------------------------------------------------------------------- */
 /* LAYOUT */
-
+/* -------------------------------------------------------------------- */
 .uiFcInner {
   /* exclude top and bottom area of the card */
   position: absolute;
-  top: 40px;
-  bottom: 40px;
+  top: 0;
+  bottom: 40px; /* don´t overlap strokecount & index */
 
   /* flex layout of the main card content */
   width: 100%;
   display: flex; /* FIREFOX bug? flex-wrap:wrap; */
-
-  /*border:1px solid #fdd;  */
-}
-.uiFcInner .uiFcHalf {
-  flex: 0 0 100%;
-  /*border:1px solid #bfb;*/
 }
 
-.d-kanji .tb {
-  display: table;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-.d-kanji .td {
-  display: table-cell;
-  vertical-align: middle;
+.fc-middle {
+  /* border: 1px solid #fcc; */
 }
 
-/* inner layout */
-@media screen and (min-width: 701px) {
-  /* adjust layout for yomi */
+/* .with-yomi .fc-middle {
+  @apply flex flex-row flex-nowrap;
+} */
+
+.d-kanji {
+  margin-top: 1rem;
+}
+.d-yomi {
+  margin-top: 1.5rem;
+}
+
+@media only screen and (width < 768px) {
+  .d-kanji {
+    margin-top: 2rem;
+  }
+  .with-yomi .d-kanji {
+    margin-top: 1rem;
+    flex: 1 1 50%;
+  }
+  .with-yomi .d-yomi {
+    margin-top:0;
+    flex: 1 1 50%;
+  }
+}
+
+@media only screen and (width >= 768px) {
   .with-yomi .uiFcHalf {
     flex: 0 0 50%;
-    height: 100%;
-    align-self: center;
   }
 }
 
@@ -249,47 +244,14 @@
    =================================================================================  */
 
 @media screen and (max-width: 700px) {
-  .fc-kanji .d-keyword {
-    /*font-size:2em;*/
-    padding: 4px 0 0 8px;
-  }
-
   .d-yomi {
     font-size: 25px;
-  }
-  .d-yomi_pad {
-    padding: 0.5em 0.5em 0;
-  }
-  .d-yomi .vyc {
-  }
-  .d-yomi .vyr {
-  }
-  .d-yomi .vyg {
-  }
-
-  /* PORTRAIT : vertical flow */
-  .uiFcInner {
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
-  .d-yomi {
-    overflow-y: auto;
-  }
-
-  .with-yomi .uiFcHalf {
-    flex: 0 0 50%;
-  }
-  .with-yomi .d-kanji {
-    flex: 0 0 40%;
-  }
-  .with-yomi .d-yomi {
-    flex: 0 0 60%;
   }
 }
 
 /* medium phone */
 @media screen and (max-width: 500px) {
-  .fc-kanji .d-kanji {
+  .d-kanji {
     font-size: 150px;
   }
 
@@ -300,8 +262,6 @@
 
 /* iPhone 5s & old devices + portrait */
 @media screen and (max-width: 320px) {
-  /*.uiFcCard { background:#fee; }*/
-
   .with-yomi .d-kanji {
     font-size: 70px;
   }
@@ -322,5 +282,7 @@
   transform: translateY(20px);
 }
 .uiFcYomi-fadein-enter-active {
-  transition: opacity 1s, transform 0.5s;
+  transition:
+    opacity 1s,
+    transform 0.5s;
 }

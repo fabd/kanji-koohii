@@ -30,9 +30,21 @@
 }
 
 .d-kanji {
+  /* grow to fill width (desktop) or height (phone), or 50% of it when d-yomi is on */
+  flex: 1;
+
+  /* responsive font-size, kanji is smaller when the card is smaller
+     (cf. https://github.com/fabd/kanji-koohii/issues/388 ) */
+  font-size: min(50px + 12vh, 150px);
+
   text-align: center;
-  font-size: 150px;
   line-height: 1em;
+}
+.d-kanji-char {
+  /* slight vertical adjustment because the kanji is lower in its char box,
+       this looks more centered vertically */
+  position: relative;
+  top: -5%;
 }
 
 .d-strokec {
@@ -196,27 +208,16 @@
   /* border: 1px solid #fcc; */
 }
 
-/* .with-yomi .fc-middle {
-  @apply flex flex-row flex-nowrap;
-} */
-
-.d-kanji {
-  margin-top: 1rem;
-}
 .d-yomi {
   margin-top: 1.5rem;
 }
 
 @media only screen and (width < 768px) {
-  .d-kanji {
-    margin-top: 2rem;
-  }
   .with-yomi .d-kanji {
-    margin-top: 1rem;
     flex: 1 1 50%;
   }
   .with-yomi .d-yomi {
-    margin-top:0;
+    margin-top: 0;
     flex: 1 1 50%;
   }
 }
@@ -251,10 +252,6 @@
 
 /* medium phone */
 @media screen and (max-width: 500px) {
-  .d-kanji {
-    font-size: 150px;
-  }
-
   .d-yomi {
     font-size: 25px;
   }
@@ -262,10 +259,6 @@
 
 /* iPhone 5s & old devices + portrait */
 @media screen and (max-width: 320px) {
-  .with-yomi .d-kanji {
-    font-size: 70px;
-  }
-
   .d-yomi {
     font-size: 20px;
   }

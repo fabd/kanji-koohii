@@ -44,9 +44,9 @@
       <div
         class="fc-middle pb-[40px] h-full flex flex-col md:flex-row flex-nowrap flex-1"
       >
-        <div class="uiFcHalf d-kanji w-full py-4">
-          <!-- do this for now, until we position everything dynamically -->
-          <cjk-lang-ja :html="cardData.kanji" />
+        <div class="uiFcHalf d-kanji flex">
+          <!-- the kanji is fully centered (flex child auto margin trick) -->
+          <cjk-lang-ja class="d-kanji-char m-auto relative" :html="cardData.kanji" />
         </div>
 
         <div v-if="hasVocab" class="uiFcHalf d-yomi">

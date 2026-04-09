@@ -84,10 +84,10 @@ export default defineComponent({
         }
 
         if (bDisplay) {
-          var wh = window.innerHeight; //document.documentElement.
+          var wh = window.innerHeight;
           if (parseInt(wh)) {
             var cardh = wh - (43 + 37 + 67);
-            if (cardh > 150) {
+            if (cardh > 100) {
               this.resizedCard = cardh;
 
               this.cardHeight = cardh;

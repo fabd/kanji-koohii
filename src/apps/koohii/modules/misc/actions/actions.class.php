@@ -25,7 +25,7 @@ class miscActions extends sfActions
    */
   public function executeReading($request)
   {
-    $userId = $this->getContext()->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 

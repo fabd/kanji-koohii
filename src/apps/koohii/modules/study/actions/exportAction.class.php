@@ -12,7 +12,7 @@ class exportAction extends sfAction
     $response = $this->getResponse();
     $response->setContentType('text/plain; charset=utf-8');
 
-    $throttler = new RequestThrottler($this->getUser(), 'study.export');
+    $throttler = new RequestThrottler(kk_get_user(), 'study.export');
     
     if (!$throttler->isValid()) {
       $response->setContentType('html');
@@ -21,9 +21,9 @@ class exportAction extends sfAction
 
     // DISABLED FOR NOW (>_>)
     // get keywords and kanji for story link substitution ({<number>})
-    //$this->exportKeywords = CustkeywordsPeer::getExportKeywords($this->getUser()->getUserId());
+    //$this->exportKeywords = CustkeywordsPeer::getExportKeywords(kk_get_user()->getUserId());
 
-    $userId  = $this->getUser()->getUserId();
+    $userId  = kk_get_user()->getUserId();
 
     $db      = kk_get_database();
     $csv     = new ExportCSV($db);

@@ -125,7 +125,7 @@ class uiSelectionState
   {
     if (self::$user === null)
     {
-      self::$user = sfContext::getInstance()->getUser();
+      self::$user = kk_get_user();
     }
     return self::$user;
   }

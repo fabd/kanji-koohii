@@ -12,7 +12,7 @@ class aboutActions extends sfActions
     $response = $this->getResponse();
 
     // test et preuve pour HostGator après l'attaque 2014/02/19
-    $throttler = new RequestThrottler($this->getUser(), 'baduser');
+    $throttler = new RequestThrottler(kk_get_user(), 'baduser');
     $throttler->setInterval(2);
 
     if (!$throttler->isValid())

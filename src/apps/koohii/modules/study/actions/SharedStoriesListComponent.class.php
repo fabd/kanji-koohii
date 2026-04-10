@@ -19,7 +19,7 @@ class SharedStoriesListComponent extends sfComponent
     $keyword = trim($request->getParameter('keyword', ''));
 
 
-    $queryParams = $this->getUser()->getLocalPrefs()->syncRequestParams('sharedstorieslist', [uiSelectPager::QUERY_ROWSPERPAGE => 20]);
+    $queryParams = kk_get_user()->getLocalPrefs()->syncRequestParams('sharedstorieslist', [uiSelectPager::QUERY_ROWSPERPAGE => 20]);
 
     // validate against more attempts to pull stories with scripts that abuse the server
     $action = $this->getController()->getActionStack()->getLastEntry()->getActionInstance();
@@ -58,7 +58,7 @@ class SharedStoriesListComponent extends sfComponent
       */
 
     $storiesSelect = $this->pager->applyPaging(
-      $this->getSharedStoriesListSelect($ucsId, $keyword, $this->getUser()->getUserId())
+      $this->getSharedStoriesListSelect($ucsId, $keyword, kk_get_user()->getUserId())
     );
 
     $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
@@ -74,7 +74,7 @@ class SharedStoriesListComponent extends sfComponent
     }
 
     $this->rows    = $rows;
-    $this->userId  = $this->getUser()->getUserId();
+    $this->userId  = kk_get_user()->getUserId();
     $this->ucsId   = $ucsId;
     $this->keyword = $keyword;
 

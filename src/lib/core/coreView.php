@@ -249,7 +249,7 @@ class coreView
     $_context  = sfContext::getInstance();
     $_request  = $_context->getRequest();
     $_params   = $_request->getParameterHolder();
-    $_user     = $_context->getUser();
+    $_user     = kk_get_user();
     $_response = $_context->getResponse();
 
     // render

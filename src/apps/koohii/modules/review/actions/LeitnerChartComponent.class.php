@@ -4,7 +4,7 @@ class LeitnerChartComponent extends sfComponent
 {
   public function execute($request)
   {
-    $user_id = sfContext::getInstance()->getUser()->getUserId();
+    $user_id = kk_get_user()->getUserId();
 
     // we phased this out (if we do it again, using Vue)
     $filter = '';
@@ -48,7 +48,7 @@ class LeitnerChartComponent extends sfComponent
     $data = new stdClass();
     $boxes = [];
 
-    $numDisplayBoxes = max(5, $this->getUser()->getUserSetting('OPT_SRS_MAX_BOX') + 1);
+    $numDisplayBoxes = max(5, kk_get_user()->getUserSetting('OPT_SRS_MAX_BOX') + 1);
 
     for ($i = 0; $i < count($carddata); ++$i)
     {

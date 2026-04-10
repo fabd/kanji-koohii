@@ -386,7 +386,7 @@ class rtkLabs
   public static function getVocabShuffleMode2Items()
   {
     $db     = kk_get_database();
-    $userId = sfContext::getInstance()->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     /*SELECT dictid, numkanji, pri, COUNT(*) AS c
       FROM dictsplit AS ds
@@ -461,7 +461,7 @@ class rtkLabs
    * @return void
   public static function setFlashcardSession(array $data)
   {
-    sfContext::getInstance()->getUser()->setAttribute(self::FLASHCARDREVIEW_SESS, $data);
+    kk_get_user()->setAttribute(self::FLASHCARDREVIEW_SESS, $data);
   }
    */
 
@@ -505,7 +505,7 @@ class rtkLabs
     
     $s = '';
 
-    $userId = sfContext::getInstance()->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     foreach($splitted as $ucsId)
     {

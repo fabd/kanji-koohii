@@ -96,7 +96,7 @@ class FlashcardReview
 
   public function __construct()
   {
-    $this->user = sfContext::getInstance()->getUser();
+    $this->user = kk_get_user();
 
     $this->cardStatus = $this->user->getAttribute(self::SESS_ATTR_NAME, []);
   }

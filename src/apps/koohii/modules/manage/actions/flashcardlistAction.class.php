@@ -9,7 +9,7 @@ class flashcardlistAction extends sfAction
    */
   public function execute($request)
   {
-    $queryParams = $this->getUser()->getLocalPrefs()
+    $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('detailedflashcardlist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
@@ -17,7 +17,7 @@ class flashcardlistAction extends sfAction
       ]);
 
     $this->pager = new uiSelectPager([
-      'select'       => ReviewsPeer::getSelectForDetailedList($this->getUser()->getUserId()),
+      'select'       => ReviewsPeer::getSelectForDetailedList(kk_get_user()->getUserId()),
       'internal_uri' => 'manage/flashcardlist',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],

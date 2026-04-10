@@ -166,7 +166,7 @@ class UsersPeer extends coreDatabaseTable
    */
   public static function createUser(array $userinfo)
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $hashed_password = $user->getSaltyHashedPassword($userinfo['raw_password']);
 
 
@@ -275,7 +275,7 @@ class UsersPeer extends coreDatabaseTable
     if (isset($columns['raw_password']))
     {
       // hash password for database
-      $user = sfContext::getInstance()->getUser();
+      $user = kk_get_user();
       $columns['password'] = $user->getSaltyHashedPassword($columns['raw_password']);
       unset($columns['raw_password']);
     }
@@ -313,7 +313,7 @@ class UsersPeer extends coreDatabaseTable
    */
   public static function sqlLocalTime($time = 'NOW()')
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $localTimezone = $user->getUserTimeZone();
     $timediff = $localTimezone - sfConfig::get('app_server_timezone');
     $hours = floor($timediff);
@@ -334,7 +334,7 @@ class UsersPeer extends coreDatabaseTable
    */
   public static function intLocalTime()
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
 
     $db = self::getInstance()->getDb();
     $ts = $db->fetchOne('SELECT UNIX_TIMESTAMP(?)', new coreDbExpr(UsersPeer::sqlLocalTime()));

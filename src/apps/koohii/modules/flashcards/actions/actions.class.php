@@ -21,7 +21,7 @@ class flashcardsActions extends sfActions
     $json = $request->getContentJson();
     $ucsId = BaseValidators::sanitizeInteger($json->ucs);
 
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
     $status = JsTron::STATUS_FAILED;
 
     if (!ReviewsPeer::hasFlashcard($userId, $ucsId))
@@ -54,7 +54,7 @@ class flashcardsActions extends sfActions
    */
   public function executeEdit(sfRequest $request)
   {
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     // the GET request is not JSON
     if ($request->hasParameter('ucs'))  {

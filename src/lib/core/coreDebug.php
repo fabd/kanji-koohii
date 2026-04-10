@@ -114,7 +114,7 @@ class DBG
 
     if (sfContext::getInstance()->has('user'))
     {
-      $user = sfContext::getInstance()->getUser();
+      $user = kk_get_user();
     
         $info = [
         'attributes'  => $user->getAttributeHolder()->getAll(),

@@ -402,7 +402,7 @@ class coreDatabaseStatementMySQL extends coreDatabaseStatement
    * @return void
    * @throws sfException
    */
-  public function _prepare($sql)
+  protected function _prepare(string $sql): void
   {
     $mysqli = $this->_adapter->getConnection();
 
@@ -421,7 +421,7 @@ class coreDatabaseStatementMySQL extends coreDatabaseStatement
    * @return bool
    * @throws sfException
    */
-  public function _execute(array $params = null)
+  protected function _execute(?array $params = null): bool
   {
     if (!$this->_stmt)
     {

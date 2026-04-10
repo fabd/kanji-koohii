@@ -12,13 +12,13 @@ class reviewActions extends sfActions
   public function executeIndex($request)
   {
     // set local pref default value
-    $this->filter = $this->getUser()->getLocalPrefs()->sync('review.graph.filter', null, '');
+    $this->filter = kk_get_user()->getLocalPrefs()->sync('review.graph.filter', null, '');
     if ($this->filter == '')
     {
       $this->filter = 'all';
     }
 
-    $this->flashcard_count = ReviewsPeer::getFlashcardCount($this->getUser()->getUserId());
+    $this->flashcard_count = ReviewsPeer::getFlashcardCount(kk_get_user()->getUserId());
   }
 
   /**
@@ -28,7 +28,7 @@ class reviewActions extends sfActions
    */
   public function executeCustom($request)
   {
-    $userId = sfContext::getInstance()->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
     $this->knowncount = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
     $this->knowndefault = max($this->knowncount, 1);
 
@@ -38,7 +38,7 @@ class reviewActions extends sfActions
 
   public function executeVocab($request)
   {
-    $userId = sfContext::getInstance()->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
     $this->learnedcount = ReviewsPeer::getReviewedFlashcardCount($userId, rtkLabs::VOCABSHUFFLE_MINBOX);
   }
 
@@ -63,7 +63,7 @@ class reviewActions extends sfActions
     }
 
     // remember last filter selected
-    $this->getUser()->getLocalPrefs()->sync('review.graph.filter', $filter, '');
+    kk_get_user()->getLocalPrefs()->sync('review.graph.filter', $filter, '');
 
     $tron = new JsTron();
 
@@ -129,7 +129,7 @@ class reviewActions extends sfActions
 
     if (false === $isCustomReview)
     {
-      $reviewReverse = (int) $this->getUser()->getUserSetting('OPT_SRS_REVERSE');
+      $reviewReverse = (int) kk_get_user()->getUserSetting('OPT_SRS_REVERSE');
     
       // SRS review
       $reviewBox = $request->getParameter('box', 'all');
@@ -270,7 +270,7 @@ class reviewActions extends sfActions
       // (SRS only): update last review info for the "Who's Reviewing" table
       if (!$this->fc_free)
       {
-        ActiveMembersPeer::updateFlashcardInfo($this->getUser()->getUserId());
+        ActiveMembersPeer::updateFlashcardInfo(kk_get_user()->getUserId());
       }
     }
   }

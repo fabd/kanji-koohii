@@ -12,7 +12,7 @@ class advancedAction extends sfAction
 
     $this->status = '';
 
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
     $ucsId  = 0;
 
     if ($request->hasParameter('commit'))

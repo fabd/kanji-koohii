@@ -24,11 +24,11 @@ class MyStoriesTableComponent extends sfComponent
     $isProfile = $this->profile_page;
 
     // ensure public=1 if tampering with form on profile page
-    $isSelf    = $this->getUser()->getUserId() === $userId;
+    $isSelf    = kk_get_user()->getUserId() === $userId;
 
     $action = $this->getController()->getActionStack()->getLastEntry()->getActionInstance();
 
-    $queryParams = $this->getUser()->getLocalPrefs()
+    $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('mystorieslist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 10
       ]);

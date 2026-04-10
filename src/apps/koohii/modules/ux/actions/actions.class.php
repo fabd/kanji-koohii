@@ -9,7 +9,7 @@ class uxActions extends sfActions
 
   private function guard()
   {
-    $user = $this->getUser();
+    $user = kk_get_user();
 
     // developer only
     $this->forward404Unless(

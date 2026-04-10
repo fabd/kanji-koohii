@@ -3,7 +3,7 @@ class MembersListComponent extends sfComponent
 {
   public function execute($request)
   {
-    $queryParams = $this->getUser()->getLocalPrefs()
+    $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('memberslist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 50,
         uiSelectTable::QUERY_SORTCOLUMN  => 'ts_lastreview',

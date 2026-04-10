@@ -45,7 +45,7 @@ Tests: a `src/test/` folder exists but tests are not currently used.
 
 ```php
 // Get current user ID in an action
-$userId = $this->getUser()->getUserId();
+$userId = kk_get_user()->getUserId();
 
 // Get database handle
 $db = kk_get_database();

@@ -29,9 +29,9 @@ class accountActions extends sfActions
 
   public function executeIndex($request)
   {
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 //    $this->redirect('account/edit');
-    $user = $this->getUser()->getUserDetails();
+    $user = kk_get_user()->getUserDetails();
     $this->forward404If(false === $user);
 
     $this->user = $user;
@@ -47,7 +47,7 @@ class accountActions extends sfActions
    */
   public function executeCreate($request)
   {
-    //$throttler = new RequestThrottler($this->getUser(), 'badbot');
+    //$throttler = new RequestThrottler(kk_get_user(), 'badbot');
     //$throttler->setInterval(2);
     /*
     if (!$throttler->isValid()) {
@@ -207,7 +207,7 @@ class accountActions extends sfActions
    */
   public function executeDelete($request)
   {
-    $user = $this->getUser();
+    $user = kk_get_user();
     $userId = $user->getUserId();
     $userName = $user->getUserName();
 
@@ -269,7 +269,7 @@ class accountActions extends sfActions
             $log = new UserDeleteLog();
             $log->logUserDeletion($userId, $userName, $userDetails['joindate'], $logDesc);
 
-            $this->getUser()->signOutAndClearCookie();
+            kk_get_user()->signOutAndClearCookie();
 
             return 'Done';
           }
@@ -289,12 +289,12 @@ class accountActions extends sfActions
    */
   public function executeEdit($request)
   {
-    $user = $this->getUser();
+    $user = kk_get_user();
 
     if ($request->getMethod() != sfRequest::POST)
     {
       // fill in form with current account details
-      $userdata = $this->getUser()->getUserDetails();
+      $userdata = kk_get_user()->getUserDetails();
       $formdata = [
         'username' => $userdata['username'],
         'location' => $userdata['location'],
@@ -366,7 +366,7 @@ class accountActions extends sfActions
         $raw_password = strtoupper(substr(md5(rand(100000, 999999)), 0, 8));
 
         // update the password on main site and forum
-        $this->getUser()->changePassword($user['username'], $raw_password);
+        kk_get_user()->changePassword($user['username'], $raw_password);
         
         // send email with new password, user username from db here to email user with the
         // username in the exact CaSe they registered with
@@ -404,23 +404,23 @@ class accountActions extends sfActions
       // verify old password
       $oldpassword = trim($request->getParameter('oldpassword'));
       
-      $user = $this->getUser()->getUserDetails();
-      if ($user && ($this->getUser()->getSaltyHashedPassword($oldpassword) == $user['password']) )
+      $user = kk_get_user()->getUserDetails();
+      if ($user && (kk_get_user()->getSaltyHashedPassword($oldpassword) == $user['password']) )
       {
         // proceed with password update
         
         $new_raw_password = trim($request->getParameter('newpassword'));
         
-        $user = $this->getUser()->getUserDetails();
+        $user = kk_get_user()->getUserDetails();
 
         // update the password on main site and forum
-        $this->getUser()->changePassword($user['username'], $new_raw_password);
+        kk_get_user()->changePassword($user['username'], $new_raw_password);
 
         // save username before signing out
-        $this->username = $this->getUser()->getUserName();
+        $this->username = kk_get_user()->getUserName();
   
         // log out user (sign out, clear cookie)
-        $this->getUser()->signOutAndClearCookie();
+        kk_get_user()->signOutAndClearCookie();
         
         try
         {
@@ -452,7 +452,7 @@ class accountActions extends sfActions
 
   public function executeFlashcards($request)
   {
-    $user = $this->getUser();
+    $user = kk_get_user();
 
     if ($request->getMethod() != sfRequest::POST)
     {
@@ -477,7 +477,7 @@ class accountActions extends sfActions
   public function executeSpacedrepetition($request)
   {
     /** @var rtkUser */
-    $user = $this->getUser();
+    $user = kk_get_user();
 
     if ($request->getMethod() != sfRequest::POST)
     {
@@ -539,9 +539,9 @@ class accountActions extends sfActions
         {
           $userdata = ['opt_sequence' => $seq['sqlId']];
           
-          if (UsersPeer::updateUser($this->getUser()->getUserId(), $userdata))
+          if (UsersPeer::updateUser(kk_get_user()->getUserId(), $userdata))
           {
-            $this->getUser()->setAttributes(['usersequence' => $seq['sqlId']]);
+            kk_get_user()->setAttributes(['usersequence' => $seq['sqlId']]);
             return;
           }
         }
@@ -580,7 +580,7 @@ class accountActions extends sfActions
     // don't use the creator token here
     $paInst = kkPatreon::getInstance(['access_token' => $patron_access_token]);
     
-    if ($paInst->fetch_user_and_link_account($this->getUser()->getUserId()))
+    if ($paInst->fetch_user_and_link_account(kk_get_user()->getUserId()))
     {
       $this->redirect('account/index');
     }

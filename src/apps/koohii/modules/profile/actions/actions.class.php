@@ -12,15 +12,15 @@ class profileActions extends sfActions
 
     if (!$username)
     {
-      if ($this->getUser()->isAuthenticated())
+      if (kk_get_user()->isAuthenticated())
       {
-        $username = $this->getUser()->getUserName();
+        $username = kk_get_user()->getUserName();
       }
       else
       {
         // if unauthenticated user checks his (bookmarked?) profile, go to login and back
         $url = $this->getController()->genUrl('profile/index', true);
-        $this->getUser()->redirectToLogin(['referer' => $url]);
+        kk_get_user()->redirectToLogin(['referer' => $url]);
       }
     }
 
@@ -31,6 +31,6 @@ class profileActions extends sfActions
 
     $profileUser = (object) $user;
     $this->profile_user = $profileUser;
-    $this->profile_self = $profileUser->userid === $this->getUser()->getUserId();
+    $this->profile_self = $profileUser->userid === kk_get_user()->getUserId();
   }
 }

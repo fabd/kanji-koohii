@@ -71,14 +71,14 @@ class apiActions extends sfActions
     }
 
     // throttle TODO basé sur api_key ... pas sur le user (aussi pour /login par ex)
-    $throttler = new RequestThrottler($this->getUser(), 'baduser');
+    $throttler = new RequestThrottler(kk_get_user(), 'baduser');
     $throttler->setInterval(1); // seconds
 
     if (!$throttler->isValid())
     {
       $rsp = $this->createResponseFail(95);
     }
-    elseif (!$this->getUser()->isAuthenticated())
+    elseif (!kk_get_user()->isAuthenticated())
     {
       $rsp = $this->createResponseFail(96);
     }
@@ -174,9 +174,9 @@ class apiActions extends sfActions
   {
     $rsp = [];
 
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
-    $user = $this->getUser()->getUserDetails();
+    $user = kk_get_user()->getUserDetails();
 
     $rsp = [
       'username' => $user['username'],
@@ -292,7 +292,7 @@ class apiActions extends sfActions
 
       if ($type === 'learned')
       {
-        $user = $this->getUser();
+        $user = kk_get_user();
         $userId = $user->getUserId();
         $rsp->items = LearnedKanjiPeer::getKanji($userId);
       }
@@ -397,7 +397,7 @@ class apiActions extends sfActions
   {
     $rsp = new stdClass();
 
-    $user = $this->getUser();
+    $user = kk_get_user();
     $userId = $user->getUserId();
 
 //    $total_flashcards = ReviewsPeer::getFlashcardCount($userId);
@@ -441,7 +441,7 @@ class apiActions extends sfActions
 
     $rsp->items = ReviewsPeer::getFlashcardsForReview($box, $type, $filt);
 
-    $user = $this->getUser();
+    $user = kk_get_user();
     $userId = $user->getUserId();
 
     $rsp->learnedItems = LearnedKanjiPeer::getKanji($userId);
@@ -478,7 +478,7 @@ class apiActions extends sfActions
       return $this->createResponseFail(3, 'Too many notLearned items (sync limit)');
     }
 
-    $user = $this->getUser();
+    $user = kk_get_user();
     $userId = $user->getUserId();
 
     $rsp->putLearned = [];

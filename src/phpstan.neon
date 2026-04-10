@@ -8,3 +8,6 @@ parameters:
         - vendor/
     bootstrapFiles:
         - vendor/autoload.php
+    scanFiles:
+        # for the kk_get_*() global stubs that fix types
+        - apps/koohii/config/koohiiConfiguration.class.php

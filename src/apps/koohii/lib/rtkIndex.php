@@ -194,7 +194,7 @@ class rtkIndex
    */
   public static function getSequenceInfo()
   {
-    $seqId = sfContext::getInstance()->getUser()->getUserSequence();
+    $seqId = kk_get_user()->getUserSequence();
     $sequences = self::getSequences();
 
     return $sequences[$seqId];
@@ -241,7 +241,7 @@ class rtkIndex
    */
   public static function getSqlCol()
   {
-    $seqId = sfContext::getInstance()->getUser()->getUserSequence();
+    $seqId = kk_get_user()->getUserSequence();
     $sequences = self::getSequences();
     assert($seqId >= 0 && $seqId < count($sequences));
 
@@ -510,11 +510,9 @@ class rtkIndex
     //  20240619 : added sequence data with lessons
     $HASH = '20240619';
 
-    $sfContext = sfContext::getInstance();
-
-    $seqId = $sfContext->getUser()->getUserSequence();
+    $seqId = kk_get_user()->getUserSequence();
     $keywordsFile = "/revtk/study/keywords-rtk-{$seqId}.{$HASH}.js";
 
-    $sfContext->getResponse()->addJavascript($keywordsFile, 'first', ['defer' => true]);
+    sfContext::getInstance()->getResponse()->addJavascript($keywordsFile, 'first', ['defer' => true]);
   }
 }

@@ -117,8 +117,7 @@ class rtkUser extends sfBasicSecurityUser
   // [listener] atm the query is fast, so no add/delete/etc, just invalidate the cached data
   public static function eventUpdateUserKnownKanji(sfEvent $event)
   {
-    $user = sfContext::getInstance()->getUser();
-    $user->getAttributeHolder()->remove(self::KNOWN_KANJI);
+    kk_get_user()->getAttributeHolder()->remove(self::KNOWN_KANJI);
   }
 
   /**

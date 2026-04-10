@@ -1,17 +1,10 @@
 <?php
 
-/**
- * Global helper to retrieve database connection.
- *
- * @throws sfException if connection can not be established (usually SQL is too busy)
- *
- * @return coreDatabaseMySQL
- */
-function kk_get_database()
+// Stub that returns our custom coreDatabase ORM
+function kk_get_database(): coreDatabaseMySQL
 {
   static $db = null;
 
-  // create database connection only when needed
   if (!$db)
   {
     $db = new coreDatabaseMySQL(sfConfig::get('app_db_connection'));
@@ -19,6 +12,12 @@ function kk_get_database()
   }
 
   return $db;
+}
+
+// Stub to fix PHPStan errors due to lack of return type from Context in Sf1.4
+function kk_get_user(): rtkUser
+{
+  return sfContext::getInstance()->getUser();
 }
 
 class koohiiConfiguration extends sfApplicationConfiguration

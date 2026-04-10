@@ -8,7 +8,7 @@ class FailedListTableComponent extends sfComponent
 {
   public function execute($request)
   {
-    $queryParams = $this->getUser()->getLocalPrefs()
+    $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('failedlist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
@@ -17,7 +17,7 @@ class FailedListTableComponent extends sfComponent
 
     // pager
     $this->pager = new uiSelectPager([
-      'select'       => ReviewsPeer::getRestudyKanjiListSelect($this->getUser()->getUserId()),
+      'select'       => ReviewsPeer::getRestudyKanjiListSelect(kk_get_user()->getUserId()),
       'internal_uri' => 'study/failedlist',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],

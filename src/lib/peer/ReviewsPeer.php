@@ -266,7 +266,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getKnownKanji($userId)
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
 
     // get array of known kanji as ucs ids (this simple SELECT uses INDEX)
     $select = self::getInstance()->select()->columns('ucs_id');
@@ -285,7 +285,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getTodayCount($userId)
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $select = self::getInstance()->select()->where('lastreview > DATE('.UsersPeer::sqlLocalTime().')');
     return self::_getFlashcardCount($userId, $select);
   }
@@ -299,7 +299,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getCountExpired($userId)
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $sqlLocalTime = new coreDbExpr(UsersPeer::sqlLocalTime());
     $select = self::getInstance()->select()->where('totalreviews>0 AND leitnerbox>1  AND expiredate <= ?', $sqlLocalTime);
     return self::_getFlashcardCount($userId, $select);
@@ -314,7 +314,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getCountUntested($userId, $filter = '')
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $select = self::getInstance()->select()->where('totalreviews <= 0');
     $select = self::filterByRtk($select, $filter);
     return self::_getFlashcardCount($userId, $select);
@@ -337,7 +337,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getLeitnerBoxCounts($filter = '')
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $userId = $user->getUserId();
 
     $select = self::getInstance()->select([
@@ -512,7 +512,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getFlashcardsForReview($box, $type, $filt, $merge = false)
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $userId = $user->getUserId();
     $sqlLocalTime = new coreDbExpr(UsersPeer::sqlLocalTime());
 
@@ -601,7 +601,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getDueCardsByDay()
   {
-    $user = sfContext::getInstance()->getUser();
+    $user = kk_get_user();
     $exprLocalTime = UsersPeer::sqlLocalTime();
     $exprDayDiff   = 'DATEDIFF(expiredate, '.$exprLocalTime.')';
 
@@ -849,7 +849,7 @@ class ReviewsPeer extends coreDatabaseTable
     assert(isset($oData->r));
 //DBG::printr($oData);
 
-    $userId = sfContext::getInstance()->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     if ($oData->r === LeitnerSRS::RATE_SKIP)
     {
@@ -933,7 +933,7 @@ class ReviewsPeer extends coreDatabaseTable
       $interval_days = $cardUpdate['interval_days'];
       unset($cardUpdate['interval_days']);
 
-      $user = sfContext::getInstance()->getUser();
+      $user = kk_get_user();
       $sqlExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', $sqlLocalTime, $interval_days);
 
       $cardUpdate['expiredate'] = new coreDbExpr($sqlExpireDate);

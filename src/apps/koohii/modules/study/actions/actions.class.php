@@ -40,10 +40,10 @@ class studyActions extends sfActions
    */
   public function executeEdit($request)
   {
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     // stop bad users from overloading the database with their stupid scripts
-    $throttler = new RequestThrottler($this->getUser(), 'baduser');
+    $throttler = new RequestThrottler(kk_get_user(), 'baduser');
     $throttler->setInterval(1); // 1 seconds
     
     // searching or browsing (previous, next buttons)
@@ -191,7 +191,7 @@ class studyActions extends sfActions
    */
   public function executeClear($request)
   {
-    LearnedKanjiPeer::clearAll($this->getUser()->getUserId());
+    LearnedKanjiPeer::clearAll(kk_get_user()->getUserId());
 
     $goto =  $request->getParameter('goto');
     $routeTo = $goto === 'restudy' ? 'study/failedlist' : 'study/kanji/1';
@@ -300,7 +300,7 @@ class studyActions extends sfActions
 
     // throttle ajax requests to prevent script abuse
     //$response = $this->getResponse();
-    $throttler = new RequestThrottler($this->getUser(), 'sharedstories');
+    $throttler = new RequestThrottler(kk_get_user(), 'sharedstories');
     $throttler->setInterval(2);
     if (!$throttler->isValid())
     {
@@ -374,7 +374,7 @@ class studyActions extends sfActions
     $tron = new JsTron();
 
     // throttle ajax requests
-    $throttler = new RequestThrottler($this->getUser(), 'sharedstories');
+    $throttler = new RequestThrottler(kk_get_user(), 'sharedstories');
     $throttler->setInterval(1);
     if (!$throttler->isValid())
     {
@@ -433,7 +433,7 @@ class studyActions extends sfActions
     $tron = new JsTron();
 
     //
-    $userId     = $this->getUser()->getUserId();
+    $userId     = kk_get_user()->getUserId();
     $ucsId      = rtkValidators::sanitizeCJKUnifiedUCS($json->ucsCode);
     $reviewMode = (bool) $json->reviewMode;
 
@@ -527,7 +527,7 @@ class studyActions extends sfActions
       
         $tron->set('sharedStoryId', "story-${userId}-${ucsId}");
         sfProjectConfiguration::getActive()->loadHelpers(['Tag', 'Url', 'Links']);
-        $tron->set('sharedStoryAuthor', link_to_member($this->getUser()->getUserName()));
+        $tron->set('sharedStoryAuthor', link_to_member(kk_get_user()->getUserName()));
       }
     }
 
@@ -586,7 +586,7 @@ class studyActions extends sfActions
       throw new rtkAjaxException('Invalid character.');
     }
     
-    $custom_keyword = CustkeywordsPeer::getCustomKeyword($this->getUser()->getUserId(), $chardata->ucs_id);
+    $custom_keyword = CustkeywordsPeer::getCustomKeyword(kk_get_user()->getUserId(), $chardata->ucs_id);
 
     $tron = new JsTron();
     $tron->setStatus(JsTron::STATUS_PROGRESS);
@@ -618,7 +618,7 @@ class studyActions extends sfActions
       if (0 === strcmp($keyword, $default_keyword))
       {
         // delete the custom keyword
-        if (CustkeywordsPeer::deleteCustomKeyword($this->getUser()->getUserId(), $ucsId))
+        if (CustkeywordsPeer::deleteCustomKeyword(kk_get_user()->getUserId(), $ucsId))
         {
           $keyword = $default_keyword;
           $success = true;
@@ -636,7 +636,7 @@ class studyActions extends sfActions
 
         if ($is_valid)
         {
-          if (CustkeywordsPeer::updateCustomKeyword($this->getUser()->getUserId(), $ucsId, $keyword))
+          if (CustkeywordsPeer::updateCustomKeyword(kk_get_user()->getUserId(), $ucsId, $keyword))
           {
             $success = true;
           }
@@ -705,7 +705,7 @@ class studyActions extends sfActions
     elseif ($sRequest === 'star' || $sRequest === 'report')
     {
       // [ uid, sid, vote, lastvote, stars, kicks ]
-      $params = (array) StoryVotesPeer::voteStory($this->getUser()->getUserId(), $sUid, $sSid, $sRequest === 'star');
+      $params = (array) StoryVotesPeer::voteStory(kk_get_user()->getUserId(), $sUid, $sSid, $sRequest === 'star');
       $tron = new JsTron($params);
       return $tron->renderJson($this);
     }
@@ -736,13 +736,13 @@ class studyActions extends sfActions
     $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
 
     $tron   = new JsTron();
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     $tron->set('items', $this->getDictListItems($ucsId));
     $tron->set('picks', VocabPicksPeer::getUserPicks($userId, $ucsId));
 
     if (true === $json->reqKnownKanji) {
-      $tron->set('knownKanji', $this->getUser()->getUserKnownKanji());
+      $tron->set('knownKanji', kk_get_user()->getUserKnownKanji());
     }
 
     return $tron->renderJson($this);
@@ -783,7 +783,7 @@ class studyActions extends sfActions
     $ucsId  = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
     $dictId = BaseValidators::sanitizeInteger($json->dictid);
 
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     $tron = new JsTron();
 
@@ -801,7 +801,7 @@ class studyActions extends sfActions
 
     $ucsId  = rtkValidators::sanitizeCJKUnifiedUCS($json->ucs);
 
-    $userId = $this->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     $tron = new JsTron();
 

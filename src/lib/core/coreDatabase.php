@@ -61,8 +61,8 @@ abstract class coreDatabase
     $this->parameterHolder->add($parameters);
 
     // setup query profiler
-    $user = sfContext::getInstance()->getUser();
-    if (null !== $user /*wtf*/ && ($user->getUserName() === 'fuaburisu' || $user->isAdministrator()))
+    $user = kk_get_user();
+    if (($user->getUserName() === 'fuaburisu' || $user->isAdministrator()))
     {
       $this->profiler = new coreDatabaseProfilerMySQL();
     }

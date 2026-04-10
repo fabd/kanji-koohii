@@ -8,7 +8,7 @@ class homeActions extends sfActions
    */
   public function executeIndex($request)
   {
-    if ($this->getUser()->isAuthenticated())
+    if (kk_get_user()->isAuthenticated())
     {    
       return 'Member';
     }
@@ -30,14 +30,14 @@ class homeActions extends sfActions
     if ($request->getMethod() != sfRequest::POST)
     {
       // get the referer option from redirectToLogin()
-      $referer = $this->getUser()->getAttribute('login_referer', '');
+      $referer = kk_get_user()->getAttribute('login_referer', '');
 
       // get other options from redirectToLogin()
-      $username = $this->getUser()->getAttribute('login_username', '');
+      $username = kk_get_user()->getAttribute('login_username', '');
 
       // clear redirectToLogin() options
-      $this->getUser()->getAttributeHolder()->remove('login_referer');
-      $this->getUser()->getAttributeHolder()->remove('login_username');
+      kk_get_user()->getAttributeHolder()->remove('login_referer');
+      kk_get_user()->getAttributeHolder()->remove('login_username');
 
       $this->getRequest()->setParameter('referer', empty($referer) ? '@homepage' : $referer);
       $this->getRequest()->setParameter('username', $username);
@@ -64,19 +64,19 @@ class homeActions extends sfActions
 
         // check that user exists and password matches
         $user = UsersPeer::getUser($username);
-        if (!$user || ($this->getUser()->getSaltyHashedPassword($raw_password) != $user['password']) )
+        if (!$user || (kk_get_user()->getSaltyHashedPassword($raw_password) != $user['password']) )
         {
           $request->setError('login_invalid', "Invalid username and/or password.");
           return;
         }
 
         // sign in user
-        $this->getUser()->signIn($user);
+        kk_get_user()->signIn($user);
 
         // optionally, create the remember me cookie
         if ($rememberme)
         {
-          $this->getUser()->setRememberMeCookie($user['username'], $this->getUser()->getSaltyHashedPassword($raw_password));
+          kk_get_user()->setRememberMeCookie($user['username'], kk_get_user()->getSaltyHashedPassword($raw_password));
         }
         
         // succesfully signed in
@@ -93,7 +93,7 @@ class homeActions extends sfActions
    */
   public function executeLogout($request)
   {
-    $this->getUser()->signOutAndClearCookie();
+    kk_get_user()->signOutAndClearCookie();
 
     return $this->redirect('@homepage');
   }
@@ -150,7 +150,7 @@ END;
 
       // fabd: spam prevention for unauthenticated users
       //  refuse message with links for non-authenticated users
-      if (!$this->getUser()->isAuthenticated())
+      if (!kk_get_user()->isAuthenticated())
       {
         if (preg_match('#https?://#', $message))
         {

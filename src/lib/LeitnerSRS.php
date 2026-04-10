@@ -8,7 +8,7 @@
 function koohiiGetUserSettingsSRS()
 {
   /** @var rtkUser */
-  $user = sfContext::getInstance()->getUser();
+  $user = kk_get_user();
 
   $opts = [
     'OPT_SRS_MULT' => $user->getUserSetting('OPT_SRS_MULT'),

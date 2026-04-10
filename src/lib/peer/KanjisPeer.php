@@ -122,7 +122,7 @@ class KanjisPeer extends coreDatabaseTable
       return null;
     }
 
-    $userId = sfContext::getInstance()->getUser()->getUserId();
+    $userId = kk_get_user()->getUserId();
 
     // make sure id is a Number in returned JSON
     $cardData->id = (int)$cardData->ucs_id;

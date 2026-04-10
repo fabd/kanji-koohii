@@ -33,13 +33,13 @@ class manageActions extends sfActions
     {
       // create a Heisig flashcard selection
       $fcSel = new rtkFlashcardSelection($request);    
-      if ($fcSel->addHeisigRange($this->getUser()->getUserId(), $request->getParameter('txtSelection'))!==false)
+      if ($fcSel->addHeisigRange(kk_get_user()->getUserId(), $request->getParameter('txtSelection'))!==false)
       {
         // store valid selection in session
         $newCards = $fcSel->getCards();
         if (count($newCards))
         {
-          $this->getUser()->setAttribute('selection', serialize($newCards));
+          kk_get_user()->setAttribute('selection', serialize($newCards));
         }
 
         $tron = new JsTron();
@@ -70,12 +70,12 @@ class manageActions extends sfActions
     }
 
     // get validated selection from session
-    $selection = $this->getUser()->getAttribute('selection');
+    $selection = kk_get_user()->getAttribute('selection');
     $this->forwardIf(!$selection, 'manage', 'addorder');
-    $this->getUser()->getAttributeHolder()->remove('selection');
+    kk_get_user()->getAttributeHolder()->remove('selection');
     $newCards = unserialize($selection);
 
-    $cards = ReviewsPeer::addSelection($this->getUser()->getUserId(), $newCards);
+    $cards = ReviewsPeer::addSelection(kk_get_user()->getUserId(), $newCards);
 
     // count should be identical at this point since duplicates are removed
     // during the confirmation step
@@ -110,7 +110,7 @@ class manageActions extends sfActions
       $fcSel = new rtkFlashcardSelection($request);    
       if ($fcSel->setFromString($request->getParameter('txtSelection')))
       {
-        $newCards = ReviewsPeer::filterExistingCards($this->getUser()->getUserId(), $fcSel->getCards());
+        $newCards = ReviewsPeer::filterExistingCards(kk_get_user()->getUserId(), $fcSel->getCards());
         $countNewCards = count($newCards);
         $countExistCards = $fcSel->getNumCards() - $countNewCards;
         
@@ -123,7 +123,7 @@ class manageActions extends sfActions
         // store valid selection in session
         if ($countNewCards)
         {
-          $this->getUser()->setAttribute('selection', serialize($newCards));
+          kk_get_user()->setAttribute('selection', serialize($newCards));
         }
 
         $tron = new JsTron();
@@ -155,12 +155,12 @@ class manageActions extends sfActions
     }
 
     // get validated selection from session
-    $selection = $this->getUser()->getAttribute('selection');
+    $selection = kk_get_user()->getAttribute('selection');
     $this->forwardIf(!$selection, 'manage', 'addcustom');
-    $this->getUser()->getAttributeHolder()->remove('selection');
+    kk_get_user()->getAttributeHolder()->remove('selection');
     $newCards = unserialize($selection);
 
-    $cards = ReviewsPeer::addSelection($this->getUser()->getUserId(), $newCards);
+    $cards = ReviewsPeer::addSelection(kk_get_user()->getUserId(), $newCards);
     if (count($cards) != count($newCards))
     {
       $request->setError('x', 'Oops! An error occured while adding flashcards, not all flashcards could be added.');
@@ -239,7 +239,7 @@ class manageActions extends sfActions
     // delete selected flashcards
     $selectedCards = uiSelectionState::getSelection(self::REMOVE_FLASHCARDS)->getAll();
     
-    $cards = ReviewsPeer::deleteSelection($this->getUser()->getUserId(), $selectedCards);
+    $cards = ReviewsPeer::deleteSelection(kk_get_user()->getUserId(), $selectedCards);
 
     if ($cards === false)
     {
@@ -276,7 +276,7 @@ class manageActions extends sfActions
         $cards = $fcSel->getCards();
         if (count($cards))
         {
-          $this->getUser()->setAttribute('selection', serialize($cards));
+          kk_get_user()->setAttribute('selection', serialize($cards));
         }
 
         $tron = new JsTron();
@@ -307,12 +307,12 @@ class manageActions extends sfActions
     }
 
     // delete selected flashcards
-    $selection = $this->getUser()->getAttribute('selection');
+    $selection = kk_get_user()->getAttribute('selection');
     $this->forwardIf(!$selection, 'manage', 'removecustom');
-    $this->getUser()->getAttributeHolder()->remove('selection');
+    kk_get_user()->getAttributeHolder()->remove('selection');
     $selectedCards = unserialize($selection);
 
-    $cards = ReviewsPeer::deleteSelection($this->getUser()->getUserId(), $selectedCards);
+    $cards = ReviewsPeer::deleteSelection(kk_get_user()->getUserId(), $selectedCards);
     if ($cards === false)
     { 
       $request->setError('x', 'Oops! An error occured while deleting flashcards, not all flashcards were deleted.');
@@ -338,7 +338,7 @@ class manageActions extends sfActions
         
         if (false !== ($parsed = $keywords->parse($txtData)) && $keywords->validate($parsed))
         {
-          $this->getUser()->setAttribute('keywords', serialize($keywords));
+          kk_get_user()->setAttribute('keywords', serialize($keywords));
 
           $tron = new JsTron();
           return $tron->renderPartial($this, 'ImportKeywordsConfirm', ['keywords' => $keywords]);
@@ -366,15 +366,15 @@ class manageActions extends sfActions
     $this->forwardIf($request->hasParameter('cancel'), 'manage', 'importKeywords');
 
     // do the import now
-    $keywords = $this->getUser()->getAttribute('keywords');
+    $keywords = kk_get_user()->getAttribute('keywords');
     $this->forwardIf(!$keywords, 'manage', 'importKeywords');
     $keywordList = unserialize($keywords);
     
     // cleanup
-    $this->getUser()->getAttributeHolder()->remove('keywords');
+    kk_get_user()->getAttributeHolder()->remove('keywords');
 
     // errors added to the request
-    CustkeywordsPeer::importList($this->getUser()->getUserId(), $keywordList->getKeywords(), $request);
+    CustkeywordsPeer::importList(kk_get_user()->getUserId(), $keywordList->getKeywords(), $request);
 
     /*
     if ($numSuccess < $keywordList->getCount())
@@ -402,14 +402,14 @@ class manageActions extends sfActions
     $response = $this->getResponse();
     $response->setContentType('text/plain; charset=utf-8');
 
-    $throttler = new RequestThrottler($this->getUser(), 'export');
+    $throttler = new RequestThrottler(kk_get_user(), 'export');
     if (!$throttler->isValid()) {
       return $this->renderPartial('misc/requestThrottleError');
     }
 
     $db      = kk_get_database();
     $csv     = new ExportCSV($db);
-    $select  = ReviewsPeer::getSelectForExport($this->getUser()->getUserId());
+    $select  = ReviewsPeer::getSelectForExport(kk_get_user()->getUserId());
 
     $fetchMode   = $db->setFetchMode(coreDatabase::FETCH_NUM);
     $tabularData = $db->fetchAll($select);

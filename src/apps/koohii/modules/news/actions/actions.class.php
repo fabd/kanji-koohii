@@ -31,7 +31,7 @@ class newsActions extends sfActions
 
   public function executePost($request)
   {
-    $user = $this->getUser();
+    $user = kk_get_user();
     
     // admin only
     $this->forward404Unless($user->getUserName() === 'fuaburisu' || $user->isAdministrator());

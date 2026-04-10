@@ -179,7 +179,7 @@ class JsTron extends sfParameterHolder
    * @param  string     $partialName    Partial name (same as get_partial() helper)
    * @param  mixed      $vars           Partial vars
    *
-   * @return coreView::NONE
+   * @return sfView::NONE
    */
   public function renderPartial($action, $partialName, $vars = null)
   {
@@ -196,7 +196,7 @@ class JsTron extends sfParameterHolder
    * @param  string     $componentName  component name
    * @param  array      $vars           vars
    *
-   * @return coreView::NONE
+   * @return sfView::NONE
    */
   public function renderComponent($action, $moduleName, $componentName, $vars = null)
   {

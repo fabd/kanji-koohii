@@ -57,8 +57,8 @@ class CJK
    * 
    * Note: not thoroughly tested beyond the digits (0-9)
    * 
-   * @param  string  Utf8 string
-   * 
+   * @param  string  $u8s  Utf8 string
+   *
    * @return string  Utf8 string
    */
   static public function normalizeFullWidthRomanCharacters($u8s)
@@ -130,9 +130,9 @@ class CJK
   /**
    * Check if UCS-2 code is in Hiragana range ( 3040 - 309f ).
    *
-   * @param   int     UCS code value
+   * @param   int     $ucs  UCS code value
    *
-   * @return  bool    
+   * @return  bool
    */
   static public function isHiraUCS($ucs)
   {

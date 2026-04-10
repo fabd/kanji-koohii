@@ -189,7 +189,7 @@ class FlashcardReview
    * Update flashcards based on an array of update data, maintains the status
    * array that flags card that have already been updated this session.
    *
-   * @param array items   An array of flashcard answers from client in the form
+   * @param array $items  An array of flashcard answers from client in the form
    *                      { id: number, ... } (cf. TCardAnswer)
    *
    * @return array an array containing the id of succesfully updated items

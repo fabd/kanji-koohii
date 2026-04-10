@@ -34,11 +34,10 @@ abstract class coreDatabase
   const FETCH_ASSOC = 2;
   const FETCH_OBJ   = 3;
     
-  protected
-    $parameterHolder = null,
-    $connection      = null,
-    $profiler        = null,
-    $fetchMode       = self::FETCH_ASSOC;
+  protected ?sfParameterHolder $parameterHolder = null;
+  protected mixed $connection = null;
+  protected ?coreDatabaseProfiler $profiler = null;
+  protected int $fetchMode = self::FETCH_ASSOC;
     
   /**
    * Class constructor.
@@ -53,7 +52,7 @@ abstract class coreDatabase
   /**
    * Initializes this coreDatabase object.
    *
-   * @param array An associative array of initialization parameters
+   * @param array $parameters An associative array of initialization parameters
    *
    */
   public function initialize($parameters = [])
@@ -98,7 +97,7 @@ abstract class coreDatabase
   /**
    * Gets the parameter holder for this object.
    *
-   * @return coreParameterHolder A coreParameterHolder instance
+   * @return sfParameterHolder
    */
   public function getParameterHolder()
   {
@@ -112,8 +111,8 @@ abstract class coreDatabase
    *
    * <code>$this->getParameterHolder()->get()</code>
    *
-   * @param string The key name
-   * @param string The default value
+   * @param string $name    The key name
+   * @param string $default The default value
    *
    * @return string The value associated with the key
    *
@@ -134,8 +133,8 @@ abstract class coreDatabase
   /**
    * Run a SQL query directly.
    *
-   * @param  string         SQL query string where '?' can be used for quoted parameters.
-   * @param  string|array   Parameters to substitute in the query string
+   * @param  string        $query  SQL query string where '?' can be used for quoted parameters.
+   * @param  string|array  $bind   Parameters to substitute in the query string
    *
    * @return bool   True if success, False if error.
    */
@@ -153,7 +152,7 @@ abstract class coreDatabase
    *
    * The function returns the last fetch mode.
    *
-   * @param  int  $fetchMode  coreDatabase::FETCH_ASSOC or coreDatabase::FETCH_OBJ
+   * @param  int  $mode  coreDatabase::FETCH_ASSOC or coreDatabase::FETCH_OBJ
    * @return int  Last active fetch mode.
    */
   public function setFetchMode($mode)
@@ -168,7 +167,6 @@ abstract class coreDatabase
         break;
       default:
         throw new sfException('Invalid fetch mode.');
-        break;
     }
     return $prevFetchMode;
   }
@@ -221,8 +219,8 @@ abstract class coreDatabase
    * Fetches all SQL result rows as a sequential array.
    * Returned row format depends on the current fetchMode.
    *
-   * @param  string|coreDatabaseSelect  $sql  An SQL SELECT statement.
-   * @param  mixed            $bind Data to bind into SELECT placeholders.
+   * @param  string|coreDatabaseSelect  $query  An SQL SELECT statement.
+   * @param  mixed                      $bind   Data to bind into SELECT placeholders.
    *
    * @return array
    */
@@ -233,8 +231,8 @@ abstract class coreDatabase
    *
    * The first column in each row is used as the array key.
    *
-   * @param  string|coreDatabaseSelect  $sql  An SQL SELECT statement.
-   * @param  mixed  $bind   Data to bind into SELECT placeholders.
+   * @param  string|coreDatabaseSelect  $query  An SQL SELECT statement.
+   * @param  mixed                      $bind   Data to bind into SELECT placeholders.
    *
    * @return array
    */
@@ -246,8 +244,8 @@ abstract class coreDatabase
    *
    * @see    lastInsertId() to retrieve an auto_increment key
    *
-   * @param  string  Table name.
-   * @param  array   An associative array of properties (column names) and data.
+   * @param  string  $table  Table name.
+   * @param  array   $data   An associative array of properties (column names) and data.
    * @return boolean TRUE on success, FALSE on error.
    * @throws sfException  If query fails.
    */
@@ -266,10 +264,10 @@ abstract class coreDatabase
   /**
    * Updates columns (key => values) in matching row(s) with optional where clause
    *
-   * @param  string  Table name.
-   * @param  array   An associative array of properties (column names) and data.
-   * @param  string  Where clause with optional '?' quoted parameters.
-   * @param  mixed   Single value or array of values for quoted parameters.
+   * @param  string  $table  Table name.
+   * @param  array   $data   An associative array of properties (column names) and data.
+   * @param  string  $where  Where clause with optional '?' quoted parameters.
+   * @param  mixed   $bind   Single value or array of values for quoted parameters.
    * @return boolean TRUE on success, FALSE on error.
    * @throws sfException  If query fails.
    */
@@ -278,9 +276,9 @@ abstract class coreDatabase
   /**
    * Delete all rows, or matching rows with optional where clause
    *
-   * @param  string  Table name.
-   * @param  string  Where clause with optional '?' quoted parameters.
-   * @param  mixed   Single value or array of values for quoted parameters.
+   * @param  string  $table  Table name.
+   * @param  string  $where  Where clause with optional '?' quoted parameters.
+   * @param  mixed   $bind   Single value or array of values for quoted parameters.
    * @return boolean TRUE on success, FALSE on error.
    * @throws sfException  If query fails.
    */
@@ -289,8 +287,8 @@ abstract class coreDatabase
   /**
    * Safely quotes a value for an SQL statement using database specific implementation.
    *
-   * @param object $value
-   * @return
+   * @param mixed $value
+   * @return string
    */
   abstract function quote($value);
 
@@ -498,7 +496,6 @@ class coreDatabaseSelect
           break;
         default:
           throw new Exception('coreDatabaseSelect::reset() Invalid argument.');
-          break;
       }
     }
     return $this;
@@ -609,7 +606,6 @@ class coreDatabaseSelect
    */
   public function whereIn($column, $values)
   {
-    assert(is_array($values));
     $this->parts[self::WHERE][] = $column.' IN ('.implode(',', $values).')';
     return $this;
   }
@@ -667,7 +663,6 @@ class coreDatabaseSelect
    */
   public function limitPage($pageNum, $rowsPerPage)
   {
-    assert(is_int($pageNum) && is_int($rowsPerPage));
     $this->parts[self::LIMIT_COUNT] = $rowsPerPage;
     $this->parts[self::LIMIT_OFFSET] = $rowsPerPage * $pageNum;
     return $this;
@@ -703,11 +698,15 @@ abstract class coreDatabaseStatement
 {
   protected $_adapter = null;
 
-  public function __construct(coreDatabase $adapter, $sql)
+  public function __construct(coreDatabase $adapter, string $sql)
   {
     $this->_adapter = $adapter;
     $this->_prepare($sql);
   }
+
+  abstract protected function _prepare(string $sql): void;
+
+  abstract protected function _execute(?array $params): bool;
 
   /**
    * Executes a prepared statement.
@@ -716,7 +715,7 @@ abstract class coreDatabaseStatement
    *
    * @return bool  TRUE on success or FALSE on failure.
    */
-  public function execute(array $params = null)
+  public function execute(?array $params = null)
   {
     return $this->_execute($params);
   }

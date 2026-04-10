@@ -40,7 +40,7 @@ class CustkeywordsPeer extends coreDatabaseTable
   /**
    * Return custom keyword if edited by user, or null.
    * 
-   * @param  int   $userid 
+   * @param  int   $userId
    * @param  int   $ucsId    UCS-2 code value.
    *
    * @return ?string
@@ -79,10 +79,10 @@ class CustkeywordsPeer extends coreDatabaseTable
    *        pulling 12559 rows (atm, only Heisig kanji can have cust. keyw).
    *
    * @param   int     $userId
-   * 
+   *
    * @return array   Associative array:  ucs_id => (ucs_id, seq_nr, keyword)
    */
-  public static function getCoalescedKeywords($userid)
+  public static function getCoalescedKeywords($userId)
   {
     $indexSqlCol = rtkIndex::getSqlCol();
 
@@ -94,7 +94,7 @@ class CustkeywordsPeer extends coreDatabaseTable
     $select->from(KanjisPeer::getInstance()->getName());
 
     // add last to avoid "ambiguous" ucs_id column
-    $select = self::addCustomKeywordJoin($select, $userid);
+    $select = self::addCustomKeywordJoin($select, $userId);
 
     // FIXME? will need to change this if we want cust.kw for non-Heisig kanji
     $select->where("`{$indexSqlCol}` < ?", rtkIndex::RTK_UCS);
@@ -243,7 +243,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    * @param int $userId
    * @param int[] $ucsIds   (optional) subset of flashcard ids to match
    * 
-   * @return user's edited keywords as a map: [[ucsId, keyword], ...]
+   * @return array   User's edited keywords as a map: [[ucsId, keyword], ...]
    */
   public static function getUserKeywordsMapJS($userId, array $ucsIds = [])
   {

@@ -35,15 +35,15 @@ class PatreonPeer extends coreDatabaseTable
    *
    *   - sets `is_active` if pledge amount is the min/. amount for perks
    * 
-   * @param  [type] $data [description]
-   * @return [type]       [description]
+   * @param  array $data  Patreon patron data (must include 'pa_id')
+   * @return bool
    */
   static public function updatePatron($data)
   {
     assert(isset($data["pa_id"]));
 
     // update flags
-    $pa_amount_cents = isset($data['pa_amount_cents']) ? $data['pa_amount_cents'] :_0;
+    $pa_amount_cents = isset($data['pa_amount_cents']) ? $data['pa_amount_cents'] : 0;
     $data['is_active'] = (int) ($pa_amount_cents >= self::PLEDGE_AMOUNT_ACTIVE);
     $data['has_perks'] = (int) ($pa_amount_cents >= self::PLEDGE_AMOUNT_PERKS);
 

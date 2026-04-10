@@ -73,10 +73,11 @@ abstract class coreDatabaseTable
   protected $columns = [];
 
   /**
-   * 
-   * 
-   * @return 
-   * @param object $childclass
+   * Returns singleton instance of the given peer class.
+   *
+   * @template T of coreDatabaseTable
+   * @param  class-string<T> $childclass  Class name of the peer
+   * @return T
    */
   public static function _getInstance($childclass)
   {

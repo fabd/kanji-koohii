@@ -39,7 +39,7 @@ class KanjisPeer extends coreDatabaseTable
    *
    * @param   int    $ucsId   UCS-2 code value.
    *
-   * @return  object  Kanjis table row data (plus 'framenum'), or false
+   * @return  object|false  Kanjis table row data (plus 'framenum'), or false
    */
   public static function getKanjiByUCS($ucsId)
   {
@@ -89,7 +89,7 @@ class KanjisPeer extends coreDatabaseTable
    * Return kanji data for given kanji as utf8 character.
    * 
    * @param   String   $utf8    Kanji character in utf8
-   * @return  Object   Kanji rowdata as object, or FALSE
+   * @return  object|false  Kanji rowdata as object, or false
    */
   public static function getKanjiByCharacter($utf8)
   {

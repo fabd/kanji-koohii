@@ -39,8 +39,7 @@ class ActiveMembersPeer extends coreDatabaseTable
   
   /**
    * Return Select object for the active members list.
-   * 
-   * @param
+   *
    * @return coreDatabaseSelect
    */
   public static function getSelectForActiveMembersList()
@@ -52,9 +51,6 @@ class ActiveMembersPeer extends coreDatabaseTable
   
   /**
    * Cleanup old data from table.
-   * 
-   * @param
-   * @return
    */
   public static function deleteInactiveMembers()
   {

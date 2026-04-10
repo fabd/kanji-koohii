@@ -303,7 +303,7 @@ class reviewActions extends sfActions
     ];
     //debugging
     // sleep(6);
-    // $response = sfContext::getInstance()->getResponse();
+    // $response = kk_get_response();
     // $response->setStatusCode(500);
 
     return $this->handleFlashcardRequest($request, $options);

@@ -62,7 +62,7 @@ abstract class coreDatabase
 
     // setup query profiler
     $user = kk_get_user();
-    if (($user->getUserName() === 'fuaburisu' || $user->isAdministrator()))
+    if ($user !== null && ($user->getUserName() === 'fuaburisu' || $user->isAdministrator()))
     {
       $this->profiler = new coreDatabaseProfilerMySQL();
     }

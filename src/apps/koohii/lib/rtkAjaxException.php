@@ -19,7 +19,7 @@ class rtkAjaxException extends sfException
     $exception = is_null($this->wrappedException) ? $this : $this->wrappedException;
     $message   = $exception->getMessage();
 
-    $response = sfContext::getInstance()->getResponse();
+    $response = kk_get_response();
     $response->setStatusCode(500);
 
     // clean current output buffer

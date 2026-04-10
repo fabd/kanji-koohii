@@ -266,7 +266,7 @@ class rtkUser extends sfBasicSecurityUser
   public function setRememberMeCookie($username, $saltyPassword)
   {
     $value = base64_encode(serialize([$username, $saltyPassword]));
-    sfContext::getInstance()->getResponse()->setCookie(sfConfig::get('app_cookie_name'), $value, time() + self::COOKIE_EXPIRE, '/');
+    kk_get_response()->setCookie(sfConfig::get('app_cookie_name'), $value, time() + self::COOKIE_EXPIRE, '/');
   }
 
   /**
@@ -276,7 +276,7 @@ class rtkUser extends sfBasicSecurityUser
    */
   public function clearRememberMeCookie()
   {
-    sfContext::getInstance()->getResponse()->setCookie(sfConfig::get('app_cookie_name'), '', time() - 3600, '/');
+    kk_get_response()->setCookie(sfConfig::get('app_cookie_name'), '', time() - 3600, '/');
   }
 
   /**

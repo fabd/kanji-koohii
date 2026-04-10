@@ -5,8 +5,7 @@ function kk_get_database(): coreDatabaseMySQL
 {
   static $db = null;
 
-  if (!$db)
-  {
+  if (!$db) {
     $db = new coreDatabaseMySQL(sfConfig::get('app_db_connection'));
     $db->connect();
   }
@@ -14,10 +13,15 @@ function kk_get_database(): coreDatabaseMySQL
   return $db;
 }
 
-// Stub to fix PHPStan errors due to lack of return type from Context in Sf1.4
-function kk_get_user(): rtkUser
+// Stubs to fix PHPStan errors due to lack of return type from Context in Sf1.4
+function kk_get_user(): ?rtkUser
 {
   return sfContext::getInstance()->getUser();
+}
+
+function kk_get_response(): coreWebResponse
+{
+  return sfContext::getInstance()->getResponse();
 }
 
 class koohiiConfiguration extends sfApplicationConfiguration
@@ -32,8 +36,7 @@ class koohiiConfiguration extends sfApplicationConfiguration
   public function initialize()
   {
     // because of sf cache:clear repeating this code??
-    if (!defined('CORE_ENVIRONMENT'))
-    {
+    if (!defined('CORE_ENVIRONMENT')) {
       // FIXME .. refactor to sf
       define('CORE_ENVIRONMENT', $this->getEnvironment());
 
@@ -76,21 +79,17 @@ class koohiiConfiguration extends sfApplicationConfiguration
 
     $totaltime = (microtime(true) - $this->profile_time);
 
-    if (null === $profiler)
-    {
+    if (null === $profiler) {
       return $totaltime;
     }
 
     $phptime = $totaltime - $profiler->getQueryTime();
     $sqltime = $profiler->getQueryTime();
 
-    if ($totaltime > 0)
-    {
-      $percentphp = number_format((($phptime / $totaltime) * 100), 2);
-      $percentsql = number_format((($sqltime / $totaltime) * 100), 2);
-    }
-    else
-    {
+    if ($totaltime > 0) {
+      $percentphp = number_format(($phptime / $totaltime) * 100, 2);
+      $percentsql = number_format(($sqltime / $totaltime) * 100, 2);
+    } else {
       // if we've got a super fast script...
       $percentphp = 0;
       $percentsql = 0;

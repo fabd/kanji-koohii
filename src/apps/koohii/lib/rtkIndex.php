@@ -335,8 +335,7 @@ class rtkIndex
   /**
    * Get the UCS code point of the character, given a extended Heisig index.
    *
-   * @param int   $n     an extended frame number (Heisig or UCS)
-   * @param mixed $extNr
+   * @param int $extNr an extended frame number (Heisig or UCS)
    *
    * @return mixed UCS code point, or false if input is neither a Heisig index
    *               or a valid CJK Unified code point
@@ -356,11 +355,11 @@ class rtkIndex
    *
    * If the value is already in the CJK range, it is unchanged.
    *
-   * @param   int|int[]   Extended frame numbers (index or UCS-2)
+   * @param int|int[] $ids Extended frame numbers (index or UCS-2)
    *
    * @return array Array with sequence numbers (ie. Heisig) converted to UCS-2, others unchanged.
    */
-  public static function convertToUCS(array $ids)
+  public static function convertToUCS(int|array $ids)
   {
     $ucsids = [];
 
@@ -513,6 +512,6 @@ class rtkIndex
     $seqId = kk_get_user()->getUserSequence();
     $keywordsFile = "/revtk/study/keywords-rtk-{$seqId}.{$HASH}.js";
 
-    sfContext::getInstance()->getResponse()->addJavascript($keywordsFile, 'first', ['defer' => true]);
+    kk_get_response()->addJavascript($keywordsFile, 'first', ['defer' => true]);
   }
 }

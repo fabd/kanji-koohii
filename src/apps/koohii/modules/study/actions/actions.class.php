@@ -633,7 +633,7 @@ class studyActions extends sfActions
     
         // add validation errors to the TRON response
         if ($request->hasErrors()) {
-          $tron->addErrorsFromRequest($request);
+          $tron->addErrors($request->getErrors());
           $tron->setStatus(JsTron::STATUS_FAILED);
         }
 

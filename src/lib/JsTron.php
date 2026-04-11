@@ -111,6 +111,13 @@ class JsTron implements JsonSerializable
     $this->errors[] = $message;
   }
 
+  public function addErrors(array $errors): void
+  {
+    foreach ($errors as $key => $message) {
+      $this->addError($message);
+    }
+  }
+
   public function getErrors(): array
   {
     return $this->errors;

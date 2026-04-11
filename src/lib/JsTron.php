@@ -1,51 +1,46 @@
 <?php
 /**
- * Wrapper for JSON communication.
- * 
+ * JsTron is a simple wrapper around JSON messages.
  * See TRON (tron.ts) for the front end side.
+ * 
+ * Example Tron object:
+ * 
+ *   {
+ *     status: 1,
+ *     props: { username: "John" },
+ *     errors: ["Password is too short"],  <== OPTIONAL
+ *     html: ...                           <== OPTIONAL
+ *   }
+ * 
+ * Implements JsonSerializable, so we can render a JSON message in an
+ * action like this:
+ * 
+ *   $tron = new JsTron();
+ *   $tron->set("foo", 123);
+ *   $tron->setError('Session expired. Please log in.');
+ *   $this->renderJson($tron);
  *
+ * Example action that returns a partial in a JSON message:
+ *
+ *   $tron->setHtml($this->getPartial('templateName', ['foo' => 123]));
+ *   return $this->renderJson($tron);
+ * 
+ * Example action that returns a component in a JSON message:
+ * 
+ *   $tron->setHtml($this->getComponent('moduleName', 'ComponentName', ['foo' => 123]));
+ *   return $this->renderJson($tron);
  * 
  * Methods:
- *   set($name, $value)          Set properties of the message.
- *   add($parameters)
- *   ...
- *
- *   setStatus($status)
- *   setError($message)
- *   setHtml($html)
- *
- *   render($action)
- *   renderJson($action)         Proxy for render().
- *
- *   renderPartial()             setHtml() with a Symfony partial render
- *   renderComponent()           ... likewise for ....... component render
- *
- *
- * Return a simple SUCCESS message:
- *
- *   $tron = new JsTron();
- *   return $tron->renderJson($this);
+ * 
+ *   set($name, $value)          Set one property of the message (props).
+ *   add($parameters)            Set multiple properties (props)
+ *   setStatus($status)          Set the status ( FAILED, SUCCESS, PROGRESS )
+ *   setError($message)          Adds an error message (can be called multiple times)
+ *   setHtml($html)              Sets the html property
  *   
- *
- * Return some data:
- *
- *   $tron = new JsTron(['foo' => 'bar']);
- *   $tron->setStatus(JsTron::STATUS_SUCCESS);
- *   return $tron->renderJson($this);
- *   
- *   
- * Return a session error to be displayed by client:
- *
- *   $tron = new JsTron(['login' => true]);
- *   $tron->setError('Session expired. Please log in.');
- *   $tron->setStatus(JsTron::STATUS_FAILED);
- *   return $tron->renderJson($this);
- *
- *
- * @author  Fabrice Denis
  */
 
-class JsTron
+class JsTron implements JsonSerializable
 {
   /**
    * Status codes used by App.Helper.TRON (app.js)
@@ -167,6 +162,11 @@ class JsTron
     return $this->html;
   }
 
+  public function jsonSerialize(): mixed
+  {
+    return $this->getJson();
+  }
+
   /**
    * Returns the JSON message in as a Php object.
    * 
@@ -189,52 +189,5 @@ class JsTron
     }
 
     return $obj;
-  }
-
-  /**
-   * Use this as the return statement of a symfony action, eg:
-   *
-   *   return $tron->renderJson($this);
-   * 
-   * @param  sfAction $action 
-   *
-   * @return sfView::NONE
-   */
-  public function renderJson($action)
-  {
-    return $action->renderJson($this->getJson());
-  }
-  
-  /**
-   * Render the TRON response with html set from partial.
-   *
-   * @param  sfAction $action 
-   * @param  string     $partialName    Partial name (same as get_partial() helper)
-   * @param  mixed      $vars           Partial vars
-   *
-   * @return sfView::NONE
-   */
-  public function renderPartial($action, $partialName, $vars = null)
-  {
-    $html = $action->getPartial($partialName, $vars);
-    $this->setHtml($html);
-    return $this->renderJson($action);
-  }
-  
-  /**
-   * Render the TRON response with html set from a component.
-   * 
-   * @param  sfAction $action
-   * @param  string     $moduleName     module name
-   * @param  string     $componentName  component name
-   * @param  array      $vars           vars
-   *
-   * @return sfView::NONE
-   */
-  public function renderComponent($action, $moduleName, $componentName, $vars = null)
-  {
-    $html = $action->getComponent($moduleName, $componentName, $vars);
-    $this->setHtml($html);
-    return $this->renderJson($action);
   }
 }

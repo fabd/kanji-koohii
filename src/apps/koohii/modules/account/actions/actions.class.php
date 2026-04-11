@@ -47,15 +47,6 @@ class accountActions extends sfActions
    */
   public function executeCreate($request)
   {
-    //$throttler = new RequestThrottler(kk_get_user(), 'badbot');
-    //$throttler->setInterval(2);
-    /*
-    if (!$throttler->isValid()) {
-      $throttler->setTimeout();
-      $response->setContentType('html');
-      return $this->renderPartial('misc/requestThrottleError');
-    }*/
-    
     $sfs = StopForumSpam::getInstance();
 
     // log IPs to investigate bots/spam wasting database space

@@ -286,7 +286,8 @@ class studyActions extends sfActions
   public function executeFailedlisttable($request)
   {
     $tron = new JsTron();
-    return $tron->renderComponent($this, 'study', 'FailedListTable');
+    $tron->setHtml($this->getComponent('study', 'FailedListTable'));
+    return $this->renderJson($tron);
   }
 
   /**
@@ -310,11 +311,12 @@ class studyActions extends sfActions
                       'helps us improve the website response time of the Study pages. Thanks! =)</p>');
       $tron->setStatus(JsTron::STATUS_FAILED);
 
-      return $tron->renderJson($this);
+      return $this->renderJson($tron);
     }
     $throttler->setTimeout();
 
-    return $tron->renderComponent($this, 'study', 'SharedStoriesList');
+    $tron->setHtml($this->getComponent('study', 'SharedStoriesList'));
+    return $this->renderJson($tron);
   }
 
   /**
@@ -384,19 +386,20 @@ class studyActions extends sfActions
                       'helps us improve the website response time of the Study pages. Thanks! =)</p>');
       $tron->setStatus(JsTron::STATUS_FAILED);
 
-      return $tron->renderJson($this);
+      return $this->renderJson($tron);
     }
     $throttler->setTimeout();
 
     if (0 === ($stories_uid = (int)$request->getParameter('stories_uid', 0)))
     {
       $tron->setStatus(JsTron::STATUS_FAILED);
-      return $tron->renderJson($this);
+      return $this->renderJson($tron);
     }
 
     $profile_page = !!$request->getParameter('profile_page', false);
 
-    return $tron->renderComponent($this, 'study', 'MyStoriesTable', ['stories_uid' => $stories_uid, 'profile_page' => $profile_page]);
+    $tron->setHtml($this->getComponent('study', 'MyStoriesTable', ['stories_uid' => $stories_uid, 'profile_page' => $profile_page]));
+    return $this->renderJson($tron);
   }
 
   /**
@@ -474,14 +477,14 @@ class studyActions extends sfActions
       // disallow markup
       if ($postStoryEdit !== strip_tags($postStoryEdit)) {
         $tron->setError('HTML markup (tags) formatting not allowed in stories.');
-        return $tron->renderJson($this);
+        return $this->renderJson($tron);
       }
   // $this->forward404();
       
       // validate kanji links within story
       if (true !== ($errorMsg = rtkStory::validateKanjiLinks($postStoryEdit))) {
         $tron->setError($errorMsg);
-        return $tron->renderJson($this);
+        return $this->renderJson($tron);
       }
 
       // delete story if empty text
@@ -499,7 +502,7 @@ class studyActions extends sfActions
         if ($count > rtkStory::MAXIMUM_STORY_LENGTH) {
           $n = $count - rtkStory::MAXIMUM_STORY_LENGTH;
           $tron->setError(sprintf('Story is too long (512 characters maximum, %d over the limit).', $n));
-          return $tron->renderJson($this);
+          return $this->renderJson($tron);
         }
 
         // NOTE! it's assumed kanji substitution makes the story SMALLER (eg. "{1000}" => "{類}")
@@ -508,7 +511,7 @@ class studyActions extends sfActions
         if (true !== StoriesPeer::updateStory($userId, $ucsId, ['text' => $postStoryEdit, 'public' => (int) $postStoryPublic]))
         {
           $tron->setError("Woops, the story couldn't be saved. Try again in a few moments.");
-          return $tron->renderJson($this);
+          return $this->renderJson($tron);
         }
       }
       
@@ -549,7 +552,7 @@ class studyActions extends sfActions
 
 // sleep(1);
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 
   /**
@@ -662,7 +665,7 @@ class studyActions extends sfActions
       }
     }
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 
   /**
@@ -699,7 +702,7 @@ class studyActions extends sfActions
         $tron = new JsTron([
           'storyText' => rtxIndexOldStoriesFix::fixOldStoriesKanjiLinks($oStory->text)
         ]);
-        return $tron->renderJson($this);
+        return $this->renderJson($tron);
       }
     }
     elseif ($sRequest === 'star' || $sRequest === 'report')
@@ -707,7 +710,7 @@ class studyActions extends sfActions
       // [ uid, sid, vote, lastvote, stars, kicks ]
       $params = (array) StoryVotesPeer::voteStory(kk_get_user()->getUserId(), $sUid, $sSid, $sRequest === 'star');
       $tron = new JsTron($params);
-      return $tron->renderJson($this);
+      return $this->renderJson($tron);
     }
     
     throw new rtkAjaxException('Badrequest');
@@ -745,7 +748,7 @@ class studyActions extends sfActions
       $tron->set('knownKanji', kk_get_user()->getUserKnownKanji());
     }
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 
   // get Dictionary entries for given character, use cached data if possible
@@ -792,7 +795,7 @@ class studyActions extends sfActions
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 
   public function executeVocabdelete($request)
@@ -810,6 +813,6 @@ class studyActions extends sfActions
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 }

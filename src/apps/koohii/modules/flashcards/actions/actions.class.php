@@ -37,7 +37,7 @@ class flashcardsActions extends sfActions
     $tron = new JsTron();
     $tron->setStatus($status);
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 
   /**
@@ -100,6 +100,6 @@ class flashcardsActions extends sfActions
       }
     }
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 }

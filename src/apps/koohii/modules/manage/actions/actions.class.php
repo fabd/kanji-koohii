@@ -22,7 +22,8 @@ class manageActions extends sfActions
     if ($request->getMethod()===sfRequest::POST)
     {
       $tron = new JsTron();
-      return $tron->renderPartial($this, 'AddOrder');
+      $tron->setHtml($this->getPartial('AddOrder'));
+      return $this->renderJson($tron);
     }
   }
 
@@ -43,10 +44,11 @@ class manageActions extends sfActions
         }
 
         $tron = new JsTron();
-        return $tron->renderPartial($this, 'AddOrderConfirm', [
+        $tron->setHtml($this->getPartial('AddOrderConfirm', [
           'newCards' => $newCards,
           'countNewCards' => count($newCards)
-        ]);
+        ]));
+        return $this->renderJson($tron);
       }
       else
       {
@@ -85,10 +87,11 @@ class manageActions extends sfActions
     }
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'AddOrderProcess', [
+    $tron->setHtml($this->getPartial('AddOrderProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ]);
+    ]));
+    return $this->renderJson($tron);
   }
 
   public function executeAddcustom($request)
@@ -97,7 +100,8 @@ class manageActions extends sfActions
     if ($request->getMethod()===sfRequest::POST)
     {
       $tron = new JsTron();
-      return $tron->renderPartial($this, 'AddCustom');
+      $tron->setHtml($this->getPartial('AddCustom'));
+      return $this->renderJson($tron);
     }
   }
 
@@ -127,11 +131,12 @@ class manageActions extends sfActions
         }
 
         $tron = new JsTron();
-        return $tron->renderPartial($this, 'AddCustomConfirm', [
+        $tron->setHtml($this->getPartial('AddCustomConfirm', [
           'newCards' => $newCards,
           'countNewCards' => $countNewCards,
           'countExistCards' => $countExistCards
-        ]);
+        ]));
+        return $this->renderJson($tron);
       }
       else
       {
@@ -167,10 +172,11 @@ class manageActions extends sfActions
     }
     
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'AddCustomProcess', [
+    $tron->setHtml($this->getPartial('AddCustomProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ]);
+    ]));
+    return $this->renderJson($tron);
   }
 
   public function executeEditkeywords($request)
@@ -181,7 +187,8 @@ class manageActions extends sfActions
   public function executeEditKeywordsTable($request)
   {
     $tron = new JsTron();
-    return $tron->renderComponent($this, 'manage', 'EditKeywordsTable');
+    $tron->setHtml($this->getComponent('manage', 'EditKeywordsTable'));
+    return $this->renderJson($tron);
   }
 
   public function executeRemovelist($request)
@@ -196,7 +203,8 @@ class manageActions extends sfActions
       }
  
       $tron = new JsTron();      
-      return $tron->renderPartial($this, 'RemoveList');
+      $tron->setHtml($this->getPartial('RemoveList'));
+      return $this->renderJson($tron);
     }
     else
     {
@@ -210,7 +218,8 @@ class manageActions extends sfActions
     uiSelectionState::updateSelection(self::REMOVE_FLASHCARDS, 'rf', $request->getParameterHolder()->getAll());
 
     $tron = new JsTron();
-    return $tron->renderComponent($this, 'manage', 'RemoveListTable');
+    $tron->setHtml($this->getComponent('manage', 'RemoveListTable'));
+    return $this->renderJson($tron);
   }
 
   public function executeRemoveListConfirm($request)
@@ -223,10 +232,11 @@ class manageActions extends sfActions
     $cards = uiSelectionState::getSelection(self::REMOVE_FLASHCARDS)->getAll();
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'RemoveListConfirm', [
+    $tron->setHtml($this->getPartial('RemoveListConfirm', [
       'cards' => $cards,
       'count' => count($cards)
-    ]);
+    ]));
+    return $this->renderJson($tron);
   }
 
   public function executeRemoveListProcess($request)
@@ -247,10 +257,11 @@ class manageActions extends sfActions
     }
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'RemoveListProcess', [
+    $tron->setHtml($this->getPartial('RemoveListProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ]);
+    ]));
+    return $this->renderJson($tron);
   }
 
   public function executeRemovecustom($request)
@@ -259,7 +270,8 @@ class manageActions extends sfActions
     if ($request->getMethod()===sfRequest::POST)
     {
       $tron = new JsTron();
-      return $tron->renderPartial($this, 'RemoveCustom');
+      $tron->setHtml($this->getPartial('RemoveCustom'));
+      return $this->renderJson($tron);
     }
   }
 
@@ -280,10 +292,11 @@ class manageActions extends sfActions
         }
 
         $tron = new JsTron();
-        return $tron->renderPartial($this, 'RemoveCustomConfirm', [
+        $tron->setHtml($this->getPartial('RemoveCustomConfirm', [
           'cards' => $cards,
           'count' => count($cards)
-        ]);
+        ]));
+        return $this->renderJson($tron);
       }
       else
       {
@@ -319,10 +332,11 @@ class manageActions extends sfActions
     }
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'RemoveCustomProcess', [
+    $tron->setHtml($this->getPartial('RemoveCustomProcess', [
       'cards' => $cards,
       'count' => count($cards)
-    ]);
+    ]));
+    return $this->renderJson($tron);
   }
 
   public function executeImportKeywords($request)
@@ -341,12 +355,14 @@ class manageActions extends sfActions
           kk_get_user()->setAttribute('keywords', serialize($keywords));
 
           $tron = new JsTron();
-          return $tron->renderPartial($this, 'ImportKeywordsConfirm', ['keywords' => $keywords]);
+          $tron->setHtml($this->getPartial('ImportKeywordsConfirm', ['keywords' => $keywords]));
+          return $this->renderJson($tron);
         }
       }
 
       $tron = new JsTron();
-      return $tron->renderPartial($this, 'ImportKeywords');
+      $tron->setHtml($this->getPartial('ImportKeywords'));
+      return $this->renderJson($tron);
     }
   }
   
@@ -357,9 +373,10 @@ class manageActions extends sfActions
 
     // confirmed
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'ImportKeywordsProcess');
+    $tron->setHtml($this->getPartial('ImportKeywordsProcess'));
+    return $this->renderJson($tron);
   }
-  
+
   public function executeImportKeywordsProcess($request)
   {
     // cancel
@@ -384,9 +401,10 @@ class manageActions extends sfActions
     */
 
     $tron = new JsTron();
-    return $tron->renderPartial($this, 'ImportKeywordsProcess', [
+    $tron->setHtml($this->getPartial('ImportKeywordsProcess', [
       'importCount'  => $keywordList->getCount()
-    ]);
+    ]));
+    return $this->renderJson($tron);
   }
   
   /**

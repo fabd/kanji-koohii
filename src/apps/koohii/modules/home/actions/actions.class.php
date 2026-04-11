@@ -243,7 +243,8 @@ END;
   public function executeMemberslisttable($request)
   {
     $tron = new JsTron();
-    return $tron->renderComponent($this, 'home', 'MembersList');
+    $tron->setHtml($this->getComponent('home', 'MembersList'));
+    return $this->renderJson($tron);
   }
 
   /**

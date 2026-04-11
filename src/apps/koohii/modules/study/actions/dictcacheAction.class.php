@@ -38,6 +38,6 @@ class dictcacheAction extends sfAction
       'items' => $results[0] ?? []
     ]);
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 }

@@ -67,7 +67,8 @@ class reviewActions extends sfActions
 
     $tron = new JsTron();
 
-    return $tron->renderComponent($this, 'review', 'LeitnerChart');
+    $tron->setHtml($this->getComponent('review', 'LeitnerChart'));
+    return $this->renderJson($tron);
   }
 
   /**
@@ -376,6 +377,7 @@ class reviewActions extends sfActions
     $this->forward404Unless(BaseValidators::validateInteger($ts_start));
     $tron = new JsTron();
 
-    return $tron->renderComponent($this, 'review', 'summaryTable', ['ts_start' => $ts_start]);
+    $tron->setHtml($this->getComponent('review', 'summaryTable', ['ts_start' => $ts_start]));
+    return $this->renderJson($tron);
   }
 }

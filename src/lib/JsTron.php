@@ -1,12 +1,12 @@
 <?php
 /**
- * Wrapper for JSON communication, extends sfParameterHolder.
+ * Wrapper for JSON communication.
  * 
  * See TRON (tron.ts) for the front end side.
  *
  * 
  * Methods:
- *   set($name, $value)          Set properties of the message (cf. sfParameterHolder)
+ *   set($name, $value)          Set properties of the message.
  *   add($parameters)
  *   ...
  *
@@ -45,7 +45,7 @@
  * @author  Fabrice Denis
  */
 
-class JsTron extends sfParameterHolder
+class JsTron
 {
   /**
    * Status codes used by App.Helper.TRON (app.js)
@@ -62,22 +62,55 @@ class JsTron extends sfParameterHolder
     $errors      = [],
     $html        = '';
 
+  private array $props = [];
+
   /**
    * Constructor.
    *
-   * Create a JsonWrapper instance, optional properties set on creation.
-   * 
-   * @param  array  $parameters 
+   * Create a JsTron instance, optional properties set on creation.
+   *
+   * @param  array  $parameters
    *
    * @return void
    */
   public function __construct($parameters = [])
   {
-    parent::__construct();
-
     $this->status = self::STATUS_SUCCESS;
 
     $this->add($parameters);
+  }
+
+  /**
+   * Set a single message property.
+   *
+   * @param  string  $name
+   * @param  mixed   $value
+   * @return void
+   */
+  public function set($name, $value)
+  {
+    $this->props[$name] = $value;
+  }
+
+  /**
+   * Merge an array of message properties.
+   *
+   * @param  array  $parameters
+   * @return void
+   */
+  public function add($parameters)
+  {
+    $this->props = array_merge($this->props, $parameters);
+  }
+
+  /**
+   * Return all message properties.
+   *
+   * @return array
+   */
+  public function getAll(): array
+  {
+    return $this->props;
   }
 
   public function setStatus($status)

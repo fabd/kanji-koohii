@@ -55,7 +55,7 @@ class JsTron implements JsonSerializable
 
   private array $errors = [];
 
-  private string $html = '';
+  private ?string $html = null;
 
   private array $props = [];
 
@@ -133,7 +133,7 @@ class JsTron implements JsonSerializable
     $this->html = $html;
   }
 
-  public function getHtml(): string
+  public function getHtml(): ?string
   {
     return $this->html;
   }
@@ -144,7 +144,7 @@ class JsTron implements JsonSerializable
     $obj->status = $this->getStatus();
     $obj->props = $this->getAll();
 
-    if ($this->html !== '') {
+    if ($this->html !== null) {
       $obj->html = $this->getHtml();
     }
 

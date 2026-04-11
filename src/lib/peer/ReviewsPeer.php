@@ -292,10 +292,10 @@ class ReviewsPeer extends coreDatabaseTable
 
   /**
    * Return count of expired flashcards (except failed cards) for user.
-   * 
-   * @param
-   * 
-   * @return
+   *
+   * @param  int  $userId
+   *
+   * @return int
    */
   public static function getCountExpired($userId)
   {
@@ -307,10 +307,11 @@ class ReviewsPeer extends coreDatabaseTable
 
   /**
    * Return count of untested flashcards for user.
-   * 
+   *
+   * @param  int     $userId
    * @param  string  $filter  See filterByRtk()
-   * 
-   * @return
+   *
+   * @return int
    */
   public static function getCountUntested($userId, $filter = '')
   {
@@ -364,10 +365,7 @@ class ReviewsPeer extends coreDatabaseTable
     foreach ($rows as $row) {
       $boxNr = (int) ($row['box'] - 1);
 
-      assert($boxNr >= 0, "LeitnerBox number is invalid!");
-      if ($boxNr < 0) {
-        throw new sfException("Invalid LeitnerBox number: {$row['box']} for user {$userId}");
-      }
+      assert($boxNr >= 0, "LeitnerBox number is invalid: {$row['box']} for user {$userId}");
 
       $pile = $row['due'] ? 'expired_cards' : 'fresh_cards';
       $boxes[$boxNr][$pile] += $row['count'];
@@ -428,13 +426,14 @@ class ReviewsPeer extends coreDatabaseTable
 
   /**
    * Returns Select for detailed flashcard lists.
-   * 
+   *
    * Used on:
    * - Detailed Flashcard List
    * - Manage Flashcards > Select flashcards to remove (RemoveListTableComponent)
-   * 
-   * @param
-   * @return
+   *
+   * @param  int  $userId
+   *
+   * @return coreDatabaseSelect
    */
   public static function getSelectForDetailedList($userId)
   {
@@ -489,7 +488,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = CustkeywordsPeer::addCustomKeywordJoinUsing($select);
     $select = VocabPicksPeer::addVocabPicksLeftJoinUsing($select);
-    $select->order('seq_nr', 'ASC');
+    $select->order('seq_nr ASC');
     $select = self::filterByUserId($select, $userId);
 // DBG::out($select);exit;
     return $select;
@@ -594,8 +593,6 @@ class ReviewsPeer extends coreDatabaseTable
   /**
    * Return array of cards with the day diff for each due card over the next N
    * days.
-   *
-   * @param   int     $userId
    *
    * @return  array   Array of day diffs (1 column), or empty array
    */
@@ -741,9 +738,10 @@ class ReviewsPeer extends coreDatabaseTable
 
   /**
    * Return count of failed kanji for user.
-   * 
-   * @param
-   * @return
+   *
+   * @param  int  $userId
+   *
+   * @return int
    */
   public static function getRestudyKanjiCount($userId)
   {

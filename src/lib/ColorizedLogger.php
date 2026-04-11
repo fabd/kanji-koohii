@@ -140,6 +140,15 @@ class LOG
     ]);
   }
 
+  public static function session() {
+    self::inst()->output([
+      'msg' => "LOG::Session()",
+      'tag' => ' SESSION ',
+      'var' => $_SESSION,
+    ]);
+
+  }
+
   /**
    * Write to log file with colorized output.
    */

@@ -41,7 +41,7 @@ class rtkAjaxException extends sfException
       // send back global error message
       $tron = new JsTron();
       $tron->setStatus(JsTron::STATUS_FAILED);
-      $tron->setError($message);
+      $tron->addError($message);
       echo json_encode($tron);
     }
 

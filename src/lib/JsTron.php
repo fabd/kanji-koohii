@@ -18,7 +18,7 @@
  *
  *   $tron = new JsTron();
  *   $tron->set("foo", 123);
- *   $tron->setError('Session expired. Please log in.');
+ *   $tron->addError('Session expired. Please log in.');
  *   $this->renderJson($tron);
  *
  * Example action that returns a partial in a JSON message:
@@ -36,7 +36,7 @@
  *   set($name, $value)          Set one property of the message (props).
  *   add($parameters)            Set multiple properties (props)
  *   setStatus($status)          Set the status ( FAILED, SUCCESS, PROGRESS )
- *   setError($message)          Adds an error message (can be called multiple times)
+ *   addError($message)          Adds an error message (can be called multiple times)
  *   setHtml($html)              Sets the html property
  */
 class JsTron implements JsonSerializable
@@ -106,20 +106,9 @@ class JsTron implements JsonSerializable
     return $this->status;
   }
 
-  public function setError(string $message): void
+  public function addError(string $message): void
   {
     $this->errors[] = $message;
-  }
-
-  /**
-   * Set errors from the Request errors (eg. from form validation).
-   */
-  public function setErrorsFromRequest(coreRequest $request): void
-  {
-    $errors = $request->getErrors();
-    foreach ($errors as $key => $message) {
-      $this->setError($message);
-    }
   }
 
   public function getErrors(): array

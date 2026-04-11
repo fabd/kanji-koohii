@@ -86,7 +86,7 @@ class flashcardsActions extends sfActions
       if ($action === "delete") {
         $result = ReviewsPeer::deleteSelection($userId, [$ucsId]);
         if (empty($result)) {
-          $tron->setError("Error deleting flashcard.");
+          $tron->addError("Error deleting flashcard.");
           $tron->setStatus(JsTron::STATUS_FAILED);
         }
       }
@@ -94,7 +94,7 @@ class flashcardsActions extends sfActions
       if ($action === "restudy") {
         $result = ReviewsPeer::failFlashcard($userId, $ucsId);
         if (!$result) {
-          $tron->setError("Woops. Could not update flashcard.");
+          $tron->addError("Woops. Could not update flashcard.");
           $tron->setStatus(JsTron::STATUS_FAILED);
         }
       }

@@ -307,7 +307,7 @@ class studyActions extends sfActions
     {
       $throttler->setTimeout();
 
-      $tron->setError('<p>Please allow a couple seconds when paging through the stories. This '.
+      $tron->addError('<p>Please allow a couple seconds when paging through the stories. This '.
                       'helps us improve the website response time of the Study pages. Thanks! =)</p>');
       $tron->setStatus(JsTron::STATUS_FAILED);
 
@@ -382,7 +382,7 @@ class studyActions extends sfActions
     {
       $throttler->setTimeout();
 
-      $tron->setError('<p>Please allow at least one second when paging through the stories. This '.
+      $tron->addError('<p>Please allow at least one second when paging through the stories. This '.
                       'helps us improve the website response time of the Study pages. Thanks! =)</p>');
       $tron->setStatus(JsTron::STATUS_FAILED);
 
@@ -476,14 +476,14 @@ class studyActions extends sfActions
 
       // disallow markup
       if ($postStoryEdit !== strip_tags($postStoryEdit)) {
-        $tron->setError('HTML markup (tags) formatting not allowed in stories.');
+        $tron->addError('HTML markup (tags) formatting not allowed in stories.');
         return $this->renderJson($tron);
       }
   // $this->forward404();
       
       // validate kanji links within story
       if (true !== ($errorMsg = rtkStory::validateKanjiLinks($postStoryEdit))) {
-        $tron->setError($errorMsg);
+        $tron->addError($errorMsg);
         return $this->renderJson($tron);
       }
 
@@ -501,7 +501,7 @@ class studyActions extends sfActions
         $count = mb_strlen($postStoryEdit);
         if ($count > rtkStory::MAXIMUM_STORY_LENGTH) {
           $n = $count - rtkStory::MAXIMUM_STORY_LENGTH;
-          $tron->setError(sprintf('Story is too long (512 characters maximum, %d over the limit).', $n));
+          $tron->addError(sprintf('Story is too long (512 characters maximum, %d over the limit).', $n));
           return $this->renderJson($tron);
         }
 
@@ -510,7 +510,7 @@ class studyActions extends sfActions
 
         if (true !== StoriesPeer::updateStory($userId, $ucsId, ['text' => $postStoryEdit, 'public' => (int) $postStoryPublic]))
         {
-          $tron->setError("Woops, the story couldn't be saved. Try again in a few moments.");
+          $tron->addError("Woops, the story couldn't be saved. Try again in a few moments.");
           return $this->renderJson($tron);
         }
       }
@@ -633,7 +633,7 @@ class studyActions extends sfActions
     
         // add validation errors to the TRON response
         if ($request->hasErrors()) {
-          $tron->setErrorsFromRequest($request);
+          $tron->addErrorsFromRequest($request);
           $tron->setStatus(JsTron::STATUS_FAILED);
         }
 
@@ -645,7 +645,7 @@ class studyActions extends sfActions
           }
           else
           {
-            $tron->setError('Oops, update failed.');
+            $tron->addError('Oops, update failed.');
             $tron->setStatus(JsTron::STATUS_FAILED);
           }
         }
@@ -791,7 +791,7 @@ class studyActions extends sfActions
     $tron = new JsTron();
 
     if (true !== VocabPicksPeer::link($userId, $ucsId, $dictId)) {
-      $tron->setError('Oops, update failed.');
+      $tron->addError('Oops, update failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
 
@@ -809,7 +809,7 @@ class studyActions extends sfActions
     $tron = new JsTron();
 
     if (true !== VocabPicksPeer::unlink($userId, $ucsId /*, $dictId*/)) {
-      $tron->setError('Oops, delete failed.');
+      $tron->addError('Oops, delete failed.');
       $tron->setStatus(JsTron::STATUS_FAILED);
     }
 

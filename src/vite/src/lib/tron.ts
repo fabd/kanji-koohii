@@ -40,12 +40,8 @@ import Lang from "@lib/lang";
 // TRON message was not found in given source
 export enum STATUS {
   EMPTY = -1,
-  // a form submission contains errors, or a blocker (do not close ajax dialog)
   FAILED = 0,
-  // a form is submitted succesfully, proceed (eg. close ajax dialog)
   SUCCESS = 1,
-  // a form submitted succesfully, and continues with another step
-  PROGRESS = 2,
 }
 
 export type TronProps = Dictionary<unknown>;

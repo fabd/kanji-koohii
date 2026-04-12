@@ -35,21 +35,17 @@
  *
  *   set($name, $value)          Set one property of the message (props).
  *   add($parameters)            Set multiple properties (props)
- *   setStatus($status)          Set the status ( FAILED, SUCCESS, PROGRESS )
+ *   setStatus($status)          Set the status ( FAILED, SUCCESS )
  *   addError($message)          Adds an error message (can be called multiple times)
  *   setHtml($html)              Sets the html property
  */
 class JsTron implements JsonSerializable
 {
   /**
-   * Status codes used by App.Helper.TRON (app.js).
+   * Keep in sync with client-side tron.ts
    */
-  // a form submission contains errors, or a blocker (do not close ajax dialog)
   public const STATUS_FAILED = 0;
-  // a form is submitted succesfully, proceed (eg. close ajax dialog)
   public const STATUS_SUCCESS = 1;
-  // a form submitted succesfully, and continues with another step
-  public const STATUS_PROGRESS = 2;
 
   private int $status;
 
@@ -97,7 +93,7 @@ class JsTron implements JsonSerializable
 
   public function setStatus(int $status): void
   {
-    assert($status === self::STATUS_FAILED || $status === self::STATUS_SUCCESS || $status === self::STATUS_PROGRESS);
+    assert($status === self::STATUS_FAILED || $status === self::STATUS_SUCCESS);
     $this->status = $status;
   }
 

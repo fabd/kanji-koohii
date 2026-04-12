@@ -592,7 +592,6 @@ class studyActions extends sfActions
     $custom_keyword = CustkeywordsPeer::getCustomKeyword(kk_get_user()->getUserId(), $chardata->ucs_id);
 
     $tron = new JsTron();
-    $tron->setStatus(JsTron::STATUS_PROGRESS);
 
     if ($request->getMethod() !== sfRequest::POST)
     {

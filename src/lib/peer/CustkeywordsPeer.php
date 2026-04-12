@@ -1,26 +1,24 @@
 <?php
 /**
  * Custom Keywords - this table stores user's edited keywords.
- * 
+ *
  * Methods:
  *   getCustomKeyword($userId, $ucsId)
- * 
+ *
  *   getCoalescedKeyword($userId, $ucsId)
  *   getCoalescedKeywords($userid)
- * 
+ *
  *   updateCustomKeyword($userId, $ucsId, $keyword)
  *   deleteCustomKeyword($userId, $ucsId)
- * 
+ *
  *   importList($userId, array $keywords, $request)
- * 
+ *
  *   getUserKeywordsMapJS($userId, array $ucsIds = [])
- * 
+ *
  * Helpers:
  *   coalesceExpr()
  *   addCustomKeywordJoin($select, $userId)
- * 
  */
-
 class CustkeywordsPeer extends coreDatabaseTable
 {
   protected $tableName = 'custkeywords';
@@ -30,6 +28,7 @@ class CustkeywordsPeer extends coreDatabaseTable
 
   /**
    * This function must be copied in each peer class.
+   *
    * @return self
    */
   public static function getInstance()
@@ -39,17 +38,16 @@ class CustkeywordsPeer extends coreDatabaseTable
 
   /**
    * Return custom keyword if edited by user, or null.
-   * 
-   * @param  int   $userId
-   * @param  int   $ucsId    UCS-2 code value.
    *
-   * @return ?string
+   * @param int $userId
+   * @param int $ucsId  UCS-2 code value
    */
   public static function getCustomKeyword($userId, $ucsId): ?string
   {
     $select = self::getInstance()->select('keyword')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
-//DBG::out($select);
+    // DBG::out($select);
     $keyword = self::getInstance()->getDb()->fetchOne($select);
+
     return (false !== $keyword) ? $keyword : null;
   }
 
@@ -57,10 +55,10 @@ class CustkeywordsPeer extends coreDatabaseTable
    * Returns coalesced (customkeyword, default keyword) for given user and
    * character.
    *
-   * @param  int     $userId
-   * @param  int     $ucsId    UCS-2 code value.
+   * @param int $userId
+   * @param int $ucsId  UCS-2 code value
    *
-   * @return mixed   Keyword (string) or null if not a Heisig character.
+   * @return mixed keyword (string) or null if not a Heisig character
    */
   public static function getCoalescedKeyword($userId, $ucsId)
   {
@@ -69,6 +67,7 @@ class CustkeywordsPeer extends coreDatabaseTable
     $select = self::addCustomKeywordJoin($select, $userId);
     $select->where('kanjis.ucs_id = ?', $ucsId);
     $keyword = $db->fetchOne($select);
+
     return (false !== $keyword) ? $keyword : null;
   }
 
@@ -78,9 +77,9 @@ class CustkeywordsPeer extends coreDatabaseTable
    * FIXME  The non-limited query returns Heisig characters for now to avoid
    *        pulling 12559 rows (atm, only Heisig kanji can have cust. keyw).
    *
-   * @param   int     $userId
+   * @param int $userId
    *
-   * @return array   Associative array:  ucs_id => (ucs_id, seq_nr, keyword)
+   * @return array Associative array:  ucs_id => (ucs_id, seq_nr, keyword)
    */
   public static function getCoalescedKeywords($userId)
   {
@@ -102,34 +101,35 @@ class CustkeywordsPeer extends coreDatabaseTable
     $rows = $db->fetchAll($select);
 
     $keywords = array_column($rows, null, 'ucs_id');
-// LOG::info($keywords);
-// LOG::info(count($keywords));
+    // LOG::info($keywords);
+    // LOG::info(count($keywords));
 
     return $keywords;
   }
 
   /**
    * Updates custom keyword.
-   * 
-   * @param  int    $userId 
-   * @param  int    $ucsId    UCS-2 code value.
-   * @param  string $keyword  Custom keyword string (must be sanitized!)
    *
-   * @return boolean  Returns true if succesfull.
+   * @param int    $userId
+   * @param int    $ucsId   UCS-2 code value
+   * @param string $keyword Custom keyword string (must be sanitized!)
+   *
+   * @return bool returns true if succesfull
    */
   public static function updateCustomKeyword($userId, $ucsId, $keyword)
   {
-    $data  = ['keyword' => $keyword];
+    $data = ['keyword' => $keyword];
+
     return self::getInstance()->replace($data, ['userid' => $userId, 'ucs_id' => $ucsId]);
   }
 
   /**
-   * Delete
-   * 
-   * @param  int    $userId 
-   * @param  int    $ucsId    UCS-2 code value.
+   * Delete.
    *
-   * @return boolean  Returns true if succesfull.
+   * @param int $userId
+   * @param int $ucsId  UCS-2 code value
+   *
+   * @return bool returns true if succesfull
    */
   public static function deleteCustomKeyword($userId, $ucsId)
   {
@@ -138,12 +138,12 @@ class CustkeywordsPeer extends coreDatabaseTable
 
   /**
    * Import a selection of custom keywords.
-   * 
-   * @param  int   $userId 
-   * @param  array $keywords   Assoc array (ucs_id => keyword)
-   * @param  coreRequest  $request    Request object to set errors
    *
-   * @return bool  True on success, false if any error occurs.
+   * @param int         $userId
+   * @param array       $keywords Assoc array (ucs_id => keyword)
+   * @param coreRequest $request  Request object to set errors
+   *
+   * @return bool true on success, false if any error occurs
    */
   public static function importList($userId, array $keywords, $request)
   {
@@ -155,49 +155,43 @@ class CustkeywordsPeer extends coreDatabaseTable
     $colUcs = array_flip(array_map('intval', $colUcs));
 
     // ~160ms for 2043 keywords
-    //sfProjectConfiguration::getActive()->profileStart();
+    // sfProjectConfiguration::getActive()->profileStart();
 
     // lock the table (to speedup index) (minimal speed gain..)
-    $db->query("LOCK TABLE $tableName WRITE");
+    $db->query("LOCK TABLE {$tableName} WRITE");
 
-    try
-    {
-      // we must set created_on 
-      $updateStmt = new coreDatabaseStatementMySQL($db, "UPDATE $tableName SET keyword = ? WHERE userid = $userId AND ucs_id = ?");
-      $insertStmt = new coreDatabaseStatementMySQL($db, "INSERT $tableName (userid, ucs_id, keyword, created_on, updated_on) VALUES ($userId,?,?,NOW(),NOW())");
+    try {
+      // we must set created_on
+      $updateStmt = new coreDatabaseStatementMySQL($db, "UPDATE {$tableName} SET keyword = ? WHERE userid = {$userId} AND ucs_id = ?");
+      $insertStmt = new coreDatabaseStatementMySQL($db, "INSERT {$tableName} (userid, ucs_id, keyword, created_on, updated_on) VALUES ({$userId},?,?,NOW(),NOW())");
 
-      foreach ($keywords as $ucsId => $keyword)
-      {
+      foreach ($keywords as $ucsId => $keyword) {
         // if user already has custom keyword, do an UPDATE...
-        if (isset($colUcs[$ucsId]))
-        {
-          if (!$updateStmt->execute([$keyword, $ucsId]))
-          {
+        if (isset($colUcs[$ucsId])) {
+          if (!$updateStmt->execute([$keyword, $ucsId])) {
             $request->setError('x', 'Update error on "'.$keyword.'"');
+
             return false;
           }
-        }
-        else
-        {
-          if (!$insertStmt->execute([$ucsId, $keyword]))
-          {
+        } else {
+          if (!$insertStmt->execute([$ucsId, $keyword])) {
             $request->setError('x', 'Database insert error on "'.$keyword.'"');
+
             return false;
           }
         }
       }
-    }
-    catch (sfException $e)
-    {
+    } catch (sfException $e) {
       $request->setError('x', 'Database error.');
+
       return false;
     }
 
     // unlock table
     $db->query('UNLOCK TABLES');
 
-    //$t=sfProjectConfiguration::getActive()->profileEnd();
-    //DBG::out("time $t  done: $done");exit;
+    // $t=sfProjectConfiguration::getActive()->profileEnd();
+    // DBG::out("time $t  done: $done");exit;
 
     return true;
   }
@@ -207,10 +201,10 @@ class CustkeywordsPeer extends coreDatabaseTable
    * user's customized keywords.
    *
    * Each returned row contains: 'framenum', 'kanji', 'keyword'.
-   * 
-   * @param  int  $userid
    *
-   * @return array  Hash of ... framenum => array(   )
+   * @param mixed $userId
+   *
+   * @return array Hash of ... framenum => array(   )
    */
   /*public static function getExportKeywords($userid)
   {
@@ -234,29 +228,30 @@ class CustkeywordsPeer extends coreDatabaseTable
 
   /**
    * Return *only* the user's customized keywords (not coalesced).
-   * 
+   *
    * Returns a map used by the front end components. The front end handles
    * itself "coalescing" custom with original keywords (the main reason for
    * that is that we already have the static keywords file for Old/New editions
    * and custom keywords are in many cases a smaller diff).
    *
-   * @param int $userId
-   * @param int[] $ucsIds   (optional) subset of flashcard ids to match
-   * 
-   * @return array   User's edited keywords as a map: [[ucsId, keyword], ...]
+   * @param int   $userId
+   * @param int[] $ucsIds (optional) subset of flashcard ids to match
+   *
+   * @return array User's edited keywords as a map: [[ucsId, keyword], ...]
    */
   public static function getUserKeywordsMapJS($userId, array $ucsIds = [])
   {
     $select = self::getInstance()
       ->select(['ucs_id', 'keyword'])
-      ->where('userid = ?', $userId);
+      ->where('userid = ?', $userId)
+    ;
 
     if (count($ucsIds)) {
       $select->whereIn('ucs_id', $ucsIds);
     }
 
     $keywords = [];
-    
+
     $db = self::getInstance()->getDb();
 
     $rows = $db->fetchAll($select);
@@ -272,7 +267,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    *
    *  => 'COALESCE(custkeywords.keyword, kanjis.keyword)'
    *
-   * @return  string
+   * @return string
    */
   public static function coalesceExpr()
   {
@@ -288,8 +283,8 @@ class CustkeywordsPeer extends coreDatabaseTable
    * Assumes the query already includes the kanjis table and userid in the WHERE clause.
    *
    * @param coreDatabaseSelect $select
-   * @param  int  $userId  Match all cust keywords
-   * 
+   * @param int                $userId Match all cust keywords
+   *
    * @return coreDatabaseSelect
    */
   public static function addCustomKeywordJoin($select, $userId)
@@ -308,14 +303,14 @@ class CustkeywordsPeer extends coreDatabaseTable
 
     return $select;
   }
-  
+
   /**
    * Probably a marginal upgrade to the LEFT JOIN version - but allows for
    * less code & shorter SQL query.
-   * 
+   *
    * Interestingly, EXPLAIN shows "Using where" when using LEFT JOIN,
    *  but not when using LEFT JOIN .. USING (..).
-   * 
+   *
    * @param coreDatabaseSelect $select
    *
    * @return coreDatabaseSelect

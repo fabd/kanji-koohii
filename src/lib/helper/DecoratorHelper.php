@@ -1,7 +1,7 @@
 <?php
 /**
- * DecoratorHelper
- * 
+ * DecoratorHelper.
+ *
  *   Simple decorator template mechanism to wrap a section or entire view with another
  *   template.
  *
@@ -25,6 +25,8 @@
  *   ... some html ...
  *   ... decorate_end()
  *
+ * @param mixed $name
+ * @param mixed $vars
  */
 
 // start buffering section of the view that will be surrounded by the decorator
@@ -46,6 +48,6 @@ function decorate_end()
 
   // vars for the decorator
   extract($vars, EXTR_REFS);
-  require(sfConfig::get('sf_app_template_dir').DIRECTORY_SEPARATOR.$template);
-}
 
+  require sfConfig::get('sf_app_template_dir').DIRECTORY_SEPARATOR.$template;
+}

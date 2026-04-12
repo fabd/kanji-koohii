@@ -2,41 +2,40 @@
 
 <?php
   // build rows per page widget
-  if ($pager->getMaxPerPage())
-  {
+  if ($pager->getMaxPerPage()) {
     $links = [];
-    foreach($pager->getMaxPerPageLinks() as $n) {
+    foreach ($pager->getMaxPerPageLinks() as $n) {
       $links[] = $pager->getMaxPerPageUrl($n);
     }
 
     $active = array_search($pager->getMaxPerPage(), $pager->getMaxPerPageLinks());
 
-    echo ui_filter_std('Rows:', $links, $active!==false ? ['active' => $active] : []);
+    echo ui_filter_std('Rows:', $links, $active !== false ? ['active' => $active] : []);
   }
 ?>
 
   <ul class="uiPager">
     <?php if ($p = $pager->getPreviousPage()): ?>
-    <li class="prev"><?php echo $pager->getPageLink($p, '&laquo;&nbsp;Previous') ?></li>
+    <li class="prev"><?= $pager->getPageLink($p, '&laquo;&nbsp;Previous'); ?></li>
   <?php else: ?>
     <li class="prev disabled">&laquo;&nbsp;Previous</li>
-  <?php endif ?>
+  <?php endif; ?>
     
-  <?php foreach($pager->getLinks() as $p): ?>
-    <?php if ($p===false): ?>
+  <?php foreach ($pager->getLinks() as $p): ?>
+    <?php if ($p === false): ?>
       <li class="etc">&hellip;</li>
-    <?php elseif ($p==$pager->getPage()): ?>
-      <li class="active"><?php echo $p ?></li>
+    <?php elseif ($p == $pager->getPage()): ?>
+      <li class="active"><?= $p; ?></li>
     <?php else: ?>
-      <li><?php echo $pager->getPageLink($p) ?></li>
-    <?php endif ?>
-  <?php endforeach ?>
+      <li><?= $pager->getPageLink($p); ?></li>
+    <?php endif; ?>
+  <?php endforeach; ?>
 
     <?php if ($p = $pager->getNextPage()): ?>
-    <li class="next"><?php echo $pager->getPageLink($p, 'Next&nbsp;&raquo;') ?></li>
+    <li class="next"><?= $pager->getPageLink($p, 'Next&nbsp;&raquo;'); ?></li>
   <?php else: ?>
     <li class="next disabled">Next&nbsp;&raquo;</li>
-  <?php endif ?>
+  <?php endif; ?>
   </ul>
   
   <div class="clear-both"></div>

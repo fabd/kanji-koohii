@@ -7,7 +7,7 @@
  *
  *
  * Provides flags to set the application and environment in which the script will run.
- * 
+ *
  * Features:
  *   - GNU convention: any arguments following -- must be treated as non-option arguments.
  *     For example: "rm -- -filename-with-dash".
@@ -46,12 +46,11 @@
  *
  * Utility methods:
  *   getRelativePathFrom($path, $base)
- * 
+ *
  * @see     http://framework.zend.com/manual/1.12/en/zend.console.getopt.rules.html
- * 
+ *
  * @author  Fabrice Denis
  */
-
 define('SF_ROOT_DIR', realpath(dirname(__FILE__).'/../..'));
 define('SF_LIB_DIR', realpath(dirname(__FILE__).'/../vendor/symfony/lib'));
 
@@ -62,35 +61,32 @@ define('DEFAULT_ENV', 'dev');
 // Zend/Console/GetOpt
 define('ZEND_LIB_DIR', SF_ROOT_DIR.'/lib/vendor');
 set_include_path(ZEND_LIB_DIR.PATH_SEPARATOR.get_include_path());
-require_once(ZEND_LIB_DIR.'/Zend/Loader.php');
+
+require_once ZEND_LIB_DIR.'/Zend/Loader.php';
 spl_autoload_register(['Zend_Loader', 'autoload']);
 
 // Console colour output
-require_once(SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php');
+require_once SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php';
 
 // Composer
-require_once(SF_ROOT_DIR.'/vendor/autoload.php'); 
-
+require_once SF_ROOT_DIR.'/vendor/autoload.php';
 
 class Command_CLI
 {
-  protected
-    $isVerbose = false,
-    $opts      = null,
-    $formatter = null;
+  protected $isVerbose = false;
+  protected $opts;
+  protected $formatter;
 
-  const
-    /**
+  public const
+    /*
      * Used with rtrim() or ltrim() to clean the ends of path names.
      */
-    SLASHES_WHITESPACE  = " \t\n\r\\/";
+    SLASHES_WHITESPACE = " \t\n\r\\/";
 
   /**
-   * Remember to call parent::__construct() first when you override this! 
-   * 
-   * @param  array $zend_getopt   Options for Zend_Console_Getopt
+   * Remember to call parent::__construct() first when you override this!
    *
-   * @return void
+   * @param array $zend_getopt Options for Zend_Console_Getopt
    */
   public function __construct(array $zend_getopt)
   {
@@ -100,33 +96,30 @@ class Command_CLI
 
     // add the help option
     $zend_getopt = array_merge($zend_getopt, [
-      'help|h'      => 'Show help',
-      'verbose|v'   => 'Verbose mode (show more information)',
-      'app-s'       => 'Sets CORE_APP (defaults to "'.DEFAULT_APP.'")',
-      'env-s'       => 'Sets CORE_ENVIRONMENT (defaults to "'.DEFAULT_ENV.'")'
+      'help|h' => 'Show help',
+      'verbose|v' => 'Verbose mode (show more information)',
+      'app-s' => 'Sets CORE_APP (defaults to "'.DEFAULT_APP.'")',
+      'env-s' => 'Sets CORE_ENVIRONMENT (defaults to "'.DEFAULT_ENV.'")',
     ]);
 
     $this->opts = new Zend_Console_Getopt($zend_getopt);
 
-#$db = kk_get_database();
-#echo get_class($db);exit;
-
+    // $db = kk_get_database();
+    // echo get_class($db);exit;
 
     // parse command line
-    try
-    {
+    try {
       $this->opts->parse();
-    }
-    catch (Zend_Console_Getopt_Exception $e)
-    {
+    } catch (Zend_Console_Getopt_Exception $e) {
       echo $e->getUsageMessage();
+
       exit;
     }
 
-    if ($this->getFlag('help') || !$this->hasArgs())
-    {
+    if ($this->getFlag('help') || !$this->hasArgs()) {
       echo $this->opts->getUsageMessage();
-      exit();
+
+      exit;
     }
 
     $opt_app = $this->getFlag('app', DEFAULT_APP);
@@ -134,17 +127,14 @@ class Command_CLI
     $opt_debug = true;
 
     // bootstrap symfony app configuration
-    try
-    {
-      require_once(SF_ROOT_DIR.'/config/ProjectConfiguration.class.php');
+    try {
+      require_once SF_ROOT_DIR.'/config/ProjectConfiguration.class.php';
       $configuration = ProjectConfiguration::getApplicationConfiguration($opt_app, $opt_env, $opt_debug);
       sfContext::createInstance($configuration);
 
       // $statusCode = 1; //$application->run();
-    }
-    catch (Exception $e)
-    {
-      //$application->renderException($e);
+    } catch (Exception $e) {
+      // $application->renderException($e);
       echo $e->getMessage()."\n";
       $statusCode = $e->getCode();
 
@@ -158,7 +148,10 @@ class Command_CLI
 
   /**
    * This should be overridden, included as a template.
-   * 
+   *
+   * @param mixed      $name
+   * @param mixed|null $default
+   *
    * @return string
    */
   /*
@@ -183,8 +176,8 @@ class Command_CLI
 
     $options = array_merge($help['options'], array(
       'v'     => 'Verbose mode (off by default)',
-      'app'   => 
-      'env'   => 
+      'app'   =>
+      'env'   =>
     ));
 
     // print out list of flags
@@ -201,101 +194,85 @@ class Command_CLI
 
   /**
    * Return command line option, or default value.
-   * 
-   * Throws error if option is undefined and no default value is provided. 
-   * 
+   *
+   * Throws error if option is undefined and no default value is provided.
+   *
    * @param string $name
-   * @param mixed $default
+   * @param mixed  $default
+   *
    * @return mixed
    */
   public function getFlag($name, $default = null)
   {
     $value = $this->opts->getOption($name);
+
     return null !== $value ? $value : $default;
   }
 
-
   /**
    * Returns true if there are any arguments on the command line.
-   * 
-   * @return boolean
+   *
+   * @return bool
    */
   public function hasArgs()
   {
     $args = $this->opts->toArray();
+
     return count($args) > 0;
   }
 
   /**
    * Prints out sprintf style error message to STDERR and exits.
-   * 
-   * @param string $message
-   * @param mixed  $arguments   Variable number of sprintf style arguments
-   *
-   * @return void
    */
   public function throwError()
   {
     $args = func_get_args();
 
     // skip sprintf can avoid some formatting issues with sprintf characters
-    $message = (count($args) > 1 ? call_user_func_array('sprintf', $args) : $args[0]) . "\n";
+    $message = (count($args) > 1 ? call_user_func_array('sprintf', $args) : $args[0])."\n";
 
     $this->formatter->setForeground('red');
     $this->formatter->setOption('bold');
 
     fwrite(STDERR, $this->formatter->apply($message));
+
     exit(-1);
   }
-  
+
   /**
    * If verbose flag is set, prints a sprintf style message, otherwise do nothing.
-   *
-   * @param string $message
-   * @param mixed  $arguments   Variable number of sprintf style arguments
-   * 
-   * @return void
    */
   public function verbose()
   {
     $args = func_get_args();
-    if ($this->isVerbose)
-    {
-      $message = call_user_func_array('sprintf', $args) . "\n";
+    if ($this->isVerbose) {
+      $message = call_user_func_array('sprintf', $args)."\n";
       fwrite(STDERR, $message);
     }
   }
 
-  
   /**
-   * Print a message to the console. "echof" as in "printf style echo"
-   * 
-   * @param string $message
-   * @param mixed  $arguments   Variable number of sprintf style arguments
-   * 
-   * @return void
-
+   * Print a message to the console. "echof" as in "printf style echo".
    */
   public function echof()
   {
     $args = func_get_args();
-    $message = call_user_func_array('sprintf', $args) . "\n";
+    $message = call_user_func_array('sprintf', $args)."\n";
     fwrite(STDERR, $message);
   }
 
   /**
    * Return a relative path from an absolute path, given the base path.
-   * 
-   * @param  string $path  Fully qualified source path, can include filename
-   * @param  string $base  Fully qualified base path (no filename)
    *
-   * @return string        Relative path, without leading separator
+   * @param string $path Fully qualified source path, can include filename
+   * @param string $base Fully qualified base path (no filename)
+   *
+   * @return string Relative path, without leading separator
    */
   public function getRelativePathFrom($path, $base)
   {
     $pos = strpos($path, $base);
-    if ($pos === false || $pos !== 0)
-    {
+    if ($pos === false || $pos !== 0) {
       $this->throwError('getRelativePathFrom() path (%s) does not start with base (%s)', $path, $base);
     }
 
@@ -307,7 +284,7 @@ class Command_CLI
   /**
    * Tweak the environment to make the PHP CGI binary behave more or less
    * the same way as the CLI binary.
-   * 
+   *
    * Things to whatch for:
    * - It changes automatically the current working directory to the running script (php -C)
    * - It outputs headers (php -q)
@@ -316,9 +293,8 @@ class Command_CLI
    */
   private function fixCGICompatiblity()
   {
-    //echo 'fixCGICompatiblity()'.php_sapi_name()."\n";
-    if (version_compare(PHP_VERSION, '4.3.0', '<') || substr(php_sapi_name(), 0, 3) === 'cgi')
-    {
+    // echo 'fixCGICompatiblity()'.php_sapi_name()."\n";
+    if (version_compare(PHP_VERSION, '4.3.0', '<') || substr(php_sapi_name(), 0, 3) === 'cgi') {
       // Handle output buffering
       @ob_end_flush();
       ob_implicit_flush(true);
@@ -336,9 +312,14 @@ class Command_CLI
 
       // Close the streams on script termination
       register_shutdown_function(
-        function () { fclose(STDIN); fclose(STDOUT); fclose(STDERR); return true; }
+        function () {
+          fclose(STDIN);
+          fclose(STDOUT);
+          fclose(STDERR);
+
+          return true;
+        }
       );
     }
   }
 }
-

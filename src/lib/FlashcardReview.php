@@ -22,9 +22,9 @@
  *   getInstance()
  *   config($options)             optional get/put handlers (cf. below)
  *   start()                      clear the cached answers at start of review
- * 
+ *
  *   handleRequest($request)      handle request object sent by FlashcardReview.ts
- * 
+ *
  *   getCachedAnswers()
  *   getStats()
  *
@@ -74,7 +74,6 @@ class FlashcardReview
   private sfUser $user;
   private object $options;
   private array $cardStatus;
-
 
   /**
    * Do not allow client to prefetch too many cards at once.
@@ -137,41 +136,35 @@ class FlashcardReview
     $oResponse = new stdClass();
 
     // get flashcard data
-    if (isset($fcrData->get) && is_array($fcrData->get))
-    {
+    if (isset($fcrData->get) && is_array($fcrData->get)) {
       $get_cards = [];
 
       // flashcard options
       $cardOpts = $fcrData->opt ?? new stdClass();
 
       // do not accept too large prefetch (tampering with ajax request on client)
-      if (count($fcrData->get) > self::MAX_PREFETCH)
-      {
+      if (count($fcrData->get) > self::MAX_PREFETCH) {
         $fcrData->get = array_slice($fcrData->get, 0, self::MAX_PREFETCH);
       }
 
-      foreach ($fcrData->get as $id)
-      {
+      foreach ($fcrData->get as $id) {
         assert(is_int($id));
 
         $cardData = call_user_func($this->options->fn_get_flashcard, $id, $cardOpts);
 
-        if ($cardData === null)
-        {
+        if ($cardData === null) {
           throw new rtkAjaxException('Could not fetch item "'.$id.'" in JSON request');
         }
         $get_cards[] = $cardData;
       }
 
-      if (count($get_cards))
-      {
+      if (count($get_cards)) {
         $oResponse->get = $get_cards;
       }
     }
 
     // update flashcard reviews
-    if (isset($fcrData->put) && is_array($fcrData->put))
-    {
+    if (isset($fcrData->put) && is_array($fcrData->put)) {
       // don't update more than MAX_UPDATE cards, client will know
       // because the success status is returned only for updated cards
       $items = array_slice($fcrData->put, 0, self::MAX_UPDATE);
@@ -189,30 +182,27 @@ class FlashcardReview
    * Update flashcards based on an array of update data, maintains the status
    * array that flags card that have already been updated this session.
    *
-   * @param array $items  An array of flashcard answers from client in the form
-   *                      { id: number, ... } (cf. TCardAnswer)
+   * @param array $items An array of flashcard answers from client in the form
+   *                     { id: number, ... } (cf. TCardAnswer)
    *
    * @return array an array containing the id of succesfully updated items
    */
   public function handlePutRequest(array $items)
   {
-    if (!isset($this->options->fn_put_flashcard))
-    {
+    if (!isset($this->options->fn_put_flashcard)) {
       throw new rtkAjaxException('FlashcardReview: fn_put_flashcard is not set');
     }
 
     $putSuccess = [];
 
-    foreach ($items as $answer)
-    {
+    foreach ($items as $answer) {
       assert(is_object($answer));
 
       $cardId = (int) $answer->id;
       $cardStatus = $this->getCardStatus($cardId);
 
       // Avoid rating a card twice, and mark it as handled for the client.
-      if ($cardStatus)
-      {
+      if ($cardStatus) {
         $putSuccess[] = $cardId;
       }
 
@@ -229,13 +219,11 @@ class FlashcardReview
       //   avoid rating them twice -- in the rare case the server handled
       //   the sync request, but somehow the client re-sends it.
       //
-      if (!$cardStatus || $cardStatus === LeitnerSRS::RATE_AGAIN)
-      {
+      if (!$cardStatus || $cardStatus === LeitnerSRS::RATE_AGAIN) {
         // Currently the client does not expect for errors to happen.
         // If an error happens, assume it is a temporary hiccup and ignore the
         // flashcard, so that the client will send another put request.
-        if (true === call_user_func($this->options->fn_put_flashcard, $cardId, $answer))
-        {
+        if (true === call_user_func($this->options->fn_put_flashcard, $cardId, $answer)) {
           $putSuccess[] = $cardId;
 
           // mark the card as rated (and cache the answers for the review summary)
@@ -263,8 +251,7 @@ class FlashcardReview
       'h' => LeitnerSRS::RATE_HARD,
     ];
 
-    foreach ($items as &$item)
-    {
+    foreach ($items as &$item) {
       $item->r = $oldRatings[$item->r] ?? $item->r;
     }
 
@@ -317,14 +304,12 @@ class FlashcardReview
     $fcr_fail = 0;
     $fcr_total = 0;
 
-    foreach ($answers as $rating)
-    {
+    foreach ($answers as $rating) {
       if (in_array($rating, [
         LeitnerSRS::RATE_HARD,
         LeitnerSRS::RATE_YES,
         LeitnerSRS::RATE_EASY,
-      ]))
-      {
+      ])) {
         ++$fcr_pass;
       }
 
@@ -334,16 +319,14 @@ class FlashcardReview
         LeitnerSRS::RATE_AGAIN_YES,
         LeitnerSRS::RATE_AGAIN_EASY,
         LeitnerSRS::RATE_NO,
-      ]))
-      {
+      ])) {
         ++$fcr_fail;
       }
 
       if (!in_array($rating, [
         LeitnerSRS::RATE_DELETE,
         LeitnerSRS::RATE_SKIP,
-      ]))
-      {
+      ])) {
         ++$fcr_total;
       }
     }

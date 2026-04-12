@@ -39,7 +39,6 @@ class ViewCacheLogPeer extends coreDatabaseTable
 
   /**
    * Return false here to disable reporting in the backend.
-   *
    */
   public static function isEnabled()
   {
@@ -50,7 +49,7 @@ class ViewCacheLogPeer extends coreDatabaseTable
    * Call from *within* the view template to signal that this template is being
    * rebuilt (and hence, the cache is a miss).
    *
-   * @param   string  $viewId   Unique id for the template, see log()
+   * @param string $viewId Unique id for the template, see log()
    */
   public static function flag($viewId)
   {
@@ -63,9 +62,8 @@ class ViewCacheLogPeer extends coreDatabaseTable
    * the template, we know this view's cache is being rebuilt, otherwise it is
    * a hit.
    *
-   * @param   string  $viewId       A short made-up name to uniquely identify a template
-   * @param   int     $resourceId   A custom value to be logged
-   *
+   * @param string $viewId     A short made-up name to uniquely identify a template
+   * @param int    $resourceId A custom value to be logged
    */
   public static function log($viewId, $resourceId)
   {
@@ -73,8 +71,8 @@ class ViewCacheLogPeer extends coreDatabaseTable
     $cacheHit = (int) !isset(self::$viewIds[$viewId]);
 
     $data = [
-      'cache_hit'    =>  $cacheHit,
-      'resource_id'  =>  $resourceId
+      'cache_hit' => $cacheHit,
+      'resource_id' => $resourceId,
     ];
 
     return self::getInstance()->insert($data);
@@ -82,7 +80,6 @@ class ViewCacheLogPeer extends coreDatabaseTable
 
   /**
    * Used by the backend to display cache efficiency.
-   *
    */
   public static function getStats()
   {
@@ -91,8 +88,8 @@ class ViewCacheLogPeer extends coreDatabaseTable
     }
 
     self::getInstance()->select([
-      'hit_count'   => 'SUM(cache_hit)',
-      'total'       => 'COUNT(*)'
+      'hit_count' => 'SUM(cache_hit)',
+      'total' => 'COUNT(*)',
     ])->query();
 
     $db = self::getInstance()->getDb();
@@ -103,9 +100,9 @@ class ViewCacheLogPeer extends coreDatabaseTable
     }
 
     return [
-      'hit_count'     => $result->hit_count,
-      'miss_count'    => $result->total - $result->hit_count,
-      'hit_percent'   => round( $result->hit_count / $result->total * 100 )
+      'hit_count' => $result->hit_count,
+      'miss_count' => $result->total - $result->hit_count,
+      'hit_percent' => round($result->hit_count / $result->total * 100),
     ];
   }
 }

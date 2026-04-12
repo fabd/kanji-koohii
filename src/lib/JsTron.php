@@ -42,7 +42,7 @@
 class JsTron implements JsonSerializable
 {
   /**
-   * Keep in sync with client-side tron.ts
+   * Keep in sync with client-side tron.ts.
    */
   public const STATUS_FAILED = 0;
   public const STATUS_SUCCESS = 1;

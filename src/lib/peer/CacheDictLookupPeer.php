@@ -24,8 +24,7 @@ class CacheDictLookupPeer extends coreDatabaseTable
     $json = false;
 
     // fixme? could test 'num_entries' instead of storing '[]'
-    if (false !== ($text = self::getInstance()->getDb()->fetchOne($select)))
-    {
+    if (false !== ($text = self::getInstance()->getDb()->fetchOne($select))) {
       $json = json_decode($text, true);
       assert(!is_null($json));
     }
@@ -35,7 +34,7 @@ class CacheDictLookupPeer extends coreDatabaseTable
 
   /**
    * Retrieve dict results for multiple kanjis.
-   * 
+   *
    * FIXME : unfinished, should return a hashmap { ucs: Array<DictListEntry> }
    *
    * @param array $ucsIds array of UCS codes
@@ -52,8 +51,7 @@ class CacheDictLookupPeer extends coreDatabaseTable
 
     $db = self::getInstance()->getDb();
 
-    while (false !== ($row = $db->fetch()))
-    {
+    while (false !== ($row = $db->fetch())) {
       $results[] = json_decode($row['json']);
     }
     // DBG::printr($results);exit;

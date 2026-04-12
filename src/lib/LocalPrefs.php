@@ -1,33 +1,26 @@
 <?php
 /**
  * LocalPrefs is a wrapper to manage session-duration preferences.
- * 
+ *
  * Methods:
  *   set($name, $value)                       Proxy to rtkUser attributes
  *   get($name, $default = null)
- *   
+ *
  *   sync($name, $value, $default = null)
  *   syncRequestParams($prefix, array $params)
- * 
- * 
+ *
  * @author     Fabrice Denis
  */
-
 class LocalPrefs
 {
   /** @var rtkUser */
-  protected
-    $user    = null;
-  
-  /**
-   * 
-   * @return 
-   */
+  protected $user;
+
   public function __construct(rtkUser $user)
   {
     $this->user = $user;
   }
-  
+
   public function set(string $name, $value)
   {
     $this->user->setAttribute($name, $value);
@@ -40,86 +33,79 @@ class LocalPrefs
 
   /**
    * Updates local preference and returns the new value.
-   * 
+   *
    * If value is set, update local pref, return that value.
    * If value is not set, and local pref exists, return current local pref.
    * If local pref doesn't exist, value is not set, and default is provided, set and return that.
    * Otherwise return null.
-   * 
-   * @param  string  $name     Name for user attribute (session).
-   * @param  mixed|null   $value    Value for local pref, or null (typically from request->getParameter)
-   * @param  mixed   $default  Default value if local pref and value are not set
-   * 
-   * @return mixed   Current value
+   *
+   * @param string     $name    name for user attribute (session)
+   * @param mixed|null $value   Value for local pref, or null (typically from request->getParameter)
+   * @param mixed      $default Default value if local pref and value are not set
+   *
+   * @return mixed Current value
    */
   public function sync(string $name, $value, $default = null)
   {
     $current = $this->get($name);
 
-    if (is_null($value))
-    {
-      if (is_null($current))
-      {
-        if (!is_null($default))
-        {
+    if (is_null($value)) {
+      if (is_null($current)) {
+        if (!is_null($default)) {
           $this->set($name, $default);
+
           return $default;
         }
-      }
-      else
-      {
+      } else {
         return $current;
       }
-    }
-    else
-    {
-      if ($value !== $current)
-      {
+    } else {
+      if ($value !== $current) {
         $this->set($name, $value);
       }
+
       return $value;
     }
-    
+
     return null;
   }
-  
+
   /**
    * Update local preferences from request parameters and returns current values.
-   * 
+   *
    * This method is handy to remember user interaction with data tables and other
    * components that send parameters on the query string. Use $prefix to uniquely
    * identify the page to which the request params apply.
-   * 
+   *
    * Example:
    *   Remember the state of a data table on page "client_report":
    *   syncRequestParams('client_report', array(
    *     'sortcol' => 'clientname',
    *     'rows'    => 20
    *   )
-   *   
+   *
    *   This will store the local prefs (user attributes):
-   *   
+   *
    *   client_report.sortcol
    *   client_report.rows
-   *   
+   *
    *   It will return a hash with the updated values:
-   *   
+   *
    *   array( 'sortcol' => ..., 'rows' => ... )
-   * 
-   * 
-   * @param  string  $prefix  Prefix for the local preference name of each param
-   * @param  array   $params  Default values for parameters (hash)
-   * 
-   * @return array   A hash of parameters (without prefix) and their updated values
+   *
+   * @param string $prefix Prefix for the local preference name of each param
+   * @param array  $params Default values for parameters (hash)
+   *
+   * @return array A hash of parameters (without prefix) and their updated values
    */
   public function syncRequestParams(string $prefix, array $params)
   {
     $request = sfContext::getInstance()->getRequest();
     $values = [];
-    foreach ($params as $name => $default)
-    {
+    foreach ($params as $name => $default) {
       $values[$name] = $this->sync($prefix.'.'.$name, $request->getParameter($name), $default);
     }
+
     return $values;
   }
 }

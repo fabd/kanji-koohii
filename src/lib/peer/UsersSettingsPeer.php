@@ -92,16 +92,14 @@ class UsersSettingsPeer extends coreDatabaseTable
   {
     $select = self::getInstance()
       ->select(array_keys(self::$map))
-      ->where('userid = ?', $userId)->query();
-    
+      ->where('userid = ?', $userId)->query()
+    ;
+
     $db = self::getInstance()->getDb();
 
-    if ($row = $db->fetch())
-    {
+    if ($row = $db->fetch()) {
       $settings = self::mapColsToOpts($row);
-    }
-    else
-    {
+    } else {
       $settings = self::getDefaultSettings();
     }
 
@@ -123,8 +121,7 @@ class UsersSettingsPeer extends coreDatabaseTable
   public static function saveUserSettings($userId, array $settings)
   {
     // if the settings aren't saved yet, fill in the defaults
-    if (!self::hasUserSettings($userId))
-    {
+    if (!self::hasUserSettings($userId)) {
       $defaults = self::getDefaultSettings();
       $settings = array_merge($defaults, $settings);
       $colData = self::mapOptsToCols($settings);
@@ -132,9 +129,7 @@ class UsersSettingsPeer extends coreDatabaseTable
       $colData['userid'] = $userId;
 
       return self::getInstance()->insert($colData);
-    }
-    else
-    {
+    } else {
       $colData = self::mapOptsToCols($settings);
 
       return self::getInstance()->update($colData, 'userid = ?', $userId);

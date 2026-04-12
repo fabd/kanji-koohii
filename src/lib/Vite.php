@@ -19,19 +19,17 @@
 class Vite
 {
   // MUST match Vite config `build.outDir` (ie. /abs/path inside www folder to Vite build).
-  const OUTDIR = '/build/dist';
+  public const OUTDIR = '/build/dist';
 
   public static function getManifestJson()
   {
     $file = sfConfig::get('sf_web_dir').self::OUTDIR.'/.vite/manifest.json';
 
-    if (false === ($text = file_get_contents($file)))
-    {
+    if (false === ($text = file_get_contents($file))) {
       throw new sfException(sprintf('Could not read manifest file "%s".', $file));
     }
 
-    if (null === ($manifest = json_decode($text, true)))
-    {
+    if (null === ($manifest = json_decode($text, true))) {
       throw new sfException(sprintf('Error parsing JSON in "%s".', $file));
     }
 
@@ -39,15 +37,12 @@ class Vite
     $deps = [];
     $imported = [];
 
-    $parseChunk = function ($chunkInfo) use (&$parseChunk, &$manifest, &$deps, &$css, &$imported)
-    {
+    $parseChunk = function ($chunkInfo) use (&$parseChunk, &$manifest, &$deps, &$css, &$imported) {
       // recurse into the dependencies first
       $imports = $chunkInfo['imports'] ?? [];
-      foreach ($imports as $importChunk)
-      {
+      foreach ($imports as $importChunk) {
         // avoid circular references between imports
-        if (!isset($imported[$importChunk]))
-        {
+        if (!isset($imported[$importChunk])) {
           $imported[$importChunk] = true;
           $deps[] = $parseChunk($manifest[$importChunk]);
         }
@@ -58,8 +53,7 @@ class Vite
 
       // add the chunk's stylesheet(s)
       $styles = $chunkInfo['css'] ?? [];
-      foreach ($styles as $cssFile)
-      {
+      foreach ($styles as $cssFile) {
         $css[] = $cssFile;
       }
 
@@ -71,10 +65,8 @@ class Vite
 
     $entries = [];
 
-    foreach ($manifest as $chunkName => $chunkInfo)
-    {
-      if (0 !== strpos($chunkName, '_'))
-      {
+    foreach ($manifest as $chunkName => $chunkInfo) {
+      if (0 !== strpos($chunkName, '_')) {
         // [
         //   'file' => $manifest[$chunk]['file'],
         //   'deps' => $deps,

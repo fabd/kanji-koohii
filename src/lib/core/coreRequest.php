@@ -7,9 +7,9 @@
  *   getContentJson()
  *   getParamsAsJson()
  *
- * 
+ *
  * The old symfony error handling that seems to have been refactored into the sfForms:
- * 
+ *
  *   getError($name)
  *   getErrors()
  *   hasError($name)
@@ -17,19 +17,16 @@
  *   removeError($name)
  *   setError($name, $message)
  *   setErrors($errors)
- *
  */
-
 class coreRequest extends sfWebRequest
 {
-  protected
-    $errors  = [];
+  protected $errors = [];
 
   /**
    * Extends getContent() and returns an object with decoded JSON.
    *
-   * Since we fully expect JSON, throw errors otherwise. 
-   * 
+   * Since we fully expect JSON, throw errors otherwise.
+   *
    * @return object
    */
   public function getContentJson()
@@ -66,11 +63,9 @@ class coreRequest extends sfWebRequest
     foreach ($params as &$val) {
       if (ctype_digit($val)) {
         $val = (int) $val;
-      }
-      elseif ($val === 'false') {
+      } elseif ($val === 'false') {
         $val = false;
-      }
-      elseif ($val === 'true') {
+      } elseif ($val === 'true') {
         $val = true;
       }
     }
@@ -82,19 +77,20 @@ class coreRequest extends sfWebRequest
 
   /**
    * Retrieves an error message.
-   * 
+   *
    * @param string Key
-   * 
+   * @param mixed $name
+   *
    * @return string An error message or null if the error doesn't exist
    */
   public function getError($name)
   {
-    return isset($this->errors[$name]) ? $this->errors[$name] : null;
+    return $this->errors[$name] ?? null;
   }
 
   /**
    * Retrieves all errors for this request.
-   * 
+   *
    * @return array Associative array of name => message
    */
   public function getErrors()
@@ -106,16 +102,16 @@ class coreRequest extends sfWebRequest
    * Removes an error.
    *
    * @param string An error name
+   * @param mixed $name
    *
    * @return string An error message, if the error was removed, otherwise null
    */
   public function removeError($name)
   {
     $retval = null;
-    if (isset($this->errors[$name]))
-    {
-        $retval = $this->errors[$name];
-        unset($this->errors[$name]);
+    if (isset($this->errors[$name])) {
+      $retval = $this->errors[$name];
+      unset($this->errors[$name]);
     }
 
     return $retval;
@@ -123,15 +119,17 @@ class coreRequest extends sfWebRequest
 
   /**
    * Sets an error message.
-   * 
+   *
    * @param string Key
    * @param string Error message
+   * @param mixed $name
+   * @param mixed $message
    */
   public function setError($name, $message)
   {
     $this->errors[$name] = $message;
   }
-  
+
   /**
    * Sets an array of errors.
    *
@@ -139,26 +137,29 @@ class coreRequest extends sfWebRequest
    * array, the associated message will be overridden.
    *
    * @param array An associative array of errors and their associated messages
+   * @param mixed $errors
    */
   public function setErrors($errors)
   {
     $this->errors = array_merge($this->errors, $errors);
   }
-  
+
   /**
    * Checks whether or not any errors exists.
-   * 
-   * @return boolean True if any error exists, false otherwise.
+   *
+   * @return bool true if any error exists, false otherwise
    */
   public function hasErrors()
   {
     return count($this->errors) > 0;
   }
-  
+
   /**
    * Checks if an error exists for given key.
-   * 
-   * @return boolean True if an error exists, false otherwise.
+   *
+   * @param mixed $name
+   *
+   * @return bool true if an error exists, false otherwise
    */
   public function hasError($name)
   {

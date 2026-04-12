@@ -42,6 +42,9 @@ class MailAbstractSMTP extends MailAbstract
    * For GMail SMTP we also set reply-to, because `+robot` suffix is removed by
    * GMail from the from: address. It will be kept in the `reply-to` address,
    * so when user replies to robot emails they can be tagged in GMail.
+   *
+   * @param mixed $email
+   * @param mixed $name
    */
   public function setFrom($email, $name = '')
   {

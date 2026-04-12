@@ -1,16 +1,15 @@
 <?php
 /**
  * ConsoleFormatter from Symfony 1.x (modified).
- * 
+ *
  * MODIFICATIONS
- * 
+ *
  *   - allow chaining, eg.
- * 
+ *
  *     $fmt = new ConsoleFormatter();
  *     echo $fmt->setForeground('red')->setOption('bold')->apply($text);
- * 
+ *
  *   - fg/bg goes back to default after each apply()
- * 
  */
 
 /*
@@ -74,16 +73,13 @@ class ConsoleFormatter
    */
   public function __construct($foreground = null, $background = null, array $options = [])
   {
-    if (null !== $foreground)
-    {
+    if (null !== $foreground) {
       $this->setForeground($foreground);
     }
-    if (null !== $background)
-    {
+    if (null !== $background) {
       $this->setBackground($background);
     }
-    if (count($options))
-    {
+    if (count($options)) {
       $this->setOptions($options);
     }
   }
@@ -99,15 +95,13 @@ class ConsoleFormatter
    */
   public function setForeground($color = null)
   {
-    if (null === $color)
-    {
+    if (null === $color) {
       $this->foreground = null;
 
       return;
     }
 
-    if (!isset(self::$availableForegroundColors[$color]))
-    {
+    if (!isset(self::$availableForegroundColors[$color])) {
       throw new Exception(sprintf(
         'Invalid foreground color specified: "%s". Expected one of (%s)',
         $color,
@@ -131,15 +125,13 @@ class ConsoleFormatter
    */
   public function setBackground($color = null)
   {
-    if (null === $color)
-    {
+    if (null === $color) {
       $this->background = null;
 
       return $this;
     }
 
-    if (!isset(self::$availableBackgroundColors[$color]))
-    {
+    if (!isset(self::$availableBackgroundColors[$color])) {
       throw new Exception(sprintf(
         'Invalid background color specified: "%s". Expected one of (%s)',
         $color,
@@ -163,8 +155,7 @@ class ConsoleFormatter
    */
   public function setOption($option)
   {
-    if (!isset(self::$availableOptions[$option]))
-    {
+    if (!isset(self::$availableOptions[$option])) {
       throw new Exception(sprintf(
         'Invalid option specified: "%s". Expected one of (%s)',
         $option,
@@ -172,8 +163,7 @@ class ConsoleFormatter
       ));
     }
 
-    if (false === array_search(self::$availableOptions[$option], $this->options))
-    {
+    if (false === array_search(self::$availableOptions[$option], $this->options)) {
       $this->options[] = self::$availableOptions[$option];
     }
 
@@ -189,8 +179,7 @@ class ConsoleFormatter
    */
   public function unsetOption($option)
   {
-    if (!isset(self::$availableOptions[$option]))
-    {
+    if (!isset(self::$availableOptions[$option])) {
       throw new Exception(sprintf(
         'Invalid option specified: "%s". Expected one of (%s)',
         $option,
@@ -199,8 +188,7 @@ class ConsoleFormatter
     }
 
     $pos = array_search(self::$availableOptions[$option], $this->options);
-    if (false !== $pos)
-    {
+    if (false !== $pos) {
       unset($this->options[$pos]);
     }
 
@@ -214,8 +202,7 @@ class ConsoleFormatter
   {
     $this->options = [];
 
-    foreach ($options as $option)
-    {
+    foreach ($options as $option) {
       $this->setOption($option);
     }
 
@@ -234,27 +221,22 @@ class ConsoleFormatter
     $setCodes = [];
     $unsetCodes = [];
 
-    if (null !== $this->foreground)
-    {
+    if (null !== $this->foreground) {
       $setCodes[] = $this->foreground['set'];
       $unsetCodes[] = $this->foreground['unset'];
     }
-    if (null !== $this->background)
-    {
+    if (null !== $this->background) {
       $setCodes[] = $this->background['set'];
       $unsetCodes[] = $this->background['unset'];
     }
-    if (count($this->options))
-    {
-      foreach ($this->options as $option)
-      {
+    if (count($this->options)) {
+      foreach ($this->options as $option) {
         $setCodes[] = $option['set'];
         $unsetCodes[] = $option['unset'];
       }
     }
 
-    if (0 === count($setCodes))
-    {
+    if (0 === count($setCodes)) {
       return $text;
     }
 

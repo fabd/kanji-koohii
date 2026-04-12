@@ -141,24 +141,20 @@ class LeitnerSRS
     $card_interval = 0;
     $card_variance = 0;
 
-    if (!$this->isValidRating($answer))
-    {
+    if (!$this->isValidRating($answer)) {
       return false;
     }
 
     // handle again-* ratings (again followed by hard/yes/easy during review)
-    if ($answer === LeitnerSRS::RATE_AGAIN_HARD)
-    {
+    if ($answer === LeitnerSRS::RATE_AGAIN_HARD) {
       $answer = LeitnerSRS::RATE_HARD;
       $card_box = 1;
     }
-    if ($answer === LeitnerSRS::RATE_AGAIN_YES)
-    {
+    if ($answer === LeitnerSRS::RATE_AGAIN_YES) {
       $answer = LeitnerSRS::RATE_YES;
       $card_box = 1;
     }
-    if ($answer === LeitnerSRS::RATE_AGAIN_EASY)
-    {
+    if ($answer === LeitnerSRS::RATE_AGAIN_EASY) {
       $answer = LeitnerSRS::RATE_EASY;
       $card_box = 1;
     }
@@ -196,26 +192,20 @@ class LeitnerSRS
     // clamp highest box to SRS setting
     $card_box = min($card_box, $this->optMaxBox + 1);
 
-    if ($card_box === 2 && $answer === LeitnerSRS::RATE_HARD)
-    {
+    if ($card_box === 2 && $answer === LeitnerSRS::RATE_HARD) {
       // cards in NEW or 1+ REVIEW piles with HARD answer get a fixed 1 day interval
       $card_interval = 1;
       $card_variance = 0;
-    }
-    elseif ($card_box === 1)
-    {
+    } elseif ($card_box === 1) {
       // failed pile
       $card_interval = 0;
       $card_variance = 0;
-    }
-    else
-    {
+    } else {
       // in all other cases, the interval is based on the new box + variance
       $card_interval = $this->intervals[$card_box - 1];
 
       // easy answers get a higher interval
-      if ($answer === LeitnerSRS::RATE_EASY)
-      {
+      if ($answer === LeitnerSRS::RATE_EASY) {
         $card_interval = (int) ceil($card_interval * self::EASY_FACTOR);
       }
 
@@ -236,16 +226,12 @@ class LeitnerSRS
     //       This is to avoid multiple failure/totalreview increases as an AGAIN
     //       card could realistically be synced 2+ times in a review.
     //
-    if ($answer !== LeitnerSRS::RATE_AGAIN)
-    {
+    if ($answer !== LeitnerSRS::RATE_AGAIN) {
       $oUpdate['totalreviews'] = $curData['totalreviews'] + 1;
 
-      if ($this->isSuccessCount($answer))
-      {
+      if ($this->isSuccessCount($answer)) {
         $oUpdate['successcount'] = $curData['successcount'] + 1;
-      }
-      else
-      {
+      } else {
         $oUpdate['failurecount'] = $curData['failurecount'] + 1;
       }
     }
@@ -286,7 +272,7 @@ class LeitnerSRS
       LeitnerSRS::RATE_AGAIN_HARD,
       LeitnerSRS::RATE_AGAIN_YES,
       LeitnerSRS::RATE_AGAIN_EASY,
-    ], /* strict check*/ true);
+    ], /* strict check */ true);
   }
 
   /**
@@ -303,8 +289,7 @@ class LeitnerSRS
 
     $BASE_INTERVAL = 3.0; // 3 days for the first pile
 
-    for ($reviewPile = 1; $reviewPile <= $this->optMaxBox; ++$reviewPile)
-    {
+    for ($reviewPile = 1; $reviewPile <= $this->optMaxBox; ++$reviewPile) {
       $intervals[] = (int) ceil($BASE_INTERVAL * pow($this->optMult, $reviewPile - 1));
     }
 
@@ -323,8 +308,7 @@ class LeitnerSRS
   {
     $variance = [0];
 
-    for ($i = 1; $i <= $this->optMaxBox; ++$i)
-    {
+    for ($i = 1; $i <= $this->optMaxBox; ++$i) {
       $variance[] = (int) min(self::VARIANCE_LIMIT, ceil(self::VARIANCE_FACTOR * $this->intervals[$i]));
     }
 

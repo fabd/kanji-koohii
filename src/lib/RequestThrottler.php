@@ -5,38 +5,37 @@
  *   setInterval($seconds)
  *   isValid()
  *   setTimeout()
- * 
+ *
  * @author     Fabrice Denis
  */
-
 class RequestThrottler
 {
   // Minimum interval between requests (cf. strtotime())
-  const    DEFAULT_TIMEOUT = '+10 seconds';
-  
-  protected
-    $user      = null,
-    $name      = '',
-    $interval  = '';
+  public const DEFAULT_TIMEOUT = '+10 seconds';
+
+  protected $user;
+
+  protected $name = '';
+
+  protected $interval = '';
 
   /**
-   * 
-   * @return
+   * @param mixed $user
+   * @param mixed $id
    */
   public function __construct($user, $id)
   {
-    $this->user     = $user;
-    $this->name     = 'request.throttle.'.$id;
+    $this->user = $user;
+    $this->name = 'request.throttle.'.$id;
 
     $this->interval = self::DEFAULT_TIMEOUT;
   }
-
 
   public function setInterval($seconds)
   {
     $n = BaseValidators::validateInteger($seconds) ? intval($seconds) : 1;
 
-    // string used by 
+    // string used by
     $this->interval = '+'.$n.' seconds';
   }
 
@@ -44,34 +43,25 @@ class RequestThrottler
    * Returns true if enough time has elapsed since last request,
    * otherwise false to indicate the minimum time has not elapsed between
    * requests.
-   * 
-   * @param coreUser $user
-   * @param string   $id     Request id can be a number or string
-   * 
-   * @return boolean
+   *
+   * @return bool
    */
   public function isValid()
   {
     $waittime = $this->user->getAttribute($this->name, null);
 
-    if (!is_null($waittime))
-    {
+    if (!is_null($waittime)) {
       $nowtime = time();
-    
-      return ($nowtime >= $waittime);
+
+      return $nowtime >= $waittime;
     }
-    
+
     return true;
   }
 
   /**
    * Marks the current timestamp for a succesful request, necessary
    * to throttle the following requests.
-   * 
-   * @param coreUser $user
-   * @param string   $id     Request id can be a number or string
-   * 
-   * @return 
    */
   public function setTimeout()
   {

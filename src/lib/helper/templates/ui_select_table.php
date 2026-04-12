@@ -1,13 +1,13 @@
 <div class="no-gutter-xs-sm">
   <div class="uiTable">
-<?php echo tag('table', $table_options, true) ?>
+<?= tag('table', $table_options, true); ?>
     <thead>
       <tr>
-<?php echo $table->getTableHead() ?>
+<?= $table->getTableHead(); ?>
       </tr>
     </thead>
     <tbody>
-<?php echo $table->getTableBody() ?>
+<?= $table->getTableBody(); ?>
     </tbody>
     </table>
   </div>

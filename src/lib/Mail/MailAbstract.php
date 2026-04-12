@@ -25,7 +25,7 @@ abstract class MailAbstract
   /**
    * Attempt to send the email.
    *
-   * @return boolean  return true if the email was sent, false on error
+   * @return bool return true if the email was sent, false on error
    */
   abstract public function send(): bool;
 }

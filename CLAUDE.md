@@ -1,5 +1,15 @@
 # CLAUDE.md
 
+## Important
+
+When you run shell commands follow these rules strictly:
+
+- Treat all file deletions as irreversible and always confirm first.
+- Before any destructive action, output: "⚠️ APPROVAL NEEDED: [describe action]"
+  and wait for the user to approve before proceeding.
+- Always ask for approval before running: rm, rmdir, dd, mkfs, DROP, TRUNCATE,
+  git reset --hard, or any command with --force or -f flags.
+
 ## About the Project
 
 Kanji Koohii is a web app for Japanese language learners to study and review kanji (Japanese characters). The two main features are **Study pages** (browse ~3000 kanji with mnemonics and shared community stories) and **Flashcard Review** (SRS using the Leitner algorithm).
@@ -15,7 +25,6 @@ All npm scripts must be run from `src/vite/` (where `package.json` lives).
 ```bash
 npm run dev          # Vite dev server (HMR)
 npm run build        # Type-check + production build
-npm run buildfast    # Production build (skip type-check)
 npm run lint         # Lint .js/.ts/.vue files with ESLint
 npm run type-check   # Type check Typescript code (including .vue files)
 
@@ -89,17 +98,28 @@ PHP loads the correct bundle via `coreWebResponse::addViteEntries()` using the g
 
 ## Coding Standards
 
-- **2 spaces** for indentation (PHP and TypeScript)
-- **Strict equality** always: `===` / `!==`
-- **Interface names** prefixed with `I` (e.g. `IUserService`)
-- All new functions and classes need **JSDoc** (TypeScript) or **PHPDoc** (PHP) comments
-- Use PHP features up to 8.3
+- Use 2-space indentation for PHP, TypeScript, and CSS
 
-When naming CSS classes, use the following conventions:
+## PHP
 
-- prefix with `ko-`, eg. `ko-Dialog` for a `Dialog` component
-- prefix modifier and state classes with `is-`, eg. `is-active`
-- use the pattern `ko-(component name)-(descendant)--(modifier)` for example `ko-Dialog-title` `ko-Dialog--small`
+- PHP 8.1+ syntax with constructor property promotion
+- PSR-1, PSR-2, PSR-4, PSR-12 standards
+- Strict comparisons only (===, !==)
+- Braces required for all control structures
+
+If PHP code changed, run:
+
+- `dcweb -c "./vendor/bin/php-cs-fixer fix the-file.php"`
+
+### PHPDoc
+
+- No @return for void methods
+
+## CSS
+
+- prefix CSS classes with `ko-` (eg. `ko-Dialog` for a `Dialog` component)
+- prefix modifier and state classes with `is-` (eg. `is-active`)
+- use the pattern `ko-(component name)-(descendant)--(modifier)` (for example `ko-Dialog-title` `ko-Dialog--small`)
 
 ## Domain Terminology
 

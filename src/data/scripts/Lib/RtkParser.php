@@ -39,13 +39,13 @@ class RtkParser
 
   private const CSV_SEPARATOR = "\t";
 
-  private const CSV_KANJI = 0;
+  private const CSV_KANJI  = 0;
   private const CSV_IDXOLD = 1;
   private const CSV_IDXNEW = 2;
   private const CSV_LESOLD = 3;
   private const CSV_LESNEW = 4;
-  private const CSV_KWOLD = 5;
-  private const CSV_KWNEW = 6;
+  private const CSV_KWOLD  = 5;
+  private const CSV_KWNEW  = 6;
 
   protected Command_CLI $cmd;
 
@@ -69,21 +69,18 @@ class RtkParser
 
     $lineNr = 0;
 
-    while (false !== ($cols = fgetcsv($handle, 1000, self::CSV_SEPARATOR)))
-    {
-      ++$lineNr;
+    while (false !== ($cols = fgetcsv($handle, 1000, self::CSV_SEPARATOR))) {
+      $lineNr++;
 
       // sanity check for empty or misformatted rows
-      if (count($cols) !== 7)
-      {
+      if (count($cols) !== 7) {
         $this->cmd->throwError(' Malformatted data at line %d', $lineNr);
       }
 
       $kanji = $cols[self::CSV_KANJI];
 
       // sanity check for duplicate rows
-      if (isset($kk[$kanji]))
-      {
+      if (isset($kk[$kanji])) {
         $this->cmd->echof(' Duplicate character at line %d', $lineNr);
 
         continue;
@@ -101,15 +98,13 @@ class RtkParser
       // sanity check that all RTK characters in the spreadsheet have valid UCS
       // $ucsId = (int) utf8::toCodePoint($cols[0]);
       $ucsId = IntlChar::ord($kanji);
-      if (null === $ucsId || $ucsId < CJK::CJK_UNIFIED_BEGIN || $ucsId > CJK::CJK_UNIFIED_END)
-      {
+      if (null === $ucsId || $ucsId < CJK::CJK_UNIFIED_BEGIN || $ucsId > CJK::CJK_UNIFIED_END) {
         $this->cmd->throwError(' ... invalid UCS code at line %d', $lineNr);
       }
 
       // sanity check that we have the matching entry in kanjidic
       $dicEntry = $dicByKanji[$kanji] || false;
-      if (!$dicEntry)
-      {
+      if (!$dicEntry) {
         $this->cmd->throwError(' kanjidic entry not set?? %s  at line %d', $kanji, $lineNr);
       }
 
@@ -163,8 +158,7 @@ class RtkParser
     $this->validateSequence($frameNums, 1);
 
     // check that the index is complete
-    if (array_pop($frameNums) !== $idxMax)
-    {
+    if (array_pop($frameNums) !== $idxMax) {
       $this->cmd->throwError(" ... sequence '%s' does not end at %d.\n", $idxCol, $idxMax);
     }
 
@@ -181,10 +175,8 @@ class RtkParser
   protected function validateSequence(array $sequence, $start)
   {
     $check = $start;
-    foreach ($sequence as $value)
-    {
-      if ($value !== $check++)
-      {
+    foreach ($sequence as $value) {
+      if ($value !== $check++) {
         $this->cmd->throwError(' ... invalid sequence!');
       }
     }

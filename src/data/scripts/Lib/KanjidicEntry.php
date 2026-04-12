@@ -44,16 +44,14 @@ class KanjidicEntry
     $this->codepoints = $this->parseCodepoints($character->codepoint);
 
     // check that the ucs code point is correct
-    if (utf8::toCodePoint($this->literal) !== $this->codepoints['ucs'])
-    {
+    if (utf8::toCodePoint($this->literal) !== $this->codepoints['ucs']) {
       printf(" ... codepoint mismatch for character %s (ucs %s)\n", $this->literal, $this->codepoints['ucs']);
     }
 
     $this->strokecount = (int) $character->misc->children()->stroke_count;
 
     // eg. 𠂉 has no reading section
-    if (isset($character->reading_meaning))
-    {
+    if (isset($character->reading_meaning)) {
       $this->readings = $this->parseReadings($character->reading_meaning->children()->rmgroup->reading);
     }
   }
@@ -62,10 +60,9 @@ class KanjidicEntry
   {
     $cp = [];
 
-    foreach ($codepoints->children() as $codepoint)
-    {
-      $attr = $codepoint->attributes();
-      $cptype = (string) $attr['cp_type'];
+    foreach ($codepoints->children() as $codepoint) {
+      $attr        = $codepoint->attributes();
+      $cptype      = (string) $attr['cp_type'];
       $cp[$cptype] = $cptype === 'ucs' ? hexdec($codepoint) : (string) $codepoint;
     }
 
@@ -77,12 +74,10 @@ class KanjidicEntry
     // only parse japanese readings
     $read = ['ja_on' => [], 'ja_kun' => []];
 
-    foreach ($readings as $reading)
-    {
+    foreach ($readings as $reading) {
       $attr = $reading->attributes();
       $type = (string) $attr['r_type'];
-      if ($type === 'ja_on' || $type === 'ja_kun')
-      {
+      if ($type === 'ja_on' || $type === 'ja_kun') {
         array_push($read[$type], (string) $reading);
       }
     }

@@ -21,6 +21,6 @@
 
   </div>
 
-<?php //DBG::user()?>
+<?php // DBG::user()?>
 <?= ui_select_table($table, $pager); ?>
 

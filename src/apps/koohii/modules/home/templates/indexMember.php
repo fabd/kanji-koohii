@@ -1,42 +1,42 @@
 <?php
-  use_helper('Widgets');
-  $sf_request->setParameter('_homeFooter', true);
+use_helper('Widgets');
+$sf_request->setParameter('_homeFooter', true);
 
-  $userId = $sf_user->getUserId();
+$userId = $sf_user->getUserId();
 
-  // studyPos will be 0 if the user has no flashcards yet!
-  $studyPos = ReviewsPeer::getSequencePosition($userId);
-  $studyNext = $studyPos + 1;
+// studyPos will be 0 if the user has no flashcards yet!
+$studyPos  = ReviewsPeer::getSequencePosition($userId);
+$studyNext = $studyPos + 1;
 
-  $sequenceName = rtkIndex::inst()->getSequenceName();
-  $isSequenceComplete = $studyPos === rtkIndex::inst()->getNumCharactersVol1();
+$sequenceName       = rtkIndex::inst()->getSequenceName();
+$isSequenceComplete = $studyPos === rtkIndex::inst()->getNumCharactersVol1();
 
-  $studyMax = rtkIndex::inst()->getNumCharactersVol1();
+$studyMax = rtkIndex::inst()->getNumCharactersVol1();
 
-  // if there are no flashcards, default to 1st lesson
-  $lessonId = rtkIndex::getLessonForIndex($studyPos ?: 1);
-  $curLesson = rtkIndex::getLessonData($lessonId);
+// if there are no flashcards, default to 1st lesson
+$lessonId  = rtkIndex::getLessonForIndex($studyPos ?: 1);
+$curLesson = rtkIndex::getLessonData($lessonId);
 
-  $studyLesson = $curLesson['lesson_nr'];
+$studyLesson = $curLesson['lesson_nr'];
 
-  // FIXME - shows Restudy across ALL cards - not just current sequence
-  $restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
+// FIXME - shows Restudy across ALL cards - not just current sequence
+$restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
 
-  $numLessons = rtkIndex::inst()->getNumLessonsVol1();
+$numLessons = rtkIndex::inst()->getNumLessonsVol1();
 
-  // count of flashcards part of current  sequence
-  $flashcardCount = ReviewsPeer::getFlashcardCount($userId, 'rtk1');
+// count of flashcards part of current  sequence
+$flashcardCount = ReviewsPeer::getFlashcardCount($userId, 'rtk1');
 
-  // is the SRS active? (*ANY* flashcards, not just current sequence)
-  $hasFlashcards = ReviewsPeer::getFlashcardCount($userId);
-  $countSrsNew = $hasFlashcards ? ReviewsPeer::getCountUntested($userId) : 0;
-  $countSrsDue = $hasFlashcards ? ReviewsPeer::getCountExpired($userId) : 0;
+// is the SRS active? (*ANY* flashcards, not just current sequence)
+$hasFlashcards = ReviewsPeer::getFlashcardCount($userId);
+$countSrsNew   = $hasFlashcards ? ReviewsPeer::getCountUntested($userId) : 0;
+$countSrsDue   = $hasFlashcards ? ReviewsPeer::getCountExpired($userId) : 0;
 
-  $urls = [
-    'study-resume-url' => url_for('@study_edit?'.http_build_query(['id' => $studyNext])),
-    'new' => url_for_review(['type' => 'untested']),
-    'due' => url_for_review(['type' => 'expired']),
-  ];
+$urls = [
+  'study-resume-url' => url_for('@study_edit?'.http_build_query(['id' => $studyNext])),
+  'new'              => url_for_review(['type' => 'untested']),
+  'due'              => url_for_review(['type' => 'expired']),
+];
 
 // DBG::user();
 ?>
@@ -69,26 +69,25 @@
   url_for('@study_edit?id=1'),
   ['class' => 'ko-Btn ko-Btn--success ko-Btn--large is-ghost']
 );
-?>
+  ?>
 <?php else: ?>
 <?= link_to(
-  'Study <span class="max-lg:hidden">Kanji </span>#'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
-  $urls['study-resume-url'],
-  ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
-);
-?>
+    'Study <span class="max-lg:hidden">Kanji </span>#'.$studyNext.'<i class="fa fa-book-open ml-2"></i>',
+    $urls['study-resume-url'],
+    ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+  );
+    ?>
 <?php endif; ?>
 <?php
-  if ($restudyCount)
-  {
-    echo _bs_button_to(
-      "Restudy ({$restudyCount})".'<i class="fa fa-book-open ml-2"></i>',
-      'study/failedlist',
-      [
-        'class' => 'ko-Btn ko-Btn--danger ko-Btn--large ml-4',
-      ]
-    );
-  }
+if ($restudyCount) {
+  echo _bs_button_to(
+    "Restudy ({$restudyCount})".'<i class="fa fa-book-open ml-2"></i>',
+    'study/failedlist',
+    [
+      'class' => 'ko-Btn ko-Btn--danger ko-Btn--large ml-4',
+    ]
+  );
+}
 ?>
       </div>
 
@@ -122,13 +121,13 @@
         </a>
 
         <?= _bs_button_to(
-  'Spaced Repetition'.'<i class="fa fa-arrow-right ml-2"></i>',
-  '@overview',
-  [
-    'class' => 'ko-Btn ko-Btn--primary ko-Btn--large ml-auto',
-  ]
-);
-        ?>
+          'Spaced Repetition<i class="fa fa-arrow-right ml-2"></i>',
+          '@overview',
+          [
+            'class' => 'ko-Btn ko-Btn--primary ko-Btn--large ml-auto',
+          ]
+        );
+  ?>
       </div>
 <?php endif; ?>
 
@@ -136,7 +135,7 @@
 
       <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 
-      <?= link_to('Custom Review Modes'.'<i class="fa fa-arrow-right ml-2"></i>', 'review/custom', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
+      <?= link_to('Custom Review Modes<i class="fa fa-arrow-right ml-2"></i>', 'review/custom', ['class' => 'ko-Btn ko-Btn--primary ko-Btn--small ml-auto']); ?>
 
     </div>
   </div>
@@ -150,40 +149,40 @@
   <div class="mb-12">
     <?php include_partial('news/_jpodBanner'); ?>
   </div>
-<?php endif ?>
+<?php endif; ?>
 
 <?php
   include_partial('news/recent');
 
-  // ids of kanji cards shown in this lesson (to limit queries)
-  $cardsIds = rtkIndex::createFlashcardSet(
-    $curLesson['lesson_from'],
-    $curLesson['lesson_from'] + $curLesson['lesson_count'] - 1
-  );
+// ids of kanji cards shown in this lesson (to limit queries)
+$cardsIds = rtkIndex::createFlashcardSet(
+  $curLesson['lesson_from'],
+  $curLesson['lesson_from'] + $curLesson['lesson_count'] - 1
+);
 
-  // include orig & user keyword maps for the kanji card component
-  rtkIndex::useKeywordsFile();
+// include orig & user keyword maps for the kanji card component
+rtkIndex::useKeywordsFile();
 
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId, $cardsIds);
+$keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId, $cardsIds);
 
-  $pctBarProps = [
-    'value' => $flashcardCount,
-    'max-value' => $studyMax,
-  ];
+$pctBarProps = [
+  'value'     => $flashcardCount,
+  'max-value' => $studyMax,
+];
 
-  $lessonProps = [
-    'lessonFrom' => $curLesson['lesson_from'],
-    'lessonId' => $curLesson['lesson_nr'],
-    'lessonCount' => $curLesson['lesson_count'],
-    'sequenceName' => $sequenceName,
-    'maxHeight' => true,
-    'allLessonsCount' => $numLessons,
-    'allLessonsUrl' => url_for('@progress'),
-  ];
+$lessonProps = [
+  'lessonFrom'      => $curLesson['lesson_from'],
+  'lessonId'        => $curLesson['lesson_nr'],
+  'lessonCount'     => $curLesson['lesson_count'],
+  'sequenceName'    => $sequenceName,
+  'maxHeight'       => true,
+  'allLessonsCount' => $numLessons,
+  'allLessonsUrl'   => url_for('@progress'),
+];
 
-  kk_globals_put([
-    'USER_KANJI_CARDS' => ReviewsPeer::getUserKanjiCardsJS($userId, $cardsIds),
-    'USER_KEYWORDS_MAP' => $keywordsMap,
-    'HOMEDASH_PCTBAR_PROPS' => $pctBarProps,
-    'HOMEDASH_LESSON_PROPS' => $lessonProps
-  ]);
+kk_globals_put([
+  'USER_KANJI_CARDS'      => ReviewsPeer::getUserKanjiCardsJS($userId, $cardsIds),
+  'USER_KEYWORDS_MAP'     => $keywordsMap,
+  'HOMEDASH_PCTBAR_PROPS' => $pctBarProps,
+  'HOMEDASH_LESSON_PROPS' => $lessonProps,
+]);

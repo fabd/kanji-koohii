@@ -14,14 +14,14 @@
       <div class="w-1/2 mx-1">
 <?php
   $prev = $framenum > 1 ? $framenum - 1 : 1;
-  echo link_to('<i class="fa fa-chevron-left"></i>', 'study/edit?id='.$prev, ['class' => 'ko-Btn ko-Btn--search', 'accesskey' => 'p']);
+echo link_to('<i class="fa fa-chevron-left"></i>', 'study/edit?id='.$prev, ['class' => 'ko-Btn ko-Btn--search', 'accesskey' => 'p']);
 ?>
       </div>
         
       <div class="w-1/2 mx-1">
 <?php
   $next = $framenum < rtkIndex::inst()->getNumCharacters() ? $framenum + 1 : 1;
-  echo link_to('<i class="fa fa-chevron-right"></i>', 'study/edit?id='.$next, ['class' => 'ko-Btn ko-Btn--search', 'accesskey' => 'n']);
+echo link_to('<i class="fa fa-chevron-right"></i>', 'study/edit?id='.$next, ['class' => 'ko-Btn ko-Btn--search', 'accesskey' => 'n']);
 ?>
       </div>
     </div>

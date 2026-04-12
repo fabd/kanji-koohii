@@ -127,7 +127,7 @@ class rtkIndex
   public static function createInstance()
   {
     // load class that represents the unique index selected by the user
-    $userSeq = rtkIndex::getSequenceInfo();
+    $userSeq  = rtkIndex::getSequenceInfo();
     $fileName = sfConfig::get('sf_app_lib_dir').'/model/'.CJ_MODE.'Index'.$userSeq['classId'].'.php';
 
     require $fileName;
@@ -193,7 +193,7 @@ class rtkIndex
    */
   public static function getSequenceInfo()
   {
-    $seqId = kk_get_user()->getUserSequence();
+    $seqId     = kk_get_user()->getUserSequence();
     $sequences = self::getSequences();
 
     return $sequences[$seqId];
@@ -240,7 +240,7 @@ class rtkIndex
    */
   public static function getSqlCol()
   {
-    $seqId = kk_get_user()->getUserSequence();
+    $seqId     = kk_get_user()->getUserSequence();
     $sequences = self::getSequences();
     assert($seqId >= 0 && $seqId < count($sequences));
 
@@ -419,7 +419,7 @@ class rtkIndex
   public static function getLessonForIndex(int $seqNr)
   {
     if (self::isValidHeisigIndex($seqNr)) {
-      $lessons = self::getLessons();
+      $lessons  = self::getLessons();
       $maxframe = 0;
       foreach ($lessons as $lesson => $count) {
         $maxframe += $count;
@@ -444,7 +444,7 @@ class rtkIndex
    */
   public static function getLessonData(int $lessonId, int $seqNr = 0)
   {
-    $lessons = self::getLessons();
+    $lessons  = self::getLessons();
     $indexEnd = 0;
     foreach ($lessons as $lesson => $count) {
       $indexStart = $indexEnd + 1;
@@ -452,8 +452,8 @@ class rtkIndex
 
       if ($lesson === $lessonId) {
         return [
-          'lesson_nr' => $lesson,
-          'lesson_from' => $indexStart,
+          'lesson_nr'    => $lesson,
+          'lesson_from'  => $indexStart,
           'lesson_count' => $count,
         ];
       }
@@ -491,7 +491,7 @@ class rtkIndex
     //  20240619 : added sequence data with lessons
     $HASH = '20240619';
 
-    $seqId = kk_get_user()->getUserSequence();
+    $seqId        = kk_get_user()->getUserSequence();
     $keywordsFile = "/revtk/study/keywords-rtk-{$seqId}.{$HASH}.js";
 
     kk_get_response()->addJavascript($keywordsFile, 'first', ['defer' => true]);

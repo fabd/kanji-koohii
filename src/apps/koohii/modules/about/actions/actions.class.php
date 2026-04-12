@@ -15,8 +15,7 @@ class aboutActions extends sfActions
     $throttler = new RequestThrottler(kk_get_user(), 'baduser');
     $throttler->setInterval(2);
 
-    if (!$throttler->isValid())
-    {
+    if (!$throttler->isValid()) {
       $throttler->setTimeout(); // reset le timer
 
       //  $response->setContentType('text/plain; charset=utf-8');
@@ -28,15 +27,12 @@ class aboutActions extends sfActions
     $throttler->setTimeout();
   }
 
-  public function executeLicense()
-  {
-  }
+  public function executeLicense() {}
 
   public function executeLearnmore()
   {
     $filename = dirname(__FILE__).'/../templates/learnmore.md';
-    if (false === ($contents = file_get_contents($filename)))
-    {
+    if (false === ($contents = file_get_contents($filename))) {
       $contents = 'ERROR.';
     }
 
@@ -50,17 +46,15 @@ class aboutActions extends sfActions
 
     // parse the headings to build the sidebar TOC
     $tocMarkdown = $this->parseMarkdownHeadings($contents);
-    $tocHtml = $parsedown->text($tocMarkdown);
-    $docHtml = $parsedown->text($contents);
+    $tocHtml     = $parsedown->text($tocMarkdown);
+    $docHtml     = $parsedown->text($contents);
 
     // template vars
     $this->docHtml = $docHtml;
     $this->tocHtml = $tocHtml;
   }
 
-  public function executeSupport()
-  {
-  }
+  public function executeSupport() {}
 
   /**
    * @param string $markdown the main document from which to retrieve TOC
@@ -77,27 +71,22 @@ class aboutActions extends sfActions
     // match any lines with `## heading text {#optional-fragment-url)`
     $markdown = preg_replace_callback(
       '/^ *(#+)\s+(.+?) *(\{#.+\})? *$/m',
-      function ($matches) use (&$tocList, $minLevel)
-      {
+      function ($matches) use (&$tocList, $minLevel) {
         // LOG::info($matches);
 
         $level = strlen($matches[1]);
         $title = $matches[2];
 
         // use existing fragment if provided in the markdown heading, or create one
-        if (isset($matches[3]))
-        {
-          $fragment = trim($matches[3], '{}');
+        if (isset($matches[3])) {
+          $fragment   = trim($matches[3], '{}');
           $fragmentMd = '';
-        }
-        else
-        {
-          $fragment = '#'.$this->slugify($title);
+        } else {
+          $fragment   = '#'.$this->slugify($title);
           $fragmentMd = ' {'.$fragment.'}';
         }
 
-        if ($level > 6)
-        {
+        if ($level > 6) {
           return $matches[0];
         }
 

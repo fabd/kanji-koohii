@@ -1,16 +1,16 @@
 <?php
 
 const RATING_LABELS = [
-  '' => '-',
-  LeitnerSRS::RATE_NO => 'No',
-  LeitnerSRS::RATE_HARD => 'Hard',
-  LeitnerSRS::RATE_YES => 'Yes',
-  LeitnerSRS::RATE_EASY => 'Easy',
-  LeitnerSRS::RATE_DELETE => 'Delete',
-  LeitnerSRS::RATE_SKIP => '(skipped)',
-  LeitnerSRS::RATE_AGAIN => 'Again',
+  ''                          => '-',
+  LeitnerSRS::RATE_NO         => 'No',
+  LeitnerSRS::RATE_HARD       => 'Hard',
+  LeitnerSRS::RATE_YES        => 'Yes',
+  LeitnerSRS::RATE_EASY       => 'Easy',
+  LeitnerSRS::RATE_DELETE     => 'Delete',
+  LeitnerSRS::RATE_SKIP       => '(skipped)',
+  LeitnerSRS::RATE_AGAIN      => 'Again',
   LeitnerSRS::RATE_AGAIN_HARD => 'Again > Hard',
-  LeitnerSRS::RATE_AGAIN_YES => 'Again > Yes',
+  LeitnerSRS::RATE_AGAIN_YES  => 'Again > Yes',
   LeitnerSRS::RATE_AGAIN_EASY => 'Again > Easy',
 ];
 
@@ -28,18 +28,18 @@ class summaryTableComponent extends sfComponent
     $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('reviewsummary', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
-        uiSelectTable::QUERY_SORTCOLUMN => 'seq_nr',
-        uiSelectTable::QUERY_SORTORDER => 0,
+        uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
+        uiSelectTable::QUERY_SORTORDER   => 0,
       ])
     ;
 
     // pager
     $this->pager = new uiSelectPager([
-      'select' => ReviewsPeer::getReviewSummaryListSelect(kk_get_user()->getUserId(), $this->ts_start),
+      'select'       => ReviewsPeer::getReviewSummaryListSelect(kk_get_user()->getUserId(), $this->ts_start),
       'internal_uri' => '@review_summary',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page' => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
     ]);
     $this->pager->init();
 
@@ -131,26 +131,20 @@ class FlashcardListBinding implements uiSelectTableBinding
     $rowData = &$row->getRowData();
 
     $rowData['failurecount'] = empty($rowData['failurecount']) ? '' : $rowData['failurecount'];
-    $rowData['_kanji'] = cjk_lang_ja($rowData['kanji']);
-    $rowData['keyword'] = link_to_keyword($rowData['keyword'], $rowData['seq_nr']);
+    $rowData['_kanji']       = cjk_lang_ja($rowData['kanji']);
+    $rowData['keyword']      = link_to_keyword($rowData['keyword'], $rowData['seq_nr']);
 
-    $ucsId = (int) $rowData['ucs_id'];
-    $ratingId = $this->ratings[$ucsId] ?? '';
-    $ratingStr = RATING_LABELS[$ratingId];
+    $ucsId              = (int) $rowData['ucs_id'];
+    $ratingId           = $this->ratings[$ucsId] ?? '';
+    $ratingStr          = RATING_LABELS[$ratingId];
     $rowData['_rating'] = <<<EOD
       <span class="SummaryTableRating is-{$ratingId}">{$ratingStr}</span>
       EOD;
   }
 
-  public function validateRowData(array $rowData)
-  {
-  }
+  public function validateRowData(array $rowData) {}
 
-  public function saveRowData(array $rowData, $newrow = false)
-  {
-  }
+  public function saveRowData(array $rowData, $newrow = false) {}
 
-  public function deleteRow(array $row_ids)
-  {
-  }
+  public function deleteRow(array $row_ids) {}
 }

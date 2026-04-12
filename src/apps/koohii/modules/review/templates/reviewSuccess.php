@@ -1,1 +1,1 @@
-<?php include_partial('ReviewKanji', $reviewOptions); ?>
+<?php include_partial('ReviewKanji', $reviewOptions);

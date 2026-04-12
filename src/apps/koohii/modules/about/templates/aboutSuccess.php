@@ -1,11 +1,11 @@
 <?php
-  $sf_request->setParameter('_homeFooter', true);
+$sf_request->setParameter('_homeFooter', true);
 ?>
 <div class="row pt-4">
 
   <div class="col-lg-3 mb-8">
     <?= image_tag('/images/1.0/nav/about_photo2.gif', ['class' => 'block mx-auto rounded-full', 'size' => '140x140']); ?>
-    <?php //echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block'))?>
+    <?php // echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block'))?>
   </div>
 
   <div class="col-lg-9">

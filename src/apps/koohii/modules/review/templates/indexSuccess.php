@@ -1,6 +1,6 @@
 <?php
-  $todayCount = ReviewsPeer::getTodayCount($sf_user->getUserId());
-  ?>
+$todayCount = ReviewsPeer::getTodayCount($sf_user->getUserId());
+?>
 
 <div class="flex items-center mb-4">
   <h2 class="mb-0">Spaced Repetition</h2>

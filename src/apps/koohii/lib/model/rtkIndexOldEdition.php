@@ -9,15 +9,15 @@
  */
 class rtkIndexMeta extends rtkIndex
 {
-  protected $MAXKANJI_RTK = 3030;
-  protected $MAXKANJI_VOL1 = 2042;
-  protected $MAXKANJI_VOL3 = 3007;
+  protected $MAXKANJI_RTK    = 3030;
+  protected $MAXKANJI_VOL1   = 2042;
+  protected $MAXKANJI_VOL3   = 3007;
   protected $NUMLESSONS_VOL1 = 56;
 
   protected $shortName = 'RTK Old Edition(s)';
 
   protected $lessons = [
-    1 => 15, 2 => 19, 3 => 18, 4 => 18, 5 => 24, 6 => 10, 7 => 22, 8 => 46, 9 => 22, 10 => 40, 11 => 15, 12 => 27, 13 => 23,
+    1  => 15, 2 => 19, 3 => 18, 4 => 18, 5 => 24, 6 => 10, 7 => 22, 8 => 46, 9 => 22, 10 => 40, 11 => 15, 12 => 27, 13 => 23,
     14 => 24, 15 => 29, 16 => 17, 17 => 26, 18 => 80, 19 => 33, 20 => 6, 21 => 63, 22 => 59, 23 => 130, 24 => 29, 25 => 96,
     26 => 59, 27 => 76, 28 => 18, 29 => 41, 30 => 39, 31 => 59, 32 => 36, 33 => 28, 34 => 46, 35 => 39, 36 => 62, 37 => 32,
     38 => 57, 39 => 47, 40 => 56, 41 => 29, 42 => 32, 43 => 34, 44 => 28, 45 => 47, 46 => 19, 47 => 30, 48 => 22, 49 => 25,

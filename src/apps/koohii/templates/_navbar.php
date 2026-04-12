@@ -1,11 +1,11 @@
-<?php 
+<?php
 function get_page_id(): string
 {
-  static $pageId =  null;
+  static $pageId = null;
 
   if (!$pageId) {
     $request = sfContext::getInstance()->getRequest();
-    $pageId = $request->getParameter('module').'-'.$request->getParameter('action');
+    $pageId  = $request->getParameter('module').'-'.$request->getParameter('action');
   }
 
   return $pageId;
@@ -14,8 +14,9 @@ function get_page_id(): string
 function nav_active(string $nav_id)
 {
   $pageId = get_page_id();
+
   // use strpos() so we can match all actions in a module, eg. 'module-'
-  return (strpos($pageId, $nav_id) === 0);
+  return strpos($pageId, $nav_id) === 0;
 }
 
 function nav_item(string $nav_id, string $text, string $internal_uri, $options = [], $dropdown = false)
@@ -34,7 +35,7 @@ function nav_item(string $nav_id, string $text, string $internal_uri, $options =
   if (false !== $dropdown) {
     $li_class[] = 'JsHasDropdown';
 
-    $script = KK_ENV_PROD ? '' : sfContext::getInstance()->getRequest()->getScriptName();
+    $script   = KK_ENV_PROD ? '' : sfContext::getInstance()->getRequest()->getScriptName();
     $dropdown = str_replace('@', $script, $dropdown);
   }
 
@@ -49,42 +50,45 @@ function nav_item(string $nav_id, string $text, string $internal_uri, $options =
   return "<li{$li_class}>\n  {$link}\n{$dropdown}\n</li>\n";
 }
 
-function staging_marker() {
+function staging_marker()
+{
   echo CORE_ENVIRONMENT === 'staging' ? '!bg-[#444]' : '';
 }
 
 ?>
 <div id="k-nav">
   <!-- mobile -->
-  <nav id="k-nav_m" class="<?php echo staging_marker() ?>">
+  <nav id="k-nav_m" class="<?= staging_marker(); ?>">
     <div id="k-nav_m_bar">
       <a class="k-nav_btn k-nav_m_btn_main JsNavToggle" id="k-slide-nav-btn">
         <i class="nav-h fa fa-bars"></i>
       </a>
-      <?php echo link_to('&nbsp;', '@homepage', ['class' => 'k-nav_brand']) ?>
+      <?= link_to('&nbsp;', '@homepage', ['class' => 'k-nav_brand']); ?>
     </div>
   </nav>
 
   <!-- desktop -->
-  <nav id="k-nav_d" class="<?php echo staging_marker() ?>">
+  <nav id="k-nav_d" class="<?= staging_marker(); ?>">
     <div class="ko-Container">
 <?php
 
     echo link_to('&nbsp;', '@homepage', ['class' => 'k-nav_brand']);
 
 if (!$sf_user->isAuthenticated()) {
-      
   echo "<ul class=\"k-nav_right\">\n";
 
   echo nav_item('-', 'Sign In', 'account/index', ['_class' => 'align-right signed-in']);
 
   echo "</ul>\n";
-
 } else {
-
   echo "<ul>\n";
 
-  echo nav_item('study-', 'Study', 'study/index', [], <<<DOM
+  echo nav_item(
+    'study-',
+    'Study',
+    'study/index',
+    [],
+    <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/study">Browse</a></li>
   <li><a href="@/study/failedlist">Restudy List</a></li>
@@ -93,9 +97,13 @@ if (!$sf_user->isAuthenticated()) {
 </ul>
 DOM
   );
-  
 
-  echo nav_item('review-', 'Review', '@overview', [], <<<DOM
+  echo nav_item(
+    'review-',
+    'Review',
+    '@overview',
+    [],
+    <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/main">Spaced Repetition</a></li>
   <li><a href="@/review/custom">Custom Review</a></li>
@@ -105,7 +113,12 @@ DOM
 DOM
   );
 
-  echo nav_item('manage-', 'Flashcards', '@manage', [], <<<DOM
+  echo nav_item(
+    'manage-',
+    'Flashcards',
+    '@manage',
+    [],
+    <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/manage">Manage Flashcards</a></li>
   <li><a href="@/manage/flashcardlist">Flashcard List</a></li>
@@ -113,7 +126,12 @@ DOM
 DOM
   );
 
-  echo nav_item('more-', 'More', '@homepage', [], <<<DOM
+  echo nav_item(
+    'more-',
+    'More',
+    '@homepage',
+    [],
+    <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/contact">Contact & Support</a></li>
   <li><a href="https://github.com/fabd/kanji-koohii/discussions">Discussions</a></li>
@@ -129,7 +147,12 @@ DOM
 
   echo nav_item('about-support', '<span class="fa fa-heart"></span>', 'about/support', ['_class' => 'donate']);
 
-  echo nav_item('account-', $sf_user->getUsername(), 'account/index', ['_class' => 'align-right signed-in'], <<<DOM
+  echo nav_item(
+    'account-',
+    $sf_user->getUsername(),
+    'account/index',
+    ['_class' => 'align-right signed-in'],
+    <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/account">Account Settings</a></li>
   <li><a href="@/profile">Member Profile</a></li>
@@ -147,80 +170,82 @@ DOM
 <?php
 // create the mobile menu data for the Aside component (cf. layout.php)
 
-function nav_m_t($label, $id, $icon, $children) {
+function nav_m_t($label, $id, $icon, $children)
+{
   return [
     'label'    => $label,
     'id'       => $id,
     'icon'     => $icon,
-    'children' => $children
+    'children' => $children,
   ];
 }
 
-function nav_m_i($label, $id, $url) {
-  $label  = link_to($label, $url);
+function nav_m_i($label, $id, $url)
+{
+  $label = link_to($label, $url);
+
   return [
-    'label'    => $label,
-    'id'       => $id
+    'label' => $label,
+    'id'    => $id,
   ];
 }
 
 $nav_items = [];
 
 if (!$sf_user->isAuthenticated()) {
-
-  $nav_items[] = nav_m_i('Register',  'a-a',  'account/create');
-  $nav_items[] = nav_m_i('Sign In',   'a-b',  '@login');
-
+  $nav_items[] = nav_m_i('Register', 'a-a', 'account/create');
+  $nav_items[] = nav_m_i('Sign In', 'a-b', '@login');
 } else {
-
   $nav_items[] = nav_m_t('Study', 'study', 'fa-book-open', [
-    nav_m_i('Index',       's-i',  'study/index'),
-    nav_m_i('Restudy List',     's-r',  'study/failedlist' ),
-    nav_m_i('View Lessons',     's-l',  '@progress' ),
-    nav_m_i('My Stories',  's-ms', 'study/mystories' ),
+    nav_m_i('Index', 's-i', 'study/index'),
+    nav_m_i('Restudy List', 's-r', 'study/failedlist'),
+    nav_m_i('View Lessons', 's-l', '@progress'),
+    nav_m_i('My Stories', 's-ms', 'study/mystories'),
   ]);
-    
+
   $nav_items[] = nav_m_t('Review', 'review', 'fa-signal', [
-    nav_m_i('Spaced Repetition',   'r-a', '@overview'),
+    nav_m_i('Spaced Repetition', 'r-a', '@overview'),
     nav_m_i('Custom Review', 'r-b', 'review/custom'),
-    nav_m_i('Vocab', 'r-c', 'review/vocab')
+    nav_m_i('Vocab', 'r-c', 'review/vocab'),
   ]);
 
   $nav_items[] = nav_m_t('Flashcards', 'flashcards', 'fa-copy', [
     nav_m_i('Manage Flashcards', 's-r', '@manage'),
-    nav_m_i('Flashcard List',   's-i', 'manage/flashcardlist')
+    nav_m_i('Flashcard List', 's-i', 'manage/flashcardlist'),
   ]);
 
   $nav_items[] = nav_m_t('Account', 'account', 'fa-user', [
-    nav_m_i('Settings',  'a-a',  'account/index'),
-    nav_m_i('Profile',   'a-b',  'profile'),
-    nav_m_i('Log out',   'a-c',  '@logout' )
+    nav_m_i('Settings', 'a-a', 'account/index'),
+    nav_m_i('Profile', 'a-b', 'profile'),
+    nav_m_i('Log out', 'a-c', '@logout'),
   ]);
 
   $nav_items[] = nav_m_t('More', 'more', 'fa-ellipsis-h', [
-    nav_m_i('Help',    'h-a',  '@learnmore'),
-    nav_m_i('Contact', 'h-b',  '@contact'),
-    nav_m_i('Donate',  'h-c',  'about/support' )
+    nav_m_i('Help', 'h-a', '@learnmore'),
+    nav_m_i('Contact', 'h-b', '@contact'),
+    nav_m_i('Donate', 'h-c', 'about/support'),
   ]);
 }
 
 $defaultOpen = 'study';
 
 $pageToMenu = [
-  'review-' => 'review',
-  'manage-' => 'flashcards',
-  'account-' => 'account', 
-   'profile-' => 'account',
-  'about-' => 'more', 'home-' => 'more'
+  'review-'  => 'review',
+  'manage-'  => 'flashcards',
+  'account-' => 'account',
+  'profile-' => 'account',
+  'about-'   => 'more', 'home-' => 'more',
 ];
 
 foreach ($pageToMenu as $pageId => $open) {
   if (nav_active($pageId)) {
-    $defaultOpen = $open; break;
+    $defaultOpen = $open;
+
+    break;
   }
 }
 
 kk_globals_put('MBL_NAV_DATA', [
   'opened' => $defaultOpen,
-  'items'  => $nav_items
+  'items'  => $nav_items,
 ]);

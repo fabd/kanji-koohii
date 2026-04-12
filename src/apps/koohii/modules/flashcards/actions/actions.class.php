@@ -1,35 +1,31 @@
 <?php
 /**
  * Flashcards actions.
- * 
+ *
  * Actions:
  *   executeAdd()
  *   executeEdit()
- * 
  */
-
 class flashcardsActions extends sfActions
 {
   public function executeIndex()
   {
     // for testing the HTTP 500 error page (nothing should link here)
-    throw new sfException("Woopsies");
+    throw new sfException('Woopsies');
   }
 
   public function executeAdd($request)
   {
-    $json = $request->getContentJson();
+    $json  = $request->getContentJson();
     $ucsId = BaseValidators::sanitizeInteger($json->ucs);
 
     $userId = kk_get_user()->getUserId();
     $status = JsTron::STATUS_FAILED;
 
-    if (!ReviewsPeer::hasFlashcard($userId, $ucsId))
-    {
+    if (!ReviewsPeer::hasFlashcard($userId, $ucsId)) {
       $added = ReviewsPeer::addSelection($userId, [$ucsId]);
 
-      if (count($added) === 1)
-      {
+      if (count($added) === 1) {
         $status = JsTron::STATUS_SUCCESS;
       }
     }
@@ -45,31 +41,27 @@ class flashcardsActions extends sfActions
    *
    * GET params
    *   ucs      UCS-2 code value of the character.
-   * 
+   *
    * POST params
    *   ucs
    *   action
-   * 
-   * @return void
    */
   public function executeEdit(sfRequest $request)
   {
     $userId = kk_get_user()->getUserId();
 
     // the GET request is not JSON
-    if ($request->hasParameter('ucs'))  {
+    if ($request->hasParameter('ucs')) {
       $json = (object) ['ucs' => $request->getParameter('ucs')];
-    }
-    else {
+    } else {
       $json = $request->getContentJson();
     }
 
-    $ucsId  = BaseValidators::sanitizeInteger($json->ucs);
-    
+    $ucsId = BaseValidators::sanitizeInteger($json->ucs);
+
     $tron = new JsTron();
-    
-    if ($request->getMethod()===sfRequest::GET)
-    {
+
+    if ($request->getMethod() === sfRequest::GET) {
       // GET request when dialog opens
       $kanjiData = KanjisPeer::getKanjiByUCS($ucsId);
       $this->forward404If(!$kanjiData);
@@ -77,24 +69,23 @@ class flashcardsActions extends sfActions
 
       $tron->add([
         'kanjiData' => $kanjiData,
-        'cardData' => $cardData,
+        'cardData'  => $cardData,
       ]);
-    }
-    else {
+    } else {
       $action = $json->action;
-      
-      if ($action === "delete") {
+
+      if ($action === 'delete') {
         $result = ReviewsPeer::deleteSelection($userId, [$ucsId]);
         if (empty($result)) {
-          $tron->addError("Error deleting flashcard.");
+          $tron->addError('Error deleting flashcard.');
           $tron->setStatus(JsTron::STATUS_FAILED);
         }
       }
 
-      if ($action === "restudy") {
+      if ($action === 'restudy') {
         $result = ReviewsPeer::failFlashcard($userId, $ucsId);
         if (!$result) {
-          $tron->addError("Woops. Could not update flashcard.");
+          $tron->addError('Woops. Could not update flashcard.');
           $tron->setStatus(JsTron::STATUS_FAILED);
         }
       }

@@ -7,8 +7,9 @@ class MembersListComponent extends sfComponent
       ->syncRequestParams('memberslist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 50,
         uiSelectTable::QUERY_SORTCOLUMN  => 'ts_lastreview',
-        uiSelectTable::QUERY_SORTORDER   => 1
-      ]);
+        uiSelectTable::QUERY_SORTORDER   => 1,
+      ])
+    ;
 
     // pager
     $this->pager = new uiSelectPager([
@@ -16,10 +17,10 @@ class MembersListComponent extends sfComponent
       'internal_uri' => '@members_list',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
     ]);
     $this->pager->init();
-    
+
     // data table
     $this->table = new uiSelectTable(new MembersListBinding(), $this->pager->getSelect(), $request->getParameterHolder());
 
@@ -72,27 +73,21 @@ EOD;
 
   public function filterDisplayData(uiSelectTableRow $row)
   {
-    $rowData =& $row->getRowData();
+    $rowData = &$row->getRowData();
 
     // needs MemberHelper in the view template
     $rowData['_username'] = link_to_member($rowData['username']);
 
-    $rowData['_lastreview'] = simple_format_date((int)$rowData['ts_lastreview'], rtkLocale::DATE_SHORT);
+    $rowData['_lastreview'] = simple_format_date((int) $rowData['ts_lastreview'], rtkLocale::DATE_SHORT);
 
     $rowData['_location'] = escape_once($rowData['location']);
 
     return $rowData;
   }
-  
-  public function validateRowData(array $rowData)
-  {
-  }
-  
-  public function saveRowData(array $rowData, $newrow = false)
-  {
-  }
-  
-  public function deleteRow(array $row_ids)
-  {
-  }
+
+  public function validateRowData(array $rowData) {}
+
+  public function saveRowData(array $rowData, $newrow = false) {}
+
+  public function deleteRow(array $row_ids) {}
 }

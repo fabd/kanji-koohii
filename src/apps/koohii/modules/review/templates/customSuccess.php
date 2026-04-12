@@ -1,12 +1,12 @@
 <?php
-  use_helper('Form', 'Validation', 'Links');
-  $sf_request->setParameter('_homeFooter', true);
+use_helper('Form', 'Validation', 'Links');
+$sf_request->setParameter('_homeFooter', true);
 
-  // Custom Review From Japanese Text
-  rtkIndex::useKeywordsFile(); // for the rtk.ts helpers
-  kk_globals_put('CUSTOM_REVIEW_PROPS', [
-    'actionUrl' => url_for('review/free'),
-  ]);
+// Custom Review From Japanese Text
+rtkIndex::useKeywordsFile(); // for the rtk.ts helpers
+kk_globals_put('CUSTOM_REVIEW_PROPS', [
+  'actionUrl' => url_for('review/free'),
+]);
 ?>
 
 <h2>Custom Review</h2>
@@ -54,16 +54,16 @@
   ['class' => 'mb-1'],
   _bs_input_checkbox('shuffle', ['label' => 'Shuffle cards'])
 );
-      echo _bs_form_group(
-        _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
-      );
-      echo _bs_form_group(
-        ['class' => 'mb-2'],
-        _bs_button(
-          'Start Review<i class="fa fa-arrow-right ml-2"></i>',
-          ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
-        )
-      );
+echo _bs_form_group(
+  _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
+);
+echo _bs_form_group(
+  ['class' => 'mb-2'],
+  _bs_button(
+    'Start Review<i class="fa fa-arrow-right ml-2"></i>',
+    ['class' => 'ko-Btn ko-Btn--success ko-Btn--large']
+  )
+);
 ?>
       </form>
 
@@ -78,40 +78,40 @@
 </div><!-- /row -->
 
 <?php
-  // OBSOLETE?
-  /*
-    <div class="ko-Box text-smx mb-4">
+// OBSOLETE?
+/*
+  <div class="ko-Box text-smx mb-4">
 
-      <h3 class="mb-4">Review from learned kanji</h3>
+    <h3 class="mb-4">Review from learned kanji</h3>
 
-      <p>You have <strong><?php echo $knowncount ?></strong> learned kanji (<strong class="clr-srs-due">due</strong> and <strong class="clr-srs-undue">scheduled</strong> cards).</p>
+    <p>You have <strong><?php echo $knowncount ?></strong> learned kanji (<strong class="clr-srs-due">due</strong> and <strong class="clr-srs-undue">scheduled</strong> cards).</p>
 
 <?php if ($knowncount > 0): ?>
-      <?php echo form_tag('review/free', ['method' => 'get']) ?>
+    <?php echo form_tag('review/free', ['method' => 'get']) ?>
 <?php
-      echo _bs_form_group(
-        _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
-      );
+    echo _bs_form_group(
+      _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
+    );
 ?>
-      <div class="form-group">
-        Review
-        <?php echo input_tag('known', $knowndefault, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
-        of <?php echo $knowncount ?> learned kanji.
-      </div>
+    <div class="form-group">
+      Review
+      <?php echo input_tag('known', $knowndefault, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
+      of <?php echo $knowncount ?> learned kanji.
+    </div>
 <?php
-      echo _bs_form_group(
-        ['class' => 'mb-2'],
-        _bs_submit_tag('Start Review')
-      );
+    echo _bs_form_group(
+      ['class' => 'mb-2'],
+      _bs_submit_tag('Start Review')
+    );
 ?>
-      </form>
+    </form>
 <?php else: ?>
 
-      <p><i class="fa fa-info-circle"></i> This mode is available once you <strong>add flashcards</strong> to the SRS
-        and have at least one succesful review.
-      </p>
+    <p><i class="fa fa-info-circle"></i> This mode is available once you <strong>add flashcards</strong> to the SRS
+      and have at least one succesful review.
+    </p>
 
 <?php endif ?>
 
-    </div>
-  */
+  </div>
+*/

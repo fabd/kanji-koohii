@@ -2,10 +2,9 @@
 /**
  * This partial is returned (renderPartial()) by actions that export data
  * and use RequestThrottler to prevent users from spamming server with heavy requests.
- * 
  */
 ?>
-<?php #DBG::user(); echo 'NOW='.time(); ?>
+<?php // DBG::user(); echo 'NOW='.time();?>
 <html>
 <head>
   <title>Oops, please retry in a short moment</title>
@@ -17,7 +16,7 @@
  | thanks, your mate Kirby.                                                                                       |
  \-------v--------------------------------------------------------------------------------------------------------/
 
-<?php  if (time() & 1): ?>
+<?php if (time() & 1): ?>
       <(^_^<)
 <?php else: ?>
        (>^_^)>

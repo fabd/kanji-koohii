@@ -2,9 +2,7 @@
 
 class miscActions extends sfActions
 {
-  public function executeIndex($request)
-  {
-  }
+  public function executeIndex($request) {}
 
   /**
    * Note: similar to the View All Lessons page, we include the original
@@ -34,7 +32,7 @@ class miscActions extends sfActions
     sfProjectConfiguration::getActive()->loadHelpers(['Bootstrap']);
     kk_globals_put([
       'USER_KEYWORDS_MAP' => $keywordsMap,
-      'USER_KNOWN_KANJI' => $knownKanji
+      'USER_KNOWN_KANJI'  => $knownKanji,
     ]);
 
     // include RTK keywords and kanjis (cf. rtk.ts helpers)

@@ -2,7 +2,7 @@
 class newsActions extends sfActions
 {
   /**
-   * News Archive
+   * News Archive.
    *
    *   /news
    *
@@ -10,21 +10,17 @@ class newsActions extends sfActions
    *
    *   /news/:year/:month
    *
+   * @param mixed $request
    */
   public function executeIndex($request)
   {
-    list($year, $month) = phpToolkit::array_splice_values($request->getParameterHolder()->getAll(), ['year', 'month']);
+    [$year, $month] = phpToolkit::array_splice_values($request->getParameterHolder()->getAll(), ['year', 'month']);
 
-    if (!$year)
-    {
+    if (!$year) {
       $this->select = 'recent';
-    }
-    else if ($month >= 1 && $month <= 12)
-    {
+    } elseif ($month >= 1 && $month <= 12) {
       $this->select = [$year, $month];
-    }
-    else
-    {
+    } else {
       $this->forward404();
     }
   }
@@ -32,15 +28,14 @@ class newsActions extends sfActions
   public function executePost($request)
   {
     $user = kk_get_user();
-    
+
     // admin only
     $this->forward404Unless($user->getUserName() === 'fuaburisu' || $user->isAdministrator());
 
-    //
-    $postId      = (int)$request->getParameter('post_id', 0);
-    $postTitle   = trim($request->getParameter('post_title', ''));
-    $postBody    = trim($request->getParameter('post_body', ''));
-    $postDate    = trim($request->getParameter('post_date', ''));
+    $postId    = (int) $request->getParameter('post_id', 0);
+    $postTitle = trim($request->getParameter('post_title', ''));
+    $postBody  = trim($request->getParameter('post_body', ''));
+    $postDate  = trim($request->getParameter('post_date', ''));
 
     $postPreview = false;
 
@@ -48,71 +43,52 @@ class newsActions extends sfActions
     $isCommit  = $request->hasParameter('commit');
     $isPreview = $request->hasParameter('do_preview');
 
-    if ($request->getMethod() !== sfRequest::POST)
-    {
+    if ($request->getMethod() !== sfRequest::POST) {
       // start a new post
-      if ($postId === 0)
-      {
+      if ($postId === 0) {
         $request->getParameterHolder()->add([
-          'post_date'  => date('Y-m-d')
+          'post_date' => date('Y-m-d'),
         ]);
-      }
-      else
-      {
+      } else {
         // edit existing post
-      
-        if (false !== ($data = SitenewsPeer::getRawPostById($postId)))
-        {
+
+        if (false !== ($data = SitenewsPeer::getRawPostById($postId))) {
           $request->getParameterHolder()->add([
             'post_title' => $data->subject,
             'post_body'  => $data->text,
-            'post_date'  => $data->created_on
+            'post_date'  => $data->created_on,
           ]);
         }
       }
-    }
-    else
-    {
-      //
+    } else {
       $postBodyPreview = SitenewsPeer::formatPost($postBody);
 
       // cf. news/_list partial
-      $postPreview = (object)[
-        'id'       => $postId,
-        'date'     => strtotime($postDate), // unix time
-        'subject'  => $postTitle,
-        'text'     => $postBodyPreview
+      $postPreview = (object) [
+        'id'      => $postId,
+        'date'    => strtotime($postDate), // unix time
+        'subject' => $postTitle,
+        'text'    => $postBodyPreview,
       ];
 
-      if ($isPreview)
-      {
-      }
-      else if ($isCommit)
-      {
-
+      if ($isPreview) {
+      } elseif ($isCommit) {
         $postData = [
-          'created_on'   => $postDate != '' ? $postDate : new coreDbExpr('NOW()'),
-          'subject'      => $postTitle,
-          'text'         => $postBody
+          'created_on' => $postDate != '' ? $postDate : new coreDbExpr('NOW()'),
+          'subject'    => $postTitle,
+          'text'       => $postBody,
         ];
         // DBG::printr($postData);exit;
 
-        if ($isNewPost && SitenewsPeer::getInstance()->insert($postData))
-        {
+        if ($isNewPost && SitenewsPeer::getInstance()->insert($postData)) {
           $postId = SitenewsPeer::lastInsertId();
           $request->setParameter('post_id', $postId);
-        }
-        else if (!$isNewPost && SitenewsPeer::getInstance()->update($postData, 'id = ?', $postId))
-        {
-          
-        }
-        else
-        {
+        } elseif (!$isNewPost && SitenewsPeer::getInstance()->update($postData, 'id = ?', $postId)) {
+        } else {
           $request->setError('replace', 'Update failed.');
         }
 
-        if (!$request->hasErrors())
-        {
+        if (!$request->hasErrors()) {
           // invalidate cached templates
           if (null !== ($cacheManager = $this->getContext()->getViewCacheManager())) {
             ManageSfCache::clearCacheWildcard('home', '_RssFeed');
@@ -125,26 +101,23 @@ class newsActions extends sfActions
 
     $this->post = $postPreview;
   }
-  
+
   /**
-   * News by article
+   * News by article.
    *
    *   /news/id/:id
    *
+   * @param mixed $request
    */
   public function executeDetail($request)
   {
-    $postId = (int)$request->getParameter('id');
-    $this->forward404Unless($postId > 0, "This news post does not exist.");
-    
-    if (false !== $post = SitenewsPeer::getPostById($postId))
-    {
+    $postId = (int) $request->getParameter('id');
+    $this->forward404Unless($postId > 0, 'This news post does not exist.');
+
+    if (false !== $post = SitenewsPeer::getPostById($postId)) {
       $this->posts = [$post];
-    }
-    else
-    {
+    } else {
       $this->posts = false;
     }
   }
-
 }

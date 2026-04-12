@@ -1,6 +1,6 @@
-<?php 
-  use_helper('Form', 'Validation');
-  $sf_request->setParameter('_homeFooter', true);
+<?php
+use_helper('Form', 'Validation');
+$sf_request->setParameter('_homeFooter', true);
 ?>
 
     <h2>Message Sent</h2>

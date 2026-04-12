@@ -1,11 +1,11 @@
 <?php
-  use_helper('Links');
-  $sf_request->setParameter('_homeFooter', true);
+use_helper('Links');
+$sf_request->setParameter('_homeFooter', true);
 
-  // (fabd): double-check autoloading on a simple page
-  // $declaredClasses = get_declared_classes();
-  // LOG::info(count($declaredClasses).' declared classes');
-  // LOG::info($declaredClasses);
+// (fabd): double-check autoloading on a simple page
+// $declaredClasses = get_declared_classes();
+// LOG::info(count($declaredClasses).' declared classes');
+// LOG::info($declaredClasses);
 ?>
 <div class="row">
   <div class="col-lg-9 mx-auto">
@@ -34,7 +34,9 @@
         PayPal is also a great way to support my work. (Note: if you chose the <em>recurring</em> option, you can cancel it at anytime from your PayPal account).
       </p>
       <div class="ko-PaypalForm">
-<?php if (!KK_ENV_FORK) { include_partial('_paypalDonateButton'); } ?>
+<?php if (!KK_ENV_FORK) {
+  include_partial('_paypalDonateButton');
+} ?>
       </div>
     </div>
  
@@ -46,22 +48,21 @@
   
     <div class="ko-Box">
       <ul class="ko-PatronsList">
-<?php //DBG::printr($patrons);?>
+<?php // DBG::printr($patrons);?>
 <?php
-  $sf_user_name = $sf_user->getUserName();
+$sf_user_name = $sf_user->getUserName();
 
-  foreach ($patrons as $pa)
-  {
-    $style = $pa['username'] == $sf_user_name ? ['class' => 'is-patron'] : [];
-    $display_name = !empty($pa['username']) ?
-      link_to_member($pa['username'], $style) :
-      escape_once($pa['pa_full_name']);
-    echo <<<HTML
+foreach ($patrons as $pa) {
+  $style        = $pa['username'] == $sf_user_name ? ['class' => 'is-patron'] : [];
+  $display_name = !empty($pa['username'])
+    ? link_to_member($pa['username'], $style)
+    : escape_once($pa['pa_full_name']);
+  echo <<<HTML
       <li class="ko-PatronsList-item">
         <span class="whitespace-nowrap">{$display_name}</span>
       </li>
       HTML;
-  }
+}
 ?>
       </ul>
     </div>

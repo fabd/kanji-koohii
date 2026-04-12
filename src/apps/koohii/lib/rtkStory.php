@@ -56,7 +56,7 @@ class rtkStory
   public static function substituteKanjiLinkCallback($matches)
   {
     $frameNr = (int) $matches[1]; // frame number or extended (ucs code)
-    $kanji = rtkIndex::getCharForIndex($frameNr);
+    $kanji   = rtkIndex::getCharForIndex($frameNr);
 
     return sprintf('{%s}', $kanji !== null ? $kanji : $frameNr);
   }

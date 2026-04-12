@@ -1,7 +1,7 @@
-<?php 
-  use_helper('Links');
-  $userId = $sf_user->getUserId();
-  $ucsId  = $kanjiData->ucs_id;
+<?php
+use_helper('Links');
+$userId = $sf_user->getUserId();
+$ucsId  = $kanjiData->ucs_id;
 ?>
   <div id="sharedstories-new">
     <div class="sharedstories_title title JsNewest">
@@ -9,28 +9,28 @@
       New &amp; updated stories
     </div>
 <?php
-  $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $sf_user->getUserId(), 'newest');
-  foreach($stories as $o) {
-?>
+  $stories = StoriesPeer::getSharedStories((int) $kanjiData->ucs_id, $kanjiData->keyword, $sf_user->getUserId(), 'newest');
+foreach ($stories as $o) {
+  ?>
     <div class="sharedstory rtkframe" lang="ja">
 
       <div class="sharedstory_author">
-        <?php echo link_to_member($o->username) ?>
+        <?= link_to_member($o->username); ?>
       </div>
 
       <div class="ko-BookStyle">
-        <div class="story"><?php echo $o->text ?></div>
+        <div class="story"><?= $o->text; ?></div>
       </div>
 
       <div class="sharedstory_meta">
-        <div class="lastmodified"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
+        <div class="lastmodified"><i class="far fa-clock"></i> <?= $o->lastmodified; ?></div>
 
-        <div class="sharedstory-actions JsAction" id="story-<?php echo $o->authorid ?>-<?php echo $ucsId ?>" data-uid="<?php echo $o->authorid ?>" data-cid="<?php echo $ucsId ?>" appv1="<?php echo $o->stars ?>" appv2="<?php echo $o->kicks ?>">
+        <div class="sharedstory-actions JsAction" id="story-<?= $o->authorid; ?>-<?= $ucsId; ?>" data-uid="<?= $o->authorid; ?>" data-cid="<?= $ucsId; ?>" appv1="<?= $o->stars; ?>" appv2="<?= $o->kicks; ?>">
           <span class="JsMsg"></span>
 
-          <a href="#" class="sharedstory_btn JsTip JsReport"><i class="fa fa-fw fa-lg fa-exclamation"></i><span><?php echo $o->kicks ?></span></a>
+          <a href="#" class="sharedstory_btn JsTip JsReport"><i class="fa fa-fw fa-lg fa-exclamation"></i><span><?= $o->kicks; ?></span></a>
           <a href="#" class="sharedstory_btn JsTip JsCopy"><i class="far fa-fw fa-lg fa-copy"></i></a>
-          <a href="#" class="sharedstory_btn JsTip JsStar"><i class="far fa-fw fa-lg fa-star"></i><span><?php echo $o->stars ?></span></a>
+          <a href="#" class="sharedstory_btn JsTip JsStar"><i class="far fa-fw fa-lg fa-star"></i><span><?= $o->stars; ?></span></a>
 
 
 
@@ -39,7 +39,7 @@
 
     </div>
 <?php
-    }
+}
 ?>
   </div>
 
@@ -48,9 +48,9 @@
       Shared stories
     </div>
 
-    <?php # See /web/revtk/components/SharedStoriesComponent.js ?>
+    <?php // See /web/revtk/components/SharedStoriesComponent.js?>
     <div id="SharedStoriesListComponent">
-      <?php include_component('study', 'SharedStoriesList') ?>
+      <?php include_component('study', 'SharedStoriesList'); ?>
     </div>
   </div>
 

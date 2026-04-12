@@ -113,7 +113,7 @@ function _bs_button_to($label, $internal_uri, array $options = [])
   }
 
   $html_options['onclick'] = "document.location.href='".$url."';";
-  $html_options = _convert_options_to_javascript($html_options);
+  $html_options            = _convert_options_to_javascript($html_options);
 
   return content_tag('button', $label, $html_options);
 }
@@ -148,7 +148,7 @@ function _bs_form_group(...$args)
   if (count($args) < 1) {
     throw new sfException('_bs_form_group() has no content.');
   }
-  $input_name = false;
+  $input_name  = false;
   $hasErrorMsg = '';
 
   // pull the optional first argument : array $options
@@ -191,7 +191,7 @@ function _bs_input($type, $name, $options = [])
   // FIXME  obsolete FormHelper (not the Symfony one) did not include 'id'
   $options['id'] = get_id_from_name($name);
 
-  if ($type === 'text'
+  if ($type    === 'text'
       || $type === 'email' /* skip the annoying browser-based email checking */) {
     $html[] = "\n  ".input_tag($name, '', $options);
   } elseif ($type === 'password') {
@@ -280,7 +280,7 @@ function _bs_submit_tag($label, $options = [])
 
 function koohii_onload_slot()
 {
-  $name = 'koohii_onload_js';
+  $name        = 'koohii_onload_js';
   $prevContent = get_slot($name);
   slot($name);
   echo $prevContent;

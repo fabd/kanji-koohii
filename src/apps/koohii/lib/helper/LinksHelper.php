@@ -15,7 +15,7 @@
 function link_to_member($username, $options = [])
 {
   $internal_uri = '@profile?username='.$username;
-  $options = array_merge($options, ['rel' => 'nofollow']);
+  $options      = array_merge($options, ['rel' => 'nofollow']);
 
   return link_to($username, $internal_uri, $options);
 }
@@ -34,7 +34,7 @@ function link_to_keyword($sKeyword, $sKanjiId = '', $options = [])
   }
 
   // for the review page front end
-  $classNames = $options['class'] ?? '';
+  $classNames       = $options['class'] ?? '';
   $options['class'] = trim(implode(' ', [$classNames, 'JsLink']));
 
   return link_to($sKeyword, '@study_edit?id='.$sKanjiId, $options);
@@ -46,6 +46,6 @@ function link_to_rk1_supplement()
 
   return link_to('RTK Supplement', $URL, [
     'target' => 'blank',
-    'class' => 'link-pdf',
+    'class'  => 'link-pdf',
   ]);
 }

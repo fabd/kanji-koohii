@@ -37,7 +37,7 @@ class rtkUser extends sfBasicSecurityUser
   // The "Remember me" cookie lifetime in seconds
   public const COOKIE_EXPIRE = 60 * 60 * 24 * 365; // 1 year
 
-  public const CREDENTIAL_ADMIN = 'admin';
+  public const CREDENTIAL_ADMIN  = 'admin';
   public const CREDENTIAL_MEMBER = 'member';
 
   // misc. session attributes
@@ -53,8 +53,8 @@ class rtkUser extends sfBasicSecurityUser
     // sign in unauthenticated user if a "remember me" cookie exists
     if (!$this->isAuthenticated()) {
       if ($cookieData = sfContext::getInstance()->getRequest()->getCookie(sfConfig::get('app_cookie_name'))) {
-        $value = unserialize(base64_decode($cookieData));
-        $username = $value[0];
+        $value         = unserialize(base64_decode($cookieData));
+        $username      = $value[0];
         $saltyPassword = $value[1];
 
         // sign in user if user is valid and password from cookie matches the one in database
@@ -207,8 +207,8 @@ class rtkUser extends sfBasicSecurityUser
   {
     $this->setAttributes([
       // user account settings
-      'userid' => $user['userid'],
-      'username' => $user['username'],
+      'userid'       => $user['userid'],
+      'username'     => $user['username'],
       'usertimezone' => $user['timezone'],
       // user application settings
       'usersequence' => $user['opt_sequence'],

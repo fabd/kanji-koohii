@@ -1,19 +1,18 @@
 <?php
 /**
  * Sightreading page validation.
- * 
  */
 
 return [
   'fields' => [
     'jtextarea' => [
-      'required'       => [
-        'msg'       => 'Please enter some japanese text.'
+      'required' => [
+        'msg' => 'Please enter some japanese text.',
       ],
-      'StringValidator'   => [
+      'StringValidator' => [
         'max'       => 20000,
-        'max_error'   => 'Text is too long (max 20000 characters).'
-      ]
-    ]
-  ]
+        'max_error' => 'Text is too long (max 20000 characters).',
+      ],
+    ],
+  ],
 ];

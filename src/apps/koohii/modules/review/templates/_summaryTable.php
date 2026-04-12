@@ -1,6 +1,6 @@
 <?php use_helper('Widgets', 'SimpleDate', 'Form', 'CJK', 'Links'); ?>
 
-<?php //DBG::request()?>
+<?php // DBG::request()?>
 
 <?= form_tag('review/summaryTable'); ?>
   <?= input_hidden_tag('ts_start', 0); ?>

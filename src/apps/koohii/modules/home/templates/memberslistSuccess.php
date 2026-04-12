@@ -1,5 +1,5 @@
 <?php
-  $sf_request->setParameter('_homeFooter', true);
+$sf_request->setParameter('_homeFooter', true);
 ?>
 
     <h2>Members reviewing in the past 30 days</h2>
@@ -9,11 +9,11 @@
         (Spaced Repetition System) and flashcards.</p>
 
     <div id="MembersListComponent">
-      <?php include_component('home', 'MembersList') ?>
+      <?php include_component('home', 'MembersList'); ?>
     </div>
 
 </div>
 
-<?php koohii_onload_slot() ?>
+<?php koohii_onload_slot(); ?>
   var ajaxTable = new Koohii.UX.AjaxTable('MembersListComponent');
-<?php end_slot() ?>
+<?php end_slot(); ?>

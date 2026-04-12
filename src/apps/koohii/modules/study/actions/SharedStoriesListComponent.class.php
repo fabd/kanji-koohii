@@ -1,9 +1,7 @@
 <?php
 /**
  * Shared Stories List component (paged list).
- * 
  */
-
 class SharedStoriesListComponent extends sfComponent
 {
   public function execute($request)
@@ -12,12 +10,11 @@ class SharedStoriesListComponent extends sfComponent
 
     // the character should be validated earlier in the Study page, but it can also be
     // sent by the paging list POST request
-    $ucsId = (int)$request->getParameter('ucsId', 0);
+    $ucsId = (int) $request->getParameter('ucsId', 0);
 
     assert(BaseValidators::validateInteger($ucsId) && $ucsId >= 0x3000);
 
     $keyword = trim($request->getParameter('keyword', ''));
-
 
     $queryParams = kk_get_user()->getLocalPrefs()->syncRequestParams('sharedstorieslist', [uiSelectPager::QUERY_ROWSPERPAGE => 20]);
 
@@ -32,15 +29,15 @@ class SharedStoriesListComponent extends sfComponent
       'select'       => $pagerSelect,
       'internal_uri' => 'study/zzzzzz',
       'query_params' => [
-        uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE]
+        uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       ],
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
     ]);
     $this->pager->init();
 
     // join decomposition
-    /*    
+    /*
     $select = $db->select('ss.sid')->from('stories_shared ss')->where('ss.ucs_id = ?', $ucsId)
       ->order(array('ss.stars DESC', 'ss.updated_on DESC'))
       ->limitPage($this->pager->getPage() - 1, $this->pager->getMaxPerPage());
@@ -62,15 +59,14 @@ class SharedStoriesListComponent extends sfComponent
     );
 
     $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $rows = $db->fetchAll($storiesSelect);
+    $rows      = $db->fetchAll($storiesSelect);
     $db->setFetchMode($fetchMode);
-    foreach ($rows as &$row)
-    {
+    foreach ($rows as &$row) {
       // fix type cast errors in php8
-      $row->stars = (int)$row->stars;
-      $row->kicks = (int)$row->kicks;
+      $row->stars = (int) $row->stars;
+      $row->kicks = (int) $row->kicks;
 
-      $row->text   = StoriesPeer::getFormattedStory($row->text, $keyword, true, false);
+      $row->text = StoriesPeer::getFormattedStory($row->text, $keyword, true, false);
     }
 
     $this->rows    = $rows;
@@ -78,24 +74,26 @@ class SharedStoriesListComponent extends sfComponent
     $this->ucsId   = $ucsId;
     $this->keyword = $keyword;
 
-// sleep(6); // debugging
+    // sleep(6); // debugging
 
     return sfView::SUCCESS;
   }
 
   /**
    * Returns query for the Shared Stories List paging.
-   * 
+   *
    *   userid
    *   username
    *   lastmodified
    *   stars
    *   kicks
    *   text
-   * 
+   *
    * @see    study/SharedStoriesComponent
-   * 
-   * @param int    $ucsId  UCS-2 code value.
+   *
+   * @param int   $ucsId   UCS-2 code value
+   * @param mixed $keyword
+   * @param mixed $userId
    *
    * @return array<array>
    */
@@ -108,14 +106,15 @@ class SharedStoriesListComponent extends sfComponent
     // NOTE: must add `public` to select the table partition!
 
     $select = $db->select([
-        'ss.userid', 'u.username', 'lastmodified' => 'DATE_FORMAT(ss.updated_on,\'%e-%c-%Y\')',
-        's.text', 'ss.stars', 'kicks' => 'ss.reports'
-        ])
+      'ss.userid', 'u.username', 'lastmodified' => 'DATE_FORMAT(ss.updated_on,\'%e-%c-%Y\')',
+      's.text', 'ss.stars', 'kicks'             => 'ss.reports',
+    ])
       ->from('stories_shared ss')
       ->joinLeft('stories s', 'ss.sid = s.sid')
       ->joinLeft('users u', 'u.userid = ss.userid')
       ->where('ss.ucs_id = ?', $ucsId)
-      ->order(['ss.stars DESC', 'ss.updated_on DESC']);
+      ->order(['ss.stars DESC', 'ss.updated_on DESC'])
+    ;
 
     return $select;
   }

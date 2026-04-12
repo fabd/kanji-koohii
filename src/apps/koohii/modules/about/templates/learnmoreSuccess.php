@@ -1,5 +1,5 @@
 <?php
-  $sf_request->setParameter('_homeFooter', true);
+$sf_request->setParameter('_homeFooter', true);
 ?>
 
 <div class="row">

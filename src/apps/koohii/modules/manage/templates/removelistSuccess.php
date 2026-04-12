@@ -1,11 +1,11 @@
-<?php use_helper('Form', 'Widgets', 'Decorator') ?>
+<?php use_helper('Form', 'Widgets', 'Decorator'); ?>
 
-<?php decorate_start('SideTabs', ['active' => 'removelist']) ?>
+<?php decorate_start('SideTabs', ['active' => 'removelist']); ?>
           
           <h2>Remove Flashcards From List</h2>
 
           <div class="ajax">
-            <?php include_partial('RemoveList') ?>
+            <?php include_partial('RemoveList'); ?>
           </div>
 
-<?php decorate_end() ?>
+<?php decorate_end(); ?>

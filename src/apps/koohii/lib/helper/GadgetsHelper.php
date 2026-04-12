@@ -27,18 +27,18 @@
 function ui_chart_vs(array $options)
 {
   $valueTotal = $options['valueLeft'] + $options['valueRight'];
-  $pctLeft = ceil($options['valueLeft'] * 100 / $valueTotal);
-  $pctRight = 100 - $pctLeft;
+  $pctLeft    = ceil($options['valueLeft'] * 100 / $valueTotal);
+  $pctRight   = 100 - $pctLeft;
 
-  $captionLeft = isset($options['labelLeftMax']) && $options['valueRight'] == 0 ? $options['labelLeftMax'] : $options['labelLeft'];
+  $captionLeft  = isset($options['labelLeftMax'])  && $options['valueRight'] == 0 ? $options['labelLeftMax'] : $options['labelLeft'];
   $captionRight = isset($options['labelRightMax']) && $options['valueLeft'] == 0 ? $options['labelRightMax'] : $options['labelRight'];
 
   $options = array_merge($options, [
-    'pctLeft' => $pctLeft,
-    'pctRight' => $pctRight,
-    'bZeroLeft' => $pctLeft == 0,
-    'bZeroRight' => $pctRight == 0,
-    'captionLeft' => $captionLeft,
+    'pctLeft'      => $pctLeft,
+    'pctRight'     => $pctRight,
+    'bZeroLeft'    => $pctLeft  == 0,
+    'bZeroRight'   => $pctRight == 0,
+    'captionLeft'  => $captionLeft,
     'captionRight' => $captionRight,
   ]);
 
@@ -104,8 +104,8 @@ function ui_progress_bar(array $bars, $maxValue, $options = [])
     }
 
     if ($bar['value'] >= 0) {
-      $percent = $bar['value'] > 0 ? ceil($bar['value'] / $maxValue * 100) : 0;
-      $label = $bar['label'] ?? "{$bar['value']}/{$maxValue}";
+      $percent     = $bar['value'] > 0 ? ceil($bar['value'] / $maxValue * 100) : 0;
+      $label       = $bar['label'] ?? "{$bar['value']}/{$maxValue}";
       $spanOptions = [
         'class' => $bar['class'] ?? 'g',
         'title' => $label,

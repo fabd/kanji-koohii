@@ -13,10 +13,10 @@
     </ul>
 
     <?= link_to(
-        'Yes,  I want to delete my account ( step 1 of 2 )',
-        'account/delete',
-        ['class' => 'ko-Btn ko-Btn--danger']
-      );
+      'Yes,  I want to delete my account ( step 1 of 2 )',
+      'account/delete',
+      ['class' => 'ko-Btn ko-Btn--danger']
+    );
     ?>
   
   </div>

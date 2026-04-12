@@ -1,1 +1,1 @@
-<?= $feed_content ?>
+<?= $feed_content;

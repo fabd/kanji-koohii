@@ -1,8 +1,8 @@
 <?php
-  use_helper('Form', 'Validation', 'Widgets');
-  $sf_request->setParameter('_homeFooter', true);
+use_helper('Form', 'Validation', 'Widgets');
+$sf_request->setParameter('_homeFooter', true);
 ?>
-    <h2>Welcome <?php echo $username ?>, your account is ready!</h2>
+    <h2>Welcome <?= $username; ?>, your account is ready!</h2>
 
     <h3>Note about <em>Remembering the Kanji</em> edition</h3>
     <p>
@@ -11,16 +11,16 @@
     </p>
 
     <p>
-      <strong>If you have the 5th edition (or older)</strong> of the <?php echo _CJ('Remembering the Kanji') ?> book(s), 
+      <strong>If you have the 5th edition (or older)</strong> of the <?= _CJ('Remembering the Kanji'); ?> book(s), 
       after signing in go to the <strong>Account</strong> settings and select "Old Edition".
     </p>
 
     <div>
-      <?php $sf_user->setAttribute('login_username', $username); // cf. redirectToLogin() ?>
-      <?php echo _bs_button_to('Sign in','@login', ['query_string' => 'username='.$username, 'class' => 'ko-Btn ko-Btn--success ko-Btn--large']) ?>
+      <?php $sf_user->setAttribute('login_username', $username); // cf. redirectToLogin()?>
+      <?= _bs_button_to('Sign in', '@login', ['query_string' => 'username='.$username, 'class' => 'ko-Btn ko-Btn--success ko-Btn--large']); ?>
     </div>
 
-    <?php echo form_errors() ?>
+    <?= form_errors(); ?>
  
 </div>
 

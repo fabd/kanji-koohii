@@ -9,7 +9,7 @@
 class rtkImportKeywords
 {
   protected $request;
-  protected $parsed = [];
+  protected $parsed   = [];
   protected $keywords = [];
 
   public const MAX_KEYWORD = 40;

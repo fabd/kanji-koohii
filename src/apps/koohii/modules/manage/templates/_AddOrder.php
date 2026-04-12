@@ -10,12 +10,11 @@
   </ul>
 </div>
 
-<?php
-  echo _bs_form_group(
-    ['validate' => 'txtSelection'],
-    _bs_input_text('txtSelection', ['class' => 'form-control-i w-[80px] mr-4']),
-    _bs_submit_tag('Add Cards')
-  );
+<?= _bs_form_group(
+  ['validate' => 'txtSelection'],
+  _bs_input_text('txtSelection', ['class' => 'form-control-i w-[80px] mr-4']),
+  _bs_submit_tag('Add Cards')
+);
 ?>
 
   <div class="ko-Box text-[#42413d] text-sm italic mb-4">
@@ -26,9 +25,9 @@
 
   <div class="ko-Box">
 
-      23 new characters from the <?= link_to_rk1_supplement() ?>
+      23 new characters from the <?= link_to_rk1_supplement(); ?>
       (PDF document, ~490kb) can be added through the <?= link_to('Custom selection', 'manage/addcustom'); ?> page.
-      &nbsp;See <?= link_to('update notes', '@news_by_id?id=154'/*, array('class' => 'link-article')*/); ?>.
+      &nbsp;See <?= link_to('update notes', '@news_by_id?id=154'/* , array('class' => 'link-article') */); ?>.
 
   </div>
 

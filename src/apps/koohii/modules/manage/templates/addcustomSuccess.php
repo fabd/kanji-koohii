@@ -1,11 +1,11 @@
-<?php use_helper('Form', 'Widgets', 'Decorator') ?>
+<?php use_helper('Form', 'Widgets', 'Decorator'); ?>
 
-<?php decorate_start('SideTabs', ['active' => 'addcustom']) ?>
+<?php decorate_start('SideTabs', ['active' => 'addcustom']); ?>
           
   <h2>Add Custom Flashcard Selection</h2>
 
   <div class="ajax">
-    <?php include_partial('AddCustom') ?>
+    <?php include_partial('AddCustom'); ?>
   </div>
 
-<?php decorate_end() ?>
+<?php decorate_end(); ?>

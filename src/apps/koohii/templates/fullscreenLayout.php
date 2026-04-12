@@ -6,15 +6,15 @@
 <?php include_metas(); ?>
 <?php include_title(); ?>
 <?php
-  // temporary (fix dirty js inclusions from labs mode later)
-  $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
-  $isLandingPage = $sf_request->getParameter('isLandingPage');
+// temporary (fix dirty js inclusions from labs mode later)
+$pageId        = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
+$isLandingPage = $sf_request->getParameter('isLandingPage');
 
-  $sf_response->addViteEntries();
+$sf_response->addViteEntries();
 
-  include_stylesheets();
-  include_javascripts();
-  include_fontawesome();
+include_stylesheets();
+include_javascripts();
+include_fontawesome();
 ?>
   <!-- thx realfavicongenerator.net -->
   <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=20170121b">
@@ -44,10 +44,10 @@ body { padding-top:0;  }
 </head>
 <body class="uiFcLayout">
 
-<?php echo $sf_content; ?>
+<?= $sf_content; ?>
 
-<?php kk_globals_out() ?>
-<?php koohii_onload_slots_out() ?>
+<?php kk_globals_out(); ?>
+<?php koohii_onload_slots_out(); ?>
 
 </body>
 </html>

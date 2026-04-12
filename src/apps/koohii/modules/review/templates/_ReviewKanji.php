@@ -18,11 +18,11 @@
   <a href="#" id="JsBtnDict" class="uiFcOptBtn uiFcOptBtnDict uiFcAction" data-action="dict" title="Dictionary lookup"><span><u>D</u>ict</span></a>
   
   <?= link_to('<span><u>U</u>ndo</span>', '/', ['absolute' => 'true',
-    'id' => 'JsBtnUndo',
-    'class' => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction',
-    'title' => 'Go back one flashcard',
-    'style' => 'display:none',
-    'data-action' => 'undo', ]); ?>
+    'id'                                                   => 'JsBtnUndo',
+    'class'                                                => 'uiFcOptBtn uiFcOptBtnUndo uiFcAction',
+    'title'                                                => 'Go back one flashcard',
+    'style'                                                => 'display:none',
+    'data-action'                                          => 'undo', ]); ?>
 
   <div class="clear-both"></div>
 </div>
@@ -82,7 +82,7 @@
   data-action="no" title="Forgotten">
   <span><u>N</u>o</span>
 </button>
-<?php if (1 /*!$freemode*/) { ?>
+<?php if (1 /* !$freemode */) { ?>
 <button
   class="ko-Btn ko-Btn--review uiFcAction uiFcBtnAG flex-1 mx-1"
   data-action="again" title="Repeat card">
@@ -138,18 +138,17 @@
   <div class="clear-both"></div>
 </div><!-- /ko-FCR-body -->
 
-<?php
-  // Form to redirect to Review Summary with POST
-  echo form_with_data(
-    url_for('@review_summary'),
-    [
-      'ts_start' => $ts_start,
-      'fc_deld' => 0, // this is set by JS at end of review before submit
-      'fc_free' => (int) $freemode,
-      'fc_rept' => $fc_rept ?? '',
-    ],
-    [ 'id' => 'uiFcRedirectForm', 'style' => 'display:none' ]
-  );
+<?=// Form to redirect to Review Summary with POST
+   form_with_data(
+     url_for('@review_summary'),
+     [
+       'ts_start' => $ts_start,
+       'fc_deld'  => 0, // this is set by JS at end of review before submit
+       'fc_free'  => (int) $freemode,
+       'fc_rept'  => $fc_rept ?? '',
+     ],
+     ['id' => 'uiFcRedirectForm', 'style' => 'display:none']
+   );
 ?>
 
 <div id="mobile-debug" style="padding:20px 0 0;"></div>
@@ -158,7 +157,7 @@
   $reviewOptions = [
     // @see TReviewProps
     'props' => [
-      'end_url' => url_for('@review_summary', true),
+      'end_url'  => url_for('@review_summary', true),
       'freemode' => $freemode,
     ],
 
@@ -166,18 +165,18 @@
     'fcrOptions' => [
       'ajax_url' => $ajax_url,
       'back_url' => url_for($exit_url, true),
-      'items' => $items,
+      'items'    => $items,
     ],
   ];
 
-  // props for KoohiiFlashcard Vue component
-  $reviewMode = [
-    'freemode' => $freemode,
-    'fc_reverse' => $fc_reverse,
-    'fc_view' => 'kanji',
-  ];
+// props for KoohiiFlashcard Vue component
+$reviewMode = [
+  'freemode'   => $freemode,
+  'fc_reverse' => $fc_reverse,
+  'fc_view'    => 'kanji',
+];
 
-  kk_globals_put([
-    'REVIEW_OPTIONS' => $reviewOptions,
-    'REVIEW_MODE' => $reviewMode
-  ]);
+kk_globals_put([
+  'REVIEW_OPTIONS' => $reviewOptions,
+  'REVIEW_MODE'    => $reviewMode,
+]);

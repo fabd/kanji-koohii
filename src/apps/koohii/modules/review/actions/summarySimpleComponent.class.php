@@ -11,12 +11,10 @@ class summarySimpleComponent extends sfComponent
 
     $this->cards = [];
 
-    if (count($answers))
-    {
+    if (count($answers)) {
       $keywords = CustkeywordsPeer::getCoalescedKeywords(kk_get_user()->getUserId());
 
-      foreach ($answers as $ucsId => $answer)
-      {
+      foreach ($answers as $ucsId => $answer) {
         // FIXME : free mode should not handle ratings other than YES/NO/AGAIN
         //         (fix keyboard shortcuts)
         $isPass = in_array($answer, [
@@ -29,10 +27,10 @@ class summarySimpleComponent extends sfComponent
         ]);
 
         $card = [
-          'kanji' => utf8::fromUnicode($ucsId),
+          'kanji'    => utf8::fromUnicode($ucsId),
           'framenum' => rtkIndex::getIndexForUCS($ucsId),
-          'keyword' => $keywords[$ucsId]['keyword'],
-          'pass' => $isPass,
+          'keyword'  => $keywords[$ucsId]['keyword'],
+          'pass'     => $isPass,
         ];
 
         $this->cards[] = (object) $card;

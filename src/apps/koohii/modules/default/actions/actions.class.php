@@ -2,7 +2,7 @@
 class defaultActions extends sfActions
 {
   /**
-   * Executes index action
+   * Executes index action.
    *
    * @param sfRequest $request A request object
    */
@@ -10,20 +10,14 @@ class defaultActions extends sfActions
   {
     $this->forward('default', 'module');
   }
-  
+
   /**
-   * Error page for page not found (404) error
-   *
+   * Error page for page not found (404) error.
    */
-  public function executeError404()
-  {
-  }
-  
+  public function executeError404() {}
+
   /**
-   * Warning page for restricted area - requires login
-   *
+   * Warning page for restricted area - requires login.
    */
-  public function executeSecure()
-  {
-  }
+  public function executeSecure() {}
 }

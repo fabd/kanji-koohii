@@ -64,7 +64,7 @@ class rtkFlashcardSelection
       // numerical range
       if (preg_match('/^([0-9]+)-([0-9]+)$/', $part, $matches)) {
         $from = $matches[1];
-        $to = $matches[2];
+        $to   = $matches[2];
         if (!rtkIndex::isValidHeisigIndex($from) || !rtkIndex::isValidHeisigIndex($to)) {
           $this->request->setError('if', sprintf('Invalid framenumber: "%s"', $part));
 

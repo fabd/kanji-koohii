@@ -1,29 +1,27 @@
 <?php
 class labsActions extends sfActions
 {
-  public function executeIndex($request)
-  {
-  }
-  
+  public function executeIndex($request) {}
+
   /**
    * Start iVocabShuffle flashcard review using Heisig #.
    *
+   * @param mixed $request
    */
   public function executeShuffle1($request)
   {
     $this->setLayout('fullscreenLayout');
 
     $max_framenum = $request->getParameter('max_framenum', 0);
-      
-    if ($request->hasParameter('max_framenum'))
-    {
+
+    if ($request->hasParameter('max_framenum')) {
       $this->forward404If($max_framenum < 1 || $max_framenum > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
     }
 
     $reviewOptions['items']    = rtkLabs::getVocabShuffleMode1Items($max_framenum);
     $reviewOptions['ajax_url'] = $this->getController()->genUrl('labs/ajax');
     $reviewOptions['exit_url'] = 'review/vocab';
-    
+
     // these will be variables in the review template partial
     $this->reviewOptions = $reviewOptions;
 
@@ -33,6 +31,7 @@ class labsActions extends sfActions
   /**
    * Start iVocabShuffle flashcard review using learned kanji in the SRS!
    *
+   * @param mixed $request
    */
   public function executeShuffle2($request)
   {
@@ -50,9 +49,10 @@ class labsActions extends sfActions
 
   /**
    * iVocabShuffle ajax handler.
-   * 
+   *
    * @see  FlashcardReview.php for POST request parameters.
    *
+   * @param mixed $request
    */
   public function executeAjax($request)
   {
@@ -63,7 +63,7 @@ class labsActions extends sfActions
     }
 
     $flashcardReview = FlashcardReview::getInstance()->config([
-      'fn_get_flashcard' => ['rtkLabs', 'getVocabShuffleCardData']
+      'fn_get_flashcard' => ['rtkLabs', 'getVocabShuffleCardData'],
     ]);
 
     return $this->renderJson($flashcardReview->handleRequest($fcrData));

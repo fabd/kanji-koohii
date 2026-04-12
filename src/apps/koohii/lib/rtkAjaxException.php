@@ -14,7 +14,7 @@ class rtkAjaxException extends sfException
   public function printStackTrace()
   {
     $exception = is_null($this->wrappedException) ? $this : $this->wrappedException;
-    $message = $exception->getMessage();
+    $message   = $exception->getMessage();
 
     $response = kk_get_response();
     $response->setStatusCode(500);

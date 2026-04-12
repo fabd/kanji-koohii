@@ -1,6 +1,6 @@
 <?php
-  use_helper('FrontEnd', 'Widgets');
-  $num_stories = StoriesPeer::getStoriesCounts($sf_user->getUserId());
+use_helper('FrontEnd', 'Widgets');
+$num_stories = StoriesPeer::getStoriesCounts($sf_user->getUserId());
 ?>
 
 <h2 class="ux-text-2xl">My Stories</h2>
@@ -20,13 +20,13 @@
   <div class="mb-6 relative">
     <div class="absolute right-0 top-0">
       <?= _bs_button_to(
-          'Export to CSV<i class="fa fa-arrow-down ml-2"></i>',
-          'study/export',
-          [
-            'class' => 'ko-Btn ko-Btn--success',
-          ]
-          );
-      ?>
+        'Export to CSV<i class="fa fa-arrow-down ml-2"></i>',
+        'study/export',
+        [
+          'class' => 'ko-Btn ko-Btn--success',
+        ]
+      );
+  ?>
     </div>
 
     <div id="MyStoriesSelect" class="mb-3"><!-- vue --></div>
@@ -34,7 +34,7 @@
 
   <div id="MyStoriesComponent">
     <?php include_component('study', 'MyStoriesTable', [
-      'stories_uid' => $sf_user->getUserId(),
+      'stories_uid'  => $sf_user->getUserId(),
       'profile_page' => false,
     ]); ?>
   </div>
@@ -42,7 +42,7 @@
 
 <?php
   kk_globals_put([
-    'MYSTORIES_SORT_ACTIVE' => $sort_active,
-    'MYSTORIES_SORT_OPTIONS' => $sort_options
+    'MYSTORIES_SORT_ACTIVE'  => $sort_active,
+    'MYSTORIES_SORT_OPTIONS' => $sort_options,
   ]);
 ?>

@@ -1,7 +1,7 @@
-<?php use_helper('Form', 'Validation', 'Widgets') ?>
-<?php echo form_tag('manage/removeListProcess', ['class' => 'main-form']) ?>
+<?php use_helper('Form', 'Validation', 'Widgets'); ?>
+<?= form_tag('manage/removeListProcess', ['class' => 'main-form']); ?>
 
-  <?php echo form_errors() ?>
+  <?= form_errors(); ?>
 
 <?php if (is_array($cards) && !count($cards)): ?>
 
@@ -9,18 +9,17 @@
 
 <?php elseif (is_array($cards)): ?>
 
-  <p> The following <strong><?php echo $count ?></strong> <?php echo _CJ('kanji') ?> have been removed from your flashcards:</p>
+  <p> The following <strong><?= $count; ?></strong> <?= _CJ('kanji'); ?> have been removed from your flashcards:</p>
   
   <div style="background:#E7F5CD;color:#000;padding:5px;margin:0 0 1em;font-size:24px;">
 <?php
   use_helper('CJK');
   $kanjis = [];
-  foreach ($cards as $id)
-  {
+  foreach ($cards as $id) {
     $kanjis[] = rtkIndex::getCharForIndex($id);
   }
-  echo cjk_lang_ja( implode(', ', $kanjis) );
-?>
+  echo cjk_lang_ja(implode(', ', $kanjis));
+  ?>
   </div>
 
 <?php endif; ?>

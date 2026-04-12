@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php include_http_metas() ?>
+<?php include_http_metas(); ?>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<?php include_metas() ?>
-<?php if (CORE_ENVIRONMENT === 'staging') { echo '<meta name="robots" content="noindex, nofollow" />'."\n"; } ?>
-<?php include_title() ?>
+<?php include_metas(); ?>
+<?php if (CORE_ENVIRONMENT === 'staging') {
+  echo '<meta name="robots" content="noindex, nofollow" />'."\n";
+} ?>
+<?php include_title(); ?>
   <link rel="alternate" type="application/rss+xml" title="RSS" href="rss">
-<?php 
-  $pageId      = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
-  $isLandingPage = $sf_request->getParameter('isLandingPage');
-  $withFooter  = $sf_request->getParameter('_homeFooter') ? 'with-footer ' : '';
+<?php
+$pageId        = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
+$isLandingPage = $sf_request->getParameter('isLandingPage');
+$withFooter    = $sf_request->getParameter('_homeFooter') ? 'with-footer ' : '';
 
-  // call it here at last, if it wasn't already triggered via view.yml (addJavascript())
-  $sf_response->addViteEntries();
+// call it here at last, if it wasn't already triggered via view.yml (addJavascript())
+$sf_response->addViteEntries();
 
-  include_stylesheets();
-  include_javascripts();
-  include_fontawesome();
+include_stylesheets();
+include_javascripts();
+include_fontawesome();
 ?>
 
 <!-- ~*~*~*~*~*~*~*~*~*~*~*~* HANAMI ~*~*~*~*~*~*~*~*~*~*~*~* -->
-<?php if($pageId === 'home-index'): ?>
+<?php if ($pageId === 'home-index'): ?>
 <script type="text/javascript" src="/koohii/hanami.js?v=20260328" defer="1"></script>
 <style>
 #k-nav_d, #k-nav_m { background: linear-gradient(45deg, #216daa, #882761) !important; }
@@ -35,7 +37,7 @@
   border-radius: 20% 20% 50% 50% / 10% 10% 80% 80%;
 }
 </style>
-<?php endif ?>
+<?php endif; ?>
 <!-- ~*~*~*~*~*~*~*~*~*~*~*~* HANAMI ~*~*~*~*~*~*~*~*~*~*~*~* -->
 
   <!-- thx realfavicongenerator.net -->
@@ -53,34 +55,40 @@
   <meta name="theme-color" content="#f0ddd4">
 
 
-<?php if(has_slot('inline_styles')): ?>
+<?php if (has_slot('inline_styles')): ?>
   <style type="text/css">
-<?php include_slot('inline_styles') ?>
+<?php include_slot('inline_styles'); ?>
   </style>
-<?php endif ?>
-<?php if (KK_ENV_PROD) { use_helper('__Analytics'); /* async */ echo ga_tracking_code(); } ?>
+<?php endif; ?>
+<?php if (KK_ENV_PROD) {
+  use_helper('__Analytics');
+  /* async */ echo ga_tracking_code();
+} ?>
 </head>
 <body
-  class="<?php echo $withFooter ?> <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action'); echo $pageId; ?>">
+  class="<?= $withFooter; ?> <?php $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
+echo $pageId; ?>">
   <div id="body-navbar-holder"></div>
 
 <div id="aside-component"></div><!-- fabd : FIXME?? TS refactor Vue3 -->
 
-<?php include_partial('global/navbar', ['pageId' => $pageId]) ?>
+<?php include_partial('global/navbar', ['pageId' => $pageId]); ?>
 
 <?php if ($isLandingPage) {
   echo $sf_content;
 } else { ?>
 <main>
   <div class="ko-MainContainer ko-Container">
-<?php echo $sf_content ?>
+<?= $sf_content; ?>
   </div>
 </main>
-<?php if ($sf_request->getParameter('_homeFooter')) { include_partial('home/homeFooter'); } ?>
+<?php if ($sf_request->getParameter('_homeFooter')) {
+  include_partial('home/homeFooter');
+} ?>
 <?php } ?>
 
-<?php kk_globals_out() ?>
-<?php koohii_onload_slots_out() ?>
+<?php kk_globals_out(); ?>
+<?php koohii_onload_slots_out(); ?>
 
 <?php if (KK_ENV_DEV):  ?>
 <script>
@@ -91,12 +99,14 @@
     }
   });
 </script>
-<?php endif ?>
+<?php endif; ?>
 
 <div id="__debug_log"></div>
 <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()) {
   $db = kk_get_database();
-  if ($db->getProfiler()) { echo $db->getProfiler()->getDebugLog(); }
+  if ($db->getProfiler()) {
+    echo $db->getProfiler()->getDebugLog();
+  }
   echo sfProjectConfiguration::getActive()->getAdminInfoFooter();
 } ?>
 

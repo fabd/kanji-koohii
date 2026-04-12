@@ -1,14 +1,14 @@
-<?php use_helper('Widgets') ?>
-<?php slot('inline_styles') ?>
+<?php use_helper('Widgets'); ?>
+<?php slot('inline_styles'); ?>
 .fmt { color:#262; font-weight:bold; font-family:"Courier New"; }
-<?php end_slot() ?>
+<?php end_slot(); ?>
 
   <h2>A Quick Tour</h2>
 
-  <p> The Study area is where you can browse the <?php echo _CJ('kanji') ?>, edit your stories, and
+  <p> The Study area is where you can browse the <?= _CJ('kanji'); ?>, edit your stories, and
     share your best stories (mnemonics) with other members.
   </p>
-  <p><?php echo ui_ibtn('Start with '._CJ('kanji').'  #1', '@study_edit?id=1') ?> ... or <strong>enter a number/keyword in the search box</strong>!</p>
+  <p><?= ui_ibtn('Start with '._CJ('kanji').'  #1', '@study_edit?id=1'); ?> ... or <strong>enter a number/keyword in the search box</strong>!</p>
 
 <h3>Searching</h3>
 

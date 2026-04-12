@@ -3,16 +3,15 @@ class homeActions extends sfActions
 {
   /**
    * Home page.
-   * 
-   * @return 
+   *
+   * @param mixed $request
    */
   public function executeIndex($request)
   {
-    if (kk_get_user()->isAuthenticated())
-    {    
+    if (kk_get_user()->isAuthenticated()) {
       return 'Member';
     }
-    
+
     $request->setParameter('isLandingPage', true);
 
     return 'Guest';
@@ -20,15 +19,14 @@ class homeActions extends sfActions
 
   /**
    * Sign In form.
-   * 
-   * @return 
+   *
+   * @param mixed $request
    */
   public function executeLogin($request)
   {
     $request->setParameter('_homeFooter', true);
 
-    if ($request->getMethod() != sfRequest::POST)
-    {
+    if ($request->getMethod() != sfRequest::POST) {
       // get the referer option from redirectToLogin()
       $referer = kk_get_user()->getAttribute('login_referer', '');
 
@@ -43,30 +41,27 @@ class homeActions extends sfActions
       $this->getRequest()->setParameter('username', $username);
 
       // AUTO FILL FORM (DEVELOPMENT ONLY!)
-      if (0 && KK_ENV_DEV)
-      {
-        $request->getParameterHolder()->add([
-          'username'=>'guest',
-          'password'=>'',
+      if (0 && KK_ENV_DEV) {
+        $request->getParameterHolder()->add(
+          [
+            'username' => 'guest',
+            'password' => '',
           ]
         );
       }
-    }
-    else
-    {
+    } else {
       $validator = new coreValidator($this->getActionName());
-      
-      if ($validator->validate($request->getParameterHolder()->getAll()))
-      {
-        $username = trim($request->getParameter('username'));
+
+      if ($validator->validate($request->getParameterHolder()->getAll())) {
+        $username     = trim($request->getParameter('username'));
         $raw_password = trim($request->getParameter('password'));
-        $rememberme = $request->hasParameter('rememberme');
+        $rememberme   = $request->hasParameter('rememberme');
 
         // check that user exists and password matches
         $user = UsersPeer::getUser($username);
-        if (!$user || (kk_get_user()->getSaltyHashedPassword($raw_password) != $user['password']) )
-        {
-          $request->setError('login_invalid', "Invalid username and/or password.");
+        if (!$user || (kk_get_user()->getSaltyHashedPassword($raw_password) != $user['password'])) {
+          $request->setError('login_invalid', 'Invalid username and/or password.');
+
           return;
         }
 
@@ -74,22 +69,22 @@ class homeActions extends sfActions
         kk_get_user()->signIn($user);
 
         // optionally, create the remember me cookie
-        if ($rememberme)
-        {
+        if ($rememberme) {
           kk_get_user()->setRememberMeCookie($user['username'], kk_get_user()->getSaltyHashedPassword($raw_password));
         }
-        
+
         // succesfully signed in
-        $referer = $this->getRequestParameter('referer', ''); 
-        return $this->redirect( empty($referer) ? '@homepage' : $referer );  //FIXME referer shouldn't be empty if present
+        $referer = $this->getRequestParameter('referer', '');
+
+        return $this->redirect(empty($referer) ? '@homepage' : $referer);  // FIXME referer shouldn't be empty if present
       }
     }
   }
 
   /**
    * Sign Out.
-   * 
-   * @return 
+   *
+   * @param mixed $request
    */
   public function executeLogout($request)
   {
@@ -97,48 +92,46 @@ class homeActions extends sfActions
 
     return $this->redirect('@homepage');
   }
-  
+
   /**
    * Contact/Feedback Form page.
-   * 
+   *
    * @param sfWebRequest $request
    */
   public function executeContact($request)
   {
-    if ($request->getMethod() !== sfRequest::POST)
-    {
+    if ($request->getMethod() !== sfRequest::POST) {
       return;
     }
 
     $validator = new coreValidator($this->getActionName());
 
-    if ($validator->validate($request->getParameterHolder()->getAll()))
-    {
+    if ($validator->validate($request->getParameterHolder()->getAll())) {
       $from_name = trim($request->getParameter('name'));
       $from_addr = trim($request->getParameter('email'));
       $message   = trim($request->getParameter('message'));
-    
+
       // remove html tags
       $message = trim(strip_tags($message));
 
       // quick fix vs XSS attacks (June 29, 2014)
-      if (!preg_match('/^[a-zA-Z0-9 _\'-()]+$/', $from_name) > 0)
-      {
+      if (!preg_match('/^[a-zA-Z0-9 _\'-()]+$/', $from_name) > 0) {
         $request->setError('woops', 'Name: please use only letters a-z A-Z \' _ - ( and )');
+
         return;
       }
 
       // add the IP address to detect trolls/spammers
-      $pathArray   = sfContext::getInstance()->getRequest()->getPathInfoArray();
+      $pathArray = sfContext::getInstance()->getRequest()->getPathInfoArray();
 
       // fabd: help identify spam bots (March 2024 - not useful atm)
       $remote_addr = $pathArray['REMOTE_ADDR'];
-      //$message     = 'IP address: '.$remote_addr."\n\n".$message;
+      // $message     = 'IP address: '.$remote_addr."\n\n".$message;
 
       // (fabd) we need a reply-to we can copy, because free SMTP with GMail
       //   does not allow using a custom from address
       $formatReplyTo = rtkMail::formatAddress([
-        'name' => $from_name,
+        'name'  => $from_name,
         'email' => $from_addr,
       ]);
       $messageHeader = <<<END
@@ -146,14 +139,12 @@ class homeActions extends sfActions
 REPLY-TO: {$formatReplyTo}
 -----------------------------------------      
 END;
-      $message = "$messageHeader\n\n$message";
+      $message = "{$messageHeader}\n\n{$message}";
 
       // fabd: spam prevention for unauthenticated users
       //  refuse message with links for non-authenticated users
-      if (!kk_get_user()->isAuthenticated())
-      {
-        if (preg_match('#https?://#', $message))
-        {
+      if (!kk_get_user()->isAuthenticated()) {
+        if (preg_match('#https?://#', $message)) {
           $request->setError('spam', 'Note: due to spam, we have to block messages containing links. (Pssst! If you are a real person, simply remove the http prefix from the URL and it will go through.)');
           $this->getResponse()->setStatusCode(403);
 
@@ -163,8 +154,7 @@ END;
           return $this->renderText('Spam.');
         }
 
-        if ($this->isRussianText($message))
-        {
+        if ($this->isRussianText($message)) {
           $request->setError('spam', 'Spam.');
           $this->getResponse()->setStatusCode(403);
 
@@ -175,21 +165,21 @@ END;
         }
       }
 
-      if (!KK_ENV_DEV)
-      {
+      if (!KK_ENV_DEV) {
         $message = $this->disableLinks($message);
 
         $mailer = new rtkMail();
         $result = $mailer->sendFeedbackMessage(
           'Message from '.$from_name,
-            $from_addr,
-            $from_name,
-            $message
-          );
-        
+          $from_addr,
+          $from_name,
+          $message
+        );
+
         if ($result !== true) {
-          $request->setError('smtp_mail', "Oops, there was a problem sending the email. "
-                                          ."Please try again shortly.");
+          $request->setError('smtp_mail', 'Oops, there was a problem sending the email. '
+                                          .'Please try again shortly.');
+
           return;
         }
       }
@@ -201,34 +191,36 @@ END;
   /**
    * Make links in the message not clickable, just in case the message
    * is sent by a bad bot and contains bad links.
-   *
-   * @param string $message
-   * @return string
    */
-  private function disableLinks(string $message): string {
+  private function disableLinks(string $message): string
+  {
     return preg_replace_callback(
-        '/https?:\/\/([^\s]+)/',
-        function($matches) {
-            return str_replace('.', '•', $matches[1]);
-        },
-        $message
+      '/https?:\/\/([^\s]+)/',
+      function ($matches) {
+        return str_replace('.', '•', $matches[1]);
+      },
+      $message
     );
   }
 
   /**
-   * Detect Russian in message (at least N characters)
-   *  
-   * @return boolean
+   * Detect Russian in message (at least N characters).
+   *
+   * @param mixed $text
+   *
+   * @return bool
    */
   private function isRussianText($text)
   {
     $count = (int) preg_match_all('/[А-Яа-яЁё]/u', $text);
+
     return $count > 10;
   }
 
   /**
    * Display the active members list.
    *
+   * @param mixed $request
    */
   public function executeMemberslist($request)
   {
@@ -237,18 +229,19 @@ END;
 
   /**
    * Active members list table ajax update.
-   * 
-   * @return 
+   *
+   * @param mixed $request
    */
   public function executeMemberslisttable($request)
   {
     $tron = new JsTron();
     $tron->setHtml($this->getComponent('home', 'MembersList'));
+
     return $this->renderJson($tron);
   }
 
   /**
-   * Rss Feed
+   * Rss Feed.
    *
    * - cache a component because I don't think a cached action remembers the content type
    * - feed cache time is in /config/cache.yml
@@ -257,7 +250,8 @@ END;
    * The feed cache is invalidated in news/actions/
    *
    *   ManageSfCache::clearCacheWildcard('home', '_RssFeed');
-   * 
+   *
+   * @param mixed $request
    */
   public function executeRssfeed($request)
   {

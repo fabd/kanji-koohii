@@ -5,7 +5,7 @@ $sf_request->setParameter('_homeFooter', true);
 
   <h2>Oops! Member Not Found</h2>
 
-  <p>Woops, the user <strong><?php echo esc_specialchars($sf_request->getParameter('username')); ?></strong> could not be found.</p>
+  <p>Woops, the user <strong><?= esc_specialchars($sf_request->getParameter('username')); ?></strong> could not be found.</p>
 
   <p>
     This user is not in the database. The username could be mistyped. The user may also have deleted their account.

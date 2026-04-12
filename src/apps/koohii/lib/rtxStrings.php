@@ -7,12 +7,12 @@
  * the "key" string is returned as is.
  */
 $GLOBALS['CJ_STRINGS'] = [
-  'Japanese' => 'Chinese',
-  'kanji' => 'hanzi',
-  'Onyomi' => 'Pinyin',
+  'Japanese'              => 'Chinese',
+  'kanji'                 => 'hanzi',
+  'Onyomi'                => 'Pinyin',
   'Remembering the Kanji' => 'Remembering Hanzi',
-  'Kanji Koohii!' => 'Reviewing the Hanzi',   // website name
-  'RTK' => 'RTH',
+  'Kanji Koohii!'         => 'Reviewing the Hanzi',   // website name
+  'RTK'                   => 'RTH',
 ];
 
 /**

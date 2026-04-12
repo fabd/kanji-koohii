@@ -51,7 +51,7 @@ class rtkValidators
   public static function sanitizeBool($value)
   {
     return
-      true === $value
+      true      === $value
       || 'true' === $value
       || 0 !== intval($value);
   }

@@ -1,9 +1,9 @@
 <?php
-  $sf_response->setTitle('Kanji Koohii API');
+$sf_response->setTitle('Kanji Koohii API');
 
-  slot('docute.init');
+slot('docute.init');
 
-  // docute.init() configuration in javascript
+// docute.init() configuration in javascript
 ?>
 {
   home: '/koohii/api/README.md',

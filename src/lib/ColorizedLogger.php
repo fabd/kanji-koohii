@@ -69,8 +69,7 @@ class LOG
   {
     $sfRootDir = sfConfig::get('sf_root_dir');
 
-    if (null === $sfRootDir)
-    {
+    if (null === $sfRootDir) {
       throw new Exception('ERROR: sf_root_dir unavailable.');
     }
 
@@ -87,10 +86,8 @@ class LOG
   // create a writable log file if it doesn't exist
   private function checkLogFile(string $fileName)
   {
-    if (!file_exists($fileName))
-    {
-      if (false === ($handle = fopen($fileName, 'w')))
-      {
+    if (!file_exists($fileName)) {
+      if (false === ($handle = fopen($fileName, 'w'))) {
         exit(__CLASS__.":: Can't create log file {$fileName}.");
       }
 
@@ -103,8 +100,7 @@ class LOG
    */
   private function getFileHandle(string $fileName)
   {
-    if (false === ($handle = fopen($fileName, 'a')))
-    {
+    if (false === ($handle = fopen($fileName, 'a'))) {
       throw new Exception(__CLASS__.":: Can't open {$fileName}!");
     }
 
@@ -117,16 +113,13 @@ class LOG
    */
   public static function info(mixed ...$args)
   {
-
     // in case we mistakenly committed a LOG::info() somewhere
     //  (cf. koohiiConfiguration.class.php)
-    if (defined('KK_ENV_PROD') && KK_ENV_PROD === true)
-    {
+    if (defined('KK_ENV_PROD') && KK_ENV_PROD === true) {
       return;
     }
 
-    if (!count($args))
-    {
+    if (!count($args)) {
       throw new Exception(__CLASS__.': no arguments');
     }
 
@@ -140,6 +133,15 @@ class LOG
     ]);
   }
 
+  public static function session()
+  {
+    self::inst()->output([
+      'msg' => 'LOG::Session()',
+      'tag' => ' SESSION ',
+      'var' => $_SESSION,
+    ]);
+  }
+
   /**
    * Write to log file with colorized output.
    */
@@ -149,13 +151,12 @@ class LOG
     $txt_msg = $args['msg'] ?? '(no message)';
 
     $formatter = $this->formatter;
-    $handle = $this->fileHandle;
+    $handle    = $this->fileHandle;
 
     $output = [];
 
     // visual separation to help separate new log lines after reloading php page
-    if ($this->lineNr === 0)
-    {
+    if ($this->lineNr === 0) {
       $output[] = $formatter
         ->setForeground('red')
         ->setOption('bold')
@@ -173,16 +174,16 @@ class LOG
       ->setForeground('black')
       ->setBackground('green')
       ->apply($txt_tag)
-      .' ';
+      .' '
+    ;
 
     $output[] = $formatter
       ->setForeground('white')
       ->apply($txt_msg)
     ;
 
-    if ($args['var'] !== self::UNDEFINED)
-    {
-      $txt_var = $this->dump($args['var']);
+    if ($args['var'] !== self::UNDEFINED) {
+      $txt_var  = $this->dump($args['var']);
       $output[] = $formatter
         ->setForeground('yellow')
         ->apply(' '.$txt_var)
@@ -191,34 +192,25 @@ class LOG
 
     fwrite($this->fileHandle, implode('', $output)."\n");
 
-    ++$this->lineNr;
+    $this->lineNr++;
   }
 
   private function dump($expr)
   {
     $s = '';
 
-    if (is_bool($expr))
-    {
+    if (is_bool($expr)) {
       $s = $expr === true ? 'true' : 'false';
-    }
-    elseif (is_null($expr))
-    {
+    } elseif (is_null($expr)) {
       $s = 'null';
-    }
-    elseif (is_string($expr))
-    {
+    } elseif (is_string($expr)) {
       $s = '"'.addcslashes($expr, "\0..\37\n\r\t\v").'"';
-    }
-    elseif (is_object($expr) || is_array($expr))
-    {
+    } elseif (is_object($expr) || is_array($expr)) {
       // ob_start();
       // var_dump($expr);
       // $s = ob_get_contents();
       $s = var_export($expr, true);
-    }
-    else
-    {
+    } else {
       $s = $expr;
     }
 

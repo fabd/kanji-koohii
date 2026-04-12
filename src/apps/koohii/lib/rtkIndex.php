@@ -104,19 +104,18 @@ class rtkIndex
 
   /**
    * Multiple indexes (FIXME move to rtk/rthSequences class ?).
-   *
    */
   // sqlId of sequence set for new users by default
   public const NEWUSER_SEQUENCE = 1;
 
   /**
    * Kanji Squences (aka RTK Old and New Editions).
-   * 
-   *   classId    is a substring that matches the class name 
+   *
+   *   classId    is a substring that matches the class name
    *              (ie. `rtkIndexOldEdition.php` )
    *   sqlId      is the integer value used in the user setting `opt_sequence`
    *   sqlCol     is the matching col for that index in the kanjis table
-   * 
+   *
    * NOTE!  Keep in sync with /modules/account/templates/sequenceView
    */
   public static $rtk_sequences = [
@@ -128,7 +127,7 @@ class rtkIndex
   public static function createInstance()
   {
     // load class that represents the unique index selected by the user
-    $userSeq = rtkIndex::getSequenceInfo();
+    $userSeq  = rtkIndex::getSequenceInfo();
     $fileName = sfConfig::get('sf_app_lib_dir').'/model/'.CJ_MODE.'Index'.$userSeq['classId'].'.php';
 
     require $fileName;
@@ -194,7 +193,7 @@ class rtkIndex
    */
   public static function getSequenceInfo()
   {
-    $seqId = sfContext::getInstance()->getUser()->getUserSequence();
+    $seqId     = kk_get_user()->getUserSequence();
     $sequences = self::getSequences();
 
     return $sequences[$seqId];
@@ -221,7 +220,7 @@ class rtkIndex
   // {
   //   mb_internal_encoding('utf-8');
   //   $kanjis = mb_str_split(self::inst()->kanjis);
-    
+
   //   $map = [];
   //   $seqNr = 1;
   //   foreach ($kanjis as $char)
@@ -241,7 +240,7 @@ class rtkIndex
    */
   public static function getSqlCol()
   {
-    $seqId = sfContext::getInstance()->getUser()->getUserSequence();
+    $seqId     = kk_get_user()->getUserSequence();
     $sequences = self::getSequences();
     assert($seqId >= 0 && $seqId < count($sequences));
 
@@ -319,13 +318,11 @@ class rtkIndex
   {
     $id = (int) $extNr;
 
-    if (self::isValidHeisigIndex($id))
-    {
+    if (self::isValidHeisigIndex($id)) {
       return mb_substr(self::inst()->kanjis, $id - 1, 1, 'utf8');
     }
 
-    if (CJK::isCJKUnifiedUCS($id))
-    {
+    if (CJK::isCJKUnifiedUCS($id)) {
       return utf8::fromUnicode([$id]);
     }
 
@@ -335,8 +332,7 @@ class rtkIndex
   /**
    * Get the UCS code point of the character, given a extended Heisig index.
    *
-   * @param int   $n     an extended frame number (Heisig or UCS)
-   * @param mixed $extNr
+   * @param int $extNr an extended frame number (Heisig or UCS)
    *
    * @return mixed UCS code point, or false if input is neither a Heisig index
    *               or a valid CJK Unified code point
@@ -356,36 +352,28 @@ class rtkIndex
    *
    * If the value is already in the CJK range, it is unchanged.
    *
-   * @param   int|int[]   Extended frame numbers (index or UCS-2)
+   * @param int|int[] $ids Extended frame numbers (index or UCS-2)
    *
    * @return array Array with sequence numbers (ie. Heisig) converted to UCS-2, others unchanged.
    */
-  public static function convertToUCS(array $ids)
+  public static function convertToUCS(array|int $ids)
   {
     $ucsids = [];
 
-    if (!is_array($ids))
-    {
+    if (!is_array($ids)) {
       $ids = [$ids];
     }
 
-    for ($i = 0, $n = count($ids); $i < $n; ++$i)
-    {
+    for ($i = 0, $n = count($ids); $i < $n; $i++) {
       $id = $ids[$i];
 
-      if (!self::isExtendedIndex($id))
-      {
-        if (null !== ($c = self::getCharForIndex($id)))
-        {
+      if (!self::isExtendedIndex($id)) {
+        if (null !== ($c = self::getCharForIndex($id))) {
           $ucsids[$i] = utf8::toCodePoint($c);
-        }
-        else
-        {
+        } else {
           throw new sfException(__METHOD__." Invalid frame number ({$id})");
         }
-      }
-      else
-      {
+      } else {
         // assume this is a UCS-2 code, though it may still be an invalid
         // character (not a kanji).
         $ucsids[$i] = $id;
@@ -414,8 +402,7 @@ class rtkIndex
   {
     $lessons = self::getLessons();
     $options = [];
-    foreach ($lessons as $k => $v)
-    {
+    foreach ($lessons as $k => $v) {
       $options[$k] = "Lesson {$k} ({$v} kanji)";
     }
 
@@ -431,15 +418,12 @@ class rtkIndex
    */
   public static function getLessonForIndex(int $seqNr)
   {
-    if (self::isValidHeisigIndex($seqNr))
-    {
-      $lessons = self::getLessons();
+    if (self::isValidHeisigIndex($seqNr)) {
+      $lessons  = self::getLessons();
       $maxframe = 0;
-      foreach ($lessons as $lesson => $count)
-      {
+      foreach ($lessons as $lesson => $count) {
         $maxframe += $count;
-        if ($seqNr <= $maxframe)
-        {
+        if ($seqNr <= $maxframe) {
           return $lesson;
         }
       }
@@ -460,18 +444,16 @@ class rtkIndex
    */
   public static function getLessonData(int $lessonId, int $seqNr = 0)
   {
-    $lessons = self::getLessons();
+    $lessons  = self::getLessons();
     $indexEnd = 0;
-    foreach ($lessons as $lesson => $count)
-    {
+    foreach ($lessons as $lesson => $count) {
       $indexStart = $indexEnd + 1;
       $indexEnd += $count;
 
-      if ($lesson === $lessonId)
-      {
+      if ($lesson === $lessonId) {
         return [
-          'lesson_nr' => $lesson,
-          'lesson_from' => $indexStart,
+          'lesson_nr'    => $lesson,
+          'lesson_from'  => $indexStart,
           'lesson_count' => $count,
         ];
       }
@@ -494,8 +476,7 @@ class rtkIndex
   {
     $framenums = range($from, $to);
 
-    if ($shuffle)
-    {
+    if ($shuffle) {
       shuffle($framenums);
     }
 
@@ -510,11 +491,9 @@ class rtkIndex
     //  20240619 : added sequence data with lessons
     $HASH = '20240619';
 
-    $sfContext = sfContext::getInstance();
-
-    $seqId = $sfContext->getUser()->getUserSequence();
+    $seqId        = kk_get_user()->getUserSequence();
     $keywordsFile = "/revtk/study/keywords-rtk-{$seqId}.{$HASH}.js";
 
-    $sfContext->getResponse()->addJavascript($keywordsFile, 'first', ['defer' => true]);
+    kk_get_response()->addJavascript($keywordsFile, 'first', ['defer' => true]);
   }
 }

@@ -3,11 +3,11 @@ use_helper('Form', 'Markdown', 'Validation');
 $sf_request->setParameter('_homeFooter', true);
 
 $address = rtkMail::parseAddress(sfConfig::get('app_email_feedback_to'));
-$email = $address['email'];
+$email   = $address['email'];
 
 $contactMailToEnts = utf8::toHtmlEntities('mailto:'.$email);
 
-$emailDisp = str_replace(['.', '@'], [' • ',' @ '], $email);
+$emailDisp = str_replace(['.', '@'], [' • ', ' @ '], $email);
 
 $contactMailToDisp = utf8::toHtmlEntities($emailDisp);
 ?>
@@ -25,7 +25,7 @@ If you like, you can also:
 * Post **bugs and suggestions** directly to [fabd/kanji-koohii](https://github.com/fabd/kanji-koohii/issues) on Github
 
 <?php if ($sf_user->isAuthenticated()): ?>
-* Use your own email client, send mail to <a href="<?= $contactMailToEnts; ?>"><?= $contactMailToDisp ?></a>
+* Use your own email client, send mail to <a href="<?= $contactMailToEnts; ?>"><?= $contactMailToDisp; ?></a>
 <?php endif; ?>
 
 <?= markdown_end(); ?>
@@ -54,9 +54,9 @@ If you like, you can also:
   echo _bs_form_group(
     ['validate' => 'email'],
     _bs_input_email('email', [
-      'label' => 'Email *',
+      'label'       => 'Email *',
       'placeholder' => 'Email',
-      'class' => 'max-w-[300px]',
+      'class'       => 'max-w-[300px]',
     ])
   );
 
@@ -64,7 +64,7 @@ If you like, you can also:
     ['validate' => 'message'],
     _bs_input_textarea('message', [
       'label' => 'Message',
-      'rows' => 8,
+      'rows'  => 8,
     ])
   );
 
@@ -76,7 +76,7 @@ If you like, you can also:
     </form>
   </div>
 
-<?php elseif(0 && $sf_user->isAuthenticated()): ?>
+<?php elseif (0 && $sf_user->isAuthenticated()): ?>
 
   <p style="color:#844">
       The <strong>contact form</strong> is currently disabled, please use the email shown above.
@@ -93,7 +93,7 @@ If you like, you can also:
         <p class="mb-2">
           <strong>If you are unable to sign in</strong>, contact:<br>
           <br>
-          <?= $emailDisp ?>
+          <?= $emailDisp; ?>
         </p>
     </div>
 

@@ -1,54 +1,50 @@
 <?php
 /**
- * Edit Keywords Table (Manage Flashcards)
- * 
+ * Edit Keywords Table (Manage Flashcards).
  */
-
 class EditKeywordsTableComponent extends sfComponent
 {
   public function execute($request)
   {
-    $queryParams = $this->getUser()->getLocalPrefs()
+    $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('manage.removelist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
-        uiSelectTable::QUERY_SORTORDER   => 0
-      ]);
-    
+        uiSelectTable::QUERY_SORTORDER   => 0,
+      ])
+    ;
+
     // pager
     $this->pager = new uiSelectPager([
-      'select'       => ReviewsPeer::getSelectForEditKeywordsList($this->getUser()->getUserId()),
+      'select'       => ReviewsPeer::getSelectForEditKeywordsList(kk_get_user()->getUserId()),
       'internal_uri' => 'manage/EditKeywordsTable',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
     ]);
     $this->pager->init();
-    
+
     // data table
-    $binding = new EditKeywordsTableBinding();
+    $binding     = new EditKeywordsTableBinding();
     $this->table = new uiSelectTable($binding, $this->pager->getSelect(), $request->getParameterHolder());
     $this->table->configure([
       'sortColumn' => $queryParams[uiSelectTable::QUERY_SORTCOLUMN],
-      'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER]
+      'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER],
     ]);
-
   }
 }
 
 /**
  * Remove flashcards selection table, checkboxes allow to select flashcards to remove from deck.
- * 
  */
 class EditKeywordsTableBinding implements uiSelectTableBinding
 {
-  protected
-    $_selection = null;
-  
+  protected $_selection;
+
   public function getConfig()
   {
     sfProjectConfiguration::getActive()->loadHelpers(['Asset', 'SimpleDate', 'CJK']);
-    
+
     // MUST BE VALID JSON! ! !
     return <<< EOD
     {
@@ -97,34 +93,28 @@ EOD;
 
   public function filterDisplayData(uiSelectTableRow $row)
   {
-    $rowData =& $row->getRowData();
+    $rowData = &$row->getRowData();
 
     $rowData['_kanji'] = cjk_lang_ja($rowData['kanji']);
 
     $rowData['_keyword'] = str_replace('/', '/<br/>', $rowData['keyword']);
 
     // create edit keyword link
-    $rowData['_custkeyword'] = esc_specialchars($rowData['custkeyword']); //'<span class="JSEditKeyword" data-url="'.$url.'">'.$rowData['custkeyword'].'</span>';
+    $rowData['_custkeyword'] = esc_specialchars($rowData['custkeyword']); // '<span class="JSEditKeyword" data-url="'.$url.'">'.$rowData['custkeyword'].'</span>';
 
     $rowData['_edit'] = image_tag('/images/ui/icons/pencil.png', [
-      'size'     => '16x16',
-      'class'    => 'edit-icon JSEditKeyword',
-      'data-id'  => $rowData['ucs_id']
+      'size'    => '16x16',
+      'class'   => 'edit-icon JSEditKeyword',
+      'data-id' => $rowData['ucs_id'],
     ]);
-    
-    //$tsLastReview = (int)$rowData['ts_lastreview'];
-    //$rowData['_lastreview'] = $tsLastReview ? simple_format_date($tsLastReview, rtkLocale::DATE_SHORT) : '-';
+
+    // $tsLastReview = (int)$rowData['ts_lastreview'];
+    // $rowData['_lastreview'] = $tsLastReview ? simple_format_date($tsLastReview, rtkLocale::DATE_SHORT) : '-';
   }
-  
-  public function validateRowData(array $rowData)
-  {
-  }
-  
-  public function saveRowData(array $rowData, $newrow = false)
-  {
-  }
-  
-  public function deleteRow(array $row_ids)
-  {
-  }
+
+  public function validateRowData(array $rowData) {}
+
+  public function saveRowData(array $rowData, $newrow = false) {}
+
+  public function deleteRow(array $row_ids) {}
 }

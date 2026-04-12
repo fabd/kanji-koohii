@@ -1,5 +1,5 @@
 <?php
-  $sf_user_name = $sf_user->getUserName();
+$sf_user_name = $sf_user->getUserName();
 ?>
 
 <h2>New Password Confirmation</h2>
@@ -12,7 +12,7 @@
   The email should arrive  shortly.
 </p>
 <p>
-  <?php echo _bs_button_to('Sign in','@login', ['query_string' => 'username='.$sf_user_name, 'class' => 'ko-Btn ko-Btn--success ko-Btn--large mr-2']) ?> with your new password.
+  <?= _bs_button_to('Sign in', '@login', ['query_string' => 'username='.$sf_user_name, 'class' => 'ko-Btn ko-Btn--success ko-Btn--large mr-2']); ?> with your new password.
 </p>
  
       

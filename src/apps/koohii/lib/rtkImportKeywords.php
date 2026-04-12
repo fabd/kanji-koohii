@@ -1,51 +1,44 @@
 <?php
 /**
- * rtkImportKeywords
- * 
+ * rtkImportKeywords.
+ *
  * Class that represents a customized keyword import selection, plus validation helpers.
  *
  * @author     Fabrice Denis
  */
-
 class rtkImportKeywords
 {
-  protected
-    $request    = null,
-    $parsed     = [],
-    $keywords   = [];
+  protected $request;
+  protected $parsed   = [];
+  protected $keywords = [];
 
-  const
-    MAX_KEYWORD = 40;
-  
+  public const MAX_KEYWORD = 40;
+
   /**
-   * 
-   * @param  object  $request  Object with setError() method
-   * @return 
+   * @param object $request Object with setError() method
    */
   public function __construct($request)
   {
     $this->request = $request;
   }
-  
+
   /**
    * Parse data into kanji => keyword associations.
    *
-   * @param  string $selection 
+   * @param string $selection
    *
-   * @return boolean  Returns false if any error happended during parse or selection is empty.
+   * @return bool returns false if any error happended during parse or selection is empty
    */
   public function parse($selection)
   {
     $parse = [];
 
     // split on newlines
-    $rows =  preg_split('/\s*[\r\n]+\s*/u', $selection);
+    $rows = preg_split('/\s*[\r\n]+\s*/u', $selection);
 
     // first parse into a sortable array
-    for ($i = 0, $n = count($rows); $i < $n; $i++)
-    {
-      if (1 !== preg_match('/^\s*([^,\s\x{3000}]+)[,\s\x{3000}]+(.*)$/u', $rows[$i], $parts))
-      {
+    for ($i = 0, $n = count($rows); $i < $n; $i++) {
+      if (1 !== preg_match('/^\s*([^,\s\x{3000}]+)[,\s\x{3000}]+(.*)$/u', $rows[$i], $parts)) {
         continue;
       }
 
@@ -56,40 +49,39 @@ class rtkImportKeywords
       $parse[] = [$id, $keyword, $i + 1];
     }
 
-    if (count($parse) <= 0)
-    {
+    if (count($parse) <= 0) {
       $this->request->setError('x', 'Import data could not be parsed.');
+
       return;
     }
 
-    //$this->parsed = $parse;
+    // $this->parsed = $parse;
 
     return $this->request->hasErrors() ? false : $parse;
   }
 
   /**
    * Validate the imported keyword data, and prepare session data.
-   * 
-   * @return bool  Returns true if the imported data is valid.
+   *
+   * @param mixed $data
+   *
+   * @return bool returns true if the imported data is valid
    */
   public function validate($data)
   {
     $parse = [];
 
-    for ($i = 0, $n = count($data); $i < $n; $i++)
-    {
-      list($id, $keyword, $lineNr) = $data[$i];
+    for ($i = 0, $n = count($data); $i < $n; $i++) {
+      [$id, $keyword, $lineNr] = $data[$i];
 
-      if (!self::validateKeyword($keyword, $this->request, $lineNr))
-      {
+      if (!self::validateKeyword($keyword, $this->request, $lineNr)) {
         return false;
       }
 
       // id is heisig index, UCS-2 code or utf-8 character
       $ucsId = ctype_digit($id) ? rtkIndex::getUCSForIndex(intval($id)) : utf8::toCodePoint($id);
 
-      if (!self::validateKanji($ucsId, $this->request, $lineNr))
-      {
+      if (!self::validateKanji($ucsId, $this->request, $lineNr)) {
         return false;
       }
 
@@ -105,13 +97,12 @@ class rtkImportKeywords
 
     // prepare serializable array as ucs => keyword
     $keywords = [];
-    foreach ($parse as $index => $data)
-    {
+    foreach ($parse as $index => $data) {
       $keywords[$data[0]] = $data[1];
     }
     $this->keywords = $keywords;
 
-//DBG::printr($keywords);DBG::printr($this->request->getErrors());exit;
+    // DBG::printr($keywords);DBG::printr($this->request->getErrors());exit;
 
     return true;
   }
@@ -120,16 +111,17 @@ class rtkImportKeywords
    * Checks if the character is allowed to have a customized keyword (limit by
    * design for the time being).
    *
-   * @param   int          $ucsId     UCS-2 code
-   * @param   coreRequest  $request   Sets an error message, if any.
+   * @param int         $ucsId   UCS-2 code
+   * @param coreRequest $request sets an error message, if any
+   * @param mixed|null  $lineNr
    *
-   * @return  bool    true if the character (UCS) is valid and allowed for customized keywords.
+   * @return bool true if the character (UCS) is valid and allowed for customized keywords
    */
   public static function validateKanji($ucsId, $request, $lineNr = null)
   {
-    if (!CJK::isCJKUnifiedUCS($ucsId))
-    {
+    if (!CJK::isCJKUnifiedUCS($ucsId)) {
       $request->setError('x', sprintf('Unsupported character (Heisig index, UCS code or kanji) %s', self::atLine($lineNr)));
+
       return false;
     }
 
@@ -138,22 +130,21 @@ class rtkImportKeywords
 
   public static function validateKeyword($keyword, $request, $lineNr = null)
   {
-
-    if (empty($keyword) || preg_match('/^\s*$/', $keyword))
-    {
+    if (empty($keyword) || preg_match('/^\s*$/', $keyword)) {
       $request->setError('x', sprintf('Empty keyword %s.', self::atLine($lineNr)));
+
       return false;
     }
 
-    if (strip_tags($keyword) !== $keyword)
-    {
+    if (strip_tags($keyword) !== $keyword) {
       $request->setError('x', 'HTML is not allowed in customized keyword '.self::atLine($lineNr).' ("'.$keyword.'")');
+
       return false;
     }
 
-    if (mb_strlen($keyword) > self::MAX_KEYWORD)
-    {
+    if (mb_strlen($keyword) > self::MAX_KEYWORD) {
       $request->setError('x', 'Keyword is too long (max. '.self::MAX_KEYWORD.' characters) '.self::atLine($lineNr));
+
       return false;
     }
 
@@ -163,12 +154,13 @@ class rtkImportKeywords
   /**
    * Return line number string for error messages, or nothing if it is null.
    *
+   * @param mixed $lineNr
+   *
    * @return string
    */
   public static function atLine($lineNr)
   {
-    if ($lineNr !== null)
-    {
+    if ($lineNr !== null) {
       return ' at line '.$lineNr;
     }
 
@@ -189,8 +181,7 @@ class rtkImportKeywords
     sfProjectConfiguration::getActive()->loadHelpers(['SimpleDate', 'CJK']);
 
     $rows = [];
-    foreach ($this->keywords as $ucs => $keyword)
-    {
+    foreach ($this->keywords as $ucs => $keyword) {
       // display Heisig index if possible
       $c_utf = rtkIndex::getCharForIndex($ucs);
       $c_ext = rtkIndex::getIndexForChar($c_utf);
@@ -198,8 +189,8 @@ class rtkImportKeywords
 
       // framenumber (extended), kanji, keyword
       $rows[] = '<tr><td class="text-center">'.$c_ext.'</td>'
-              . '<td class="kanji">'.cjk_lang_ja('&#'.$ucs.';').'</td>'
-              . '<td>'.esc_specialchars($keyword).'</td></tr>';
+              .'<td class="kanji">'.cjk_lang_ja('&#'.$ucs.';').'</td>'
+              .'<td>'.esc_specialchars($keyword).'</td></tr>';
     }
 
     return implode("\n", $rows);
@@ -209,7 +200,7 @@ class rtkImportKeywords
   {
     return $this->keywords;
   }
-  
+
   public function getCount()
   {
     return count($this->keywords);
@@ -217,15 +208,11 @@ class rtkImportKeywords
 
   /**
    * Serialize methods to save user selection between requests.
-   * 
-   * @return 
    */
   public function __sleep()
   {
     return ['keywords'];
   }
 
-  public function __wakeup()
-  {
-  }
+  public function __wakeup() {}
 }

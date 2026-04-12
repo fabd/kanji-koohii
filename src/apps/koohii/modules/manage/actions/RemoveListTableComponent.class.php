@@ -1,56 +1,52 @@
 <?php
 /**
- * Remove Flashcards
- * 
+ * Remove Flashcards.
  */
-
 class RemoveListTableComponent extends sfComponent
 {
   public function execute($request)
   {
-    $queryParams = $this->getUser()->getLocalPrefs()
+    $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('manage.removelist', [
         uiSelectPager::QUERY_ROWSPERPAGE => 20,
         uiSelectTable::QUERY_SORTCOLUMN  => 'seq_nr',
-        uiSelectTable::QUERY_SORTORDER   => 0
-      ]);
-    
+        uiSelectTable::QUERY_SORTORDER   => 0,
+      ])
+    ;
+
     // pager
     $this->pager = new uiSelectPager([
-      'select'       => ReviewsPeer::getSelectForDetailedList($this->getUser()->getUserId()),
+      'select'       => ReviewsPeer::getSelectForDetailedList(kk_get_user()->getUserId()),
       'internal_uri' => 'manage/removeListTable',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1)
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
     ]);
     $this->pager->init();
-    
+
     // data table
-    $binding = new RemoveListTableBinding();
+    $binding     = new RemoveListTableBinding();
     $this->table = new uiSelectTable($binding, $this->pager->getSelect(), $request->getParameterHolder());
     $this->table->configure([
       'sortColumn' => $queryParams[uiSelectTable::QUERY_SORTCOLUMN],
-      'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER]
+      'sortOrder'  => $queryParams[uiSelectTable::QUERY_SORTORDER],
     ]);
-
   }
 }
 
 /**
  * Remove flashcards selection table, checkboxes allow to select flashcards to remove from deck.
- * 
  */
 class RemoveListTableBinding implements uiSelectTableBinding
 {
-  protected
-    $_selection = null;
-  
+  protected $_selection;
+
   public function getConfig()
   {
     sfProjectConfiguration::getActive()->loadHelpers(['SimpleDate', 'CJK']);
-    
+
     $this->_selection = uiSelectionState::getSelection(manageActions::REMOVE_FLASHCARDS);
-    
+
     // MUST BE VALID JSON! ! !
     return <<< EOD
     {
@@ -105,7 +101,7 @@ class RemoveListTableBinding implements uiSelectTableBinding
           "colDisplay":  "_lastreview"
         },
         {
-          "caption":   "<input type=\"checkbox\" name=\"chkAll\" value=\"all\" class=\"chkAll\" />",
+          "caption":   "<input type=\\"checkbox\\" name=\\"chkAll\\" value=\\"all\\" class=\\"chkAll\\" />",
           "width":     1,
           "cssClass":  "text-center",
           "colDisplay":  "_checkbox"
@@ -117,31 +113,24 @@ EOD;
 
   public function filterDisplayData(uiSelectTableRow $row)
   {
-    $rowData =& $row->getRowData();
+    $rowData = &$row->getRowData();
 
-    $rowData['_failurecount'] =  $rowData['failurecount']==0 ? '' : $rowData['failurecount'];
-    $rowData['_kanji'] = cjk_lang_ja($rowData['kanji']);
-    
-    $tsLastReview = (int)$rowData['tsLastReview'];
+    $rowData['_failurecount'] = $rowData['failurecount'] == 0 ? '' : $rowData['failurecount'];
+    $rowData['_kanji']        = cjk_lang_ja($rowData['kanji']);
+
+    $tsLastReview           = (int) $rowData['tsLastReview'];
     $rowData['_lastreview'] = $tsLastReview ? simple_format_date($tsLastReview, rtkLocale::DATE_SHORT) : '-';
 
-    $id = $rowData['ucs_id'];
-    $rowData['_checkbox'] = $this->_selection->getInputTag('rf', $id) . $this->_selection->getCheckboxTag('rf', $id);
-    if ($this->_selection->getState($id))
-    {
+    $id                   = $rowData['ucs_id'];
+    $rowData['_checkbox'] = $this->_selection->getInputTag('rf', $id).$this->_selection->getCheckboxTag('rf', $id);
+    if ($this->_selection->getState($id)) {
       $row->addCssClass(['selected']);
     }
   }
-  
-  public function validateRowData(array $rowData)
-  {
-  }
-  
-  public function saveRowData(array $rowData, $newrow = false)
-  {
-  }
-  
-  public function deleteRow(array $row_ids)
-  {
-  }
+
+  public function validateRowData(array $rowData) {}
+
+  public function saveRowData(array $rowData, $newrow = false) {}
+
+  public function deleteRow(array $row_ids) {}
 }

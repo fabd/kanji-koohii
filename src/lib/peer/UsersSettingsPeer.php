@@ -26,19 +26,19 @@ class UsersSettingsPeer extends coreDatabaseTable
 
   // array to map settings names to database fields
   public static $map = [
-    'no_shuffle' => 'OPT_NO_SHUFFLE',
-    'srs_max_box' => 'OPT_SRS_MAX_BOX',
-    'srs_mult' => 'OPT_SRS_MULT',
+    'no_shuffle'   => 'OPT_NO_SHUFFLE',
+    'srs_max_box'  => 'OPT_SRS_MAX_BOX',
+    'srs_mult'     => 'OPT_SRS_MULT',
     'srs_hard_box' => 'OPT_SRS_HARD_BOX',
-    'srs_reverse' => 'OPT_SRS_REVERSE',
+    'srs_reverse'  => 'OPT_SRS_REVERSE',
   ];
 
   private static $defaultSettings = [
-    'OPT_NO_SHUFFLE' => 0,    // do not shuffle new cards (blue pile)
-    'OPT_SRS_MAX_BOX' => 7,   // number of review piles (excludes Failed & New box)
-    'OPT_SRS_MULT' => 205,    // 205 means 2.05
+    'OPT_NO_SHUFFLE'   => 0,    // do not shuffle new cards (blue pile)
+    'OPT_SRS_MAX_BOX'  => 7,   // number of review piles (excludes Failed & New box)
+    'OPT_SRS_MULT'     => 205,    // 205 means 2.05
     'OPT_SRS_HARD_BOX' => 0,  // zero means default behaviour
-    'OPT_SRS_REVERSE' => 0,   // 1 = reverse from Heisig's recommendation
+    'OPT_SRS_REVERSE'  => 0,   // 1 = reverse from Heisig's recommendation
   ];
 
   public static function getInstance(): self
@@ -53,7 +53,7 @@ class UsersSettingsPeer extends coreDatabaseTable
    */
   private static function mapColsToOpts(array $data)
   {
-    $map = self::$map;
+    $map         = self::$map;
     $mapped_keys = array_map(fn ($k) => $map[$k], array_keys($data));
 
     return array_combine($mapped_keys, $data);
@@ -66,7 +66,7 @@ class UsersSettingsPeer extends coreDatabaseTable
    */
   private static function mapOptsToCols(array $data)
   {
-    $map = array_flip(self::$map);
+    $map         = array_flip(self::$map);
     $mapped_keys = array_map(fn ($k) => $map[$k], array_keys($data));
 
     return array_combine($mapped_keys, $data);
@@ -92,25 +92,23 @@ class UsersSettingsPeer extends coreDatabaseTable
   {
     $select = self::getInstance()
       ->select(array_keys(self::$map))
-      ->where('userid = ?', $userId)->query();
-    
+      ->where('userid = ?', $userId)->query()
+    ;
+
     $db = self::getInstance()->getDb();
 
-    if ($row = $db->fetch())
-    {
+    if ($row = $db->fetch()) {
       $settings = self::mapColsToOpts($row);
-    }
-    else
-    {
+    } else {
       $settings = self::getDefaultSettings();
     }
 
     // normalize the settings
-    $settings['OPT_NO_SHUFFLE'] = (int) $settings['OPT_NO_SHUFFLE'];
-    $settings['OPT_SRS_MAX_BOX'] = (int) $settings['OPT_SRS_MAX_BOX'];
-    $settings['OPT_SRS_MULT'] = (int) $settings['OPT_SRS_MULT'];
+    $settings['OPT_NO_SHUFFLE']   = (int) $settings['OPT_NO_SHUFFLE'];
+    $settings['OPT_SRS_MAX_BOX']  = (int) $settings['OPT_SRS_MAX_BOX'];
+    $settings['OPT_SRS_MULT']     = (int) $settings['OPT_SRS_MULT'];
     $settings['OPT_SRS_HARD_BOX'] = (int) $settings['OPT_SRS_HARD_BOX'];
-    $settings['OPT_SRS_REVERSE'] = (int) $settings['OPT_SRS_REVERSE'];
+    $settings['OPT_SRS_REVERSE']  = (int) $settings['OPT_SRS_REVERSE'];
 
     return $settings;
   }
@@ -123,18 +121,15 @@ class UsersSettingsPeer extends coreDatabaseTable
   public static function saveUserSettings($userId, array $settings)
   {
     // if the settings aren't saved yet, fill in the defaults
-    if (!self::hasUserSettings($userId))
-    {
+    if (!self::hasUserSettings($userId)) {
       $defaults = self::getDefaultSettings();
       $settings = array_merge($defaults, $settings);
-      $colData = self::mapOptsToCols($settings);
+      $colData  = self::mapOptsToCols($settings);
 
       $colData['userid'] = $userId;
 
       return self::getInstance()->insert($colData);
-    }
-    else
-    {
+    } else {
       $colData = self::mapOptsToCols($settings);
 
       return self::getInstance()->update($colData, 'userid = ?', $userId);

@@ -1,35 +1,36 @@
 <?php
 /**
  * A class for testing php expressions and other misc. code with readable output.
- * 
- * 
+ *
  * @author  Fabrice Denis
+ *
  * @see     http://www.symfony-project.org/book/1_0/15-Unit-and-Functional-Testing
  */
-
 class coreTest
 {
   public $failed = 0;
   public $passed = 0;
 
-  function title($title)
+  public function title($title)
   {
-    echo "<h2>$title</h2>\n";
+    echo "<h2>{$title}</h2>\n";
   }
 
   /**
-   * Compares two values and passes if they are equal (==)
-   * 
+   * Compares two values and passes if they are equal (==).
+   *
    * @param mixed  Value
    * @param mixed  Expected value
    * @param string Test label
+   * @param mixed $exp1
+   * @param mixed $exp2
+   * @param mixed $message
    */
   public function is($exp1, $exp2, $message = '')
   {
     if (is_object($exp1) || is_object($exp2)) {
       $value = $exp1 === $exp2;
-    }
-    else {
+    } else {
       $value = $exp1 == $exp2;
     }
 
@@ -40,45 +41,45 @@ class coreTest
 
   public function ok($exp, $message = '')
   {
-      if ($result = (boolean) $exp) {
-        ++$this->passed;
-      }
-      else {
-        ++$this->failed;
-      }
+    if ($result = (bool) $exp) {
+      $this->passed++;
+    } else {
+      $this->failed++;
+    }
 
     // print
-    $message = ($message!=='') ? ('<div class="label">' . $message . '</div>') : ''; 
+    $message = ($message !== '') ? ('<div class="label">'.$message.'</div>') : '';
 
-    $output = '<div class="result">' . $this->to_string($exp) . '</div>';
+    $output = '<div class="result">'.$this->to_string($exp).'</div>';
 
     $cssclass = $result ? 'box_ok' : 'box_error';
 
     echo <<<EOD
-<div class="${cssclass}">
-  $message
-  $output
+<div class="{$cssclass}">
+  {$message}
+  {$output}
 </div>
 EOD;
   }
 
   /**
-   * Output results with a message,
-   * 
-   * @return 
+   * Output results with a message,.
+   *
+   * @param mixed $exp
+   * @param mixed $message
    */
   public function out($exp, $message = '')
   {
-    $message = ($message!=='') ? ('<div class="label">' . $message . '</div>') : ''; 
+    $message = ($message !== '') ? ('<div class="label">'.$message.'</div>') : '';
 
-    $output = '<div class="result">' . $this->to_string($exp) . '</div>';
+    $output = '<div class="result">'.$this->to_string($exp).'</div>';
 
     $cssclass = 'box_print';
 
     echo <<<EOD
-<div class="${cssclass}">
-  $message
-  $output
+<div class="{$cssclass}">
+  {$message}
+  {$output}
 </div>
 EOD;
   }
@@ -87,23 +88,19 @@ EOD;
   {
     if (is_null($exp)) {
       $result = 'null';
-    }
-    elseif (is_bool($exp)) {
+    } elseif (is_bool($exp)) {
       $result = $exp ? 'true' : 'false';
-    }
-    elseif ($exp==='') {
+    } elseif ($exp === '') {
       $result = '(empty string)';
-    }
-    else {
+    } else {
       $result = $exp;
     }
+
     return $result;
   }
 
-
   /**
    * Echo styles used by the tests output.
-   * 
    */
   public function echoStyles()
   {
@@ -118,11 +115,9 @@ EOD;
   </style>
 EOD;
   }
-  
+
   /**
    * Outputs page footer with php script name and last modified time.
-   * 
-   * @return 
    */
   private function footer()
   {

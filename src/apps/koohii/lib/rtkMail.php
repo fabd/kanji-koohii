@@ -129,7 +129,7 @@ class rtkMail extends MailAbstractAPI
     $body = $this->renderTemplate('updatedPasswordConfirmation', [
       'username' => $userName,
       'password' => $rawPassword,
-      'email' => $userAddress,
+      'email'    => $userAddress,
     ]);
     $this->setBodyText($body);
 
@@ -144,7 +144,7 @@ class rtkMail extends MailAbstractAPI
    */
   private function renderTemplate($templateName, $templateVars = [])
   {
-    $templateDir = sfConfig::get('sf_app_template_dir').'/emails';
+    $templateDir  = sfConfig::get('sf_app_template_dir').'/emails';
     $templateFile = $templateDir.'/'.$templateName.'.php';
 
     if (!is_readable($templateFile)) {
@@ -185,12 +185,12 @@ class rtkMail extends MailAbstractAPI
     $address = trim($address ?? '');
     assert(!empty($address));
 
-    $name = '';
+    $name  = '';
     $email = '';
 
     if (preg_match('/"?([^><,"]+)"?\s*((?:<[^><,]+>)?)/', $address, $matches)) {
       if (!empty($matches[2])) {
-        $name = trim($matches[1]);
+        $name  = trim($matches[1]);
         $email = trim($matches[2], '<>');
       } else {
         $email = $matches[1];

@@ -9,22 +9,21 @@ class coreWebResponse extends sfWebResponse
    *
    * @see https://vitejs.dev/guide/#browser-support
    */
-  const SCRIPT_TYPE_MODULE = ['type' => 'module'];
+  public const SCRIPT_TYPE_MODULE = ['type' => 'module'];
 
   /**
    * Vite dev server.
    */
-  const VITE_SERVER = 'http://localhost:5173/';
-  const VITE_CLIENT = '@vite/client';
+  public const VITE_SERVER = 'http://localhost:5173/';
+  public const VITE_CLIENT = '@vite/client';
 
-  const USE_DEV_SERVER = true;
+  public const USE_DEV_SERVER = true;
 
   public function addViteEntries()
   {
     static $viteClientLoaded = false;
 
-    if ($viteClientLoaded)
-    {
+    if ($viteClientLoaded) {
       return;
     }
 
@@ -35,15 +34,13 @@ class coreWebResponse extends sfWebResponse
 
     $isLandingPage = $request->getParameter('isLandingPage');
 
-    if (KK_ENV_DEV && self::USE_DEV_SERVER && false === $viteClientLoaded)
-    {
+    if (KK_ENV_DEV && self::USE_DEV_SERVER && false === $viteClientLoaded) {
       $this->addViteClient();
       $viteClientLoaded = true;
     }
 
     // common base entry for all authenticated pages
-    if (!$isLandingPage)
-    {
+    if (!$isLandingPage) {
       $this->addViteEntry('src/entry-common.ts');
     }
   }
@@ -64,16 +61,13 @@ class coreWebResponse extends sfWebResponse
    */
   public function addJavascript($file, $position = '', $options = [])
   {
-    if (strpos($file, 'src/') === 0)
-    {
+    if (strpos($file, 'src/') === 0) {
       // this adds Vite dependencies, when triggered early via adding an entry in view.yml
       $this->addViteEntries();
 
       // typically this will be the last added entry for specific pages (after common entries)
       $this->addViteEntry($file, $position);
-    }
-    else
-    {
+    } else {
       parent::addJavascript($file, $position, $options);
     }
   }
@@ -81,8 +75,7 @@ class coreWebResponse extends sfWebResponse
   public function addViteEntry($entryFile, string $position = '')
   {
     // with Vite's dev server, just import the entry file(s) which also include the CSS
-    if (KK_ENV_DEV && self::USE_DEV_SERVER)
-    {
+    if (KK_ENV_DEV && self::USE_DEV_SERVER) {
       $this->addJavascript(self::VITE_SERVER.$entryFile, $position, self::SCRIPT_TYPE_MODULE);
 
       return;
@@ -98,16 +91,13 @@ class coreWebResponse extends sfWebResponse
 
     $position = '';
 
-    $addViteDist = function ($assetFile)
-    {
+    $addViteDist = function ($assetFile) {
       return Vite::OUTDIR.'/'.$assetFile;
     };
 
     // add imports
-    if (null !== ($deps = $manifest[$entryFile]['deps'] ?? null))
-    {
-      foreach ($deps as $importFile)
-      {
+    if (null !== ($deps = $manifest[$entryFile]['deps'] ?? null)) {
+      foreach ($deps as $importFile) {
         $this->addJavascript($addViteDist($importFile), $position, self::SCRIPT_TYPE_MODULE);
       }
     }
@@ -117,10 +107,8 @@ class coreWebResponse extends sfWebResponse
     $this->addJavascript($addViteDist($importFile), $position, self::SCRIPT_TYPE_MODULE);
 
     // add stylesheet(s) if any
-    if ($cssDeps = $entryInfo['css'])
-    {
-      foreach ($cssDeps as $importFile)
-      {
+    if ($cssDeps = $entryInfo['css']) {
+      foreach ($cssDeps as $importFile) {
         $this->addStylesheet($addViteDist($importFile), $position);
       }
     }
@@ -130,16 +118,13 @@ class coreWebResponse extends sfWebResponse
   {
     static $viteManifest = null;
 
-    if (null === $viteManifest)
-    {
+    if (null === $viteManifest) {
       // in dev, grab the manifest.json which is updated in real time by `vite build --watch`
-      if (KK_ENV_DEV)
-      {
+      if (KK_ENV_DEV) {
         $viteManifest = Vite::getManifestJson();
       }
       // in test/prod, use the one we pre-parsed to php array
-      else
-      {
+      else {
         $viteManifest = require_once sfConfig::get('sf_config_dir').'/vite-build.inc.php';
       }
     }

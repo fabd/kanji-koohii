@@ -89,9 +89,9 @@ class MyCommand extends Command_CLI
   {
     parent::__construct([
       'out|o=s' => 'Output filename (required) for either -t or -k',
-      't' => 'Output the main table for import in the database',
-      'l=i' => 'Output map of lesson numbers (cf. rtkIndexNewEdition.php)',
-      'k=i' => 'Output javascript file for the Study search dropdown.',
+      't'       => 'Output the main table for import in the database',
+      'l=i'     => 'Output map of lesson numbers (cf. rtkIndexNewEdition.php)',
+      'k=i'     => 'Output javascript file for the Study search dropdown.',
     ]);
 
     mb_internal_encoding('utf-8');
@@ -103,8 +103,7 @@ class MyCommand extends Command_CLI
   {
     $outfile = $this->getFlag('o');
 
-    if (null === $outfile)
-    {
+    if (null === $outfile) {
       $this->throwError('Required output file (-o). Type --help for help.');
     }
 
@@ -123,7 +122,7 @@ class MyCommand extends Command_CLI
     // dd($kanjisTable->indexByUCS[20007]); // not in KANJIDIC, should be 8 strokes
 
     $this->verbose("\nParsing KANJIDIC2_XML_FILE ...");
-    $kanjidic = new KanjidicParser(KANJIDIC2_XML_FILE);
+    $kanjidic   = new KanjidicParser(KANJIDIC2_XML_FILE);
     $numEntries = $kanjidic->parse();
     $this->verbose(' ... succesfully parsed %d characters.', $numEntries);
 
@@ -136,21 +135,16 @@ class MyCommand extends Command_CLI
     $rtkParser = new RtkParser($this);
     $rtkParser->parse($kanjisTable, $kanjidic);
 
-    if ($this->getFlag('t'))
-    {
+    if ($this->getFlag('t')) {
       $this->verbose("\nWriting kanji table data ...");
       $kanjisTable->output($this->outputFile(), $kanjidic);
-    }
-    elseif (null !== ($seqId = $this->getFlag('k')))
-    {
-      $sequences = rtkIndex::getSequences();
+    } elseif (null !== ($seqId = $this->getFlag('k'))) {
+      $sequences = rtKIndex::getSequences();
       assert(isset($sequences[$seqId]));
 
       $this->outputKeywords($this->outputFile(), (int) $seqId, $kanjisTable, $kanjidic);
-    }
-    elseif (null !== ($seqId = $this->getFlag('l')))
-    {
-      $sequences = rtkIndex::getSequences();
+    } elseif (null !== ($seqId = $this->getFlag('l'))) {
+      $sequences = rtKIndex::getSequences();
       assert(isset($sequences[$seqId]));
 
       $this->outputLessonsForPhp((int) $seqId, $kanjisTable);
@@ -161,15 +155,13 @@ class MyCommand extends Command_CLI
 
   /**
    * Output the lesson map that is included in `rtkIndexOld/NewEdition.php`.
-   *
    */
   private function outputLessonsForPhp(int $seqId, KanjisTable $kanjisTable)
   {
     $lessons = $this->getLessonsArray($seqId, $kanjisTable);
 
     $arr = [];
-    foreach ($lessons as $lessNr => $count)
-    {
+    foreach ($lessons as $lessNr => $count) {
       $arr[] = "{$lessNr} => {$count}";
     }
 
@@ -190,32 +182,28 @@ class MyCommand extends Command_CLI
 
     $lessons = [];
 
-    foreach ($kanjisBySeq as $seqNr => $entry)
-    {
+    foreach ($kanjisBySeq as $seqNr => $entry) {
       // ignore special values (9998, 9999)
-      if ($seqNr >= RtkParser::NOT_IN)
-      {
+      if ($seqNr >= RtkParser::NOT_IN) {
         break;
       }
 
       $lessNr = $entry->{$lessCol};
       assert('$lessNr > 0');
 
-      if (!isset($lessons[$lessNr]))
-      {
+      if (!isset($lessons[$lessNr])) {
         $lessons[$lessNr] = 0;
       }
 
-      ++$lessons[$lessNr];
+      $lessons[$lessNr]++;
     }
 
     return $lessons;
   }
-  
 
   /**
    * Generate sequence data usable by the client side:
-   * 
+   *
    *   - the sequence name (ie. "RTK Old Edition")
    *   - the lessons with pre-baked from/count values even if we could infer "from"
    *     on the client side, so it is more readily usable
@@ -224,11 +212,11 @@ class MyCommand extends Command_CLI
    */
   private function getSequenceData(int $seqId, KanjisTable $kanjisTable)
   {
-    $sequences = rtkIndex::getSequences();
+    $sequences = rtKIndex::getSequences();
     assert(isset($sequences[$seqId]));
     $sequenceInfo = $sequences[$seqId];
 
-    //FIXME hardcoded for now, we'll need to refactor rtkIndex if we want to support
+    // FIXME hardcoded for now, we'll need to refactor rtkIndex if we want to support
     // additional sequences, so it's more flexible (not too hard, no use for now)
     $sequenceName = $seqId === 0 ? 'RTK Old Edition' : 'RTK New Edition';
 
@@ -236,16 +224,15 @@ class MyCommand extends Command_CLI
 
     // arrange data for new Map() in JavaScript
     $lessonsMap = [];
-    $from = 1;
-    foreach ($lessons as $lessNr => $count)
-    {
+    $from       = 1;
+    foreach ($lessons as $lessNr => $count) {
       $lessonsMap[] = [$lessNr, [$from, $count]];
       $from += $count;
     }
 
     return [
       'sequenceName' => $sequenceName,
-      'lessons' => $lessonsMap,
+      'lessons'      => $lessonsMap,
     ];
   }
 
@@ -256,7 +243,7 @@ class MyCommand extends Command_CLI
    */
   private function outputKeywords(string $fileName, int $seqId, KanjisTable $kanjisTable, KanjidicParser $kanjidic)
   {
-    $sequences = rtkIndex::getSequences();
+    $sequences  = rtKIndex::getSequences();
     $seqClassId = $sequences[$seqId]['classId'];
 
     echo sprintf("\nWriting keywords file for sequence '%s' ...\n", $seqClassId);
@@ -272,35 +259,32 @@ class MyCommand extends Command_CLI
 
     $handle = ParserUtils::fileOpen($fileName, 'wb');
 
-    $keywords = [];
-    $kanjis = [];
+    $keywords   = [];
+    $kanjis     = [];
     $seqNrCheck = 1;
 
-    foreach ($kanjisBySeq as $indexNr => $entry)
-    {
+    foreach ($kanjisBySeq as $indexNr => $entry) {
       // it is ordered by heisig nr, so extended frame nr (UCS) means we're done
-      if (rtkIndex::isExtendedIndex($indexNr))
-      {
+      if (rtKIndex::isExtendedIndex($indexNr)) {
         break;
       }
 
       // sanity check for sequential index
-      if ($indexNr !== $seqNrCheck)
-      {
+      if ($indexNr !== $seqNrCheck) {
         $this->throwError(__FUNCTION__.' Guru Meditation #239874');
       }
 
       $keywords[] = $entry->keyword;
-      $kanjis[] = IntlChar::chr($entry->ucs_id);
-      ++$seqNrCheck;
+      $kanjis[]   = IntlChar::chr($entry->ucs_id);
+      $seqNrCheck++;
     }
 
     $lessons = $this->getSequenceData($seqId, $kanjisTable);
 
     // output template
     $keywords_json = json_encode($keywords, JSON_UNESCAPED_UNICODE);
-    $lessons_json = json_encode($lessons, JSON_UNESCAPED_UNICODE);
-    $characters = implode('', $kanjis);
+    $lessons_json  = json_encode($lessons, JSON_UNESCAPED_UNICODE);
+    $characters    = implode('', $kanjis);
     $generatorTime = date('F j, Y G:i:s');
     $generatorFile = basename(__FILE__);
 

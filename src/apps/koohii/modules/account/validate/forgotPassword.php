@@ -1,20 +1,19 @@
 <?php
 /**
  * Forgot Password validation.
- * 
  */
 
 return [
   'fields' => [
     'email_address' => [
-      'required'         => [
-        'msg'           => 'Email address is required.'
+      'required' => [
+        'msg' => 'Email address is required.',
       ],
-      'EmailValidator'  => [
-        'strict'        => true,
-        'email_error'   => 'Email is not valid.'
-      ]
-      
+      'EmailValidator' => [
+        'strict'      => true,
+        'email_error' => 'Email is not valid.',
+      ],
+
       /*
       'StringValidator'   => array
       (
@@ -25,6 +24,6 @@ return [
         'max_error'   => 'Username is too long (max 25 characters).'
       )
       */
-    ]
-  ]
+    ],
+  ],
 ];

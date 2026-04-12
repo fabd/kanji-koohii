@@ -1,9 +1,9 @@
-<?php use_helper('Form', 'Validation', 'Widgets') ?>
+<?php use_helper('Form', 'Validation', 'Widgets'); ?>
 
 <div class="markdown">
   <p> To import customized keywords each line should contain the following two fields, separated by spaces (tabs, comma):</p>
   <ul>
-    <li><?php echo _CJ_U('kanji') ?> <em style="color:green">or</em> index number ("frame number") <em style="color:green">or</em> <?php echo link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set') ?> code.</li>
+    <li><?= _CJ_U('kanji'); ?> <em style="color:green">or</em> index number ("frame number") <em style="color:green">or</em> <?= link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set'); ?> code.</li>
     <li>Custom keyword.</li>
   </ul>
 
@@ -16,18 +16,17 @@
   </p>
 </div>
 
-  <?php echo form_errors() ?>
+  <?= form_errors(); ?>
   
-  <?php echo form_tag('manage/importKeywords', ['class' => 'main-form']) ?>
+  <?= form_tag('manage/importKeywords', ['class' => 'main-form']); ?>
 
-  <?php echo textarea_tag('txtData', /*<<<EOT
+  <?= textarea_tag('txtData', /*<<<EOT
 4  "quattre"
 二 deux
 三, trois
 30000 "champs de ""riz-o-lait"""
-EOT*/ ''
-, ['class' => 'form-control mb-3', 'rows' => 5]) ?>
+EOT*/ '', ['class' => 'form-control mb-3', 'rows' => 5]); ?>
 
-  <?php echo _bs_submit_tag('Import Keywords') ?><em class="note">Note: there will be a confirmation step.</em>
+  <?= _bs_submit_tag('Import Keywords'); ?><em class="note">Note: there will be a confirmation step.</em>
 
 </form>

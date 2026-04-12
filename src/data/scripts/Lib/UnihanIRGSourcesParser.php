@@ -30,10 +30,9 @@ class UnihanIRGSourcesParser
   {
     $this->cmd->verbose(' ... merging strokecounts from Unihan');
 
-    foreach ($kanjis->entries as $kEntry)
-    {
-      $ucsId = $kEntry->ucs_id;
-      $kTotalStrokes = $this->kTotalStrokes[$ucsId] ?? 0;
+    foreach ($kanjis->entries as $kEntry) {
+      $ucsId               = $kEntry->ucs_id;
+      $kTotalStrokes       = $this->kTotalStrokes[$ucsId] ?? 0;
       $kEntry->strokecount = $kEntry->strokecount ?: $kTotalStrokes;
     }
   }
@@ -47,19 +46,16 @@ class UnihanIRGSourcesParser
 
     $this->kTotalStrokes = [];
 
-    while (false !== ($cols = fgetcsv($handle, 1000, "\t")))
-    {
-      ++$lineNr;
+    while (false !== ($cols = fgetcsv($handle, 1000, "\t"))) {
+      $lineNr++;
 
       // skip enmpty lines
-      if (null === $cols[0])
-      {
+      if (null === $cols[0]) {
         continue;
       }
 
       // skip comments
-      if ($cols[0][0] === '#')
-      {
+      if ($cols[0][0] === '#') {
         continue;
       }
 
@@ -69,14 +65,12 @@ class UnihanIRGSourcesParser
       $unique[$ucsId] = true;
 
       // this should match CJK::isCJKUnifiedUCS()
-      if ($ucsId < CJK::CJK_UNIFIED_BEGIN || $ucsId > CJK::CJK_UNIFIED_END)
-      {
+      if ($ucsId < CJK::CJK_UNIFIED_BEGIN || $ucsId > CJK::CJK_UNIFIED_END) {
         continue;
       }
 
-      if ($cols[1] === 'kTotalStrokes')
-      {
-        $strokeCount = (int) $cols[2];
+      if ($cols[1] === 'kTotalStrokes') {
+        $strokeCount                 = (int) $cols[2];
         $this->kTotalStrokes[$ucsId] = $strokeCount;
       }
     }

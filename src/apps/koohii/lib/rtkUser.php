@@ -37,7 +37,7 @@ class rtkUser extends sfBasicSecurityUser
   // The "Remember me" cookie lifetime in seconds
   public const COOKIE_EXPIRE = 60 * 60 * 24 * 365; // 1 year
 
-  public const CREDENTIAL_ADMIN = 'admin';
+  public const CREDENTIAL_ADMIN  = 'admin';
   public const CREDENTIAL_MEMBER = 'member';
 
   // misc. session attributes
@@ -51,18 +51,15 @@ class rtkUser extends sfBasicSecurityUser
     parent::initialize($dispatcher, $storage, $options);
 
     // sign in unauthenticated user if a "remember me" cookie exists
-    if (!$this->isAuthenticated())
-    {
-      if ($cookieData = sfContext::getInstance()->getRequest()->getCookie(sfConfig::get('app_cookie_name')))
-      {
-        $value = unserialize(base64_decode($cookieData));
-        $username = $value[0];
+    if (!$this->isAuthenticated()) {
+      if ($cookieData = sfContext::getInstance()->getRequest()->getCookie(sfConfig::get('app_cookie_name'))) {
+        $value         = unserialize(base64_decode($cookieData));
+        $username      = $value[0];
         $saltyPassword = $value[1];
 
         // sign in user if user is valid and password from cookie matches the one in database
         $user = UsersPeer::getUser($username);
-        if ($user && ($saltyPassword == $user['password']))
-        {
+        if ($user && ($saltyPassword == $user['password'])) {
           $this->signIn($user);
         }
       }
@@ -105,8 +102,7 @@ class rtkUser extends sfBasicSecurityUser
    */
   public function getUserKnownKanji($refresh = false)
   {
-    if ($refresh || null === ($knownKanji = $this->getAttribute(self::KNOWN_KANJI)))
-    {
+    if ($refresh || null === ($knownKanji = $this->getAttribute(self::KNOWN_KANJI))) {
       $knownKanji = ReviewsPeer::getKnownKanji($this->getUserId());
       $this->setAttribute(self::KNOWN_KANJI, $knownKanji);
     }
@@ -117,8 +113,7 @@ class rtkUser extends sfBasicSecurityUser
   // [listener] atm the query is fast, so no add/delete/etc, just invalidate the cached data
   public static function eventUpdateUserKnownKanji(sfEvent $event)
   {
-    $user = sfContext::getInstance()->getUser();
-    $user->getAttributeHolder()->remove(self::KNOWN_KANJI);
+    kk_get_user()->getAttributeHolder()->remove(self::KNOWN_KANJI);
   }
 
   /**
@@ -135,8 +130,7 @@ class rtkUser extends sfBasicSecurityUser
     $attrName = $this->getUserSettingName($name);
 
     // return setting if already in session
-    if (null !== ($value = $this->getAttribute($attrName)))
-    {
+    if (null !== ($value = $this->getAttribute($attrName))) {
       return $value;
     }
 
@@ -168,8 +162,7 @@ class rtkUser extends sfBasicSecurityUser
    */
   public function addUserSettings(array $settings)
   {
-    foreach ($settings as $name => $value)
-    {
+    foreach ($settings as $name => $value) {
       $this->setUserSetting($name, $value);
     }
   }
@@ -209,15 +202,13 @@ class rtkUser extends sfBasicSecurityUser
    * Sign In the user.
    *
    * @param array $user UsersPeer row
-   *
-   * @return void
    */
   public function signIn($user)
   {
     $this->setAttributes([
       // user account settings
-      'userid' => $user['userid'],
-      'username' => $user['username'],
+      'userid'       => $user['userid'],
+      'username'     => $user['username'],
       'usertimezone' => $user['timezone'],
       // user application settings
       'usersequence' => $user['opt_sequence'],
@@ -226,8 +217,7 @@ class rtkUser extends sfBasicSecurityUser
     $this->clearCredentials();
     $this->addCredential(self::CREDENTIAL_MEMBER);
 
-    switch ($user['userlevel'])
-    {
+    switch ($user['userlevel']) {
       case UsersPeer::USERLEVEL_ADMIN:
         $this->addCredential(self::CREDENTIAL_ADMIN);
 
@@ -267,17 +257,15 @@ class rtkUser extends sfBasicSecurityUser
   public function setRememberMeCookie($username, $saltyPassword)
   {
     $value = base64_encode(serialize([$username, $saltyPassword]));
-    sfContext::getInstance()->getResponse()->setCookie(sfConfig::get('app_cookie_name'), $value, time() + self::COOKIE_EXPIRE, '/');
+    kk_get_response()->setCookie(sfConfig::get('app_cookie_name'), $value, time() + self::COOKIE_EXPIRE, '/');
   }
 
   /**
    * Clears the persistent session cookie.
-   *
-   * @return void
    */
   public function clearRememberMeCookie()
   {
-    sfContext::getInstance()->getResponse()->setCookie(sfConfig::get('app_cookie_name'), '', time() - 3600, '/');
+    kk_get_response()->setCookie(sfConfig::get('app_cookie_name'), '', time() - 3600, '/');
   }
 
   /**
@@ -305,7 +293,7 @@ class rtkUser extends sfBasicSecurityUser
    *   salt VARCHAR(32)      =>  md5(rand(100000, 999999).$this->getNickname().$this->getEmail());
    *   password VARCHAR(40)  =>  sha1($salt.$raw_password)
    *
-   * @param string $raw_password  non-encrypted password
+   * @param string $raw_password non-encrypted password
    */
   public function getSaltyHashedPassword($raw_password)
   {
@@ -320,17 +308,15 @@ class rtkUser extends sfBasicSecurityUser
    *   username => Fill in the user name of the login form
    *   referer  => Page to return the user to after signing in
    *
-   * @param array $options  Options to pass to the login page
+   * @param array $options Options to pass to the login page
    */
   public function redirectToLogin($options = [])
   {
-    if (isset($options['referer']))
-    {
+    if (isset($options['referer'])) {
       $this->setAttribute('login_referer', $options['referer']);
     }
 
-    if (isset($options['username']))
-    {
+    if (isset($options['username'])) {
       $this->setAttribute('login_username', $options['username']);
     }
 

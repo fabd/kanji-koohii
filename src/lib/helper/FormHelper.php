@@ -2,10 +2,10 @@
 /**
  * Various helpers to build forms, based on the FormHelper in the early version
  * of symfony (that seems to be absent from sf 1.4).
- * 
+ *
  * Methods:
  *   form_with_data()     Create a <form> with hidden inputs from key/values, and url.
- * 
+ *
  *   options_for_select()
  *   select_tag()
  *   input_tag()
@@ -16,28 +16,32 @@
  *   radiobutton_tag()
  *   submit_tag()
  *   label_for()
- * 
+ *
  *
  * Repopulating forms:
- * 
+ *
  *   The text input, checkbox, radio and textarea elements can be repopulated.
  *   For these elements, the value argument is a default value. When the field is repopulated,
  *   the get/post value is used in place of the default value.
- *   
+ *
  *   Checkbox and radios must use the array name syntax otherwise the default values are ignored.
- * 
+ *
  *   If an error exists in the request with the name matching one of the element's name,
  *   a css class "error" is added.
- * 
+ *
  * @author     Fabrice Denis
  * @copyright  Code based on Symfony php framework, by Fabien Potencier (www.symfony-project.org)
+ *
+ * @param mixed $url
+ * @param mixed $data
+ * @param mixed $html_options
+ * @param mixed $content
  */
 
 /**
  * Create a FORM with hidden inputs to submit manually or via a
  *  button that can be passed as $content.
  *
- * @param string $action       absolute or relative url (use url_for())
  * @param array  $data         the form data, encoded as <input type="hidden" ...>
  * @param array  $html_options html options for the <form> tag
  * @param string $content      optional content (eg. a button to submit)
@@ -55,8 +59,7 @@ function form_with_data($url, $data = [], $html_options = [], $content = '')
   $html_options['action'] = $url;
 
   $inputs = [];
-  foreach ($data as $key => $val)
-  {
+  foreach ($data as $key => $val) {
     $inputs[] = input_hidden_tag($key, $val);
   }
 
@@ -68,7 +71,6 @@ function form_with_data($url, $data = [], $html_options = [], $content = '')
 
   return $html;
 }
-
 
 /**
  * Returns a formatted set of <option> tags based on optional <i>$options</i> array variable.
@@ -101,45 +103,40 @@ function form_with_data($url, $data = [], $html_options = [], $content = '')
  * @param  array dataset to create <option> tags and <optgroup> tags from
  * @param  string selected option value
  * @param  array  additional HTML compliant <option> tag parameters
+ * @param mixed $options
+ * @param mixed $selected
+ * @param mixed $html_options
+ *
  * @return string populated with <option> tags derived from the <i>$options</i> array variable
+ *
  * @see select_tag
  */
 function options_for_select($options = [], $selected = '', $html_options = [])
 {
   $html_options = _parse_attributes($html_options);
 
-  if (is_array($selected))
-  {
+  if (is_array($selected)) {
     $selected = array_map('strval', array_values($selected));
   }
 
   $html = '';
 
-  if ($value = _get_option($html_options, 'include_custom'))
-  {
+  if ($value = _get_option($html_options, 'include_custom')) {
     $html .= content_tag('option', $value, ['value' => ''])."\n";
-  }
-  else if (_get_option($html_options, 'include_blank'))
-  {
+  } elseif (_get_option($html_options, 'include_blank')) {
     $html .= content_tag('option', '', ['value' => ''])."\n";
   }
 
-  foreach ($options as $key => $value)
-  {
-    if (is_array($value))
-    {
+  foreach ($options as $key => $value) {
+    if (is_array($value)) {
       $html .= content_tag('optgroup', options_for_select($value, $selected, $html_options), ['label' => $key])."\n";
-    }
-    else
-    {
+    } else {
       $option_options = ['value' => $key];
 
       if (
-          (is_array($selected) && in_array(strval($key), $selected, true))
-          ||
-          (strval($key) == strval($selected))
-         )
-      {
+        (is_array($selected) && in_array(strval($key), $selected, true))
+        || (strval($key) == strval($selected))
+      ) {
         $option_options['selected'] = 'selected';
       }
 
@@ -153,12 +150,12 @@ function options_for_select($options = [], $selected = '', $html_options = [])
 /**
  * Returns a <select> tag, optionally comprised of <option> tags.
  *
- * The select tag does not generate <option> tags by default.  
+ * The select tag does not generate <option> tags by default.
  * To do so, you must populate the <i>$option_tags</i> parameter with a string of valid HTML compliant <option> tags.
- * Fortunately, Symfony provides a handy helper function to convert an array of data into option tags (see options_for_select). 
- * If you need to create a "multiple" select tag (ability to select multiple options), set the <i>multiple</i> option to true.  
+ * Fortunately, Symfony provides a handy helper function to convert an array of data into option tags (see options_for_select).
+ * If you need to create a "multiple" select tag (ability to select multiple options), set the <i>multiple</i> option to true.
  * Doing so will automatically convert the name field to an array type variable (i.e. name="name" becomes name="name[]").
- * 
+ *
  * <b>Options:</b>
  * - multiple - If set to true, the select tag will allow multiple options to be selected at once.
  *
@@ -176,150 +173,177 @@ function options_for_select($options = [], $selected = '', $html_options = [])
  *  echo select_tag('url', options_for_select($url_list), array('onChange' => 'Javascript:this.form.submit();'));
  * </code>
  *
- * @param  string field name 
+ * @param  string field name
  * @param  mixed contains a string of valid <option></option> tags, or an array of options that will be passed to options_for_select
  * @param  array  additional HTML compliant <select> tag parameters
- * @return string <select> tag optionally comprised of <option> tags.
+ * @param mixed      $name
+ * @param mixed|null $option_tags
+ * @param mixed      $options
+ *
+ * @return string <select> tag optionally comprised of <option> tags
+ *
  * @see options_for_select, content_tag
  */
 function select_tag($name, $option_tags = null, $options = [])
 {
   $options = _convert_options($options);
-  $id = $name;
-  if (isset($options['multiple']) && $options['multiple'] && substr($name, -2) !== '[]')
-  {
+  $id      = $name;
+  if (isset($options['multiple']) && $options['multiple'] && substr($name, -2) !== '[]') {
     $name .= '[]';
   }
-  if (is_array($option_tags))
-  {
+  if (is_array($option_tags)) {
     $option_tags = options_for_select($option_tags);
   }
 
-  return content_tag('select', $option_tags, array_merge(['name' => $name/*, 'id' => get_id_from_name($id)*/], $options));
+  return content_tag('select', $option_tags, array_merge(['name' => $name/* , 'id' => get_id_from_name($id) */], $options));
 }
 
 /**
  * Create an <input type="text" ... /> element.
- * 
+ *
  * @param string Name attribute
  * @param mixed  Default value
  * @param array   Optional attributes
+ * @param mixed      $name
+ * @param mixed|null $value
+ * @param mixed      $options
  */
 function input_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $value = $_request->getParameter($name, $value);
+  $value    = $_request->getParameter($name, $value);
 
   // add css class
   $options = _parse_attributes($options);
 
-  $options = array_merge(['type' => 'text', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value], $options);
+  $options = array_merge(['type' => 'text', 'name' => $name, /* 'id' => get_id_from_name($name, $value), */ 'value' => $value], $options);
   _check_field_error($name, $options);
+
   return tag('input', _convert_options($options));
 }
 
 /**
  * Create an <input type="hidden" ... /> element.
- * 
+ *
  * @param string Name attribute
  * @param mixed  Value attribute
  * @param array   Optional attributes
+ * @param mixed      $name
+ * @param mixed|null $value
+ * @param mixed      $options
  */
 function input_hidden_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $value = $_request->getParameter($name, $value);
+  $value    = $_request->getParameter($name, $value);
 
   $options = array_merge(['type' => 'hidden', 'name' => $name, 'value' => $value], _parse_attributes($options));
+
   return tag('input', _convert_options($options));
 }
 
 /**
  * Create an <input type="password" ... /> element.
- * 
+ *
  * @param string Name attribute
  * @param mixed  Value
  * @param array   Optional attributes
+ * @param mixed      $name
+ * @param mixed|null $value
+ * @param mixed      $options
  */
 function input_password_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $value = $_request->getParameter($name, $value);
+  $value    = $_request->getParameter($name, $value);
 
   // add css class
   $options = _parse_attributes($options);
 
-  $options = array_merge(['type' => 'password', 'name' => $name, /*'id' => get_id_from_name($name),*/ 'value' => $value], $options);
+  $options = array_merge(['type' => 'password', 'name' => $name, /* 'id' => get_id_from_name($name), */ 'value' => $value], $options);
   _check_field_error($name, $options);
+
   return tag('input', _convert_options($options));
 }
 
 /**
  * Create a <textarea> element, with content.
- * 
+ *
  * @param string Name attribute
  * @param mixed  Default content
  * @param array   Optional attributes
+ * @param mixed      $name
+ * @param mixed|null $content
+ * @param mixed      $options
  */
 function textarea_tag($name, $content = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $content = $_request->getParameter($name, $content);
+  $content  = $_request->getParameter($name, $content);
 
   // add css class
   $options = _parse_attributes($options);
 
-  $options = array_merge(['name' => $name/*, 'id' => get_id_from_name($name)*/], $options);
+  $options = array_merge(['name' => $name/* , 'id' => get_id_from_name($name) */], $options);
 
   _check_field_error($name, $options);
-  
+
   return content_tag('textarea', escape_once((is_object($content)) ? $content->__toString() : $content), _convert_options($options));
 }
 
 /**
  * Create a checkbox.
- * 
+ *
  * For mutliple checkboxes in the same group the name should be an array (eg. "choice[]")
  * otherwise the field won't repopulate correctly.
- * 
+ *
  * @todo  Repopulation doesn't work when no checkbox are selected (it will use the default value).
- * 
+ *
  * @param string  Name attribute
  * @param string  Value attribute
- * @param boolean Default checked state
+ * @param bool Default checked state
  * @param array    Optional attributes
+ * @param mixed $name
+ * @param mixed $value
+ * @param mixed $checked
+ * @param mixed $options
  */
 function checkbox_tag($name, $value = '1', $checked = false, $options = [])
 {
-  $options = array_merge(['type' => 'checkbox', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value], _parse_attributes($options));
+  $options = array_merge(['type' => 'checkbox', 'name' => $name, /* 'id' => get_id_from_name($name, $value), */ 'value' => $value], _parse_attributes($options));
 
   // repopulate field
   $checked = _repopulate_input_cb($name, $value, $checked);
-  
+
   if ($checked) {
     $options['checked'] = 'checked';
   }
+
   return tag('input', _convert_options($options));
 }
 
 /**
  * Create a radio button.
- * 
+ *
  * For mutliple radio buttons in the same group the name should be an array (eg. "choice[]")
  * otherwise the field won't repopulate correctly.
- * 
+ *
  * @param string  Name attribute
  * @param string  Value attribute
- * @param boolean Default checked state
+ * @param bool Default checked state
  * @param array    Optional attributes
+ * @param mixed $name
+ * @param mixed $value
+ * @param mixed $checked
+ * @param mixed $options
  */
 function radiobutton_tag($name, $value = '1', $checked = false, $options = [])
 {
-  $options = array_merge(['type' => 'radio', 'name' => $name, /*'id' => get_id_from_name($name, $value),*/ 'value' => $value], _parse_attributes($options));
+  $options = array_merge(['type' => 'radio', 'name' => $name, /* 'id' => get_id_from_name($name, $value), */ 'value' => $value], _parse_attributes($options));
 
   // repopulate field
   $checked = _repopulate_input_cb($name, $value, $checked);
@@ -327,16 +351,17 @@ function radiobutton_tag($name, $value = '1', $checked = false, $options = [])
   if ($checked) {
     $options['checked'] = 'checked';
   }
+
   return tag('input', _convert_options($options));
 }
 
 /**
  * Returns an XHTML compliant <input> tag with type="submit".
- * 
+ *
  * By default, this helper creates a submit tag with a name of <em>commit</em> to avoid
  * conflicts with other parts of the framework.  It is recommended that you do not use the name
  * "submit" for submit tags unless absolutely necessary. Also, the default <i>$value</i> parameter
- * (title of the button) is set to "Save changes", which can be easily overwritten by passing a 
+ * (title of the button) is set to "Save changes", which can be easily overwritten by passing a
  * <i>$value</i> parameter.
  *
  * <b>Examples:</b>
@@ -350,6 +375,9 @@ function radiobutton_tag($name, $value = '1', $checked = false, $options = [])
  *
  * @param  string Field value (title of submit button)
  * @param  array  Additional HTML compliant <input> tag parameters
+ * @param mixed $value
+ * @param mixed $options
+ *
  * @return string XHTML compliant <input> tag with type="submit"
  */
 function submit_tag($value = 'Save changes', $options = [])
@@ -363,14 +391,17 @@ function submit_tag($value = 'Save changes', $options = [])
  * @param  string id
  * @param  string label or title
  * @param  array  additional HTML compliant <label> tag parameters
- * @return string <label> tag with <i>$label</i> for the specified <i>$id</i> parameter.
+ * @param mixed $id
+ * @param mixed $label
+ * @param mixed $options
+ *
+ * @return string <label> tag with <i>$label</i> for the specified <i>$id</i> parameter
  */
 function label_for($id, $label, $options = [])
 {
   $options = _parse_attributes($options);
 
-  if (is_object($label) && method_exists($label, '__toString'))
-  {
+  if (is_object($label) && method_exists($label, '__toString')) {
     $label = $label->__toString();
   }
 
@@ -380,49 +411,50 @@ function label_for($id, $label, $options = [])
 /**
  * Add a css class "error" to the options for rendering the form element,
  * if a validation error exists for the given element's name.
- * 
+ *
  * If the class attribute is already specified, existing classes are maintained.
- * 
+ *
  * @param string  Element name attribute
  * @param array   Assoc. array of options for the tag
+ * @param mixed $name
+ * @param mixed $options
  */
 function _check_field_error($name, &$options)
 {
-  if (sfContext::getInstance()->getRequest()->hasError($name))
-  {
-    $options['class'] = ($options['class'] ?? '') . ' is-invalid';    
+  if (sfContext::getInstance()->getRequest()->hasError($name)) {
+    $options['class'] = ($options['class'] ?? '').' is-invalid';
   }
 }
 
 /**
  * Repopulate the "checked" state for a checkbox/radio button.
- * 
+ *
  * @param string  Name attribute of the input
  * @param string  Value attribute of the input
- * @param boolean Default state for the checkbox/radio
+ * @param bool Default state for the checkbox/radio
+ * @param mixed $name
+ * @param mixed $value
+ * @param mixed $checked
  *
- * @return boolean Checkbox state repopulated, or the default value.
+ * @return bool checkbox state repopulated, or the default value
  */
 function _repopulate_input_cb($name, $value, $checked)
 {
   $_request = sfContext::getInstance()->getRequest();
-  if (strstr($name, '[]'))
-  {
-    if ( ($array_values = $_request->getParameter(rtrim($name,'[]')))!==null )
-    {
+  if (strstr($name, '[]')) {
+    if (($array_values = $_request->getParameter(rtrim($name, '[]'))) !== null) {
       assert(is_array($array_values));
       if (in_array($value, $array_values)) {
         $checked = true;
-      }
-      else {
+      } else {
         $checked = false;
       }
     }
-  }
-  else {
+  } else {
     // checkboxes with unique names (no []) repopulate but can not use default values
-    $value = $_request->getParameter($name);
-    $checked = $value!==null && !empty($value);
+    $value   = $_request->getParameter($name);
+    $checked = $value !== null && !empty($value);
   }
-  return $checked;  
+
+  return $checked;
 }

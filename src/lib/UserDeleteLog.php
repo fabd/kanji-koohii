@@ -7,10 +7,10 @@
 class UserDeleteLog
 {
   // how many days back to keep in the logs
-  const LOG_PERSIST_DAYS = 365;
+  public const LOG_PERSIST_DAYS = 365;
 
   // name of the log table
-  const LOG_TABLE_NAME = 'log_user_delete';
+  public const LOG_TABLE_NAME = 'log_user_delete';
 
   public function __construct()
   {
@@ -29,10 +29,10 @@ class UserDeleteLog
 
     $this->db->insert(self::LOG_TABLE_NAME, [
       // 'created_on' :: DEFAULT CURRENT_TIMESTAMP
-      'userid' => $userid,
+      'userid'   => $userid,
       'username' => $username,
       'joindate' => $joindate,
-      'logdesc' => $description,
+      'logdesc'  => $description,
     ]);
   }
 

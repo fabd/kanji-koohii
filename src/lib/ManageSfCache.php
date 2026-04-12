@@ -43,20 +43,14 @@ class ManageSfCache
 
     $dir = sfConfig::get('sf_cache_dir').'/'.self::getAppSlashEnv().'/template/'.self::getHostName().'/all/';
 
-    if (substr($action, 0, 1) === '_')
-    {
+    if (substr($action, 0, 1) === '_') {
       $dir = $dir.'sf_cache_partial/'.$module.'/_'.$action.'/sf_cache_key/';
-    }
-    else
-    {
+    } else {
       $dir = $dir.$module.'/'.$action;
 
-      if (is_file("{$dir}.cache"))
-      {
+      if (is_file("{$dir}.cache")) {
         $dir = "{$dir}.cache"; // simple action with no params
-      }
-      else
-      {
+      } else {
         $dir = $dir.'/';
       }
     }
@@ -73,26 +67,19 @@ class ManageSfCache
    */
   public static function recursiveDeleteFromPath(string $path, $level = 0)
   {
-    if (is_dir($path))
-    {
+    if (is_dir($path)) {
       $files = array_diff(scandir($path), ['.', '..']);
 
-      foreach ($files as $file)
-      {
+      foreach ($files as $file) {
         self::recursiveDeleteFromPath(realpath($path).'/'.$file, $level + 1);
       }
 
-      if ($level > 0)
-      {
+      if ($level > 0) {
         return rmdir($path);
-      }
-      else
-      {
+      } else {
         return true;
       }
-    }
-    elseif (is_file($path))
-    {
+    } elseif (is_file($path)) {
       return unlink($path);
     }
 
@@ -112,34 +99,29 @@ class ManageSfCache
     $real_path = ManageSfCache::getRealPathForCache($route);
     // LOG::info('route', $real_path);
 
-    if (false === $real_path)
-    {
+    if (false === $real_path) {
       return ['real_path' => '-NO CACHE FILE(s)-', 'file_count' => -1, 'size_kb' => -1];
     }
 
     $size = 0;
 
-    if (is_dir($real_path))
-    {
+    if (is_dir($real_path)) {
       $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($real_path, FilesystemIterator::SKIP_DOTS));
-      foreach ($iterator as $i)
-      {
+      foreach ($iterator as $i) {
         $size += $i->getSize();
       }
       $file_count = iterator_count($iterator);
-    }
-    else
-    {
-      $size = filesize($real_path);
+    } else {
+      $size       = filesize($real_path);
       $file_count = 1;
     }
 
-    //echo sprintf('%d size, %d files', $size, iterator_count($iterator));
+    // echo sprintf('%d size, %d files', $size, iterator_count($iterator));
 
     return [
-      'real_path' => $real_path,
+      'real_path'  => $real_path,
       'file_count' => $file_count,
-      'size_kb' => (int) ($size / 1024),
+      'size_kb'    => (int) ($size / 1024),
     ];
   }
 
@@ -170,7 +152,7 @@ class ManageSfCache
    */
   public static function getHostName()
   {
-    $context = sfContext::getInstance();
+    $context  = sfContext::getInstance();
     $hostName = $context->getRequest()->getHost();
 
     $hostName = preg_replace('/[^a-z0-9\*]/i', '_', $hostName);

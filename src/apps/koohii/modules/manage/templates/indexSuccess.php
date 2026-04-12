@@ -1,11 +1,11 @@
-<?php use_helper('Form', 'Widgets', 'Decorator') ?>
+<?php use_helper('Form', 'Widgets', 'Decorator'); ?>
 
-<?php decorate_start('SideTabs', ['active' => 'addorder']) ?>
+<?php decorate_start('SideTabs', ['active' => 'addorder']); ?>
 
-          <h2>Add <?php echo _CJ('Remembering the Kanji') ?> flashcards</h2>
+          <h2>Add <?= _CJ('Remembering the Kanji'); ?> flashcards</h2>
 
           <div class="ajax">
-            <?php include_partial('AddOrder') ?>
+            <?php include_partial('AddOrder'); ?>
           </div>
 
-<?php decorate_end() ?>
+<?php decorate_end(); ?>

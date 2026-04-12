@@ -1,5 +1,5 @@
 <?php
-  $ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
+$ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
 ?>
 <div class="ko-Box ko-Box--success lg:mb-4 max-lg:flex max-lg:items-center max-lg:px-2 max-lg:py-2">
   <div class="lg:mb-2">
@@ -13,26 +13,23 @@
   </div>
   <div class="ml-auto">
 <?php
-      if ($learnedCount)
-      {
-        echo _bs_button_to(
-          'Review Learned'.'<i class="fa fa-arrow-right ml-2"></i>',
-          '@review',
-          [
-            'query_string' => 'type=relearned',
-            'class' => 'ko-Btn ko-Btn--success',
-          ]
-        );
-      }
-      else
-      {
+      if ($learnedCount) {
         echo _bs_button_to(
           'Review Learned<i class="fa fa-arrow-right ml-2"></i>',
           '@review',
           [
             'query_string' => 'type=relearned',
-            'class' => 'ko-Btn ko-Btn--success is-disabled',
-            'disabled' => true,
+            'class'        => 'ko-Btn ko-Btn--success',
+          ]
+        );
+      } else {
+        echo _bs_button_to(
+          'Review Learned<i class="fa fa-arrow-right ml-2"></i>',
+          '@review',
+          [
+            'query_string' => 'type=relearned',
+            'class'        => 'ko-Btn ko-Btn--success is-disabled',
+            'disabled'     => true,
           ]
         );
       }

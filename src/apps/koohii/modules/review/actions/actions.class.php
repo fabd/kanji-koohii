@@ -6,30 +6,27 @@ class reviewActions extends sfActions
    * Review graph page.
    *
    * @param sfRequest $request
-   *
-   * @return
    */
   public function executeIndex($request)
   {
     // set local pref default value
-    $this->filter = $this->getUser()->getLocalPrefs()->sync('review.graph.filter', null, '');
-    if ($this->filter == '')
-    {
+    $this->filter = kk_get_user()->getLocalPrefs()->sync('review.graph.filter', null, '');
+    if ($this->filter == '') {
       $this->filter = 'all';
     }
 
-    $this->flashcard_count = ReviewsPeer::getFlashcardCount($this->getUser()->getUserId());
+    $this->flashcard_count = ReviewsPeer::getFlashcardCount(kk_get_user()->getUserId());
   }
 
   /**
-   * Custom Review modes 
+   * Custom Review modes.
    *
    * @param sfRequest $request
    */
   public function executeCustom($request)
   {
-    $userId = sfContext::getInstance()->getUser()->getUserId();
-    $this->knowncount = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
+    $userId             = kk_get_user()->getUserId();
+    $this->knowncount   = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
     $this->knowndefault = max($this->knowncount, 1);
 
     // set defaults for forms
@@ -38,7 +35,7 @@ class reviewActions extends sfActions
 
   public function executeVocab($request)
   {
-    $userId = sfContext::getInstance()->getUser()->getUserId();
+    $userId             = kk_get_user()->getUserId();
     $this->learnedcount = ReviewsPeer::getReviewedFlashcardCount($userId, rtkLabs::VOCABSHUFFLE_MINBOX);
   }
 
@@ -46,28 +43,26 @@ class reviewActions extends sfActions
    * Review graph filter actions.
    *
    * @param sfRequest $request
-   *
-   * @return
    */
   public function executeAjaxLeitnerGraph($request)
   {
     $filter = $request->getParameter('filter', '');
-    if (!preg_match('/^(all|rtk1|rtk3)$/', $filter))
-    {
+    if (!preg_match('/^(all|rtk1|rtk3)$/', $filter)) {
       throw new rtkAjaxException('Invalid parameters.');
     }
 
-    if ($filter == 'all')
-    {
+    if ($filter == 'all') {
       $filter = '';
     }
 
     // remember last filter selected
-    $this->getUser()->getLocalPrefs()->sync('review.graph.filter', $filter, '');
+    kk_get_user()->getLocalPrefs()->sync('review.graph.filter', $filter, '');
 
     $tron = new JsTron();
 
-    return $tron->renderComponent($this, 'review', 'LeitnerChart');
+    $tron->setHtml($this->getComponent('review', 'LeitnerChart'));
+
+    return $this->renderJson($tron);
   }
 
   /**
@@ -109,34 +104,31 @@ class reviewActions extends sfActions
   {
     $this->setLayout('fullscreenLayout');
 
-    $reviewFrom = (int) $request->getParameter('from', 0);
-    $reviewTo = (int) $request->getParameter('to', 0);
-    $reviewKnown = (int) $request->getParameter('known', 0);
+    $reviewFrom     = (int) $request->getParameter('from', 0);
+    $reviewTo       = (int) $request->getParameter('to', 0);
+    $reviewKnown    = (int) $request->getParameter('known', 0);
     $reviewFromText = $request->getParameter('from_text', '');
-    $reviewShuffle = !!$request->getParameter('shuffle', 0);
+    $reviewShuffle  = (bool) $request->getParameter('shuffle', 0);
     // DBG::request();exit;
-    
+
     // if any of these options is set it is assumed to be a Custom Review (not SRS)
     $isCustomReview = $reviewFrom > 0 || $reviewKnown > 0 || $reviewFromText;
 
-    if ($lessonId = (int) $request->getParameter('lesson', 0))
-    {
+    if ($lessonId = (int) $request->getParameter('lesson', 0)) {
       $lessonInfo = rtkIndex::getLessonData($lessonId);
       $this->forward404If(!$lessonInfo);
       $reviewFrom = $lessonInfo['lesson_from'];
-      $reviewTo = $lessonInfo['lesson_from'] + $lessonInfo['lesson_count'] - 1;
+      $reviewTo   = $lessonInfo['lesson_from'] + $lessonInfo['lesson_count'] - 1;
     }
 
-    if (false === $isCustomReview)
-    {
-      $reviewReverse = (int) $this->getUser()->getUserSetting('OPT_SRS_REVERSE');
-    
+    if (false === $isCustomReview) {
+      $reviewReverse = (int) kk_get_user()->getUserSetting('OPT_SRS_REVERSE');
+
       // SRS review
-      $reviewBox = $request->getParameter('box', 'all');
-      $reviewType = $request->getParameter('type', 'expired');
-      $reviewFilt = $request->getParameter('filt', '');
+      $reviewBox   = $request->getParameter('box', 'all');
+      $reviewType  = $request->getParameter('type', 'expired');
+      $reviewFilt  = $request->getParameter('filt', '');
       $reviewMerge = $request->getParameter('merge') ? true : false;
-      
 
       // validate
       $this->forward404Unless(preg_match('/^(all|[0-9]+)$/', $reviewBox));
@@ -144,35 +136,31 @@ class reviewActions extends sfActions
       $this->forward404Unless($reviewFilt == '' || preg_match('/(rtk1|rtk3)/', $reviewFilt));
 
       // pick title
-      //$this->setReviewTitle($reviewType, $reviewFilt);
+      // $this->setReviewTitle($reviewType, $reviewFilt);
 
       // options for setting up the review template
       $options['items'] = ReviewsPeer::getFlashcardsForReview($reviewBox, $reviewType, $reviewFilt, $reviewMerge);
 
       $options['ajax_url'] = $this->getController()->genUrl('review/ajaxsrs');
-    }
-    else
-    {
+    } else {
       $reviewReverse = (int) $request->getParameter('reverse', 0);
 
       $options['ajax_url'] = $this->getController()->genUrl('review/ajaxfree');
-      $options['fc_rept'] = null;
+      $options['fc_rept']  = null;
 
-      if ($request->hasParameter('known'))
-      {
+      if ($request->hasParameter('known')) {
         // free review :: known cards
 
         $this->forward404If(!BaseValidators::validateInteger($reviewKnown)
                             || !BaseValidators::validateNotEmpty($reviewKnown)
                             || $reviewKnown <= 0, 'Invalid card range');
-        $cards = ReviewsPeer::getFlashcardsForReview('all', 'known', '');
+        $cards            = ReviewsPeer::getFlashcardsForReview('all', 'known', '');
         $options['items'] = array_slice($cards, 0, $reviewKnown);
-        //DBG::printr($options['items']);exit;
+        // DBG::printr($options['items']);exit;
 
         // NO repeat button because the randomized card set can change
         $options['fc_rept'] = null;
-      }
-      else if ($reviewFromText) {
+      } elseif ($reviewFromText) {
         // Custom Review : Create a Review Deck from Japanese Text
 
         $chars = CJK::getKanji($reviewFromText);
@@ -180,8 +168,8 @@ class reviewActions extends sfActions
 
         // just in case client didn't remove the duplicates
         $uniqueChars = array_unique($chars);
-        
-        $cards = array_map(fn($char) => mb_ord($char), $uniqueChars);
+
+        $cards = array_map(fn ($char) => mb_ord($char), $uniqueChars);
 
         if ($reviewShuffle) {
           shuffle($cards);
@@ -191,15 +179,13 @@ class reviewActions extends sfActions
 
         // set the options to repeat the review at the Review Summary screen
         $options['fc_rept'] = json_encode([
-          'action' => $this->getController()->genUrl('review/free'),
+          'action'    => $this->getController()->genUrl('review/free'),
           'from_text' => implode($uniqueChars),
-          'reverse' => $reviewReverse,
-          'shuffle' => (int) $reviewShuffle,
+          'reverse'   => $reviewReverse,
+          'shuffle'   => (int) $reviewShuffle,
         ], JSON_UNESCAPED_UNICODE);
-        // DBG::printr($options);exit;
-      }
-      else
-      {
+      // DBG::printr($options);exit;
+      } else {
         // Custom Review : by index or lesson (from/to)
 
         $this->forward404If(!BaseValidators::validateInteger($reviewFrom), 'Invalid card range');
@@ -207,23 +193,23 @@ class reviewActions extends sfActions
         $this->forward404If($reviewFrom > $reviewTo || $reviewTo > rtkIndex::inst()->getNumCharacters(), 'Invalid card range');
 
         $options['items'] = rtkIndex::createFlashcardSet($reviewFrom, $reviewTo, $reviewShuffle);
-        
+
         // set the options to repeat the review at the Review Summary screen
         $options['fc_rept'] = json_encode([
-          'action' => $this->getController()->genUrl('review/free'),
-          'from' => $reviewFrom,
-          'to' => $reviewTo,
+          'action'  => $this->getController()->genUrl('review/free'),
+          'from'    => $reviewFrom,
+          'to'      => $reviewTo,
           'reverse' => $reviewReverse,
           'shuffle' => (int) $reviewShuffle,
         ]);
       }
     }
-    
+
     // additional options passed to the front end
     $options['freemode'] = $isCustomReview;
-    
+
     $options['ts_start'] = UsersPeer::intLocalTime();
-    
+
     $options['fc_reverse'] = $reviewReverse;
 
     // route for Exit button and 'empty' review url
@@ -236,18 +222,18 @@ class reviewActions extends sfActions
   }
 
   /**
-   * Review Summary (SRS and Custom Reviews)
+   * Review Summary (SRS and Custom Reviews).
    *
    * POST (from form in _ReviewKanji.php which is submitted at end of review):
    *
    *   ts_start
    *   fc_deld
    *   fc_free      Is "1" if Custom Review mode (not SRS)
-   * 
+   *
    * If Custom Review mode (not SRS):
    *
    *   fc_rept      JSON encoded POST params to repeat the review
-   * 
+   *
    * @param sfRequest $request
    */
   public function executeSummary($request)
@@ -255,22 +241,20 @@ class reviewActions extends sfActions
     // free mode review flag
     $this->fc_free = $request->getParameter('fc_free', 0);
     $this->fc_rept = $request->getParameter('fc_rept', '');
-  
+
     // deleted cards
-    $deletedCards = $request->getParameter('fc_deld');
+    $deletedCards       = $request->getParameter('fc_deld');
     $this->deletedCards = $deletedCards ? explode(',', $deletedCards) : [];
 
     // POST request is initiated by the end of a review session
-    if ($request->getMethod() === sfRequest::POST)
-    {
+    if ($request->getMethod() === sfRequest::POST) {
       // validate post parameters
       $validator = new coreValidator($this->getContext()->getActionName());
       $this->forward404Unless($validator->validate($request->getParameterHolder()->getAll()));
 
       // (SRS only): update last review info for the "Who's Reviewing" table
-      if (!$this->fc_free)
-      {
-        ActiveMembersPeer::updateFlashcardInfo($this->getUser()->getUserId());
+      if (!$this->fc_free) {
+        ActiveMembersPeer::updateFlashcardInfo(kk_get_user()->getUserId());
       }
     }
   }
@@ -301,9 +285,9 @@ class reviewActions extends sfActions
       'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
       'fn_put_flashcard' => 'reviewActions::dummyUpdate',
     ];
-    //debugging
+    // debugging
     // sleep(6);
-    // $response = sfContext::getInstance()->getResponse();
+    // $response = kk_get_response();
     // $response->setStatusCode(500);
 
     return $this->handleFlashcardRequest($request, $options);
@@ -338,8 +322,7 @@ class reviewActions extends sfActions
   {
     $fcrData = $request->getContentJson();
 
-    if (empty($fcrData))
-    {
+    if (empty($fcrData)) {
       throw new rtkAjaxException('Empty JSON Request.');
     }
 
@@ -367,8 +350,6 @@ class reviewActions extends sfActions
 
   /**
    * Summary Table ajax.
-   *
-   * @return
    */
   public function executeSummaryTable($request)
   {
@@ -376,6 +357,8 @@ class reviewActions extends sfActions
     $this->forward404Unless(BaseValidators::validateInteger($ts_start));
     $tron = new JsTron();
 
-    return $tron->renderComponent($this, 'review', 'summaryTable', ['ts_start' => $ts_start]);
+    $tron->setHtml($this->getComponent('review', 'summaryTable', ['ts_start' => $ts_start]));
+
+    return $this->renderJson($tron);
   }
 }

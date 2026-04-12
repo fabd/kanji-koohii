@@ -57,7 +57,7 @@ alias kkena='sf project:enable koohii dev'
 # --------------------------------------------------------------------
 
 # configs
-kkphpini() { vim /etc/php/7.4/apache2/conf.d/koohii.php.ini; }
+kkphpini() { vim /etc/php/8.3/apache2/conf.d/koohii.php.ini; }
 
 # where the php error_log() output goes to
 kkphplog() { tail -f /var/log/apache2/error.log; }

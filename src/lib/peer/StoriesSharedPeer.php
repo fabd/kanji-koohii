@@ -1,7 +1,7 @@
 <?php
 /**
  * StoriesShared Peer.
- * 
+ *
  * This table acts as a sub index to the publicly shared stories, which represents
  * only 6-7% of 6+ million rows.
  *
@@ -18,16 +18,16 @@
  *
  * See:
  *   data/schemas/incremental/rtk_1000_performance_update.sql
- * 
+ *
  * @author  Fabrice Denis
  */
-
 class StoriesSharedPeer extends coreDatabaseTable
 {
   protected $tableName = 'stories_shared';
 
   /**
    * This function must be copied in each peer class.
+   *
    * @return self
    */
   public static function getInstance()
@@ -38,8 +38,8 @@ class StoriesSharedPeer extends coreDatabaseTable
   /**
    * Invalidate the Shared Stories list in the Study pages after updates to
    * votes / reports.
-   * 
-   * @param   int     $ucsId   UCS-2 code for the kanji (the cache key)
+   *
+   * @param int $ucsId UCS-2 code for the kanji (the cache key)
    */
   public static function invalidateStoriesCache($ucsId)
   {
@@ -59,11 +59,10 @@ class StoriesSharedPeer extends coreDatabaseTable
    * We still however use this separate table so we don't have a votes/reports
    * columns as well as the index on millions of private stories.
    *
-   * @param   int     $storyId   stories PK
-   * @param   int     $ucsId     UCS-2 code
-   * @param   int     $userId    users PK
-   * @param   bool    $isPublic  true if the story is shared
-   *
+   * @param int  $storyId  stories PK
+   * @param int  $ucsId    UCS-2 code
+   * @param int  $userId   users PK
+   * @param bool $isPublic true if the story is shared
    */
   public static function updateStoryRef($storyId, $ucsId, $userId, $isPublic)
   {
@@ -71,30 +70,27 @@ class StoriesSharedPeer extends coreDatabaseTable
 
     $exists = $inst->count('sid = ?', $storyId) > 0;
 
-    if ($exists && $isPublic)
-    {
+    if ($exists && $isPublic) {
       // nothing to change
       return true;
     }
-    else if ($exists && !$isPublic)
-    {
+    if ($exists && !$isPublic) {
       // no longer shared
       return $inst->delete('sid = ?', $storyId);
     }
-    else if (!$exists && $isPublic)
-    {
+    if (!$exists && $isPublic) {
       // FIXME for now, maintain votes if made public again
       $count_votes   = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 1', [$userId, $ucsId]);
       $count_reports = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 2', [$userId, $ucsId]);
 
       // new public story (or one that was private for a time...)
       $data = [
-        'sid'         => $storyId,
-        'ucs_id'      => $ucsId,
-        'userid'      => $userId,
-        'updated_on'  => new coreDbExpr('NOW()'),
-        'stars'       => $count_votes,
-        'reports'     => $count_reports
+        'sid'        => $storyId,
+        'ucs_id'     => $ucsId,
+        'userid'     => $userId,
+        'updated_on' => new coreDbExpr('NOW()'),
+        'stars'      => $count_votes,
+        'reports'    => $count_reports,
       ];
 
       return $inst->insert($data);
@@ -104,6 +100,7 @@ class StoriesSharedPeer extends coreDatabaseTable
   public static function deleteStoryRef($storyId)
   {
     assert(is_int($storyId));
+
     return self::getInstance()->delete('sid = ?', $storyId);
   }
 }

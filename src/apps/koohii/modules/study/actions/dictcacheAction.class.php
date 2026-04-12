@@ -24,8 +24,7 @@ class dictcacheAction extends sfAction
 
     // FIXME : validate
     $chars = $params->chars;
-    if (!is_string($chars))
-    {
+    if (!is_string($chars)) {
       throw new rtkAjaxException('Bad request.');
     }
 
@@ -35,9 +34,9 @@ class dictcacheAction extends sfAction
 
     // FIXME - for now it doesn't lookup multiple kanji
     $tron = new JsTron([
-      'items' => $results[0] ?? []
+      'items' => $results[0] ?? [],
     ]);
 
-    return $tron->renderJson($this);
+    return $this->renderJson($tron);
   }
 }

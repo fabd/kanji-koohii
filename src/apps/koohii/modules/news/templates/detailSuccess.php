@@ -1,5 +1,5 @@
-<?php 
-  $post_id = $posts ? $posts[0]->id : 0; 
+<?php
+$post_id = $posts ? $posts[0]->id : 0;
 ?>
 <div class="row">
 
@@ -16,12 +16,12 @@
     Oops, this news post can not be found.
   </div>
 
-<?php endif ?>
+<?php endif; ?>
 
     <div class="mb-8">
-      <?php echo _bs_button_to('&laquo; Back', '@homepage', ['class' => 'ko-Btn ko-Btn--success']) ?>
+      <?= _bs_button_to('&laquo; Back', '@homepage', ['class' => 'ko-Btn ko-Btn--success']); ?>
       <?php if ($sf_user->getUserName() === 'fuaburisu' || $sf_user->isAdministrator()): ?>
-        <?php echo '&nbsp;&nbsp;'.link_to('<i class="fa fa-edit"></i> Edit Post', "news/post?post_id=$post_id", ['class' => 'ko-Btn is-ghost']) ?>
+        <?= '&nbsp;&nbsp;'.link_to('<i class="fa fa-edit"></i> Edit Post', "news/post?post_id={$post_id}", ['class' => 'ko-Btn is-ghost']); ?>
       <?php endif; ?>
 
     </div>
@@ -29,7 +29,7 @@
   </div><!-- /col -->
 
   <div class="col-lg-3">
-    <?php include_partial('archiveList') ?>
+    <?php include_partial('archiveList'); ?>
   </div>
 
 </div>

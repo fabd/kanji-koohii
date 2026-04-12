@@ -1,5 +1,5 @@
 <?php
-  use_helper('Form', 'Validation');
+use_helper('Form', 'Validation');
 ?>  
 <h2>Delete Your Account</h2>
 
@@ -12,31 +12,30 @@
   <?php
   echo form_tag('account/delete', ['class' => '', 'autocomplete' => 'off']);
 
-  echo _bs_form_group(
-    ['validate' => 'email'],
-    _bs_input_email('email', ['label' => 'Your email:'])
-  );
+echo _bs_form_group(
+  ['validate' => 'email'],
+  _bs_input_email('email', ['label' => 'Your email:'])
+);
 
-  echo _bs_form_group(
-    ['validate' => 'confirm_text'],
-    _bs_input_text('confirm_text', ['label' => '<strong>To verify, type</strong> <span class="font-normal italic">delete my account</span> below:', 'class' => ''])
-  );
+echo _bs_form_group(
+  ['validate' => 'confirm_text'],
+  _bs_input_text('confirm_text', ['label' => '<strong>To verify, type</strong> <span class="font-normal italic">delete my account</span> below:', 'class' => ''])
+);
 
-  echo _bs_form_group(
-    ['validate' => 'password'],
-    _bs_input_password('password', ['label' => 'Confirm your password:', 'class' => ''])
-  );
+echo _bs_form_group(
+  ['validate' => 'password'],
+  _bs_input_password('password', ['label' => 'Confirm your password:', 'class' => ''])
+);
 
-  ?>
+?>
   <p class="mt-8 mb-2 text-[#9f0e0b]">
     <strong>Account deletion is final</strong>. There will be no way to restore your account.
   </p>
-  <?php
-  echo _bs_form_group(
+  <?= _bs_form_group(
     _bs_submit_tag('Delete this account', ['class' => 'ko-Btn ko-Btn--danger'])
   );
-  ?>
+?>
   </form>
 
-  <?php //DBG::request(); ?>
+  <?php // DBG::request();?>
 </div>

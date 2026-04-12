@@ -1,21 +1,17 @@
 <?php
 /**
  * ExportCSV - Export a coreDatabaseSelect query result to a CSV file.
- * 
- * 
- * @package    
+ *
  * @author     Fabrice Denis
  */
-
 class ExportCSV
 {
-  protected
-    $db        = null,
-    $options   = [];
-    
-  const
-    LINE_TERMINATED_BY = "\r\n",
-    FIELDS_TERMINATED_BY = ",";
+  protected $db;
+  protected $options = [];
+
+  public const LINE_TERMINATED_BY = "\r\n";
+
+  public const FIELDS_TERMINATED_BY = ',';
 
   public function __construct($db)
   {
@@ -36,7 +32,7 @@ class ExportCSV
   public static function unescapeString($s)
   {
     // unescape CSV tabs
-    $s = preg_replace('/\\t/', "\t", $s);
+    $s = preg_replace('/\t/', "\t", $s);
 
     // unescape CSV double quotes
     $s = preg_replace('/""/', '"', $s);
@@ -48,21 +44,21 @@ class ExportCSV
   {
     $s = $escape ? self::escapeString($s) : $s;
 
-    return '"' . $s . '"';
+    return '"'.$s.'"';
   }
 
   /**
    * Returns content of quoted string, optionally unescaping contents.
    *
-   * @param  string $s 
+   * @param string $s
+   * @param mixed  $unescape
    *
    * @return string
    */
   public static function unquoteString($s, $unescape = false)
   {
     // remove start and end double quote, if any, ignore space outside the quotes
-    if (preg_match('/^[\s\r\n]*"(.*)"[\s\r\n]*$/', $s, $parts))
-    {
+    if (preg_match('/^[\s\r\n]*"(.*)"[\s\r\n]*$/', $s, $parts)) {
       $s = $parts[1];
     }
 
@@ -71,10 +67,10 @@ class ExportCSV
 
     return $s;
   }
-  
+
   /**
    * Export the query results to the current output buffer.
-   * 
+   *
    * Options:
    *   col_escape:           Array of booleans, true means to escape as string, false means no escaping
    *   output_callback       Output callback function for ob_start() OPTIONAL (defaults to none)
@@ -85,35 +81,34 @@ class ExportCSV
    *                         and formatted for CSV. Function should return the row data. Do not change
    *                         the number of columns.
    *
-   * @param array  $tabularData
-   * @param array  $columns  Array of column names as displayed in CSV,
-   *                         must match the number of columns in the select
-   * @param array  $options  Options (see above)
+   * @param array $columns Array of column names as displayed in CSV,
+   *                       must match the number of columns in the select
+   * @param array $options Options (see above)
    */
   public function export(array $tabularData, $columns, $options = [])
   {
     $this->options = array_merge([
-      'col_escape'       => null,
-      'output_callback'  => null,
-      'column_heads'     => true,
-      'row_callback'     => null
+      'col_escape'      => null,
+      'output_callback' => null,
+      'column_heads'    => true,
+      'row_callback'    => null,
     ], $options);
 
     // sanity check
     $row_callback = $this->options['row_callback'];
     if (null !== $row_callback && !is_callable($row_callback)) {
-      throw new sfException(__METHOD__."() invalid callback");
+      throw new sfException(__METHOD__.'() invalid callback');
     }
 
     ob_start($this->options['output_callback']);
 
     if (true === $this->options['column_heads']) {
-      echo implode(self::FIELDS_TERMINATED_BY, $columns) . self::LINE_TERMINATED_BY;
+      echo implode(self::FIELDS_TERMINATED_BY, $columns).self::LINE_TERMINATED_BY;
     }
 
     $numCols   = count($columns);
     $escapeCol = $options['col_escape'];
-// DBG::printr($tabularData);exit;
+    // DBG::printr($tabularData);exit;
 
     foreach ($tabularData as $rowData) {
       $cells = [];
@@ -125,18 +120,18 @@ class ExportCSV
 
       for ($i = 0; $i < $numCols; $i++) {
         $t = $rowData[$i];
-        
+
         // escape string values
         if ($escapeCol !== null && $escapeCol[$i]) {
           $t = self::quoteString($t, true);
         }
-  
+
         $cells[] = $t;
       }
-      
-      echo implode(self::FIELDS_TERMINATED_BY, $cells) . self::LINE_TERMINATED_BY;
+
+      echo implode(self::FIELDS_TERMINATED_BY, $cells).self::LINE_TERMINATED_BY;
     }
-  
+
     return ob_get_clean();
   }
 }

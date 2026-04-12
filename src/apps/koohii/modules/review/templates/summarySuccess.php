@@ -1,42 +1,37 @@
 <?php
-  use_helper('Widgets', 'Form', 'Gadgets', 'CJK', 'Links');
+use_helper('Widgets', 'Form', 'Gadgets', 'CJK', 'Links');
 
-  // unix timestamp recorded at start of last review to match updated flashcards
-  $ts_start = $sf_params->get('ts_start', 0);
+// unix timestamp recorded at start of last review to match updated flashcards
+$ts_start = $sf_params->get('ts_start', 0);
 
-  $stats = FlashcardReview::getInstance()->getStats();
-  extract($stats);
+$stats = FlashcardReview::getInstance()->getStats();
+extract($stats);
 
-  if ($fcr_pass === $fcr_total)
-  {
-    $title = 'Hurrah! All remembered!';
-  }
-  elseif ($fcr_fail === $fcr_total && $fcr_total > 1)
-  {
-    $title = 'Eek! All forgotten!';
-  }
-  else
-  {
-    $title = "Remembered {$fcr_pass} of {$fcr_total} kanji.";
-  }
+if ($fcr_pass === $fcr_total) {
+  $title = 'Hurrah! All remembered!';
+} elseif ($fcr_fail === $fcr_total && $fcr_total > 1) {
+  $title = 'Eek! All forgotten!';
+} else {
+  $title = "Remembered {$fcr_pass} of {$fcr_total} kanji.";
+}
 
-  // handle the repeat button for Custom Review modes
-  $repeat_button_html = '';
-  if ($fc_rept) {
-    $formData = json_decode($fc_rept, true) ?? [];
-    $formAction = $formData['action'];
-    unset($formData['action']);
+// handle the repeat button for Custom Review modes
+$repeat_button_html = '';
+if ($fc_rept) {
+  $formData   = json_decode($fc_rept, true) ?? [];
+  $formAction = $formData['action'];
+  unset($formData['action']);
 
-    $repeat_button_html = form_with_data(
-      $formAction,
-      $formData,
-      ['class' => 'inline-block ml-4'],
-      _bs_button(
-        '<i class="fa fa-redo mr-2"></i>Repeat Review',
-        [ 'class' => 'ko-Btn ko-Btn--success' ]
-      )
-    );
-  }
+  $repeat_button_html = form_with_data(
+    $formAction,
+    $formData,
+    ['class' => 'inline-block ml-4'],
+    _bs_button(
+      '<i class="fa fa-redo mr-2"></i>Repeat Review',
+      ['class' => 'ko-Btn ko-Btn--success']
+    )
+  );
+}
 ?>
 
   <h2>Review Summary</h2>
@@ -52,10 +47,10 @@
 <?php } ?>
 
 <?php
-    $go_back = $fc_free ? 'review/custom' : 'review/index';
-    echo _bs_button_to('<i class="fa fa-arrow-left mr-2"></i>Back', $go_back, ['class' => 'ko-Btn is-ghost']);
-    
-    echo $repeat_button_html;
+  $go_back = $fc_free ? 'review/custom' : 'review/index';
+echo _bs_button_to('<i class="fa fa-arrow-left mr-2"></i>Back', $go_back, ['class' => 'ko-Btn is-ghost']);
+
+echo $repeat_button_html;
 ?>
   </div>
   
@@ -64,11 +59,11 @@
     <div class="ko-Box mb-4">
 
       <?= ui_chart_vs([
-        'valueLeft' => $fcr_pass,
-        'labelLeft' => 'Remembered',
-        'valueRight' => $fcr_fail,
-        'labelRight' => 'Forgotten',
-      ]); ?>
+      'valueLeft'  => $fcr_pass,
+      'labelLeft'  => 'Remembered',
+      'valueRight' => $fcr_fail,
+      'labelRight' => 'Forgotten',
+    ]); ?>
 
     </div>
 <?php } ?>
@@ -90,20 +85,17 @@
 <?php if ($fcr_total > 0) { ?>
   <div id="KoReviewSummaryTable">
     <?php
-      /**
-       * FIXME? Instead of using ts_start to match the last updated cards, we
-       *        could use the cached answers + WHERE ucs_id IN (id1, id2, etc)
-       *        to select all cards from the last review session.
-       */
-      if (!$fc_free && $ts_start > 0)
-      {
-        include_component('review', 'summaryTable', ['ts_start' => $ts_start]);
-      }
-      elseif ($fc_free)
-      {
-        include_component('review', 'summarySimple');
-      }
-    ?>
+    /**
+     * FIXME? Instead of using ts_start to match the last updated cards, we
+     *        could use the cached answers + WHERE ucs_id IN (id1, id2, etc)
+     *        to select all cards from the last review session.
+     */
+    if (!$fc_free && $ts_start > 0) {
+      include_component('review', 'summaryTable', ['ts_start' => $ts_start]);
+    } elseif ($fc_free) {
+      include_component('review', 'summarySimple');
+    }
+  ?>
   </div>
 <?php } ?>
 

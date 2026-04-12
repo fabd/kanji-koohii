@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php include_http_metas() ?>
+<?php include_http_metas(); ?>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php include_metas(); ?>
 <?php include_title(); ?>
   <!-- the docute client styles -->
-<?php 
+<?php
   // $pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
-  
+
   // reset default app css/js
   $sf_response->clearStylesheets();
-  $sf_response->clearJavascripts();
-  
-  include_stylesheets();
+$sf_response->clearJavascripts();
+
+include_stylesheets();
 ?>
   <link rel="stylesheet" href="https://unpkg.com/docute@3.4.12/dist/docute.css">
   <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
@@ -65,7 +65,7 @@ h4 { color:#42b983; }
 </head>
 <body>
 
-<?php echo $sf_content; ?>
+<?= $sf_content; ?>
 
 <div id="app"></div>
 
@@ -74,7 +74,7 @@ h4 { color:#42b983; }
   
 <!-- bootstrap your docute app! -->
 <script>
-  docute.init(<?php echo get_slot('docute.init') ?>);
+  docute.init(<?= get_slot('docute.init'); ?>);
 </script>
 
 </body>

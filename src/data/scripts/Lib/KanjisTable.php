@@ -25,8 +25,7 @@ class KanjisTable
   {
     $this->entries = [];
 
-    for ($ucsId = CJK::CJK_UNIFIED_BEGIN; $ucsId <= CJK::CJK_UNIFIED_END; ++$ucsId)
-    {
+    for ($ucsId = CJK::CJK_UNIFIED_BEGIN; $ucsId <= CJK::CJK_UNIFIED_END; $ucsId++) {
       $entry = new KanjisRow();
 
       $entry->ucs_id = $ucsId;
@@ -38,7 +37,7 @@ class KanjisTable
       // default value for mysql import
       $entry->strokecount = 0;
 
-      $this->entries[] = $entry;
+      $this->entries[]          = $entry;
       $this->indexByUCS[$ucsId] = $entry;
     }
   }
@@ -100,8 +99,7 @@ class KanjisTable
 
     $lineNr = 0;
 
-    foreach ($indexByNewEd as $idxNew => $kEntry)
-    {
+    foreach ($indexByNewEd as $idxNew => $kEntry) {
       $ucsId = $kEntry->ucs_id;
 
       // kanjidic entry (only ~12000 of the ~20000 CJK Unified Ideographs)
@@ -109,8 +107,7 @@ class KanjisTable
 
       $on_yomi = '';
 
-      if ($dicEntry && $dicEntry->readings)
-      {
+      if ($dicEntry && $dicEntry->readings) {
         $on_yomi = $dicEntry->readings['ja_on'][0] ?? '';
       }
 
@@ -134,7 +131,7 @@ class KanjisTable
 
       ParserUtils::outputTabularData($handle, $rowdata);
 
-      ++$lineNr;
+      $lineNr++;
     }
 
     ParserUtils::fileClose($handle);

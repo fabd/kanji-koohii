@@ -1,6 +1,6 @@
 <?php
 /**
- * (Zend_Db like API from the old RevTK codebase)
+ * (Zend_Db like API from the old RevTK codebase).
  *
  * coreDatabase is an abstraction class that allows to setup a database
  * connection via configuration parameters, and then access the data
@@ -15,14 +15,12 @@
  * When you need to pass a SQL expression as a bound parameter, wrap it
  * with "new coreDbExpr(...)" so that this parameter is not quoted.
  *
- *
  * @author     Fabrice Denis
  */
-
 abstract class coreDatabase
 {
   /**
-   * Fetch mode to use for fetch(), fetchRow() and fetchAll()
+   * Fetch mode to use for fetch(), fetchRow() and fetchAll().
    *
    * FETCH_ASSOC: return data in an array of associative arrays. The array keys are
    *              column names, as strings. This is the default fetch mode.
@@ -30,20 +28,21 @@ abstract class coreDatabase
    * FETCH_OBJ:   return data in an array of objects. The default class is the PHP built-in
    *              class stdClass. Columns of the result set are available as public properties of the object.
    */
-  const FETCH_NUM   = 1;
-  const FETCH_ASSOC = 2;
-  const FETCH_OBJ   = 3;
-    
-  protected
-    $parameterHolder = null,
-    $connection      = null,
-    $profiler        = null,
-    $fetchMode       = self::FETCH_ASSOC;
-    
+  public const FETCH_NUM   = 1;
+  public const FETCH_ASSOC = 2;
+  public const FETCH_OBJ   = 3;
+
+  protected ?sfParameterHolder $parameterHolder = null;
+  protected mixed $connection                   = null;
+  protected ?coreDatabaseProfiler $profiler     = null;
+  protected int $fetchMode                      = self::FETCH_ASSOC;
+
   /**
    * Class constructor.
    *
    * @see initialize()
+   *
+   * @param mixed $parameters
    */
   public function __construct($parameters = [])
   {
@@ -53,8 +52,7 @@ abstract class coreDatabase
   /**
    * Initializes this coreDatabase object.
    *
-   * @param array An associative array of initialization parameters
-   *
+   * @param array $parameters An associative array of initialization parameters
    */
   public function initialize($parameters = [])
   {
@@ -62,9 +60,8 @@ abstract class coreDatabase
     $this->parameterHolder->add($parameters);
 
     // setup query profiler
-    $user = sfContext::getInstance()->getUser();
-    if (null !== $user /*wtf*/ && ($user->getUserName() === 'fuaburisu' || $user->isAdministrator()))
-    {
+    $user = kk_get_user();
+    if ($user !== null && ($user->getUserName() === 'fuaburisu' || $user->isAdministrator())) {
       $this->profiler = new coreDatabaseProfilerMySQL();
     }
   }
@@ -72,23 +69,22 @@ abstract class coreDatabase
   /**
    * Creates a connection to the database.
    *
-   * @throws sfException  If a connection could not be created
-   * @return void
+   * @throws sfException If a connection could not be created
    */
-  abstract function connect();
+  abstract public function connect();
 
   /**
    * Returns the underlying database connection object or resource.
-   * If not presently connected, returns null
+   * If not presently connected, returns null.
    *
    * @return object|resource|null
    */
-  abstract function getConnection();
+  abstract public function getConnection();
 
   /**
    * Returns the SQL query profiler instance.
    *
-   * @return  coreDatabaseProfiler
+   * @return coreDatabaseProfiler
    */
   public function getProfiler()
   {
@@ -98,7 +94,7 @@ abstract class coreDatabase
   /**
    * Gets the parameter holder for this object.
    *
-   * @return coreParameterHolder A coreParameterHolder instance
+   * @return sfParameterHolder
    */
   public function getParameterHolder()
   {
@@ -112,8 +108,8 @@ abstract class coreDatabase
    *
    * <code>$this->getParameterHolder()->get()</code>
    *
-   * @param string The key name
-   * @param string The default value
+   * @param string $name    The key name
+   * @param string $default The default value
    *
    * @return string The value associated with the key
    *
@@ -127,49 +123,54 @@ abstract class coreDatabase
   /**
    * Returns number of rows in resultset from the last SQL query.
    *
-   * @return mixed  The number of rows, or FALSE on failure.
+   * @return mixed the number of rows, or FALSE on failure
    */
-  abstract function num_rows();
+  abstract public function num_rows();
 
   /**
    * Run a SQL query directly.
    *
-   * @param  string         SQL query string where '?' can be used for quoted parameters.
-   * @param  string|array   Parameters to substitute in the query string
+   * @param string       $query SQL query string where '?' can be used for quoted parameters
+   * @param array|string $bind  Parameters to substitute in the query string
    *
-   * @return bool   True if success, False if error.
+   * @return bool true if success, False if error
    */
-  abstract function query($query, $bind = null);
+  abstract public function query($query, $bind = null);
 
   /**
    * Start building a new query with the coreDatabaseSelect object.
    *
+   * @param mixed|null $columns
+   *
    * @return coreDatabaseSelect query object for building queries
    */
-  abstract function select($columns = null);
+  abstract public function select($columns = null);
 
   /**
    * Set the default fetch mode for fetch(), fetchRow() and fetchAll().
    *
    * The function returns the last fetch mode.
    *
-   * @param  int  $fetchMode  coreDatabase::FETCH_ASSOC or coreDatabase::FETCH_OBJ
-   * @return int  Last active fetch mode.
+   * @param int $mode coreDatabase::FETCH_ASSOC or coreDatabase::FETCH_OBJ
+   *
+   * @return int last active fetch mode
    */
   public function setFetchMode($mode)
   {
     $prevFetchMode = $this->fetchMode;
-    switch ($mode)
-    {
+
+    switch ($mode) {
       case self::FETCH_NUM:
       case self::FETCH_ASSOC:
       case self::FETCH_OBJ:
         $this->fetchMode = $mode;
+
         break;
+
       default:
         throw new sfException('Invalid fetch mode.');
-        break;
     }
+
     return $prevFetchMode;
   }
 
@@ -188,57 +189,63 @@ abstract class coreDatabase
    *                            - self::FETCH_OBJ: Fetch as an object
    *                            - self::FETCH_ASSOC: Fetch as an associative array
    *
-   * @return array|object|false Returns the fetched row as an array or object depending on 
-   *                            the fetch mode, or false if there are no more rows or on error.
+   * @return array|false|object returns the fetched row as an array or object depending on
+   *                            the fetch mode, or false if there are no more rows or on error
    */
-  abstract function fetch($fetchMode = null);
+  abstract public function fetch($fetchMode = null);
 
   /**
    * Fetches the next row and returns it as an object.
    *
-   * @param string $class  OPTIONAL Name of the class to create.
-   * @param array  $config OPTIONAL Constructor arguments for the class.
+   * @param string $class  OPTIONAL Name of the class to create
+   * @param array  $config OPTIONAL Constructor arguments for the class
    *
-   * @return mixed  One object instance of the specified class, or false.
+   * @return mixed one object instance of the specified class, or false
    */
-  abstract function fetchObject($class = 'stdClass', array $config = []);
+  abstract public function fetchObject($class = 'stdClass', array $config = []);
 
   /**
-   * Returns first column from first row of the result set (useful for "count(*)" querries)
+   * Returns first column from first row of the result set (useful for "count(*)" querries).
    *
-   * @return mixed  One value from the first row of result set, or false.
+   * @param mixed      $query
+   * @param mixed|null $bind
+   *
+   * @return mixed one value from the first row of result set, or false
    */
-  abstract function fetchOne($query, $bind = null);
+  abstract public function fetchOne($query, $bind = null);
 
   /**
-   * Returns the first row of the result set as an object, or false
+   * Returns the first row of the result set as an object, or false.
    *
-   * @return mixed Resultset row as an object, or FALSE if no results.
+   * @param mixed      $query
+   * @param mixed|null $bind
+   *
+   * @return mixed resultset row as an object, or FALSE if no results
    */
-  abstract function fetchRow($query, $bind = null);
+  abstract public function fetchRow($query, $bind = null);
 
   /**
    * Fetches all SQL result rows as a sequential array.
    * Returned row format depends on the current fetchMode.
    *
-   * @param  string|coreDatabaseSelect  $sql  An SQL SELECT statement.
-   * @param  mixed            $bind Data to bind into SELECT placeholders.
+   * @param coreDatabaseSelect|string $query an SQL SELECT statement
+   * @param mixed                     $bind  data to bind into SELECT placeholders
    *
    * @return array
    */
-  abstract function fetchAll($query, $bind = null);
+  abstract public function fetchAll($query, $bind = null);
 
   /**
    * Fetches the first column of all result rows as an array.
    *
    * The first column in each row is used as the array key.
    *
-   * @param  string|coreDatabaseSelect  $sql  An SQL SELECT statement.
-   * @param  mixed  $bind   Data to bind into SELECT placeholders.
+   * @param coreDatabaseSelect|string $query an SQL SELECT statement
+   * @param mixed                     $bind  data to bind into SELECT placeholders
    *
    * @return array
    */
-  abstract function fetchCol($query, $bind = null);
+  abstract public function fetchCol($query, $bind = null);
 
   /**
    * Insert a new row with specified key => values,
@@ -246,12 +253,14 @@ abstract class coreDatabase
    *
    * @see    lastInsertId() to retrieve an auto_increment key
    *
-   * @param  string  Table name.
-   * @param  array   An associative array of properties (column names) and data.
-   * @return boolean TRUE on success, FALSE on error.
-   * @throws sfException  If query fails.
+   * @param string $table table name
+   * @param array  $data  an associative array of properties (column names) and data
+   *
+   * @return bool TRUE on success, FALSE on error
+   *
+   * @throws sfException if query fails
    */
-  abstract function insert($table, $data = []);
+  abstract public function insert($table, $data = []);
 
   /**
    * Retrieves the id generated for an AUTO_INCREMENT column by the previous
@@ -259,66 +268,73 @@ abstract class coreDatabase
    *
    * Returns 0 if the previous query did not generate an AUTO_INCREMENT value.
    *
-   * @return int  AUTO_INCREMENT id, or 0
+   * @return int AUTO_INCREMENT id, or 0
    */
-  abstract function lastInsertId();
+  abstract public function lastInsertId();
 
   /**
-   * Updates columns (key => values) in matching row(s) with optional where clause
+   * Updates columns (key => values) in matching row(s) with optional where clause.
    *
-   * @param  string  Table name.
-   * @param  array   An associative array of properties (column names) and data.
-   * @param  string  Where clause with optional '?' quoted parameters.
-   * @param  mixed   Single value or array of values for quoted parameters.
-   * @return boolean TRUE on success, FALSE on error.
-   * @throws sfException  If query fails.
+   * @param string $table table name
+   * @param array  $data  an associative array of properties (column names) and data
+   * @param string $where where clause with optional '?' quoted parameters
+   * @param mixed  $bind  single value or array of values for quoted parameters
+   *
+   * @return bool TRUE on success, FALSE on error
+   *
+   * @throws sfException if query fails
    */
-  abstract function update($table, $data, $where = null, $bind = null);
+  abstract public function update($table, $data, $where = null, $bind = null);
 
   /**
-   * Delete all rows, or matching rows with optional where clause
+   * Delete all rows, or matching rows with optional where clause.
    *
-   * @param  string  Table name.
-   * @param  string  Where clause with optional '?' quoted parameters.
-   * @param  mixed   Single value or array of values for quoted parameters.
-   * @return boolean TRUE on success, FALSE on error.
-   * @throws sfException  If query fails.
+   * @param string $table table name
+   * @param string $where where clause with optional '?' quoted parameters
+   * @param mixed  $bind  single value or array of values for quoted parameters
+   *
+   * @return bool TRUE on success, FALSE on error
+   *
+   * @throws sfException if query fails
    */
-  abstract function delete($table, $where = null, $bind = null);
+  abstract public function delete($table, $where = null, $bind = null);
 
   /**
    * Safely quotes a value for an SQL statement using database specific implementation.
    *
-   * @param object $value
-   * @return
+   * @param mixed $value
+   *
+   * @return string
    */
-  abstract function quote($value);
+  abstract public function quote($value);
 
   /**
    * Creates a SQL string of selected columns or expressions.
-   * Array keys become AS aliases: ['alias' => 'expr'] → "expr AS alias"
+   * Array keys become AS aliases: ['alias' => 'expr'] → "expr AS alias".
    *
-   * @param  string|array $columns
+   * @param array|string $columns
+   *
    * @return string
    */
-  abstract function aliases($columns);
+  abstract public function aliases($columns);
 
   /**
    * Bind and quote parameters into a query string.
    * Each '?' placeholder is replaced by the corresponding quoted parameter.
    *
-   * @param  string       $query
-   * @param  mixed|null   $bindParams  Single value or array of values
+   * @param string     $query
+   * @param mixed|null $bindParams Single value or array of values
+   *
    * @return string
    */
-  abstract function bind($query, $bindParams);
+  abstract public function bind($query, $bindParams);
 
   /**
-   * Output a html table with the resultset (or single rowdata), including column names
+   * Output a html table with the resultset (or single rowdata), including column names.
    *
    * @param $resultset Array of objects or assoc.arrays
    */
-  abstract function dumpResultSet($resultset);
+  abstract public function dumpResultSet($resultset);
 }
 
 /**
@@ -360,7 +376,7 @@ class coreDbExpr implements Stringable
  * $select->from(...)
  *        ->where(...)
  *        ->order(...);
- * 
+ *
  * @see    http://framework.zend.com/manual/en/zend.db.select.html
  *
  * @todo   Support offset without LIMIT. Does it work in MySQL?
@@ -373,31 +389,30 @@ class coreDatabaseSelect
   private $parts;
 
   /**
-   * Parts of the select that can be reset
+   * Parts of the select that can be reset.
+   *
    * @see reset()
    */
-  const COLUMNS      = 'columns';
-  const FROM         = 'from';
-  const JOINS        = 'joins';
-  const WHERE        = 'where';
-  const GROUP        = 'group';
-  const HAVING       = 'having';
-  const ORDER        = 'order';
-  const LIMIT_COUNT  = 'limitcount';
-  const LIMIT_OFFSET = 'limitoffset';
+  public const COLUMNS      = 'columns';
+  public const FROM         = 'from';
+  public const JOINS        = 'joins';
+  public const WHERE        = 'where';
+  public const GROUP        = 'group';
+  public const HAVING       = 'having';
+  public const ORDER        = 'order';
+  public const LIMIT_COUNT  = 'limitcount';
+  public const LIMIT_OFFSET = 'limitoffset';
 
   /**
-   * Initialize the SELECT statement, columns can be a string (single column) or array (multiple columns)
+   * Initialize the SELECT statement, columns can be a string (single column) or array (multiple columns).
    *
-   * @param coreDatabase $db
-   * @param string|array $columns 
+   * @param array|string $columns
    */
   public function __construct(coreDatabase $db, $columns = null)
   {
     $this->db = $db;
     $this->reset();
-    if (null !== $columns)
-    {
+    if (null !== $columns) {
       $this->columns($columns);
     }
   }
@@ -409,51 +424,50 @@ class coreDatabaseSelect
   {
     // COLUMNS
     $columns = $this->parts[self::COLUMNS];
-    if (empty($columns))
-    {
+    if (empty($columns)) {
       $columns = ['*'];
     }
-    $q = 'SELECT ' .  $this->db->aliases($columns);
+    $q = 'SELECT '.$this->db->aliases($columns);
 
     // FROM clause
     if (isset($this->parts[self::FROM])) {
-      $q = $q . ' FROM ' . $this->db->aliases($this->parts[self::FROM]);
+      $q = $q.' FROM '.$this->db->aliases($this->parts[self::FROM]);
     }
 
     // JOIN clauses
     if (count($this->parts[self::JOINS])) {
       foreach ($this->parts[self::JOINS] as $joinString) {
-        $q = $q . $joinString;
+        $q = $q.$joinString;
       }
     }
 
     // WHERE clause
     if (count($this->parts[self::WHERE])) {
-      $q = $q . ' WHERE (' . implode(') AND (', $this->parts[self::WHERE]) . ')';
+      $q = $q.' WHERE ('.implode(') AND (', $this->parts[self::WHERE]).')';
     }
 
     // GROUP clause
     if (isset($this->parts[self::GROUP])) {
-      $q = $q . ' GROUP BY ' . implode(',', $this->parts[self::GROUP]);
+      $q = $q.' GROUP BY '.implode(',', $this->parts[self::GROUP]);
     }
 
     // HAVING clause
     if (count($this->parts[self::HAVING])) {
-      $q = $q . ' HAVING (' . implode(') AND (', $this->parts[self::HAVING]) . ')';
+      $q = $q.' HAVING ('.implode(') AND (', $this->parts[self::HAVING]).')';
     }
 
     // ORDER clause
     if (isset($this->parts[self::ORDER])) {
-      $q = $q . ' ORDER BY ' . implode(',', $this->parts[self::ORDER]);
+      $q = $q.' ORDER BY '.implode(',', $this->parts[self::ORDER]);
     }
 
     // LIMIT clause
     if (isset($this->parts[self::LIMIT_COUNT])) {
-      $q = $q . ' LIMIT ';
+      $q = $q.' LIMIT ';
       if (isset($this->parts[self::LIMIT_OFFSET])) {
-        $q = $q . $this->parts[self::LIMIT_OFFSET] . ', ';
+        $q = $q.$this->parts[self::LIMIT_OFFSET].', ';
       }
-      $q = $q . $this->parts[self::LIMIT_COUNT];
+      $q = $q.$this->parts[self::LIMIT_COUNT];
     }
 
     return $q;
@@ -465,58 +479,59 @@ class coreDatabaseSelect
    * Note: If you reset all parts then you need to use the ->columns() method to add
    * columns (usually it's easier to pass columns to the select() method of coreDatabase).
    *
-   *
    * @param $part Which part to reset (see class constants)
+   *
    * @return self
    */
   public function reset($part = null)
   {
-    if ($part===null)
-    {
-      $this->parts = [];
+    if ($part === null) {
+      $this->parts                = [];
       $this->parts[self::COLUMNS] = [];
       $this->parts[self::JOINS]   = [];
       $this->parts[self::WHERE]   = [];
       $this->parts[self::HAVING]  = [];
-    }
-    else
-    {
-      switch ($part)
-      {
+    } else {
+      switch ($part) {
         case self::FROM:
         case self::GROUP:
         case self::ORDER:
         case self::LIMIT_COUNT:
         case self::LIMIT_OFFSET:
           $this->parts[$part] = null;
+
           break;
+
         case self::COLUMNS:
         case self::JOINS:
         case self::WHERE:
         case self::HAVING:
           $this->parts[$part] = [];
+
           break;
+
         default:
           throw new Exception('coreDatabaseSelect::reset() Invalid argument.');
-          break;
       }
     }
+
     return $this;
   }
 
   /**
-   * Adds to the columns
+   * Adds to the columns.
    *
-   * @param string|array $cols
+   * @param array|string $cols
+   *
    * @return self
    */
   public function columns($cols)
   {
-    if (!is_array($cols))
-    {
+    if (!is_array($cols)) {
       $cols = [$cols];
     }
     $this->parts[self::COLUMNS] = array_merge($this->parts[self::COLUMNS], $cols);
+
     return $this;
   }
 
@@ -526,111 +541,126 @@ class coreDatabaseSelect
    * Ex1:   'table1'
    * Ex2:   array('t' => 'table')
    * Ex3:   array('table1', 't2' => 'table2')
-   * 
+   *
+   * @param mixed $table
+   *
    * @return self
    */
   public function from($table)
   {
     $this->parts[self::FROM] = $table;
+
     return $this;
   }
 
   /**
+   * @param       $table     Object
+   * @param mixed $condition
    *
-   *
-   * @param $table Object
    * @return self
    */
   public function join($table, $condition)
   {
-    $this->parts[self::JOINS][] = ' JOIN ' . $this->db->aliases($table) . ' ON ' . $condition;
+    $this->parts[self::JOINS][] = ' JOIN '.$this->db->aliases($table).' ON '.$condition;
+
     return $this;
   }
 
   /**
+   * @param string $table   The table to join
+   * @param mixed  $columns Column(s) for the USING clause (string or array)
    *
-   *
-   * @param string $table    The table to join
-   * @param mixed  $columns  Column(s) for the USING clause (string or array)
    * @return self
    */
   public function joinUsing($table, $columns)
   {
-    $this->parts[self::JOINS][] = ' JOIN ' . $this->db->aliases($table) . ' USING(' . $this->db->aliases($columns) . ')';
+    $this->parts[self::JOINS][] = ' JOIN '.$this->db->aliases($table).' USING('.$this->db->aliases($columns).')';
+
     return $this;
   }
 
   /**
+   * @param       $table     Object
+   * @param mixed $condition
    *
-   *
-   * @param $table Object
    * @return self
    */
   public function joinLeft($table, $condition)
   {
-    $this->parts[self::JOINS][] = ' LEFT JOIN ' . $this->db->aliases($table) . ' ON ' . $condition;
+    $this->parts[self::JOINS][] = ' LEFT JOIN '.$this->db->aliases($table).' ON '.$condition;
+
     return $this;
   }
 
   /**
+   * @param string $table   The table to join
+   * @param mixed  $columns Column(s) for the USING clause (string or array)
    *
-   * @param string $table    The table to join
-   * @param mixed  $columns  Column(s) for the USING clause (string or array)
    * @return self
    */
   public function joinLeftUsing($table, $columns)
   {
-    $this->parts[self::JOINS][] = ' LEFT JOIN ' . $this->db->aliases($table) . ' USING(' . $this->db->aliases($columns) . ')';
+    $this->parts[self::JOINS][] = ' LEFT JOIN '.$this->db->aliases($table).' USING('.$this->db->aliases($columns).')';
+
     return $this;
   }
 
   /**
-   * 
+   * @param mixed      $criteria
+   * @param mixed|null $bindParams
+   *
    * @return self
    */
   public function where($criteria, $bindParams = null)
   {
-    if (func_num_args()>2) {
+    if (func_num_args() > 2) {
       DBG::error(__METHOD__.' Argument #2 should be an array if there is more than one bound parameter.');
     }
 
     $this->parts[self::WHERE][] = $this->db->bind($criteria, $bindParams);
+
     return $this;
   }
-  
+
   /**
    * Add a WHERE col IN (values) clause.
-   * 
+   *
    * FIXME? Only needed with integer values so far.
    *
-   * @param string $column 
-   * @param int[] $values
+   * @param string $column
+   * @param int[]  $values
+   *
    * @return self
    */
   public function whereIn($column, $values)
   {
-    assert(is_array($values));
     $this->parts[self::WHERE][] = $column.' IN ('.implode(',', $values).')';
+
     return $this;
   }
 
   /**
-   * 
+   * @param mixed $columns
+   *
    * @return self
    */
   public function group($columns)
   {
-    $this->parts[self::GROUP] = (array)$columns;
+    $this->parts[self::GROUP] = (array) $columns;
+
     return $this;
   }
 
   /**
-   * 
+   * @param mixed      $criteria
+   * @param mixed|null $bindParams
+   *
    * @return self
    */
   public function having($criteria, $bindParams = null)
   {
     $this->parts[self::HAVING][] = $this->db->bind($criteria, $bindParams);
+
     return $this;
   }
 
@@ -639,37 +669,44 @@ class coreDatabaseSelect
    *
    * Direction can be added simply in the column name eg: ->order('age DESC')
    *
+   * @param mixed $columns
+   *
    * @return self
    */
   public function order($columns)
   {
-    $this->parts[self::ORDER] = (array)$columns;
+    $this->parts[self::ORDER] = (array) $columns;
+
     return $this;
   }
 
   /**
-   * 
+   * @param mixed      $numrows
+   * @param mixed|null $offset
+   *
    * @return self
    */
   public function limit($numrows, $offset = null)
   {
-    $this->parts[self::LIMIT_COUNT] = $numrows;
+    $this->parts[self::LIMIT_COUNT]  = $numrows;
     $this->parts[self::LIMIT_OFFSET] = $offset;
+
     return $this;
   }
 
   /**
-   * Convenient way to apply paging
+   * Convenient way to apply paging.
    *
-   * @param int $pageNum zero-based page number
+   * @param int $pageNum     zero-based page number
    * @param int $rowsPerPage
+   *
    * @return self
    */
   public function limitPage($pageNum, $rowsPerPage)
   {
-    assert(is_int($pageNum) && is_int($rowsPerPage));
-    $this->parts[self::LIMIT_COUNT] = $rowsPerPage;
+    $this->parts[self::LIMIT_COUNT]  = $rowsPerPage;
     $this->parts[self::LIMIT_OFFSET] = $rowsPerPage * $pageNum;
+
     return $this;
   }
 
@@ -680,14 +717,13 @@ class coreDatabaseSelect
    * with the fetch() and fetchObject() methods for retrieving rows of the result set.
    * Rows are returned in the current fetch mode set by coreDatabase::setFetchMode()
    *
-   * @return boolean  True on success, or throws sfException
+   * @return bool True on success, or throws sfException
    */
   public function query()
   {
     return $this->db->query($this->__toString());
   }
 }
-
 
 /**
  * coreDatabaseStatement allows to run prepared statements.
@@ -696,27 +732,29 @@ class coreDatabaseSelect
  * does not support named parameters.
  *
  * @author     Fabrice Denis
- * 
- * 
  */
 abstract class coreDatabaseStatement
 {
-  protected $_adapter = null;
+  protected $_adapter;
 
-  public function __construct(coreDatabase $adapter, $sql)
+  public function __construct(coreDatabase $adapter, string $sql)
   {
     $this->_adapter = $adapter;
     $this->_prepare($sql);
   }
 
+  abstract protected function _prepare(string $sql): void;
+
+  abstract protected function _execute(?array $params): bool;
+
   /**
    * Executes a prepared statement.
    *
-   * @param  array $params OPTIONAL Values to bind to parameter placeholders.
+   * @param array $params OPTIONAL Values to bind to parameter placeholders
    *
-   * @return bool  TRUE on success or FALSE on failure.
+   * @return bool TRUE on success or FALSE on failure
    */
-  public function execute(array $params = null)
+  public function execute(?array $params = null)
   {
     return $this->_execute($params);
   }
@@ -727,7 +765,7 @@ abstract class coreDatabaseStatement
    *
    * For SELECT statements mysqli_affected_rows() works like mysqli_num_rows()
    *
-   * @return int     The number of rows affected.
+   * @return int the number of rows affected
    */
-  abstract function rowCount();
+  abstract public function rowCount();
 }

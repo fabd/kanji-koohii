@@ -1,11 +1,11 @@
-<?php use_helper('Form', 'Widgets', 'Decorator') ?>
+<?php use_helper('Form', 'Widgets', 'Decorator'); ?>
 
-<?php decorate_start('SideTabs', ['active' => 'importkeywords']) ?>
+<?php decorate_start('SideTabs', ['active' => 'importkeywords']); ?>
 
           <h2>Import Customized Keywords</h2>
 
           <div class="ajax">
-            <?php include_partial('ImportKeywords') ?>
+            <?php include_partial('ImportKeywords'); ?>
           </div>
 
-<?php decorate_end() ?>
+<?php decorate_end(); ?>

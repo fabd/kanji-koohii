@@ -1,66 +1,66 @@
 <?php
-  use_helper('CJK');
+use_helper('CJK');
 
-  $userId = $sf_user->getUserId();
+$userId = $sf_user->getUserId();
 
-  // get the user's edited keywords (currently for the sidebar "Last Viewed")
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
-  
-  // required for displaying Cust Keywords in "Last Viewed" component
-  kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
+// get the user's edited keywords (currently for the sidebar "Last Viewed")
+$keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 
-  if ($kanjiData) {
-    $ucsId  = $kanjiData->ucs_id;
-  
-    // for the Last Viewed component : the current index
-    kk_globals_put('LASTVIEWED_UCS_ID', (int)$ucsId);
+// required for displaying Cust Keywords in "Last Viewed" component
+kk_globals_put('USER_KEYWORDS_MAP', $keywordsMap);
 
-    // FIXME? we could save a (tiny) query here by re-using the $keywordsMap
-    // $custKeyword = $keywordsMap[(int)$ucsId] ?? null; <- not ASSOC array
-    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+if ($kanjiData) {
+  $ucsId = $kanjiData->ucs_id;
 
-    $formatKeyword = $custKeyword ?? $kanjiData->keyword;
+  // for the Last Viewed component : the current index
+  kk_globals_put('LASTVIEWED_UCS_ID', (int) $ucsId);
 
-    $sf_response->setTitle( $kanjiData->kanji . ' "' . $formatKeyword . '" - ' . _CJ('Kanji Koohii') );
+  // FIXME? we could save a (tiny) query here by re-using the $keywordsMap
+  // $custKeyword = $keywordsMap[(int)$ucsId] ?? null; <- not ASSOC array
+  $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
 
-    // props shared by the Vue component and the placeholder template
-    $storedStory   = StoriesPeer::getStory($userId, $ucsId);
-    $postStoryEdit = ($storedStory ? $storedStory->text : '');
-    $initStoryData = [
-      'initStoryEdit'   => $postStoryEdit,
-      'initStoryPublic' => (bool) ($storedStory && $storedStory->public),
-      'initStoryView'   => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true)
+  $formatKeyword = $custKeyword ?? $kanjiData->keyword;
+
+  $sf_response->setTitle($kanjiData->kanji.' "'.$formatKeyword.'" - '._CJ('Kanji Koohii'));
+
+  // props shared by the Vue component and the placeholder template
+  $storedStory   = StoriesPeer::getStory($userId, $ucsId);
+  $postStoryEdit = ($storedStory ? $storedStory->text : '');
+  $initStoryData = [
+    'initStoryEdit'   => $postStoryEdit,
+    'initStoryPublic' => (bool) ($storedStory && $storedStory->public),
+    'initStoryView'   => StoriesPeer::getFormattedStory($postStoryEdit, $formatKeyword, true),
+  ];
+
+  $cardData = ReviewsPeer::getflashcardData($userId, $ucsId);
+
+  // IF ... on Study page, is in the red pile, is not yet "Added to learn list"
+  $isRestudyKanji     = ReviewsPeer::isFailedCard($cardData);
+  $isRelearnedKanji   = LearnedKanjiPeer::hasKanji($userId, $ucsId);
+  $showLearnButton    = $isRestudyKanji && !$isRelearnedKanji;
+  $showLearnedMessage = $isRestudyKanji && $isRelearnedKanji;
+
+  $jsCardData = null;
+  if (false !== $cardData) {
+    // normalize the flashcard data for the client side
+    $jsCardData = [
+      'ucsId'        => (int) $cardData['ucs_id'],
+      'leitnerBox'   => (int) $cardData['leitnerbox'],
+      'totalReviews' => (int) $cardData['totalreviews'],
     ];
-    
-    $cardData = ReviewsPeer::getflashcardData($userId, $ucsId);
-
-    // IF ... on Study page, is in the red pile, is not yet "Added to learn list"
-    $isRestudyKanji = ReviewsPeer::isFailedCard($cardData);   
-    $isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
-    $showLearnButton = $isRestudyKanji && !$isRelearnedKanji;
-    $showLearnedMessage = $isRestudyKanji && $isRelearnedKanji;
-  
-    $jsCardData = null;
-    if (false !== $cardData) {
-      // normalize the flashcard data for the client side
-      $jsCardData = [
-        'ucsId' => (int)$cardData['ucs_id'],
-        'leitnerBox' => (int)$cardData['leitnerbox'],
-        'totalReviews' => (int)$cardData['totalreviews'],
-      ];
-    }
-    kk_globals_put('STUDY_FLASHCARD', $jsCardData);
   }
+  kk_globals_put('STUDY_FLASHCARD', $jsCardData);
+}
 
-  kk_globals_put('NEW_CARDS_COUNT', ReviewsPeer::getCountUntested($userId));
+kk_globals_put('NEW_CARDS_COUNT', ReviewsPeer::getCountUntested($userId));
 ?>
 
 <div class="row">
 
 <?php include_partial('SideColumn', [
-  'kanjiData' => $kanjiData,
-  'isBeginRestudy' => $isBeginRestudy ?? false
-  ]) ?>
+'kanjiData'      => $kanjiData,
+'isBeginRestudy' => $isBeginRestudy ?? false,
+]); ?>
 
   <div class="col-lg-9">
 
@@ -68,11 +68,11 @@
   
   <h2>Search : No results</h2>
   
-  <?php $oRTK = rtkIndex::inst() ?>
+  <?php $oRTK = rtkIndex::inst(); ?>
 
-  <p> Sorry, there are no results for "<strong><?php echo esc_specialchars($sf_params->get('id')) ?></strong>".</p>
+  <p> Sorry, there are no results for "<strong><?= esc_specialchars($sf_params->get('id')); ?></strong>".</p>
 
-  <p> Valid frame numbers for <strong><?php echo $oRTK->getSequenceName() ?></strong> are #1 to #<?php echo $oRTK->getNumCharacters() ?>.</p>
+  <p> Valid frame numbers for <strong><?= $oRTK->getSequenceName(); ?></strong> are #1 to #<?= $oRTK->getNumCharacters(); ?>.</p>
 
   <p> To search for characters outside of the selected index, type in a character or a unicode value.</p>
 
@@ -80,19 +80,19 @@
 
   <div id="EditStoryComponent">
     <div class="flex items-center mb-2">
-      <h2 class="flex-1 text-[26px] m-0"><?php echo $title; ?></h2>
+      <h2 class="flex-1 text-[26px] m-0"><?= $title; ?></h2>
 <?php if (CJK::isCJKUnifiedUCS($kanjiData->ucs_id)): ?>
       <div class="ko-EditFlashcard"></div>
-<?php endif ?>
+<?php endif; ?>
     </div>
 
     <div id="JsEditStoryInst" class="min-h-[100px]">
       <!-- placeholder till Vue comp is mounted -->
       <?php include_partial('EditStoryPlaceholder', [
-        'kanjiData' => $kanjiData,
-        'formattedStory' => $initStoryData['initStoryView'],
-        'custKeyword' => $custKeyword])
-      ?>
+      'kanjiData'      => $kanjiData,
+      'formattedStory' => $initStoryData['initStoryView'],
+      'custKeyword'    => $custKeyword]);
+?>
     </div>
   </div>
 
@@ -101,7 +101,7 @@
       <i class="fa fa-chevron-down" style="position:absolute;right:0;top:0;width:33px;height:33px;line-height:33px;"></i>
       Dictionary
     </div>
-    <div id="JsDictBody" data-ucs="<?= $kanjiData->ucs_id ?>" style="display:none">
+    <div id="JsDictBody" data-ucs="<?= $kanjiData->ucs_id; ?>" style="display:none">
       <div class="JsMount"></div>
     </div>
   </div>
@@ -114,32 +114,32 @@
         Favourite(s)
       </div>
 <?php
-  // req. ucsId, userId
-  use_helper('Links');
-  $stories = StoriesPeer::getSharedStories((int)$kanjiData->ucs_id, $kanjiData->keyword, $userId, 'starred');
-  foreach($stories as $o) {
-?>
+// req. ucsId, userId
+use_helper('Links');
+$stories = StoriesPeer::getSharedStories((int) $kanjiData->ucs_id, $kanjiData->keyword, $userId, 'starred');
+foreach ($stories as $o) {
+  ?>
       <div class="sharedstory rtkframe">
         
         <div class="sharedstory_author">
-          <?php echo link_to_member($o->username) ?>
+          <?= link_to_member($o->username); ?>
         </div>
 
         <div class="ko-BookStyle">
-          <div class="story"><?php echo $o->text ?></div>
+          <div class="story"><?= $o->text; ?></div>
         </div>
 
         <div class="sharedstory_meta flex">
-          <div class="lastmodified  self-center"><i class="far fa-clock"></i> <?php echo $o->lastmodified ?></div>
+          <div class="lastmodified  self-center"><i class="far fa-clock"></i> <?= $o->lastmodified; ?></div>
 
-          <div class="sharedstory-actions JsAction" data-uid="<?php echo $o->authorid ?>" data-cid="<?php echo $ucsId ?>" appv1="<?php echo $o->stars ?>" appv2="<?php echo $o->kicks ?>">
+          <div class="sharedstory-actions JsAction" data-uid="<?= $o->authorid; ?>" data-cid="<?= $ucsId; ?>" appv1="<?= $o->stars; ?>" appv2="<?= $o->kicks; ?>">
             <span class="JsMsg"></span>
             <a href="#" class="sharedstory_btn JsTip JsCopy"><i class="far fa-fw fa-lg fa-copy"></i></a>
 <?php if ($userId != $o->authorid): ?>
-            <a href="#" class="sharedstory_btn JsTip JsStar"><i class="far fa-fw fa-lg fa-star"></i><span><?php echo $o->stars ?></span></a>
+            <a href="#" class="sharedstory_btn JsTip JsStar"><i class="far fa-fw fa-lg fa-star"></i><span><?= $o->stars; ?></span></a>
 <?php else: ?>
-            <em class="star"><?php echo $o->stars ?></em>
-<?php endif ?>
+            <em class="star"><?= $o->stars; ?></em>
+<?php endif; ?>
           </div>
         </div>
       </div>
@@ -148,15 +148,15 @@
     </div>
 
     <?php
-    // Caching of this partial is dynamically enabled in study/edit action. Use sf_cache_key for removals.
-    include_partial('SharedStories', ['sf_cache_key' => $kanjiData->ucs_id, 'kanjiData' => $kanjiData]);
-    ?>
+      // Caching of this partial is dynamically enabled in study/edit action. Use sf_cache_key for removals.
+      include_partial('SharedStories', ['sf_cache_key' => $kanjiData->ucs_id, 'kanjiData' => $kanjiData]);
+?>
   </div>
 
 
-<?php #ViewCacheLogPeer::log('SharedStories', $kanjiData->framenum); ?>
+<?php // ViewCacheLogPeer::log('SharedStories', $kanjiData->framenum);?>
 
-<?php endif ?>
+<?php endif; ?>
 
   </div><!-- /col -->
 
@@ -164,28 +164,26 @@
 
 <?php
 
-    //FIXME
-    // // Learned button for Study page only
-    // if (!$request->hasParameter('reviewMode'))
-    // {
-    //   $this->isRestudyKanji = ReviewsPeer::isFailedCard($userId, $ucsId);
-    //   $this->isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
-    // }
+  // FIXME
+  // // Learned button for Study page only
+  // if (!$request->hasParameter('reviewMode'))
+  // {
+  //   $this->isRestudyKanji = ReviewsPeer::isFailedCard($userId, $ucsId);
+  //   $this->isRelearnedKanji = LearnedKanjiPeer::hasKanji($userId, $ucsId);
+  // }
 
-  // only if EditStory component is displayed
-  if ($kanjiData)
-  {
-    $propsData = [
-      'kanjiData' => $kanjiData,
-      'custKeyword' => $custKeyword,
+// only if EditStory component is displayed
+if ($kanjiData) {
+  $propsData = [
+    'kanjiData'   => $kanjiData,
+    'custKeyword' => $custKeyword,
 
-      // Study page only (not for flashcards "edit story" dialog)
-      'fromRestudyList' => $sf_request->getParameter('from') === 'restudy-list',
-      'showLearnButton' => $showLearnButton,
-      'showLearnedMessage' => $showLearnedMessage,
-    ];
+    // Study page only (not for flashcards "edit story" dialog)
+    'fromRestudyList'    => $sf_request->getParameter('from') === 'restudy-list',
+    'showLearnButton'    => $showLearnButton,
+    'showLearnedMessage' => $showLearnedMessage,
+  ];
 
-    $propsData = array_merge($propsData, $initStoryData);
-    echo kk_globals_put('EDITSTORY_PROPS', $propsData);
-  }
-
+  $propsData = array_merge($propsData, $initStoryData);
+  echo kk_globals_put('EDITSTORY_PROPS', $propsData);
+}

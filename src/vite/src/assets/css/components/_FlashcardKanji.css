@@ -14,8 +14,13 @@
   /* prevent overlapping by flashcard menu icon top right */
   margin-right: 40px;
 
-  /* do not word break CJK text */
+  /* do not word break CJK text, break
+     See https://www.w3.org/TR/css-text-3/#word-break-property  */
   word-break: keep-all;
+
+  /* break anyway if there are no spaces or punctuation that word-break would use 
+     for example, a Japanese sentence will break, to avoid overflowing the card */
+  overflow-wrap: anywhere;
 
   /* balance number of characters per line */
   text-wrap: balance;

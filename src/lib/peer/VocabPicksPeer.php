@@ -8,7 +8,7 @@ class VocabPicksPeer extends coreDatabaseTable
 
   /**
    * This function must be copied in each peer class.
-   * 
+   *
    * @return self
    */
   public static function getInstance()
@@ -18,13 +18,19 @@ class VocabPicksPeer extends coreDatabaseTable
 
   /**
    * Create or update a vocab link from jmdict (dictid) to kanji card (userid, ucsid).
-   *  
-   * @return boolean
+   *
+   * @param mixed $userId
+   * @param mixed $ucsId
+   * @param mixed $dictId
+   *
+   * @return bool
    */
   public static function link($userId, $ucsId, $dictId)
   {
     assert($dictId > 0);
-    if ($dictId <= 0) return;
+    if ($dictId <= 0) {
+      return;
+    }
 
     $data = ['dictid' => $dictId];
 
@@ -33,8 +39,11 @@ class VocabPicksPeer extends coreDatabaseTable
 
   /**
    * Remove a vocab link.
-   * 
-   * @return boolean  Returns true if succesfull.
+   *
+   * @param mixed $userId
+   * @param mixed $ucsId
+   *
+   * @return bool returns true if succesfull
    */
   public static function unlink($userId, $ucsId)
   {
@@ -44,13 +53,17 @@ class VocabPicksPeer extends coreDatabaseTable
   /**
    * Returns user's vocab picks for given character.
    *
-   * @return  array
+   * @param mixed $userId
+   * @param mixed $ucsId
+   *
+   * @return array
    */
   public static function getUserPicks($userId, $ucsId)
   {
     $select = self::getInstance()->select('dictid')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     $items  = $db->fetchCol($select);
+
     return $items ?: [];
   }
 
@@ -60,7 +73,6 @@ class VocabPicksPeer extends coreDatabaseTable
    * Assumes the query already includes the kanjis table.
    *
    * @param coreDatabaseSelect $select
-   * @param int                $userId  Match all user's dictionary words.
    *
    * @return coreDatabaseSelect
    */

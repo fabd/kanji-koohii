@@ -1,21 +1,21 @@
 <?php
-  use_helper('Gadgets');
-  $sf_request->setParameter('_homeFooter', true);
+use_helper('Gadgets');
+$sf_request->setParameter('_homeFooter', true);
 
-  $userId = $sf_user->getUserId();
+$userId = $sf_user->getUserId();
 
-  $keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
+$keywordsMap = CustkeywordsPeer::getUserKeywordsMapJS($userId);
 
-  $cardsData = ReviewsPeer::getUserKanjiCardsJS($userId);
+$cardsData = ReviewsPeer::getUserKanjiCardsJS($userId);
 // DBG::printr($cardsData);exit;
 
-  // include orig & user keyword maps for the kanji card component
-  rtkIndex::useKeywordsFile();
+// include orig & user keyword maps for the kanji card component
+rtkIndex::useKeywordsFile();
 
-  kk_globals_put([
-    'USER_KEYWORDS_MAP' => $keywordsMap,
-    'USER_KANJI_CARDS' => $cardsData
-  ]);
+kk_globals_put([
+  'USER_KEYWORDS_MAP' => $keywordsMap,
+  'USER_KANJI_CARDS'  => $cardsData,
+]);
 ?>
 <h2>View All Lessons</h2>
 

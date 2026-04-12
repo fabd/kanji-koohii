@@ -1,36 +1,29 @@
 <?php
 /**
  * User profile, community features(someday).
- * 
  */
-
 class profileActions extends sfActions
 {
   public function executeIndex($request)
   {
     $username = $request->getParameter('username');
 
-    if (!$username)
-    {
-      if ($this->getUser()->isAuthenticated())
-      {
-        $username = $this->getUser()->getUserName();
-      }
-      else
-      {
+    if (!$username) {
+      if (kk_get_user()->isAuthenticated()) {
+        $username = kk_get_user()->getUserName();
+      } else {
         // if unauthenticated user checks his (bookmarked?) profile, go to login and back
         $url = $this->getController()->genUrl('profile/index', true);
-        $this->getUser()->redirectToLogin(['referer' => $url]);
+        kk_get_user()->redirectToLogin(['referer' => $url]);
       }
     }
 
-    if (false === ($user = UsersPeer::getUser($username)))
-    {
+    if (false === ($user = UsersPeer::getUser($username))) {
       return sfView::ERROR;
     }
 
-    $profileUser = (object) $user;
+    $profileUser        = (object) $user;
     $this->profile_user = $profileUser;
-    $this->profile_self = $profileUser->userid === $this->getUser()->getUserId();
+    $this->profile_self = $profileUser->userid === kk_get_user()->getUserId();
   }
 }

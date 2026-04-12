@@ -1,207 +1,153 @@
 <?php
 /**
- * Wrapper for JSON communication, extends sfParameterHolder.
- * 
+ * JsTron is a simple wrapper around JSON messages.
  * See TRON (tron.ts) for the front end side.
  *
- * 
- * Methods:
- *   set($name, $value)          Set properties of the message (cf. sfParameterHolder)
- *   add($parameters)
- *   ...
+ * Example Tron object:
  *
- *   setStatus($status)
- *   setError($message)
- *   setHtml($html)
+ *   {
+ *     status: 1,
+ *     props: { username: "John" },
+ *     errors: ["Password is too short"],  <== OPTIONAL
+ *     html: ...                           <== OPTIONAL
+ *   }
  *
- *   render($action)
- *   renderJson($action)         Proxy for render().
- *
- *   renderPartial()             setHtml() with a Symfony partial render
- *   renderComponent()           ... likewise for ....... component render
- *
- *
- * Return a simple SUCCESS message:
+ * Implements JsonSerializable, so we can render a JSON message in an
+ * action like this:
  *
  *   $tron = new JsTron();
- *   return $tron->renderJson($this);
- *   
+ *   $tron->set("foo", 123);
+ *   $tron->addError('Session expired. Please log in.');
+ *   $this->renderJson($tron);
  *
- * Return some data:
+ * Example action that returns a partial in a JSON message:
  *
- *   $tron = new JsTron(['foo' => 'bar']);
- *   $tron->setStatus(JsTron::STATUS_SUCCESS);
- *   return $tron->renderJson($this);
- *   
- *   
- * Return a session error to be displayed by client:
+ *   $tron->setHtml($this->getPartial('templateName', ['foo' => 123]));
+ *   return $this->renderJson($tron);
  *
- *   $tron = new JsTron(['login' => true]);
- *   $tron->setError('Session expired. Please log in.');
- *   $tron->setStatus(JsTron::STATUS_FAILED);
- *   return $tron->renderJson($this);
+ * Example action that returns a component in a JSON message:
  *
+ *   $tron->setHtml($this->getComponent('moduleName', 'ComponentName', ['foo' => 123]));
+ *   return $this->renderJson($tron);
  *
- * @author  Fabrice Denis
+ * Methods:
+ *
+ *   set($name, $value)          Set one property of the message (props).
+ *   add($parameters)            Set multiple properties (props)
+ *   setStatus($status)          Set the status ( FAILED, SUCCESS )
+ *   addError($message)          Adds an error message (can be called multiple times)
+ *   setHtml($html)              Sets the html property
  */
-
-class JsTron extends sfParameterHolder
+class JsTron implements JsonSerializable
 {
   /**
-   * Status codes used by App.Helper.TRON (app.js)
+   * Keep in sync with client-side tron.ts.
    */
-  // a form submission contains errors, or a blocker (do not close ajax dialog)
-  const STATUS_FAILED   = 0;
-  // a form is submitted succesfully, proceed (eg. close ajax dialog)
-  const STATUS_SUCCESS  = 1;
-  // a form submitted succesfully, and continues with another step
-  const STATUS_PROGRESS = 2;
+  public const STATUS_FAILED  = 0;
+  public const STATUS_SUCCESS = 1;
 
-  protected
-    $status      = null,
-    $errors      = [],
-    $html        = '';
+  private int $status;
+
+  private array $errors = [];
+
+  private ?string $html = null;
+
+  private array $props = [];
 
   /**
    * Constructor.
    *
-   * Create a JsonWrapper instance, optional properties set on creation.
-   * 
-   * @param  array  $parameters 
-   *
-   * @return void
+   * Create a JsTron instance, optional properties set on creation.
    */
-  public function __construct($parameters = [])
+  public function __construct(array $props = [])
   {
-    parent::__construct();
-
     $this->status = self::STATUS_SUCCESS;
 
-    $this->add($parameters);
+    $this->add($props);
   }
 
-  public function setStatus($status)
+  /**
+   * Set a single message property.
+   */
+  public function set(string $name, mixed $value): void
   {
-    assert($status === self::STATUS_FAILED || $status === self::STATUS_SUCCESS || $status === self::STATUS_PROGRESS);
+    $this->props[$name] = $value;
+  }
+
+  /**
+   * Merge an array of message properties.
+   */
+  public function add(array $props): void
+  {
+    $this->props = array_merge($this->props, $props);
+  }
+
+  /**
+   * Return all message properties.
+   */
+  public function getAll(): array
+  {
+    return $this->props;
+  }
+
+  public function setStatus(int $status): void
+  {
+    assert($status === self::STATUS_FAILED || $status === self::STATUS_SUCCESS);
     $this->status = $status;
   }
 
-  public function getStatus()
+  public function getStatus(): int
   {
-    if (null === $this->status)
-    {
-      throw new sfException(__METHOD__.' Status is not set.');
-    }
     return $this->status;
   }
 
-  public function setError($message)
+  public function addError(string $message): void
   {
     $this->errors[] = $message;
   }
 
-  /**
-   * Set errors from the Request errors (eg. from form validation).
-   *
-   * @param coreRequest $request
-   * @return void
-   */
-  public function setErrorsFromRequest(coreRequest $request)
+  public function addErrors(array $errors): void
   {
-    $errors = $request->getErrors();
     foreach ($errors as $key => $message) {
-      $this->setError($message);
+      $this->addError($message);
     }
   }
 
-  public function getErrors()
+  public function getErrors(): array
   {
     return $this->errors;
   }
 
-  public function hasErrors()
+  public function hasErrors(): bool
   {
     return count($this->errors) > 0;
   }
 
-  public function setHtml($html)
+  public function setHtml(string $html): void
   {
     $this->html = $html;
   }
 
-  public function getHtml()
+  public function getHtml(): ?string
   {
     return $this->html;
   }
 
-  /**
-   * Returns the JSON message in as a Php object.
-   * 
-   * @return object
-   */
-  public function getJson()
+  public function jsonSerialize(): mixed
   {
     $obj = new stdClass();
+
     $obj->status = $this->getStatus();
     $obj->props  = $this->getAll();
 
-    if ($this->html !== '')
-    {
+    if ($this->html !== null) {
       $obj->html = $this->getHtml();
     }
 
-    if ($this->hasErrors())
-    {
+    if ($this->hasErrors()) {
       $obj->errors = $this->getErrors();
     }
 
     return $obj;
-  }
-
-  /**
-   * Use this as the return statement of a symfony action, eg:
-   *
-   *   return $tron->renderJson($this);
-   * 
-   * @param  sfAction $action 
-   *
-   * @return sfView::NONE
-   */
-  public function renderJson($action)
-  {
-    return $action->renderJson($this->getJson());
-  }
-  
-  /**
-   * Render the TRON response with html set from partial.
-   *
-   * @param  sfAction $action 
-   * @param  string     $partialName    Partial name (same as get_partial() helper)
-   * @param  mixed      $vars           Partial vars
-   *
-   * @return coreView::NONE
-   */
-  public function renderPartial($action, $partialName, $vars = null)
-  {
-    $html = $action->getPartial($partialName, $vars);
-    $this->setHtml($html);
-    return $this->renderJson($action);
-  }
-  
-  /**
-   * Render the TRON response with html set from a component.
-   * 
-   * @param  sfAction $action
-   * @param  string     $moduleName     module name
-   * @param  string     $componentName  component name
-   * @param  array      $vars           vars
-   *
-   * @return coreView::NONE
-   */
-  public function renderComponent($action, $moduleName, $componentName, $vars = null)
-  {
-    $html = $action->getComponent($moduleName, $componentName, $vars);
-    $this->setHtml($html);
-    return $this->renderJson($action);
   }
 }

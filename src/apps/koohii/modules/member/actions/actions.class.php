@@ -2,11 +2,7 @@
 
 class memberActions extends sfActions
 {
-  public function executeIndex()
-  {
-  }
+  public function executeIndex() {}
 
-  public function executeProgress()
-  {
-  }
+  public function executeProgress() {}
 }

@@ -25,12 +25,9 @@ class ParserUtils
 
   public static function fileOpen($fileName, $mode = 'r')
   {
-    try
-    {
+    try {
       $handle = fopen($fileName, $mode);
-    }
-    catch (sfException $e)
-    {
+    } catch (sfException $e) {
       echo sprintf('Error opening file: "%s" with mode "%s"', $fileName, $mode);
     }
 

@@ -6,4 +6,4 @@ $sf_request->setParameter('_homeFooter', true);
 
 <?php include_partial('DeleteAccountConfirm'); ?>
 
-<p><i class="fa fa-arrow-left mr-2"></i><?php echo link_to('Woops, take me back to the homepage!', '@homepage'); ?></p>
+<p><i class="fa fa-arrow-left mr-2"></i><?= link_to('Woops, take me back to the homepage!', '@homepage'); ?></p>

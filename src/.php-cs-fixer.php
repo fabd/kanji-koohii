@@ -7,9 +7,17 @@ return (new Config())
     // rulesets
     '@PSR2' => true,
     '@PhpCsFixer' => true,
-    '@PHP74Migration' => true,
+
+    // koohii server currently runs php 8.2.30
+    '@PHP8x2Migration' => true,
 
     'array_syntax' => ['syntax' => 'short'],
+
+    'binary_operator_spaces' => [
+      'default' => 'align_single_space_minimal',
+    ],
+
+    'blank_line_after_opening_tag' => false,
 
     // oldschool Symfony style, verbose but more readable
     'braces' => [
@@ -30,6 +38,9 @@ return (new Config())
 
     // heredoc should always start at column 1, easy to see, more space for html
     'heredoc_indentation' => false,
+
+    // $i++ not ++$i
+    'increment_style' => ['style' => 'post'],
 
     // allow cleaner one-line conditionals in php templates :
     //   <!php if (expr): !> ... <!php else: !> ... <!php endif; !>

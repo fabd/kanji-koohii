@@ -36,10 +36,10 @@ class KanjidicParser
    */
   public function __construct()
   {
-    $this->fileName = KANJIDIC2_XML_FILE;
-    $this->entries = [];
+    $this->fileName     = KANJIDIC2_XML_FILE;
+    $this->entries      = [];
     $this->indexByKanji = [];
-    $this->indexByUCS = [];
+    $this->indexByUCS   = [];
   }
 
   /**
@@ -48,14 +48,13 @@ class KanjidicParser
   public function parse()
   {
     $simpleXml = new SimpleXMLElement(file_get_contents($this->fileName));
-    $children = $simpleXml->children();
+    $children  = $simpleXml->children();
 
-    foreach ($children->character as $character)
-    {
+    foreach ($children->character as $character) {
       $entry = new KanjidicEntry($character);
 
-      $this->entries[] = $entry;
-      $this->indexByKanji[$entry->literal] = $entry;
+      $this->entries[]                             = $entry;
+      $this->indexByKanji[$entry->literal]         = $entry;
       $this->indexByUCS[$entry->codepoints['ucs']] = $entry;
     }
 

@@ -22,9 +22,6 @@ class rtkValidators
    * Validate RevTK username.
    *
    * @param object $value
-   * @param object $params
-   *
-   * @return
    */
   public static function validateUsername($value)
   {
@@ -54,7 +51,7 @@ class rtkValidators
   public static function sanitizeBool($value)
   {
     return
-      true === $value
+      true      === $value
       || 'true' === $value
       || 0 !== intval($value);
   }
@@ -70,8 +67,7 @@ class rtkValidators
   {
     $ucs_code = BaseValidators::sanitizeInteger($value);
 
-    if (!CJK::isCJKUnifiedUCS($ucs_code))
-    {
+    if (!CJK::isCJKUnifiedUCS($ucs_code)) {
       throw new sfException(__METHOD__);
     }
 

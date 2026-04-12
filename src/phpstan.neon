@@ -1,5 +1,5 @@
 parameters:
-    level: 3
+    level: 5
     paths:
         - lib/
         - apps/koohii/lib/
@@ -8,3 +8,12 @@ parameters:
         - vendor/
     bootstrapFiles:
         - vendor/autoload.php
+        - tools/phpstan-bootstrap.php
+    scanFiles:
+        # for the kk_get_*() global stubs that fix types
+        - apps/koohii/config/koohiiConfiguration.class.php
+    dynamicConstantNames:
+        # defined in koohiiConfiguration, not visible to PHPStan statically
+        - KK_ENV_DEV
+        - KK_ENV_PROD
+        - KK_ENV_FORK

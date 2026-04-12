@@ -6,7 +6,7 @@
  *  getCount($userId)
  *
  *  getKanji($userId)
- *  
+ *
  *  addKanji($userId, $ucsId)
  *  addKanjis($userId, array $ucsIds)
  *
@@ -16,16 +16,14 @@
  *  clearKanjis($userId, array $ucsIds)
  *
  *  clearAll($userId)
- * 
- * 
  */
-
 class LearnedKanjiPeer extends coreDatabaseTable
 {
   protected $tableName = 'learnedkanji';
 
   /**
    * This function must be copied in each peer class.
+   *
    * @return self
    */
   public static function getInstance()
@@ -35,8 +33,10 @@ class LearnedKanjiPeer extends coreDatabaseTable
 
   /**
    * Returns count of relearned kanji for given user.
-   * 
-   * @return mixed  Count, or FALSE on failure
+   *
+   * @param mixed $userId
+   *
+   * @return mixed Count, or FALSE on failure
    */
   public static function getCount($userId)
   {
@@ -44,31 +44,36 @@ class LearnedKanjiPeer extends coreDatabaseTable
   }
 
   /**
-   * 
-   * @return boolean
+   * @param mixed $userId
+   * @param mixed $ucsId
+   *
+   * @return bool
    */
   public static function addKanji($userId, $ucsId)
   {
-    assert((int)$ucsId > 0x3000);
-    $db = self::getInstance()->getDb();
+    assert((int) $ucsId > 0x3000);
+    $db        = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
-    return $db->query("REPLACE INTO {$tableName} (userid, ucs_id) VALUES (?, ?)",
-      [$userId, $ucsId]);
+
+    return $db->query(
+      "REPLACE INTO {$tableName} (userid, ucs_id) VALUES (?, ?)",
+      [$userId, $ucsId]
+    );
   }
-    
+
   public static function addKanjis($userId, array $ucsIds)
   {
     $placeholders = join(',', array_fill(0, count($ucsIds), '(?, ?)'));
-    $values = [];
-    foreach ($ucsIds as $ucsId)
-    {
-      assert((int)$ucsId > 0x3000);
+    $values       = [];
+    foreach ($ucsIds as $ucsId) {
+      assert((int) $ucsId > 0x3000);
       array_push($values, $userId);
       array_push($values, $ucsId);
     }
-     
-    $db = self::getInstance()->getDb();
+
+    $db        = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
+
     return $db->query(
       "REPLACE INTO {$tableName} (userid, ucs_id) VALUES {$placeholders}",
       $values
@@ -76,50 +81,58 @@ class LearnedKanjiPeer extends coreDatabaseTable
   }
 
   /**
-   * 
-   * @return boolean
+   * @param mixed $userId
+   * @param mixed $ucsId
+   *
+   * @return bool
    */
   public static function hasKanji($userId, $ucsId)
   {
-    assert((int)$ucsId > 0x3000);
+    assert((int) $ucsId > 0x3000);
 
     return self::getInstance()->count('userid = ? AND ucs_id = ?', [$userId, $ucsId]) > 0;
   }
 
   /**
    * Remove a relearned kanji from the selection.
-   * 
-   * @return boolean
+   *
+   * @param mixed $userId
+   * @param mixed $ucsId
+   *
+   * @return bool
    */
   public static function clearKanji($userId, $ucsId)
   {
-    assert((int)$ucsId > 0x3000);
+    assert((int) $ucsId > 0x3000);
 
     return self::getInstance()->delete('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
   }
-  
+
   /**
-  * Remove relearned kanjis from the selection.
-  *
-  * @return boolean
-  */
+   * Remove relearned kanjis from the selection.
+   *
+   * @param mixed $userId
+   *
+   * @return bool
+   */
   public static function clearKanjis($userId, array $ucsIds)
   {
-    foreach ($ucsIds as $ucsId)
-    {
-      assert((int)$ucsId > 0x3000);
+    foreach ($ucsIds as $ucsId) {
+      assert((int) $ucsId > 0x3000);
     }
-      
+
     $values = [$userId];
     array_push($values, $ucsIds);
-      
+
     return self::getInstance()->delete('userid = ? AND ucs_id in (?)', $values);
   }
 
   /**
    * Clear the relearned kanji list for this user.
-   * 
-   * @return boolean
+   *
+   * @param mixed $userId
+   *
+   * @return bool
    */
   public static function clearAll($userId)
   {
@@ -127,16 +140,19 @@ class LearnedKanjiPeer extends coreDatabaseTable
   }
 
   /**
-   * Return array of relearned kanji for given user
+   * Return array of relearned kanji for given user.
    *
-   * @return array  kanji ids
+   * @param mixed $userId
+   *
+   * @return array kanji ids
    */
   public static function getKanji($userId)
   {
     $select = self::getInstance()->select('ucs_id');
     $select->where('userid = ?', $userId);
-    $db = self::getInstance()->getDb();
+    $db  = self::getInstance()->getDb();
     $ids = $db->fetchCol($select);
+
     return array_map('intval', $ids);
   }
 }

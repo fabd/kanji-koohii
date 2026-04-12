@@ -6,14 +6,13 @@
  * The key for the strings is the original RevTK string, so  for Japanese mode,
  * the "key" string is returned as is.
  */
-
 $GLOBALS['CJ_STRINGS'] = [
-  'Japanese'               => 'Chinese',
-  'kanji'                  => 'hanzi',
-  'Onyomi'                 => 'Pinyin',
-  'Remembering the Kanji'  => 'Remembering Hanzi',
-  'Kanji Koohii!'          => 'Reviewing the Hanzi',   // website name
-  'RTK'                    => 'RTH'
+  'Japanese'              => 'Chinese',
+  'kanji'                 => 'hanzi',
+  'Onyomi'                => 'Pinyin',
+  'Remembering the Kanji' => 'Remembering Hanzi',
+  'Kanji Koohii!'         => 'Reviewing the Hanzi',   // website name
+  'RTK'                   => 'RTH',
 ];
 
 /**
@@ -21,8 +20,5 @@ $GLOBALS['CJ_STRINGS'] = [
  */
 class rtxStrings
 {
-  public static function init()
-  {
-  }
+  public static function init() {}
 }
-

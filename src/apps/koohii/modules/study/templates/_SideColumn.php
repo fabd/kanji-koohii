@@ -1,38 +1,35 @@
 <?php
-  use_helper('CJK', 'Form');
+use_helper('CJK', 'Form');
 
-  // keywords and index for the search box (front end side)
-  rtkIndex::useKeywordsFile();
+// keywords and index for the search box (front end side)
+rtkIndex::useKeywordsFile();
 
-  //$restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
+// $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
 
-  $framenum = $kanjiData ? $kanjiData->framenum : 0;
-  // $ucs_code = $kanjiData ? $kanjiData->ucs_id : 0;
+$framenum = $kanjiData ? $kanjiData->framenum : 0;
+// $ucs_code = $kanjiData ? $kanjiData->ucs_id : 0;
 
-  $cur_kanji = $kanjiData ? $kanjiData->kanji : '1';
+$cur_kanji = $kanjiData ? $kanjiData->kanji : '1';
 ?>
 
 <div class="col-lg-3 mb-4">
 <?php
   include_partial('study/StudySearch', ['framenum' => $framenum]);
 
-  $restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
-  $learnedCount = LearnedKanjiPeer::getCount($sf_user->getUserId());
+$restudyCount = ReviewsPeer::getRestudyKanjiCount($sf_user->getUserId());
+$learnedCount = LearnedKanjiPeer::getCount($sf_user->getUserId());
 
-  if ($isBeginRestudy || $learnedCount > 0)
-  {
-    include_partial('LearnedPanel', [
-      'learnedCount' => $learnedCount,
-      'restudyCount' => $restudyCount,
-      'kanji' => $cur_kanji,
-    ]);
-  }
-  elseif ($restudyCount)
-  {
-    include_partial('RestudyPanel', [
-      'restudyCount' => $restudyCount,
-    ]);
-  }
+if ($isBeginRestudy || $learnedCount > 0) {
+  include_partial('LearnedPanel', [
+    'learnedCount' => $learnedCount,
+    'restudyCount' => $restudyCount,
+    'kanji'        => $cur_kanji,
+  ]);
+} elseif ($restudyCount) {
+  include_partial('RestudyPanel', [
+    'restudyCount' => $restudyCount,
+  ]);
+}
 ?>
 
   <div class="max-lg:hidden ko-Box mb-4">

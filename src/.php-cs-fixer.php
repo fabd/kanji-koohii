@@ -7,9 +7,13 @@ return (new Config())
     // rulesets
     '@PSR2' => true,
     '@PhpCsFixer' => true,
-    '@PHP74Migration' => true,
+
+    // koohii server currently runs php 8.2.30
+    '@PHP8x2Migration' => true,
 
     'array_syntax' => ['syntax' => 'short'],
+
+    'blank_line_after_opening_tag' => false,
 
     // oldschool Symfony style, verbose but more readable
     'braces' => [

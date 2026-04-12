@@ -151,7 +151,7 @@ class LOG
     $txt_msg = $args['msg'] ?? '(no message)';
 
     $formatter = $this->formatter;
-    $handle = $this->fileHandle;
+    $handle    = $this->fileHandle;
 
     $output = [];
 
@@ -183,7 +183,7 @@ class LOG
     ;
 
     if ($args['var'] !== self::UNDEFINED) {
-      $txt_var = $this->dump($args['var']);
+      $txt_var  = $this->dump($args['var']);
       $output[] = $formatter
         ->setForeground('yellow')
         ->apply(' '.$txt_var)
@@ -192,7 +192,7 @@ class LOG
 
     fwrite($this->fileHandle, implode('', $output)."\n");
 
-    ++$this->lineNr;
+    $this->lineNr++;
   }
 
   private function dump($expr)

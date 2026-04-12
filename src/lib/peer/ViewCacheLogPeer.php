@@ -71,7 +71,7 @@ class ViewCacheLogPeer extends coreDatabaseTable
     $cacheHit = (int) !isset(self::$viewIds[$viewId]);
 
     $data = [
-      'cache_hit' => $cacheHit,
+      'cache_hit'   => $cacheHit,
       'resource_id' => $resourceId,
     ];
 
@@ -89,10 +89,10 @@ class ViewCacheLogPeer extends coreDatabaseTable
 
     self::getInstance()->select([
       'hit_count' => 'SUM(cache_hit)',
-      'total' => 'COUNT(*)',
+      'total'     => 'COUNT(*)',
     ])->query();
 
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     $result = $db->fetchObject();
 
     if ($result === false || $result->total == 0) {
@@ -100,8 +100,8 @@ class ViewCacheLogPeer extends coreDatabaseTable
     }
 
     return [
-      'hit_count' => $result->hit_count,
-      'miss_count' => $result->total - $result->hit_count,
+      'hit_count'   => $result->hit_count,
+      'miss_count'  => $result->total - $result->hit_count,
       'hit_percent' => round($result->hit_count / $result->total * 100),
     ];
   }

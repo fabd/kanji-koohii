@@ -86,9 +86,9 @@ class SitenewsPeer extends coreDatabaseTable
       $select->where('EXTRACT(DAY FROM created_on) = ?', $day);
     }
 
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
     $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $result = self::formatPostsArray($db->fetchAll($select));
+    $result    = self::formatPostsArray($db->fetchAll($select));
     $db->setFetchMode($fetchMode);
 
     return $result;
@@ -109,9 +109,9 @@ class SitenewsPeer extends coreDatabaseTable
       ->limit($max)
     ;
 
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
     $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $result = self::formatPostsArray($db->fetchAll($select), true);
+    $result    = self::formatPostsArray($db->fetchAll($select), true);
     $db->setFetchMode($fetchMode);
 
     return $result;
@@ -125,16 +125,16 @@ class SitenewsPeer extends coreDatabaseTable
   public static function getArchiveIndex()
   {
     $select = self::getInstance()->select([
-      'count' => 'COUNT(*)',
+      'count'  => 'COUNT(*)',
       'yyyymm' => 'DATE_FORMAT(created_on, \'%Y%m\')',
-      'year' => 'EXTRACT(YEAR FROM created_on)',
-      'month' => 'EXTRACT(MONTH FROM created_on)'])
+      'year'   => 'EXTRACT(YEAR FROM created_on)',
+      'month'  => 'EXTRACT(MONTH FROM created_on)'])
       ->group('yyyymm')
       ->order('yyyymm DESC')
     ;
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
     $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $result = $db->fetchAll($select);
+    $result    = $db->fetchAll($select);
     $db->setFetchMode($fetchMode);
 
     return $result;

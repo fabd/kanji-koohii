@@ -61,8 +61,8 @@ class VocabPicksPeer extends coreDatabaseTable
   public static function getUserPicks($userId, $ucsId)
   {
     $select = self::getInstance()->select('dictid')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
-    $db = self::getInstance()->getDb();
-    $items = $db->fetchCol($select);
+    $db     = self::getInstance()->getDb();
+    $items  = $db->fetchCol($select);
 
     return $items ?: [];
   }

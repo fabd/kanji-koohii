@@ -17,7 +17,7 @@ class StopForumSpam
   public const SFS_ACTIVITYLOG = 'sfs_activitylog';
 
   // how many days back to keep in the logs
-  public const SFS_BLOCKEDIPS_TRIM = 7;
+  public const SFS_BLOCKEDIPS_TRIM  = 7;
   public const SFS_ACTIVITYLOG_TRIM = 5;
 
   // checkRegistration() return value: the IP is listed as a spammer
@@ -44,7 +44,7 @@ class StopForumSpam
    */
   public static function getRemoteAddress()
   {
-    $pathArray = sfContext::getInstance()->getRequest()->getPathInfoArray();
+    $pathArray   = sfContext::getInstance()->getRequest()->getPathInfoArray();
     $remote_addr = $pathArray['REMOTE_ADDR'];
 
     $ip = strtolower($remote_addr);
@@ -105,12 +105,12 @@ class StopForumSpam
     // timeout for fsock/curl connection to StopForumSpam, in seconds
     $timeout = 5;
 
-    $ip = self::getRemoteAddress();
+    $ip  = self::getRemoteAddress();
     $now = time();
 
     // &unix for unix time
     $url = 'http://www.stopforumspam.com/api?ip='.$ip.'&email='.urlencode($email).'&f=serial&unix';
-    $r = GetRemoteFile::fetchUrl($url, $timeout);
+    $r   = GetRemoteFile::fetchUrl($url, $timeout);
 
     if (null === $r || null === ($r = unserialize($r['content']))) {
       // let's log so that we know if something's not working as expected
@@ -168,7 +168,7 @@ class StopForumSpam
     $logtime = time();
 
     $this->db->insert(self::SFS_ACTIVITYLOG, [
-      'ip' => $ip,
+      'ip'      => $ip,
       'logtime' => time(),
       'logdesc' => $description,
     ]);
@@ -180,9 +180,9 @@ class StopForumSpam
     $logtime = time();
 
     $this->db->insert(self::SFS_BLOCKEDIPS, [
-      'ip' => $ip,
-      'username' => $username,
-      'email' => $email,
+      'ip'        => $ip,
+      'username'  => $username,
+      'email'     => $email,
       'bot_visit' => $bot_visit,
       'frequency' => $frequency,
     ]);

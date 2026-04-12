@@ -32,8 +32,8 @@ class uiSelectionState
     $pattern = '/^sel_'.$paramName.'-([0-9]{1,10})$/';
     foreach ($params as $param => $value) {
       if (preg_match($pattern, $param, $matches)) {
-        $id = $matches[1];
-        $state = $value;
+        $id               = $matches[1];
+        $state            = $value;
         $this->items[$id] = $state === '1';
       }
     }
@@ -58,8 +58,8 @@ class uiSelectionState
 
   public function getInputTag($paramName, $id)
   {
-    $state = $this->getState($id);
-    $value = $state === true ? '1' : '0';
+    $state     = $this->getState($id);
+    $value     = $state === true ? '1' : '0';
     $inputName = 'sel_'.$paramName.'-'.$id;
 
     return input_hidden_tag($inputName, $value);
@@ -67,7 +67,7 @@ class uiSelectionState
 
   public function getCheckboxTag($paramName, $id)
   {
-    $state = $this->getState($id);
+    $state     = $this->getState($id);
     $inputName = 'chk_'.$paramName.'-'.$id;
 
     // todo: FIXME!!! problème avec le helper?

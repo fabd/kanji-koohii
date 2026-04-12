@@ -26,7 +26,7 @@ class coreValidator
   public function __construct($validatorName)
   {
     $configuration = $this->loadConfigurationFile($validatorName);
-    $this->fields = $configuration['fields'];
+    $this->fields  = $configuration['fields'];
   }
 
   /**
@@ -42,7 +42,7 @@ class coreValidator
   protected function loadConfigurationFile($validatorName)
   {
     $moduleName = sfContext::getInstance()->getModuleName();
-    $file = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/validate/'.$validatorName.'.php';
+    $file       = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/validate/'.$validatorName.'.php';
 
     if (!is_readable($file)) {
       throw new sfException(sprintf('Can not read validator file %s in module %s', $validatorName, $moduleName));
@@ -134,7 +134,7 @@ class coreValidator
         if (method_exists($this, $ruleName)) {
           // save value to compare to for CompareValidator
           if ($ruleName === 'CompareValidator') {
-            $compareField = $ruleParams['check'];
+            $compareField              = $ruleParams['check'];
             $ruleParams['check_value'] = $this->getParameter($data, $compareField);
           }
 
@@ -329,7 +329,7 @@ class coreValidator
    */
   protected function RegexValidator($value, $params)
   {
-    $match = $this->getParameter($params, 'match');
+    $match   = $this->getParameter($params, 'match');
     $pattern = $this->getParameter($params, 'pattern');
 
     if (($match && !preg_match($pattern, $value))

@@ -35,7 +35,7 @@ class CJK
    * "CJK unifed ideographs - Common and Uncommon Kanji".
    */
   public const CJK_UNIFIED_BEGIN = 0x4E00;
-  public const CJK_UNIFIED_END = 0x9FAF;
+  public const CJK_UNIFIED_END   = 0x9FAF;
 
   /**
    * Regular expression to match the range above. All characters within this
@@ -63,7 +63,7 @@ class CJK
   public static function normalizeFullWidthRomanCharacters($u8s)
   {
     $aUCS = utf8::toUnicode($u8s);
-    for ($i = 0; $i < count($aUCS); ++$i) {
+    for ($i = 0; $i < count($aUCS); $i++) {
       if ($aUCS[$i] >= 0xFF10 && $aUCS[$i] <= 0xFF5A) {
         $aUCS[$i] = $aUCS[$i] - 0xFF00 + 32;
       }
@@ -154,7 +154,7 @@ class CJK
   public static function toHiraganaUCS(array $ua_text)
   {
     // Hiragana ( 3040 - 309f)  Katakana ( 30a0 - 30ff)
-    for ($i = 0; $i < count($ua_text); ++$i) {
+    for ($i = 0; $i < count($ua_text); $i++) {
       if ($ua_text[$i] >= 0x30A0 && $ua_text[$i] <= 0x30FF) {
         $ua_text[$i] -= 0x0060;
       }
@@ -177,7 +177,7 @@ class CJK
   public static function toKatakanaUCS(array $ua_text)
   {
     // Hiragana ( 3040 - 309f)  Katakana ( 30a0 - 30ff)
-    for ($i = 0; $i < count($ua_text); ++$i) {
+    for ($i = 0; $i < count($ua_text); $i++) {
       if ($ua_text[$i] >= 0x3040 && $ua_text[$i] <= 0x309F) {
         $ua_text[$i] += 0x0060;
       }

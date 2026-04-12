@@ -28,14 +28,14 @@ abstract class coreDatabase
    * FETCH_OBJ:   return data in an array of objects. The default class is the PHP built-in
    *              class stdClass. Columns of the result set are available as public properties of the object.
    */
-  public const FETCH_NUM = 1;
+  public const FETCH_NUM   = 1;
   public const FETCH_ASSOC = 2;
-  public const FETCH_OBJ = 3;
+  public const FETCH_OBJ   = 3;
 
   protected ?sfParameterHolder $parameterHolder = null;
-  protected mixed $connection = null;
-  protected ?coreDatabaseProfiler $profiler = null;
-  protected int $fetchMode = self::FETCH_ASSOC;
+  protected mixed $connection                   = null;
+  protected ?coreDatabaseProfiler $profiler     = null;
+  protected int $fetchMode                      = self::FETCH_ASSOC;
 
   /**
    * Class constructor.
@@ -393,14 +393,14 @@ class coreDatabaseSelect
    *
    * @see reset()
    */
-  public const COLUMNS = 'columns';
-  public const FROM = 'from';
-  public const JOINS = 'joins';
-  public const WHERE = 'where';
-  public const GROUP = 'group';
-  public const HAVING = 'having';
-  public const ORDER = 'order';
-  public const LIMIT_COUNT = 'limitcount';
+  public const COLUMNS      = 'columns';
+  public const FROM         = 'from';
+  public const JOINS        = 'joins';
+  public const WHERE        = 'where';
+  public const GROUP        = 'group';
+  public const HAVING       = 'having';
+  public const ORDER        = 'order';
+  public const LIMIT_COUNT  = 'limitcount';
   public const LIMIT_OFFSET = 'limitoffset';
 
   /**
@@ -486,11 +486,11 @@ class coreDatabaseSelect
   public function reset($part = null)
   {
     if ($part === null) {
-      $this->parts = [];
+      $this->parts                = [];
       $this->parts[self::COLUMNS] = [];
-      $this->parts[self::JOINS] = [];
-      $this->parts[self::WHERE] = [];
-      $this->parts[self::HAVING] = [];
+      $this->parts[self::JOINS]   = [];
+      $this->parts[self::WHERE]   = [];
+      $this->parts[self::HAVING]  = [];
     } else {
       switch ($part) {
         case self::FROM:
@@ -688,7 +688,7 @@ class coreDatabaseSelect
    */
   public function limit($numrows, $offset = null)
   {
-    $this->parts[self::LIMIT_COUNT] = $numrows;
+    $this->parts[self::LIMIT_COUNT]  = $numrows;
     $this->parts[self::LIMIT_OFFSET] = $offset;
 
     return $this;
@@ -704,7 +704,7 @@ class coreDatabaseSelect
    */
   public function limitPage($pageNum, $rowsPerPage)
   {
-    $this->parts[self::LIMIT_COUNT] = $rowsPerPage;
+    $this->parts[self::LIMIT_COUNT]  = $rowsPerPage;
     $this->parts[self::LIMIT_OFFSET] = $rowsPerPage * $pageNum;
 
     return $this;

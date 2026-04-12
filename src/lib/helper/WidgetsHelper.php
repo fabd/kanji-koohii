@@ -40,7 +40,7 @@ function ui_filter_std($label, $links, $options = [])
   // add the JSFilterStd class to each link, and the 'active' class to the active item
   $active = isset($options['active']) ? (int) $options['active'] : false;
 
-  for ($i = 0; $i < count($links); ++$i) {
+  for ($i = 0; $i < count($links); $i++) {
     $linkOptions = $links[$i][2] ?? [];
 
     $addClasses = 'JSFilterStd';

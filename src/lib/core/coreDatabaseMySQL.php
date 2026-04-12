@@ -12,7 +12,7 @@ class coreDatabaseMySQL extends coreDatabase
   {
     // get parameters
     $database = $this->getParameter('database');
-    $host = $this->getParameter('host', 'localhost');
+    $host     = $this->getParameter('host', 'localhost');
     $password = $this->getParameter('password');
     $username = $this->getParameter('username');
 
@@ -157,7 +157,7 @@ class coreDatabaseMySQL extends coreDatabase
   public function insert($table, $data = [])
   {
     $values = $this->chain($data);
-    $q = "INSERT {$table} SET {$values}";
+    $q      = "INSERT {$table} SET {$values}";
     $result = $this->query($q);
 
     return $result;
@@ -171,7 +171,7 @@ class coreDatabaseMySQL extends coreDatabase
   public function update($table, $data, $where = null, $bindParams = null)
   {
     $values = $this->chain($data);
-    $q = "UPDATE {$table} SET {$values}";
+    $q      = "UPDATE {$table} SET {$values}";
     if ($where !== null) {
       $q .= ' WHERE '.$this->bind($where, $bindParams);
     }
@@ -310,8 +310,8 @@ class coreDatabaseMySQL extends coreDatabase
   {
     $timezone = sfContext::getInstance()->get('auth')->getTimezone();
     $timediff = $timezone - sfConfig::get('app_server_timezone', 0);
-    $hours = floor($timediff);
-    $minutes = ($hours != $timediff) ? '30' : '0';  // some timezones have half-hour precision, convert to minutes
+    $hours    = floor($timediff);
+    $minutes  = ($hours != $timediff) ? '30' : '0';  // some timezones have half-hour precision, convert to minutes
 
     $s = sprintf('ADDDATE(%s, INTERVAL \'%d:%d\' HOUR_MINUTE)', $column, $hours, $minutes);
 
@@ -329,7 +329,7 @@ class coreDatabaseMySQL extends coreDatabase
     echo '<table cellspacing="1" style="border:1px solid #B3DCFF;border-collapse:collapse;">';
     echo '<tr class="head">';
     $numfields = mysqli_num_fields($this->result);
-    $colNames = [];
+    $colNames  = [];
     while ($finfo = mysqli_fetch_field($this->result)) {
       $colNames[] = $finfo->name;
       echo '<th style="border:1px solid #B3DCFF;padding:2px 9px;">'.$finfo->name.'</th>';
@@ -352,12 +352,12 @@ class coreDatabaseMySQL extends coreDatabase
 
     // display table contents
     $emptyCellHtml = '<td bgcolor="#B3DCFF">&nbsp;</td>';
-    $tdBegin = '<td style="background:#DFF1FF;padding:2px 9px;border:1px solid #B3DCFF;">';
-    $tdEnd = '</td>';
+    $tdBegin       = '<td style="background:#DFF1FF;padding:2px 9px;border:1px solid #B3DCFF;">';
+    $tdEnd         = '</td>';
     foreach ($resultset as $rowdata) {
       echo '<tr>';
 
-      for ($i = 0; $i < $numfields; ++$i) {
+      for ($i = 0; $i < $numfields; $i++) {
         $colvalue = gettype($rowdata);
         if (is_array($rowdata)) {
           $colvalue = $rowdata[$i] ?? $rowdata[$colNames[$i]];

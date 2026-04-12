@@ -21,14 +21,14 @@ class MailAbstractMS extends MailAbstract
 
   private const CREDENTIALS_FILE = '__mailersend-api-key.php';
 
-  protected array $recipients = [];
-  protected ?string $fromEmail = null;
-  protected ?string $fromName = null;
+  protected array $recipients     = [];
+  protected ?string $fromEmail    = null;
+  protected ?string $fromName     = null;
   protected ?string $replyToEmail = null;
-  protected ?string $replyToName = null;
-  protected ?string $subject = null;
-  protected ?string $text = null;
-  protected ?string $html = null;
+  protected ?string $replyToName  = null;
+  protected ?string $subject      = null;
+  protected ?string $text         = null;
+  protected ?string $html         = null;
 
   public function __construct() {}
 
@@ -40,7 +40,7 @@ class MailAbstractMS extends MailAbstract
   public function setFrom($email, $name = '')
   {
     $this->fromEmail = $email;
-    $this->fromName = $name;
+    $this->fromName  = $name;
   }
 
   public function addTo($email, $name = '')
@@ -51,7 +51,7 @@ class MailAbstractMS extends MailAbstract
   public function addReplyTo($email, $name = '')
   {
     $this->replyToEmail = $email;
-    $this->replyToName = $name;
+    $this->replyToName  = $name;
   }
 
   public function setSubject($subject)
@@ -62,7 +62,7 @@ class MailAbstractMS extends MailAbstract
   public function send(): bool
   {
     $credentials = $this->getCredentials();
-    $mailersend = new MailerSend(['api_key' => $credentials['apikey']]);
+    $mailersend  = new MailerSend(['api_key' => $credentials['apikey']]);
 
     $params = (new EmailParams())
       ->setFrom($this->fromEmail)

@@ -18,8 +18,8 @@ class phpToolkit
   {
     if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
       $charset = sfConfig::get('sf_charset');
-      $first = mb_substr($string, 0, 1, $charset);
-      $string = mb_strtoupper($first, $charset).mb_substr($string, 1, mb_strlen($string, $charset), $charset);
+      $first   = mb_substr($string, 0, 1, $charset);
+      $string  = mb_strtoupper($first, $charset).mb_substr($string, 1, mb_strlen($string, $charset), $charset);
     } else {
       throw new Exception(__METHOD__.': no mb_substr() support.');
     }

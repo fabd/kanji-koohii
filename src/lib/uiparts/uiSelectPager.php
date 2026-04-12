@@ -40,13 +40,13 @@
  */
 class uiSelectPager
 {
-  public const QUERY_PAGENUM = 'page';
+  public const QUERY_PAGENUM     = 'page';
   public const QUERY_ROWSPERPAGE = 'rows';
 
-  protected $page = 1;
-  protected $maxPerPage = 10;
+  protected $page            = 1;
+  protected $maxPerPage      = 10;
   protected $maxPerPageLinks = [10, 20, 50];
-  protected $nbResults = 0;
+  protected $nbResults       = 0;
   protected $select;
   protected $countQuery;
   protected $db;
@@ -216,7 +216,7 @@ class uiSelectPager
   public function getLinks()
   {
     $num_pages = $this->getNumPages();
-    $cur_page = $this->getPage();
+    $cur_page  = $this->getPage();
 
     $pages = [];
 
@@ -233,7 +233,7 @@ class uiSelectPager
       }
 
       // Don't ask me how the following works. It just does, OK? :-)
-      for ($current = $cur_page - 2, $stop = $cur_page + 3; $current < $stop; ++$current) {
+      for ($current = $cur_page - 2, $stop = $cur_page + 3; $current < $stop; $current++) {
         if ($current < 1 || $current > $num_pages) {
           continue;
         }
@@ -270,7 +270,7 @@ class uiSelectPager
 
     $options = [
       'query_string' => http_build_query(array_merge($this->query_params, [self::QUERY_PAGENUM => $page, self::QUERY_ROWSPERPAGE => $this->getMaxPerPage()])),
-      'class' => 'JSPagerLink',
+      'class'        => 'JSPagerLink',
     ];
 
     return link_to($label, $this->internal_uri, $options);

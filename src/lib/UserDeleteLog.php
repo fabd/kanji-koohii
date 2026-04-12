@@ -29,10 +29,10 @@ class UserDeleteLog
 
     $this->db->insert(self::LOG_TABLE_NAME, [
       // 'created_on' :: DEFAULT CURRENT_TIMESTAMP
-      'userid' => $userid,
+      'userid'   => $userid,
       'username' => $username,
       'joindate' => $joindate,
-      'logdesc' => $description,
+      'logdesc'  => $description,
     ]);
   }
 

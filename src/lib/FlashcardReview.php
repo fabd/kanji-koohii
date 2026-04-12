@@ -198,7 +198,7 @@ class FlashcardReview
     foreach ($items as $answer) {
       assert(is_object($answer));
 
-      $cardId = (int) $answer->id;
+      $cardId     = (int) $answer->id;
       $cardStatus = $this->getCardStatus($cardId);
 
       // Avoid rating a card twice, and mark it as handled for the client.
@@ -243,11 +243,11 @@ class FlashcardReview
   public static function normalizeOldRatings(array $items)
   {
     $oldRatings = [
-      1 => LeitnerSRS::RATE_NO,
-      2 => LeitnerSRS::RATE_YES,
-      3 => LeitnerSRS::RATE_EASY,
-      4 => LeitnerSRS::RATE_DELETE,
-      5 => LeitnerSRS::RATE_SKIP,
+      1   => LeitnerSRS::RATE_NO,
+      2   => LeitnerSRS::RATE_YES,
+      3   => LeitnerSRS::RATE_EASY,
+      4   => LeitnerSRS::RATE_DELETE,
+      5   => LeitnerSRS::RATE_SKIP,
       'h' => LeitnerSRS::RATE_HARD,
     ];
 
@@ -300,8 +300,8 @@ class FlashcardReview
   {
     $answers = $this->getCachedAnswers();
 
-    $fcr_pass = 0;
-    $fcr_fail = 0;
+    $fcr_pass  = 0;
+    $fcr_fail  = 0;
     $fcr_total = 0;
 
     foreach ($answers as $rating) {
@@ -310,7 +310,7 @@ class FlashcardReview
         LeitnerSRS::RATE_YES,
         LeitnerSRS::RATE_EASY,
       ])) {
-        ++$fcr_pass;
+        $fcr_pass++;
       }
 
       if (in_array($rating, [
@@ -320,20 +320,20 @@ class FlashcardReview
         LeitnerSRS::RATE_AGAIN_EASY,
         LeitnerSRS::RATE_NO,
       ])) {
-        ++$fcr_fail;
+        $fcr_fail++;
       }
 
       if (!in_array($rating, [
         LeitnerSRS::RATE_DELETE,
         LeitnerSRS::RATE_SKIP,
       ])) {
-        ++$fcr_total;
+        $fcr_total++;
       }
     }
 
     return [
-      'fcr_pass' => $fcr_pass,
-      'fcr_fail' => $fcr_fail,
+      'fcr_pass'  => $fcr_pass,
+      'fcr_fail'  => $fcr_fail,
       'fcr_total' => $fcr_total,
     ];
   }

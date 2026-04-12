@@ -14,9 +14,9 @@
   <span class="tb">
     <span class="lr"><?php
       foreach ($links as $link) {
-        $name = $link[0];
+        $name         = $link[0];
         $internal_uri = $link[1];
-        $options = $link[2] ?? [];
+        $options      = $link[2] ?? [];
         echo link_to($name, $internal_uri, $options);
       }
 ?></span>

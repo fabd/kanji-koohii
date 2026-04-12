@@ -68,7 +68,7 @@ class DBG
   public static function out()
   {
     $arguments = func_get_args();
-    $message = func_num_args() > 1 ? call_user_func_array('sprintf', $arguments) : $arguments[0];
+    $message   = func_num_args() > 1 ? call_user_func_array('sprintf', $arguments) : $arguments[0];
     trigger_error($message, E_USER_NOTICE);
   }
 
@@ -115,7 +115,7 @@ class DBG
       $user = kk_get_user();
 
       $info = [
-        'attributes' => $user->getAttributeHolder()->getAll(),
+        'attributes'  => $user->getAttributeHolder()->getAll(),
         'credentials' => $user->getCredentials(),
       ];
 
@@ -134,7 +134,7 @@ class DBG
   public static function request(bool $return = false)
   {
     $request = sfContext::getInstance()->getRequest();
-    $out = '<pre>'.print_r($request->getParameterHolder()->getAll(), true).'</pre>';
+    $out     = '<pre>'.print_r($request->getParameterHolder()->getAll(), true).'</pre>';
     if ($return) {
       return $out;
     }

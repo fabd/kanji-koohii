@@ -124,8 +124,8 @@ class coreDatabaseProfiler
       $time = number_format(round(1000000 * $time, 2)).' μs';
     } elseif (round(1000000 * $time, 2) >= 1000 && round(1000000 * $time, 2) < 1000000) {
       $milliseconds = round(1000 * $time, 2);
-      $style = $milliseconds >= 10 ? ' style="color:#f44;"' : '';
-      $time = '<span'.$style.'>'.number_format($milliseconds).' ms</span>';
+      $style        = $milliseconds >= 10 ? ' style="color:#f44;"' : '';
+      $time         = '<span'.$style.'>'.number_format($milliseconds).' ms</span>';
     } else {
       $time = '<span style="color:#f44;">'.round($time, 3).' seconds</span>';
     }
@@ -141,7 +141,7 @@ class coreDatabaseProfilerMySQL extends coreDatabaseProfiler {}
 class coreDatabaseProfilerQuery
 {
   protected $query = '';
-  protected $time = -1;
+  protected $time  = -1;
 
   /**
    * @param string $query The SQL query
@@ -150,7 +150,7 @@ class coreDatabaseProfilerQuery
   public function __construct($query, $time)
   {
     $this->query = $query;
-    $this->time = $time;
+    $this->time  = $time;
   }
 
   public function getTime()

@@ -44,7 +44,7 @@ function decorate_end()
   $decorator_content = ob_get_clean();
 
   $template = sfConfig::get('view.decorator.name').'Decorator.php';
-  $vars = sfConfig::get('view.decorator.vars', []);
+  $vars     = sfConfig::get('view.decorator.vars', []);
 
   // vars for the decorator
   extract($vars, EXTR_REFS);

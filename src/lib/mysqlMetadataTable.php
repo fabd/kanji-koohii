@@ -24,7 +24,7 @@ class mysqlMetadataTable
    */
   public function __construct(coreDatabase $db, $tableName)
   {
-    $this->db = $db;
+    $this->db        = $db;
     $this->tableName = $tableName;
   }
 
@@ -50,7 +50,7 @@ class mysqlMetadataTable
   public function getColumnsInfo()
   {
     if ($this->columns === null) {
-      $fetchMode = $this->db->setFetchMode(coreDatabase::FETCH_OBJ);
+      $fetchMode     = $this->db->setFetchMode(coreDatabase::FETCH_OBJ);
       $this->columns = $this->db->fetchAll('SHOW COLUMNS FROM ?', new coreDbExpr($this->tableName));
       $this->db->setFetchMode($fetchMode);
     }
@@ -145,16 +145,16 @@ class mysqlMetadataTable
    */
   public function parseColumnType($col_type)
   {
-    $matches = [];
+    $matches  = [];
     $typeInfo = [];
 
     if (preg_match('/^(\w+)\(([0-9,]+)\)/', $col_type, $matches)) {
       // echo '<p>'.$col_type;
       // DBG::printr($matches);exit;
-      $typeInfo['type'] = $matches[1];
+      $typeInfo['type']   = $matches[1];
       $typeInfo['length'] = (int) $matches[2];
     } else {
-      $typeInfo['type'] = $col_type;
+      $typeInfo['type']   = $col_type;
       $typeInfo['length'] = null;
     }
 

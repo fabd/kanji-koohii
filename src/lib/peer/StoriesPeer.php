@@ -75,8 +75,8 @@ class StoriesPeer extends coreDatabaseTable
   public static function getStoryId($userId, $ucsId)
   {
     $select = self::getInstance()->select('sid')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId]);
-    $db = self::getInstance()->getDb();
-    $sid = $db->fetchOne($select);
+    $db     = self::getInstance()->getDb();
+    $sid    = $db->fetchOne($select);
 
     return (false === $sid) ? false : (int) $sid;
   }
@@ -112,7 +112,7 @@ class StoriesPeer extends coreDatabaseTable
 
     assert((int) $ucsId >= 0x3000);
 
-    $db = self::getInstance()->getDb();
+    $db      = self::getInstance()->getDb();
     $storyId = $db->fetchOne(
       $db->select('sid')->from('stories')->where('userid = ? AND ucs_id = ?', [$userId, $ucsId])
     );
@@ -300,11 +300,11 @@ class StoriesPeer extends coreDatabaseTable
   {
     assert(is_int($ucsId) && $ucsId >= 0x3000);
 
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     $select = $db->select();
 
     $select->columns([
-      'u.username', 'lastmodified' => 'DATE_FORMAT(ss.updated_on,\'%e-%c-%Y\')',
+      'u.username', 'lastmodified'  => 'DATE_FORMAT(ss.updated_on,\'%e-%c-%Y\')',
       's.text', 'ss.stars', 'kicks' => 'ss.reports',
     ]);
 
@@ -339,7 +339,7 @@ class StoriesPeer extends coreDatabaseTable
 
     // must fetch all here because getFormattedStory() will do more querries
     $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
-    $rows = $db->fetchAll($select);
+    $rows      = $db->fetchAll($select);
     $db->setFetchMode($fetchMode);
 
     $stories = [];
@@ -370,9 +370,9 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getStoriesCounts($userId)
   {
-    $num_stories = new stdClass();
+    $num_stories          = new stdClass();
     $num_stories->private = 0;
-    $num_stories->public = 0;
+    $num_stories->public  = 0;
 
     $db = self::getInstance()->getDb();
 
@@ -400,10 +400,10 @@ class StoriesPeer extends coreDatabaseTable
    */
   public static function getMyStoriesSelect($userId)
   {
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     $select = $db->select()->columns(
       [
-        'seq_nr' => rtkIndex::getSqlCol(), 'kanji', 'story' => 'text', 'public',
+        'seq_nr'         => rtkIndex::getSqlCol(), 'kanji', 'story' => 'text', 'public',
         'stars', 'kicks' => 'reports', 's.updated_on', 'ts_dispdate' => 'UNIX_TIMESTAMP(s.updated_on)',
       ]
     );
@@ -437,7 +437,7 @@ class StoriesPeer extends coreDatabaseTable
       'keyword' => CustkeywordsPeer::coalesceExpr(),
       'public',
       'last_edited' => 's.updated_on',
-      'story' => 'text'])
+      'story'       => 'text'])
       ->from('stories s')
       ->where('s.userid = ?', $userId)
       ->order('framenr', 'ASC')

@@ -80,17 +80,17 @@ class StoriesSharedPeer extends coreDatabaseTable
     }
     if (!$exists && $isPublic) {
       // FIXME for now, maintain votes if made public again
-      $count_votes = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 1', [$userId, $ucsId]);
+      $count_votes   = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 1', [$userId, $ucsId]);
       $count_reports = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 2', [$userId, $ucsId]);
 
       // new public story (or one that was private for a time...)
       $data = [
-        'sid' => $storyId,
-        'ucs_id' => $ucsId,
-        'userid' => $userId,
+        'sid'        => $storyId,
+        'ucs_id'     => $ucsId,
+        'userid'     => $userId,
         'updated_on' => new coreDbExpr('NOW()'),
-        'stars' => $count_votes,
-        'reports' => $count_reports,
+        'stars'      => $count_votes,
+        'reports'    => $count_reports,
       ];
 
       return $inst->insert($data);

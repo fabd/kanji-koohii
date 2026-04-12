@@ -80,7 +80,7 @@ abstract class coreDatabaseTable
   {
     static $instances = [];
     if (!isset($instances[$childclass])) {
-      $instance = new $childclass($childclass);
+      $instance               = new $childclass($childclass);
       $instances[$childclass] = $instance;
     }
 

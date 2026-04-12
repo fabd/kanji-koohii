@@ -80,16 +80,16 @@ class ReviewsPeer extends coreDatabaseTable
     $select = self::filterByUserId($select, $userId);
     $select->query();
 
-    $db = self::getInstance()->getDb();
+    $db  = self::getInstance()->getDb();
     $row = $db->fetch();
 
     if ($row !== false) {
       // FIXME : could use mysqli_options($mysqli, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
-      $row['ucs_id'] = (int) $row['ucs_id'];
-      $row['leitnerbox'] = (int) $row['leitnerbox'];
-      $row['failurecount'] = (int) $row['failurecount'];
-      $row['successcount'] = (int) $row['successcount'];
-      $row['totalreviews'] = (int) $row['totalreviews'];
+      $row['ucs_id']        = (int) $row['ucs_id'];
+      $row['leitnerbox']    = (int) $row['leitnerbox'];
+      $row['failurecount']  = (int) $row['failurecount'];
+      $row['successcount']  = (int) $row['successcount'];
+      $row['totalreviews']  = (int) $row['totalreviews'];
       $row['ts_lastreview'] = (int) $row['ts_lastreview'];
     }
 
@@ -264,8 +264,8 @@ class ReviewsPeer extends coreDatabaseTable
     $user = kk_get_user();
 
     // get array of known kanji as ucs ids (this simple SELECT uses INDEX)
-    $select = self::getInstance()->select()->columns('ucs_id');
-    $select = self::filterByUserId($select, $userId);
+    $select    = self::getInstance()->select()->columns('ucs_id');
+    $select    = self::filterByUserId($select, $userId);
     $ucs_array = self::getInstance()->getDb()->fetchCol($select);
 
     // convert to utf8 string for storage
@@ -281,7 +281,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getTodayCount($userId)
   {
-    $user = kk_get_user();
+    $user   = kk_get_user();
     $select = self::getInstance()->select()->where('lastreview > DATE('.UsersPeer::sqlLocalTime().')');
 
     return self::_getFlashcardCount($userId, $select);
@@ -296,9 +296,9 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getCountExpired($userId)
   {
-    $user = kk_get_user();
+    $user         = kk_get_user();
     $sqlLocalTime = new coreDbExpr(UsersPeer::sqlLocalTime());
-    $select = self::getInstance()->select()->where('totalreviews>0 AND leitnerbox>1  AND expiredate <= ?', $sqlLocalTime);
+    $select       = self::getInstance()->select()->where('totalreviews>0 AND leitnerbox>1  AND expiredate <= ?', $sqlLocalTime);
 
     return self::_getFlashcardCount($userId, $select);
   }
@@ -313,7 +313,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getCountUntested($userId, $filter = '')
   {
-    $user = kk_get_user();
+    $user   = kk_get_user();
     $select = self::getInstance()->select()->where('totalreviews <= 0');
     $select = self::filterByRtk($select, $filter);
 
@@ -337,12 +337,12 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getLeitnerBoxCounts($filter = '')
   {
-    $user = kk_get_user();
+    $user   = kk_get_user();
     $userId = $user->getUserId();
 
     $select = self::getInstance()->select([
-      'box' => 'leitnerbox',
-      'due' => sprintf('(%s >= expiredate)', UsersPeer::sqlLocalTime()),
+      'box'   => 'leitnerbox',
+      'due'   => sprintf('(%s >= expiredate)', UsersPeer::sqlLocalTime()),
       'count' => 'COUNT(*)',
     ])
       ->where('totalreviews > 0')
@@ -351,13 +351,13 @@ class ReviewsPeer extends coreDatabaseTable
 
     $select = self::filterByUserId($select, $userId);
     $select = self::filterByRtk($select, $filter); // FIXME  we don't strictly need sequences JOIN here
-    $rows = self::getInstance()->getDb()->fetchAll($select);
+    $rows   = self::getInstance()->getDb()->fetchAll($select);
 
     // do not assume a fixed box setting, do assume SQL data is not messed up
     $highest_box = count($rows) ? max(array_column($rows, 'box')) : 1;
 
     $boxes = [];
-    for ($i = 0; $i < $highest_box; ++$i) {
+    for ($i = 0; $i < $highest_box; $i++) {
       $boxes[$i] = ['expired_cards' => 0, 'fresh_cards' => 0, 'total_cards' => 0];
     }
 
@@ -372,7 +372,7 @@ class ReviewsPeer extends coreDatabaseTable
     }
 
     // set totals per box
-    for ($i = 0; $i < $highest_box; ++$i) {
+    for ($i = 0; $i < $highest_box; $i++) {
       $boxes[$i]['total_cards'] = $boxes[$i]['expired_cards'] + $boxes[$i]['fresh_cards'];
     }
 
@@ -406,7 +406,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getTotalReviews($userId)
   {
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     $select = $db->select(['count' => 'SUM(totalreviews)'])->from('reviews');
     self::filterByUserId($select, $userId)->query();
     $row = $db->fetchObject();
@@ -424,8 +424,8 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getMostRecentReviewTimeStamp($userId)
   {
-    $select = self::getInstance()->select('MAX(lastreview)');
-    $select = self::filterByUserId($select, $userId);
+    $select        = self::getInstance()->select('MAX(lastreview)');
+    $select        = self::filterByUserId($select, $userId);
     $ts_lastreview = self::getInstance()->getDb()->fetchOne($select);
 
     return !is_null($ts_lastreview) ? $ts_lastreview : false;
@@ -446,8 +446,8 @@ class ReviewsPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select([
       'kanjis.ucs_id', 'seq_nr' => rtkIndex::getSqlCol(), 'failurecount', 'successcount', 'leitnerbox',
-      'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)', 'kanji', 'onyomi', 'strokecount',
-      'tsLastReview' => 'UNIX_TIMESTAMP(lastreview)',
+      'ts_lastreview'           => 'UNIX_TIMESTAMP(lastreview)', 'kanji', 'onyomi', 'strokecount',
+      'tsLastReview'            => 'UNIX_TIMESTAMP(lastreview)',
     ]);
     $select = KanjisPeer::joinLeftUsingUCS($select);
     $select = self::filterByUserId($select, $userId);
@@ -467,8 +467,8 @@ class ReviewsPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select([
       'kanjis.ucs_id', 'kanji', 'seq_nr' => rtkIndex::getSqlCol(),
-      'kanjis.keyword', 'custkeyword' => 'custkeywords.keyword',
-      'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
+      'kanjis.keyword', 'custkeyword'    => 'custkeywords.keyword',
+      'ts_lastreview'                    => 'UNIX_TIMESTAMP(lastreview)',
     ]);
     $select = KanjisPeer::joinLeftUsingUCS($select);
 
@@ -489,7 +489,7 @@ class ReviewsPeer extends coreDatabaseTable
   {
     // the order of columns must match the ExportCSV call in executeExportflashcards() !
     $select = self::getInstance()->select([
-      'seq_nr' => rtkIndex::getSqlCol(), 'kanji',
+      'seq_nr'  => rtkIndex::getSqlCol(), 'kanji',
       'keyword' => CustkeywordsPeer::coalesceExpr(),
       'lastreview', 'expiredate', 'leitnerbox', 'failurecount', 'successcount',
       // vocab added with PR #287 (works because we currently have 1 word per card limit)
@@ -522,8 +522,8 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getFlashcardsForReview($box, $type, $filt, $merge = false)
   {
-    $user = kk_get_user();
-    $userId = $user->getUserId();
+    $user         = kk_get_user();
+    $userId       = $user->getUserId();
     $sqlLocalTime = new coreDbExpr(UsersPeer::sqlLocalTime());
 
     if ($type === 'relearned') {
@@ -546,7 +546,7 @@ class ReviewsPeer extends coreDatabaseTable
         if ($user->getUserSetting('OPT_NO_SHUFFLE')) {
           // do not shuffle new cards, order by sequence number
           $select->columns(['seq_nr' => rtkIndex::getSqlCol()]);
-          $select = KanjisPeer::joinLeftUsingUCS($select);
+          $select   = KanjisPeer::joinLeftUsingUCS($select);
           $order_by = $order_by.', '.rtkIndex::getSqlCol().' ASC';
         } else {
           $order_by = $order_by.', RAND()';
@@ -589,7 +589,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     // DBG::out($select);exit;
 
-    $db = self::getInstance()->getDb();
+    $db  = self::getInstance()->getDb();
     $ids = $db->fetchCol($select);
 
     return array_map('intval', $ids);
@@ -603,9 +603,9 @@ class ReviewsPeer extends coreDatabaseTable
    */
   public static function getDueCardsByDay()
   {
-    $user = kk_get_user();
+    $user          = kk_get_user();
     $exprLocalTime = UsersPeer::sqlLocalTime();
-    $exprDayDiff = 'DATEDIFF(expiredate, '.$exprLocalTime.')';
+    $exprDayDiff   = 'DATEDIFF(expiredate, '.$exprLocalTime.')';
 
     $select = self::getInstance()->select(new coreDbExpr($exprDayDiff))
       ->where('userid = ?', $user->getUserId())
@@ -667,7 +667,7 @@ class ReviewsPeer extends coreDatabaseTable
     $select->columns(['idx' => rtkIndex::getSqlCol()]);
 
     $indices = self::getInstance()->getDb()->fetchCol($select);
-    $count = count($indices);
+    $count   = count($indices);
 
     if (!$count) {
       return 0;
@@ -721,12 +721,12 @@ class ReviewsPeer extends coreDatabaseTable
       // ref
       $lesson = &$lessons[$lessNr];
 
-      ++$lesson->total;
+      $lesson->total++;
 
       if ($row->leitnerbox > 1 && $row->totalreviews > 0) {
-        ++$lesson->pass;
+        $lesson->pass++;
       } elseif ($row->leitnerbox == 1 && $row->totalreviews > 0) {
-        ++$lesson->fail;
+        $lesson->fail++;
       }
     }
 
@@ -774,7 +774,7 @@ class ReviewsPeer extends coreDatabaseTable
         'successcount',
         'failurecount',
         'ts_lastreview' => 'UNIX_TIMESTAMP(lastreview)',
-        'is_learned' => new coreDbExpr('(lk.ucs_id IS NOT NULL)'),
+        'is_learned'    => new coreDbExpr('(lk.ucs_id IS NOT NULL)'),
       ])
     ;
 
@@ -822,8 +822,8 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getNextUnlearnedKanji($userId)
   {
     $tableName = self::getInstance()->getName();
-    $select = self::getInstance()->select($tableName.'.ucs_id');
-    $select = KanjisPeer::joinLeftUsingUCS($select);
+    $select    = self::getInstance()->select($tableName.'.ucs_id');
+    $select    = KanjisPeer::joinLeftUsingUCS($select);
     $select->joinLeftUsing('learnedkanji', 'userid, ucs_id');
     $select = self::filterByUserId($select, $userId);
 
@@ -884,7 +884,7 @@ class ReviewsPeer extends coreDatabaseTable
 
     // clear relearned kanji if successfull answer
     if ($result
-        && ($oData->r === LeitnerSRS::RATE_HARD
+        && ($oData->r    === LeitnerSRS::RATE_HARD
             || $oData->r === LeitnerSRS::RATE_YES
             || $oData->r === LeitnerSRS::RATE_NO
             || $oData->r === LeitnerSRS::RATE_EASY
@@ -936,7 +936,7 @@ class ReviewsPeer extends coreDatabaseTable
       $interval_days = $cardUpdate['interval_days'];
       unset($cardUpdate['interval_days']);
 
-      $user = kk_get_user();
+      $user          = kk_get_user();
       $sqlExpireDate = sprintf('DATE_ADD(%s, INTERVAL %d DAY)', $sqlLocalTime, $interval_days);
 
       $cardUpdate['expiredate'] = new coreDbExpr($sqlExpireDate);
@@ -1042,7 +1042,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   private static function addFlashcards($userId, array $cards)
   {
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
 
     // only lock if necessary
@@ -1089,7 +1089,7 @@ class ReviewsPeer extends coreDatabaseTable
    */
   private static function deleteFlashcards($userId, $cards)
   {
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
 
     // only lock if necessary

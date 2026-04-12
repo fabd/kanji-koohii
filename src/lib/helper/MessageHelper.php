@@ -18,7 +18,7 @@
 function form_errors()
 {
   $request = sfContext::getInstance()->getRequest();
-  $s = '';
+  $s       = '';
   if ($request->hasErrors()) {
     $s = implode("<br/>\n", array_values($request->getErrors()));
     $s = content_tag('p', $s, ['class' => 'ico ico-error']);
@@ -37,7 +37,7 @@ function form_errors()
 function form_confirmations()
 {
   $request = sfContext::getInstance()->getRequest();
-  $s = '';
+  $s       = '';
   if ($request->hasConfirmations()) {
     $s = implode("<br/>\n", array_values($request->getConfirmations()));
     $s = content_tag('p', $s);

@@ -77,8 +77,7 @@ class Command_CLI
   protected $opts;
   protected $formatter;
 
-  public const
-    /*
+  public const /*
      * Used with rtrim() or ltrim() to clean the ends of path names.
      */
     SLASHES_WHITESPACE = " \t\n\r\\/";
@@ -96,10 +95,10 @@ class Command_CLI
 
     // add the help option
     $zend_getopt = array_merge($zend_getopt, [
-      'help|h' => 'Show help',
+      'help|h'    => 'Show help',
       'verbose|v' => 'Verbose mode (show more information)',
-      'app-s' => 'Sets CORE_APP (defaults to "'.DEFAULT_APP.'")',
-      'env-s' => 'Sets CORE_ENVIRONMENT (defaults to "'.DEFAULT_ENV.'")',
+      'app-s'     => 'Sets CORE_APP (defaults to "'.DEFAULT_APP.'")',
+      'env-s'     => 'Sets CORE_ENVIRONMENT (defaults to "'.DEFAULT_ENV.'")',
     ]);
 
     $this->opts = new Zend_Console_Getopt($zend_getopt);
@@ -122,8 +121,8 @@ class Command_CLI
       exit;
     }
 
-    $opt_app = $this->getFlag('app', DEFAULT_APP);
-    $opt_env = $this->getFlag('env', DEFAULT_ENV);
+    $opt_app   = $this->getFlag('app', DEFAULT_APP);
+    $opt_env   = $this->getFlag('env', DEFAULT_ENV);
     $opt_debug = true;
 
     // bootstrap symfony app configuration
@@ -256,7 +255,7 @@ class Command_CLI
    */
   public function echof()
   {
-    $args = func_get_args();
+    $args    = func_get_args();
     $message = call_user_func_array('sprintf', $args)."\n";
     fwrite(STDERR, $message);
   }

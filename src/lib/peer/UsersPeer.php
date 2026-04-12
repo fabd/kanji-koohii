@@ -30,7 +30,7 @@ class UsersPeer extends coreDatabaseTable
    * Credential values as stored in `userlevel`.
    */
   public const USERLEVEL_ADMIN = 9;
-  public const USERLEVEL_USER = 1;
+  public const USERLEVEL_USER  = 1;
 
   /**
    * Get this peer instance to access the base methods.
@@ -58,14 +58,14 @@ class UsersPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select([
       '*',
-      'ts_joindate' => 'UNIX_TIMESTAMP(joindate)',
+      'ts_joindate'  => 'UNIX_TIMESTAMP(joindate)',
       'ts_lastlogin' => 'UNIX_TIMESTAMP(lastlogin)']);
 
     $select->where($criteria.' = ?', $value)
       ->query()
     ;
 
-    $db = self::getInstance()->getDb();
+    $db   = self::getInstance()->getDb();
     $user = $db->fetch();
 
     // normalize integers
@@ -118,7 +118,7 @@ class UsersPeer extends coreDatabaseTable
   public static function getUserId($username)
   {
     $select = self::getInstance()->select('userid')->where('username = ?', $username)->query();
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     if ($row = $db->fetch()) {
       return (int) $row['userid'];
     }
@@ -170,13 +170,13 @@ class UsersPeer extends coreDatabaseTable
    */
   public static function createUser(array $userinfo)
   {
-    $user = kk_get_user();
+    $user            = kk_get_user();
     $hashed_password = $user->getSaltyHashedPassword($userinfo['raw_password']);
 
     $userdata = [
       'username' => $userinfo['username'],
       'password' => $hashed_password,
-      'email' => $userinfo['email'],
+      'email'    => $userinfo['email'],
       'location' => $userinfo['location'],
       'joindate' => new coreDbExpr('NOW()'),
     ];
@@ -213,43 +213,43 @@ class UsersPeer extends coreDatabaseTable
   {
     $db = self::getInstance()->getDb();
 
-    $result = true;
+    $result     = true;
     $deleteStmt = 'DELETE FROM %s WHERE userid = ?';
-    $where = 'userid = ?';
-    $count = [];
+    $where      = 'userid = ?';
+    $count      = [];
 
     // This one can potentially delete 2000+ records at once
-    $table = ReviewsPeer::getInstance()->getName();
-    $stmt = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
-    $result = $result && $stmt->execute([$userid]);
+    $table               = ReviewsPeer::getInstance()->getName();
+    $stmt                = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
+    $result              = $result && $stmt->execute([$userid]);
     $count['flashcards'] = $stmt->rowCount();
 
     // This one also can potentially delete 2000+ rows at once
-    $table = StoriesPeer::getInstance()->getName();
-    $stmt = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
-    $result = $result && $stmt->execute([$userid]);
+    $table            = StoriesPeer::getInstance()->getName();
+    $stmt             = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
+    $result           = $result && $stmt->execute([$userid]);
     $count['stories'] = $stmt->rowCount();
 
     // Custom Keywords
-    $table = CustkeywordsPeer::getInstance()->getName();
-    $stmt = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
-    $result = $result && $stmt->execute([$userid]);
+    $table             = CustkeywordsPeer::getInstance()->getName();
+    $stmt              = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
+    $result            = $result && $stmt->execute([$userid]);
     $count['keywords'] = $stmt->rowCount();
 
     // Other misc linked tables
-    $table = ActiveMembersPeer::getInstance()->getName();
+    $table  = ActiveMembersPeer::getInstance()->getName();
     $result = $result && $db->delete($table, $where, $userid);
-    $table = LearnedKanjiPeer::getinstance()->getname();
+    $table  = LearnedKanjiPeer::getinstance()->getname();
     $result = $result && $db->delete($table, $where, $userid);
-    $table = StoriesSharedPeer::getInstance()->getName();
+    $table  = StoriesSharedPeer::getInstance()->getName();
     $result = $result && $db->delete($table, $where, $userid);
-    $table = StoryVotesPeer::getInstance()->getName();
+    $table  = StoryVotesPeer::getInstance()->getName();
     $result = $result && $db->delete($table, $where, $userid);
-    $table = UsersSettingsPeer::getInstance()->getName();
+    $table  = UsersSettingsPeer::getInstance()->getName();
     $result = $result && $db->delete($table, $where, $userid);
 
     // Delete the user last in case some sql above breaks, user can still sign in
-    $table = UsersPeer::getInstance()->getName();
+    $table  = UsersPeer::getInstance()->getName();
     $result = $result && $db->delete($table, $where, $userid);
 
     if (true !== $result) {
@@ -275,7 +275,7 @@ class UsersPeer extends coreDatabaseTable
   {
     if (isset($columns['raw_password'])) {
       // hash password for database
-      $user = kk_get_user();
+      $user                = kk_get_user();
       $columns['password'] = $user->getSaltyHashedPassword($columns['raw_password']);
       unset($columns['raw_password']);
     }
@@ -319,10 +319,10 @@ class UsersPeer extends coreDatabaseTable
    */
   public static function sqlLocalTime($time = 'NOW()')
   {
-    $user = kk_get_user();
+    $user          = kk_get_user();
     $localTimezone = $user->getUserTimeZone();
-    $timediff = $localTimezone - sfConfig::get('app_server_timezone');
-    $hours = floor($timediff);
+    $timediff      = $localTimezone - sfConfig::get('app_server_timezone');
+    $hours         = floor($timediff);
 
     // some timezones have half-hour precision, convert to minutes
     $minutes = ($hours != $timediff) ? '30' : '0';

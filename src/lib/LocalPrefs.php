@@ -101,7 +101,7 @@ class LocalPrefs
   public function syncRequestParams(string $prefix, array $params)
   {
     $request = sfContext::getInstance()->getRequest();
-    $values = [];
+    $values  = [];
     foreach ($params as $name => $default) {
       $values[$name] = $this->sync($prefix.'.'.$name, $request->getParameter($name), $default);
     }

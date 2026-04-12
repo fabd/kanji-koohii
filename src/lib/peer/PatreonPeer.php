@@ -42,7 +42,7 @@ class PatreonPeer extends coreDatabaseTable
     assert(isset($data['pa_id']));
 
     // update flags
-    $pa_amount_cents = $data['pa_amount_cents'] ?? 0;
+    $pa_amount_cents   = $data['pa_amount_cents'] ?? 0;
     $data['is_active'] = (int) ($pa_amount_cents >= self::PLEDGE_AMOUNT_ACTIVE);
     $data['has_perks'] = (int) ($pa_amount_cents >= self::PLEDGE_AMOUNT_PERKS);
 

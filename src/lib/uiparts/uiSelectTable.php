@@ -23,59 +23,59 @@
 class uiSelectTable
 {
   public const QUERY_SORTCOLUMN = 'sort';
-  public const QUERY_SORTORDER = 'order';
+  public const QUERY_SORTORDER  = 'order';
   public const // separator used to concatenate ids if the primary key use more than one column
     COMPOUNDROWID_SEPARATOR = '-';
   public const // salt used in checksum for row ids
     CHECKSUM_MAGICWORD = 'ErikaSako';
   public const // row ids in post data
-    POSTDATA_ROWIDS = 'rowids';
-  public const POSTDATA_NEW_ROWID = '*';
+    POSTDATA_ROWIDS                   = 'rowids';
+  public const POSTDATA_NEW_ROWID     = '*';
   public const POSTDATA_DELETE_ROWIDS = 'deletedRowIds';
   public const // uiform.js javascript constants must match!
     JSNEWROW_CLASS = 'JsNewRow';
 
   // the binding interface for this table instance
   protected $binding;
-  protected // request parameter holder
-    $request;
+  // request parameter holder
+  protected $request;
   protected $sortOrders = [0 => 'ASC', 1 => 'DESC'];
-  protected // this will hold the configuration data returned by getConfig() as native php objects
-    $columns;
-  protected // fetch results from Select object prepared for getTableBody()
-    $rowdata;
-  protected // each one of those default settings can be overwritten in the config
-    $settings = [
-      'editable' => false,
+  // this will hold the configuration data returned by getConfig() as native php objects
+  protected $columns;
+  // fetch results from Select object prepared for getTableBody()
+  protected $rowdata;
+  // each one of those default settings can be overwritten in the config
+  protected $settings = [
+    'editable' => false,
 
-      // show the delete icon in each row
-      'deleteicon' => false,
+    // show the delete icon in each row
+    'deleteicon' => false,
 
-      // add a checkbox to each row for multiple selection
-      'rowselection' => false,
+    // add a checkbox to each row for multiple selection
+    'rowselection' => false,
 
-      // default sort column (null will be set to first defined column)
-      'sortColumn' => null,
+    // default sort column (null will be set to first defined column)
+    'sortColumn' => null,
 
-      // use a secondary sort to solve duplicate entries when paging results
-      'sortColumnTwo' => null,
+    // use a secondary sort to solve duplicate entries when paging results
+    'sortColumnTwo' => null,
 
-      // default sort order
-      'sortOrder' => 0,
+    // default sort order
+    'sortOrder' => 0,
 
-      // primary key(s) must always be set in config data
-      'primaryKey' => null,
+    // primary key(s) must always be set in config data
+    'primaryKey' => null,
 
-      // "module/action" part of ajax url for sorting & updates, @see ajaxFrontController
-      'ajaxAction' => null,
-    ];
-  protected // flag set to true when ready to render
-    $processed = false;
+    // "module/action" part of ajax url for sorting & updates, @see ajaxFrontController
+    'ajaxAction' => null,
+  ];
+  // flag set to true when ready to render
+  protected $processed = false;
 
   public function __construct(uiSelectTableBinding $binding, coreDatabaseSelect $select, sfParameterHolder $request)
   {
     $this->binding = $binding;
-    $this->select = $select;
+    $this->select  = $select;
     $this->request = $request;
 
     $this->bind($this->binding);
@@ -177,7 +177,7 @@ class uiSelectTable
     }
 
     if (count($this->badRows) > 0) {
-      $this->errors = '1';
+      $this->errors          = '1';
       $this->errorMessages[] = 'Some validation errors occured. Please correct the data and then save again.';
     } else {
       $this->errors = '0';
@@ -261,7 +261,7 @@ class uiSelectTable
 
       // generate rows of data from columns of data
       $postRows = [];
-      for ($i = 0; $i < $num_rows; ++$i) {
+      for ($i = 0; $i < $num_rows; $i++) {
         $row = [];
         foreach ($postCols as $bind => &$colData) {
           $row[$bind] = $colData[$i];
@@ -273,11 +273,11 @@ class uiSelectTable
     // add the primary key values back into the row data
     // for new rows, generate incremental primary keys
     $primaryKeys = (array) $this->settings['primaryKey'];
-    for ($i = 0; $i < $num_rows; ++$i) {
+    for ($i = 0; $i < $num_rows; $i++) {
       $bNewRow = $rowids[$i] === self::POSTDATA_NEW_ROWID;
       if (!$bNewRow) {
         $rowid_parts = explode(self::COMPOUNDROWID_SEPARATOR, $rowids[$i]);
-        $ipk = 1;
+        $ipk         = 1;
       } else {
         // fixme : generated values should never match possible key values
         // space character is unlikely to appear in primary key values
@@ -291,10 +291,10 @@ class uiSelectTable
 
     // save post data with unique row key, to post back invalid fields
     $this->postRowData = [];
-    $this->newRows = [];
-    for ($i = 0; $i < $num_rows; ++$i) {
-      $rowData = $postRows[$i];
-      $row_id = $this->getRowId($rowData);
+    $this->newRows     = [];
+    for ($i = 0; $i < $num_rows; $i++) {
+      $rowData                    = $postRows[$i];
+      $row_id                     = $this->getRowId($rowData);
       $this->postRowData[$row_id] = $rowData;
 
       // remember new rows
@@ -431,22 +431,22 @@ EOD;
    */
   private function getColHead($colDef)
   {
-    $width = !empty($colDef->width) ? 'width="'.$colDef->width.'%"' : '';
-    $href = '#';
+    $width   = !empty($colDef->width) ? 'width="'.$colDef->width.'%"' : '';
+    $href    = '#';
     $caption = $colDef->caption;
 
     // set css hook for sort order icon
     if ($this->sortColumn == $colDef->colSort) {
-      $classAttr = 'class="JSTableSort active sort'.strtolower($this->sortOrders[$this->sortOrder]).'" ';
+      $classAttr  = 'class="JSTableSort active sort'.strtolower($this->sortOrders[$this->sortOrder]).'" ';
       $next_order = $this->sortOrder ? 0 : 1;
     } elseif (isset($colDef->colSort)) {
-      $classAttr = 'class="JSTableSort sort" ';
+      $classAttr  = 'class="JSTableSort sort" ';
       $next_order = 0;
     }
 
     if (isset($colDef->colSort)) {
       // sortable
-      $href = $this->getColQuery($colDef->colSort, $next_order);
+      $href    = $this->getColQuery($colDef->colSort, $next_order);
       $colHtml = "\t\t\t<th {$width}><a {$classAttr}href=\"{$href}\">{$caption}</a></th>\n";
     } else {
       // not sortable
@@ -489,7 +489,7 @@ EOD;
 
     // make the row template
     if ($this->settings['editable']) {
-      $oRow = new uiSelectTableRow();
+      $oRow     = new uiSelectTableRow();
       $rowsHtml = $rowsHtml.$this->getTableRow($oRow, true);
     }
 
@@ -504,7 +504,7 @@ EOD;
     // add new rows that couldn't be saved
     foreach ($this->newRows as $row_id => $v) {
       $oRow = new uiSelectTableRow();
-      $row = $this->postRowData[$row_id];
+      $row  = $this->postRowData[$row_id];
       $oRow->setRowData($row);
       $rowsHtml = $rowsHtml.$this->getTableRow($oRow, false);
     }
@@ -521,7 +521,7 @@ EOD;
    */
   private function getRowId($rowData)
   {
-    $primaryKeys = (array) $this->settings['primaryKey'];
+    $primaryKeys   = (array) $this->settings['primaryKey'];
     $primaryKeyIds = [];
     foreach ($primaryKeys as $column) {
       if (!array_key_exists($column, $rowData)) {
@@ -532,7 +532,7 @@ EOD;
       $primaryKeyIds[] = $rowData[$column];
     }
     $sPrimaryKeys = implode('', $primaryKeyIds);
-    $checksum = md5(self::CHECKSUM_MAGICWORD.$sPrimaryKeys);
+    $checksum     = md5(self::CHECKSUM_MAGICWORD.$sPrimaryKeys);
     array_unshift($primaryKeyIds, $checksum);
 
     return implode(self::COMPOUNDROWID_SEPARATOR, $primaryKeyIds);
@@ -582,7 +582,7 @@ EOD;
 EOD;
     } elseif (isset($this->newRows[$row_id])) {
       $newRowClass = self::JSNEWROW_CLASS;
-      $rowHtml = $rowHtml.<<<EOD
+      $rowHtml     = $rowHtml.<<<EOD
     <tr class="{$newRowClass}">
 
 EOD;
@@ -591,7 +591,7 @@ EOD;
         $oRow->addCssClass(['validation-error']);
       }
       $options = [
-        'id' => $this->getRowId($rowData),
+        'id'    => $this->getRowId($rowData),
         'class' => implode(',', $oRow->getCssClass()),
       ];
       $rowHtml = $rowHtml.tag('tr', $options, true);

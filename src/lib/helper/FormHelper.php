@@ -187,7 +187,7 @@ function options_for_select($options = [], $selected = '', $html_options = [])
 function select_tag($name, $option_tags = null, $options = [])
 {
   $options = _convert_options($options);
-  $id = $name;
+  $id      = $name;
   if (isset($options['multiple']) && $options['multiple'] && substr($name, -2) !== '[]') {
     $name .= '[]';
   }
@@ -212,7 +212,7 @@ function input_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $value = $_request->getParameter($name, $value);
+  $value    = $_request->getParameter($name, $value);
 
   // add css class
   $options = _parse_attributes($options);
@@ -237,7 +237,7 @@ function input_hidden_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $value = $_request->getParameter($name, $value);
+  $value    = $_request->getParameter($name, $value);
 
   $options = array_merge(['type' => 'hidden', 'name' => $name, 'value' => $value], _parse_attributes($options));
 
@@ -258,7 +258,7 @@ function input_password_tag($name, $value = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $value = $_request->getParameter($name, $value);
+  $value    = $_request->getParameter($name, $value);
 
   // add css class
   $options = _parse_attributes($options);
@@ -283,7 +283,7 @@ function textarea_tag($name, $content = null, $options = [])
 {
   // repopulate with get/post data
   $_request = sfContext::getInstance()->getRequest();
-  $content = $_request->getParameter($name, $content);
+  $content  = $_request->getParameter($name, $content);
 
   // add css class
   $options = _parse_attributes($options);
@@ -452,7 +452,7 @@ function _repopulate_input_cb($name, $value, $checked)
     }
   } else {
     // checkboxes with unique names (no []) repopulate but can not use default values
-    $value = $_request->getParameter($name);
+    $value   = $_request->getParameter($name);
     $checked = $value !== null && !empty($value);
   }
 

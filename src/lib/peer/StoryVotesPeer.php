@@ -62,13 +62,13 @@ class StoryVotesPeer extends coreDatabaseTable
 
     // new vote or toggle vote
     if ($isUpvote) {
-      $cur_vote = ($lastvote == 1) ? 0 : 1;
+      $cur_vote  = ($lastvote == 1) ? 0 : 1;
       $UPD_STARS = ['+1', '-1', '+1'];
       $UPD_KICKS = ['+0', '+0', '-1'];
       $stars_inc = $UPD_STARS[$lastvote];
       $kicks_inc = $UPD_KICKS[$lastvote];
     } else {
-      $cur_vote = ($lastvote == 2) ? 0 : 2;
+      $cur_vote  = ($lastvote == 2) ? 0 : 2;
       $UPD_STARS = ['+0', '-1', '+0'];
       $UPD_KICKS = ['+1', '+1', '-1'];
       $stars_inc = $UPD_STARS[$lastvote];
@@ -88,20 +88,20 @@ class StoryVotesPeer extends coreDatabaseTable
 
     StoriesSharedPeer::getInstance()->update(
       [
-        'stars' => new coreDbExpr('stars'.$stars_inc),
-        'reports' => new coreDbExpr('reports'.$kicks_inc),
+        'stars'      => new coreDbExpr('stars'.$stars_inc),
+        'reports'    => new coreDbExpr('reports'.$kicks_inc),
         'updated_on' => new coreDbExpr('updated_on')],
       'ucs_id = ? AND userid = ?',
       [$ucsId, $authorId]
     );
 
     $response = [
-      'uid' => $authorId,
-      'sid' => $ucsId,
-      'vote' => $cur_vote,
+      'uid'      => $authorId,
+      'sid'      => $ucsId,
+      'vote'     => $cur_vote,
       'lastvote' => $lastvote,
-      'stars' => $stars_inc,
-      'kicks' => $kicks_inc,
+      'stars'    => $stars_inc,
+      'kicks'    => $kicks_inc,
     ];
 
     // FIXME for now always invalidate the cache
@@ -127,7 +127,7 @@ class StoryVotesPeer extends coreDatabaseTable
   protected static function getLastVote($authorId, $ucsId, $userId)
   {
     $select = self::getInstance()->select('vote')->where('authorid = ? AND ucs_id = ? AND userid = ?', [$authorId, $ucsId, $userId]);
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     $result = $db->fetchOne($select);
 
     return intval($result);

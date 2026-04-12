@@ -26,8 +26,8 @@ class GetRemoteFile
    */
   public static function fetchUrl($url, $timeout, $head_only = false, $max_redirects = 10)
   {
-    $result = null;
-    $parsed_url = parse_url($url);
+    $result          = null;
+    $parsed_url      = parse_url($url);
     $allow_url_fopen = strtolower(@ini_get('allow_url_fopen'));
 
     // Quite unlikely that this will be allowed on a shared host, but it can't hurt
@@ -48,7 +48,7 @@ class GetRemoteFile
       curl_setopt($ch, CURLOPT_USERAGENT, 'PunBB');
 
       // Grab the page
-      $content = @curl_exec($ch);
+      $content       = @curl_exec($ch);
       $responce_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
       curl_close($ch);
 
@@ -73,7 +73,7 @@ class GetRemoteFile
           $result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", trim($content)));
         } else {
           preg_match('#HTTP/1.[01] 200 OK#', $content, $match, PREG_OFFSET_CAPTURE);
-          $last_content = substr($content, $match[0][1]);
+          $last_content  = substr($content, $match[0][1]);
           $content_start = strpos($last_content, "\r\n\r\n");
           if ($content_start !== false) {
             $result['headers'] = explode("\r\n", str_replace("\r\n\r\n", "\r\n", substr($content, 0, $match[0][1] + $content_start)));
@@ -141,10 +141,10 @@ class GetRemoteFile
         $stream_context = stream_context_create(
           [
             'http' => [
-              'method' => $head_only ? 'HEAD' : 'GET',
-              'user_agent' => 'PunBB',
+              'method'        => $head_only ? 'HEAD' : 'GET',
+              'user_agent'    => 'PunBB',
               'max_redirects' => $max_redirects + 1,	// PHP >=5.1.0 only
-              'timeout' => $timeout,	// PHP >=5.2.1 only
+              'timeout'       => $timeout,	// PHP >=5.2.1 only
             ],
           ]
         );

@@ -62,7 +62,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   public static function getCoalescedKeyword($userId, $ucsId)
   {
-    $db = self::getInstance()->getDb();
+    $db     = self::getInstance()->getDb();
     $select = $db->select()->from(KanjisPeer::getInstance()->getName());
     $select = self::addCustomKeywordJoin($select, $userId);
     $select->where('kanjis.ucs_id = ?', $ucsId);
@@ -148,7 +148,7 @@ class CustkeywordsPeer extends coreDatabaseTable
   public static function importList($userId, array $keywords, $request)
   {
     $tableName = self::getInstance()->getName();
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
 
     // obtenir l'id des custom keywords existants, comme clé dans un array assoc.
     $colUcs = $db->fetchCol(self::getInstance()->select('ucs_id')->where('userid = ?', $userId));
@@ -271,7 +271,7 @@ class CustkeywordsPeer extends coreDatabaseTable
    */
   public static function coalesceExpr()
   {
-    $kanjisTable = KanjisPeer::getInstance()->getName();
+    $kanjisTable       = KanjisPeer::getInstance()->getName();
     $custkeywordsTable = self::getInstance()->getName();
 
     return "COALESCE({$custkeywordsTable}.keyword, {$kanjisTable}.keyword)";
@@ -298,7 +298,7 @@ class CustkeywordsPeer extends coreDatabaseTable
     //  use to compare against any kanjis rows and not just custkeywords rows.
 
     $kanjis = KanjisPeer::getInstance()->getName();
-    $expr = "{$kanjis}.ucs_id = {$custkeywords}.ucs_id AND {$custkeywords}.userid = {$userId}";
+    $expr   = "{$kanjis}.ucs_id = {$custkeywords}.ucs_id AND {$custkeywords}.userid = {$userId}";
     $select->joinLeft($custkeywords, $expr);
 
     return $select;

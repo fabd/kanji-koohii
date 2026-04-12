@@ -112,16 +112,16 @@ class ManageSfCache
       }
       $file_count = iterator_count($iterator);
     } else {
-      $size = filesize($real_path);
+      $size       = filesize($real_path);
       $file_count = 1;
     }
 
     // echo sprintf('%d size, %d files', $size, iterator_count($iterator));
 
     return [
-      'real_path' => $real_path,
+      'real_path'  => $real_path,
       'file_count' => $file_count,
-      'size_kb' => (int) ($size / 1024),
+      'size_kb'    => (int) ($size / 1024),
     ];
   }
 
@@ -152,7 +152,7 @@ class ManageSfCache
    */
   public static function getHostName()
   {
-    $context = sfContext::getInstance();
+    $context  = sfContext::getInstance();
     $hostName = $context->getRequest()->getHost();
 
     $hostName = preg_replace('/[^a-z0-9\*]/i', '_', $hostName);

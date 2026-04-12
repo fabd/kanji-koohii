@@ -1,5 +1,4 @@
 <?php
-
 /**
  * JsTron is a simple wrapper around JSON messages.
  * See TRON (tron.ts) for the front end side.
@@ -44,7 +43,7 @@ class JsTron implements JsonSerializable
   /**
    * Keep in sync with client-side tron.ts.
    */
-  public const STATUS_FAILED = 0;
+  public const STATUS_FAILED  = 0;
   public const STATUS_SUCCESS = 1;
 
   private int $status;
@@ -137,8 +136,9 @@ class JsTron implements JsonSerializable
   public function jsonSerialize(): mixed
   {
     $obj = new stdClass();
+
     $obj->status = $this->getStatus();
-    $obj->props = $this->getAll();
+    $obj->props  = $this->getAll();
 
     if ($this->html !== null) {
       $obj->html = $this->getHtml();

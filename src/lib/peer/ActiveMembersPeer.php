@@ -67,11 +67,11 @@ class ActiveMembersPeer extends coreDatabaseTable
    */
   public static function updateFlashcardInfo($userId)
   {
-    $fc_count = ReviewsPeer::getFlashcardCount($userId);
+    $fc_count      = ReviewsPeer::getFlashcardCount($userId);
     $lastreview_ts = ReviewsPeer::getMostRecentReviewTimeStamp($userId);
 
     $data = [
-      'fc_count' => $fc_count,
+      'fc_count'    => $fc_count,
       'last_review' => $lastreview_ts,
     ];
 

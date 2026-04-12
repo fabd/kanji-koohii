@@ -88,10 +88,10 @@ class ExportCSV
   public function export(array $tabularData, $columns, $options = [])
   {
     $this->options = array_merge([
-      'col_escape' => null,
+      'col_escape'      => null,
       'output_callback' => null,
-      'column_heads' => true,
-      'row_callback' => null,
+      'column_heads'    => true,
+      'row_callback'    => null,
     ], $options);
 
     // sanity check
@@ -106,7 +106,7 @@ class ExportCSV
       echo implode(self::FIELDS_TERMINATED_BY, $columns).self::LINE_TERMINATED_BY;
     }
 
-    $numCols = count($columns);
+    $numCols   = count($columns);
     $escapeCol = $options['col_escape'];
     // DBG::printr($tabularData);exit;
 
@@ -118,7 +118,7 @@ class ExportCSV
         $rowData = call_user_func($row_callback, $rowData);
       }
 
-      for ($i = 0; $i < $numCols; ++$i) {
+      for ($i = 0; $i < $numCols; $i++) {
         $t = $rowData[$i];
 
         // escape string values

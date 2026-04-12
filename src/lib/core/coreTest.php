@@ -42,9 +42,9 @@ class coreTest
   public function ok($exp, $message = '')
   {
     if ($result = (bool) $exp) {
-      ++$this->passed;
+      $this->passed++;
     } else {
-      ++$this->failed;
+      $this->failed++;
     }
 
     // print

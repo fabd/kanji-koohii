@@ -52,7 +52,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
   public static function addKanji($userId, $ucsId)
   {
     assert((int) $ucsId > 0x3000);
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
 
     return $db->query(
@@ -64,14 +64,14 @@ class LearnedKanjiPeer extends coreDatabaseTable
   public static function addKanjis($userId, array $ucsIds)
   {
     $placeholders = join(',', array_fill(0, count($ucsIds), '(?, ?)'));
-    $values = [];
+    $values       = [];
     foreach ($ucsIds as $ucsId) {
       assert((int) $ucsId > 0x3000);
       array_push($values, $userId);
       array_push($values, $ucsId);
     }
 
-    $db = self::getInstance()->getDb();
+    $db        = self::getInstance()->getDb();
     $tableName = self::getInstance()->getName();
 
     return $db->query(
@@ -150,7 +150,7 @@ class LearnedKanjiPeer extends coreDatabaseTable
   {
     $select = self::getInstance()->select('ucs_id');
     $select->where('userid = ?', $userId);
-    $db = self::getInstance()->getDb();
+    $db  = self::getInstance()->getDb();
     $ids = $db->fetchCol($select);
 
     return array_map('intval', $ids);

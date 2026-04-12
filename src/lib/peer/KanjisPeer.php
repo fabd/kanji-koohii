@@ -54,11 +54,11 @@ class KanjisPeer extends coreDatabaseTable
 
     if (false !== ($o = $db->fetchObject())) {
       // set "framenum" to the selected Heisig index, otherwise UCS
-      $heisigNr = rtkIndex::getIndexForChar($o->kanji);
+      $heisigNr    = rtkIndex::getIndexForChar($o->kanji);
       $o->framenum = $heisigNr !== false ? $heisigNr : $ucsId;
 
       // normalize some values for cleaner code downhill
-      $o->ucs_id = (int) $o->ucs_id;
+      $o->ucs_id      = (int) $o->ucs_id;
       $o->strokecount = (int) $o->strokecount;
     }
 
@@ -146,7 +146,7 @@ class KanjisPeer extends coreDatabaseTable
     }
 
     // coalesce keyword with user's custom keyword
-    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $custKeyword       = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
     $cardData->keyword = $custKeyword ?? $cardData->keyword;
 
     // API ONLY (apps) : api doesn't return the kanji as a character
@@ -170,8 +170,8 @@ class KanjisPeer extends coreDatabaseTable
   {
     $sequences = rtkIndex::getSequences();
     $indexCols = ['index1' => $sequences[0]['sqlCol'], 'index2' => $sequences[1]['sqlCol']];
-    $select = self::getInstance()->select($indexCols)->where('ucs_id = ?', $ucsId)->query();
-    $db = self::getInstance()->getDb();
+    $select    = self::getInstance()->select($indexCols)->where('ucs_id = ?', $ucsId)->query();
+    $db        = self::getInstance()->getDb();
     if ($row = $db->fetch()) {
       // anything above 0x3400 is an UCS code, below should be known Heisig indexes
       return ($row['index1'] > 0 && $row['index1'] < rtkIndex::RTK_UCS)

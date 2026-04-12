@@ -33,8 +33,8 @@ class Vite
       throw new sfException(sprintf('Error parsing JSON in "%s".', $file));
     }
 
-    $css = [];
-    $deps = [];
+    $css      = [];
+    $deps     = [];
     $imported = [];
 
     $parseChunk = function ($chunkInfo) use (&$parseChunk, &$manifest, &$deps, &$css, &$imported) {
@@ -44,7 +44,7 @@ class Vite
         // avoid circular references between imports
         if (!isset($imported[$importChunk])) {
           $imported[$importChunk] = true;
-          $deps[] = $parseChunk($manifest[$importChunk]);
+          $deps[]                 = $parseChunk($manifest[$importChunk]);
         }
       }
 
@@ -72,14 +72,14 @@ class Vite
         //   'deps' => $deps,
         //   'css' => $manifest[$chunk]['css'],
         // ];
-        $css = [];
-        $deps = [];
-        $imported = [];
-        $entryFile = $parseChunk($chunkInfo);
+        $css                 = [];
+        $deps                = [];
+        $imported            = [];
+        $entryFile           = $parseChunk($chunkInfo);
         $entries[$chunkName] = [
           'file' => $entryFile,
           'deps' => array_unique($deps),
-          'css' => array_unique($css),
+          'css'  => array_unique($css),
         ];
       }
     }

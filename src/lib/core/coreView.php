@@ -31,7 +31,7 @@ class coreView
   protected $parameterHolder;
   protected $moduleName = '';
   protected $actionName = '';
-  protected $viewName = '';
+  protected $viewName   = '';
   protected $directory;
   protected $template;
   protected $extension = '.php';
@@ -94,14 +94,14 @@ class coreView
 
     $this->moduleName = $moduleName;
     $this->actionName = $actionName;
-    $this->viewName = $viewName;
+    $this->viewName   = $viewName;
 
     if ($moduleName === 'global') {
       $this->directory = sfConfig::get('sf_app_template_dir');
-      $this->template = $actionName.'View'.$this->getExtension();
+      $this->template  = $actionName.'View'.$this->getExtension();
     } else {
       $this->directory = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/templates';
-      $this->template = $actionName.$viewName.'View'.$this->getExtension();
+      $this->template  = $actionName.$viewName.'View'.$this->getExtension();
     }
 
     if (!is_readable($this->directory.'/'.$this->template)) {
@@ -123,10 +123,10 @@ class coreView
   {
     if (sfToolkit::isPathAbsolute($template)) {
       $this->directory = dirname($template);
-      $this->template = basename($template);
+      $this->template  = basename($template);
     } else {
       $this->directory = sfConfig::get('sf_app_module_dir').'/'.$this->context->getModuleName().'/templates';
-      $this->template = $template;
+      $this->template  = $template;
     }
 
     if (!is_readable($this->directory.'/'.$this->template)) {
@@ -225,10 +225,10 @@ class coreView
     extract($this->parameterHolder->getAll(), EXTR_REFS);
 
     // template shortcuts
-    $_context = sfContext::getInstance();
-    $_request = $_context->getRequest();
-    $_params = $_request->getParameterHolder();
-    $_user = kk_get_user();
+    $_context  = sfContext::getInstance();
+    $_request  = $_context->getRequest();
+    $_params   = $_request->getParameterHolder();
+    $_user     = kk_get_user();
     $_response = $_context->getResponse();
 
     // render

@@ -43,7 +43,7 @@ class CacheDictLookupPeer extends coreDatabaseTable
    */
   public static function getDictResultsFor(array $ucsIds)
   {
-    $where = implode(',', $ucsIds);
+    $where  = implode(',', $ucsIds);
     $select = self::getInstance()->select('json')->where('ucs_id IN (?)', $where);
     $select->query();
 

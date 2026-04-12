@@ -1,16 +1,14 @@
 <?php
 /**
  * Simple helper class returning timezones (part of the user account settings).
- * 
+ *
  * The current timezone list comes from the PunBB package.
  *
- * 
  * @author  Fabrice Denis
  */
-
 class rtkTimezones
 {
-  static $timezones = [
+  public static $timezones = [
     '-12' => '-12',
     '-11' => '-11',
     '-10' => '-10',
@@ -47,6 +45,6 @@ class rtkTimezones
     '11.5' => '+11.5',
     '12' => '+12',
     '13' => '+13',
-    '14' => '+14'
+    '14' => '+14',
   ];
 }

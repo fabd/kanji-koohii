@@ -104,19 +104,18 @@ class rtkIndex
 
   /**
    * Multiple indexes (FIXME move to rtk/rthSequences class ?).
-   *
    */
   // sqlId of sequence set for new users by default
   public const NEWUSER_SEQUENCE = 1;
 
   /**
    * Kanji Squences (aka RTK Old and New Editions).
-   * 
-   *   classId    is a substring that matches the class name 
+   *
+   *   classId    is a substring that matches the class name
    *              (ie. `rtkIndexOldEdition.php` )
    *   sqlId      is the integer value used in the user setting `opt_sequence`
    *   sqlCol     is the matching col for that index in the kanjis table
-   * 
+   *
    * NOTE!  Keep in sync with /modules/account/templates/sequenceView
    */
   public static $rtk_sequences = [
@@ -221,7 +220,7 @@ class rtkIndex
   // {
   //   mb_internal_encoding('utf-8');
   //   $kanjis = mb_str_split(self::inst()->kanjis);
-    
+
   //   $map = [];
   //   $seqNr = 1;
   //   foreach ($kanjis as $char)
@@ -319,13 +318,11 @@ class rtkIndex
   {
     $id = (int) $extNr;
 
-    if (self::isValidHeisigIndex($id))
-    {
+    if (self::isValidHeisigIndex($id)) {
       return mb_substr(self::inst()->kanjis, $id - 1, 1, 'utf8');
     }
 
-    if (CJK::isCJKUnifiedUCS($id))
-    {
+    if (CJK::isCJKUnifiedUCS($id)) {
       return utf8::fromUnicode([$id]);
     }
 
@@ -359,32 +356,24 @@ class rtkIndex
    *
    * @return array Array with sequence numbers (ie. Heisig) converted to UCS-2, others unchanged.
    */
-  public static function convertToUCS(int|array $ids)
+  public static function convertToUCS(array|int $ids)
   {
     $ucsids = [];
 
-    if (!is_array($ids))
-    {
+    if (!is_array($ids)) {
       $ids = [$ids];
     }
 
-    for ($i = 0, $n = count($ids); $i < $n; ++$i)
-    {
+    for ($i = 0, $n = count($ids); $i < $n; $i++) {
       $id = $ids[$i];
 
-      if (!self::isExtendedIndex($id))
-      {
-        if (null !== ($c = self::getCharForIndex($id)))
-        {
+      if (!self::isExtendedIndex($id)) {
+        if (null !== ($c = self::getCharForIndex($id))) {
           $ucsids[$i] = utf8::toCodePoint($c);
-        }
-        else
-        {
+        } else {
           throw new sfException(__METHOD__." Invalid frame number ({$id})");
         }
-      }
-      else
-      {
+      } else {
         // assume this is a UCS-2 code, though it may still be an invalid
         // character (not a kanji).
         $ucsids[$i] = $id;
@@ -413,8 +402,7 @@ class rtkIndex
   {
     $lessons = self::getLessons();
     $options = [];
-    foreach ($lessons as $k => $v)
-    {
+    foreach ($lessons as $k => $v) {
       $options[$k] = "Lesson {$k} ({$v} kanji)";
     }
 
@@ -430,15 +418,12 @@ class rtkIndex
    */
   public static function getLessonForIndex(int $seqNr)
   {
-    if (self::isValidHeisigIndex($seqNr))
-    {
+    if (self::isValidHeisigIndex($seqNr)) {
       $lessons = self::getLessons();
       $maxframe = 0;
-      foreach ($lessons as $lesson => $count)
-      {
+      foreach ($lessons as $lesson => $count) {
         $maxframe += $count;
-        if ($seqNr <= $maxframe)
-        {
+        if ($seqNr <= $maxframe) {
           return $lesson;
         }
       }
@@ -461,13 +446,11 @@ class rtkIndex
   {
     $lessons = self::getLessons();
     $indexEnd = 0;
-    foreach ($lessons as $lesson => $count)
-    {
+    foreach ($lessons as $lesson => $count) {
       $indexStart = $indexEnd + 1;
       $indexEnd += $count;
 
-      if ($lesson === $lessonId)
-      {
+      if ($lesson === $lessonId) {
         return [
           'lesson_nr' => $lesson,
           'lesson_from' => $indexStart,
@@ -493,8 +476,7 @@ class rtkIndex
   {
     $framenums = range($from, $to);
 
-    if ($shuffle)
-    {
+    if ($shuffle) {
       shuffle($framenums);
     }
 

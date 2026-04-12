@@ -1,14 +1,13 @@
 <?php
 /**
- * rtkLocale
- * 
- * Helpers to print formatted dates, 
+ * rtkLocale.
+ *
+ * Helpers to print formatted dates,
  */
-
 class rtkLocale
 {
   /**
-   * Date formats for simle_simple_format_date() in SimpleDateHelper
+   * Date formats for simle_simple_format_date() in SimpleDateHelper.
    */
-  const  DATE_SHORT  = 'j M Y';
+  public const DATE_SHORT = 'j M Y';
 }

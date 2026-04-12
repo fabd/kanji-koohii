@@ -102,14 +102,12 @@ function _bs_button_to($label, $internal_uri, array $options = [])
 
   $url = url_for($internal_uri);
 
-  if (isset($html_options['query_string']))
-  {
+  if (isset($html_options['query_string'])) {
     $url = $url.'?'.$html_options['query_string'];
     unset($html_options['query_string']);
   }
 
-  if (isset($html_options['anchor']))
-  {
+  if (isset($html_options['anchor'])) {
     $url = $url.'#'.$html_options['anchor'];
     unset($html_options['anchor']);
   }
@@ -121,27 +119,35 @@ function _bs_button_to($label, $internal_uri, array $options = [])
 }
 
 /**
- * Optional first argument : array $options.
+ * Renders a Bootstrap form group wrapper with optional validation handling.
+ *
+ * This helper wraps given HTML content inside a <div> with the "form-group" class.
+ * Optionally, the first argument can be an associative array of HTML attributes.
+ *
+ * Special option:
+ * - 'validate' (string): Name of the input field to check for validation errors.
+ *   If an error exists in the request, an "invalid-feedback" div is appended.
  *
  * Example:
  *
  *   _bs_form_group(
- *     array('style' => 'color:red'),
+ *     ['style' => 'color:red'],
  *     '<span>Hello</span>',
  *     _bs_input_text('Label', 'name_and_id')
  *   )
  *
- * @param array|string $options Options (array), or html to wrap inside form-group
- * @param string       ...$html One or more html to append inside form-group
+ * @param array|string ...$args Optional first argument is an associative array of HTML attributes.
+ *                              Remaining arguments are strings of HTML content to include inside the div.
+ *
+ * @return string rendered HTML for the form group
+ *
+ * @throws sfException if no arguments are provided
  */
-function _bs_form_group()
+function _bs_form_group(...$args)
 {
-  if (func_num_args() < 1)
-  {
+  if (count($args) < 1) {
     throw new sfException('_bs_form_group() has no content.');
   }
-
-  $args = func_get_args();
   $input_name = false;
   $hasErrorMsg = '';
 
@@ -149,12 +155,10 @@ function _bs_form_group()
   $options = is_array($args[0]) ? array_shift($args) : [];
 
   // add Bootstrap 'has-error' class
-  if (false !== ($input_name = $options['validate'] ?? false))
-  {
+  if (false !== ($input_name = $options['validate'] ?? false)) {
     unset($options['validate']);
     $request = sfContext::getInstance()->getRequest();
-    if ($request->hasError($input_name))
-    {
+    if ($request->hasError($input_name)) {
       $hasErrorMsg = '<div class="invalid-feedback">^ '.$request->getError($input_name).'</div>';
     }
   }
@@ -173,13 +177,11 @@ function _bs_input($type, $name, $options = [])
 {
   $html = [];
 
-  if (null !== ($label = _get_option($options, 'label')))
-  {
+  if (null !== ($label = _get_option($options, 'label'))) {
     $html[] = "\n  ".label_for($name /* id */, $label, ['class' => 'form-label']);
   }
 
-  if (null !== ($optional = _get_option($options, 'optional')))
-  {
+  if (null !== ($optional = _get_option($options, 'optional'))) {
     $html[] = '<span class="form-optional">(optional)</span>';
   }
 
@@ -190,26 +192,18 @@ function _bs_input($type, $name, $options = [])
   $options['id'] = get_id_from_name($name);
 
   if ($type === 'text'
-      || $type === 'email' /* skip the annoying browser-based email checking */)
-  {
+      || $type === 'email' /* skip the annoying browser-based email checking */) {
     $html[] = "\n  ".input_tag($name, '', $options);
-  }
-  elseif ($type === 'password')
-  {
+  } elseif ($type === 'password') {
     $html[] = "\n  ".input_password_tag($name, null, $options);
-  }
-  elseif ($type === 'textarea')
-  {
+  } elseif ($type === 'textarea') {
     $html[] = "\n  ".textarea_tag($name, null, $options);
-  }
-  else
-  {
+  } else {
     throw new sfException('Unsupported input type in _bs_input()');
   }
 
   // help text
-  if (null !== ($helptext = _get_option($options, 'helptext')))
-  {
+  if (null !== ($helptext = _get_option($options, 'helptext'))) {
     $html[] = "\n  ".'<span class="form-text">'.$helptext.'</span>';
   }
 
@@ -231,15 +225,13 @@ function _bs_input($type, $name, $options = [])
 function _bs_input_checkbox($name, $options = [])
 {
   // we want a wrapping label here
-  if (null !== ($label = _get_option($options, 'label')))
-  {
+  if (null !== ($label = _get_option($options, 'label'))) {
     $html[] = "\n  <label>";
   }
 
   $html[] = checkbox_tag($name, '1', false, $options)."<span>{$label}</span>";
 
-  if (null !== $label)
-  {
+  if (null !== $label) {
     $html[] = "</label>\n";
   }
 
@@ -279,8 +271,7 @@ function _bs_submit_tag($label, $options = [])
 {
   // default to adding `success` style - unless a button class is used
   $classnames = $options['class'] ?? '';
-  if (false === strstr($classnames, 'ko-Btn'))
-  {
+  if (false === strstr($classnames, 'ko-Btn')) {
     $options['class'] = merge_html_classes($options['class'] ?? [], ['ko-Btn', 'ko-Btn--success']);
   }
 
@@ -298,8 +289,7 @@ function koohii_onload_slot()
 
 function koohii_onload_slots_out()
 {
-  if ($s = get_slot('koohii_onload_js'))
-  {
+  if ($s = get_slot('koohii_onload_js')) {
     echo "<script>\n",
     '/* Koohii onload slot */ ',
     "window.addEventListener('DOMContentLoaded',function(){\n", $s, "});</script>\n";
@@ -323,21 +313,16 @@ define('KK_GLOBALS', 'kk.globals');
 function kk_globals_put($key, $value = null)
 {
   $kk_globals = sfConfig::get(KK_GLOBALS);
-  if (null === $kk_globals)
-  {
+  if (null === $kk_globals) {
     $kk_globals = new sfParameterHolder();
     sfConfig::set(KK_GLOBALS, $kk_globals);
   }
 
-  if (is_array($key))
-  {
-    foreach ($key as $name => $value)
-    {
+  if (is_array($key)) {
+    foreach ($key as $name => $value) {
       $kk_globals->set($name, $value);
     }
-  }
-  else
-  {
+  } else {
     $kk_globals->set($key, $value);
   }
 }
@@ -349,13 +334,11 @@ function kk_globals_out()
 {
   kk_globals_put('BASE_URL', url_for('@homepage', true));
 
-  if (null !== ($kk_globals = sfConfig::get(KK_GLOBALS)))
-  {
+  if (null !== ($kk_globals = sfConfig::get(KK_GLOBALS))) {
     $values = json_encode($kk_globals->getAll());
 
     $lines = [];
-    foreach ($kk_globals->getAll() as $name => $value)
-    {
+    foreach ($kk_globals->getAll() as $name => $value) {
       $lines[] = "KK.{$name} = ".json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).';';
     }
 
@@ -380,13 +363,10 @@ function include_fontawesome()
   // echo '<link href="/fonts/fa5pro/css/all-but-duo.min.css" rel="stylesheet">';
   // return;
 
-  if (KK_ENV_FORK)
-  {
+  if (KK_ENV_FORK) {
     // use the free, CDN version
     echo '<link href="https://use.fontawesome.com/releases/v7.2.0/css/all.css" rel="stylesheet">';
-  }
-  else
-  {
+  } else {
     // use the self hosted subset version (only the icons we need)
     echo '<link href="/fonts/fa5sub/css/all.min.css" rel="stylesheet">';
   }
@@ -420,18 +400,15 @@ function url_for_review(array $queryParams)
  */
 function merge_html_classes($classnames, $tokens)
 {
-  if (empty($tokens))
-  {
+  if (empty($tokens)) {
     return $classnames;
   }
 
-  if (is_string($classnames))
-  {
+  if (is_string($classnames)) {
     $classnames = preg_split('/\s+/', $classnames);
   }
 
-  if (!is_array($tokens))
-  {
+  if (!is_array($tokens)) {
     $tokens = [$tokens];
   }
 

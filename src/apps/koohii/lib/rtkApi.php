@@ -4,28 +4,27 @@
  *
  * Helpers:
  *   isApiModule()
- * 
- * 
+ *
  * @author     Fabrice Denis
  */
-
 class rtkApi
 {
-  const API_REVIEW_FETCH_LIMIT = 10;
+  public const API_REVIEW_FETCH_LIMIT = 10;
 
-  const API_REVIEW_SYNC_LIMIT  = 50;
+  public const API_REVIEW_SYNC_LIMIT = 50;
 
-  const API_DEBUG_SQL = false;
+  public const API_DEBUG_SQL = false;
 
   /**
    * Checks whether the current request is an API method.
-   * 
-   * @return  bool    True if current action is within API module.
+   *
+   * @return bool true if current action is within API module
    */
   public static function isApiModule()
   {
     $moduleName = sfContext::getInstance()->getModuleName();
-    return ('api' === $moduleName);
+
+    return 'api' === $moduleName;
   }
 
   public static function getApiBaseUrl()
@@ -41,26 +40,26 @@ class rtkApi
 
   public static function curlJson($url, $jsonData)
   {
-    //Initiate cURL.
+    // Initiate cURL.
     $ch = curl_init($url);
 
-    //Encode the array into JSON.
+    // Encode the array into JSON.
     $jsonDataEncoded = json_encode($jsonData);
-     
-    //Tell cURL that we want to send a POST request.
+
+    // Tell cURL that we want to send a POST request.
     curl_setopt($ch, CURLOPT_POST, 1);
-     
-    //Attach our encoded JSON string to the POST fields.
+
+    // Attach our encoded JSON string to the POST fields.
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-     
-    //Set the content type to application/json
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']); 
-     
+
+    // Set the content type to application/json
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-    //Execute the request
+    // Execute the request
     $result = curl_exec($ch);
-   
+
     return $result;
   }
 }

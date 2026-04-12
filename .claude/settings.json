@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dcweb *)",
+      "Bash(npm run *)",
+      "Bash(git * main)",
+      "Bash(* --version)",
+      "Bash(* --help *)"
+    ],
+    "deny": [],
+    "ask": [
+      "Bash(git push *)"
+    ]
+  }
+}

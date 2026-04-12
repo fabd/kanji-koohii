@@ -46,7 +46,7 @@ class SitenewsPeer extends coreDatabaseTable
    * @param int   $id    Id of post
    * @param mixed $brief
    *
-   * @return object Single  formatted post, or false if Id is not found
+   * @return false|object Single formatted post, or false if Id is not found
    */
   public static function getPostById($id, $brief = false)
   {
@@ -97,8 +97,7 @@ class SitenewsPeer extends coreDatabaseTable
   /**
    * Return most recent posts, with 'brief' on.
    *
-   * @param  integer[Optional]  Max number of posts to return
-   * @param mixed $max
+   * @param int $max Max number of posts to return
    *
    * @return array<object> Formatted posts
    */
@@ -168,6 +167,7 @@ class SitenewsPeer extends coreDatabaseTable
     if ($pos = strpos($text, '<more>')) {
       if ($brief) {
         $text = substr($text, 0, $pos);
+
         $text .= link_to('Continued&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>', 'news/detail?id='.$msg_id, ['class' => 'readmore']);
       } else {
         $text = preg_replace('/(\r\n?)*<more>(\r\n?)*/', '<p>', $text);
@@ -187,9 +187,8 @@ class SitenewsPeer extends coreDatabaseTable
   /**
    * Format the text in array of post(s) fetched from database.
    *
-   * @param  array<object>  Array of posts
-   * @param  bool        See formatPost()
-   * @param mixed $brief
+   * @param array<object> $posts Array of posts
+   * @param bool          $brief See formatPost()
    *
    * @return array<object> Array of posts
    */

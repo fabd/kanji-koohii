@@ -29,7 +29,7 @@ class VocabPicksPeer extends coreDatabaseTable
   {
     assert($dictId > 0);
     if ($dictId <= 0) {
-      return;
+      return false;
     }
 
     $data = ['dictid' => $dictId];

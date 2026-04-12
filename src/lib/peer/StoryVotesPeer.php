@@ -48,7 +48,7 @@ class StoryVotesPeer extends coreDatabaseTable
    * @param int $ucsId    UCS-2 code (character !!!)
    * @param int $isUpvote true for star, false for report
    *
-   * @return object Object for JSON response
+   * @return array Array for JSON response
    */
   public static function voteStory($userId, $authorId, $ucsId, $isUpvote)
   {

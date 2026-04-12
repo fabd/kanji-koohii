@@ -113,7 +113,7 @@ class UsersPeer extends coreDatabaseTable
    *
    * @param mixed $username
    *
-   * @return int User id or false
+   * @return false|int User id or false
    */
   public static function getUserId($username)
   {
@@ -207,7 +207,7 @@ class UsersPeer extends coreDatabaseTable
    *
    * @param int $userid
    *
-   * @return mixed Returns an assoc.array with some info (see above), FALSE on failure
+   * @return array Returns an assoc.array with some info (see above), FALSE on failure
    */
   public static function deleteUser($userid)
   {
@@ -221,7 +221,7 @@ class UsersPeer extends coreDatabaseTable
     // This one can potentially delete 2000+ records at once
     $table               = ReviewsPeer::getInstance()->getName();
     $stmt                = new coreDatabaseStatementMySQL($db, sprintf($deleteStmt, $table));
-    $result              = $result && $stmt->execute([$userid]);
+    $result              = $stmt->execute([$userid]);
     $count['flashcards'] = $stmt->rowCount();
 
     // This one also can potentially delete 2000+ rows at once
@@ -256,7 +256,7 @@ class UsersPeer extends coreDatabaseTable
       throw new sfException("An error occured while deleting user id {$userid}");
     }
 
-    return ($result === false) ? false : $count;
+    return $count;
   }
 
   /**
@@ -286,10 +286,8 @@ class UsersPeer extends coreDatabaseTable
   /**
    * Returns number of registrations by given IP in last N hours interval.
    *
-   * @param   string  Unpacked ip
-   * @param   int     Interval to check in hours
-   * @param mixed $regip
-   * @param mixed $since_hours
+   * @param string $regip       Unpacked ip
+   * @param int    $since_hours Interval to check in hours
    */
   public static function getRegistrationCount($regip, $since_hours)
   {

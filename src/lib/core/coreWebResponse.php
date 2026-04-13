@@ -17,7 +17,7 @@ class coreWebResponse extends sfWebResponse
   public const VITE_SERVER = 'http://localhost:5173/';
   public const VITE_CLIENT = '@vite/client';
 
-  public const USE_DEV_SERVER = true;
+  public static bool $USE_DEV_SERVER = true;
 
   public function addViteEntries()
   {
@@ -34,7 +34,7 @@ class coreWebResponse extends sfWebResponse
 
     $isLandingPage = $request->getParameter('isLandingPage');
 
-    if (KK_ENV_DEV && self::USE_DEV_SERVER && false === $viteClientLoaded) {
+    if (KK_ENV_DEV && self::$USE_DEV_SERVER) {
       $this->addViteClient();
       $viteClientLoaded = true;
     }
@@ -75,7 +75,7 @@ class coreWebResponse extends sfWebResponse
   public function addViteEntry($entryFile, string $position = '')
   {
     // with Vite's dev server, just import the entry file(s) which also include the CSS
-    if (KK_ENV_DEV && self::USE_DEV_SERVER) {
+    if (KK_ENV_DEV && self::$USE_DEV_SERVER) {
       $this->addJavascript(self::VITE_SERVER.$entryFile, $position, self::SCRIPT_TYPE_MODULE);
 
       return;

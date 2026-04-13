@@ -6,7 +6,7 @@
 class coreDatabaseProfiler
 {
   protected $log;
-  protected $totalElapsed = 0;
+  protected float $totalElapsed = 0;
 
   public function __construct()
   {
@@ -23,7 +23,7 @@ class coreDatabaseProfiler
   // abstract function getQueryProfiles();
 
   /**
-   * @return int the total time spent running SQL queries (milliseconds)
+   * @return float the total time spent running SQL queries (seconds)
    */
   public function getQueryTime()
   {
@@ -67,9 +67,10 @@ class coreDatabaseProfiler
   /**
    * Time how long it takes for a particular piece of code to run.
    *
-   * @return float The time taken
+   * Returns null when called the first time (starts the timer).
+   * Returns elapsed time in seconds when called the second time.
    */
-  public function getExecutionTime()
+  public function getExecutionTime(): ?float
   {
     static $time_start;
 
@@ -79,7 +80,7 @@ class coreDatabaseProfiler
     if (!$time_start) {
       $time_start = $time;
 
-      return;
+      return null;
     }
 
     // Timer has run, return execution time
@@ -99,7 +100,7 @@ class coreDatabaseProfiler
   {
     $query .= ';';
 
-    $time = $this->getExecutionTime();
+    $time = $this->getExecutionTime() ?? 0.0;
     $this->totalElapsed += $time;
 
     $profile = new coreDatabaseProfilerQuery($query, $time);
@@ -110,19 +111,20 @@ class coreDatabaseProfiler
   /**
    * Format a decimal number in to microseconds, milliseconds, or seconds.
    *
-   * @param int $time The time in microseconds
+   * @param float $time The time in seconds
    *
-   * @return string The friendly time duration
+   * @return string formatted time duration (optionally surrounded by <span>)
    */
-  public function format_time_duration($time)
+  public function format_time_duration(float $time): string
   {
-    if (!is_numeric($time)) {
-      return '(na)';
-    }
+    $microseconds = round(1000000 * $time, 2);
 
-    if (round(1000000 * $time, 2) < 1000) {
-      $time = number_format(round(1000000 * $time, 2)).' μs';
-    } elseif (round(1000000 * $time, 2) >= 1000 && round(1000000 * $time, 2) < 1000000) {
+    // is microseconds < 1000 (less than 1 ms) ?
+    if ($microseconds < 1000) {
+      $time = number_format($microseconds).' μs';
+    }
+    // >= 1ms < 1s
+    elseif ($microseconds >= 1000 && $microseconds < 1000000) {
       $milliseconds = round(1000 * $time, 2);
       $style        = $milliseconds >= 10 ? ' style="color:#f44;"' : '';
       $time         = '<span'.$style.'>'.number_format($milliseconds).' ms</span>';

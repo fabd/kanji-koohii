@@ -1,4 +1,5 @@
 <?php
+
 /**
  * get_remote_file() function from PunBB1.3.
  *
@@ -22,7 +23,7 @@ class GetRemoteFile
    * @param mixed $head_only
    * @param mixed $max_redirects
    *
-   * @return array
+   * @return array<string, mixed>|null
    */
   public static function fetchUrl($url, $timeout, $head_only = false, $max_redirects = 10)
   {
@@ -135,24 +136,18 @@ class GetRemoteFile
     }
     // Last case scenario, we use file_get_contents provided allow_url_fopen is enabled (any non 200 response results in a failure)
     elseif (in_array($allow_url_fopen, ['on', 'true', '1'])) {
-      // PHP5's version of file_get_contents() supports stream options
-      if (version_compare(PHP_VERSION, '5.0.0', '>=')) {
-        // Setup a stream context
-        $stream_context = stream_context_create(
-          [
-            'http' => [
-              'method'        => $head_only ? 'HEAD' : 'GET',
-              'user_agent'    => 'PunBB',
-              'max_redirects' => $max_redirects + 1,	// PHP >=5.1.0 only
-              'timeout'       => $timeout,	// PHP >=5.2.1 only
-            ],
-          ]
-        );
+      $stream_context = stream_context_create(
+        [
+          'http' => [
+            'method'        => $head_only ? 'HEAD' : 'GET',
+            'user_agent'    => 'PunBB',
+            'max_redirects' => $max_redirects + 1,
+            'timeout'       => $timeout,
+          ],
+        ]
+      );
 
-        $content = @file_get_contents($url, false, $stream_context);
-      } else {
-        $content = @file_get_contents($url);
-      }
+      $content = @file_get_contents($url, false, $stream_context);
 
       // Did we get anything?
       if ($content !== false) {

@@ -29,7 +29,7 @@ class coreDatabaseMySQL extends coreDatabase
     }
 
     // select our database
-    if (false === $this->connection || (null !== $database && !@$this->connection->select_db($database))) {
+    if (false === $this->connection || !@$this->connection->select_db($database)) {
       // can't select the database
       throw new sfException(sprintf('Failed to connect MySQLDatabase "%s".', $database));
     }
@@ -64,7 +64,7 @@ class coreDatabaseMySQL extends coreDatabase
       $this->profiler->logQuery((string) $sql);
     }
 
-    return $this->result !== false;
+    return true;
   }
 
   public function num_rows()
@@ -301,8 +301,7 @@ class coreDatabaseMySQL extends coreDatabase
    * of the user's timezone (assuming the user set the timezone properly).
    * (the user's timezone range is -12...+14)
    *
-   * @param string  If set,
-   * @param mixed $column
+   * @param string $column
    *
    * @todo  Move to RevTK extension of core class
    */
@@ -321,7 +320,7 @@ class coreDatabaseMySQL extends coreDatabase
   /**
    * Echoes a resultset in html table.
    *
-   * @param object $resultset
+   * @param mixed $resultset
    */
   public function dumpResultSet($resultset)
   {
@@ -382,12 +381,7 @@ class coreDatabaseMySQL extends coreDatabase
  */
 class coreDatabaseStatementMySQL extends coreDatabaseStatement
 {
-  /**
-   * The mysqli_stmt object.
-   *
-   * @var mysqli_stmt
-   */
-  protected $_stmt;
+  protected ?mysqli_stmt $_stmt = null;
 
   /**
    * @throws sfException
@@ -396,11 +390,13 @@ class coreDatabaseStatementMySQL extends coreDatabaseStatement
   {
     $mysqli = $this->_adapter->getConnection();
 
-    $this->_stmt = $mysqli->prepare($sql);
+    $stmt = $mysqli->prepare($sql);
 
-    if ($this->_stmt === false || $mysqli->errno) {
+    if ($stmt === false || $mysqli->errno) {
       throw new sfException('Mysqli prepare error: '.$mysqli->error);
     }
+
+    $this->_stmt = $stmt;
   }
 
   /**
@@ -449,10 +445,10 @@ class coreDatabaseStatementMySQL extends coreDatabaseStatement
    *
    * @return int the number of rows affected
    */
-  public function rowCount()
+  public function rowCount(): int
   {
     if (!$this->_adapter) {
-      return false;
+      return 0;
     }
     $mysqli = $this->_adapter->getConnection();
 

@@ -152,9 +152,10 @@ class ManageSfCache
    */
   public static function getHostName()
   {
-    $context  = sfContext::getInstance();
-    $hostName = $context->getRequest()->getHost();
+    /** @var sfWebRequest */
+    $request  = sfContext::getInstance()->getRequest();
 
+    $hostName = $request->getHost();
     $hostName = preg_replace('/[^a-z0-9\*]/i', '_', $hostName);
     $hostName = preg_replace('/_+/', '_', $hostName);
 

@@ -12,6 +12,8 @@ class UserDeleteLog
   // name of the log table
   public const LOG_TABLE_NAME = 'log_user_delete';
 
+  protected coreDatabaseMySQL $db;
+
   public function __construct()
   {
     $this->db = kk_get_database();
@@ -24,8 +26,6 @@ class UserDeleteLog
   {
     // trim the table while we're here
     $this->trim();
-
-    $logtime = time();
 
     $this->db->insert(self::LOG_TABLE_NAME, [
       // 'created_on' :: DEFAULT CURRENT_TIMESTAMP

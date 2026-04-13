@@ -26,6 +26,8 @@ class StopForumSpam
   // checkRegistration() return value: a connection timeout occured while connecting to third party
   public const SFS_CR_TIMEOUT = -2;
 
+  protected coreDatabaseMySQL $db;
+
   public function __construct()
   {
     $this->db = kk_get_database();
@@ -44,7 +46,9 @@ class StopForumSpam
    */
   public static function getRemoteAddress()
   {
-    $pathArray   = sfContext::getInstance()->getRequest()->getPathInfoArray();
+    /** @var sfWebRequest $request */
+    $request     = sfContext::getInstance()->getRequest();
+    $pathArray   = $request->getPathInfoArray();
     $remote_addr = $pathArray['REMOTE_ADDR'];
 
     $ip = strtolower($remote_addr);
@@ -160,6 +164,8 @@ class StopForumSpam
       }
       */
     }
+
+    return 0;
   }
 
   // keep a log of misc. actions or errors to help improve or find issues

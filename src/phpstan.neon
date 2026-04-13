@@ -14,6 +14,7 @@ parameters:
         # for the kk_get_*() global stubs that fix types
         - apps/koohii/config/koohiiConfiguration.class.php
         - vendor/friendsofsymfony1/symfony1/lib/helper/UrlHelper.php
+        - vendor/friendsofsymfony1/symfony1/lib/helper/TagHelper.php
     dynamicConstantNames:
         # defined in koohiiConfiguration, not visible to PHPStan statically
         - KK_ENV_DEV

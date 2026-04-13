@@ -36,7 +36,7 @@ alias phpcs='tools/php-cs-fixer/vendor/bin/php-cs-fixer'
 #
 #   Install : https://psysh.org/
 #
-alias psysh='./psysh'
+alias psysh='./tools/psysh'
 
 # --------------------------------------------------------------------
 # Symfony 

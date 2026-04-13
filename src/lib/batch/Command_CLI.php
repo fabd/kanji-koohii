@@ -18,36 +18,38 @@
  *   - Fixes CGI compatibility issues if cgi/fcgi detected.
  *
  * Constructor:
- *   Pass an array of options as for Zend_Console_Getopt constructor.
+ *   Pass an array of options using Zend_Console_Getopt-compatible format strings:
+ *
+ *   'flag|f=s'   required string value + short alias
+ *   'flag|f-s'   optional string value + short alias
+ *   'flag|f=i'   required integer + short alias
+ *   'flag|f'     boolean flag + short alias
+ *   'flag=s'     required string, no short alias
+ *   'flag-s'     optional string, no short alias
+ *   'flag'       boolean flag (boolean: 1 when present, null when absent)
+ *   'f'          flag, short alias
  *
  * These options are automatically supported:
- *   -v --v            Verbose mode
+ *   -v --verbose      Verbose mode
  *   -h --help         Show help
  *
  * These options change the application environment:
- *   --app <app>       Sets application (changes the settings file, defaults to "revtk")
- *   --env <env>       Sets environment (changes the environment, defaults to "dev")
+ *   --app <app>       Sets the Symfony app (changes the settings file)
+ *   --env <env>       Sets the Symfony environment, defaults to "dev"
  *
  * Methods:
- *   __construct(array $zend_getopt)   Override this and call parent::__construct()
+ *   __construct(array $options)   Override this and call parent::__construct()
  *
  *   getFlag($name, $default = null)   Returns option value, or default or NULL
- *                                     (specified flag without parameter is TRUE, unspecified is NULL or default value)
+ *                                     (specified flag without parameter is 1, unspecified is NULL or default value)
  *
  *   echof($message[, args])           Output sprintf style message
  *   verbose($message[, args])         Output sprintf style message only in verbose mode (-v|--verbose)
  *   throwError($message[, args])      Output sprintf style message to STDERR and exit
  *
- * Zend_Console_GetOpt ($this->opts):
- *
- *   ->getOption()    Returns value, true if specified without parameter, null if not provided.
- *
- *
  *
  * Utility methods:
  *   getRelativePathFrom($path, $base)
- *
- * @see     http://framework.zend.com/manual/1.12/en/zend.console.getopt.rules.html
  *
  * @author  Fabrice Denis
  */
@@ -58,65 +60,68 @@ define('SF_LIB_DIR', realpath(dirname(__FILE__).'/../vendor/symfony/lib'));
 define('DEFAULT_APP', 'koohii');
 define('DEFAULT_ENV', 'dev');
 
-// Zend/Console/GetOpt
-define('ZEND_LIB_DIR', SF_ROOT_DIR.'/lib/vendor');
-set_include_path(ZEND_LIB_DIR.PATH_SEPARATOR.get_include_path());
-
-require_once ZEND_LIB_DIR.'/Zend/Loader.php';
-spl_autoload_register(['Zend_Loader', 'autoload']);
+// Composer
+require_once SF_ROOT_DIR.'/vendor/autoload.php';
 
 // Console colour output
 require_once SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php';
 
-// Composer
-require_once SF_ROOT_DIR.'/vendor/autoload.php';
+use GetOpt\ArgumentException;
+use GetOpt\GetOpt;
+use GetOpt\Option;
 
 class Command_CLI
 {
   protected $isVerbose = false;
-  protected $opts;
   protected $formatter;
+  private $opts;
 
-  public const /*
-     * Used with rtrim() or ltrim() to clean the ends of path names.
-     */
-    SLASHES_WHITESPACE = " \t\n\r\\/";
+  /*
+   * Used with rtrim() or ltrim() to clean the ends of path names.
+   */
+  public const SLASHES_WHITESPACE = " \t\n\r\\/";
 
   /**
    * Remember to call parent::__construct() first when you override this!
    *
-   * @param array $zend_getopt Options for Zend_Console_Getopt
+   * Options are specified using Zend_Console_Getopt-compatible format
+   * strings as array keys, with descriptions as array values.
+   * See class docblock for format details.
+   *
+   * @param array $options ['flag|f=s' => 'Description', ...]
    */
-  public function __construct(array $zend_getopt)
+  public function __construct(array $options)
   {
-    $this->fixCGICompatiblity();
-
     $this->formatter = new ConsoleFormatter();
 
-    // add the help option
-    $zend_getopt = array_merge($zend_getopt, [
+    // add the default options
+    $options = array_merge($options, [
       'help|h'    => 'Show help',
       'verbose|v' => 'Verbose mode (show more information)',
       'app-s'     => 'Sets CORE_APP (defaults to "'.DEFAULT_APP.'")',
       'env-s'     => 'Sets CORE_ENVIRONMENT (defaults to "'.DEFAULT_ENV.'")',
     ]);
 
-    $this->opts = new Zend_Console_Getopt($zend_getopt);
+    $optObjects = [];
+    foreach ($options as $key => $desc) {
+      $optObjects[] = $this->parseZendOption($key, $desc);
+    }
 
-    // $db = kk_get_database();
-    // echo get_class($db);exit;
+    $this->opts = new GetOpt($optObjects);
 
     // parse command line
     try {
-      $this->opts->parse();
-    } catch (Zend_Console_Getopt_Exception $e) {
-      echo $e->getUsageMessage();
+      $this->opts->process();
+    } catch (ArgumentException $e) {
+      // eg. "Option 'path' must have a value"
+      echo $e->getMessage()."\n\n";
+      echo $this->opts->getHelpText();
 
       exit;
     }
 
     if ($this->getFlag('help') || !$this->hasArgs()) {
-      echo $this->opts->getUsageMessage();
+      echo $this->opts->getHelpText();
 
       exit;
     }
@@ -130,10 +135,7 @@ class Command_CLI
       require_once SF_ROOT_DIR.'/config/ProjectConfiguration.class.php';
       $configuration = ProjectConfiguration::getApplicationConfiguration($opt_app, $opt_env, $opt_debug);
       sfContext::createInstance($configuration);
-
-      // $statusCode = 1; //$application->run();
     } catch (Exception $e) {
-      // $application->renderException($e);
       echo $e->getMessage()."\n";
       $statusCode = $e->getCode();
 
@@ -146,66 +148,50 @@ class Command_CLI
   }
 
   /**
-   * This should be overridden, included as a template.
+   * Translate a Zend_Console_Getopt-style format string into a
+   * GetOpt Option object.
    *
-   * @param mixed      $name
-   * @param mixed|null $default
+   * Format: 'longname|s{suffix}' or 'longname{suffix}' or 's' (single char = short only)
+   * Suffix: '=s' required string, '=i' required integer, '-s' optional string, (none) boolean flag
    *
-   * @return string
+   * @param string $key  Format string (e.g. 'user|u=s', 'verbose|v', 'app-s')
+   * @param string $desc Description for help text
    */
-  /*
-  protected function showHelp()
+  private function parseZendOption(string $key, string $desc): Option
   {
-    global $argv;
-
-    define('COL_ALIGN', 24);
-    define('OPT_PREFIX', '  --');
-
-    if (!isset($this->cmdHelp)) {
-      $this->throwError('Help text must be declared in extending class, see '.__CLASS__.' documentation.');
+    // Detect and strip suffix: =s, =i (required) or -s (optional)
+    $mode = GetOpt::NO_ARGUMENT;
+    if (preg_match('/([=\-][si])$/', $key, $m)) {
+      $key  = substr($key, 0, -2);
+      $mode = ($m[1][0] === '=') ? GetOpt::REQUIRED_ARGUMENT : GetOpt::OPTIONAL_ARGUMENT;
     }
 
-    $help = $this->cmdHelp;
-
-    // short description
-    echo $help['short_desc']."\n\n";
-
-    // sample command line
-    echo 'php ' . $argv[0] . ' ' . $help['usage_fmt']."\n\n";
-
-    $options = array_merge($help['options'], array(
-      'v'     => 'Verbose mode (off by default)',
-      'app'   =>
-      'env'   =>
-    ));
-
-    // print out list of flags
-    foreach ($options as $optFlag => $optDesc)
-    {
-      $align  = max(COL_ALIGN - strlen(OPT_PREFIX) - strlen($optFlag), 1);
-
-      // align newlines to the description column
-      $optDesc = preg_replace('/\n/', "\n".str_repeat(' ', COL_ALIGN), $optDesc);
-
-      echo OPT_PREFIX.$optFlag.str_repeat(' ', $align).$optDesc."\n";
+    // Split long|short alias
+    $short = null;
+    $long  = null;
+    if (strpos($key, '|') !== false) {
+      [$long, $short] = explode('|', $key);
+    } elseif (strlen($key) === 1) {
+      $short = $key;
+    } else {
+      $long = $key;
     }
-  }*/
+
+    return Option::create($short, $long, $mode)->setDescription($desc);
+  }
 
   /**
-   * Return command line option, or default value.
+   * Return command line option, or default value, or null.
    *
-   * Throws error if option is undefined and no default value is provided.
-   *
-   * @param string $name
-   * @param mixed  $default
+   * @param mixed|null $default
    *
    * @return mixed
    */
-  public function getFlag($name, $default = null)
+  public function getFlag(string $name, $default = null)
   {
     $value = $this->opts->getOption($name);
 
-    return null !== $value ? $value : $default;
+    return $value ?? $default;
   }
 
   /**
@@ -215,20 +201,20 @@ class Command_CLI
    */
   public function hasArgs()
   {
-    $args = $this->opts->toArray();
+    $argv = $_SERVER['argv'] ?? [];
 
-    return count($args) > 0;
+    return count($argv) > 1;
   }
 
   /**
    * Prints out sprintf style error message to STDERR and exits.
    */
-  public function throwError()
+  public function throwError(string $message, ...$args)
   {
-    $args = func_get_args();
-
-    // skip sprintf can avoid some formatting issues with sprintf characters
-    $message = (count($args) > 1 ? call_user_func_array('sprintf', $args) : $args[0])."\n";
+    if (count($args)) {
+      $message = call_user_func_array('sprintf', [$message, ...$args]);
+    }
+    $message .= "\n";
 
     $this->formatter->setForeground('red');
     $this->formatter->setOption('bold');
@@ -240,12 +226,17 @@ class Command_CLI
 
   /**
    * If verbose flag is set, prints a sprintf style message, otherwise do nothing.
+   *
+   * @param mixed $message
    */
-  public function verbose()
+  public function verbose($message, ...$args)
   {
-    $args = func_get_args();
     if ($this->isVerbose) {
-      $message = call_user_func_array('sprintf', $args)."\n";
+      if (count($args)) {
+        $message = call_user_func_array('sprintf', [$message, ...$args]);
+      }
+      $message .= "\n";
+
       fwrite(STDERR, $message);
     }
   }
@@ -253,9 +244,8 @@ class Command_CLI
   /**
    * Print a message to the console. "echof" as in "printf style echo".
    */
-  public function echof()
+  public function echof(...$args)
   {
-    $args    = func_get_args();
     $message = call_user_func_array('sprintf', $args)."\n";
     fwrite(STDERR, $message);
   }
@@ -278,47 +268,5 @@ class Command_CLI
     $relPath = substr($path, strlen($base));
 
     return ltrim($relPath, self::SLASHES_WHITESPACE);
-  }
-
-  /**
-   * Tweak the environment to make the PHP CGI binary behave more or less
-   * the same way as the CLI binary.
-   *
-   * Things to whatch for:
-   * - It changes automatically the current working directory to the running script (php -C)
-   * - It outputs headers (php -q)
-   *
-   * @see  http://articles.sitepoint.com/article/php-command-line-1/3
-   */
-  private function fixCGICompatiblity()
-  {
-    // echo 'fixCGICompatiblity()'.php_sapi_name()."\n";
-    if (version_compare(PHP_VERSION, '4.3.0', '<') || substr(php_sapi_name(), 0, 3) === 'cgi') {
-      // Handle output buffering
-      @ob_end_flush();
-      ob_implicit_flush(true);
-
-      // PHP ini settings
-      set_time_limit(0);
-      ini_set('track_errors', true);
-      ini_set('html_errors', false);
-      ini_set('magic_quotes_runtime', false);
-
-      // Define stream constants
-      define('STDIN', fopen('php://stdin', 'r'));
-      define('STDOUT', fopen('php://stdout', 'w'));
-      define('STDERR', fopen('php://stderr', 'w'));
-
-      // Close the streams on script termination
-      register_shutdown_function(
-        function () {
-          fclose(STDIN);
-          fclose(STDOUT);
-          fclose(STDERR);
-
-          return true;
-        }
-      );
-    }
   }
 }

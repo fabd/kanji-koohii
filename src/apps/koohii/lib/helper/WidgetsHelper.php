@@ -2,14 +2,31 @@
 /**
  * Helpers to include user interface elements in the application templates.
  *
- * Uses stylesheet /css/ui/widgets.css
+ *    ui_filter_std()
+ *    ui_select_pager()
+ *    ui_select_table()
+ *    ui_data_table()
+ *    ui_ibtn()
+ *    ui_chart_vs()
+ *    ui_progress_bar()
  *
  * @author   Fabrice Denis
- *
- * @param mixed $label
- * @param mixed $links
- * @param mixed $options
  */
+
+/**
+ * Render a widget template with the given variables.
+ *
+ * @param array<string, mixed> $vars
+ */
+function _widgets_render(string $template, array $vars): string
+{
+  extract($vars, EXTR_REFS);
+  ob_start();
+
+  require dirname(__FILE__).'/templates/'.$template.'.php';
+
+  return ob_get_clean();
+}
 
 /**
  * Returns HTML for a uiFilterStd widget.
@@ -55,11 +72,7 @@ function ui_filter_std($label, $links, $options = [])
     $links[$i][2] = array_merge($linkOptions, ['class' => $linkClasses]);
   }
 
-  $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(['links' => $links, 'label' => $label, 'options' => $options]);
-  $view->setTemplate(dirname(__FILE__).'/templates/ui_filter_std.php');
-
-  return $view->render();
+  return _widgets_render('ui_filter_std', ['links' => $links, 'label' => $label, 'options' => $options]);
 }
 
 /**
@@ -90,10 +103,7 @@ function ui_select_pager($pager = false, $slot = 'widgets.ui.pager')
   if ($pager !== false) {
     slot($slot);
 
-    $view = new coreView(sfContext::getInstance());
-    $view->getParameterHolder()->add(['pager' => $pager]);
-    $view->setTemplate(dirname(__FILE__).'/templates/ui_select_pager.php');
-    echo $view->render();
+    echo _widgets_render('ui_select_pager', ['pager' => $pager]);
 
     end_slot();
   }
@@ -121,10 +131,7 @@ function ui_select_table(uiSelectTable $table, ?uiSelectPager $pager = null, $ht
 
   $html_options['class'] = merge_html_classes('uiTabular', $html_options['class'] ?? []);
 
-  $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(['table' => $table, 'table_options' => $html_options]);
-  $view->setTemplate(dirname(__FILE__).'/templates/ui_select_table.php');
-  echo $view->render();
+  echo _widgets_render('ui_select_table', ['table' => $table, 'table_options' => $html_options]);
 
   if (!is_null($pager)) {
     echo ui_select_pager();
@@ -154,27 +161,9 @@ function ui_data_table($table, $html_options = [])
 
   $html_options['class'] = merge_html_classes('uiTabular', $html_options['class'] ?? []);
 
-  $view = new coreView(sfContext::getInstance());
-  $view->getParameterHolder()->add(['table' => $table, 'table_options' => $html_options]);
-  $view->setTemplate(dirname(__FILE__).'/templates/ui_select_table.php');
-  echo $view->render();
+  echo _widgets_render('ui_select_table', ['table' => $table, 'table_options' => $html_options]);
 
   return ob_get_clean();
-}
-
-/**
- * Helper to set the display property inline stlye in html templates.
- *
- * Example:
- *   <div ... style="<3php echo ui_display($active===3) 3>">
- *
- * Echoes the display property with ending ";"
- *
- * @param mixed $bDisplay
- */
-function ui_display($bDisplay)
-{
-  echo $bDisplay ? 'display:block;' : 'display:none;';
 }
 
 /**
@@ -234,4 +223,111 @@ function ui_ibtn($name, $internal_uri = '', $options = [])
   }
 
   return link_to($name, $internal_uri, $options);
+}
+
+/**
+ * uiChartVs.
+ *
+ * Options:
+ *   labelLeft, labelRight   Labels on each side
+ *   valueLeft, valueRight   Values, will be summed up to calculate percentage
+ *   labelLeftMax            Label to use when value of the other side is 0 (OPTIONAL)
+ *   labelRightMax
+ *
+ * @see /doc/slicing/RevTK/charts/uiChartVs.html
+ */
+function ui_chart_vs(array $options)
+{
+  $valueTotal = $options['valueLeft'] + $options['valueRight'];
+  $pctLeft    = ceil($options['valueLeft'] * 100 / $valueTotal);
+  $pctRight   = 100 - $pctLeft;
+
+  $captionLeft  = isset($options['labelLeftMax'])  && $options['valueRight'] == 0 ? $options['labelLeftMax'] : $options['labelLeft'];
+  $captionRight = isset($options['labelRightMax']) && $options['valueLeft']  == 0 ? $options['labelRightMax'] : $options['labelRight'];
+
+  $options = array_merge($options, [
+    'pctLeft'      => $pctLeft,
+    'pctRight'     => $pctRight,
+    'bZeroLeft'    => $pctLeft  == 0,
+    'bZeroRight'   => $pctRight == 0,
+    'captionLeft'  => $captionLeft,
+    'captionRight' => $captionRight,
+  ]);
+
+  return _widgets_render('ui_chart_vs', $options);
+}
+
+/**
+ * ko-StripedProgressBar.
+ *
+ * Generate markup for a progress bar.
+ *
+ * Bars is an array of 'bar' definitions as associative arrays:
+ *
+ *   value   => value for this bar, between 0 and maxValue
+ *   label   => optional label to output within SPAN and as title attribute on the SPAN, defaults to "min/max"
+ *   class   => a class name for this SPAN, defaults to "g" (green), specify if using multiple bars
+ *
+ *    => <span class="r" title="optional label" style="width:15%;">optional label</span>
+ *
+ * Does not support minValue for now, so bars must be defined in order of size from largest to smallest,
+ * the smallest will show on top of others.
+ *
+ * Options:
+ * - optional attributes, as for the tag helpers
+ * - "borderColor" with a proper css color value ("red" or "#f00") to override the default gray
+ *   border from the stylesheet.
+ *
+ * @param array $bars     Associative array definitions for bars
+ * @param int   $maxValue The max value corresponds to 100% of the bar width, related to each bar's value
+ * @param array $options
+ *
+ * @return string HTML markup
+ */
+function ui_progress_bar(array $bars, $maxValue, $options = [])
+{
+  if (!is_int($maxValue)) {
+    throw new sfException('ui_progress_bar()  "maxValue" must be an integer');
+  }
+
+  // border color for the bar, override border-color from the stylesheet
+
+  $innerDivOptions = [];
+  if (isset($options['borderColor'])) {
+    // override background color on outer div
+    $options['style'] = "border-color:{$options['borderColor']};";
+    // override border-color on inner div
+    // $innerDivOptions['style'] = "border-color:{$options['borderColor']};";
+    unset($options['borderColor']);
+  }
+
+  // merge widget class name
+  $options['class'] = merge_html_classes($options['class'] ?? [], ['ko-StripedProgressBar']);
+
+  // generate the bars as SPANs
+  $spans = [];
+  foreach ($bars as $bar) {
+    if (!ctype_digit((string) $bar['value'])) {
+      throw new sfException('ui_progress_bar()  "value" must be numeric');
+    }
+
+    if ($bar['value'] >= 0) {
+      $percent     = $bar['value'] > 0 ? ceil($bar['value'] / $maxValue * 100) : 0;
+      $label       = $bar['label'] ?? "{$bar['value']}/{$maxValue}";
+      $spanOptions = [
+        'class' => $bar['class'] ?? 'g',
+        'title' => $label,
+        'style' => "width:{$percent}%;",
+      ];
+      array_push($spans, content_tag('span', $label, $spanOptions));
+    }
+  }
+
+  // span for the gloss overlay
+  $spans[] = '<span class="x"></span>';
+
+  $content = content_tag('div', implode('', $spans), $innerDivOptions);
+
+  // generate the outer div
+  return content_tag('div', $content, $options);
 }

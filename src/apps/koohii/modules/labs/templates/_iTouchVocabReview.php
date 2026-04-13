@@ -1,4 +1,4 @@
-<?php use_helper('CJK', 'Form', 'Widgets', 'Gadgets'); ?>
+<?php use_helper('CJK', 'Form', 'Widgets'); ?>
 
 <?php // Ajax loading indicator?>
 <div id="uiFcAjaxLoading" style="display:none"><span class="spinner"></span>Loading</div>

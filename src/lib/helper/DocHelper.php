@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Simple highlighting and formatting of <pre> blocks and print_r() output.
  *
  * For custom documentation:
@@ -35,7 +35,6 @@
  *
  * @author   Fabrice Denis
  *
- * @param mixed $cssClass
  */
 
 /**
@@ -43,7 +42,7 @@
  *
  * By default creates <pre class="code">.
  *
- * @param object $cssClass[optional]
+ * @param string $cssClass
  */
 function pre_start($cssClass = 'code')
 {

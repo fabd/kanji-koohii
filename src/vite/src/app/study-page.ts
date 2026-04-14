@@ -12,7 +12,7 @@ import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
 import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
 import VueInstance from "@lib/helpers/vue-instance";
-import AutoComplete from "@/components/KoStudySearch";
+import AutoComplete from "@/vue/KoStudySearch";
 
 let cardData: Window["KK"]["STUDY_FLASHCARD"] = null;
 

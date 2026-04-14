@@ -9,7 +9,7 @@
  */
 
 import $$, { hasClass } from "@lib/dom";
-import KoDialog from "@/components/KoDialog";
+import KoDialog from "@/vue/KoDialog";
 import DictLookupDialog from "@old/components/DictLookupDialog";
 import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
 import EditStoryDialog from "@old/components/EditStoryDialog";

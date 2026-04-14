@@ -1,6 +1,6 @@
 import { type TronInst } from "@lib/tron";
-import { KoAjaxDialog } from "@/components/KoAjaxDialog";
-import { type KoDialogAnchor, type KoDialogOptions } from "@/components/KoDialog";
+import { KoAjaxDialog } from "@/vue/KoAjaxDialog";
+import { type KoDialogAnchor, type KoDialogOptions } from "@/vue/KoDialog";
 import KoEditFlashcard from "@/vue/KoEditFlashcard.vue";
 import VueInstance from "@lib/helpers/vue-instance";
 import { type GetEditFlashcardResponse } from "@/app/api/models";

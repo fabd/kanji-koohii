@@ -1,6 +1,6 @@
 import VueInstance from "@lib/helpers/vue-instance";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
-import KoDialog from "@/components/KoDialog";
+import KoDialog from "@/vue/KoDialog";
 
 export default class DictLookupDialog {
   // unique id to find when we need to reload the dialog

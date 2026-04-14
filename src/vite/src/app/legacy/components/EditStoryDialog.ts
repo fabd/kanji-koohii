@@ -5,7 +5,7 @@
 import VueInstance from "@lib/helpers/vue-instance";
 import $$ from "@/lib/dom";
 import { type TronInst } from "@/lib/tron";
-import { KoAjaxDialog } from "@/components/KoAjaxDialog";
+import { KoAjaxDialog } from "@/vue/KoAjaxDialog";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import { type EditStoryResponse } from "@/app/api/models";
 

@@ -9,7 +9,8 @@
     ],
     "deny": [],
     "ask": [
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(rm *)"
     ]
   }
 }

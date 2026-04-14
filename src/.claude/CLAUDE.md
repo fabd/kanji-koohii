@@ -1,33 +1,29 @@
 # CLAUDE.md
 
-## Important
-
-When you run shell commands follow these rules strictly:
-
-- Treat all file deletions as irreversible and always confirm first.
-- Before any destructive action, output: "⚠️ APPROVAL NEEDED: [describe action]"
-  and wait for the user to approve before proceeding.
-- Always ask for approval before running: rm, rmdir, dd, mkfs, DROP, TRUNCATE,
-  git reset --hard, or any command with --force or -f flags.
-
 ## About the Project
 
 Kanji Koohii is a web app for Japanese language learners to study and review kanji (Japanese characters). The two main features are **Study pages** (browse ~3000 kanji with mnemonics and shared community stories) and **Flashcard Review** (SRS using the Leitner algorithm).
 
 ## Commands
 
-`dcweb` is an alias for `docker exec web bash`.
-
-Running commands with `dcweb` defaults to `/var/www/html` in the container, which maps to the `src/` folder on the host.
-
-All npm scripts must be run from `src/vite/` (where `package.json` lives).
+All npm scripts must be run from `src/vite/` (where `package.json` lives):
 
 ```bash
 npm run dev          # Vite dev server (HMR)
 npm run build        # Type-check + production build
 npm run lint         # Lint .js/.ts/.vue files with ESLint
 npm run type-check   # Type check Typescript code (including .vue files)
+```
 
+Running commands inside the `web` container:
+
+`dcweb` is an alias for `docker exec web bash`.
+
+Note the default folder for running commands in the container `/var/www/html/` is mapped to the `src/` folder in the project root.
+
+For example to run phpstan on 
+
+```
 dcweb -c "./vendor/bin/phpstan file.php"   # use PHPStan (from the Docker container)
 ```
 

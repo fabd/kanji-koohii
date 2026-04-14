@@ -6,6 +6,7 @@
 
 # don't automatically add these
 .*
+!.claude
 !.gitignore
 !/web/.htaccess_default
 

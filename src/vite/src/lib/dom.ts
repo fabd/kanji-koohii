@@ -333,14 +333,6 @@ export { factory as default };
 // --------------------------------------------------------------------
 
 /**
- * Helper mainly to simplify JSDoc type cast, where we
- * KNOW the element reference is always valid (not null, not undefined).
- */
-export function asHtmlElement(el: any) {
-  return el as HTMLElement;
-}
-
-/**
  * Inserts the new node as the next sibling of the reference node.
  *
  * @returns The added child node

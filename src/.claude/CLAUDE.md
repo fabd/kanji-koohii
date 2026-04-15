@@ -191,6 +191,7 @@ Read the following docs if it is relevant to your task, before you start working
 - **docs/front-end-api.md** : read when adding or modifying frontend API calls or backend API endpoints
 - **docs/symfony-mvc.md** : read when creating a new module, action, template, or routing on the backend
 - **docs/vite-entries.md** : read when creating/modifying Vite entries, or passing data from PHP to frontend via KK globals
+- **docs/front-end-dom.md** : read when writing DOM manipulation, event handling, or mounting Vue components from non-Vue code
 
 ## External References
 

@@ -389,14 +389,6 @@ export function getStyle(element: HTMLElement, styleName: string): string | null
   }
 }
 
-/**
- * Always return an Element from either a selector or an Element.
- */
-export function getNode<EL extends Element>(sel: EL | string): EL | null {
-  const node = isString(sel) ? (document.querySelector(sel) as EL) : sel;
-  return node;
-}
-
 export const domContentLoaded = (fn: EventListener) => {
   window.addEventListener("DOMContentLoaded", fn);
 };

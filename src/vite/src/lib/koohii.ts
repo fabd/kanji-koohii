@@ -1,6 +1,6 @@
 // a grab bag of Koohii specific helpers for now
 
-import { kk_globals_get } from "@app/root-bundle";
+import { kk_globals_get } from "@/app/root-bundle";
 
 /**
  * The site's base url to account for dev/test envs, may have a trailing slash

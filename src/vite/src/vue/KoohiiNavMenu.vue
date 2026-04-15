@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import $$ from "@lib/dom";
+import $$ from "@/lib/dom";
 import KoohiiNavMenuItem from "@/vue/KoohiiNavMenuItem.vue";
 
 export type TMenuItem = {

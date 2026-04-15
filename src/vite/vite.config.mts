@@ -73,9 +73,6 @@ export default defineConfig({
     // ---------------------------------------------------------------------------
     alias: {
       "@": srcDir,
-      "@img": `${srcDir}/assets/img`,
-      "@app": `${srcDir}/app`,
-      "@lib": `${srcDir}/lib`,
     },
   },
 

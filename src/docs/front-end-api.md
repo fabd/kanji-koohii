@@ -41,9 +41,9 @@ export type TronMsg<T extends object> = {
 Import `getApi()` to get the singleton `LegacyApi` instance:
 
 ```ts
-import { getApi } from "@app/api/api";
-import type { PostUserStoryResponse } from "@app/api/models";
-import { type TronInst } from "@lib/tron";
+import { getApi } from "@/app/api/api";
+import type { PostUserStoryResponse } from "@/app/api/models";
+import { type TronInst } from "@/lib/tron";
 ```
 
 Call an endpoint and handle the Tron response:
@@ -100,9 +100,9 @@ Use `this.post()` for POST requests and `this.get()` for GET requests. The first
 ### 3. Call it from a component
 
 ```ts
-import { getApi } from "@app/api/api";
-import type { PostMyActionResponse } from "@app/api/models";
-import { type TronInst } from "@lib/tron";
+import { getApi } from "@/app/api/api";
+import type { PostMyActionResponse } from "@/app/api/models";
+import { type TronInst } from "@/lib/tron";
 
 getApi()
   .postMyAction(ucsId, "some value")

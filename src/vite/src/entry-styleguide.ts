@@ -1,7 +1,7 @@
 // set up for the `/ux` live docs/testing ground
 
-import { domGetById, domContentLoaded } from "@lib/dom";
-import VueInstance from "@lib/helpers/vue-instance";
+import { domGetById, domContentLoaded } from "@/lib/dom";
+import VueInstance from "@/lib/helpers/vue-instance";
 
 import "@/assets/css/pages/styleguide/docs.css";
 

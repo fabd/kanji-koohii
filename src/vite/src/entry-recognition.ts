@@ -1,5 +1,5 @@
-import { domGetById, domContentLoaded } from "@lib/dom";
-import VueInstance from "@lib/helpers/vue-instance";
+import { domGetById, domContentLoaded } from "@/lib/dom";
+import VueInstance from "@/lib/helpers/vue-instance";
 
 import "@/assets/css/RecognitionApp.css";
 

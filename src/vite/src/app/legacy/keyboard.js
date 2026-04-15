@@ -23,8 +23,8 @@
  *
  */
 
-import { stopEvent } from "@lib/dom";
-import EventCache from "@lib/EventCache";
+import { stopEvent } from "@/lib/dom";
+import EventCache from "@/lib/EventCache";
 
 export default class Keyboard {
   /** @type {{[key: number]: EventListener} */

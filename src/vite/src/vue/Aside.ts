@@ -1,5 +1,5 @@
 import { nextTick } from "vue";
-import VueInstance from "@lib/helpers/vue-instance";
+import VueInstance from "@/lib/helpers/vue-instance";
 import AsideComponent from "@/vue/Aside.vue";
 import KoohiiNavMenu from "@/vue/KoohiiNavMenu.vue";
 

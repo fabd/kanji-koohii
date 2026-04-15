@@ -2,7 +2,7 @@ import {
   createApp,
   type Component,
 } from "vue";
-import Lang from "@lib/lang";
+import Lang from "@/lib/lang";
 
 export default <C extends Component>(
   component: C,

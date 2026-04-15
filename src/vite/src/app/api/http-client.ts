@@ -5,7 +5,7 @@
  * - request errors are converted to TRON errors (tron.getErrors())
  */
 import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
-import { Tron, STATUS } from "@lib/tron";
+import { Tron, STATUS } from "@/lib/tron";
 
 type ApiRequestConfig = Pick<AxiosRequestConfig, "method" | "params" | "data">;
 

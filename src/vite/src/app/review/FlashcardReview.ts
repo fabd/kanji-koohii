@@ -116,10 +116,10 @@
  *
  *
  */
-import { kk_globals_get } from "@app/root-bundle";
-import AjaxQueue from "@app/legacy/ajaxqueue";
-import EventDispatcher, { type ListenerFn } from "@lib/EventDispatcher";
-import VueInstance from "@lib/helpers/vue-instance";
+import { kk_globals_get } from "@/app/root-bundle";
+import AjaxQueue from "@/app/legacy/ajaxqueue";
+import EventDispatcher, { type ListenerFn } from "@/lib/EventDispatcher";
+import VueInstance from "@/lib/helpers/vue-instance";
 import KoohiiFlashcard from "@/vue/KoohiiFlashcard.vue";
 import { type AxiosResponse } from "axios";
 

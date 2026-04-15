@@ -1,8 +1,8 @@
 // this is the legacy desktop navigation with dropdown menus
 //  fixed to work with ESM build
 
-import $$ from "@lib/dom";
-import EventDelegator from "@lib/EventDelegator";
+import $$ from "@/lib/dom";
+import EventDelegator from "@/lib/EventDelegator";
 
 export default {
   dropdown: null,

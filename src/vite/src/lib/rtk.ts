@@ -29,7 +29,7 @@
  *
  */
 
-import { kk_globals_get, kk_globals_has } from "@app/root-bundle";
+import { kk_globals_get, kk_globals_has } from "@/app/root-bundle";
 import * as CJK from "@/lib/cjk";
 
 type TKeywordMap = Map<TUcsId, string>; // UCS code, keyword

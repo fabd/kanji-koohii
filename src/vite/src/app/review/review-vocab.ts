@@ -1,6 +1,6 @@
-import $$, { hasClass } from "@lib/dom";
-import FlashcardReview from "@app/review/FlashcardReview";
-import ReviewPage from "@app/review/ReviewPage";
+import $$, { hasClass } from "@/lib/dom";
+import FlashcardReview from "@/app/review/FlashcardReview";
+import ReviewPage from "@/app/review/ReviewPage";
 
 export default class VocabReview {
   options: TVocabReviewProps;

@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { kk_globals_get } from "@app/root-bundle";
+import { kk_globals_get } from "@/app/root-bundle";
 import * as RTK from "@/lib/rtk";
 
 const KOOHII_LOCALSTORAGE_KEY = "lastViewedKanji";

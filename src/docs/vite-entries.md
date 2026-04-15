@@ -24,9 +24,9 @@ Some Vite entries facts:
 In the following example $$ is a lightweight jQuery-like selector, and domContentLoaded is a helper that sets up a `DOMContentLoaded` event listener:
 
 ```ts
-import VueInstance from "@lib/helpers/vue-instance";
+import VueInstance from "@/lib/helpers/vue-instance";
 import SomeComponent from "@/vue/SomeComponent.vue";
-import $$, { domContentLoaded } from "@lib/dom";
+import $$, { domContentLoaded } from "@/lib/dom";
 
 // defer initialization until DOM + deferred scripts are ready
 domContentLoaded(() => {
@@ -51,9 +51,9 @@ vueInst.unmount();
 **When an entry mounts multiple components**, group the setup in a class and instantiate it from `domContentLoaded`. This keeps the entry readable and allows shared local state between mounts:
 
 ```ts
-import VueInstance from "@lib/helpers/vue-instance";
-import $$, { domContentLoaded } from "@lib/dom";
-import { kk_globals_get } from "@app/root-bundle";
+import VueInstance from "@/lib/helpers/vue-instance";
+import $$, { domContentLoaded } from "@/lib/dom";
+import { kk_globals_get } from "@/app/root-bundle";
 import ComponentA from "@/vue/ComponentA.vue";
 import ComponentB from "@/vue/ComponentB.vue";
 

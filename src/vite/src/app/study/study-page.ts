@@ -1,17 +1,17 @@
 // this is the legacy study-page.js, could be a master Vue component someday
 
-import $$, { domGetById } from "@lib/dom";
-import { kk_globals_get } from "@app/root-bundle";
+import $$, { domGetById } from "@/lib/dom";
+import { kk_globals_get } from "@/app/root-bundle";
 import * as RTK from "@/lib/rtk";
-import { getApi } from "@app/api/api";
+import { getApi } from "@/app/api/api";
 import eventBus from "@/lib/EventBus";
-import EventDelegator from "@lib/EventDelegator";
-import EditFlashcardDialog from "@app/legacy/components/EditFlashcardDialog";
+import EventDelegator from "@/lib/EventDelegator";
+import EditFlashcardDialog from "@/app/legacy/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
-import SharedStoriesComponent from "@app/legacy/components/SharedStoriesComponent";
-import VueInstance from "@lib/helpers/vue-instance";
+import SharedStoriesComponent from "@/app/legacy/components/SharedStoriesComponent";
+import VueInstance from "@/lib/helpers/vue-instance";
 import AutoComplete from "@/vue/KoStudySearch";
 
 let cardData: Window["KK"]["STUDY_FLASHCARD"] = null;

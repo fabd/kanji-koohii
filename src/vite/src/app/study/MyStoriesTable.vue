@@ -19,8 +19,8 @@
 // NOTE! converted from legacy js, the pager is still handled on php end
 
 import { defineComponent } from "vue";
-import { kk_globals_get } from "@app/root-bundle";
-import AjaxTable from "@app/legacy/ajaxtable";
+import { kk_globals_get } from "@/app/root-bundle";
+import AjaxTable from "@/app/legacy/ajaxtable";
 
 let ajaxTable: AjaxTable;
 

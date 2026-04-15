@@ -10,10 +10,10 @@
  */
 
 import { nextTick } from "vue";
-import VueInstance from "@lib/helpers/vue-instance";
+import VueInstance from "@/lib/helpers/vue-instance";
 import KoohiiLoading from "./KoohiiLoading.vue";
-import { getStyle } from "@lib/dom";
-import Lang from "@lib/lang";
+import { getStyle } from "@/lib/dom";
+import Lang from "@/lib/lang";
 
 let component: TVueInstanceOf<typeof KoohiiLoading> | null;
 let componentUnmount: () => void;

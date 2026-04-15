@@ -180,7 +180,7 @@
 // NOTE : the validation needs to match the backend (account/spacedrepetition)
 
 import { defineComponent } from "vue";
-import { kk_globals_get } from "@app/root-bundle";
+import { kk_globals_get } from "@/app/root-bundle";
 
 export default defineComponent({
   name: "SpacedRepetitionForm",

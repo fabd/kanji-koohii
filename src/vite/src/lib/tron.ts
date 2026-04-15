@@ -33,7 +33,7 @@
  *
  */
 
-import Lang from "@lib/lang";
+import Lang from "@/lib/lang";
 
 // keep in sync with constants in /lib/JsTron.php
 

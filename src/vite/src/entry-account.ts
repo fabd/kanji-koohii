@@ -1,5 +1,5 @@
-import VueInstance from "@lib/helpers/vue-instance";
-import $$, { domContentLoaded } from "@lib/dom";
+import VueInstance from "@/lib/helpers/vue-instance";
+import $$, { domContentLoaded } from "@/lib/dom";
 import SpacedRepetitionForm from "@/vue/account/SpacedRepetitionForm.vue";
 
 domContentLoaded(() => {

@@ -162,6 +162,8 @@ KanjisPeer::getInstance()->select('ucs_id')->where('kanji = ?', $s)->query();
 
 - use kebab-case for filenames (eg. root-bundle.ts)
 - use PascalCase for classes (eg. KoDialog)
+- use alias `@` in imports in place of `src` (eg. `src/app/file` => `@/app/file`)
+
 
 When you have finished a task involving TypeScript code, run `dcweb -c "cd vite; vue-tsc --noEmit"` to check for errors.
 

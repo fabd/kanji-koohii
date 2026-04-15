@@ -10,7 +10,7 @@
 // stylesheets
 import "./assets/css/home.build.css";
 
-import rootBundleInit from "@app/root-bundle";
+import rootBundleInit from "@/app/root-bundle";
 rootBundleInit();
 
 console.log("@entry-landing");

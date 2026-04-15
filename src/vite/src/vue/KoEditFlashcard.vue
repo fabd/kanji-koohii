@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { getApi } from "@app/api/api";
+import { getApi } from "@/app/api/api";
 import { type ReviewData } from "@/app/api/models";
 import { type KanjiData } from "@/app/api/models";
 import KoohiiLoading from "@/vue/KoohiiLoading";

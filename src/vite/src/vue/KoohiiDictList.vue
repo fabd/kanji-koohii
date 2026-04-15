@@ -27,12 +27,12 @@
  *
  */
 import { defineComponent } from "vue";
-import type { GetDictListForUCS } from "@app/api/models";
-import { getApi } from "@app/api/api";
+import type { GetDictListForUCS } from "@/app/api/models";
+import { getApi } from "@/app/api/api";
 // import CacheDictResults from "@/app/dict/CacheDictResults";
 
 import DictList from "@/vue/DictList.vue";
-import KanjiReview from "@app/review/review-kanji";
+import KanjiReview from "@/app/review/review-kanji";
 import KoDictEmpty from "@/vue/KoDictEmpty.vue";
 import KoohiiLoading from "@/vue/KoohiiLoading";
 import KoohiiFlashcardKanji from "./KoohiiFlashcardKanji.vue";

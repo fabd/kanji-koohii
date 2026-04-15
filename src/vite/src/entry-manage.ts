@@ -10,12 +10,12 @@
 // stylesheets
 import "./assets/css/manage.build.css";
 
-import $$, { domContentLoaded, domGetById } from "@lib/dom";
-import { getBodyED } from "@app/root-bundle";
-import AjaxPanel from "@app/legacy/ajaxpanel";
-import AjaxTable from "@app/legacy/ajaxtable";
-import EditKeywordDialog, { type EditKeywordCallback } from "@app/legacy/components/EditKeywordDialog";
-import SelectionTable from "@app/legacy/selectiontable";
+import $$, { domContentLoaded, domGetById } from "@/lib/dom";
+import { getBodyED } from "@/app/root-bundle";
+import AjaxPanel from "@/app/legacy/ajaxpanel";
+import AjaxTable from "@/app/legacy/ajaxtable";
+import EditKeywordDialog, { type EditKeywordCallback } from "@/app/legacy/components/EditKeywordDialog";
+import SelectionTable from "@/app/legacy/selectiontable";
 
 class ManagePage {
   private viewDiv?: Element;

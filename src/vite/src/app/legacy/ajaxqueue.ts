@@ -31,8 +31,8 @@
  *
  */
 
-import $$, { DomJS } from "@lib/dom";
-import EventDispatcher from "@lib/EventDispatcher";
+import $$, { DomJS } from "@/lib/dom";
+import EventDispatcher from "@/lib/EventDispatcher";
 import AjaxRequest, { type AjaxRequestOptions } from "./AjaxRequest";
 import { AxiosError, type AxiosResponse } from "axios";
 

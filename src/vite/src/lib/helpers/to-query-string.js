@@ -1,4 +1,4 @@
-import Lang from "@lib/lang";
+import Lang from "@/lib/lang";
 
 /**
  * Turns an object into its URL-encoded query string representation.

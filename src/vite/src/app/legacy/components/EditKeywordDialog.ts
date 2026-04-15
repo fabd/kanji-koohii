@@ -1,7 +1,7 @@
-import { type TronInst } from "@lib/tron";
+import { type TronInst } from "@/lib/tron";
 import { KoAjaxDialog } from "@/vue/KoAjaxDialog";
 import { type KoDialogAnchor, type KoDialogOptions } from "@/vue/KoDialog";
-import VueInstance from "@lib/helpers/vue-instance";
+import VueInstance from "@/lib/helpers/vue-instance";
 
 import KoEditKeyword from "@/vue/KoEditKeyword.vue";
 

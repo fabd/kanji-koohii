@@ -8,10 +8,10 @@
 // stylesheets
 import "./assets/css/study-base.build.css";
 
-import { domGetById, domContentLoaded } from "@lib/dom";
-import VueInstance from "@lib/helpers/vue-instance";
+import { domGetById, domContentLoaded } from "@/lib/dom";
+import VueInstance from "@/lib/helpers/vue-instance";
 import StudyPage from "@/app/study/study-page";
-import MyStoriesTable from "@app/study/MyStoriesTable.vue";
+import MyStoriesTable from "@/app/study/MyStoriesTable.vue";
 
 domContentLoaded(() => {
   console.log("@entry-study");

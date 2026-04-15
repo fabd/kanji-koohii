@@ -199,7 +199,7 @@
 <script lang="ts">
 // @ts-nocheck ( unfinished feature, silence vue-tsc )
 import { defineComponent } from "vue";
-import { kk_globals_get } from "@app/root-bundle";
+import { kk_globals_get } from "@/app/root-bundle";
 import { urlForStudy } from "@/lib/koohii";
 import * as wanakana from "wanakana";
 import * as RTK from "@/lib/rtk";

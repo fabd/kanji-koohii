@@ -5,7 +5,7 @@
  * from the document at end of hide animation otherwise it blocks
  * clicks.
  */
-import $$ from "@lib/dom";
+import $$ from "@/lib/dom";
 
 export class KoNotification {
   private element: HTMLElement;

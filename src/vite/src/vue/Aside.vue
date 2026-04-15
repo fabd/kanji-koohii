@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import $$ from "@lib/dom";
+import $$ from "@/lib/dom";
 
 function getScrollBarWidth() {
   if (

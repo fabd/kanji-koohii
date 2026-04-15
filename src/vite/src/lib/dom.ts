@@ -88,7 +88,7 @@
  *
  */
 
-import Lang from "@lib/lang";
+import Lang from "@/lib/lang";
 
 // types
 type StringHash = { [key: string]: string };

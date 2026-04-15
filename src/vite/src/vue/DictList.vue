@@ -27,7 +27,7 @@
  * A dumb component displaying a list of JMDICT entries.
  */
 import { defineComponent, type PropType } from "vue";
-import { kkFormatReading } from "@lib/format";
+import { kkFormatReading } from "@/lib/format";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
 
 // FIXME : move to an import

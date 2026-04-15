@@ -1,4 +1,4 @@
-import VueInstance from "@lib/helpers/vue-instance";
+import VueInstance from "@/lib/helpers/vue-instance";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoDialog from "@/vue/KoDialog";
 

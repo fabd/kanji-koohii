@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import $$, { px } from "@lib/dom";
+import $$, { px } from "@/lib/dom";
 import KoohiiNavMenu, { type TMenuItem }  from "@/vue/KoohiiNavMenu.vue";
 
 // fix for circular reference (can't type return value of rootMenu())

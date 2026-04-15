@@ -1,6 +1,6 @@
-import VueInstance from "@lib/helpers/vue-instance";
-import $$, { domContentLoaded } from "@lib/dom";
-import { kk_globals_get } from "@app/root-bundle";
+import VueInstance from "@/lib/helpers/vue-instance";
+import $$, { domContentLoaded } from "@/lib/dom";
+import { kk_globals_get } from "@/app/root-bundle";
 import * as RTK from "@/lib/rtk";
 
 import KoLessonPane from "@/vue/KoLessonPane.vue";

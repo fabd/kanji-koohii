@@ -8,13 +8,13 @@
  *
  */
 
-import $$, { hasClass } from "@lib/dom";
+import $$, { hasClass } from "@/lib/dom";
 import KoDialog from "@/vue/KoDialog";
-import DictLookupDialog from "@app/legacy/components/DictLookupDialog";
-import EditFlashcardDialog from "@app/legacy/components/EditFlashcardDialog";
-import EditStoryDialog from "@app/legacy/components/EditStoryDialog";
-import FlashcardReview, { FCRATE } from "@app/review/FlashcardReview";
-import ReviewPage from "@app/review/ReviewPage";
+import DictLookupDialog from "@/app/legacy/components/DictLookupDialog";
+import EditFlashcardDialog from "@/app/legacy/components/EditFlashcardDialog";
+import EditStoryDialog from "@/app/legacy/components/EditStoryDialog";
+import FlashcardReview, { FCRATE } from "@/app/review/FlashcardReview";
+import ReviewPage from "@/app/review/ReviewPage";
 import eventBus from "@/lib/EventBus";
 
 export default class KanjiReview {

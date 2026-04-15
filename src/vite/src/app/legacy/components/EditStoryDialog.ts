@@ -2,7 +2,7 @@
  * Dialog to edit a story, within Flashcard Review or other pages.
  *
  */
-import VueInstance from "@lib/helpers/vue-instance";
+import VueInstance from "@/lib/helpers/vue-instance";
 import $$ from "@/lib/dom";
 import { type TronInst } from "@/lib/tron";
 import { KoAjaxDialog } from "@/vue/KoAjaxDialog";

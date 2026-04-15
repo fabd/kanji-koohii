@@ -87,7 +87,7 @@
 <script>
 import { defineComponent } from "vue";
 import CjkLangJa from "@/vue/CjkLangJa.vue";
-import { kkFormatReading } from "@lib/format";
+import { kkFormatReading } from "@/lib/format";
 
 export default defineComponent({
   name: "KoohiiFlashcardKanji",

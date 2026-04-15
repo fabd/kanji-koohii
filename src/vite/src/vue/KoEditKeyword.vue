@@ -55,9 +55,9 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import { getApi } from "@app/api/api";
-import { type TronInst } from "@lib/tron";
-import { type PostUserKeywordResponse } from "@app/api/models";
+import { getApi } from "@/app/api/api";
+import { type TronInst } from "@/lib/tron";
+import { type PostUserKeywordResponse } from "@/app/api/models";
 
 import KoohiiCharsLeft from "@/vue/KoohiiCharsLeft.vue";
 import KoohiiLoading from "@/vue/KoohiiLoading";

@@ -76,7 +76,6 @@ export default defineConfig({
       "@img": `${srcDir}/assets/img`,
       "@app": `${srcDir}/app`,
       "@lib": `${srcDir}/lib`,
-      "@old": `${srcDir}/app/legacy`,
     },
   },
 

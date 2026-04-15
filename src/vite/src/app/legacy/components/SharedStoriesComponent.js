@@ -3,7 +3,7 @@
 
 import $$, { domGetById, insertBefore } from "@lib/dom";
 import { getApi } from "@app/api/api";
-import AjaxTable from "@old/ajaxtable";
+import AjaxTable from "@app/legacy/ajaxtable";
 import EventDelegator from "@lib/EventDelegator";
 import { applyCssTransition } from "@lib/dom";
 

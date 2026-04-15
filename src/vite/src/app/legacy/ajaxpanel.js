@@ -91,7 +91,7 @@
 
 import $$, { domGetById } from "@lib/dom";
 import Lang from "@lib/lang";
-import AjaxIndicator from "@old/ajaxindicator";
+import AjaxIndicator from "@app/legacy/ajaxindicator";
 import EventCache from "@lib/EventCache";
 import EventDispatcher from "@lib/EventDispatcher";
 import KoohiiLoading from "@/vue/KoohiiLoading";

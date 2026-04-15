@@ -10,9 +10,9 @@
 
 import $$, { hasClass } from "@lib/dom";
 import KoDialog from "@/vue/KoDialog";
-import DictLookupDialog from "@old/components/DictLookupDialog";
-import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
-import EditStoryDialog from "@old/components/EditStoryDialog";
+import DictLookupDialog from "@app/legacy/components/DictLookupDialog";
+import EditFlashcardDialog from "@app/legacy/components/EditFlashcardDialog";
+import EditStoryDialog from "@app/legacy/components/EditStoryDialog";
 import FlashcardReview, { FCRATE } from "@app/review/FlashcardReview";
 import ReviewPage from "@app/review/ReviewPage";
 import eventBus from "@/lib/EventBus";

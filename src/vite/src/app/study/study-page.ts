@@ -6,11 +6,11 @@ import * as RTK from "@/lib/rtk";
 import { getApi } from "@app/api/api";
 import eventBus from "@/lib/EventBus";
 import EventDelegator from "@lib/EventDelegator";
-import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
+import EditFlashcardDialog from "@app/legacy/components/EditFlashcardDialog";
 import KoohiiDictList from "@/vue/KoohiiDictList.vue";
 import KoohiiEditStory from "@/vue/KoohiiEditStory.vue";
 import KoStudyLastViewed from "@/vue/KoStudyLastViewed.vue";
-import SharedStoriesComponent from "@old/components/SharedStoriesComponent";
+import SharedStoriesComponent from "@app/legacy/components/SharedStoriesComponent";
 import VueInstance from "@lib/helpers/vue-instance";
 import AutoComplete from "@/vue/KoStudySearch";
 

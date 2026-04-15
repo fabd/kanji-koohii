@@ -179,7 +179,7 @@ import type { KanjiData, PostUserStoryResponse } from "@app/api/models";
 import { type TronInst } from "@lib/tron";
 import { checkForUnsupportedUtf } from "@/lib/cjk";
 import VueInstance from "@lib/helpers/vue-instance";
-import EditKeywordDialog from "@old/components/EditKeywordDialog";
+import EditKeywordDialog from "@app/legacy/components/EditKeywordDialog";
 
 // components
 import KoohiiCharsLeft from "@/vue/KoohiiCharsLeft.vue";

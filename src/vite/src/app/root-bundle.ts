@@ -1,8 +1,8 @@
 import $$, { domContentLoaded } from "@lib/dom";
-import AjaxTable from "@old/ajaxtable";
+import AjaxTable from "@app/legacy/ajaxtable";
 import EventDelegator from "@lib/EventDelegator";
 import KoohiiAside from "@/vue/Aside";
-import KoohiiNav from "@old/components/KoohiiNav";
+import KoohiiNav from "@app/legacy/components/KoohiiNav";
 
 let bodyED: EventDelegator | null = null;
 

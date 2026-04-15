@@ -12,7 +12,7 @@
  */
 
 import $$, { stopEvent } from "@lib/dom";
-import AjaxTable from "@old/ajaxtable";
+import AjaxTable from "@app/legacy/ajaxtable";
 
 export default class SelectionTable {
   /**

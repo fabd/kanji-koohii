@@ -26,7 +26,6 @@
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
       "@lib/*": ["./src/lib/*"],
-      "@old/*": ["./src/app/legacy/*"]
     },
 
     "resolveJsonModule": true,

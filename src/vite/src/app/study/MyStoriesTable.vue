@@ -20,7 +20,7 @@
 
 import { defineComponent } from "vue";
 import { kk_globals_get } from "@app/root-bundle";
-import AjaxTable from "@old/ajaxtable";
+import AjaxTable from "@app/legacy/ajaxtable";
 
 let ajaxTable: AjaxTable;
 

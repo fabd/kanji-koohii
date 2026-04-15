@@ -6,45 +6,159 @@ Kanji Koohii is a web app for Japanese language learners to study and review kan
 
 ## Commands
 
-All npm scripts must be run from `src/vite/` (where `package.json` lives):
+`dcweb` is an alias for `docker exec web bash`. The `web` docker container is setup with Apache, PHP and nodeJS. Use `docker compose up -d` to start the dev environment.
+
+npm should be run in the container, eg. `dcweb -c "cd vite; npm install (package)"`.
 
 ```bash
-npm run dev          # Vite dev server (HMR)
-npm run build        # Type-check + production build
-npm run lint         # Lint .js/.ts/.vue files with ESLint
-npm run type-check   # Type check Typescript code (including .vue files)
+dcweb -c "cd vite; npm run dev"       # Vite dev server (HMR)
+dcweb -c "cd vite; npm run build"     # production build
+dcweb -c "cd vite; vue-tsc --noEmit"  # type-check Typescript code (including .vue files)
 ```
 
-Running commands inside the `web` container:
+These commands can be run from the host directly:
 
-`dcweb` is an alias for `docker exec web bash`.
+- `./vendor/bin/php-cs-fixer fix (filename.php)` to format PHP and fix coding standards issues.
 
-Note the default folder for running commands in the container `/var/www/html/` is mapped to the `src/` folder in the project root.
+- `./vendor/bin/phpstan analyse (filename.php)` to check PHP code with PHPStan. PHPStan config file at `./phpstan.neon`.
 
-For example to run phpstan on 
+## Tech Stack & Project Structure
+
+- Docker: PHP/Apache container (Ubuntu 24.04, PHP 8.3) + MariaDB container
+- Vite dev server
+- Backend uses Symfony 1.4 and composer packages
+- Frontend uses Vite + Vue 3 + TypeScript + Tailwind CSS 4
+
+Docker container runs PHP 8.3; we write PHP 8.2-compatible code to match the production server.
+
+The folder structure is a typical Symfony 1.4 project with some additional folders:
 
 ```
-dcweb -c "./vendor/bin/phpstan file.php"   # use PHPStan (from the Docker container)
+# (paths relative to src/)
+apps/
+  koohii/                    Symfony app folder
+    config/                  Symfony app config files (app.yml, routing.yml, etc)
+    modules/                 MVC controllers (study, review, manage, account, api, …)
+      (name)/
+        actions/
+          actions.class.php  standard Symfony actions
+        templates/
+          (name)Success.php  standard Symfony template for an action
+    lib/                     app-specific PHP classes
+    templates/
+      layout.php             the global HTML template
+batch/                       build and admin scripts — do not run these unless explicitly instructed
+  build-prod.sh
+config/                      generated files, do not edit files in this folder
+data/
+  schemas/
+    revtk_schema.sql         the database schema
+docs/                        see Documentation section below
+lib/                         classes that are not app-specific
+  core/                      classes that extend Symfony
+    coreDatabase.php         custom ORM base
+    coreDatabaseTable.php    base class for peer classes
+    coreWebResponse.php      extends sfWebResponse to resolve CSS & JS assets served by Vite
+  peer/                      peer classes to model the database
+    KanjisPeer.php           peer model for the kanjis table in the database
+    *Peer.php                one peer class for each table in the database
+    ...
+test/                        we don't use tests, folder is not relevant to most tasks
+tools/                       folder is not relevant to most tasks
+vite/                        this is the root folder for Vite dev server and Vite build
+  src/                       all the frontend code lives here (typescript, css, and Vue files)
+    app/                     app-specific modules and page logic
+      api/                   async API based on an Axios wrapper that always resolves
+                             (errors are returned as values, never thrown).
+      dict/                  related to the kanji/japanese dictionary features
+      legacy/                do not add new code here — only move code out of this folder
+      review/                Flashcard Review page functionality
+      study/                 Study page features
+      root-bundle.ts         utilities available to all pages (imported by entry-common.ts)
+    assets/
+      css/                   stylesheets
+        main.build.css       the main stylesheet
+    lib/                     helpers and utilities that are not page-specific
+    types/                   TypeScript type definitions
+    vue/                     components (.vue and .ts files)
+      styleguide/            for the /ux section of the app (internal docs & demos, admin only)
+      ...
+    entry-common.ts          loaded on every page, *in addition* to the page specific entry
+    entry-home.ts            dashboard
+    entry-study.ts           study pages
+    entry-review.ts          SRS chart + flashcard review
+    entry-recognition.ts     kanji recognition/writing practice
+    entry-manage.ts          manage flashcards
+    entry-account.ts         account settings
+    entry-landing.ts         signed-out landing page    
+    entry-styleguide.ts      private docs & testing ground (admin only)
+web/                         the root folder served by Apache
+  index.php                  the default backend entry point
 ```
 
-Production build calls `src/batch/build-prod.sh`, which runs Vite then parses the manifest into `src/config/vite-build.inc.php` for PHP template injection.
+## Frontend Architecture
 
-Tests: a `src/test/` folder exists but tests are not currently used.
+This is **not a SPA**:
 
-## Architecture
+- most pages are rendered by PHP, and enhanced with Javascript
+- does not use routing
+- does not use state management
+- components can communicate with an event bus (`vite/src/lib/EventBus.ts`)
 
-### Backend — Symfony 1.4 (PHP 8.3)
+Here is a table matching entries and what pages they are served on:
 
-- Entry point: `src/web/index.php` (prod) / `index_dev.php` (dev)
-- Symfony app: `src/apps/koohii/`
-  - `modules/` — MVC controllers (study, review, manage, account, api, …)
-  - `lib/` — app-specific PHP classes
-  - `templates/layout.php` — global HTML template
-- Shared libraries: `src/lib/`
-  - `core/coreDatabase.php` — custom ORM base
-  - `core/coreDatabaseTable.php` — base class for peer classes
-  - `peer/` — one peer class per DB table (e.g. `KanjisPeer`, `UsersPeer`)
-- Database schema: `src/data/schemas/revtk_schema.sql`
+| Entry point            | Used on                             |
+| ---------------------- | ----------------------------------- |
+| `entry-account.ts`     | /account                            |
+| `entry-common.ts`      | (Every page)                        |
+| `entry-home.ts`        | / (homepage, when signed in)        |
+| `entry-landing.ts`     | / (landing page, when signed out)   |
+| `entry-manage.ts`      | /manage                             |
+| `entry-recognition.ts` | /misc/reading (WIP feature)         |
+| `entry-review.ts`      | /main (SRS chart) /review/*         |
+| `entry-study.ts`       | /study/*                            |
+| `entry-styleguide.ts`  | /ux (accessible only to admin user) |
+
+Production build calls `batch/build-prod.sh`, which runs Vite then pre-parses the manifest into `config/vite-build.inc.php`. This manifest is used by `coreWebResponse::addViteEntries()` to insert the required js/css chunks for a given bundle. A module/action can specify the bundle to use in the view.yml file (eg. `apps/koohii/modules/study/config/view.yml`) by setting the `javascripts` key. If the javascript filename is in the pattern `src/entry-(name).ts` then it is recognized as a Vite bundle and the associated css/js dependencies are added to the response.
+
+Example entry that sets up a Vue component:
+
+```ts
+import VueInstance from "@lib/helpers/vue-instance";
+import $$, { domContentLoaded } from "@lib/dom";
+
+// defer initialization until DOM + deferred scripts are ready
+domContentLoaded(() => {
+  // find element by id, mount Vue component to it
+  const mount = $$("#WhereToMount")[0];
+  // note how an entry can be used on different pages, so we check if the element is present
+  if (mount) {
+    VueInstance(SpacedRepetitionForm, mount);
+  }
+});
+```
+
+## Coding Standards
+
+- Use 2-space indentation for PHP, TypeScript, and CSS
+
+### CSS
+
+- prefix CSS classes with `ko-` (eg. `ko-Dialog` for a `Dialog` component)
+- use the pattern `ko-(component name)-(descendant)--(modifier)` (eg. `ko-Dialog-title`)
+- BEM modifier `--` for component variants, eg. `ko-Dialog--small`
+- use `is-` prefix for runtime state (eg. `is-active`)
+
+### PHP
+
+- PHP 8.2 syntax with constructor property promotion
+- PSR-1, PSR-2, PSR-4, PSR-12 standards
+- Strict comparisons only (===, !==)
+- Braces required for all control structures
+
+When you add/modify PHP code, run PHPStan after to check for errors.
+
+When you have finished a task involving PHP code, run php-cs-fixer once to properly format the code.
 
 **Common Symfony patterns:**
 
@@ -59,63 +173,21 @@ $db = kk_get_database();
 KanjisPeer::getInstance()->select('ucs_id')->where('kanji = ?', $s)->query();
 ```
 
-API endpoints live in `src/apps/koohii/modules/api/`.
-
-### Frontend — Vite 8 + Vue 3 + TypeScript + Tailwind CSS 4
-
-Located in `src/vite/src/`. This is **not a SPA** — Vite produces multiple per-page bundles:
-
-| Entry point        | Used on                      |
-| ------------------ | ---------------------------- |
-| `entry-common.ts`  | Every page                   |
-| `entry-home.ts`    | Dashboard                    |
-| `entry-study.ts`   | Study pages                  |
-| `entry-review.ts`  | SRS chart + flashcard review |
-| `entry-manage.ts`  | Manage flashcards            |
-| `entry-account.ts` | Account settings             |
-| `entry-landing.ts` | Signed-out landing page      |
-
-Each entry uses `domContentLoaded()` to defer initialization until DOM + deferred scripts are ready.
-
-Frontend structure:
-
-- `src/app/` — core logic (API client, review flow, study page)
-- `src/vue/` — Vue 3 SFC components (Koohii-prefixed; Element Plus also used)
-- `src/lib/` — utilities
-- `src/types/` — TypeScript type definitions
-- `src/assets/css/` — stylesheets; `main.build.css` is the main stylesheet
-
-PHP loads the correct bundle via `coreWebResponse::addViteEntries()` using the generated manifest at `src/config/vite-build.inc.php`. An module/action can specify the bundle to use in the module's `config/view.yml` file by setting the `javascripts` key. If the javascript filename starts with `src/` then coreWebResponse treats it as a bundle, and includes the required javascript and css dependencies.
-
-### Infrastructure
-
-- Docker: PHP/Apache container (Ubuntu 24.04, PHP 8.3) + MariaDB container
-- Vite dev server
-
-## Coding Standards
-
-- Use 2-space indentation for PHP, TypeScript, and CSS
-
-## PHP
-
-- PHP 8.1+ syntax with constructor property promotion
-- PSR-1, PSR-2, PSR-4, PSR-12 standards
-- Strict comparisons only (===, !==)
-- Braces required for all control structures
-
-If PHP code changed, run:
-
-- `dcweb -c "./vendor/bin/php-cs-fixer fix the-file.php"`
-
 ### PHPDoc
 
-- No @return for void methods
+- Only add PHPDoc when it adds information not already expressed by type hints
 
-## CSS
+### TypeScript
 
-- prefix CSS classes with `ko-` (eg. `ko-Dialog` for a `Dialog` component)
-- prefix modifier and state classes with `is-` (eg. `is-active`)
-- use the pattern `ko-(component name)-(descendant)--(modifier)` (for example `ko-Dialog-title` `ko-Dialog--small`)
+- use kebab-case for filenames (eg. root-bundle.ts)
+- use PascalCase for classes (eg. KoDialog)
+
+When you have finished a task involving TypeScript code, run `dcweb -c "cd vite; vue-tsc --noEmit"` to check for errors.
+
+### Vue
+
+- use the Options API
+- use `Ko` prefix for Vue components (eg. KoKanjiCard.vue)
 
 ## Domain Terminology
 
@@ -124,7 +196,7 @@ Used throughout code, comments, and variable names:
 | Term         | Meaning                                               |
 | ------------ | ----------------------------------------------------- |
 | RTK          | *Remembering the Kanji* — book series by James Heisig |
-| frame number | RTK index for a kanji (e.g. 一 = 1, 二 = 2)           |
+| frame number | also known as "RTK index" (e.g. 一 = 1, 二 = 2)       |
 | UCS / ucsId  | Unicode code point identifying a kanji (UCS-2)        |
 | userId       | Integer value uniquely identifying a user             |
 

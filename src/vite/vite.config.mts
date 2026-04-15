@@ -66,21 +66,16 @@ export default defineConfig({
 
   resolve: {
     // ---------------------------------------------------------------------------
-    // Set custom aliases for imports, see  https://vitejs.dev/config/#resolve-alias
+    // Controls how imports are resolved at runtime/build time
+    // See https://vite.dev/config/shared-options#resolve-alias
     // ---------------------------------------------------------------------------
-    alias: [
-      { find: "@", replacement: path.resolve(__dirname, "./src") },
-      {
-        find: "@img",
-        replacement: path.resolve(__dirname, "./src/assets/img"),
-      },
-      { find: "@app", replacement: path.resolve(__dirname, "./src/app") },
-      { find: "@lib", replacement: path.resolve(__dirname, "./src/lib") },
-      {
-        find: "@old",
-        replacement: path.resolve(__dirname, "./src/app/legacy"),
-      },
-    ],
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@img": path.resolve(__dirname, "./src/assets/img"),
+      "@app": path.resolve(__dirname, "./src/app"),
+      "@lib": path.resolve(__dirname, "./src/lib"),
+      "@old": path.resolve(__dirname, "./src/app/legacy"),
+    },
   },
 
   plugins: [

@@ -119,25 +119,6 @@ Here is a table matching entries and what pages they are served on:
 | `entry-study.ts`       | /study/*                            |
 | `entry-styleguide.ts`  | /ux (accessible only to admin user) |
 
-Production build calls `batch/build-prod.sh`, which runs Vite then pre-parses the manifest into `config/vite-build.inc.php`. This manifest is used by `coreWebResponse::addViteEntries()` to insert the required js/css chunks for a given bundle. A module/action can specify the bundle to use in the view.yml file (eg. `apps/koohii/modules/study/config/view.yml`) by setting the `javascripts` key. If the javascript filename is in the pattern `src/entry-(name).ts` then it is recognized as a Vite bundle and the associated css/js dependencies are added to the response.
-
-Example entry that sets up a Vue component:
-
-```ts
-import VueInstance from "@lib/helpers/vue-instance";
-import $$, { domContentLoaded } from "@lib/dom";
-
-// defer initialization until DOM + deferred scripts are ready
-domContentLoaded(() => {
-  // find element by id, mount Vue component to it
-  const mount = $$("#WhereToMount")[0];
-  // note how an entry can be used on different pages, so we check if the element is present
-  if (mount) {
-    VueInstance(SpacedRepetitionForm, mount);
-  }
-});
-```
-
 ## Coding Standards
 
 - Use 2-space indentation for PHP, TypeScript, and CSS
@@ -204,11 +185,10 @@ Used throughout code, comments, and variable names:
 
 Read the following docs if it is relevant to your task, before you start working:
 
-| Document                  | Contents                                                           |
-| ------------------------- | ------------------------------------------------------------------ |
-| docs/core-database-orm.md | Reference for the database ORM and peer classes in `lib/peer/`     |
-| docs/front-end-api.md     | how to use the front-end API, how to create new endpoints          |
-| docs/symfony-mvc.md       | how to wire a new module from scratch, add API endpoint to backend |
+- **docs/core-database-orm.md** : read when writing queries or working with peer classes in `lib/peer/`
+- **docs/front-end-api.md** : read when adding or modifying frontend API calls or backend API endpoints
+- **docs/symfony-mvc.md** : read when creating a new module, action, template, or routing on the backend
+- **docs/vite-entries.md** : read when creating/modifying Vite entries, or passing data from PHP to frontend via KK globals
 
 ## External References
 

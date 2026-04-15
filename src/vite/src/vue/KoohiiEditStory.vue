@@ -176,7 +176,7 @@ import { defineComponent, nextTick } from "vue";
 import $$, { insertAfter, getNode } from "@lib/dom";
 import { getApi } from "@app/api/api";
 import type { KanjiData, PostUserStoryResponse } from "@app/api/models";
-import * as TRON from "@lib/tron";
+import { type TronInst } from "@lib/tron";
 import { checkForUnsupportedUtf } from "@/lib/cjk";
 import VueInstance from "@lib/helpers/vue-instance";
 import EditKeywordDialog from "@old/components/EditKeywordDialog";
@@ -283,7 +283,7 @@ export default defineComponent({
       return this.formErrors.length > 0;
     },
 
-    formHandleResponse(tron: TRON.TronInst<any>) {
+    formHandleResponse(tron: TronInst<any>) {
       this.formErrors = tron.getErrors();
     },
 
@@ -309,7 +309,7 @@ export default defineComponent({
           this.postStoryPublic,
           this.isReviewMode
         )
-        .then((tron: TRON.TronInst<PostUserStoryResponse>) => {
+        .then((tron: TronInst<PostUserStoryResponse>) => {
           KoohiiLoading.hide();
           this.formHandleResponse(tron);
           if (!tron.hasErrors()) {

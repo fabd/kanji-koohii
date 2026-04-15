@@ -47,10 +47,10 @@ export enum STATUS {
 export type TronProps = Dictionary<unknown>;
 
 export type TronMsg<T extends object> = {
-  status: STATUS;
-  props: T;
-  html: string;
-  errors: string[];
+  status: STATUS;   // EMPTY | FAILED | SUCCESS
+  props: T;         // typed response payload
+  html: string;     // optional embedded HTML
+  errors: string[]; // user-facing error messages
 };
 
 export type TronInst<T extends object> = {

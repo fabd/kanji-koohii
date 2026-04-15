@@ -1,5 +1,17 @@
 # Vite Entries & data flow between backend and frontend
 
+## Scripts execution
+
+1. **Vite bundles** are included in the document `<head>`. Because they are ESM modules, they are [implicitly deferred](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-defer)
+
+2. **php outputs data for Vue templating via a global `window.KK` object**. Because `<script>` tags are part of the document, this data is parsed _before_ deferred modules are executed.
+
+3. **deferred ESM modules are executed** after the document has been parsed, but *before* firing `DOMContentLoaded`.
+
+4. **DOMContentLoaded events firing**
+     - any `DOMContentLoaded` events set up with `koohii_onload_slot()` in the php templates will execute first since they were parsed as part of the document
+     - followed by `DOMContentLoaded` events set up with the `domContentLoaded` helper in Vite entries, in the order entries were included (`entry-common` first, then the page-specific entry)
+
 ## Vite entries
 
 Some Vite entries facts:
@@ -8,7 +20,8 @@ Some Vite entries facts:
 - `vite/src/entry-common.ts` is included in ALL pages, and *before* the page-specific entry, so it executes also first
 
 **Example entry that sets up a Vue component**. To simplify this common pattern, a `VueInstance` helper is available. This helper mounts a Vue 3 component to a DOM element with optional props.
-:
+
+In the following example $$ is a lightweight jQuery-like selector, and domContentLoaded is a helper that sets up a `DOMContentLoaded` event listener:
 
 ```ts
 import VueInstance from "@lib/helpers/vue-instance";
@@ -33,6 +46,34 @@ Note the VueInstance helper returns an object with an `unmount` method which can
 const vueInst = VueInstance(SpacedRepetitionForm, mount);
 // ... later in the code (for example a dialog component closes), unmount the component
 vueInst.unmount();
+```
+
+**When an entry mounts multiple components**, group the setup in a class and instantiate it from `domContentLoaded`. This keeps the entry readable and allows shared local state between mounts:
+
+```ts
+import VueInstance from "@lib/helpers/vue-instance";
+import $$, { domContentLoaded } from "@lib/dom";
+import { kk_globals_get } from "@app/root-bundle";
+import ComponentA from "@/vue/ComponentA.vue";
+import ComponentB from "@/vue/ComponentB.vue";
+
+class MyPageSetup {
+  constructor() {
+    const elA = $$("#MountA")[0];
+    if (elA) {
+      VueInstance(ComponentA, elA, kk_globals_get("PROPS_A"));
+    }
+
+    const elB = $$("#MountB")[0];
+    if (elB) {
+      VueInstance(ComponentB, elB);
+    }
+  }
+}
+
+domContentLoaded(() => {
+  new MyPageSetup();
+});
 ```
 
 ### How Vite entries are handled by the backend
@@ -157,18 +198,6 @@ When the layout is rendered a `<script>` block is generated, with the "onload" c
 });
 </script>
 ```
-
-## Scripts execution
-
-1. **Vite bundles** are included in the document `<head>`. Because they are ESM modules, they are [implicitly deferred](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-defer)
-
-2. **php outputs data for Vue templating via a global `window.KK` object**. Because `<script>` tags are part of the document, this data is parsed _before_ deferred modules are executed.
-
-3. **deferred ESM modules are executed** after the document has been parsed, but *before* firing `DOMContentLoaded`.
-
-4. **DOMContentLoaded events firing**
-     - any `DOMContentLoaded` events set up with `koohii_onload_slot()` in the php templates will execute first since they were parsed as part of the document
-     - followed by `DOMContentLoaded` events set up with the `domContentLoaded` helper in Vite entries, in the order entries were included (`entry-common` first, then the page-specific entry)
 
 ## See Also
 

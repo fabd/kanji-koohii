@@ -204,10 +204,11 @@ Used throughout code, comments, and variable names:
 
 Read the following docs if it is relevant to your task, before you start working:
 
-| Document                  | Contents                                                       |
-| ------------------------- | -------------------------------------------------------------- |
-| docs/core-database-orm.md | Reference for the database ORM and peer classes in `lib/peer/` |
-| docs/front-end-api.md     | how to use the front-end API, how to create new endpoints      |
+| Document                  | Contents                                                           |
+| ------------------------- | ------------------------------------------------------------------ |
+| docs/core-database-orm.md | Reference for the database ORM and peer classes in `lib/peer/`     |
+| docs/front-end-api.md     | how to use the front-end API, how to create new endpoints          |
+| docs/symfony-mvc.md       | how to wire a new module from scratch, add API endpoint to backend |
 
 ## External References
 

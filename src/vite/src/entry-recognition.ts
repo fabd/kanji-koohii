@@ -1,9 +1,9 @@
-import { domGetById, domContentLoaded } from "@lib/dom";
-import VueInstance from "@lib/helpers/vue-instance";
+import { domGetById, domContentLoaded } from "@/lib/dom";
+import VueInstance from "@/lib/helpers/vue-instance";
 
-import "@/assets/css/RecognitionApp.css";
+import "./app/recognition/RecognitionApp.css";
 
-import RecognitionApp from "@/vue/recognition/RecognitionApp.vue";
+import RecognitionApp from "@/app/recognition/RecognitionApp.vue";
 
 class RecognitionPage {
   constructor() {

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * The coreValidator class helps with the repetitive task of validating
  * data by using a configuration file to define the validation rules.
  *
@@ -11,6 +11,7 @@
  * to validate form data, but it could be data from an Ajax post, data
  * imported from a spreadsheet, etc.
  */
+
 class coreValidator
 {
   private $fields = [];
@@ -20,10 +21,8 @@ class coreValidator
    * Class constructor.
    *
    * Loads the validator configuration file.
-   *
-   * @param mixed $validatorName
    */
-  public function __construct($validatorName)
+  public function __construct(string $validatorName)
   {
     $configuration = $this->loadConfigurationFile($validatorName);
     $this->fields  = $configuration['fields'];
@@ -60,9 +59,9 @@ class coreValidator
   /**
    * Returns value for key in array, or default value.
    *
-   * @param mixed      $parameters
-   * @param mixed      $name
-   * @param mixed|null $default
+   * @param array<string, mixed> $parameters
+   * @param string               $name
+   * @param mixed|null           $default
    */
   protected function getParameter($parameters, $name, $default = null)
   {
@@ -72,8 +71,8 @@ class coreValidator
   /**
    * Returns true if key exists in array.
    *
-   * @param mixed $parameters
-   * @param mixed $name
+   * @param array<string, mixed> $parameters
+   * @param string               $name
    */
   protected function hasParameter($parameters, $name)
   {
@@ -83,8 +82,7 @@ class coreValidator
   /**
    * Validate the data and returns true if data passed the validation rules.
    *
-   * @param  data    an associative array of data keys and values
-   * @param mixed $data
+   * @param array<string, mixed> $data an associative array of data keys and values
    *
    * @return bool true if data is valid, false if one or more validations failed
    */
@@ -156,7 +154,9 @@ class coreValidator
 
     // Add error messages to the Request object
     if (!$valid) {
-      sfContext::getInstance()->getRequest()->setErrors($this->errors);
+      /** @var coreRequest $request */
+      $request = sfContext::getInstance()->getRequest();
+      $request->setErrors($this->errors);
     }
 
     return $valid;
@@ -165,10 +165,8 @@ class coreValidator
   /**
    * Sets an error message.
    *
-   * @param string Key
-   * @param string Error message
-   * @param mixed $name
-   * @param mixed $message
+   * @param string $name    Key
+   * @param string $message Error message
    */
   public function setError($name, $message)
   {
@@ -188,11 +186,9 @@ class coreValidator
   /**
    * Checks if an error exists for given key.
    *
-   * @param mixed $name
-   *
    * @return bool true if an error exists, false otherwise
    */
-  public function hasError($name)
+  public function hasError(string $name)
   {
     return array_key_exists($name, $this->errors);
   }
@@ -216,12 +212,9 @@ class coreValidator
    *    max
    *    max_error
    *
-   * @param mixed $value
-   * @param mixed $params
-   *
-   * @return mixed true if validates, or a an error message as a string
+   * @return string|true true if validates, or a an error message as a string
    */
-  protected function StringValidator($value, $params)
+  protected function StringValidator(string $value, array $params)
   {
     $min = $this->getParameter($params, 'min');
     if ($min !== null && mb_strlen(trim($value)) < $min) {

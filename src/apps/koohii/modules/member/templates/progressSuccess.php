@@ -1,5 +1,4 @@
 <?php
-use_helper('Gadgets');
 $sf_request->setParameter('_homeFooter', true);
 
 $userId = $sf_user->getUserId();

@@ -70,7 +70,7 @@ class StoriesPeer extends coreDatabaseTable
    * @param mixed $userId
    * @param mixed $ucsId
    *
-   * @return int story id (sid), or false (no result)
+   * @return false|int story id (sid), or false (no result)
    */
   public static function getStoryId($userId, $ucsId)
   {
@@ -125,7 +125,7 @@ class StoriesPeer extends coreDatabaseTable
       self::getInstance()->insert($data);
       $storyId = $db->lastInsertId();
     } else {
-      $result = $result && self::getInstance()->update($data, 'sid = ?', $storyId);
+      $result = self::getInstance()->update($data, 'sid = ?', $storyId);
     }
 
     // after insert or update we need a valid story id > 0
@@ -217,7 +217,7 @@ class StoriesPeer extends coreDatabaseTable
     // remove extra spaces
     $s = preg_replace('/\s\s+/u', ' ', $s);
 
-    $s = preg_replace('/(^|\s+)('.preg_quote($keyword).')/i', '<strong>$1$2</strong>', $s);
+    $s = preg_replace('/(^|\s+)('.preg_quote($keyword, '/').')/i', '<strong>$1$2</strong>', $s);
 
     // format mnemonic #keyword#
     $s = preg_replace('/#([^#]+)#/ui', '<strong>$1</strong>', $s);
@@ -289,16 +289,16 @@ class StoriesPeer extends coreDatabaseTable
    * Returns array of stories for the "Favourite" and "Newest" sections in the
    * Study page.
    *
-   * @param int   $ucsId   UCS-2 code value
-   * @param mixed $keyword
-   * @param mixed $userId
-   * @param mixed $type
+   * @param int    $ucsId   UCS-2 code value
+   * @param string $keyword
+   * @param int    $userId
+   * @param string $type
    *
    * @return array
    */
   public static function getSharedStories($ucsId, $keyword, $userId, $type)
   {
-    assert(is_int($ucsId) && $ucsId >= 0x3000);
+    assert($ucsId >= 0x3000);
 
     $db     = self::getInstance()->getDb();
     $select = $db->select();

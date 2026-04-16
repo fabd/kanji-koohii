@@ -28,9 +28,9 @@
  *                returns an error.
  *
  */
-import $$, { domGetById } from "@lib/dom";
-import AjaxPanel from "@old/ajaxpanel";
-import EventDelegator from "@lib/EventDelegator";
+import $$, { domGetById } from "@/lib/dom";
+import AjaxPanel from "@/app/legacy/ajaxpanel";
+import EventDelegator from "@/lib/EventDelegator";
 
 export default class AjaxTable {
   /** @type {HTMLElement} */

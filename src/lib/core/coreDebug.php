@@ -65,10 +65,11 @@ class DBG
   }
 
   //  Debug output and continue
-  public static function out()
+  public static function out(string $message, mixed ...$args): void
   {
-    $arguments = func_get_args();
-    $message   = func_num_args() > 1 ? call_user_func_array('sprintf', $arguments) : $arguments[0];
+    if (count($args)) {
+      $message = sprintf($message, ...$args);
+    }
     trigger_error($message, E_USER_NOTICE);
   }
 
@@ -92,7 +93,7 @@ class DBG
     } elseif (is_string($expr)) {
       echo '"'.$expr.'"';
     } elseif (is_object($expr) || is_array($expr)) {
-      echo var_dump($expr);
+      var_dump($expr);
     } else {
       echo $expr;
     }

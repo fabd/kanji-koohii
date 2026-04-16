@@ -17,12 +17,15 @@
 
     /* Modules */
     "module": "Preserve",
+
+    // Helps with:
+    //  - type checking
+    //  - IDE autocomplete / navigation
+    // ❗ Does NOT affect runtime or bundling
     "paths": {
       "@/*": ["./src/*"],
-      "@app/*": ["./src/app/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@old/*": ["./src/app/legacy/*"]
     },
+
     "resolveJsonModule": true,
     "types": ["node", "vite/client"],
 

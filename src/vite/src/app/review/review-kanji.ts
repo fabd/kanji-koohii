@@ -8,13 +8,13 @@
  *
  */
 
-import $$, { hasClass } from "@lib/dom";
-import KoDialog from "@/components/KoDialog";
-import DictLookupDialog from "@old/components/DictLookupDialog";
-import EditFlashcardDialog from "@old/components/EditFlashcardDialog";
-import EditStoryDialog from "@old/components/EditStoryDialog";
-import FlashcardReview, { FCRATE } from "@app/review/FlashcardReview";
-import ReviewPage from "@app/review/ReviewPage";
+import $$, { hasClass } from "@/lib/dom";
+import KoDialog from "@/app/common/components/KoDialog";
+import DictLookupDialog from "@/app/review/components/DictLookupDialog";
+import EditFlashcardDialog from "@/app/review/components/EditFlashcardDialog";
+import EditStoryDialog from "@/app/common/components/EditStoryDialog";
+import FlashcardReview, { FCRATE } from "@/app/review/FlashcardReview";
+import ReviewPage from "@/app/review/ReviewPage";
 import eventBus from "@/lib/EventBus";
 
 export default class KanjiReview {

@@ -80,7 +80,7 @@ interface uiSelectTableBinding
   /**
    * Delete one or more rows (if the row deletion icon was enabled).
    *
-   * @param array   Array of key => value for each primary key set in table config
+   * @param array $row_ids Array of key => value for each primary key set in table config
    */
   public function deleteRow(array $row_ids);
 }

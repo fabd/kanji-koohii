@@ -8,14 +8,14 @@
  */
 
 // stylesheets
-import "./assets/css/manage.build.css";
+import "./app/manage/manage.build.css";
 
-import $$, { domContentLoaded, domGetById } from "@lib/dom";
-import { getBodyED } from "@app/root-bundle";
-import AjaxPanel from "@old/ajaxpanel";
-import AjaxTable from "@old/ajaxtable";
-import EditKeywordDialog, { type EditKeywordCallback } from "@old/components/EditKeywordDialog";
-import SelectionTable from "@old/selectiontable";
+import $$, { domContentLoaded, domGetById } from "@/lib/dom";
+import { getBodyED } from "@/app/common/root-bundle";
+import AjaxPanel from "@/app/legacy/ajaxpanel";
+import AjaxTable from "@/app/legacy/ajaxtable";
+import EditKeywordDialog, { type EditKeywordCallback } from "@/app/common/components/EditKeywordDialog";
+import SelectionTable from "@/app/legacy/selectiontable";
 
 class ManagePage {
   private viewDiv?: Element;

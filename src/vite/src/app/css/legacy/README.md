@@ -1,0 +1,1 @@
+This folder contains legacy stylesheets to migrate over time.

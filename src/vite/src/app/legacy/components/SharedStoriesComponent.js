@@ -1,11 +1,11 @@
 /* global Koohii */
 // FIXME: legacy componet, should become a Vue at some point
 
-import $$, { domGetById, insertBefore } from "@lib/dom";
-import { getApi } from "@app/api/api";
-import AjaxTable from "@old/ajaxtable";
-import EventDelegator from "@lib/EventDelegator";
-import { applyCssTransition } from "@lib/dom";
+import $$, { domGetById, insertBefore } from "@/lib/dom";
+import { getApi } from "@/app/api/api";
+import AjaxTable from "@/app/legacy/ajaxtable";
+import EventDelegator from "@/lib/EventDelegator";
+import { applyCssTransition } from "@/lib/dom";
 
 // story in collapsed view with small "Unhide" link
 const CLASS_HIDDEN_STORY = "is-moderated";

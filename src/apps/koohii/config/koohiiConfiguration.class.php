@@ -26,7 +26,7 @@ function kk_get_response(): coreWebResponse
 
 class koohiiConfiguration extends sfApplicationConfiguration
 {
-  private $profile_time;
+  private float $profile_time;
 
   public function configure()
   {

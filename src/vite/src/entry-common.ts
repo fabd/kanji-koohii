@@ -5,10 +5,10 @@
  */
 
 // common stylesheets we want across the site
-import "./assets/css/main.build.css";
+import "./app/common/main.build.css";
 
 console.log("@entry-common");
 
 // init the site-wide navigation (desktop & mobile)
-import rootBundleInit from "@app/root-bundle";
+import rootBundleInit from "@/app/common/root-bundle";
 rootBundleInit();

@@ -1,0 +1,16 @@
+/*---------------------------------------------------------------------
+  See 
+    https://tailwindcss.com/docs/theme
+  ---------------------------------------------------------------------*/
+@theme {
+  --text-smx: 15px;
+  --text-md: 16px; /* alias for text-base */
+  --color-mint-500: powderblue;
+}
+
+/*---------------------------------------------------------------------
+  See 
+    https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources
+  ---------------------------------------------------------------------*/
+/* parse the Symfony & php templates */
+@source "../../../../apps";

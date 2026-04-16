@@ -177,12 +177,11 @@ class utf8
    * Returns false if the input array contains ints that represent
    * surrogates or are outside the Unicode range.
    *
-   * @param  mixed  Single integer code point or array of code points
-   * @param mixed $arr
+   * @param int|int[] $arr Single integer code point or array of code points
    *
-   * @return string UTF-8 string
+   * @return false|string UTF-8 string, or false on invalid input
    */
-  public static function fromUnicode($arr)
+  public static function fromUnicode(array|int $arr): false|string
   {
     if (!is_array($arr)) {
       $arr = [$arr];

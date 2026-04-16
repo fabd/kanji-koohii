@@ -1,11 +1,11 @@
-import VueInstance from "@lib/helpers/vue-instance";
-import $$, { domContentLoaded } from "@lib/dom";
-import { kk_globals_get } from "@app/root-bundle";
+import VueInstance from "@/lib/helpers/vue-instance";
+import $$, { domContentLoaded } from "@/lib/dom";
+import { kk_globals_get } from "@/app/common/root-bundle";
 import * as RTK from "@/lib/rtk";
 
-import KoLessonPane from "@/vue/KoLessonPane.vue";
-import KoPctBar from "@/vue/KoPctBar.vue";
-import KoLessonsChart from "@/vue/KoLessonsChart.vue";
+import KoLessonPane from "@/app/lessons/KoLessonPane.vue";
+import KoPctBar from "@/app/home/KoPctBar.vue";
+import KoLessonsChart from "@/app/lessons/KoLessonsChart.vue";
 
 class HomeDashboard {
   constructor() {

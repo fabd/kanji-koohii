@@ -43,6 +43,7 @@ class StoriesSharedPeer extends coreDatabaseTable
    */
   public static function invalidateStoriesCache($ucsId)
   {
+    /** @var sfViewCacheManager|null Symfony's phpdoc is incorrect */
     $viewCacheManager = sfContext::getInstance()->getViewCacheManager();
     if (null !== $viewCacheManager) {
       $viewCacheManager->remove('@sf_cache_partial?module=study&action=_SharedStories&sf_cache_key='.$ucsId);
@@ -74,11 +75,14 @@ class StoriesSharedPeer extends coreDatabaseTable
       // nothing to change
       return true;
     }
-    if ($exists && !$isPublic) {
-      // no longer shared
+
+    // exists and not public, no longer shared
+    if ($exists) {
       return $inst->delete('sid = ?', $storyId);
     }
-    if (!$exists && $isPublic) {
+
+    // does not exist and public
+    if ($isPublic) {
       // FIXME for now, maintain votes if made public again
       $count_votes   = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 1', [$userId, $ucsId]);
       $count_reports = (int) StoryVotesPeer::getInstance()->count('authorid = ? AND ucs_id = ? AND vote = 2', [$userId, $ucsId]);

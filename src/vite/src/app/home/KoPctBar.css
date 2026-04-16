@@ -1,0 +1,31 @@
+.ko-PctBar {
+  background-color: #cdcdcd;
+  border-bottom: 3px solid #a8a8a8;
+
+  --ko-pct-bar-h: 42px; /* height total with borders */
+  --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);
+  --ko-pct-bar-radius: 6px;
+
+  border-radius: var(--ko-pct-bar-radius);
+
+  height: var(--ko-pct-bar-h);
+}
+.ko-PctBar-fill {
+  @apply inline-block h-full px-3;
+  @apply rounded-md;
+  border-bottom: 3px solid #4b9227;
+  border-radius: var(--ko-pct-bar-radius);
+  box-shadow: 1px 3px 5px 0px #0002; /* very subtle depth :) */
+  background-color: var(--color-btn-success);
+  color: #fff;
+  font-size: 20px;
+  text-align: right;
+  line-height: var(--ko-pct-bar-fill-h);
+}
+
+.ko-PctBar.is-zero .ko-PctBar-fill {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  color: #2228;
+}

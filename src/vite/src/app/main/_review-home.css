@@ -1,0 +1,96 @@
+/**
+ * Styles for the SRS bar chart.
+ * 
+ * This is now included by the main stylesheet
+ *  
+ */
+
+@import "./_LeitnerChart.css";
+
+@media (max-width: 374px) {
+  #srs-home_actions .ko-Btn--srs {
+    font-size: 13px;
+    margin-right: 5px;
+  } /* iPhone 5 */
+}
+
+/* ---------------------------- */
+/* Due cards graph */
+/* ---------------------------- */
+
+/* barchart widget TODO */
+.barchart-container {
+  height: 100%;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+.barchart-chart {
+  height: 150px;
+  position: relative;
+}
+.barchart-grid {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: #ccc;
+}
+.barchart-cols {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+.barchart-cols li {
+  width: 14.28%;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  min-width: 12px;
+  height: 100%;
+  text-align: center;
+}
+.barchart-cols .bar {
+  position: absolute;
+  bottom: 0;
+  background: #72c569;
+  width: 75%;
+  left: 12%;
+  transition: height 0.3s ease-out;
+}
+.barchart-cols .lbl {
+  color: #929292;
+  font-size: 12px;
+  line-height: 19px;
+  white-space: nowrap;
+  position: absolute;
+  left: 50%;
+  bottom: -31px;
+  width: 72px;
+  height: 24px;
+  margin-left: -36px;
+  margin-bottom: 4px;
+}
+.barchart-cols .lbl strong {
+  color: #444;
+}
+.barchart-cols .val {
+  /*font-size:15px;*/
+  white-space: nowrap;
+  color: #72c569;
+  font-weight: bold;
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  width: 48px;
+  padding: 0;
+  margin-left: -24px;
+}
+.barchart-cols .bar.zero {
+  background: #888;
+}
+.barchart-cols .bar.zero .val {
+  color: #a5a59c;
+}
+.barchart-cols .bar.zero .lbl {
+}

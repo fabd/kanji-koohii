@@ -88,7 +88,7 @@
  *
  */
 
-import Lang from "@lib/lang";
+import Lang from "@/lib/lang";
 
 // types
 type StringHash = { [key: string]: string };
@@ -333,14 +333,6 @@ export { factory as default };
 // --------------------------------------------------------------------
 
 /**
- * Helper mainly to simplify JSDoc type cast, where we
- * KNOW the element reference is always valid (not null, not undefined).
- */
-export function asHtmlElement(el: any) {
-  return el as HTMLElement;
-}
-
-/**
  * Inserts the new node as the next sibling of the reference node.
  *
  * @returns The added child node
@@ -387,14 +379,6 @@ export function getStyle(element: HTMLElement, styleName: string): string | null
   } catch {
     return element.style.getPropertyValue(styleName);
   }
-}
-
-/**
- * Always return an Element from either a selector or an Element.
- */
-export function getNode<EL extends Element>(sel: EL | string): EL | null {
-  const node = isString(sel) ? (document.querySelector(sel) as EL) : sel;
-  return node;
 }
 
 export const domContentLoaded = (fn: EventListener) => {

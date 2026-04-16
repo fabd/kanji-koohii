@@ -16,8 +16,8 @@
  */
 // @ts-check
 
-import { getBodyED } from "@app/root-bundle";
-import Keyboard from "@old/keyboard";
+import { getBodyED } from "@/app/common/root-bundle";
+import Keyboard from "@/app/legacy/keyboard";
 
 export default class ReviewPage {
   /** @type {TReviewPageActionFn} */

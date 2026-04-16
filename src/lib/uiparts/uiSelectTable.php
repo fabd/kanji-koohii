@@ -36,14 +36,27 @@ class uiSelectTable
     JSNEWROW_CLASS = 'JsNewRow';
 
   // the binding interface for this table instance
-  protected $binding;
-  // request parameter holder
-  protected $request;
+  protected uiSelectTableBinding $binding;
+
+  protected sfParameterHolder $request;
+  protected coreDatabaseSelect $select;
+
   protected $sortOrders = [0 => 'ASC', 1 => 'DESC'];
+
   // this will hold the configuration data returned by getConfig() as native php objects
   protected $columns;
+
   // fetch results from Select object prepared for getTableBody()
-  protected $rowdata;
+  protected array $rowdata = [];
+
+  protected array $errorMessages = [];
+  protected array $badRows       = [];
+  protected array $newRows       = [];
+  protected array $postRowData   = [];
+  protected string $errors       = '0';
+  protected ?string $sortColumn  = null;
+  protected int $sortOrder       = 0;
+
   // each one of those default settings can be overwritten in the config
   protected $settings = [
     'editable' => false,
@@ -95,7 +108,7 @@ class uiSelectTable
   /**
    * Configure the 'settings' part of the table binding options.
    *
-   * @param  array  Hash with parameters to match $settings (cf. uiSelectTableBinding)
+   * @param array $settings Hash with parameters to match $settings (cf. uiSelectTableBinding)
    */
   private function configureSettings($settings)
   {
@@ -108,16 +121,8 @@ class uiSelectTable
     }
   }
 
-  /**
-   * @return object $this (allows chaining calls)
-   */
-  private function bind(uiSelectTableBinding $bindObj)
+  private function bind(uiSelectTableBinding $bindObj): void
   {
-    // check
-    if (!$bindObj instanceof uiSelectTableBinding) {
-      throw new sfException('Binding parameter not of required class');
-    }
-
     // get configuration as object, or convert from JSON if string
     $config = $bindObj->getConfig();
     if (is_string($config)) {
@@ -198,9 +203,7 @@ class uiSelectTable
   {
     // verify row ids are valid
     $rowids = $this->request->get(self::POSTDATA_DELETE_ROWIDS, []);
-    if (!$this->verifyRowIds($rowids)) {
-      exit;
-    }
+    $this->verifyRowIds($rowids);
 
     foreach ($rowids as $row_id) {
       if (!$this->binding->deleteRow($row_id)) {
@@ -211,12 +214,11 @@ class uiSelectTable
 
   /**
    * Verifies an array of row ids to see that they were not tampered with.
+   * Throws if any row id is invalid.
    *
-   * @param array Array of row ids from post data (ie. with checksum)
-   *
-   * @return bool true if all row ids are valid
+   * @param array $rowids Array of row ids from post data (ie. with checksum)
    */
-  private function verifyRowIds(array $rowids)
+  private function verifyRowIds(array $rowids): void
   {
     foreach ($rowids as $id) {
       if ($id !== self::POSTDATA_NEW_ROWID && !$this->isValidRowId($id)) {
@@ -237,11 +239,10 @@ class uiSelectTable
   {
     // verify row ids are valid
     $rowids = $this->request->get(self::POSTDATA_ROWIDS, []);
-    if (!$this->verifyRowIds($rowids)) {
-      exit;
-    }
+    $this->verifyRowIds($rowids);
 
     $num_rows = count($rowids);
+    $postRows = [];
 
     // collect columns of editable data
     $postCols = [];
@@ -274,10 +275,11 @@ class uiSelectTable
     // for new rows, generate incremental primary keys
     $primaryKeys = (array) $this->settings['primaryKey'];
     for ($i = 0; $i < $num_rows; $i++) {
-      $bNewRow = $rowids[$i] === self::POSTDATA_NEW_ROWID;
+      $bNewRow     = $rowids[$i] === self::POSTDATA_NEW_ROWID;
+      $rowid_parts = [];
+      $ipk         = 1;
       if (!$bNewRow) {
         $rowid_parts = explode(self::COMPOUNDROWID_SEPARATOR, $rowids[$i]);
-        $ipk         = 1;
       } else {
         // fixme : generated values should never match possible key values
         // space character is unlikely to appear in primary key values
@@ -308,9 +310,9 @@ class uiSelectTable
    * Validate post data for modified rows and new rows,
    * save valid rows, and mark invalid rows.
    *
-   * @return true if no validation errors
+   * @return bool true if no validation errors
    */
-  private function validatePostRowData()
+  private function validatePostRowData(): bool
   {
     $this->badRows = [];
 
@@ -342,7 +344,7 @@ class uiSelectTable
       }
     }
 
-    return count($this->badRows) == 0;
+    return count($this->badRows) === 0;
   }
 
   /**
@@ -431,9 +433,11 @@ EOD;
    */
   private function getColHead($colDef)
   {
-    $width   = !empty($colDef->width) ? 'width="'.$colDef->width.'%"' : '';
-    $href    = '#';
-    $caption = $colDef->caption;
+    $width      = !empty($colDef->width) ? 'width="'.$colDef->width.'%"' : '';
+    $href       = '#';
+    $caption    = $colDef->caption;
+    $classAttr  = '';
+    $next_order = 0;
 
     // set css hook for sort order icon
     if ($this->sortColumn == $colDef->colSort) {
@@ -541,11 +545,9 @@ EOD;
   /**
    * The counterpart to getRowId(), verify the the row ids match the checksum.
    *
-   * @param mixed $rowid
-   *
-   * @return true if it's correct
+   * @return bool true if it's correct
    */
-  private function isValidRowId($rowid)
+  private function isValidRowId(string $rowid): bool
   {
     $ids = explode(self::COMPOUNDROWID_SEPARATOR, $rowid);
     assert(count($ids) >= 2);
@@ -648,12 +650,8 @@ EOD;
 
   /**
    * Return html for a single table cell and data, add styles for validation errors.
-   *
-   * @param mixed $colDef
-   * @param mixed $colData
-   * @param mixed $isError
    */
-  private function getTableCell($colDef, $colData, $isError = false)
+  private function getTableCell(mixed $colDef, ?string $colData, bool $isError = false)
   {
     $cssClass = $colDef->cssClass ?? '';
     if ($isError) {
@@ -669,8 +667,8 @@ EOD;
         $colData = htmlspecialchars($colData);
       }
 
-      // emtpy values need &nbsp; or table borders won't display properly
-      if (!isset($colData)) {
+      // empty values need &nbsp; or table borders won't display properly
+      if ($colData === '') {
         $colData = '&nbsp;';
       }
 

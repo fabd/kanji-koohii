@@ -10,7 +10,7 @@
  *
  */
 
-import $$, { domGetById, px } from "@lib/dom";
+import $$, { domGetById, px } from "@/lib/dom";
 
 const DEFAULT_MESSAGE = "Loading...";
 

@@ -33,14 +33,16 @@ class KanjisPeer extends coreDatabaseTable
   /**
    * Get character information, given the UCS-2 code value.
    *
-   * Datatype conversions:
-   *    ucs_id     =>   (int)
+   * Returns row data with numeric columns as integers.
+   *    (int) framenum (extended frame number, based on user's index)
+   *    (int) ucs_id
+   *    (int) strokecount
    *
    * @param int $ucsId UCS-2 code value
    *
    * @return false|object Kanjis table row data (plus 'framenum'), or false
    */
-  public static function getKanjiByUCS($ucsId)
+  public static function getKanjiByUCS(int $ucsId)
   {
     // FIXME   remove the validation code (validate higher up!! + cohesion)
     assert(ctype_digit($ucsId) && rtkIndex::isExtendedIndex($ucsId));

@@ -1,0 +1,45 @@
+.ko-LastViewed {
+  @apply text-smx;
+}
+.ko-LastViewed-list {
+  @apply -mx-2;
+}
+
+.ko-LastViewed-item {
+  @apply mb-px;
+}
+
+.ko-LastViewed-link {
+  @apply leading-none no-underline hover:no-underline;
+  @apply rounded-sm;
+  @apply flex items-center h-[1.75em];
+
+  /* apply pl-2 here to visually align kanjis with the title in the box */
+  /*  if the keyword is clipped then it's fine, allow for smaller padding on the right end */
+  @apply p-1 pl-2;
+
+  @apply hover:bg-[#DBD4C3];
+
+  &.is-active {
+    @apply bg-[#DBD4C3];
+  }
+}
+
+.ko-LastViewed-kan {
+  @apply text-[#42413d] mr-3;
+}
+
+.ko-LastViewed-idx {
+  flex: 0 0 auto;
+  @apply w-[40px] mr-3 text-center text-[#42413d];
+}
+
+.ko-LastViewed-kwd {
+  @apply font-serif;
+
+  /* truncate keyword +fix for flex item */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-width: 0;
+}

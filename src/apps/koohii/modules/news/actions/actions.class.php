@@ -10,11 +10,11 @@ class newsActions extends sfActions
    *
    *   /news/:year/:month
    *
-   * @param mixed $request
    */
-  public function executeIndex($request)
+  public function executeIndex(sfWebRequest $request)
   {
-    [$year, $month] = phpToolkit::array_splice_values($request->getParameterHolder()->getAll(), ['year', 'month']);
+    $year = $request->getParameter('year');
+    $month = $request->getParameter('month');
 
     if (!$year) {
       $this->select = 'recent';

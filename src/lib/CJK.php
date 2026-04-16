@@ -91,9 +91,9 @@ class CJK
    *
    * @return bool
    */
-  public static function isKanjiChar($char)
+  public static function isKanjiChar(string $char)
   {
-    return is_string($char) && (1 === preg_match('/^['.self::PREG_CJK_COMMON.']$/u', $char));
+    return (1 === preg_match('/^['.self::PREG_CJK_COMMON.']$/u', $char));
   }
 
   /**
@@ -101,14 +101,14 @@ class CJK
    * (note: to be precise, the range that is defined by the constants herein,
    * which matches what characters are in the database).
    *
-   * @param int $ucs UCS code value as integer
+   * @param int $ucs UCS code value
    *
    * @return bool
    */
-  public static function isCJKUnifiedUCS($ucs)
+  public static function isCJKUnifiedUCS(int $ucs)
   {
     // CJK unifed ideographs - Common and uncommon kanji (4e00 - 9faf)
-    return is_int($ucs) && $ucs >= self::CJK_UNIFIED_BEGIN && $ucs <= self::CJK_UNIFIED_END;
+    return $ucs >= self::CJK_UNIFIED_BEGIN && $ucs <= self::CJK_UNIFIED_END;
   }
 
   /**

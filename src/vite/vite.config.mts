@@ -7,6 +7,8 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // import { visualizer } from 'rollup-plugin-visualizer'
 
+const srcDir = path.resolve(__dirname, "./src");
+
 export default defineConfig({
   build: {
     /**
@@ -54,10 +56,6 @@ export default defineConfig({
               name: "vendor",
               test: /node_modules/,
             },
-            {
-              name: "vue",
-              test: /src\/vue/,
-            },
           ],
         },
       },
@@ -66,21 +64,12 @@ export default defineConfig({
 
   resolve: {
     // ---------------------------------------------------------------------------
-    // Set custom aliases for imports, see  https://vitejs.dev/config/#resolve-alias
+    // Controls how imports are resolved at runtime/build time
+    // See https://vite.dev/config/shared-options#resolve-alias
     // ---------------------------------------------------------------------------
-    alias: [
-      { find: "@", replacement: path.resolve(__dirname, "./src") },
-      {
-        find: "@img",
-        replacement: path.resolve(__dirname, "./src/assets/img"),
-      },
-      { find: "@app", replacement: path.resolve(__dirname, "./src/app") },
-      { find: "@lib", replacement: path.resolve(__dirname, "./src/lib") },
-      {
-        find: "@old",
-        replacement: path.resolve(__dirname, "./src/app/legacy"),
-      },
-    ],
+    alias: {
+      "@": srcDir,
+    },
   },
 
   plugins: [

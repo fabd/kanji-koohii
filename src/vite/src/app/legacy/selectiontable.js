@@ -11,8 +11,8 @@
  * @see       See related backend class uiSelectionState.php
  */
 
-import $$, { stopEvent } from "@lib/dom";
-import AjaxTable from "@old/ajaxtable";
+import $$, { stopEvent } from "@/lib/dom";
+import AjaxTable from "@/app/legacy/ajaxtable";
 
 export default class SelectionTable {
   /**

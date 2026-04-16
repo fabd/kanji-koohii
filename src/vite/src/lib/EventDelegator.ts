@@ -58,7 +58,7 @@
  *
  */
 
-import Lang from "@lib/lang";
+import Lang from "@/lib/lang";
 
 type EDCallback = (event: Event, target: Element) => boolean | void;
 type EDListener = {

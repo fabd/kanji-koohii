@@ -89,12 +89,12 @@
  *
  */
 
-import $$, { domGetById } from "@lib/dom";
-import Lang from "@lib/lang";
-import AjaxIndicator from "@old/ajaxindicator";
-import EventCache from "@lib/EventCache";
-import EventDispatcher from "@lib/EventDispatcher";
-import KoohiiLoading from "@/vue/KoohiiLoading";
+import $$, { domGetById } from "@/lib/dom";
+import Lang from "@/lib/lang";
+import AjaxIndicator from "@/app/legacy/ajaxindicator";
+import EventCache from "@/lib/EventCache";
+import EventDispatcher from "@/lib/EventDispatcher";
+import KoohiiLoading from "@/app/common/components/KoohiiLoading";
 import AjaxRequest from "./AjaxRequest";
 import { Tron } from "@/lib/tron";
 

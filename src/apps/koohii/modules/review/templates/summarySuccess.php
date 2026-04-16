@@ -1,5 +1,5 @@
 <?php
-use_helper('Widgets', 'Form', 'Gadgets', 'CJK', 'Links');
+use_helper('Widgets', 'Form', 'CJK', 'Links');
 
 // unix timestamp recorded at start of last review to match updated flashcards
 $ts_start = $sf_params->get('ts_start', 0);

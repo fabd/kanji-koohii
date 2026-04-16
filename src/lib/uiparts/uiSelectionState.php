@@ -6,7 +6,7 @@
  */
 class uiSelectionState
 {
-  protected static $user;
+  protected static ?rtkUser $user = null;
 
   protected $items = [];
 
@@ -107,10 +107,8 @@ class uiSelectionState
 
   /**
    * Returns active user session.
-   *
-   * @return coreUser
    */
-  public static function getUser()
+  public static function getUser(): rtkUser
   {
     if (self::$user === null) {
       self::$user = kk_get_user();

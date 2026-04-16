@@ -60,6 +60,25 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 
+type TLeitnerChart = {
+  boxes: TLeitnerBox[];
+  urls: {
+    restudy: string;
+    new: string;
+    due: string;
+  };
+};
+
+type TLeitnerBox = [TLeitnerStack, TLeitnerStack];
+
+type TLeitnerStack = {
+  type: TLeitnerStackId;
+  index: number;
+  value: number;
+};
+
+type TLeitnerStackId = "failed" | "new" | "due" | "fresh" | "nill";
+
 export default defineComponent({
   props: {
     // id of a parent container used to determine the available horizontal space

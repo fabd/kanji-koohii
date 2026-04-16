@@ -31,7 +31,9 @@ These commands can be run from the host directly:
 
 Docker container runs PHP 8.3; we write PHP 8.2-compatible code to match the production server.
 
-The folder structure is a typical Symfony 1.4 project with some additional folders:
+The folder structure is a typical Symfony 1.4 project with some additional folders.
+
+The `vite` folder is the root folder for the front-end, it is organized in a vertical structure where JS, TS and CSS are grouped by features or the pages they are used on.
 
 ```
 # (paths relative to src/)
@@ -68,21 +70,32 @@ tools/                       folder is not relevant to most tasks
 vite/                        this is the root folder for Vite dev server and Vite build
   src/                       all the frontend code lives here (typescript, css, and Vue files)
     app/                     app-specific modules and page logic
+      account/               account & settings pages
+      admin/                 admin dashboard related
       api/                   async API based on an Axios wrapper that always resolves
                              (errors are returned as values, never thrown).
-      dict/                  related to the kanji/japanese dictionary features
-      legacy/                do not add new code here — only move code out of this folder
-      review/                Flashcard Review page functionality
-      study/                 Study page features
-      root-bundle.ts         utilities available to all pages (imported by entry-common.ts)
-    assets/
-      css/                   stylesheets
+      common/                features that are not page-specific go here
+        components/          components that are not page-specific
         main.build.css       the main stylesheet
+        root-bundle.ts       utilities available to all pages (imported by entry-common.ts)
+      css/                   common styles, most stylesheets here are included in main.build.css
+        legacy/              do not add new code here — only move code out of this folder
+      dict/                  related to the kanji/japanese dictionary features
+      home/                  home page dashboard
+      landing/               landing page
+      learn-more/            the Learn More page
+      lessons/               View All Lessons page, components related to lessons
+      main/                  the SRS chart page
+      manage/                the Manage Flashcards pages
+      nav/                   mobile and desktop nav
+      recognition/           Kanji Recognition (WIP)
+      review/                Flashcard Review functionality
+      review-custom/         Custom Review page
+      study/                 the Study page, study search box, shared stories, all study related
+      support/               the Support/Donate page
+      ux/                    the /ux section of the app (internal docs & demos, admin only)
     lib/                     helpers and utilities that are not page-specific
     types/                   TypeScript type definitions
-    vue/                     components (.vue and .ts files)
-      styleguide/            for the /ux section of the app (internal docs & demos, admin only)
-      ...
     entry-common.ts          loaded on every page, *in addition* to the page specific entry
     entry-home.ts            dashboard
     entry-study.ts           study pages

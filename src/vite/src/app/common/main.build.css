@@ -1,0 +1,484 @@
+/* ==================================================================== */
+/* LEGACY main.build stylesheet                                         */
+/* ==================================================================== */
+
+/**********************************************************************
+  Following is equivalent to @import "tailwindcss";
+
+  We "pop" the utilities outside of a layer, so that Tailwind utilities
+  override our own css. So for example h3 can have a built in margin
+  bottom in our css, and we can override it with `mb-0` in template.
+
+  *********************************************************************/
+
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+
+/* tailwind customization */
+@import "../css/_tailwind.css";
+
+/* Bootstrap 5 minimal build (forms) */
+@import "../css/_bootstrap.css";
+
+/* koohii specific resets (*after* Bootstrap/tailwind resets) */
+@import "../css/_base.css";
+@import "../css/_variables.css";
+@import "../css/_layout.css";
+
+/* components */
+@import "../css/_box.css";
+@import "../css/_buttons.css";
+@import "../css/_transitions.css";
+@import "../css/_markdown.css";
+@import "../css/_widgets.css";
+@import "../css/legacy/_widgets.css";
+@import "../common/components/KoDialog.css";
+@import "../common/_KanjiCard.css";
+@import "../review/_ReviewSummary.css";
+@import "../study/components/KoStudyLastViewed.css";
+@import "../home/KoPctBar.css";
+@import "../nav/_navbar.css";
+@import "../nav/_mobile-nav.css";
+
+/* pages */
+@import "../admin/_admin.css";
+@import "../support/_about-support.css";
+@import "../home/_home-dashboard.css";
+@import "../learn-more/_learn-more.css";
+@import "../main/_review-home.css";
+
+/* Bootstrap 5 minimal build (forms) */
+
+.bg-confirm {
+  background-color: var(--clr-bg-gl);
+}
+.text-confirm {
+  color: var(--clr-bg-gd);
+}
+
+/* SRS color coding used for text */
+.clr-srs-due {
+  color: var(--clr-srs-due);
+}
+.clr-srs-undue {
+  color: var(--clr-srs-undue);
+}
+.clr-srs-fail {
+  color: #f1311a;
+}
+.clr-srs-new {
+  color: #1c90d4;
+}
+
+/* gradients */
+.gdt-ocean-blue {
+  background: #deeef8; /* Old browsers */
+  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%);
+}
+
+/* ---------------------------- */
+/* UI */
+/* ---------------------------- */
+
+/* disable selection for GUI items */
+.uiGUI {
+  outline: none;
+  user-select: none;
+}
+
+/*.action_top-right { position:absolute; right:0; top:0; }*/
+
+/**
+ * ui_select_pager() helper
+ *
+ * Float the "rows per page" FilterStd widget to the left, and the pager to the right.
+ */
+.uiPagerDiv {
+  margin: 0 0 5px;
+}
+.uiPagerDiv .uiFilterStd {
+  float: left;
+}
+.uiPagerDiv .uiPager {
+  float: right;
+}
+/* smaller */
+.uiPagerDiv .uiFilterStd .lbl {
+  font:
+    11px/1.1em Arial,
+    sans-serif;
+}
+.uiPagerDiv .uiFilterStd a {
+  padding: 4px 5px 4px;
+}
+
+/* ---------------------------- */
+/* Gadgets */
+/* ---------------------------- */
+
+/* 'blocky' tables */
+.blocky {
+  font-size: 14px;
+  line-height: 1.2;
+  width: 100%;
+  border-left: 1px solid var(--clr-bg-1m);
+  border-collapse: collapse;
+  text-align: left;
+
+  th {
+    background-color: var(--clr-bg-1);
+    border-top-width: 0;
+  }
+  th,
+  td {
+    border-top: 1px solid var(--clr-bg-1);
+    border-right: 1px solid var(--clr-bg-1);
+    padding: 0.7em 0.8em;
+  }
+  td {
+    background: var(--clr-bg-nav);
+  }
+}
+
+/* used for the link to the RTK Supplement in Account > RTK Edition */
+a.link-pdf {
+  padding: 2px 0 2px 22px;
+  background: url(/images/1.0/ico/link_pdf.png) no-repeat 0 50%;
+}
+
+/* ---------------------------- */
+/* LAYOUT */
+/* ---------------------------- */
+
+/* box styles */
+div.col-box {
+  position: relative;
+}
+div.col-box-bis {
+  margin-top: 10px;
+}
+
+.box-side {
+  border-radius: 3px;
+  background-color: var(--clr-bg-1);
+  padding: 15px 10px;
+}
+
+/* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
+.kkSymfonyCache {
+  border: 1px solid #f00;
+}
+
+/* ---------------------------- */
+/* Main Layout                  */
+/* ---------------------------- */
+
+/* extend the footer end of gradient color to bottom of page */
+body.with-footer {
+  background: #f0ddd4;
+}
+main {
+  background: var(--clr-bg-body);
+}
+
+main {
+  padding-bottom: 5em;
+}
+
+.ko-MainContainer {
+  @apply pt-6;
+}
+
+.study-index .ko-MainContainer,
+.study-edit .ko-MainContainer {
+  @apply max-lg:pt-0;
+}
+
+/* ---------------------------- */
+/* Footer & Support             */
+/* ---------------------------- */
+.ko-PageFooter-grad {
+  /* http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
+  background: #f8c5e4; /* Old browsers */
+  background: linear-gradient(to bottom, #f8c5e4 0%, #f0ddd4 100%);
+}
+
+.ko-PageFooter {
+  text-align: center;
+  padding: 0 0 5em;
+  color: #8b1566;
+  @apply text-smx sm:text-base;
+
+  a {
+    color: #e400b1;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #e400b1;
+    text-decoration: underline;
+  }
+
+  /* fontawesome icons */
+  .fa {
+    color: #9c3d7b;
+    margin-right: 0.5em;
+  }
+}
+
+.ko-PageFooter-links {
+  a {
+    padding-left: 0.8em;
+    padding-right: 0.8em; /*tap target*/
+    color: #9c3d7b;
+    text-decoration: none;
+  }
+}
+
+.ko-PageFooter-dots {
+  width: 100%;
+  height: 29px;
+  background: var(--clr-bg-body) url(/koohii/landing/bubbles_gdt.png) repeat-x 0
+    0;
+}
+
+/* ---------------------------- */
+/* Markdown content */
+/* ---------------------------- */
+
+/* Site news (posts using markdown) */
+.ko-SiteNews .markdown h2,
+.ko-SiteNews .markdown h3 {
+  color: #000;
+  font-weight: normal;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+.ko-SiteNews .markdown h2:not(:first-of-type),
+.ko-SiteNews .markdown h3:not(:first-of-type) {
+  margin-top: calc(var(--vunit) * 2);
+}
+
+/* ---------------------------- */
+/* Site news (old posts using raw html) */
+/* ---------------------------- */
+
+/*.layout-news span.news-date { font-size:16px; color:#69664E; white-space:nowrap; }*/
+
+.ko-SiteNews {
+  --color-blog-heading: #fa3d60;
+  line-height: 1.5em;
+  font-family: Arial, sans-serif;
+}
+
+.ko-SiteNews-list {
+  list-style: none;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+/*.ko-SiteNews .content ul { margin:1em 0 1em 2em; }*/
+
+.ko-SiteNews-hd {
+  font-size: 18px;
+  border-bottom: 1px solid var(--color-blog-heading);
+}
+
+.ko-SiteNews-hd a {
+  color: var(--color-blog-heading);
+  text-decoration: none;
+  font-weight: bold;
+}
+.ko-SiteNews-date {
+  font-size: 0.9em;
+  float: right;
+  padding: 4px 5px;
+  margin-top: -4px;
+  border-radius: 3px;
+  color: #568249;
+  background: #dff7d3;
+}
+
+.ko-SiteNews-body {
+  margin: 0 0 25px;
+  padding: 0 0 2em; /*border-bottom:1px solid var(--clr-bg-1);*/
+  color: #3c3c3c;
+  clear: both;
+}
+
+.ko-SiteNews blockquote,
+.ko-SiteNews p.quote {
+  background: url(/images/1.0/news/blockquote_begin.gif) no-repeat 6px 4px;
+  margin: 0 0 1em;
+  padding: 0 0 0 36px;
+  font-style: italic;
+}
+.ko-SiteNews a.readmore {
+  color: #8fb052;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.ko-SiteNews .img-break {
+  padding: 10px 0;
+  margin: 0 0 1em;
+}
+
+/* monthly archives */
+.ko-NewsByMonth {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  a {
+    padding: 5px 10px;
+    display: block;
+    text-decoration: none;
+    @apply border-dotted border-[#d4cdba] border-b;
+    &:hover {
+      background-color: var(--clr-bg-1);
+    }
+  }
+  span {
+    color: #454545;
+  }
+}
+
+/* ---------------------------- */
+/* Confirmation & error boxes */
+/* ---------------------------- */
+
+.actionconfirmationmessage {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #ffffcc;
+  margin: 1em 0;
+}
+.actionconfirmationmessage p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.confirmwhatwasdone {
+  padding: 10px;
+  background: #cdecae;
+  margin: 1em 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgba(170, 165, 130, 0.3);
+  /* -webkit-transition:background-color 0.5s; transition:background-color 0.5s;*/
+}
+.confirmwhatwasdone p {
+  margin: 0 0 10px;
+  color: #262;
+}
+
+.rounded-css3 {
+  border-radius: 5px;
+}
+
+.formerrormessage {
+  border: 1px solid #f5ab8f;
+  padding: 10px;
+  background: #ffe0a8;
+  margin: 1em 0;
+  color: #f33;
+}
+.formerrormessage p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.warningmessagebox {
+  border: 1px solid #f5ab8f;
+  padding: 10px;
+  background: #ffe0a8;
+  margin: 1em 0;
+}
+.warningmessagebox p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+/**
+ * Links bound to user interface actions.
+ */
+a.cancel,
+a.delete {
+  color: red;
+  padding: 1px;
+}
+a.cancel:hover,
+a.delete:hover {
+  color: white;
+  background: red;
+}
+
+a.proceed {
+  color: #005cb1;
+  padding: 1px;
+}
+a.proceed:hover {
+  color: white;
+  background: #005cb1;
+}
+
+a.subdued {
+  color: #666;
+  padding: 1px;
+}
+a:hover.subdued {
+  background: #666;
+  color: #fff;
+  padding: 1px;
+}
+
+/* ------------------ */
+/* CJK Fonts          */
+/* ------------------ */
+
+/* class name output by cjk_lang_ja() helper */
+.cj-k {
+  font-family:
+    "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝",
+    "Droid Sans Japanese", "Droid Serif", serif;
+}
+
+/* -------------------------------------------------------------------- */
+/* Restudy List */
+/* -------------------------------------------------------------------- */
+.ko-RestudyList {
+  /* small "learned" tag in the Restudy List */
+  &-learned {
+    @apply px-[.4em] py-[.3em] rounded-sm;
+    @apply bg-[#6cbe6b] text-[#fff];
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* Misc */
+/* -------------------------------------------------------------------- */
+/* not a fan of the FA7 icon, override with the FA5 version in SVG form
+   https://fontawesome.com/v5/icons/book-open?f=classic&s=solid  */
+.fa.fa-book-open {
+  vertical-align: -2px;
+  width: 16px;
+  height: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512'%3E%3Cpath fill='%23fff' d='M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z'/%3E%3C/svg%3E") no-repeat;
+  &::before {
+    content: initial;
+  }
+}
+
+/* --------------------------------------------------------------------
+// Our own utilities & Tailwind utilities
+//  imported last, so that we can override component styles (in CSS files)
+//  with utilities in the templates.
+// -------------------------------------------------------------------- */
+@import "../css/_utilities.css";
+
+@import "tailwindcss/utilities.css";

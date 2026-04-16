@@ -56,10 +56,6 @@ export default defineConfig({
               name: "vendor",
               test: /node_modules/,
             },
-            {
-              name: "vue",
-              test: /src\/vue/,
-            },
           ],
         },
       },

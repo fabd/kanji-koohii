@@ -1,4 +1,4 @@
-import { kk_globals_get } from "@/app/root-bundle";
+import { kk_globals_get } from "@/app/common/root-bundle";
 import * as RTK from "@/lib/rtk";
 
 type TUserKanjiMap = Map<TUcsId, TUserKanjiCard>;

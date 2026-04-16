@@ -3,9 +3,9 @@
 import { domGetById, domContentLoaded } from "@/lib/dom";
 import VueInstance from "@/lib/helpers/vue-instance";
 
-import "@/assets/css/pages/styleguide/docs.css";
+import "./app/ux/docs.css";
 
-import UxIndex from "@/vue/styleguide/ux-index.vue";
+import UxIndex from "@/app/ux/ux-index.vue";
 
 domContentLoaded(() => {
   console.log("@entry-styleguide");

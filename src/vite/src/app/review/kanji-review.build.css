@@ -1,0 +1,44 @@
+/* See main.build.scss for Tailwind import explanation */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+
+/* tailwind customization */
+@import "../css/_tailwind.css";
+
+/* old css for components not using Vue */
+@import "../review/components/_EditFlashcardDialog.css";
+@import "../study/components/_EditStory.css";
+
+/* old css for the "Flashcard Review" page */
+@import "../review/components/_Flashcard.css";
+
+/* old css for the "Kanji Flashcard" layout */
+@import "../review/components/_FlashcardKanji.css";
+
+body {
+  padding-top: 0;
+}
+
+/* --------------------------------------------------------------------
+// Flashcard Review buttons
+// -------------------------------------------------------------------- */
+
+.ko-Btn--review {
+  height: 42px;
+  font-weight: bold;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+
+  &:active {
+    transform: scale(0.975, 0.95);
+  }
+}
+
+/* --------------------------------------------------------------------
+// Our own utilities & Tailwind utilities
+//  imported last, so that we can override component styles (in CSS files)
+//  with utilities in the templates.
+// -------------------------------------------------------------------- */
+@import "../css/_utilities.css";
+
+@import "tailwindcss/utilities.css";

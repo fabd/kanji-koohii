@@ -7,16 +7,16 @@
  */
 
 // import legacy stylesheets
-import "./assets/css/kanji-review.build.css";
+import "./app/review/kanji-review.build.css";
 
 import $$, { domContentLoaded } from "@/lib/dom";
-import { kk_globals_get } from "@/app/root-bundle";
+import { kk_globals_get } from "@/app/common/root-bundle";
 import VueInstance from "@/lib/helpers/vue-instance";
 
-import LeitnerChart from "@/vue/LeitnerChart.vue";
+import LeitnerChart from "@/app/main/LeitnerChart.vue";
 import KanjiReview from "@/app/review/review-kanji";
 import VocabReview from "@/app/review/review-vocab";
-import CustomReviewFromJapText from "@/vue/review/CustomReviewFromJapText.vue";
+import CustomReviewFromJapText from "@/app/review-custom/CustomReviewFromJapText.vue";
 
 domContentLoaded(() => {
   console.log("@entry-review");

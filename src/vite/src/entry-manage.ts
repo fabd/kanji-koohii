@@ -8,13 +8,13 @@
  */
 
 // stylesheets
-import "./assets/css/manage.build.css";
+import "./app/manage/manage.build.css";
 
 import $$, { domContentLoaded, domGetById } from "@/lib/dom";
-import { getBodyED } from "@/app/root-bundle";
+import { getBodyED } from "@/app/common/root-bundle";
 import AjaxPanel from "@/app/legacy/ajaxpanel";
 import AjaxTable from "@/app/legacy/ajaxtable";
-import EditKeywordDialog, { type EditKeywordCallback } from "@/app/legacy/components/EditKeywordDialog";
+import EditKeywordDialog, { type EditKeywordCallback } from "@/app/common/components/EditKeywordDialog";
 import SelectionTable from "@/app/legacy/selectiontable";
 
 class ManagePage {

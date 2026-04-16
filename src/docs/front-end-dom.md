@@ -294,7 +294,7 @@ Use `VueInstance` to mount a Vue 3 component into a DOM element from non-Vue cod
 
 ```ts
 import VueInstance from "@/lib/helpers/vue-instance";
-import MyComponent from "@/vue/MyComponent.vue";
+import MyComponent from "@/app/study/MyComponent.vue";
 ```
 
 ```ts

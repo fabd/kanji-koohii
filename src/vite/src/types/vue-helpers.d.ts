@@ -4,7 +4,7 @@ type TVuePropsData = Record<string, unknown>;
 /**
  * Extract component instance (component T's custom properties, methods, etc)
  *
- *   import MyComponent from "@/vue/MyComponent.vue";
+ *   import MyComponent from "@/app/study/MyComponent.vue";
  *   const instance: TVueInstanceOf<typeof MyComponent>;
  *   const { vm } = VueInstance(MyComponent, elMount);
  *   instance = vm;

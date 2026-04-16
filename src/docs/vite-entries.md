@@ -25,7 +25,7 @@ In the following example $$ is a lightweight jQuery-like selector, and domConten
 
 ```ts
 import VueInstance from "@/lib/helpers/vue-instance";
-import SomeComponent from "@/vue/SomeComponent.vue";
+import SomeComponent from "@/app/study/SomeComponent.vue";
 import $$, { domContentLoaded } from "@/lib/dom";
 
 // defer initialization until DOM + deferred scripts are ready
@@ -54,8 +54,8 @@ vueInst.unmount();
 import VueInstance from "@/lib/helpers/vue-instance";
 import $$, { domContentLoaded } from "@/lib/dom";
 import { kk_globals_get } from "@/app/root-bundle";
-import ComponentA from "@/vue/ComponentA.vue";
-import ComponentB from "@/vue/ComponentB.vue";
+import ComponentA from "@/app/study/ComponentA.vue";
+import ComponentB from "@/app/study/ComponentB.vue";
 
 class MyPageSetup {
   constructor() {
@@ -124,8 +124,8 @@ KK.BASE_URL = "http://kanji.koohii.com/";
 **JS side** — `kk_globals_get()` and `kk_globals_has()` are exported from `@app/root-bundle` and provide typed access to the KK object:
 
 ```ts
-import { kk_globals_get } from "src/app/root-bundle";
-import KoPctBar from "src/vue/KoPctBar.vue";
+import { kk_globals_get } from "@/app/common/root-bundle";
+import KoPctBar from "@/app/home/KoPctBar.vue";
 
 // ... page setup logic ...
 

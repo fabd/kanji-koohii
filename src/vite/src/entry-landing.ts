@@ -8,9 +8,9 @@
  */
 
 // stylesheets
-import "./assets/css/home.build.css";
+import "./app/landing/home.build.css";
 
-import rootBundleInit from "@/app/root-bundle";
+import rootBundleInit from "@/app/common/root-bundle";
 rootBundleInit();
 
 console.log("@entry-landing");

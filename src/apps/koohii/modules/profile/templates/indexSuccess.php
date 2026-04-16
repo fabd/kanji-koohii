@@ -1,6 +1,6 @@
 <?php
 use_helper('Widgets', 'Date', 'SimpleDate');
-$sf_request->setParameter('_homeFooter', true);
+with_footer();
 
 $profile_uid = $profile_user->userid;
 

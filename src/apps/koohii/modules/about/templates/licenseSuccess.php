@@ -1,6 +1,4 @@
-<?php
-$sf_request->setParameter('_homeFooter', true);
-?>
+<?php with_footer() ?>
 <div class="row pt-8">
 
   <div class="col-lg-3 mb-8">

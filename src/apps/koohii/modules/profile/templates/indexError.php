@@ -1,6 +1,4 @@
-<?php
-$sf_request->setParameter('_homeFooter', true);
-?>
+<?php with_footer(); ?>
 <div class="pt-8 markdown">
 
   <h2>Oops! Member Not Found</h2>

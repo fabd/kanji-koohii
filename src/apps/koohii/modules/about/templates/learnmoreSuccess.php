@@ -1,7 +1,4 @@
-<?php
-$sf_request->setParameter('_homeFooter', true);
-?>
-
+<?php with_footer(); ?>
 <div class="row">
 
   <div class="col-md-3 mb-8">
@@ -9,7 +6,7 @@ $sf_request->setParameter('_homeFooter', true);
       <?= $tocHtml; ?>
     </div>
   </div>
-  
+
   <div class="col-md-9 markdown ko-DocMain">
     <?= $docHtml; ?>
   </div>

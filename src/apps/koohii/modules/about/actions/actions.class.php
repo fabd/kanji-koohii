@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Template variables declared here (for PHPStan).
+ *
+ * @property string $docHtml
+ * @property string $tocHtml
+ */
 class aboutActions extends sfActions
 {
   public function executeIndex(coreRequest $request)
@@ -61,7 +67,7 @@ class aboutActions extends sfActions
    *
    * @return string the TOC as a list in markdown format
    */
-  private function parseMarkdownHeadings(string &$markdown)
+  private function parseMarkdownHeadings(string &$markdown): string
   {
     // ignore h1, make h2 the first level in the TOC
     $minLevel = 2;
@@ -100,14 +106,14 @@ class aboutActions extends sfActions
         return $matches[0].$fragmentMd;
       },
       $markdown
-    );
+    ) ?? $markdown;
 
     // LOG::info($tocList);
 
     return implode("\n", $tocList);
   }
 
-  private function slugify(string $text)
+  private function slugify(string $text): string
   {
     $text = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $text)));
 

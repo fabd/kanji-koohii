@@ -12,6 +12,17 @@ define('KK_ENV_PROD', false);
 define('KK_ENV_FORK', false);
 define('CJ_MODE', 'rtk');
 
+// Defined conditionally inside koohiiConfiguration::initialize()
+function _CJ(string $sid): string
+{
+  return $sid;
+}
+
+function _CJ_U(string $sid): string
+{
+  return ucfirst(_CJ($sid));
+}
+
 // Symfony 1.x expects a concrete ProjectConfiguration class by convention;
 // referenced internally when resolving sfProjectConfiguration subclasses.
 class ProjectConfiguration extends sfProjectConfiguration

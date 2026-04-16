@@ -92,10 +92,8 @@ abstract class coreDatabaseTable
    *
    * The only reason we instantiate the class is that static variables
    * can not be overriden in the extending class as of Php 5.2.
-   *
-   * @param mixed $peerclass
    */
-  public function __construct($peerclass)
+  public function __construct(string $peerclass)
   {
     // static reference for convenience
     self::$db = kk_get_database();
@@ -109,9 +107,6 @@ abstract class coreDatabaseTable
     if ($this->tableName === null) {
       $this->tableName = strtolower($matches[1]);
     }
-
-    // columns check
-    assert(is_array($this->columns));
 
     $this->initialize();
   }
@@ -158,12 +153,12 @@ abstract class coreDatabaseTable
   /**
    * Return count of rows in table.
    *
-   * @param mixed|null $where
-   * @param mixed|null $bindParams
+   * @param string|null $where      optional WHERE clause with '?' placeholders
+   * @param mixed       $bindParams single value or array of values for quoted parameters
    *
    * @return mixed number of rows, or FALSE on failure
    */
-  public function count($where = null, $bindParams = null)
+  public function count(?string $where = null, mixed $bindParams = null)
   {
     $stmt = self::$db->select('count(*)')->from($this->getName());
     if ($where !== null) {
@@ -179,12 +174,11 @@ abstract class coreDatabaseTable
    *
    * This method updates the CREATED_ON and UPDATED_ON timestamps if present.
    *
-   * @param  array   an associative array of properties (column names) and data
-   * @param mixed $data
+   * @param array $data an associative array of properties (column names) and data
    *
    * @return bool TRUE on success, FALSE on error
    */
-  public function insert($data = [])
+  public function insert(array $data = [])
   {
     // creation timestamp
     if (in_array(self::CREATED_ON, $this->getColumns()) && !isset($data[self::CREATED_ON])) {
@@ -204,15 +198,13 @@ abstract class coreDatabaseTable
    *
    * Automatically update the UPDATED_ON timestamp if present.
    *
-   * @param  array   an associative array of properties (column names) and data
-   * @param  string  where clause with optional '?' quoted parameters
-   * @param  mixed   single value or array of values for quoted parameters
-   * @param mixed|null $where
-   * @param mixed|null $bindParams
+   * @param array       $data       an associative array of properties (column names) and data
+   * @param string|null $where      where clause with optional '?' quoted parameters
+   * @param mixed       $bindParams single value or array of values for quoted parameters
    *
    * @return bool TRUE on success, FALSE on error
    */
-  public function update(array $data, $where = null, $bindParams = null)
+  public function update(array $data, ?string $where = null, mixed $bindParams = null)
   {
     // update timestamp
     if (in_array(self::UPDATED_ON, $this->getColumns())
@@ -228,9 +220,8 @@ abstract class coreDatabaseTable
    * replace statement. This is a shortcut for the insert() and update()
    * methods.
    *
-   * @param  array   an associative array of properties (column names) and data
-   * @param  string  where clause with optional '?' quoted parameters
-   * @param  mixed   single value or array of values for quoted parameters
+   * @param array $data        an associative array of properties (column names) and data
+   * @param array $primaryKeys an associative array of primary key column names and values
    *
    * @return bool TRUE on success, FALSE on error
    */
@@ -254,14 +245,12 @@ abstract class coreDatabaseTable
   /**
    * Delete all rows, or matching rows with optional where clause.
    *
-   * @param  string  where clause with optional '?' quoted parameters
-   * @param  mixed   single value or array of values for quoted parameters
-   * @param mixed|null $where
-   * @param mixed|null $bindParams
+   * @param string|null $where      where clause with optional '?' quoted parameters
+   * @param mixed       $bindParams single value or array of values for quoted parameters
    *
    * @return bool TRUE on success, FALSE on error
    */
-  public function delete($where = null, $bindParams = null)
+  public function delete(?string $where = null, mixed $bindParams = null)
   {
     return self::$db->delete($this->getName(), $where, $bindParams);
   }

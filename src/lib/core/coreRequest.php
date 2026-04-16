@@ -78,10 +78,9 @@ class coreRequest extends sfWebRequest
   /**
    * Retrieves an error message.
    *
-   * @param string Key
-   * @param mixed $name
+   * @param string $name Key
    *
-   * @return string An error message or null if the error doesn't exist
+   * @return string|null An error message or null if the error doesn't exist
    */
   public function getError($name)
   {
@@ -101,10 +100,9 @@ class coreRequest extends sfWebRequest
   /**
    * Removes an error.
    *
-   * @param string An error name
-   * @param mixed $name
+   * @param string $name An error name
    *
-   * @return string An error message, if the error was removed, otherwise null
+   * @return string|null An error message, if the error was removed, otherwise null
    */
   public function removeError($name)
   {
@@ -120,10 +118,8 @@ class coreRequest extends sfWebRequest
   /**
    * Sets an error message.
    *
-   * @param string Key
-   * @param string Error message
-   * @param mixed $name
-   * @param mixed $message
+   * @param string $name    Key
+   * @param string $message Error message
    */
   public function setError($name, $message)
   {
@@ -136,10 +132,9 @@ class coreRequest extends sfWebRequest
    * If an existing error name matches any of the keys in the supplied
    * array, the associated message will be overridden.
    *
-   * @param array An associative array of errors and their associated messages
-   * @param mixed $errors
+   * @param array<string, string> $errors An associative array of errors and their associated messages
    */
-  public function setErrors($errors)
+  public function setErrors(array $errors)
   {
     $this->errors = array_merge($this->errors, $errors);
   }

@@ -14,10 +14,7 @@ class rtkImportKeywords
 
   public const MAX_KEYWORD = 40;
 
-  /**
-   * @param object $request Object with setError() method
-   */
-  public function __construct($request)
+  public function __construct(coreRequest $request)
   {
     $this->request = $request;
   }
@@ -25,11 +22,9 @@ class rtkImportKeywords
   /**
    * Parse data into kanji => keyword associations.
    *
-   * @param string $selection
-   *
-   * @return bool returns false if any error happended during parse or selection is empty
+   * @return false|list<array{string, string, int}> returns false if any error happened during parse or selection is empty
    */
-  public function parse($selection)
+  public function parse(string $selection): array|false
   {
     $parse = [];
 
@@ -52,7 +47,7 @@ class rtkImportKeywords
     if (count($parse) <= 0) {
       $this->request->setError('x', 'Import data could not be parsed.');
 
-      return;
+      return false;
     }
 
     // $this->parsed = $parse;
@@ -63,11 +58,9 @@ class rtkImportKeywords
   /**
    * Validate the imported keyword data, and prepare session data.
    *
-   * @param mixed $data
-   *
    * @return bool returns true if the imported data is valid
    */
-  public function validate($data)
+  public function validate(array $data): bool
   {
     $parse = [];
 
@@ -97,7 +90,7 @@ class rtkImportKeywords
 
     // prepare serializable array as ucs => keyword
     $keywords = [];
-    foreach ($parse as $index => $data) {
+    foreach ($parse as $data) {
       $keywords[$data[0]] = $data[1];
     }
     $this->keywords = $keywords;
@@ -113,11 +106,10 @@ class rtkImportKeywords
    *
    * @param int         $ucsId   UCS-2 code
    * @param coreRequest $request sets an error message, if any
-   * @param mixed|null  $lineNr
    *
    * @return bool true if the character (UCS) is valid and allowed for customized keywords
    */
-  public static function validateKanji($ucsId, $request, $lineNr = null)
+  public static function validateKanji(int $ucsId, coreRequest $request, ?int $lineNr = null): bool
   {
     if (!CJK::isCJKUnifiedUCS($ucsId)) {
       $request->setError('x', sprintf('Unsupported character (Heisig index, UCS code or kanji) %s', self::atLine($lineNr)));
@@ -128,7 +120,7 @@ class rtkImportKeywords
     return true;
   }
 
-  public static function validateKeyword($keyword, $request, $lineNr = null)
+  public static function validateKeyword(string $keyword, coreRequest $request, ?int $lineNr = null): bool
   {
     if (empty($keyword) || preg_match('/^\s*$/', $keyword)) {
       $request->setError('x', sprintf('Empty keyword %s.', self::atLine($lineNr)));
@@ -153,12 +145,8 @@ class rtkImportKeywords
 
   /**
    * Return line number string for error messages, or nothing if it is null.
-   *
-   * @param mixed $lineNr
-   *
-   * @return string
    */
-  public static function atLine($lineNr)
+  public static function atLine(?int $lineNr): string
   {
     if ($lineNr !== null) {
       return ' at line '.$lineNr;
@@ -178,7 +166,7 @@ class rtkImportKeywords
 
   public function getTableBody()
   {
-    sfProjectConfiguration::getActive()->loadHelpers(['SimpleDate', 'CJK']);
+    sfProjectConfiguration::getActive()->loadHelpers(['Escaping', 'SimpleDate', 'CJK']);
 
     $rows = [];
     foreach ($this->keywords as $ucs => $keyword) {

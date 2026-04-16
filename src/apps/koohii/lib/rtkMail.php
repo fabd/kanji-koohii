@@ -182,7 +182,7 @@ class rtkMail extends MailAbstractAPI
    */
   public static function parseAddress(string $address)
   {
-    $address = trim($address ?? '');
+    $address = trim($address);
     assert(!empty($address));
 
     $name  = '';

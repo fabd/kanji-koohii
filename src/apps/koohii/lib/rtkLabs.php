@@ -568,9 +568,7 @@ class rtkLabs
         $compound = $row->compound; // mb_ereg_replace($u8kanji, $highlight[0].$u8kanji.$highlight[1], $row->compound);
 
         // highlight kanji pronunciation in the full reading
-        if ($highlight[0] !== '') {
-          $reading = self::getFormattedReading($db, $row->dictid, $ucsId, $highlight);
-        }
+        $reading = $highlight[0] !== '' ? self::getFormattedReading($db, $row->dictid, $ucsId, $highlight) : '';
 
         $on = ['compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/* , 'type' => (int)$row->type */];
       } elseif (false === $kun && $row->type == self::TYPE_KUN) {
@@ -578,9 +576,7 @@ class rtkLabs
 
         $compound = $row->compound; // mb_ereg_replace($u8kanji, $highlight[0].$u8kanji.$highlight[1], $row->compound);
 
-        if ($highlight[0] !== '') {
-          $reading = self::getFormattedReading($db, $row->dictid, $ucsId, $highlight);
-        }
+        $reading = $highlight[0] !== '' ? self::getFormattedReading($db, $row->dictid, $ucsId, $highlight) : '';
 
         $kun = ['compound' => $compound, 'reading' => $reading, 'gloss' => $row->glossary/* , 'type' => (int)$row->type */];
       }

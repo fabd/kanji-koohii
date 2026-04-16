@@ -14,10 +14,10 @@ class defaultActions extends sfActions
   /**
    * Error page for page not found (404) error.
    */
-  public function executeError404() {}
+  public function executeError404(coreRequest $request) {}
 
   /**
    * Warning page for restricted area - requires login.
    */
-  public function executeSecure() {}
+  public function executeSecure(coreRequest $request) {}
 }

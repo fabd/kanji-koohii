@@ -4,9 +4,9 @@ class homeActions extends sfActions
   /**
    * Home page.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     if (kk_get_user()->isAuthenticated()) {
       return 'Member';
@@ -20,9 +20,9 @@ class homeActions extends sfActions
   /**
    * Sign In form.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeLogin($request)
+  public function executeLogin(coreRequest $request)
   {
     $request->setParameter('_homeFooter', true);
 
@@ -84,9 +84,9 @@ class homeActions extends sfActions
   /**
    * Sign Out.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeLogout($request)
+  public function executeLogout(coreRequest $request)
   {
     kk_get_user()->signOutAndClearCookie();
 
@@ -98,7 +98,7 @@ class homeActions extends sfActions
    *
    * @param sfWebRequest $request
    */
-  public function executeContact($request)
+  public function executeContact(coreRequest $request)
   {
     if ($request->getMethod() !== sfRequest::POST) {
       return;
@@ -220,9 +220,9 @@ END;
   /**
    * Display the active members list.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeMemberslist($request)
+  public function executeMemberslist(coreRequest $request)
   {
     ActiveMembersPeer::deleteInactiveMembers();
   }
@@ -230,9 +230,9 @@ END;
   /**
    * Active members list table ajax update.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeMemberslisttable($request)
+  public function executeMemberslisttable(coreRequest $request)
   {
     $tron = new JsTron();
     $tron->setHtml($this->getComponent('home', 'MembersList'));
@@ -251,9 +251,9 @@ END;
    *
    *   ManageSfCache::clearCacheWildcard('home', '_RssFeed');
    *
-   * @param mixed $request
+   * 
    */
-  public function executeRssfeed($request)
+  public function executeRssfeed(coreRequest $request)
   {
     $response = $this->getResponse();
     $response->setContentType('application/rss+xml; charset=UTF-8');

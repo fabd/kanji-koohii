@@ -31,12 +31,12 @@ class apiActions extends sfActions
     'TESTING',
   ];
 
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     $this->redirect('api/docs');
   }
 
-  public function executeV1($request)
+  public function executeV1(coreRequest $request)
   {
     // DBG::request();exit;
 
@@ -92,7 +92,7 @@ class apiActions extends sfActions
     return $this->renderJson($rsp);
   }
 
-  public function executeDocs()
+  public function executeDocs(coreRequest $request)
   {
     $this->setLayout('docuteLayout');
   }
@@ -152,7 +152,7 @@ class apiActions extends sfActions
   /**
    * API Methods.
    *
-   * @param mixed $request
+   * 
    */
   protected function API_accountInfo($request)
   {
@@ -176,7 +176,7 @@ class apiActions extends sfActions
   }
 
   /**
-   * @param mixed $request
+   * 
    */
   protected function API_reviewFetch($request)
   {
@@ -229,7 +229,7 @@ class apiActions extends sfActions
    *   2 : Invalid card range (from, to)
    *   3 : Invalid type for SRS review ("type").
    *
-   * @param mixed $request
+   * 
    */
   protected function API_reviewStart($request)
   {
@@ -316,7 +316,7 @@ class apiActions extends sfActions
   /**
    * TODO    Return error message if a flashcard is non existent.
    *
-   * @param mixed $request
+   * 
    */
   protected function API_reviewSync($request)
   {
@@ -388,7 +388,7 @@ class apiActions extends sfActions
    * Returns ids of all restudy kanji plus the ids of those which are marked as learned
    * (for clients updating their study info, single rq synthesizing what they could get via multiple rq's).
    *
-   * @param mixed $request
+   * 
    */
   protected function API_studyInfo($request)
   {

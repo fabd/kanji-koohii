@@ -1,14 +1,14 @@
 <?php
 class labsActions extends sfActions
 {
-  public function executeIndex($request) {}
+  public function executeIndex(coreRequest $request) {}
 
   /**
    * Start iVocabShuffle flashcard review using Heisig #.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeShuffle1($request)
+  public function executeShuffle1(coreRequest $request)
   {
     $this->setLayout('fullscreenLayout');
 
@@ -31,9 +31,9 @@ class labsActions extends sfActions
   /**
    * Start iVocabShuffle flashcard review using learned kanji in the SRS!
    *
-   * @param mixed $request
+   * 
    */
-  public function executeShuffle2($request)
+  public function executeShuffle2(coreRequest $request)
   {
     $this->setLayout('fullscreenLayout');
 
@@ -52,9 +52,9 @@ class labsActions extends sfActions
    *
    * @see  FlashcardReview.php for POST request parameters.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeAjax($request)
+  public function executeAjax(coreRequest $request)
   {
     $fcrData = $request->getContentJson();
 

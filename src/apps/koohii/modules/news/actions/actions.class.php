@@ -25,7 +25,7 @@ class newsActions extends sfActions
     }
   }
 
-  public function executePost($request)
+  public function executePost(coreRequest $request)
   {
     $user = kk_get_user();
 
@@ -107,9 +107,9 @@ class newsActions extends sfActions
    *
    *   /news/id/:id
    *
-   * @param mixed $request
+   * 
    */
-  public function executeDetail($request)
+  public function executeDetail(coreRequest $request)
   {
     $postId = (int) $request->getParameter('id');
     $this->forward404Unless($postId > 0, 'This news post does not exist.');

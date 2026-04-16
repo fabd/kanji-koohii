@@ -29,7 +29,7 @@ class accountActions extends sfActions
     return $regcount < self::MAX_REGS_BETWEEN_TIME;
   }
 
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     $userId = kk_get_user()->getUserId();
     //    $this->redirect('account/edit');
@@ -45,9 +45,9 @@ class accountActions extends sfActions
   /**
    * Create a new account.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeCreate($request)
+  public function executeCreate(coreRequest $request)
   {
     $sfs = StopForumSpam::getInstance();
 
@@ -187,9 +187,9 @@ class accountActions extends sfActions
   /**
    * Delete Account.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeDelete($request)
+  public function executeDelete(coreRequest $request)
   {
     $user     = kk_get_user();
     $userId   = $user->getUserId();
@@ -260,9 +260,9 @@ class accountActions extends sfActions
   /**
    * Edit Account.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeEdit($request)
+  public function executeEdit(coreRequest $request)
   {
     $user = kk_get_user();
 
@@ -314,9 +314,9 @@ class accountActions extends sfActions
    * Still too simplistic, ideally should add another step so that the password
    * is not automatically reset.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeForgotPassword($request)
+  public function executeForgotPassword(coreRequest $request)
   {
     if ($request->getMethod() != sfRequest::POST) {
       return sfView::SUCCESS;
@@ -355,9 +355,9 @@ class accountActions extends sfActions
    *
    * Update the user's password on the RevTK site AND the corresponding PunBB forum account.
    *
-   * @param mixed $request
+   * 
    */
-  public function executePassword($request)
+  public function executePassword(coreRequest $request)
   {
     if ($request->getMethod() != sfRequest::POST) {
       return sfView::SUCCESS;
@@ -409,7 +409,7 @@ class accountActions extends sfActions
     $request->setParameter('newpassword2', '');
   }
 
-  public function executeFlashcards($request)
+  public function executeFlashcards(coreRequest $request)
   {
     $user = kk_get_user();
 
@@ -430,7 +430,7 @@ class accountActions extends sfActions
     }
   }
 
-  public function executeSpacedrepetition($request)
+  public function executeSpacedrepetition(coreRequest $request)
   {
     /** @var rtkUser */
     $user = kk_get_user();
@@ -470,7 +470,7 @@ class accountActions extends sfActions
     ];
   }
 
-  public function executeSequence($request)
+  public function executeSequence(coreRequest $request)
   {
     if ($request->getMethod() != sfRequest::POST) {
       $curSeq   = rtkIndex::getSequenceInfo();
@@ -501,9 +501,9 @@ class accountActions extends sfActions
    *
    *  https://kanji.koohii.com/account/patreon ? code=<single use code> & state=<string>
    *
-   * @param mixed $request
+   * 
    */
-  public function executePatreon($request)
+  public function executePatreon(coreRequest $request)
   {
     require_once sfConfig::get('sf_lib_dir').'/vendor/Patreon/__patreon.php';
 

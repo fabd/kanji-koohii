@@ -2,7 +2,7 @@
 
 class miscActions extends sfActions
 {
-  public function executeIndex($request) {}
+  public function executeIndex(coreRequest $request) {}
 
   /**
    * Note: similar to the View All Lessons page, we include the original
@@ -21,7 +21,7 @@ class miscActions extends sfActions
    *
    * @param coreRequest $request
    */
-  public function executeReading($request)
+  public function executeReading(coreRequest $request)
   {
     $userId = kk_get_user()->getUserId();
 

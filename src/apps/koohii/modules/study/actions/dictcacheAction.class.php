@@ -16,7 +16,7 @@ class dictcacheAction extends sfAction
    * Request:
    *   chars           string of kanjis to lookup
    *
-   * @param [type] $request
+   * @param coreRequest $request
    */
   public function execute($request)
   {

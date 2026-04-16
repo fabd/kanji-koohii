@@ -7,7 +7,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     // set local pref default value
     $this->filter = kk_get_user()->getLocalPrefs()->sync('review.graph.filter', null, '');
@@ -23,7 +23,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeCustom($request)
+  public function executeCustom(coreRequest $request)
   {
     $userId             = kk_get_user()->getUserId();
     $this->knowncount   = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
@@ -33,7 +33,7 @@ class reviewActions extends sfActions
     $request->setParameter('shuffle', 1);
   }
 
-  public function executeVocab($request)
+  public function executeVocab(coreRequest $request)
   {
     $userId             = kk_get_user()->getUserId();
     $this->learnedcount = ReviewsPeer::getReviewedFlashcardCount($userId, rtkLabs::VOCABSHUFFLE_MINBOX);
@@ -44,7 +44,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeAjaxLeitnerGraph($request)
+  public function executeAjaxLeitnerGraph(coreRequest $request)
   {
     $filter = $request->getParameter('filter', '');
     if (!preg_match('/^(all|rtk1|rtk3)$/', $filter)) {
@@ -72,7 +72,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeFree($request)
+  public function executeFree(coreRequest $request)
   {
     $this->forward('review', 'review');
   }
@@ -100,7 +100,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeReview($request)
+  public function executeReview(coreRequest $request)
   {
     $this->setLayout('fullscreenLayout');
 
@@ -236,7 +236,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeSummary($request)
+  public function executeSummary(coreRequest $request)
   {
     // free mode review flag
     $this->fc_free = $request->getParameter('fc_free', 0);
@@ -264,7 +264,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeAjaxsrs($request)
+  public function executeAjaxsrs(coreRequest $request)
   {
     $options = [
       'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
@@ -279,7 +279,7 @@ class reviewActions extends sfActions
    *
    * @param sfRequest $request
    */
-  public function executeAjaxfree($request)
+  public function executeAjaxfree(coreRequest $request)
   {
     $options = [
       'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
@@ -351,7 +351,7 @@ class reviewActions extends sfActions
   /**
    * Summary Table ajax.
    */
-  public function executeSummaryTable($request)
+  public function executeSummaryTable(coreRequest $request)
   {
     $ts_start = $request->getParameter('ts_start', 0);
     $this->forward404Unless(BaseValidators::validateInteger($ts_start));

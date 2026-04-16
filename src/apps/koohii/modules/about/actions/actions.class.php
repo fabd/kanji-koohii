@@ -2,12 +2,12 @@
 
 class aboutActions extends sfActions
 {
-  public function executeIndex()
+  public function executeIndex(coreRequest $request)
   {
     $this->forward('about', 'about');
   }
 
-  public function executeAbout()
+  public function executeAbout(coreRequest $request)
   {
     $response = $this->getResponse();
 
@@ -27,9 +27,9 @@ class aboutActions extends sfActions
     $throttler->setTimeout();
   }
 
-  public function executeLicense() {}
+  public function executeLicense(coreRequest $request) {}
 
-  public function executeLearnmore()
+  public function executeLearnmore(coreRequest $request)
   {
     $filename = dirname(__FILE__).'/../templates/learnmore.md';
     if (false === ($contents = file_get_contents($filename))) {
@@ -54,7 +54,7 @@ class aboutActions extends sfActions
     $this->tocHtml = $tocHtml;
   }
 
-  public function executeSupport() {}
+  public function executeSupport(coreRequest $request) {}
 
   /**
    * @param string $markdown the main document from which to retrieve TOC

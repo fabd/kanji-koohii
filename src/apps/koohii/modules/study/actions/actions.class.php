@@ -20,9 +20,9 @@ class studyActions extends sfActions
   /**
    * Study page.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeIndex($request) {}
+  public function executeIndex(coreRequest $request) {}
 
   /**
    * Study Page Search.
@@ -33,7 +33,7 @@ class studyActions extends sfActions
    *
    * @param coreRequest $request
    */
-  public function executeEdit($request)
+  public function executeEdit(coreRequest $request)
   {
     $userId = kk_get_user()->getUserId();
 
@@ -163,9 +163,9 @@ class studyActions extends sfActions
    * Because of the redirect, browser history doesn't keep
    * this step, so the user can go "Back" without repeating this action.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeClear($request)
+  public function executeClear(coreRequest $request)
   {
     LearnedKanjiPeer::clearAll(kk_get_user()->getUserId());
 
@@ -247,16 +247,16 @@ class studyActions extends sfActions
   /**
    * Failed Kanji List.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeFailedlist($request) {}
+  public function executeFailedlist(coreRequest $request) {}
 
   /**
    * Failed Kanji List ajax table.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeFailedlisttable($request)
+  public function executeFailedlisttable(coreRequest $request)
   {
     $tron = new JsTron();
     $tron->setHtml($this->getComponent('study', 'FailedListTable'));
@@ -267,9 +267,9 @@ class studyActions extends sfActions
   /**
    * Shared Stories List paging on the Study pages.
    *
-   * @param mixed $request
+   * 
    */
-  public function executeSharedStoriesList($request)
+  public function executeSharedStoriesList(coreRequest $request)
   {
     $tron = new JsTron();
 
@@ -298,7 +298,7 @@ class studyActions extends sfActions
    *
    * @param sfWebRequest $request
    */
-  public function executeMystories($request)
+  public function executeMystories(coreRequest $request)
   {
     // use Last Edit as the default sort
     $sortkey = $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'lastedit');
@@ -342,9 +342,9 @@ class studyActions extends sfActions
   /**
    * My Stories ajax component (used in Study > My Stories and Profile).
    *
-   * @param mixed $request
+   * 
    */
-  public function executeMyStoriesTable($request)
+  public function executeMyStoriesTable(coreRequest $request)
   {
     $tron = new JsTron();
 
@@ -390,9 +390,9 @@ class studyActions extends sfActions
    *
    * See study/edit action (parameters) and EditStoryDialog.js
    *
-   * @param mixed $request
+   * 
    */
-  public function executeEditstory($request)
+  public function executeEditstory(coreRequest $request)
   {
     // FIXME - temporary compat. with AjaxDialog (YUI2 Connect) in Flashcard Review page
     if ($request->hasParameter('ucsCode')) {
@@ -627,9 +627,9 @@ class studyActions extends sfActions
    *   uid         Story author's userid
    *   sid         Story id (kanji's UCS-2 code value)
    *
-   * @param mixed $request
+   * 
    */
-  public function executeAjax($request)
+  public function executeAjax(coreRequest $request)
   {
     $json = $request->getContentJson();
 
@@ -676,9 +676,9 @@ class studyActions extends sfActions
    *   picks             Array of user's selected vocab ([dictid, ...])
    *   knownKanji       (IF "reqKnownKanji") String of known kanji
    *
-   * @param mixed $request
+   * 
    */
-  public function executeDict($request)
+  public function executeDict(coreRequest $request)
   {
     $json = $request->getParamsAsJson();
     // DBG::printr($json);exit;
@@ -725,9 +725,9 @@ class studyActions extends sfActions
    *
    * Returns:
    *
-   * @param mixed $request
+   * 
    */
-  public function executeVocabpick($request)
+  public function executeVocabpick(coreRequest $request)
   {
     $json = $request->getContentJson();
 
@@ -746,7 +746,7 @@ class studyActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeVocabdelete($request)
+  public function executeVocabdelete(coreRequest $request)
   {
     $json = $request->getContentJson();
 

@@ -1,21 +1,21 @@
 1. [First Time Setup](#first-time-setup)
 2. [Running the website](#running-the-website)
-3. [Development \& Production Builds](#development--production-builds)
-   1. [The Symfony 1 Project Structure](#the-symfony-1-project-structure)
-4. [The Php/Apache container](#the-phpapache-container)
-   1. [Solving file permission issues with a Linux host](#solving-file-permission-issues-with-a-linux-host)
-   2. [Using virtual host name](#using-virtual-host-name)
-5. [The MySQL/mariadb container](#the-mysqlmariadb-container)
+3. [Development Setup](#development-setup)
+   1. [Docker Setup](#docker-setup)
+   2. [VSCode Setup](#vscode-setup)
+   3. [Project Documentation](#project-documentation)
+   4. [Solving file permission issues with a Linux host](#solving-file-permission-issues-with-a-linux-host)
+   5. [Using virtual host name](#using-virtual-host-name)
+4. [The MySQL/mariadb container](#the-mysqlmariadb-container)
       1. [About the sample database](#about-the-sample-database)
       2. [MySQL Workbench](#mysql-workbench)
       3. [Using MySQL from the command line](#using-mysql-from-the-command-line)
       4. [Rebuild / reset the sample database](#rebuild--reset-the-sample-database)
-6. [Working with Symfony 1.x](#working-with-symfony-1x)
+5. [Working with Symfony 1.x](#working-with-symfony-1x)
    1. [Clearing Symfony's cache](#clearing-symfonys-cache)
-7. [F.A.Q.](#faq)
-   1. [VSCode Setup](#vscode-setup)
-   2. [Docker](#docker)
-   3. [Generate favicons (optional)](#generate-favicons-optional)
+6. [F.A.Q.](#faq)
+   1. [Docker](#docker)
+   2. [Generate favicons (optional)](#generate-favicons-optional)
 
 # First Time Setup
 
@@ -99,34 +99,41 @@ You can sign in as `admin`, or `guest` or any of the users that are linked to th
 * You can create additional test users using the signup form, or on the command line with the `createuser` script (see the alias in docker/bash/koohii_dev.sh).
 * No emails are sent in development mode.
 
-# Development & Production Builds
+# Development Setup
 
-Production scripts are not included.
+## Docker Setup
 
-For the produciton experience, use `USE_DEV_SERVER = false` with `vite build --watch`.
+We use two simple containers: `web` for Php 8.x & Apache, `db` for MysQL 5.6. For convenience, both containers maintain bash history and custom aliases through a Docker volume (see `docker-compose.yml`).
 
-Please note Kanji Koohii's code base goes back to the summer of 2005!
+## VSCode Setup
 
-**Php**: The backend code started as plain php files. It was later refactored to Symfony 1.x (with some remaining small hacks / tweaks). The php code was updated to run on php 7. In general newer developments should use less php templating and more client side code.
+**Recommended extensions**: ESLint, Prettier, Stylelint, Tailwind CSS IntelliSense, Vue (Official), php cs fixer, PHP Intelephense.
 
-**Docker setup**: we use two simple containers: `web` for Php 7.x & Apache, `db` for MysQL 5.6. For convenience, both containers maintain bash history and custom aliases through a Docker volume (see `docker-compose.yml`).
+In VSCode open `src/` as the project folder, and use `src/` as the current folder for running Claude Code on the terminal. Note the main `.claude/` folder is in `src/`, not at the root of the repo.
 
-## The Symfony 1 Project Structure
+`npm run build` and `vite` are run from the container.
 
-Some bootstrap code is in `apps/koohii/config/koohiiConfiguration.class.php`.
+Tools like `./vendor/bin/phpstan` can be run on the host.
 
-All application configuration is in `apps/koohii/config/` Yaml files: `app.yml`, `settings.yml`, `routing.yml`, etc.
+**Development**
 
-The global layout is in `apps/koohii/templates/layout.php`.
+- The default environment in index.php. 
+- `docker compose exec web bash` followed by `cd vite && vite`
 
-# The Php/Apache container
+**Production build**
 
-This is how I usually work with docker locally:
+- `docker compose exec web bash`
+  - `cd vite`
+  - `npm run build`
+  - `cd .. ; composer dumpautoload -o -a --no-dev`
+  
+For testing locally, access `index_test.php`.
 
-- I run VSCode, Sublime Merge, Vim, git etc. **from the host**<br>
-  (assumes the user on the host has gid/uid that matches the one in the Dockerfile)
-- **npm** and **vite** are run from the container
+## Project Documentation
 
+See [CLAUDE.md](./src/.claude/CLAUDE.md) for a good overview.
+
+See also [docs/](./src/docs/) folder.
 
 ## Solving file permission issues with a Linux host
 
@@ -136,8 +143,6 @@ If you are seeing php errors related to writing to files - check your uid/gid wi
 
     ARG UID=1000
     ARG GID=1000
-
-
 
 ## Using virtual host name
 
@@ -206,16 +211,6 @@ Most YAML (`.yml`) configuration changes are picked up automatically (for exampl
     sf cache:clear --type=config
 
 # F.A.Q.
-
-## VSCode Setup
-
-Recommended setup:
-
-- ESLint
-- Prettier - Code formatter
-- Stylelint - Official Stylelint extension for Visual Studio Code
-- Tailwind CSS IntelliSense
-- Vue (Official) - Language Support for Vue
 
 ## Docker
 

@@ -334,10 +334,10 @@ class rtkIndex
    *
    * @param int $extNr an extended frame number (Heisig or UCS)
    *
-   * @return mixed UCS code point, or false if input is neither a Heisig index
-   *               or a valid CJK Unified code point
+   * @return false|int UCS code point, or false if input is neither a Heisig index
+   *                   or a valid CJK Unified code point
    */
-  public static function getUCSForIndex(int $extNr): int|false
+  public static function getUCSForIndex(int $extNr): false|int
   {
     $extNr = (int) $extNr;
 

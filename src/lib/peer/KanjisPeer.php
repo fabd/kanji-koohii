@@ -146,6 +146,8 @@ class KanjisPeer extends coreDatabaseTable
 
     // coalesce keyword with user's custom keyword
     $custKeyword       = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    
+    /** @var stdClass $cardData (make it writable) */
     $cardData->keyword = $custKeyword ?? $cardData->keyword;
 
     // API ONLY (apps) : api doesn't return the kanji as a character

@@ -439,10 +439,10 @@ class accountActions extends sfActions
       $opt_srs_reverse  = intval($request->getParameter('opt_srs_reverse'));
 
       // needs to match the Vue form validation
-      if ($opt_srs_max_box                      < 5 || $opt_srs_max_box                     > 10
-                               || $opt_srs_mult < 130 || $opt_srs_mult > 400
-                               || $opt_srs_hard_box >= $opt_srs_max_box
-                               || !BaseValidators::validateIntegerRange($opt_srs_reverse, 0, 1)) {
+      if ($opt_srs_max_box                                           < 5 || $opt_srs_max_box                     > 10
+                                                    || $opt_srs_mult < 130 || $opt_srs_mult > 400
+                                                    || $opt_srs_hard_box >= $opt_srs_max_box
+                                                    || !BaseValidators::validateIntegerRange($opt_srs_reverse, 0, 1)) {
         $request->setError('x', 'Invalid form submission');
       } else {
         $settings = [
@@ -472,8 +472,7 @@ class accountActions extends sfActions
       $formdata = ['optSeq' => [$curSeq['classId']]];
       $request->getParameterHolder()->add($formdata);
     } else {
-      $optSeqParam = $request->getParameter('optSeq');
-      $optSeq      = is_array($optSeqParam) ? ($optSeqParam[0] ?? null) : null;
+      $optSeq = $request->getParameter('optSeq');
 
       foreach (rtkIndex::getSequences() as $seq) {
         // only update if the parameter matches a known sequence

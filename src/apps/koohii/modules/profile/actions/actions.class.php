@@ -1,6 +1,10 @@
 <?php
+
 /**
  * User profile, community features(someday).
+ *
+ * @property object $profile_user
+ * @property bool   $profile_self
  */
 class profileActions extends sfActions
 {

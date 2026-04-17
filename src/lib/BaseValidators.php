@@ -18,11 +18,11 @@ class BaseValidators
   }
 
   /**
-   * @param mixed $value
+   *
    *
    * @return bool returns TRUE if $value is an integer or if the string is only 0-9 digits
    */
-  public static function validateInteger($value)
+  public static function validateInteger(int|string $value): bool
   {
     $value = (string) $value;
 
@@ -53,12 +53,11 @@ class BaseValidators
 
   /**
    * Returns a positive integer, or throws an exception.
+   * 
+   * @throws sfException
    *
-   * @param mixed $value
-   *
-   * @return int
    */
-  public static function sanitizeInteger($value)
+  public static function sanitizeInteger(int|string $value): int
   {
     // must be all decimal digits
     if (!BaseValidators::validateInteger($value)) {

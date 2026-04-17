@@ -8,6 +8,8 @@ parameters:
         - apps/koohii/lib/helper/templates
         - apps/koohii/modules/*/templates/*
         - vendor/
+    stubFiles:
+        - tools/phpstan-stubs.php
     bootstrapFiles:
         - vendor/autoload.php
         - tools/phpstan-bootstrap.php

@@ -96,14 +96,14 @@ class coreDatabaseMySQL extends coreDatabase
         break;
     }
 
-    return $result !== null ? $result : false;
+    return $result ?? false;
   }
 
   public function fetchObject($class = 'stdClass', array $constructor_args = [])
   {
     $result = @mysqli_fetch_object($this->result, $class, $constructor_args);
 
-    return $result !== null ? $result : false;
+    return $result ?? false;
   }
 
   /**

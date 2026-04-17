@@ -1,16 +1,25 @@
 <?php
 /**
  * Shared Stories List component (paged list).
+ *
+ * @property uiSelectPager $pager
+ * @property object[]      $rows
+ * @property int           $userId
+ * @property int           $ucsId
+ * @property string        $keyword
  */
 class SharedStoriesListComponent extends sfComponent
 {
+  /**
+   * @param coreRequest $request
+   */
   public function execute($request)
   {
     $db = kk_get_database();
 
     // the character should be validated earlier in the Study page, but it can also be
     // sent by the paging list POST request
-    $ucsId = (int) $request->getParameter('ucsId', 0);
+    $ucsId = (int) $request->getParameter('ucsId', '0');
 
     assert(BaseValidators::validateInteger($ucsId) && $ucsId >= 0x3000);
 
@@ -32,7 +41,7 @@ class SharedStoriesListComponent extends sfComponent
         uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       ],
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, '1'),
     ]);
     $this->pager->init();
 
@@ -55,7 +64,7 @@ class SharedStoriesListComponent extends sfComponent
       */
 
     $storiesSelect = $this->pager->applyPaging(
-      $this->getSharedStoriesListSelect($ucsId, $keyword, kk_get_user()->getUserId())
+      $this->getSharedStoriesListSelect($ucsId)
     );
 
     $fetchMode = $db->setFetchMode(coreDatabase::FETCH_OBJ);
@@ -91,15 +100,11 @@ class SharedStoriesListComponent extends sfComponent
    *
    * @see    study/SharedStoriesComponent
    *
-   * @param int   $ucsId   UCS-2 code value
-   * @param mixed $keyword
-   * @param mixed $userId
-   *
-   * @return array<array>
+   * @param int $ucsId UCS-2 code value
    */
-  private function getSharedStoriesListSelect($ucsId, $keyword, $userId)
+  private function getSharedStoriesListSelect(int $ucsId): coreDatabaseSelect
   {
-    assert(is_int($ucsId) && $ucsId >= 0x3000);
+    assert($ucsId >= 0x3000);
 
     $db = kk_get_database();
 

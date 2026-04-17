@@ -63,7 +63,7 @@ class exportAction extends sfAction
     // DBG::printr($csvText);exit;
 
     $throttler->setTimeout();
-    $this->getResponse()->setFileAttachmentHeaders('my_stories.csv');
+    kk_get_response()->setFileAttachmentHeaders('my_stories.csv');
 
     $this->setLayout(false);
 

@@ -49,7 +49,7 @@ class StoriesPeer extends coreDatabaseTable
    * @param mixed $userId
    * @param mixed $ucsId
    *
-   * @return object stories row data as object, or false
+   * @return false|object stories row data as object, or false
    */
   public static function getStory($userId, $ucsId)
   {
@@ -88,7 +88,7 @@ class StoriesPeer extends coreDatabaseTable
    * @param mixed $userId
    * @param mixed $ucsId
    *
-   * @return object stories row data as object, or false
+   * @return false|object stories row data as object, or false
    */
   public static function getFavouriteStory($userId, $ucsId)
   {

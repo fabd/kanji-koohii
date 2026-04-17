@@ -817,7 +817,7 @@ class ReviewsPeer extends coreDatabaseTable
    * Returns the first kanji in index order,
    * which is in the failed stack and not yet "learned".
    *
-   * @return mixed UCS-2 code value (int) of the next restudy kanji, or false
+   * @return int|false UCS-2 code value of the next restudy kanji, or false
    */
   public static function getNextUnlearnedKanji($userId)
   {

@@ -337,7 +337,7 @@ class rtkIndex
    * @return mixed UCS code point, or false if input is neither a Heisig index
    *               or a valid CJK Unified code point
    */
-  public static function getUCSForIndex($extNr)
+  public static function getUCSForIndex(int $extNr): int|false
   {
     $extNr = (int) $extNr;
 

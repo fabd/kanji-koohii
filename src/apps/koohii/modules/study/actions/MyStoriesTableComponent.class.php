@@ -6,6 +6,11 @@
  *
  *   stories_uid
  *   profile_page
+ *
+ * @property int           $stories_uid
+ * @property bool          $profile_page
+ * @property uiSelectPager $pager
+ * @property array         $rows
  */
 class MyStoriesTableComponent extends sfComponent
 {
@@ -61,11 +66,11 @@ class MyStoriesTableComponent extends sfComponent
       'internal_uri' => 'study/mystories',
       'query_params' => [
         uiSelectTable::QUERY_SORTCOLUMN  => $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN),
-        uiSelectTable::QUERY_SORTORDER   => $request->getParameter(uiSelectTable::QUERY_SORTORDER, 1),
+        uiSelectTable::QUERY_SORTORDER   => $request->getParameter(uiSelectTable::QUERY_SORTORDER, '1'),
         uiSelectPager::QUERY_ROWSPERPAGE => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
       ],
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, '1'),
     ]);
     $pager->init();
 

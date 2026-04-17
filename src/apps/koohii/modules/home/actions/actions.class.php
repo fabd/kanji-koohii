@@ -3,8 +3,6 @@ class homeActions extends sfActions
 {
   /**
    * Home page.
-   *
-   * 
    */
   public function executeIndex(coreRequest $request)
   {
@@ -12,19 +10,17 @@ class homeActions extends sfActions
       return 'Member';
     }
 
-    $request->setParameter('isLandingPage', true);
+    $request->setParameter('isLandingPage', '1');
 
     return 'Guest';
   }
 
   /**
    * Sign In form.
-   *
-   * 
    */
   public function executeLogin(coreRequest $request)
   {
-    $request->setParameter('_homeFooter', true);
+    $request->setParameter('_homeFooter', '1');
 
     if ($request->getMethod() != sfRequest::POST) {
       // get the referer option from redirectToLogin()
@@ -39,16 +35,6 @@ class homeActions extends sfActions
 
       $this->getRequest()->setParameter('referer', empty($referer) ? '@homepage' : $referer);
       $this->getRequest()->setParameter('username', $username);
-
-      // AUTO FILL FORM (DEVELOPMENT ONLY!)
-      if (0 && KK_ENV_DEV) {
-        $request->getParameterHolder()->add(
-          [
-            'username' => 'guest',
-            'password' => '',
-          ]
-        );
-      }
     } else {
       $validator = new coreValidator($this->getActionName());
 
@@ -83,8 +69,6 @@ class homeActions extends sfActions
 
   /**
    * Sign Out.
-   *
-   * 
    */
   public function executeLogout(coreRequest $request)
   {
@@ -95,8 +79,6 @@ class homeActions extends sfActions
 
   /**
    * Contact/Feedback Form page.
-   *
-   * @param sfWebRequest $request
    */
   public function executeContact(coreRequest $request)
   {
@@ -122,7 +104,7 @@ class homeActions extends sfActions
       }
 
       // add the IP address to detect trolls/spammers
-      $pathArray = sfContext::getInstance()->getRequest()->getPathInfoArray();
+      $pathArray = $request->getPathInfoArray();
 
       // fabd: help identify spam bots (March 2024 - not useful atm)
       $remote_addr = $pathArray['REMOTE_ADDR'];
@@ -146,7 +128,7 @@ END;
       if (!kk_get_user()->isAuthenticated()) {
         if (preg_match('#https?://#', $message)) {
           $request->setError('spam', 'Note: due to spam, we have to block messages containing links. (Pssst! If you are a real person, simply remove the http prefix from the URL and it will go through.)');
-          $this->getResponse()->setStatusCode(403);
+          $this->getResponse()->setStatusCode('403');
 
           $sfs = StopForumSpam::getInstance();
           $sfs->logActivity($remote_addr, '/contact : blocked message with link (403)');
@@ -156,7 +138,7 @@ END;
 
         if ($this->isRussianText($message)) {
           $request->setError('spam', 'Spam.');
-          $this->getResponse()->setStatusCode(403);
+          $this->getResponse()->setStatusCode('403');
 
           $sfs = StopForumSpam::getInstance();
           $sfs->logActivity($remote_addr, '/contact : blocked Russian (403)');
@@ -204,13 +186,9 @@ END;
   }
 
   /**
-   * Detect Russian in message (at least N characters).
-   *
-   * @param mixed $text
-   *
-   * @return bool
+   * Detect Russian in message.
    */
-  private function isRussianText($text)
+  private function isRussianText(string $text): bool
   {
     $count = (int) preg_match_all('/[А-Яа-яЁё]/u', $text);
 
@@ -219,8 +197,6 @@ END;
 
   /**
    * Display the active members list.
-   *
-   * 
    */
   public function executeMemberslist(coreRequest $request)
   {
@@ -229,8 +205,6 @@ END;
 
   /**
    * Active members list table ajax update.
-   *
-   * 
    */
   public function executeMemberslisttable(coreRequest $request)
   {
@@ -250,8 +224,6 @@ END;
    * The feed cache is invalidated in news/actions/
    *
    *   ManageSfCache::clearCacheWildcard('home', '_RssFeed');
-   *
-   * 
    */
   public function executeRssfeed(coreRequest $request)
   {

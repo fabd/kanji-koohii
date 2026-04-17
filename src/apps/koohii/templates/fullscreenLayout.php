@@ -8,7 +8,6 @@
 <?php
 // temporary (fix dirty js inclusions from labs mode later)
 $pageId        = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
-$isLandingPage = $sf_request->getParameter('isLandingPage');
 
 $sf_response->addViteEntries();
 

@@ -6,15 +6,15 @@ parameters:
         - apps/koohii/modules/
     excludePaths:
         - apps/koohii/lib/helper/templates
-        - apps/koohii/modules/*/templates
+        - apps/koohii/modules/*/templates/*
         - vendor/
-        - lib/vendor/
     bootstrapFiles:
         - vendor/autoload.php
         - tools/phpstan-bootstrap.php
     scanFiles:
         # for the kk_get_*() global stubs that fix types
         - apps/koohii/config/koohiiConfiguration.class.php
+        # Patreon vendor: loaded conditionally via require_once at runtime
         - vendor/friendsofsymfony1/symfony1/lib/helper/AssetHelper.php
         - vendor/friendsofsymfony1/symfony1/lib/helper/EscapingHelper.php
         - vendor/friendsofsymfony1/symfony1/lib/helper/HelperHelper.php

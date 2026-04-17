@@ -26,10 +26,10 @@ class coreRequest extends sfWebRequest
    * Extends getContent() and returns an object with decoded JSON.
    *
    * Since we fully expect JSON, throw errors otherwise.
-   * 
-   * @throws sfException
    *
    * @return object
+   *
+   * @throws sfException
    */
   public function getContentJson()
   {
@@ -161,5 +161,16 @@ class coreRequest extends sfWebRequest
   public function hasError($name)
   {
     return array_key_exists($name, $this->errors);
+  }
+
+  /**
+   * Retrieves a parameter for the current request (fixed for PHPStan).
+   *
+   * @param string $name    Parameter name
+   * @param ?string $default Parameter default value
+   */
+  public function getParameter($name, $default = null): ?string
+  {
+    return $this->parameterHolder->get($name, $default);
   }
 }

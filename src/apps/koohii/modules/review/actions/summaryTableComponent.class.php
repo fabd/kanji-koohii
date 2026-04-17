@@ -14,16 +14,17 @@ const RATING_LABELS = [
   LeitnerSRS::RATE_AGAIN_EASY => 'Again > Easy',
 ];
 
+/**
+ * Component variables:
+ *   ts_start   Timestamp from the review session start time
+ *
+ * @property int           $ts_start
+ * @property uiSelectPager $pager
+ * @property uiSelectTable $table
+ */
 class summaryTableComponent extends sfComponent
 {
-  /**
-   * Component variables:.
-   *
-   *   ts_start   Timestamp from the review session start time
-   *
-   * @param object $request
-   */
-  public function execute($request)
+  public function execute($request): string
   {
     $queryParams = kk_get_user()->getLocalPrefs()
       ->syncRequestParams('reviewsummary', [
@@ -39,7 +40,7 @@ class summaryTableComponent extends sfComponent
       'internal_uri' => '@review_summary',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, '1'),
     ]);
     $this->pager->init();
 
@@ -142,9 +143,15 @@ class FlashcardListBinding implements uiSelectTableBinding
       EOD;
   }
 
-  public function validateRowData(array $rowData) {}
+  public function validateRowData(array $rowData): bool
+  {
+    return true;
+  }
 
-  public function saveRowData(array $rowData, $newrow = false) {}
+  public function saveRowData(array $rowData): bool
+  {
+    return true;
+  }
 
-  public function deleteRow(array $row_ids) {}
+  public function deleteRow(array $row_ids): void {}
 }

@@ -54,6 +54,9 @@ return (new Config())
     // *don't* reorder public/private/etc: too much diffs in legacy code
     'ordered_class_elements' => false,
 
+    // IMPORTANT - prevents breaking single line cast for PHPStan eg. /** @var <type> $foo */
+    'phpdoc_to_comment' => false,
+
     // prefer `string|null`
     'phpdoc_types_order' => [
       'null_adjustment' => 'always_last',

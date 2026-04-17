@@ -26,13 +26,15 @@ class coreRequest extends sfWebRequest
    * Extends getContent() and returns an object with decoded JSON.
    *
    * Since we fully expect JSON, throw errors otherwise.
+   * 
+   * @throws sfException
    *
    * @return object
    */
   public function getContentJson()
   {
     if ($this->getContentType() !== 'application/json') {
-      throw new sfException(sprintf('Content-type is not expected "application/json".'));
+      throw new sfException('Content-type is not expected "application/json".');
     }
 
     $data = json_decode($this->getContent(), false);

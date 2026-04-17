@@ -32,7 +32,7 @@ abstract class coreDatabase
   public const FETCH_ASSOC = 2;
   public const FETCH_OBJ   = 3;
 
-  protected ?sfParameterHolder $parameterHolder = null;
+  protected sfParameterHolder $parameterHolder;
   protected mixed $connection                   = null;
   protected ?coreDatabaseProfiler $profiler     = null;
   protected int $fetchMode                      = self::FETCH_ASSOC;
@@ -61,7 +61,7 @@ abstract class coreDatabase
 
     // setup query profiler
     $user = kk_get_user();
-    if ($user !== null && ($user->getUserName() === 'fuaburisu' || $user->isAdministrator())) {
+    if ($user->getUserName() === 'fuaburisu' || $user->isAdministrator()) {
       $this->profiler = new coreDatabaseProfilerMySQL();
     }
   }
@@ -84,7 +84,7 @@ abstract class coreDatabase
   /**
    * Returns the SQL query profiler instance.
    *
-   * @return coreDatabaseProfiler
+   * @return null|coreDatabaseProfiler
    */
   public function getProfiler()
   {
@@ -205,7 +205,7 @@ abstract class coreDatabase
   abstract public function fetchObject($class = 'stdClass', array $config = []);
 
   /**
-   * Returns first column from first row of the result set (useful for "count(*)" querries).
+   * Returns first column from first row of the result set (useful for "count (*)" querries).
    *
    * @param mixed      $query
    * @param mixed|null $bind

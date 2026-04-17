@@ -13,15 +13,20 @@ function kk_get_database(): coreDatabaseMySQL
   return $db;
 }
 
-// Stubs to fix PHPStan errors due to lack of return type from Context in Sf1.4
-function kk_get_user(): ?rtkUser
+function kk_get_user(): rtkUser
 {
-  return sfContext::getInstance()->getUser();
+  /** @var rtkUser */
+  $user = sfContext::getInstance()->getUser();
+
+  return $user;
 }
 
 function kk_get_response(): coreWebResponse
 {
-  return sfContext::getInstance()->getResponse();
+  /** @var coreWebResponse */
+  $response = sfContext::getInstance()->getResponse();
+
+  return $response;
 }
 
 function koohii_onload_slot()
@@ -40,6 +45,17 @@ function koohii_onload_slots_out()
     '/* Koohii onload slot */ ',
     "window.addEventListener('DOMContentLoaded',function(){\n", $s, "});</script>\n";
   }
+}
+
+// translate between kanji/hanzi sites, FIXME @obsolete
+function _CJ($sid)
+{
+  return $sid;
+}
+// Return the string with first character uppercase. FIXME @obsolete
+function _CJ_U($sid)
+{
+  return ucfirst(_CJ($sid));
 }
 
 define('KK_GLOBALS', 'kk.globals');
@@ -92,13 +108,14 @@ function kk_globals_out()
   }
 }
 
-function with_footer() {
+function with_footer()
+{
   sfContext::getInstance()->getRequest()->setParameter('_homeFooter', '1');
 }
 
 class koohiiConfiguration extends sfApplicationConfiguration
 {
-  private float $profile_time;
+  private ?float $profile_time = null;
 
   public function configure()
   {
@@ -119,16 +136,6 @@ class koohiiConfiguration extends sfApplicationConfiguration
 
       // FIXME obsolete, clean up
       define('CJ_MODE', 'rtk');
-      // translate between kanji/hanzi sites, FIXME @obsolete
-      function _CJ($sid)
-      {
-        return $sid;
-      }
-      // Return the string with first character uppercase. FIXME @obsolete
-      function _CJ_U($sid)
-      {
-        return ucfirst(_CJ($sid));
-      }
     }
 
     // events

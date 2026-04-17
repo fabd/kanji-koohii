@@ -7,7 +7,7 @@
 <?php include_title(); ?>
 <?php
 // temporary (fix dirty js inclusions from labs mode later)
-$pageId        = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
+$pageId = $sf_request->getParameter('module').'-'.$sf_request->getParameter('action');
 
 $sf_response->addViteEntries();
 

@@ -1,4 +1,4 @@
-<?php with_footer() ?>
+<?php with_footer(); ?>
 <div class="row pt-8">
 
   <div class="col-lg-3 mb-8">

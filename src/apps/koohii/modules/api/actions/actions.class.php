@@ -80,7 +80,7 @@ class apiActions extends sfActions
     $throttler->setTimeout(); // reset le timer
 
     /** @var koohiiConfiguration */
-    $koohiiConfig = sfProjectConfiguration::getActive();
+    $koohiiConfig             = sfProjectConfiguration::getActive();
     $rsp->dbg_generation_time = $koohiiConfig->profileEnd();
 
     return $this->renderJson($rsp);
@@ -138,7 +138,7 @@ class apiActions extends sfActions
   /**
    * API Methods.
    *
-   * 
+   * @param mixed $request
    */
   protected function API_accountInfo($request)
   {
@@ -162,7 +162,7 @@ class apiActions extends sfActions
   }
 
   /**
-   * 
+   * @param mixed $request
    */
   protected function API_reviewFetch($request)
   {
@@ -215,7 +215,7 @@ class apiActions extends sfActions
    *   2 : Invalid card range (from, to)
    *   3 : Invalid type for SRS review ("type").
    *
-   * 
+   * @param mixed $request
    */
   protected function API_reviewStart($request)
   {
@@ -300,7 +300,7 @@ class apiActions extends sfActions
   /**
    * TODO    Return error message if a flashcard is non existent.
    *
-   * 
+   * @param mixed $request
    */
   protected function API_reviewSync($request)
   {
@@ -372,7 +372,7 @@ class apiActions extends sfActions
    * Returns ids of all restudy kanji plus the ids of those which are marked as learned
    * (for clients updating their study info, single rq synthesizing what they could get via multiple rq's).
    *
-   * 
+   * @param mixed $request
    */
   protected function API_studyInfo($request)
   {

@@ -56,7 +56,7 @@ class rtkValidators
 
   /**
    * Cast value to an int, and makes sure it checks against supported CJK range.
-   * 
+   *
    * @throws sfException
    */
   public static function sanitizeCJKUnifiedUCS(int|string $value): int

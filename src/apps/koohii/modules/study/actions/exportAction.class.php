@@ -6,7 +6,7 @@ class exportAction extends sfAction
    *
    * Note! 'col_escape' option must match the select from StoriesPeer::getSelectForExport()
    *
-   * 
+   * @param coreRequest $request
    */
   public function execute($request)
   {

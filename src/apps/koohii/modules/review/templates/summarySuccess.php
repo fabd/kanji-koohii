@@ -59,11 +59,11 @@ echo $repeat_button_html;
     <div class="ko-Box mb-4">
 
       <?= ui_chart_vs([
-      'valueLeft'  => $fcr_pass,
-      'labelLeft'  => 'Remembered',
-      'valueRight' => $fcr_fail,
-      'labelRight' => 'Forgotten',
-    ]); ?>
+        'valueLeft'  => $fcr_pass,
+        'labelLeft'  => 'Remembered',
+        'valueRight' => $fcr_fail,
+        'labelRight' => 'Forgotten',
+      ]); ?>
 
     </div>
 <?php } ?>

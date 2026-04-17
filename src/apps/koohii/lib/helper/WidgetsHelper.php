@@ -93,12 +93,12 @@ function ui_filter_std(string $label, array $links, array $options = []): string
  *  echo ui_select_pager(false, 'pager2')
  *    => Print previously set pager with custom slot name
  *
- * @param uiSelectPager|false $pager uiSelectPager object or false
+ * @param false|uiSelectPager $pager uiSelectPager object or false
  * @param string              $slot  Slot name, leave out to use the default
  *
  * @return string HTML representation
  */
-function ui_select_pager(uiSelectPager|false $pager = false, string $slot = 'widgets.ui.pager'): string
+function ui_select_pager(false|uiSelectPager $pager = false, string $slot = 'widgets.ui.pager'): string
 {
   if ($pager !== false) {
     slot($slot);
@@ -146,10 +146,7 @@ function ui_select_table(uiSelectTable $table, ?uiSelectPager $pager = null, arr
  * Uses the same helper template as the uiSelectTable component, to limit the damage
  * (ideally the select_table should be refactored to use a datasource interface...)
  *
- * @param object $table        an object with the getTableHead() and getTableBody() methods
- * @param array  $html_options
- *
- * @return string
+ * @param object $table an object with the getTableHead() and getTableBody() methods
  */
 function ui_data_table(object $table, array $html_options = []): string
 {
@@ -196,8 +193,6 @@ function ui_data_table(object $table, array $html_options = []): string
  * @param string $name         Button text can contain HTML (eg. <span>), will NOT be escaped
  * @param string $internal_uri See link_to()
  * @param array  $options      See link_to()
- *
- * @return string
  */
 function ui_ibtn(string $name, string $internal_uri = '', array $options = []): string
 {
@@ -280,7 +275,6 @@ function ui_chart_vs(array $options)
  *
  * @param array $bars     Associative array definitions for bars
  * @param int   $maxValue The max value corresponds to 100% of the bar width, related to each bar's value
- * @param array $options
  *
  * @return string HTML markup
  */

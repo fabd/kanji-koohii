@@ -48,8 +48,8 @@ class LeitnerChartComponent extends sfComponent
   }
 
   /**
-   * Format data for the VueJS bar chart component
-   * 
+   * Format data for the VueJS bar chart component.
+   *
    * @param array<int, array{expired_cards: int, fresh_cards: int, total_cards: int}> $carddata
    */
   protected function makeChartData(array $carddata): stdClass

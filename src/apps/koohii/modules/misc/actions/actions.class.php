@@ -18,8 +18,6 @@ class miscActions extends sfActions
    *
    * The helpers on the frontend side "coalesce" the custom keywords with
    * the original keywords, for any kanji in the sequence.
-   *
-   * @param coreRequest $request
    */
   public function executeReading(coreRequest $request)
   {

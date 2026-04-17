@@ -490,7 +490,7 @@ class studyActions extends sfActions
     }
 
     // keyword to auto-format
-    $kanjiData = KanjisPeer::getKanjiByUCS($ucsId);
+    $kanjiData     = KanjisPeer::getKanjiByUCS($ucsId);
     $custKeyword   = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
     $formatKeyword = $custKeyword ?? $kanjiData->keyword;
 

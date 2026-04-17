@@ -18,8 +18,6 @@ class BaseValidators
   }
 
   /**
-   *
-   *
    * @return bool returns TRUE if $value is an integer or if the string is only 0-9 digits
    */
   public static function validateInteger(int|string $value): bool
@@ -53,9 +51,8 @@ class BaseValidators
 
   /**
    * Returns a positive integer, or throws an exception.
-   * 
-   * @throws sfException
    *
+   * @throws sfException
    */
   public static function sanitizeInteger(int|string $value): int
   {

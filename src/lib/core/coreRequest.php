@@ -165,10 +165,10 @@ class coreRequest extends sfWebRequest
 
   /**
    * Retrieves a parameter for the current request (fixed for PHPStan).
-   * 
+   *
    * @see sfWebRequest
    *
-   * @param string $name    Parameter name
+   * @param string  $name    Parameter name
    * @param ?string $default Parameter default value
    */
   public function getParameter($name, $default = null): ?string

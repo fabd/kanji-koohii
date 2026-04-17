@@ -33,9 +33,9 @@ abstract class coreDatabase
   public const FETCH_OBJ   = 3;
 
   protected sfParameterHolder $parameterHolder;
-  protected mixed $connection                   = null;
-  protected ?coreDatabaseProfiler $profiler     = null;
-  protected int $fetchMode                      = self::FETCH_ASSOC;
+  protected mixed $connection               = null;
+  protected ?coreDatabaseProfiler $profiler = null;
+  protected int $fetchMode                  = self::FETCH_ASSOC;
 
   /**
    * Class constructor.
@@ -84,7 +84,7 @@ abstract class coreDatabase
   /**
    * Returns the SQL query profiler instance.
    *
-   * @return null|coreDatabaseProfiler
+   * @return coreDatabaseProfiler|null
    */
   public function getProfiler()
   {

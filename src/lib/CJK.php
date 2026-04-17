@@ -93,7 +93,7 @@ class CJK
    */
   public static function isKanjiChar(string $char)
   {
-    return (1 === preg_match('/^['.self::PREG_CJK_COMMON.']$/u', $char));
+    return 1 === preg_match('/^['.self::PREG_CJK_COMMON.']$/u', $char);
   }
 
   /**

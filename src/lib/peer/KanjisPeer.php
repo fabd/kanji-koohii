@@ -145,8 +145,8 @@ class KanjisPeer extends coreDatabaseTable
     }
 
     // coalesce keyword with user's custom keyword
-    $custKeyword       = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
-    
+    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+
     /** @var stdClass $cardData (make it writable) */
     $cardData->keyword = $custKeyword ?? $cardData->keyword;
 

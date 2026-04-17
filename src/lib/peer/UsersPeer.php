@@ -207,9 +207,11 @@ class UsersPeer extends coreDatabaseTable
    *
    * @param int $userid
    *
-   * @return array Returns an assoc.array with some info (see above), FALSE on failure
+   * @return array{stories: int, flashcards: int, keywords: int}
+   *
+   * @throws sfException on failure
    */
-  public static function deleteUser($userid)
+  public static function deleteUser($userid): array
   {
     $db = self::getInstance()->getDb();
 

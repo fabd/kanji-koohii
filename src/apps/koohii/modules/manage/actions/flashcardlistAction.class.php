@@ -1,4 +1,8 @@
 <?php
+/**
+ * @property uiSelectPager $pager
+ * @property uiSelectTable $table
+ */
 class flashcardlistAction extends sfAction
 {
   /**
@@ -21,7 +25,7 @@ class flashcardlistAction extends sfAction
       'internal_uri' => 'manage/flashcardlist',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, '1'),
     ]);
     $this->pager->init();
 
@@ -126,13 +130,17 @@ EOD;
     $lastReviewTS = (int) $rowData['ts_lastreview'];
 
     $rowData['_lastreview'] = $lastReviewTS ? simple_format_date($lastReviewTS, rtkLocale::DATE_SHORT) : '-';
-
-    return $rowData;
   }
 
-  public function validateRowData(array $rowData) {}
+  public function validateRowData(array $rowData): bool
+  {
+    return true;
+  }
 
-  public function saveRowData(array $rowData, $newrow = false) {}
+  public function saveRowData(array $rowData, $newrow = false): bool
+  {
+    return true;
+  }
 
   public function deleteRow(array $row_ids) {}
 }

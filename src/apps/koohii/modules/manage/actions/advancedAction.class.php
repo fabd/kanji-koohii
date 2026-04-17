@@ -1,9 +1,15 @@
 <?php
 /**
  * Crude way of editing a flashcard, undocumented in site navigation.
+ *
+ * @property string $status
+ * @property object $cardInfo
  */
 class advancedAction extends sfAction
 {
+  /**
+   * @param coreRequest $request
+   */
   public function execute($request)
   {
     $MAX_STACKS = 50;

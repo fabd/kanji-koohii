@@ -1,6 +1,8 @@
 <?php
 /**
  * Flashcard Management.
+ *
+ * @property string $tplEditKeywordUri
  */
 class manageActions extends sfActions
 {
@@ -421,7 +423,8 @@ class manageActions extends sfActions
 
     $throttler->setTimeout();
 
-    $this->getResponse()->setFileAttachmentHeaders('rtk_flashcards.csv');
+    kk_get_response()->setFileAttachmentHeaders('rtk_flashcards.csv');
+
     $this->setLayout(false);
 
     return $this->renderText($csvText);

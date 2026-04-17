@@ -992,7 +992,7 @@ class ReviewsPeer extends coreDatabaseTable
    * @param int   $userId
    * @param array $cardSel Array of flashcard ids (UCS-2)
    *
-   * @return array Array of successfully deleted flashcards (ids) or false
+   * @return false|array Array of successfully deleted flashcards (ids) or false
    */
   public static function deleteSelection($userId, array $cardSel)
   {

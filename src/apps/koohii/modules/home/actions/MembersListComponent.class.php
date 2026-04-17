@@ -88,8 +88,6 @@ EOD;
     $rowData['_lastreview'] = simple_format_date((int) $rowData['ts_lastreview'], rtkLocale::DATE_SHORT);
 
     $rowData['_location'] = escape_once($rowData['location']);
-
-    return $rowData;
   }
 
   public function validateRowData(array $rowData): bool

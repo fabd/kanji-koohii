@@ -170,8 +170,10 @@ class coreRequest extends sfWebRequest
    *
    * @param string  $name    Parameter name
    * @param ?string $default Parameter default value
+   * 
+   * @return mixed  Value or null (could be array for some form fields...)
    */
-  public function getParameter($name, $default = null): ?string
+  public function getParameter($name, $default = null): mixed
   {
     return $this->parameterHolder->get($name, $default);
   }

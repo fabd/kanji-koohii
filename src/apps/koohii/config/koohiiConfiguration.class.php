@@ -13,9 +13,9 @@ function kk_get_database(): coreDatabaseMySQL
   return $db;
 }
 
-function kk_get_user(): rtkUser
+function kk_get_user(): ?rtkUser
 {
-  /** @var rtkUser */
+  /** @var ?rtkUser */
   $user = sfContext::getInstance()->getUser();
 
   return $user;

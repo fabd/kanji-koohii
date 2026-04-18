@@ -470,9 +470,8 @@ class accountActions extends sfActions
   public function executeSequence(coreRequest $request)
   {
     if ($request->getMethod() != sfRequest::POST) {
-      $curSeq   = rtkIndex::getSequenceInfo();
-      $formdata = ['optSeq' => [$curSeq['classId']]];
-      $request->getParameterHolder()->add($formdata);
+      $curSeq = rtkIndex::getSequenceInfo();
+      $request->getParameterHolder()->add(['optSeq' => $curSeq['classId']]);
     } else {
       $optSeq = $request->getParameter('optSeq');
 

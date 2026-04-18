@@ -22,6 +22,8 @@ abstract class coreDatabase
   /**
    * Fetch mode to use for fetch(), fetchRow() and fetchAll().
    *
+   * FETCH_NUM:   return each row as an enumerated array
+   * 
    * FETCH_ASSOC: return data in an array of associative arrays. The array keys are
    *              column names, as strings. This is the default fetch mode.
    *

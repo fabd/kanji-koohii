@@ -80,7 +80,7 @@ class coreDatabaseMySQL extends coreDatabase
 
     switch ($fetchMode) {
       case self::FETCH_NUM:
-        $result = @mysqli_fetch_array($this->result, MYSQLI_NUM);
+        $result = @mysqli_fetch_row($this->result);
 
         break;
 
@@ -91,7 +91,7 @@ class coreDatabaseMySQL extends coreDatabase
 
       case self::FETCH_ASSOC:
       default:
-        $result = @mysqli_fetch_array($this->result, MYSQLI_ASSOC);
+        $result = @mysqli_fetch_assoc($this->result);
 
         break;
     }

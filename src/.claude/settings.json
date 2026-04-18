@@ -2,15 +2,17 @@
   "permissions": {
     "allow": [
       "Bash(dcweb *)",
-      "Bash(npm run *)",
+      "Bash(ls *)",
+      "Bash(grep *)",
       "Bash(git * main)",
+      "Bash(npm run *)",
+      "Bash(sed -n *)",
       "Bash(* --version)",
-      "Bash(* --help *)"
+      "Bash(* --help *)",
+      "Bash(./vendor/bin/phpstan analyse:*)",
+      "Bash(./vendor/bin/php-cs-fixer fix:*)"
     ],
     "deny": [],
-    "ask": [
-      "Bash(git push *)",
-      "Bash(rm *)"
-    ]
+    "ask": ["Bash(git push *)", "Bash(rm *)"]
   }
 }

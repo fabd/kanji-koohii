@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @property array<int>|string   $select
+ * @property false|object        $post
+ * @property array<object>|false $posts
+ */
 class newsActions extends sfActions
 {
   /**
@@ -9,11 +15,10 @@ class newsActions extends sfActions
    * News by month
    *
    *   /news/:year/:month
-   *
    */
   public function executeIndex(sfWebRequest $request)
   {
-    $year = $request->getParameter('year');
+    $year  = $request->getParameter('year');
     $month = $request->getParameter('month');
 
     if (!$year) {
@@ -25,14 +30,14 @@ class newsActions extends sfActions
     }
   }
 
-  public function executePost($request)
+  public function executePost(coreRequest $request)
   {
     $user = kk_get_user();
 
     // admin only
     $this->forward404Unless($user->getUserName() === 'fuaburisu' || $user->isAdministrator());
 
-    $postId    = (int) $request->getParameter('post_id', 0);
+    $postId    = (int) $request->getParameter('post_id', '0');
     $postTitle = trim($request->getParameter('post_title', ''));
     $postBody  = trim($request->getParameter('post_body', ''));
     $postDate  = trim($request->getParameter('post_date', ''));
@@ -89,8 +94,11 @@ class newsActions extends sfActions
         }
 
         if (!$request->hasErrors()) {
+          /** @var ?sfViewCacheManager incorrect Symfony phpDoc */
+          $cacheManager = $this->getContext()->getViewCacheManager();
+
           // invalidate cached templates
-          if (null !== ($cacheManager = $this->getContext()->getViewCacheManager())) {
+          if (null !== $cacheManager) {
             ManageSfCache::clearCacheWildcard('home', '_RssFeed');
             ManageSfCache::clearCacheWildcard('news', '_recent');
             ManageSfCache::clearCacheWildcard('news', 'index');
@@ -106,10 +114,8 @@ class newsActions extends sfActions
    * News by article.
    *
    *   /news/id/:id
-   *
-   * @param mixed $request
    */
-  public function executeDetail($request)
+  public function executeDetail(coreRequest $request)
   {
     $postId = (int) $request->getParameter('id');
     $this->forward404Unless($postId > 0, 'This news post does not exist.');

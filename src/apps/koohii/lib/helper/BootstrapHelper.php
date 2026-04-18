@@ -72,10 +72,8 @@
  *
  * @param string $content ... button label, or any HTML (is NOT escaped!)
  * @param array  $options ... same as sf's content_tag() helper
- *
- * @return string
  */
-function _bs_button($content = '', $options = [])
+function _bs_button(string $content = '', array $options = []): string
 {
   return content_tag('button', $content, $options);
 }
@@ -96,7 +94,7 @@ function _bs_button($content = '', $options = [])
  * @param string $internal_uri 'module/action' or '@rule' of the action
  * @param array  $options      additional HTML compliant <input> tag parameters
  */
-function _bs_button_to($label, $internal_uri, array $options = [])
+function _bs_button_to(string $label, string $internal_uri, array $options = []): string
 {
   $html_options = _parse_attributes($options);
 
@@ -143,7 +141,7 @@ function _bs_button_to($label, $internal_uri, array $options = [])
  *
  * @throws sfException if no arguments are provided
  */
-function _bs_form_group(...$args)
+function _bs_form_group(array|string ...$args): string
 {
   if (count($args) < 1) {
     throw new sfException('_bs_form_group() has no content.');
@@ -157,6 +155,8 @@ function _bs_form_group(...$args)
   // add Bootstrap 'has-error' class
   if (false !== ($input_name = $options['validate'] ?? false)) {
     unset($options['validate']);
+
+    /** @var coreRequest */
     $request = sfContext::getInstance()->getRequest();
     if ($request->hasError($input_name)) {
       $hasErrorMsg = '<div class="invalid-feedback">^ '.$request->getError($input_name).'</div>';
@@ -173,7 +173,7 @@ function _bs_form_group(...$args)
   return $html;
 }
 
-function _bs_input($type, $name, $options = [])
+function _bs_input(string $type, string $name, array $options = []): string
 {
   $html = [];
 
@@ -218,11 +218,8 @@ function _bs_input($type, $name, $options = [])
  *  <div class="form-group">
  *    <label><input ...><span>Label text</span>
  *  </div>
- *
- * @param mixed $name
- * @param mixed $options
  */
-function _bs_input_checkbox($name, $options = [])
+function _bs_input_checkbox(string $name, array $options = []): string
 {
   // we want a wrapping label here
   if (null !== ($label = _get_option($options, 'label'))) {
@@ -238,22 +235,22 @@ function _bs_input_checkbox($name, $options = [])
   return implode($html);
 }
 
-function _bs_input_email($name, $options = [])
+function _bs_input_email(string $name, array $options = []): string
 {
   return _bs_input('text', $name, $options);
 }
 
-function _bs_input_password($name, $options = [])
+function _bs_input_password(string $name, array $options = []): string
 {
   return _bs_input('password', $name, $options);
 }
 
-function _bs_input_text($name, $options = [])
+function _bs_input_text(string $name, array $options = []): string
 {
   return _bs_input('text', $name, $options);
 }
 
-function _bs_input_textarea($name, $options = [])
+function _bs_input_textarea(string $name, array $options = []): string
 {
   return _bs_input('textarea', $name, $options);
 }
@@ -262,12 +259,9 @@ function _bs_input_textarea($name, $options = [])
  * Returns <input type=submit" ...> - adds 'success' button styles by
  * default unless a `ko-Btn` class is used in the `class` option.
  *
- * @param string $label
- * @param array  $options Symfony tag helper options
- *
- * @return string
+ * @param array $options Symfony tag helper options
  */
-function _bs_submit_tag($label, $options = [])
+function _bs_submit_tag(string $label, array $options = []): string
 {
   // default to adding `success` style - unless a button class is used
   $classnames = $options['class'] ?? '';
@@ -276,74 +270,6 @@ function _bs_submit_tag($label, $options = [])
   }
 
   return submit_tag($label, $options);
-}
-
-function koohii_onload_slot()
-{
-  $name        = 'koohii_onload_js';
-  $prevContent = get_slot($name);
-  slot($name);
-  echo $prevContent;
-  // echo "console.log('koohii_onload_slot()')\n";
-}
-
-function koohii_onload_slots_out()
-{
-  if ($s = get_slot('koohii_onload_js')) {
-    echo "<script>\n",
-    '/* Koohii onload slot */ ',
-    "window.addEventListener('DOMContentLoaded',function(){\n", $s, "});</script>\n";
-  }
-}
-
-define('KK_GLOBALS', 'kk.globals');
-
-/**
- * Helper to "hydrate" template with data for the frontend.
- *
- * Use `kk_globals_get()` in Javascript (cf. globals.d.ts)
- *
- * Conveniently, this hydration happens BEFORE defered modules
- * from Vite build are run, since defered modules happen after
- * the document is parsed, and \<script>'s are part of the document.
- *
- * @param array $key   key name (convention ALL_UPPERCASE), or array of key => values
- * @param mixed $value (if single key) any value that parses to JSON (string, boolean, null, etc)
- */
-function kk_globals_put($key, $value = null)
-{
-  $kk_globals = sfConfig::get(KK_GLOBALS);
-  if (null === $kk_globals) {
-    $kk_globals = new sfParameterHolder();
-    sfConfig::set(KK_GLOBALS, $kk_globals);
-  }
-
-  if (is_array($key)) {
-    foreach ($key as $name => $value) {
-      $kk_globals->set($name, $value);
-    }
-  } else {
-    $kk_globals->set($key, $value);
-  }
-}
-
-/**
- * Call once in the main layout template to output all KK.* globals.
- */
-function kk_globals_out()
-{
-  kk_globals_put('BASE_URL', url_for('@homepage', true));
-
-  if (null !== ($kk_globals = sfConfig::get(KK_GLOBALS))) {
-    $values = json_encode($kk_globals->getAll());
-
-    $lines = [];
-    foreach ($kk_globals->getAll() as $name => $value) {
-      $lines[] = "KK.{$name} = ".json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).';';
-    }
-
-    echo "\n<script>\nwindow.KK || (KK = {});\n".implode("\n", $lines)."\n</script>\n";
-  }
 }
 
 /**
@@ -372,17 +298,15 @@ function include_fontawesome()
   }
 }
 
-function query_string_for_review(array $queryParams)
+function query_string_for_review(array $queryParams): string
 {
   return http_build_query($queryParams);
 }
 
 /**
  * returns url for the review page with given query parameters.
- *
- * @return string
  */
-function url_for_review(array $queryParams)
+function url_for_review(array $queryParams): string
 {
   $queryString = query_string_for_review($queryParams);
 
@@ -395,10 +319,8 @@ function url_for_review(array $queryParams)
  *
  * @param string|string[] $classnames ... string or array of classes to merge into
  * @param string|string[] $tokens     ... one or more additional classes
- *
- * @return string
  */
-function merge_html_classes($classnames, $tokens)
+function merge_html_classes(array|string $classnames, array|string $tokens): string
 {
   if (empty($tokens)) {
     return $classnames;

@@ -31,29 +31,21 @@ class apiActions extends sfActions
     'TESTING',
   ];
 
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     $this->redirect('api/docs');
   }
 
-  public function executeV1($request)
+  public function executeV1(coreRequest $request)
   {
     // DBG::request();exit;
 
-    $public_api  = true;
     $api_method  = $request->getParameter('api_method', '');
     $api_method2 = $request->getParameter('api_method2', '');
 
     $this->forward404Unless($api_method !== '');
 
     if (rtkApi::isContentTypeJson($request)) {
-    } elseif (false === $public_api) {
-      $api_key = $request->getParameter('api_key', false);
-
-      // check for invalid or missing API key
-      if (false === $api_key || false === $this->validateAPIKey($api_key)) {
-        return $this->renderJson($this->createResponseFail(100));
-      }
     }
 
     // check for missing API method
@@ -87,12 +79,14 @@ class apiActions extends sfActions
 
     $throttler->setTimeout(); // reset le timer
 
-    $rsp->dbg_generation_time = sfProjectConfiguration::getActive()->profileEnd();
+    /** @var koohiiConfiguration */
+    $koohiiConfig             = sfProjectConfiguration::getActive();
+    $rsp->dbg_generation_time = $koohiiConfig->profileEnd();
 
     return $this->renderJson($rsp);
   }
 
-  public function executeDocs()
+  public function executeDocs(coreRequest $request)
   {
     $this->setLayout('docuteLayout');
   }
@@ -121,14 +115,6 @@ class apiActions extends sfActions
   protected function createResponseOk($rsp)
   {
     $msg = ['stat' => 'ok'];
-
-    if (rtkApi::API_DEBUG_SQL) {
-      $log = kk_get_database()->getDebugLog();
-      // $log = "\n".implode("\n", $log);
-      $msg = array_merge($msg, [
-        'sql_debug' => sprintf('%d QUERIES. *** ', count($log)).implode('###', $log),
-      ]);
-    }
 
     return (object) array_merge($msg, (array) $rsp);
   }
@@ -189,7 +175,7 @@ class apiActions extends sfActions
     $prm_items = $request->getParameter('items', '');
     $prm_items = explode(',', $prm_items);
     $items     = array_filter($prm_items, 'ctype_digit');
-    if (count($prm_items) === 0 || count($prm_items) !== count($items)) {
+    if (count($prm_items) !== count($items)) {
       return $this->createResponseFail(2, 'Parameter "items" is invalid or empty');
     }
 
@@ -309,8 +295,6 @@ class apiActions extends sfActions
     echo $result;
 
     exit;
-
-    return $this->renderText($result);
   }
 
   /**

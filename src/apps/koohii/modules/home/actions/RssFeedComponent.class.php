@@ -3,6 +3,9 @@
 define('RSS_FEED_NUM_ENTRIES', 30);
 define('RSS_FEED_DESCRIPTION', 'A feed for Kanji Koohii news & updates.');
 
+/**
+ * @property string $feed_content
+ */
 class RssFeedComponent extends sfComponent
 {
   public function execute($request)

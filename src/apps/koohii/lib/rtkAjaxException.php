@@ -17,7 +17,7 @@ class rtkAjaxException extends sfException
     $message   = $exception->getMessage();
 
     $response = kk_get_response();
-    $response->setStatusCode(500);
+    $response->setStatusCode('500');
 
     // clean current output buffer
     while (@ob_end_clean());

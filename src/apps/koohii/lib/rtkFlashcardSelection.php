@@ -20,12 +20,9 @@
 class rtkFlashcardSelection
 {
   protected $cardIds = [];
-  protected $request;
+  protected coreRequest $request;
 
-  /**
-   * @param object $request Object with setError() method
-   */
-  public function __construct($request)
+  public function __construct(coreRequest $request)
   {
     $this->request = $request;
   }
@@ -48,9 +45,9 @@ class rtkFlashcardSelection
    *
    * @param string $selString Selection in string format
    *
-   * @return int Number of cards in selection
+   * @return false|int Number of cards in selection
    */
-  public function setFromString($selString)
+  public function setFromString(string $selString): false|int
   {
     $this->cardIds = [];
 
@@ -63,8 +60,8 @@ class rtkFlashcardSelection
     foreach ($selparts as &$part) {
       // numerical range
       if (preg_match('/^([0-9]+)-([0-9]+)$/', $part, $matches)) {
-        $from = $matches[1];
-        $to   = $matches[2];
+        $from = (int) $matches[1];
+        $to   = (int) $matches[2];
         if (!rtkIndex::isValidHeisigIndex($from) || !rtkIndex::isValidHeisigIndex($to)) {
           $this->request->setError('if', sprintf('Invalid framenumber: "%s"', $part));
 
@@ -127,11 +124,10 @@ class rtkFlashcardSelection
    * or a number of cards to add "+10", filling in all missing cards in the RTK range.
    *
    * @param string $selection "56" (add up to 56), or "+20" (add 20 cards)
-   * @param mixed  $userId
    *
-   * @return int Number of cards in selection (also 0), or false if error
+   * @return false|int Number of cards in selection (also 0), or false if error
    */
-  public function addHeisigRange($userId, $selection)
+  public function addHeisigRange(int $userId, string $selection): false|int
   {
     $this->cardIds = [];
 

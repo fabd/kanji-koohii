@@ -316,7 +316,8 @@ function radiobutton_tag($name, $value = '1', $checked = false, $options = [])
   $options = array_merge(['type' => 'radio', 'name' => $name, /* 'id' => get_id_from_name($name, $value), */ 'value' => $value], _parse_attributes($options));
 
   // repopulate field
-  $checked = _repopulate_input_cb($name, $value, $checked);
+  $_request = sfContext::getInstance()->getRequest();
+  $checked = $_request->getParameter($name) === $value;
 
   if ($checked) {
     $options['checked'] = 'checked';

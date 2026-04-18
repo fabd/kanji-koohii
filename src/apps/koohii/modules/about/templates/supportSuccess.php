@@ -1,7 +1,6 @@
 <?php
 use_helper('Links');
-$sf_request->setParameter('_homeFooter', true);
-
+with_footer();
 // (fabd): double-check autoloading on a simple page
 // $declaredClasses = get_declared_classes();
 // LOG::info(count($declaredClasses).' declared classes');

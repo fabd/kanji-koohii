@@ -2,7 +2,7 @@
 
 class uxActions extends sfActions
 {
-  public function executeIndex()
+  public function executeIndex(coreRequest $request)
   {
     $this->guard();
   }

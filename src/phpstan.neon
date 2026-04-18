@@ -5,16 +5,24 @@ parameters:
         - apps/koohii/lib/
         - apps/koohii/modules/
     excludePaths:
+        - apps/koohii/lib/helper/templates
+        - apps/koohii/modules/*/templates/*
         - vendor/
-        - lib/vendor/
+    stubFiles:
+        - tools/phpstan-stubs.php
     bootstrapFiles:
         - vendor/autoload.php
         - tools/phpstan-bootstrap.php
     scanFiles:
         # for the kk_get_*() global stubs that fix types
         - apps/koohii/config/koohiiConfiguration.class.php
-        - vendor/friendsofsymfony1/symfony1/lib/helper/UrlHelper.php
+        # Patreon vendor: loaded conditionally via require_once at runtime
+        - vendor/friendsofsymfony1/symfony1/lib/helper/AssetHelper.php
+        - vendor/friendsofsymfony1/symfony1/lib/helper/EscapingHelper.php
+        - vendor/friendsofsymfony1/symfony1/lib/helper/HelperHelper.php
+        - vendor/friendsofsymfony1/symfony1/lib/helper/PartialHelper.php
         - vendor/friendsofsymfony1/symfony1/lib/helper/TagHelper.php
+        - vendor/friendsofsymfony1/symfony1/lib/helper/UrlHelper.php
     dynamicConstantNames:
         # defined in koohiiConfiguration, not visible to PHPStan statically
         - KK_ENV_DEV

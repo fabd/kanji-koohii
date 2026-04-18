@@ -1,5 +1,5 @@
 <?php
-$sf_request->setParameter('_homeFooter', true);
+with_footer();
 
 ?>
 

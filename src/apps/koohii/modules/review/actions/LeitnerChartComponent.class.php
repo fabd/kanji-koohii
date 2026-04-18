@@ -1,8 +1,15 @@
 <?php
 
+/**
+ * @property int      $restudy_cards
+ * @property int      $untested_cards
+ * @property int      $expired_total
+ * @property stdClass $leitner_chart_data
+ * @property self     $me
+ */
 class LeitnerChartComponent extends sfComponent
 {
-  public function execute($request)
+  public function execute($request): string
   {
     $user_id = kk_get_user()->getUserId();
 
@@ -34,14 +41,18 @@ class LeitnerChartComponent extends sfComponent
 
     // DBG::printr($this->chart_data);exit;
 
-    $this->leitner_chart_data = $this->makeChartData($carddata, $filter);
+    $this->leitner_chart_data = $this->makeChartData($carddata);
     $this->me                 = $this;
 
     return sfView::SUCCESS;
   }
 
-  // Format data for the VueJS bar chart component
-  protected function makeChartData($carddata, string $filter)
+  /**
+   * Format data for the VueJS bar chart component.
+   *
+   * @param array<int, array{expired_cards: int, fresh_cards: int, total_cards: int}> $carddata
+   */
+  protected function makeChartData(array $carddata): stdClass
   {
     $data  = new stdClass();
     $boxes = [];

@@ -40,16 +40,11 @@ class KanjisPeer extends coreDatabaseTable
    *
    * @param int $ucsId UCS-2 code value
    *
-   * @return false|object Kanjis table row data (plus 'framenum'), or false
+   * @return false|object{ucs_id: int, keyword: string, kanji: string, onyomi: string, idx_olded: int, idx_newed: int, strokecount: int, framenum: int} Kanjis table row data (plus 'framenum'), or false
    */
   public static function getKanjiByUCS(int $ucsId)
   {
-    // FIXME   remove the validation code (validate higher up!! + cohesion)
     assert(ctype_digit($ucsId) && rtkIndex::isExtendedIndex($ucsId));
-
-    if (!BaseValidators::validateInteger($ucsId)) {
-      return false;
-    }
 
     self::getInstance()->select()->where('ucs_id = ?', $ucsId)->query();
     $db = self::getInstance()->getDb();
@@ -61,6 +56,8 @@ class KanjisPeer extends coreDatabaseTable
 
       // normalize some values for cleaner code downhill
       $o->ucs_id      = (int) $o->ucs_id;
+      $o->idx_olded   = (int) $o->idx_olded;
+      $o->idx_newed   = (int) $o->idx_newed;
       $o->strokecount = (int) $o->strokecount;
     }
 
@@ -148,7 +145,9 @@ class KanjisPeer extends coreDatabaseTable
     }
 
     // coalesce keyword with user's custom keyword
-    $custKeyword       = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+    $custKeyword = CustkeywordsPeer::getCustomKeyword($userId, $ucsId);
+
+    /** @var stdClass $cardData (make it writable) */
     $cardData->keyword = $custKeyword ?? $cardData->keyword;
 
     // API ONLY (apps) : api doesn't return the kanji as a character

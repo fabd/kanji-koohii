@@ -1,10 +1,14 @@
 <?php
+
 /**
  * User profile, community features(someday).
+ *
+ * @property object $profile_user
+ * @property bool   $profile_self
  */
 class profileActions extends sfActions
 {
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     $username = $request->getParameter('username');
 

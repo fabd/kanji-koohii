@@ -105,6 +105,9 @@ $select->whereIn('ucs_id', [0x5c71, 0x5ddd, 0x5973]);
 // JOIN ... ON condition
 $select->join('kanjis', 'kanjis.ucs_id = reviews.ucs_id');
 
+// JOIN table AS alias
+$select->join(['k' => 'kanjis'], 'kanjis.ucs_id = reviews.ucs_id');
+
 // JOIN ... USING(col)
 $select->joinUsing('kanjis', 'ucs_id');
 

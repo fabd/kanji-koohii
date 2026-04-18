@@ -1,3 +1,3 @@
-<?php $sf_request->setParameter('_homeFooter', true); ?>
+<?php with_footer(); ?>
 
 <div id="JsRecognitionApp"></div>

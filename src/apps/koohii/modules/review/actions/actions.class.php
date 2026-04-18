@@ -1,13 +1,22 @@
 <?php
 
+/**
+ * @property string        $filter
+ * @property int           $flashcard_count
+ * @property int           $knowncount
+ * @property int           $knowndefault
+ * @property int           $learnedcount
+ * @property array<mixed>  $reviewOptions
+ * @property string        $fc_free
+ * @property string        $fc_rept
+ * @property array<string> $deletedCards
+ */
 class reviewActions extends sfActions
 {
   /**
    * Review graph page.
-   *
-   * @param sfRequest $request
    */
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     // set local pref default value
     $this->filter = kk_get_user()->getLocalPrefs()->sync('review.graph.filter', null, '');
@@ -20,20 +29,18 @@ class reviewActions extends sfActions
 
   /**
    * Custom Review modes.
-   *
-   * @param sfRequest $request
    */
-  public function executeCustom($request)
+  public function executeCustom(coreRequest $request)
   {
     $userId             = kk_get_user()->getUserId();
     $this->knowncount   = ReviewsPeer::getReviewedFlashcardCount($userId, LeitnerSRS::FAILEDSTACK + 1);
     $this->knowndefault = max($this->knowncount, 1);
 
     // set defaults for forms
-    $request->setParameter('shuffle', 1);
+    $request->setParameter('shuffle', '1');
   }
 
-  public function executeVocab($request)
+  public function executeVocab(coreRequest $request)
   {
     $userId             = kk_get_user()->getUserId();
     $this->learnedcount = ReviewsPeer::getReviewedFlashcardCount($userId, rtkLabs::VOCABSHUFFLE_MINBOX);
@@ -41,10 +48,8 @@ class reviewActions extends sfActions
 
   /**
    * Review graph filter actions.
-   *
-   * @param sfRequest $request
    */
-  public function executeAjaxLeitnerGraph($request)
+  public function executeAjaxLeitnerGraph(coreRequest $request)
   {
     $filter = $request->getParameter('filter', '');
     if (!preg_match('/^(all|rtk1|rtk3)$/', $filter)) {
@@ -69,10 +74,8 @@ class reviewActions extends sfActions
    * Kanji Flashcard review WITHOUT SRS (no flashcard updates in database).
    *
    * See executeReview for parameters.
-   *
-   * @param sfRequest $request
    */
-  public function executeFree($request)
+  public function executeFree(coreRequest $request)
   {
     $this->forward('review', 'review');
   }
@@ -97,24 +100,22 @@ class reviewActions extends sfActions
    *   type = 'expired'|'untested'|'relearned'|'fresh'
    *   box  = 'all'|[1-5]
    *   filt = ''|'rtk1'|'rtk3'
-   *
-   * @param sfRequest $request
    */
-  public function executeReview($request)
+  public function executeReview(coreRequest $request)
   {
     $this->setLayout('fullscreenLayout');
 
-    $reviewFrom     = (int) $request->getParameter('from', 0);
-    $reviewTo       = (int) $request->getParameter('to', 0);
-    $reviewKnown    = (int) $request->getParameter('known', 0);
+    $reviewFrom     = (int) $request->getParameter('from');
+    $reviewTo       = (int) $request->getParameter('to');
+    $reviewKnown    = (int) $request->getParameter('known');
     $reviewFromText = $request->getParameter('from_text', '');
-    $reviewShuffle  = (bool) $request->getParameter('shuffle', 0);
+    $reviewShuffle  = (bool) $request->getParameter('shuffle');
     // DBG::request();exit;
 
     // if any of these options is set it is assumed to be a Custom Review (not SRS)
     $isCustomReview = $reviewFrom > 0 || $reviewKnown > 0 || $reviewFromText;
 
-    if ($lessonId = (int) $request->getParameter('lesson', 0)) {
+    if ($lessonId = (int) $request->getParameter('lesson')) {
       $lessonInfo = rtkIndex::getLessonData($lessonId);
       $this->forward404If(!$lessonInfo);
       $reviewFrom = $lessonInfo['lesson_from'];
@@ -143,7 +144,7 @@ class reviewActions extends sfActions
 
       $options['ajax_url'] = $this->getController()->genUrl('review/ajaxsrs');
     } else {
-      $reviewReverse = (int) $request->getParameter('reverse', 0);
+      $reviewReverse = (int) $request->getParameter('reverse', null);
 
       $options['ajax_url'] = $this->getController()->genUrl('review/ajaxfree');
       $options['fc_rept']  = null;
@@ -233,13 +234,11 @@ class reviewActions extends sfActions
    * If Custom Review mode (not SRS):
    *
    *   fc_rept      JSON encoded POST params to repeat the review
-   *
-   * @param sfRequest $request
    */
-  public function executeSummary($request)
+  public function executeSummary(coreRequest $request)
   {
     // free mode review flag
-    $this->fc_free = $request->getParameter('fc_free', 0);
+    $this->fc_free = $request->getParameter('fc_free', '0');
     $this->fc_rept = $request->getParameter('fc_rept', '');
 
     // deleted cards
@@ -261,10 +260,8 @@ class reviewActions extends sfActions
 
   /**
    * Ajax handler for SRS flashcard reviews.
-   *
-   * @param sfRequest $request
    */
-  public function executeAjaxsrs($request)
+  public function executeAjaxsrs(coreRequest $request)
   {
     $options = [
       'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
@@ -276,10 +273,8 @@ class reviewActions extends sfActions
 
   /**
    * Ajax handler for Free mode reviews.
-   *
-   * @param sfRequest $request
    */
-  public function executeAjaxfree($request)
+  public function executeAjaxfree(coreRequest $request)
   {
     $options = [
       'fn_get_flashcard' => 'KanjisPeer::getKanjiCardData',
@@ -311,20 +306,13 @@ class reviewActions extends sfActions
   }
 
   /**
-   * handleFlashcardRequest.
-   *
    * @see  FlashcardReview.php for POST request parameters.
    *
-   * @param sfRequest $request
-   * @param mixed     $options
+   * @param array<string, string> $options
    */
-  private function handleFlashcardRequest($request, $options)
+  private function handleFlashcardRequest(coreRequest $request, array $options)
   {
     $fcrData = $request->getContentJson();
-
-    if (empty($fcrData)) {
-      throw new rtkAjaxException('Empty JSON Request.');
-    }
 
     $flashcardReview = FlashcardReview::getInstance()->config($options);
 
@@ -351,9 +339,9 @@ class reviewActions extends sfActions
   /**
    * Summary Table ajax.
    */
-  public function executeSummaryTable($request)
+  public function executeSummaryTable(coreRequest $request)
   {
-    $ts_start = $request->getParameter('ts_start', 0);
+    $ts_start = $request->getParameter('ts_start');
     $this->forward404Unless(BaseValidators::validateInteger($ts_start));
     $tron = new JsTron();
 

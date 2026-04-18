@@ -1,11 +1,11 @@
 <?php
 
+/**
+ * @property object[] $cards
+ */
 class summarySimpleComponent extends sfComponent
 {
-  /**
-   * @param object $request
-   */
-  public function execute($request)
+  public function execute($request): string
   {
     $answers = FlashcardReview::getInstance()->getCachedAnswers();
 

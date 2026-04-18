@@ -22,20 +22,17 @@ class rtxIndexOldStoriesFix
   /**
    * Return a character for extended frame number, assuming Heisig indexes are Old Edition.
    *
-   * @param  int      Extended frame number (Heisig, or UCS-2)
-   * @param mixed $frameNum
+   * @param int $frameNum Extended frame number (Heisig, or UCS-2)
    *
    * @return string Single utf8 character or 'ERROR'
    */
-  public static function getCharForOldIndex($frameNum)
+  public static function getCharForOldIndex(int $frameNum): string
   {
-    $id = intval($frameNum);
-
-    if ($id > 0 && $id <= self::HEISIG_COUNT) {
-      return mb_substr(self::$kanjis, $id - 1, 1, 'utf8');
+    if ($frameNum > 0 && $frameNum <= self::HEISIG_COUNT) {
+      return mb_substr(self::$kanjis, $frameNum - 1, 1, 'utf8');
     }
-    if (CJK::isCJKUnifiedUCS($id)) {
-      return utf8::fromUnicode([$id]);
+    if (CJK::isCJKUnifiedUCS($frameNum)) {
+      return utf8::fromUnicode([$frameNum]);
     }
 
     return 'ERROR';
@@ -48,15 +45,16 @@ class rtxIndexOldStoriesFix
    * index is selected.
    *
    * @see   Study action executeAjax()
-   *
-   * @param mixed $text
    */
-  public static function fixOldStoriesKanjiLinks($text)
+  public static function fixOldStoriesKanjiLinks(string $text): string
   {
-    return preg_replace_callback('/{([0-9]+)}/u', ['rtxIndexOldStoriesFix', 'substituteOldKanjiRef'], $text);
+    return preg_replace_callback('/{([0-9]+)}/u', ['rtxIndexOldStoriesFix', 'substituteOldKanjiRef'], $text) ?? '';
   }
 
-  public static function substituteOldKanjiRef($matches)
+  /**
+   * @param array<int, string> $matches
+   */
+  public static function substituteOldKanjiRef(array $matches): string
   {
     return '{'.self::getCharForOldIndex((int) $matches[1]).'}';
   }

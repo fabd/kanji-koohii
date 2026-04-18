@@ -11,13 +11,11 @@ class rtkStory
    * Checks that all the kanji links (using {...} notation) are valid and point
    * to an existing character.
    *
-   * @param mixed $text
-   *
-   * @return bool true, or an error message
+   * @return string|true true, or an error message
    */
-  public static function validateKanjiLinks($text)
+  public static function validateKanjiLinks(string $text): string|true
   {
-    $result = preg_match_all('/{([^}]*)}/u', $text, $matches);
+    preg_match_all('/{([^}]*)}/u', $text, $matches);
 
     foreach ($matches[1] as $match) {
       $valid = true;
@@ -43,17 +41,18 @@ class rtkStory
    * This is also done for both public and private stories, in case the author
    * selects a different index later and the frame number reference would be
    * incorrect.
-   *
-   * @param mixed $text
    */
-  public static function substituteKanjiLinks($text)
+  public static function substituteKanjiLinks(string $text): string
   {
     $text = preg_replace_callback('/{([0-9]+)}/', ['self', 'substituteKanjiLinkCallback'], $text);
 
     return $text;
   }
 
-  public static function substituteKanjiLinkCallback($matches)
+  /**
+   * @param array<int, string> $matches
+   */
+  public static function substituteKanjiLinkCallback(array $matches): string
   {
     $frameNr = (int) $matches[1]; // frame number or extended (ucs code)
     $kanji   = rtkIndex::getCharForIndex($frameNr);

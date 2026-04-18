@@ -1,6 +1,13 @@
 <?php
+/**
+ * @property uiSelectPager $pager
+ * @property uiSelectTable $table
+ */
 class MembersListComponent extends sfComponent
 {
+  /**
+   * @param coreRequest $request
+   */
   public function execute($request)
   {
     $queryParams = kk_get_user()->getLocalPrefs()
@@ -17,7 +24,7 @@ class MembersListComponent extends sfComponent
       'internal_uri' => '@members_list',
       'query_params' => $queryParams,
       'max_per_page' => $queryParams[uiSelectPager::QUERY_ROWSPERPAGE],
-      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, 1),
+      'page'         => $request->getParameter(uiSelectPager::QUERY_PAGENUM, '1'),
     ]);
     $this->pager->init();
 
@@ -81,13 +88,17 @@ EOD;
     $rowData['_lastreview'] = simple_format_date((int) $rowData['ts_lastreview'], rtkLocale::DATE_SHORT);
 
     $rowData['_location'] = escape_once($rowData['location']);
-
-    return $rowData;
   }
 
-  public function validateRowData(array $rowData) {}
+  public function validateRowData(array $rowData): bool
+  {
+    return true;
+  }
 
-  public function saveRowData(array $rowData, $newrow = false) {}
+  public function saveRowData(array $rowData, bool $newrow = false): bool
+  {
+    return true;
+  }
 
   public function deleteRow(array $row_ids) {}
 }

@@ -43,10 +43,10 @@ class StoryVotesPeer extends coreDatabaseTable
    *       identifier. The `sid` column in the new InnoDB schema for `stories` is not connected
    *       currently (just a placeholder primary key) so we don't use it.
    *
-   * @param int $userId   User id
-   * @param int $authorId Id of the author of the story
-   * @param int $ucsId    UCS-2 code (character !!!)
-   * @param int $isUpvote true for star, false for report
+   * @param int  $userId   User id
+   * @param int  $authorId Id of the author of the story
+   * @param int  $ucsId    UCS-2 code (character !!!)
+   * @param bool $isUpvote true for star, false for report
    *
    * @return array Array for JSON response
    */

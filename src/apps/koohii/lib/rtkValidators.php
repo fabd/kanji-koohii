@@ -20,10 +20,8 @@ class rtkValidators
 {
   /**
    * Validate RevTK username.
-   *
-   * @param object $value
    */
-  public static function validateUsername($value)
+  public static function validateUsername(string $value): bool
   {
     // no special characters
     $valid = (preg_match('/^[a-zA-Z0-9_]+$/', $value) > 0);
@@ -34,7 +32,7 @@ class rtkValidators
     return $valid;
   }
 
-  public static function validateUserLocation($value)
+  public static function validateUserLocation(string $value): bool
   {
     return BaseValidators::validateNoHtmlTags($value)
            && BaseValidators::validateMysqlUtf8($value);
@@ -59,11 +57,9 @@ class rtkValidators
   /**
    * Cast value to an int, and makes sure it checks against supported CJK range.
    *
-   * @param mixed $value
-   *
-   * @return int
+   * @throws sfException
    */
-  public static function sanitizeCJKUnifiedUCS($value)
+  public static function sanitizeCJKUnifiedUCS(int|string $value): int
   {
     $ucs_code = BaseValidators::sanitizeInteger($value);
 

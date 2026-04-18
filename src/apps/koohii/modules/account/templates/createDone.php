@@ -1,6 +1,6 @@
 <?php
 use_helper('Form', 'Validation', 'Widgets');
-$sf_request->setParameter('_homeFooter', true);
+with_footer();
 ?>
     <h2>Welcome <?= $username; ?>, your account is ready!</h2>
 

@@ -2,6 +2,14 @@
 
 use Patreon\OAuth;
 
+/**
+ * @property array  $user
+ * @property int    $flashcard_count
+ * @property int    $reviewed_count
+ * @property int    $total_reviews
+ * @property string $username
+ * @property array  $srsSettings
+ */
 class accountActions extends sfActions
 {
   // Answer for the registration question (must be lowercase)
@@ -29,7 +37,7 @@ class accountActions extends sfActions
     return $regcount < self::MAX_REGS_BETWEEN_TIME;
   }
 
-  public function executeIndex($request)
+  public function executeIndex(coreRequest $request)
   {
     $userId = kk_get_user()->getUserId();
     //    $this->redirect('account/edit');
@@ -44,10 +52,8 @@ class accountActions extends sfActions
 
   /**
    * Create a new account.
-   *
-   * @param mixed $request
    */
-  public function executeCreate($request)
+  public function executeCreate(coreRequest $request)
   {
     $sfs = StopForumSpam::getInstance();
 
@@ -63,7 +69,7 @@ class accountActions extends sfActions
       $sfs->logActivity($regip, 'Too many registrations');
 
       $this->setLayout(false);
-      $this->getResponse()->setStatusCode(403);
+      $this->getResponse()->setStatusCode('403');
 
       return $this->renderText('Too many registrations within '.self::BETWEEN_REGS_TIME.'h period.');
     }
@@ -108,7 +114,7 @@ class accountActions extends sfActions
           if (empty($answer)) {
             $sfs->logActivity($regip, 'NO answer to the anti-spam question');
             // on va tester un 403 au lieu du 404 (qui semble inciter le bot à doubler la requête)
-            $this->getResponse()->setStatusCode(403);
+            $this->getResponse()->setStatusCode('403');
 
             $request->setError('question', 'Woops, did you forget to answer the question?');
 
@@ -123,7 +129,7 @@ class accountActions extends sfActions
 
         // increase of spam from Russia
         if (preg_match('/\.ru$/', $email)) {
-          $this->getResponse()->setStatusCode(403);
+          $this->getResponse()->setStatusCode('403');
 
           return $this->renderText('.ru email address is not accepted (we are sorry but 99% of these are spam bots - please use an alternate email during registration - you can change your email after you signin in Account Settings.)');
         }
@@ -138,7 +144,7 @@ class accountActions extends sfActions
           // $request->setError('error', $s);
           // return sfView::SUCCESS;
 
-          $this->getResponse()->setStatusCode(403);
+          $this->getResponse()->setStatusCode('403');
 
           return $this->renderText('Invalid request');
         }
@@ -186,10 +192,8 @@ class accountActions extends sfActions
 
   /**
    * Delete Account.
-   *
-   * @param mixed $request
    */
-  public function executeDelete($request)
+  public function executeDelete(coreRequest $request)
   {
     $user     = kk_get_user();
     $userId   = $user->getUserId();
@@ -217,9 +221,9 @@ class accountActions extends sfActions
 
         // hmm this might be an issue with the legacy code
 
-        $isValidEmail    = strtolower($inputs['email'])                          === strtolower($userDetails['email']);
+        $isValidEmail    = strtolower($inputs['email'])                       === strtolower($userDetails['email']);
         $isValidPassword = $user->getSaltyHashedPassword($inputs['password']) === $userDetails['password'];
-        $isValidPhrase   = $inputs['confirm_text']                              === 'delete my account';
+        $isValidPhrase   = $inputs['confirm_text']                            === 'delete my account';
 
         if (!$isValidEmail) {
           $request->setError('email', 'Email is incorrect. Make sure you type it correctly');
@@ -236,22 +240,19 @@ class accountActions extends sfActions
           && $isValidPhrase
           && $isValidPassword
         ) {
-          if (false !== ($stats = UsersPeer::deleteUser($userId))) {
-            $this->setVar('account_stats', $stats);
-            $this->setVar('account_username', $userName);
+          $stats = UsersPeer::deleteUser($userId);
 
-            $logDesc = "{$stats['stories']} stories, {$stats['flashcards']} flashcards, {$stats['keywords']} keywords";
+          $this->setVar('account_stats', $stats);
+          $this->setVar('account_username', $userName);
 
-            $log = new UserDeleteLog();
-            $log->logUserDeletion($userId, $userName, $userDetails['joindate'], $logDesc);
+          $logDesc = "{$stats['stories']} stories, {$stats['flashcards']} flashcards, {$stats['keywords']} keywords";
 
-            kk_get_user()->signOutAndClearCookie();
+          $log = new UserDeleteLog();
+          $log->logUserDeletion($userId, $userName, $userDetails['joindate'], $logDesc);
 
-            return 'Done';
-          } else {
-            // code...
-            $request->setError('db', 'Oops, the delete operation failed. Please try again in a minute.');
-          }
+          kk_get_user()->signOutAndClearCookie();
+
+          return 'Done';
         }
       }
     }
@@ -259,10 +260,8 @@ class accountActions extends sfActions
 
   /**
    * Edit Account.
-   *
-   * @param mixed $request
    */
-  public function executeEdit($request)
+  public function executeEdit(coreRequest $request)
   {
     $user = kk_get_user();
 
@@ -313,10 +312,8 @@ class accountActions extends sfActions
    *
    * Still too simplistic, ideally should add another step so that the password
    * is not automatically reset.
-   *
-   * @param mixed $request
    */
-  public function executeForgotPassword($request)
+  public function executeForgotPassword(coreRequest $request)
   {
     if ($request->getMethod() != sfRequest::POST) {
       return sfView::SUCCESS;
@@ -331,7 +328,7 @@ class accountActions extends sfActions
 
       if ($user) {
         // set new random password
-        $raw_password = strtoupper(substr(md5(rand(100000, 999999)), 0, 8));
+        $raw_password = strtoupper(substr(md5((string) rand(100000, 999999)), 0, 8));
 
         // update the password on main site and forum
         kk_get_user()->changePassword($user['username'], $raw_password);
@@ -354,10 +351,8 @@ class accountActions extends sfActions
    * Change Password.
    *
    * Update the user's password on the RevTK site AND the corresponding PunBB forum account.
-   *
-   * @param mixed $request
    */
-  public function executePassword($request)
+  public function executePassword(coreRequest $request)
   {
     if ($request->getMethod() != sfRequest::POST) {
       return sfView::SUCCESS;
@@ -409,7 +404,7 @@ class accountActions extends sfActions
     $request->setParameter('newpassword2', '');
   }
 
-  public function executeFlashcards($request)
+  public function executeFlashcards(coreRequest $request)
   {
     $user = kk_get_user();
 
@@ -421,7 +416,7 @@ class accountActions extends sfActions
       $request->getParameterHolder()->add($form_data);
     } else {
       $settings = [
-        'OPT_NO_SHUFFLE' => $request->getParameter('opt_no_shuffle', 0),
+        'OPT_NO_SHUFFLE' => $request->getParameter('opt_no_shuffle', '0'),
         // 'OPT_READINGS'   => $request->getParameter('opt_readings', 0)     PHASING OUT
       ];
 
@@ -430,7 +425,7 @@ class accountActions extends sfActions
     }
   }
 
-  public function executeSpacedrepetition($request)
+  public function executeSpacedrepetition(coreRequest $request)
   {
     /** @var rtkUser */
     $user = kk_get_user();
@@ -444,10 +439,12 @@ class accountActions extends sfActions
       $opt_srs_reverse  = intval($request->getParameter('opt_srs_reverse'));
 
       // needs to match the Vue form validation
-      if ($opt_srs_max_box < 5 || $opt_srs_max_box > 10
-                               || $opt_srs_mult < 130 || $opt_srs_mult  > 400
-                               || $opt_srs_hard_box >= $opt_srs_max_box
-                               || !BaseValidators::validateIntegerRange($opt_srs_reverse, 0, 1)) {
+      if ($opt_srs_max_box < 5
+        || $opt_srs_max_box > 10
+        || $opt_srs_mult < 130
+        || $opt_srs_mult > 400
+        || $opt_srs_hard_box >= $opt_srs_max_box
+        || !BaseValidators::validateIntegerRange($opt_srs_reverse, 0, 1)) {
         $request->setError('x', 'Invalid form submission');
       } else {
         $settings = [
@@ -470,14 +467,13 @@ class accountActions extends sfActions
     ];
   }
 
-  public function executeSequence($request)
+  public function executeSequence(coreRequest $request)
   {
     if ($request->getMethod() != sfRequest::POST) {
-      $curSeq   = rtkIndex::getSequenceInfo();
-      $formdata = ['optSeq' => [$curSeq['classId']]];
-      $request->getParameterHolder()->add($formdata);
+      $curSeq = rtkIndex::getSequenceInfo();
+      $request->getParameterHolder()->add(['optSeq' => $curSeq['classId']]);
     } else {
-      $optSeq = $request->getParameter('optSeq', [])[0];
+      $optSeq = $request->getParameter('optSeq');
 
       foreach (rtkIndex::getSequences() as $seq) {
         // only update if the parameter matches a known sequence
@@ -500,10 +496,8 @@ class accountActions extends sfActions
    * Patreon login redirect (OAuth).
    *
    *  https://kanji.koohii.com/account/patreon ? code=<single use code> & state=<string>
-   *
-   * @param mixed $request
    */
-  public function executePatreon($request)
+  public function executePatreon(coreRequest $request)
   {
     require_once sfConfig::get('sf_lib_dir').'/vendor/Patreon/__patreon.php';
 

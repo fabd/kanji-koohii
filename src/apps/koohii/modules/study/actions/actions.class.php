@@ -14,15 +14,19 @@
  *   executeDict()
  *   executeVocabpick()
  *   executeVocabdelete().
+ *
+ * @property bool         $isBeginRestudy
+ * @property false|object $kanjiData
+ * @property string       $title
+ * @property array        $sort_options
+ * @property string       $sort_active
  */
 class studyActions extends sfActions
 {
   /**
    * Study page.
-   *
-   * @param mixed $request
    */
-  public function executeIndex($request) {}
+  public function executeIndex(coreRequest $request) {}
 
   /**
    * Study Page Search.
@@ -30,12 +34,11 @@ class studyActions extends sfActions
    * Convert the search term to a framenum parameter and forward to index.
    *
    * @url  /study/kanji/:id
-   *
-   * @param coreRequest $request
    */
-  public function executeEdit($request)
+  public function executeEdit(coreRequest $request)
   {
     $userId = kk_get_user()->getUserId();
+    $ucsId  = false;
 
     // stop bad users from overloading the database with their stupid scripts
     $throttler = new RequestThrottler(kk_get_user(), 'baduser');
@@ -76,7 +79,7 @@ class studyActions extends sfActions
         }
       }
     } else {
-      $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($request->getParameter('ucs_code', 0));
+      $ucsId = rtkValidators::sanitizeCJKUnifiedUCS($request->getParameter('ucs_code') ?? 0);
 
       // "Add to learned list"
       if ($request->hasParameter('doLearned')) {
@@ -91,7 +94,9 @@ class studyActions extends sfActions
         $nextId = ReviewsPeer::getNextUnlearnedKanji($userId);
         if ($nextId !== false) {
           $kanji = KanjisPeer::getKanjiByUCS($nextId);
-          $this->redirect('study/edit?id='.$kanji->kanji);
+          if ($kanji !== false) {
+            $this->redirect('study/edit?id='.$kanji->kanji);
+          }
         }
       }
     }
@@ -105,14 +110,14 @@ class studyActions extends sfActions
       $request->getParameterHolder()->add(['ucsId' => $ucsId, 'keyword' => $this->kanjiData->keyword]);
 
       // replace search term with frame number in search box
-      $request->setParameter('search', $this->kanjiData->framenum);
+      $request->setParameter('search', (string) $this->kanjiData->framenum);
 
       // set descriptive lesson title
       $this->title = $this->getLessonTitleForIndex($this->kanjiData->framenum);
 
       // enable caching of Shared Stories list ONLY for Heisig indexed (~3000 items)
       if (false === rtkIndex::isExtendedIndex($this->kanjiData->framenum)) {
-        // sometimes we disable cache fin development
+        // sometimes we disable cache in development
         if (null !== ($cacheManager = $this->getContext()->getViewCacheManager())) {
           // set cache to THIRTY days because we invalidate it whenever needed
           $cacheManager->addCache(
@@ -162,10 +167,8 @@ class studyActions extends sfActions
    *
    * Because of the redirect, browser history doesn't keep
    * this step, so the user can go "Back" without repeating this action.
-   *
-   * @param mixed $request
    */
-  public function executeClear($request)
+  public function executeClear(coreRequest $request)
   {
     LearnedKanjiPeer::clearAll(kk_get_user()->getUserId());
 
@@ -208,7 +211,7 @@ class studyActions extends sfActions
     }
     if (preg_match('/^[0-9]+$/', $s)) {
       // could be a Heisig #, or a unicode # (UCS2)
-      return rtkIndex::getUCSForIndex($s);
+      return rtkIndex::getUCSForIndex((int) $s);
     }
     if (preg_match('/[^0-9]/', $s)) {
       // try to find an exact match, match before and after the RTK edition separator
@@ -246,17 +249,13 @@ class studyActions extends sfActions
 
   /**
    * Failed Kanji List.
-   *
-   * @param mixed $request
    */
-  public function executeFailedlist($request) {}
+  public function executeFailedlist(coreRequest $request) {}
 
   /**
    * Failed Kanji List ajax table.
-   *
-   * @param mixed $request
    */
-  public function executeFailedlisttable($request)
+  public function executeFailedlisttable(coreRequest $request)
   {
     $tron = new JsTron();
     $tron->setHtml($this->getComponent('study', 'FailedListTable'));
@@ -266,10 +265,8 @@ class studyActions extends sfActions
 
   /**
    * Shared Stories List paging on the Study pages.
-   *
-   * @param mixed $request
    */
-  public function executeSharedStoriesList($request)
+  public function executeSharedStoriesList(coreRequest $request)
   {
     $tron = new JsTron();
 
@@ -295,10 +292,8 @@ class studyActions extends sfActions
 
   /**
    * My Stories page.
-   *
-   * @param sfWebRequest $request
    */
-  public function executeMystories($request)
+  public function executeMystories(coreRequest $request)
   {
     // use Last Edit as the default sort
     $sortkey = $request->getParameter(uiSelectTable::QUERY_SORTCOLUMN, 'lastedit');
@@ -341,10 +336,8 @@ class studyActions extends sfActions
 
   /**
    * My Stories ajax component (used in Study > My Stories and Profile).
-   *
-   * @param mixed $request
    */
-  public function executeMyStoriesTable($request)
+  public function executeMyStoriesTable(coreRequest $request)
   {
     $tron = new JsTron();
 
@@ -362,13 +355,13 @@ class studyActions extends sfActions
     }
     $throttler->setTimeout();
 
-    if (0 === ($stories_uid = (int) $request->getParameter('stories_uid', 0))) {
+    if (0 === ($stories_uid = (int) $request->getParameter('stories_uid'))) {
       $tron->setStatus(JsTron::STATUS_FAILED);
 
       return $this->renderJson($tron);
     }
 
-    $profile_page = (bool) $request->getParameter('profile_page', false);
+    $profile_page = (bool) $request->getParameter('profile_page');
 
     $tron->setHtml($this->getComponent('study', 'MyStoriesTable', ['stories_uid' => $stories_uid, 'profile_page' => $profile_page]));
 
@@ -389,10 +382,8 @@ class studyActions extends sfActions
    *   reviewMode         boolean
    *
    * See study/edit action (parameters) and EditStoryDialog.js
-   *
-   * @param mixed $request
    */
-  public function executeEditstory($request)
+  public function executeEditstory(coreRequest $request)
   {
     // FIXME - temporary compat. with AjaxDialog (YUI2 Connect) in Flashcard Review page
     if ($request->hasParameter('ucsCode')) {
@@ -460,7 +451,7 @@ class studyActions extends sfActions
         $postStoryEdit = '';
       } else { // update story
         // validate story length BEFORE substitutions (to match "x chars left" feedback on the client side)
-        mb_internal_encoding('utf-8');
+          mb_internal_encoding('utf-8');
         $count = mb_strlen($postStoryEdit);
         if ($count > rtkStory::MAXIMUM_STORY_LENGTH) {
           $n = $count - rtkStory::MAXIMUM_STORY_LENGTH;
@@ -626,10 +617,8 @@ class studyActions extends sfActions
    *               "copy": copy story
    *   uid         Story author's userid
    *   sid         Story id (kanji's UCS-2 code value)
-   *
-   * @param mixed $request
    */
-  public function executeAjax($request)
+  public function executeAjax(coreRequest $request)
   {
     $json = $request->getContentJson();
 
@@ -675,10 +664,8 @@ class studyActions extends sfActions
    *   items             Array of vocab entries (compound, reading, etc)
    *   picks             Array of user's selected vocab ([dictid, ...])
    *   knownKanji       (IF "reqKnownKanji") String of known kanji
-   *
-   * @param mixed $request
    */
-  public function executeDict($request)
+  public function executeDict(coreRequest $request)
   {
     $json = $request->getParamsAsJson();
     // DBG::printr($json);exit;
@@ -724,10 +711,8 @@ class studyActions extends sfActions
    *   dictid            JMDICT entseq id
    *
    * Returns:
-   *
-   * @param mixed $request
    */
-  public function executeVocabpick($request)
+  public function executeVocabpick(coreRequest $request)
   {
     $json = $request->getContentJson();
 
@@ -746,7 +731,7 @@ class studyActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeVocabdelete($request)
+  public function executeVocabdelete(coreRequest $request)
   {
     $json = $request->getContentJson();
 

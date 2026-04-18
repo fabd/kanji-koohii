@@ -1,12 +1,15 @@
 <?php
 /**
  * Due Cards Graph Component. Shows how many cards are due each day for the next week.
+ *
+ * @property array<int> $cardsByDay
+ * @property int        $maxCards
  */
 class DueCardsGraphComponent extends sfComponent
 {
   public const GRAPH_DAYS = 7;
 
-  public function execute($request)
+  public function execute($request): string
   {
     $duecards = ReviewsPeer::getDueCardsByDay();
 

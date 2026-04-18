@@ -47,8 +47,6 @@ interface uiSelectTableBinding
    * - Editable fields should not be modified by this function!
    * - colData is escaped, to prevent escaping, add colDisplay and set it in this method
    * - Set the 'cssClass' key in $rowData to add custom classes on the TR element.
-   *
-   * @return array $rowData
    */
   public function filterDisplayData(uiSelectTableRow $row);
 

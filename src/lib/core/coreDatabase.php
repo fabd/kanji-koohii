@@ -32,10 +32,10 @@ abstract class coreDatabase
   public const FETCH_ASSOC = 2;
   public const FETCH_OBJ   = 3;
 
-  protected ?sfParameterHolder $parameterHolder = null;
-  protected mixed $connection                   = null;
-  protected ?coreDatabaseProfiler $profiler     = null;
-  protected int $fetchMode                      = self::FETCH_ASSOC;
+  protected sfParameterHolder $parameterHolder;
+  protected mixed $connection               = null;
+  protected ?coreDatabaseProfiler $profiler = null;
+  protected int $fetchMode                  = self::FETCH_ASSOC;
 
   /**
    * Class constructor.
@@ -61,7 +61,7 @@ abstract class coreDatabase
 
     // setup query profiler
     $user = kk_get_user();
-    if ($user !== null && ($user->getUserName() === 'fuaburisu' || $user->isAdministrator())) {
+    if (null !== $user && ($user->getUserName() === 'fuaburisu' || $user->isAdministrator())) {
       $this->profiler = new coreDatabaseProfilerMySQL();
     }
   }
@@ -84,7 +84,7 @@ abstract class coreDatabase
   /**
    * Returns the SQL query profiler instance.
    *
-   * @return coreDatabaseProfiler
+   * @return coreDatabaseProfiler|null
    */
   public function getProfiler()
   {
@@ -205,7 +205,7 @@ abstract class coreDatabase
   abstract public function fetchObject($class = 'stdClass', array $config = []);
 
   /**
-   * Returns first column from first row of the result set (useful for "count(*)" querries).
+   * Returns first column from first row of the result set (useful for "count (*)" querries).
    *
    * @param mixed      $query
    * @param mixed|null $bind
@@ -521,11 +521,9 @@ class coreDatabaseSelect
   /**
    * Adds to the columns.
    *
-   * @param array|string $cols
-   *
    * @return self
    */
-  public function columns($cols)
+  public function columns(array|string $cols)
   {
     if (!is_array($cols)) {
       $cols = [$cols];
@@ -539,14 +537,14 @@ class coreDatabaseSelect
    * Specify FROM table(s).
    *
    * Ex1:   'table1'
-   * Ex2:   array('t' => 'table')
-   * Ex3:   array('table1', 't2' => 'table2')
+   * Ex2:   ['t' => 'table']
+   * Ex3:   ['table1', 't2' => 'table2']
    *
-   * @param mixed $table
+   * @param array<string,string>|string $table One or more tables, use k => v for alias
    *
    * @return self
    */
-  public function from($table)
+  public function from(array|string $table)
   {
     $this->parts[self::FROM] = $table;
 
@@ -554,12 +552,12 @@ class coreDatabaseSelect
   }
 
   /**
-   * @param       $table     Object
-   * @param mixed $condition
+   * @param array<string,string>|string $table     One or more tables, use k => v for alias
+   * @param mixed                       $condition
    *
    * @return self
    */
-  public function join($table, $condition)
+  public function join(array|string $table, $condition)
   {
     $this->parts[self::JOINS][] = ' JOIN '.$this->db->aliases($table).' ON '.$condition;
 
@@ -567,12 +565,12 @@ class coreDatabaseSelect
   }
 
   /**
-   * @param string $table   The table to join
-   * @param mixed  $columns Column(s) for the USING clause (string or array)
+   * @param array<string,string>|string $table   The table to join (use k => v for alias)
+   * @param array|string                $columns Column(s) for the USING clause
    *
    * @return self
    */
-  public function joinUsing($table, $columns)
+  public function joinUsing(array|string $table, array|string $columns)
   {
     $this->parts[self::JOINS][] = ' JOIN '.$this->db->aliases($table).' USING('.$this->db->aliases($columns).')';
 
@@ -580,12 +578,11 @@ class coreDatabaseSelect
   }
 
   /**
-   * @param       $table     Object
-   * @param mixed $condition
+   * @param array<string,string>|string $table The table to join (use k => v for alias)
    *
    * @return self
    */
-  public function joinLeft($table, $condition)
+  public function joinLeft(array|string $table, string $condition)
   {
     $this->parts[self::JOINS][] = ' LEFT JOIN '.$this->db->aliases($table).' ON '.$condition;
 
@@ -593,12 +590,12 @@ class coreDatabaseSelect
   }
 
   /**
-   * @param string $table   The table to join
-   * @param mixed  $columns Column(s) for the USING clause (string or array)
+   * @param array<string,string>|string $table   The table to join (use k => v for alias)
+   * @param array|string                $columns Column(s) for the USING clause
    *
    * @return self
    */
-  public function joinLeftUsing($table, $columns)
+  public function joinLeftUsing(array|string $table, array|string $columns)
   {
     $this->parts[self::JOINS][] = ' LEFT JOIN '.$this->db->aliases($table).' USING('.$this->db->aliases($columns).')';
 

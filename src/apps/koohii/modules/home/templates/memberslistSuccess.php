@@ -1,6 +1,4 @@
-<?php
-$sf_request->setParameter('_homeFooter', true);
-?>
+<?php with_footer(); ?>
 
     <h2>Members reviewing in the past 30 days</h2>
 

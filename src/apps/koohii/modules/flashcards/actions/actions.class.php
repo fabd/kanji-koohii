@@ -8,13 +8,13 @@
  */
 class flashcardsActions extends sfActions
 {
-  public function executeIndex()
+  public function executeIndex(coreRequest $request)
   {
     // for testing the HTTP 500 error page (nothing should link here)
     throw new sfException('Woopsies');
   }
 
-  public function executeAdd($request)
+  public function executeAdd(coreRequest $request)
   {
     $json  = $request->getContentJson();
     $ucsId = BaseValidators::sanitizeInteger($json->ucs);
@@ -46,7 +46,7 @@ class flashcardsActions extends sfActions
    *   ucs
    *   action
    */
-  public function executeEdit(sfRequest $request)
+  public function executeEdit(coreRequest $request)
   {
     $userId = kk_get_user()->getUserId();
 

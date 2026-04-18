@@ -1,6 +1,6 @@
 <?php
 use_helper('Date', 'SimpleDate', 'Widgets', 'Decorator');
-$sf_request->setParameter('_homeFooter', true);
+with_footer();
 ?>
 <?php decorate_start('SideTabs', ['active' => 'overview']); ?>
 

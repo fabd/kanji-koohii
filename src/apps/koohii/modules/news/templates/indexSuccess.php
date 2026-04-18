@@ -1,6 +1,6 @@
 <?php
 use_helper('SimpleDate');
-$sf_request->setParameter('_homeFooter', true);
+with_footer();
 
 if ($select === 'recent') {
   // show recent news posts as on homepage

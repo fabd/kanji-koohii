@@ -138,7 +138,7 @@
   <div class="clear-both"></div>
 </div><!-- /ko-FCR-body -->
 
-<?=// Form to redirect to Review Summary with POST
+<?= // Form to redirect to Review Summary with POST
    form_with_data(
      url_for('@review_summary'),
      [

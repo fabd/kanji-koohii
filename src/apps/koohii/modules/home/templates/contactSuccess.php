@@ -1,6 +1,6 @@
 <?php
 use_helper('Form', 'Markdown', 'Validation');
-$sf_request->setParameter('_homeFooter', true);
+with_footer();
 
 $address = rtkMail::parseAddress(sfConfig::get('app_email_feedback_to'));
 $email   = $address['email'];

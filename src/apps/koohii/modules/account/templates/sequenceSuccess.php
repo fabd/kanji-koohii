@@ -44,7 +44,7 @@ END,
     <tbody>
     <?php for ($i = 0; $i < count($eds); $i++): ?>
       <tr>
-        <td><label><?= radiobutton_tag('optSeq[]', $sequences[$i]['classId'], false); ?> <strong><?= $eds[$i]['short']; ?></strong></label></td>
+        <td><label><?= radiobutton_tag('optSeq', $sequences[$i]['classId'], false); ?> <strong><?= $eds[$i]['short']; ?></strong></label></td>
         <td><?= $eds[$i]['long']; ?></td>
         <td><?= $eds[$i]['count']; ?></td>
       </tr>

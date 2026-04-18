@@ -1,6 +1,6 @@
 <?php
 use_helper('Form', 'Validation', 'Links');
-$sf_request->setParameter('_homeFooter', true);
+with_footer();
 ?>
 
 <h2>Vocab Shuffle</h2>

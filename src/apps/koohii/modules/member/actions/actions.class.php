@@ -2,7 +2,7 @@
 
 class memberActions extends sfActions
 {
-  public function executeIndex() {}
+  public function executeIndex(coreRequest $request) {}
 
-  public function executeProgress() {}
+  public function executeProgress(coreRequest $request) {}
 }

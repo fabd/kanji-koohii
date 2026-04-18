@@ -1,6 +1,8 @@
 <?php
 /**
  * Flashcard Management.
+ *
+ * @property string $tplEditKeywordUri
  */
 class manageActions extends sfActions
 {
@@ -9,9 +11,9 @@ class manageActions extends sfActions
    */
   public const REMOVE_FLASHCARDS = 'removeFlashcards';
 
-  public function executeIndex($request) {}
+  public function executeIndex(coreRequest $request) {}
 
-  public function executeAddorder($request)
+  public function executeAddorder(coreRequest $request)
   {
     // handle ajax requests (POST)
     if ($request->getMethod() === sfRequest::POST) {
@@ -22,7 +24,7 @@ class manageActions extends sfActions
     }
   }
 
-  public function executeAddOrderConfirm($request)
+  public function executeAddOrderConfirm(coreRequest $request)
   {
     $validator = new coreValidator('AddOrder');
     if ($validator->validate($request->getParameterHolder()->getAll())) {
@@ -50,7 +52,7 @@ class manageActions extends sfActions
     $this->forward('manage', 'addorder');
   }
 
-  public function executeAddOrderProcess($request)
+  public function executeAddOrderProcess(coreRequest $request)
   {
     // cancel action
     $this->forwardIf($request->hasParameter('cancel'), 'manage', 'addorder');
@@ -84,7 +86,7 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeAddcustom($request)
+  public function executeAddcustom(coreRequest $request)
   {
     // handle ajax requests (POST)
     if ($request->getMethod() === sfRequest::POST) {
@@ -95,7 +97,7 @@ class manageActions extends sfActions
     }
   }
 
-  public function executeAddCustomConfirm($request)
+  public function executeAddCustomConfirm(coreRequest $request)
   {
     $validator = new coreValidator('AddCustom');
     if ($validator->validate($request->getParameterHolder()->getAll())) {
@@ -133,7 +135,7 @@ class manageActions extends sfActions
     $this->forward('manage', 'addcustom');
   }
 
-  public function executeAddCustomProcess($request)
+  public function executeAddCustomProcess(coreRequest $request)
   {
     // cancel: go back to edited form
     $this->forwardIf($request->hasParameter('cancel'), 'manage', 'addcustom');
@@ -164,12 +166,12 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeEditkeywords($request)
+  public function executeEditkeywords(coreRequest $request)
   {
     $this->tplEditKeywordUri = $this->getController()->genUrl('study/editkeyword', true);
   }
 
-  public function executeEditKeywordsTable($request)
+  public function executeEditKeywordsTable(coreRequest $request)
   {
     $tron = new JsTron();
     $tron->setHtml($this->getComponent('manage', 'EditKeywordsTable'));
@@ -177,7 +179,7 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeRemovelist($request)
+  public function executeRemovelist(coreRequest $request)
   {
     // handle ajax requests (POST)
     if ($request->getMethod() === sfRequest::POST) {
@@ -196,7 +198,7 @@ class manageActions extends sfActions
     }
   }
 
-  public function executeRemoveListTable($request)
+  public function executeRemoveListTable(coreRequest $request)
   {
     uiSelectionState::updateSelection(self::REMOVE_FLASHCARDS, 'rf', $request->getParameterHolder()->getAll());
 
@@ -206,7 +208,7 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeRemoveListConfirm($request)
+  public function executeRemoveListConfirm(coreRequest $request)
   {
     // Clear selection > reset form
     $this->forwardIf($request->hasParameter('reset'), 'manage', 'removelist');
@@ -224,7 +226,7 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeRemoveListProcess($request)
+  public function executeRemoveListProcess(coreRequest $request)
   {
     // Confirm > cancel > go back and keep the current selection
     $this->forwardIf($request->hasParameter('cancel'), 'manage', 'removelist');
@@ -249,7 +251,7 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeRemovecustom($request)
+  public function executeRemovecustom(coreRequest $request)
   {
     // handle ajax requests (POST)
     if ($request->getMethod() === sfRequest::POST) {
@@ -260,7 +262,7 @@ class manageActions extends sfActions
     }
   }
 
-  public function executeRemoveCustomConfirm($request)
+  public function executeRemoveCustomConfirm(coreRequest $request)
   {
     $validator = new coreValidator('RemoveCustom');
     if ($validator->validate($request->getParameterHolder()->getAll())) {
@@ -288,7 +290,7 @@ class manageActions extends sfActions
     $this->forward('manage', 'removecustom');
   }
 
-  public function executeRemoveCustomProcess($request)
+  public function executeRemoveCustomProcess(coreRequest $request)
   {
     // cancel: go back to edited form
     $this->forwardIf($request->hasParameter('cancel'), 'manage', 'removecustom');
@@ -319,7 +321,7 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeImportKeywords($request)
+  public function executeImportKeywords(coreRequest $request)
   {
     if ($request->getMethod() === sfRequest::POST) {
       // validate
@@ -345,7 +347,7 @@ class manageActions extends sfActions
     }
   }
 
-  public function executeImportKeywordsConfirm($request)
+  public function executeImportKeywordsConfirm(coreRequest $request)
   {
     // cancel
     $this->forwardIf($request->hasParameter('cancel'), 'manage', 'importKeywords');
@@ -357,7 +359,7 @@ class manageActions extends sfActions
     return $this->renderJson($tron);
   }
 
-  public function executeImportKeywordsProcess($request)
+  public function executeImportKeywordsProcess(coreRequest $request)
   {
     // cancel
     $this->forwardIf($request->hasParameter('cancel'), 'manage', 'importKeywords');
@@ -391,9 +393,9 @@ class manageActions extends sfActions
   /**
    * Export the user's flaschards with their review status.
    */
-  public function executeExport() {}
+  public function executeExport(coreRequest $request) {}
 
-  public function executeExportflashcards()
+  public function executeExportflashcards(coreRequest $request)
   {
     $response = $this->getResponse();
     $response->setContentType('text/plain; charset=utf-8');
@@ -421,7 +423,8 @@ class manageActions extends sfActions
 
     $throttler->setTimeout();
 
-    $this->getResponse()->setFileAttachmentHeaders('rtk_flashcards.csv');
+    kk_get_response()->setFileAttachmentHeaders('rtk_flashcards.csv');
+
     $this->setLayout(false);
 
     return $this->renderText($csvText);

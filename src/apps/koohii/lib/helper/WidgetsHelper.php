@@ -49,7 +49,7 @@ function _widgets_render(string $template, array $vars): string
  *
  * @return string HTML representation
  */
-function ui_filter_std($label, $links, $options = [])
+function ui_filter_std(string $label, array $links, array $options = []): string
 {
   // always set the widget class name in the main div tag
   $options['class'] = merge_html_classes($options['class'] ?? [], 'uiFilterStd');
@@ -93,12 +93,12 @@ function ui_filter_std($label, $links, $options = [])
  *  echo ui_select_pager(false, 'pager2')
  *    => Print previously set pager with custom slot name
  *
- * @param mixed  $pager uiSelectPager object or false
- * @param string $slot  Slot name, leave out to use the default
+ * @param false|uiSelectPager $pager uiSelectPager object or false
+ * @param string              $slot  Slot name, leave out to use the default
  *
  * @return string HTML representation
  */
-function ui_select_pager($pager = false, $slot = 'widgets.ui.pager')
+function ui_select_pager(false|uiSelectPager $pager = false, string $slot = 'widgets.ui.pager'): string
 {
   if ($pager !== false) {
     slot($slot);
@@ -121,7 +121,7 @@ function ui_select_pager($pager = false, $slot = 'widgets.ui.pager')
  *
  * @return string HTML representation
  */
-function ui_select_table(uiSelectTable $table, ?uiSelectPager $pager = null, $html_options = [])
+function ui_select_table(uiSelectTable $table, ?uiSelectPager $pager = null, array $html_options = []): string
 {
   ob_start();
 
@@ -146,12 +146,9 @@ function ui_select_table(uiSelectTable $table, ?uiSelectPager $pager = null, $ht
  * Uses the same helper template as the uiSelectTable component, to limit the damage
  * (ideally the select_table should be refactored to use a datasource interface...)
  *
- * @param mixed $table        an object with the getTableHead() and getTableBody() methods
- * @param mixed $html_options
- *
- * @return string
+ * @param object $table an object with the getTableHead() and getTableBody() methods
  */
-function ui_data_table($table, $html_options = [])
+function ui_data_table(object $table, array $html_options = []): string
 {
   if (!method_exists($table, 'getTableHead') || !method_exists($table, 'getTableBody')) {
     throw new sfException(__METHOD__.' Bad interface on $table');
@@ -196,10 +193,8 @@ function ui_data_table($table, $html_options = [])
  * @param string $name         Button text can contain HTML (eg. <span>), will NOT be escaped
  * @param string $internal_uri See link_to()
  * @param array  $options      See link_to()
- *
- * @return string
  */
-function ui_ibtn($name, $internal_uri = '', $options = [])
+function ui_ibtn(string $name, string $internal_uri = '', array $options = []): string
 {
   $button_type = 'uiIBtnDefault';
 
@@ -280,16 +275,11 @@ function ui_chart_vs(array $options)
  *
  * @param array $bars     Associative array definitions for bars
  * @param int   $maxValue The max value corresponds to 100% of the bar width, related to each bar's value
- * @param array $options
  *
  * @return string HTML markup
  */
-function ui_progress_bar(array $bars, $maxValue, $options = [])
+function ui_progress_bar(array $bars, int $maxValue, array $options = []): string
 {
-  if (!is_int($maxValue)) {
-    throw new sfException('ui_progress_bar()  "maxValue" must be an integer');
-  }
-
   // border color for the bar, override border-color from the stylesheet
 
   $innerDivOptions = [];

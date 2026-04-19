@@ -63,6 +63,8 @@ class PatreonAPI
     do {
       $params = [
         'fields[member]' => 'full_name,email,patron_status,campaign_lifetime_support_cents',
+        'include'        => 'user',
+        'fields[user]'   => 'hide_pledges',
         'page[count]'    => 500,
       ];
 
@@ -72,7 +74,23 @@ class PatreonAPI
 
       $response = $this->get('/campaigns/'.$campaignId.'/members', $params);
 
-      $members = array_merge($members, $response['data'] ?? []);
+      // Build id => hide_pledges map from this page's included users.
+      $userMap = [];
+      foreach ($response['included'] ?? [] as $included) {
+        if ($included['type'] === 'user') {
+          $userMap[$included['id']] = (bool) ($included['attributes']['hide_pledges'] ?? false);
+        }
+      }
+
+      // Inject hide_pledges into each member's attributes for convenience.
+      $page = $response['data'] ?? [];
+      foreach ($page as &$member) {
+        $userId                               = $member['relationships']['user']['data']['id'] ?? null;
+        $member['attributes']['hide_pledges'] = $userId !== null && ($userMap[$userId] ?? false);
+      }
+      unset($member);
+
+      $members = array_merge($members, $page);
 
       $cursor = $response['meta']['pagination']['cursors']['next'] ?? null;
     } while ($cursor !== null);

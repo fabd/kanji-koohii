@@ -98,21 +98,24 @@ class Patreon_CLI extends Command_CLI
     $colEmail    = 36;
     $colStatus   = 8;
     $colLifetime = 10;
+    $colHidden   = 6;
 
     $header = sprintf(
-      '  %-'.$colName.'s  %-'.$colEmail.'s  %-'.$colStatus.'s  %s',
+      '  %-'.$colName.'s  %-'.$colEmail.'s  %-'.$colStatus.'s  %-'.$colLifetime.'s  %s',
       'NAME',
       'EMAIL',
       'STATUS',
-      'LIFETIME'
+      'LIFETIME',
+      'HIDDEN'
     );
     echo $fmt->setOption('bold')->apply($header)."\n";
     echo sprintf(
-      "  %s  %s  %s  %s\n",
+      "  %s  %s  %s  %s  %s\n",
       str_repeat('-', $colName),
       str_repeat('-', $colEmail),
       str_repeat('-', $colStatus),
-      str_repeat('-', $colLifetime)
+      str_repeat('-', $colLifetime),
+      str_repeat('-', $colHidden)
     );
 
     foreach ($members as $member) {
@@ -141,12 +144,16 @@ class Patreon_CLI extends Command_CLI
         ? $fmt->setForeground($statusColor)->apply($statusPadded)
         : $statusPadded;
 
+      $hiddenText  = ($attrs['hide_pledges'] ?? false) ? 'yes' : '';
+      $hiddenLabel = $hiddenText !== '' ? $fmt->setForeground('red')->apply($hiddenText) : '';
+
       echo sprintf(
-        '  %-'.$colName.'s  %-'.$colEmail.'s  %s  $%'.($colLifetime - 1).'.2f'."\n",
+        '  %-'.$colName.'s  %-'.$colEmail.'s  %s  $%'.($colLifetime - 1).'.2f  %s'."\n",
         $name,
         $email,
         $statusLabel,
-        $lifetime
+        $lifetime,
+        $hiddenLabel
       );
     }
 

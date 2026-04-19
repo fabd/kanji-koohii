@@ -1,4 +1,7 @@
 <?php
+
+use Koohii\Batch\ConsoleFormatter;
+
 /**
  * Simple file logger with colorized output.
  *
@@ -78,7 +81,7 @@ class LOG
 
   private function getFormatter()
   {
-    require_once realpath($this->getSfRootDir().'/lib/batch/ConsoleFormatter.php');
+    require_once realpath($this->getSfRootDir().'/lib/Batch/ConsoleFormatter.php');
 
     return new ConsoleFormatter();
   }

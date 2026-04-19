@@ -27,7 +27,7 @@
  *    pri    priority, bitmask (cf rtkLabs::$pricodes)
  */
 
-require_once realpath(dirname(__FILE__).'/../../..').'/lib/batch/Command_CLI.php';
+require_once realpath(dirname(__FILE__).'/../../..').'/lib/Batch/Command_CLI.php';
 
 require_once SF_ROOT_DIR.'/lib/CJK.php';
 

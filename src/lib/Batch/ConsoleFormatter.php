@@ -1,4 +1,9 @@
 <?php
+
+namespace Koohii\Batch;
+
+use Exception;
+
 /**
  * ConsoleFormatter from Symfony 1.x (modified).
  *

@@ -297,6 +297,35 @@ CREATE TABLE `learnedkanji` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------------------------------------------------------
+-- patreon_members
+-- ----------------------------------------------------------------------------
+-- Cache of Patreon campaign member data, synced via the Patreon API v2.
+-- A separate linking table maps Patreon members to local user accounts,
+-- so this table can be dropped and recreated during syncs.
+--
+-- IMPORTANT
+--   hide_pledges    true if the user has chosen to keep private which creators
+--                   they pledge to (Privacy setting on Patreon website)
+--   pledge_start    Date of beginning of most recent pledge chainfrom this
+--                   member to the campaign (usually when they joined, but
+--                   not always).
+-- ----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS patreon_members;
+
+CREATE TABLE `patreon_members` (
+  `member_id`              CHAR(36)      NOT NULL,
+  `full_name`              VARCHAR(255)  NOT NULL DEFAULT '',
+  `email`                  VARCHAR(255)  NOT NULL DEFAULT '',
+  `patron_status`          VARCHAR(20)   DEFAULT NULL,
+  `lifetime_support_cents` INT UNSIGNED  NOT NULL DEFAULT 0,
+  `pledge_start`           DATE          NOT NULL DEFAULT '0000-00-00',
+  `hide_pledges`           TINYINT(1)    UNSIGNED NOT NULL DEFAULT 0,
+  `updated_at`             TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
 -- reviews
 -- ----------------------------------------------------------------------------
 -- This table stores the flashcard data for the user's kanji flashcards. User

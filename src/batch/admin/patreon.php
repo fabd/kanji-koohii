@@ -20,25 +20,29 @@ class Patreon_CLI extends Command_CLI
   public function __construct()
   {
     parent::__construct([
-      'campaign' => 'Fetch and display campaign info',
-      'members'  => 'Fetch and display all patrons (active and former)',
+      'campaign'     => 'Fetch and display campaign info',
+      'members'      => 'Fetch and display all patrons (active and former)',
+      'update-table' => 'Fetch members and store them in the patreon_members table',
     ]);
 
     /** @var array{CLIENT_ID: string, CLIENT_SECRET: string, CREATOR_ACCESS_TOKEN: string, CREATOR_REFRESH_TOKEN: string, CAMPAIGN_ID: string} */
     $credentials = require SF_ROOT_DIR.'/.secrets/koohii_patreon.php';
     $api         = new PatreonAPI($credentials);
+    $campaignId  = $credentials['CAMPAIGN_ID'];
+
+    if ($campaignId === '') {
+      $this->throwError(
+        "CAMPAIGN_ID is not set.\nRun --campaign first to get your campaign ID."
+      );
+    }
 
     try {
       if ($this->getFlag('campaign')) {
         $this->showCampaigns($api);
       } elseif ($this->getFlag('members')) {
-        $campaignId = $credentials['CAMPAIGN_ID'];
-        if ($campaignId === '') {
-          $this->throwError(
-            "CAMPAIGN_ID is not set.\nRun --campaign first to get your campaign ID."
-          );
-        }
-        $this->showMembers($api->getAllCampaignMembers($campaignId));
+        $this->showMembers($api, $campaignId);
+      } elseif ($this->getFlag('update-table')) {
+        $this->updateTable($api, $campaignId);
       }
     } catch (RuntimeException $e) {
       $this->throwError($e->getMessage());
@@ -68,11 +72,56 @@ class Patreon_CLI extends Command_CLI
     }
   }
 
-  /**
-   * @param array<int, array<string, mixed>> $members
-   */
-  private function showMembers(array $members): void
+  private function updateTable(PatreonAPI $api, string $campaignId): void
   {
+    $members = $api->getAllCampaignMembers($campaignId);
+    $db      = kk_get_database();
+
+    $activeCount = 0;
+    $formerCount = 0;
+
+    foreach ($members as $member) {
+      $attrs  = $member['attributes'];
+      $status = $attrs['patron_status'] ?? null;
+
+      if ($status !== 'active_patron' && $status !== 'former_patron') {
+        continue;
+      }
+
+      $startRaw    = $attrs['pledge_relationship_start'] ?? null;
+      $pledgeStart = $startRaw !== null
+        ? (new DateTime($startRaw, new DateTimeZone('UTC')))->format('Y-m-d')
+        : '0000-00-00';
+
+      $db->replace('patreon_members', [
+        'member_id'              => $member['id'],
+        'full_name'              => $attrs['full_name'] ?? '',
+        'email'                  => $attrs['email']     ?? '',
+        'patron_status'          => $status,
+        'lifetime_support_cents' => (int) ($attrs['campaign_lifetime_support_cents'] ?? 0),
+        'pledge_start'           => $pledgeStart,
+        'hide_pledges'           => (int) ($attrs['hide_pledges'] ?? false),
+      ]);
+
+      if ($status === 'active_patron') {
+        $activeCount++;
+      } else {
+        $formerCount++;
+      }
+    }
+
+    echo "\n";
+    echo "Patreon members table updated:\n";
+    echo sprintf("  %d active members\n", $activeCount);
+    echo sprintf("  %d former members\n", $formerCount);
+    echo sprintf("  %d total (active & former)\n", $activeCount + $formerCount);
+    echo "\n";
+  }
+
+  private function showMembers(PatreonAPI $api, string $campaignId): void
+  {
+    $members = $api->getAllCampaignMembers($campaignId);
+
     $activeCount = 0;
     $formerCount = 0;
     foreach ($members as $member) {

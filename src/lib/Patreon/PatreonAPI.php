@@ -62,7 +62,7 @@ class PatreonAPI
 
     do {
       $params = [
-        'fields[member]' => 'full_name,email,patron_status,campaign_lifetime_support_cents',
+        'fields[member]' => 'full_name,email,patron_status,campaign_lifetime_support_cents,pledge_relationship_start',
         'include'        => 'user',
         'fields[user]'   => 'hide_pledges',
         'page[count]'    => 500,

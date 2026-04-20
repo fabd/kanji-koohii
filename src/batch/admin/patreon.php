@@ -98,23 +98,26 @@ class Patreon_CLI extends Command_CLI
     $colEmail    = 36;
     $colStatus   = 8;
     $colLifetime = 10;
+    $colStart    = 10;
     $colHidden   = 6;
 
     $header = sprintf(
-      '  %-'.$colName.'s  %-'.$colEmail.'s  %-'.$colStatus.'s  %-'.$colLifetime.'s  %s',
+      '  %-'.$colName.'s  %-'.$colEmail.'s  %-'.$colStatus.'s  %-'.$colLifetime.'s  %-'.$colStart.'s  %s',
       'NAME',
       'EMAIL',
       'STATUS',
       'LIFETIME',
+      'START',
       'HIDDEN'
     );
     echo $fmt->setOption('bold')->apply($header)."\n";
     echo sprintf(
-      "  %s  %s  %s  %s  %s\n",
+      "  %s  %s  %s  %s  %s  %s\n",
       str_repeat('-', $colName),
       str_repeat('-', $colEmail),
       str_repeat('-', $colStatus),
       str_repeat('-', $colLifetime),
+      str_repeat('-', $colStart),
       str_repeat('-', $colHidden)
     );
 
@@ -144,15 +147,21 @@ class Patreon_CLI extends Command_CLI
         ? $fmt->setForeground($statusColor)->apply($statusPadded)
         : $statusPadded;
 
+      $startRaw  = $attrs['pledge_relationship_start'] ?? null;
+      $startText = $startRaw !== null
+        ? (new DateTime($startRaw, new DateTimeZone('UTC')))->format('M Y')
+        : '';
+
       $hiddenText  = ($attrs['hide_pledges'] ?? false) ? 'yes' : '';
       $hiddenLabel = $hiddenText !== '' ? $fmt->setForeground('red')->apply($hiddenText) : '';
 
       echo sprintf(
-        '  %-'.$colName.'s  %-'.$colEmail.'s  %s  $%'.($colLifetime - 1).'.2f  %s'."\n",
+        '  %-'.$colName.'s  %-'.$colEmail.'s  %s  $%'.($colLifetime - 1).'.2f  %-'.$colStart.'s  %s'."\n",
         $name,
         $email,
         $statusLabel,
         $lifetime,
+        $startText,
         $hiddenLabel
       );
     }

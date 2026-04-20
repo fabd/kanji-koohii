@@ -227,27 +227,6 @@ class coreDatabaseMySQL extends coreDatabase
     return '\''.$this->connection->real_escape_string($value).'\'';
   }
 
-  /**
-   * Transform a hash into a SQL string of key and value assignments : "key=value,key=value,(...)".
-   *
-   * If using something else than comma for glue, make sure to use spaces! (" AND ").
-   *
-   * @param array  $fields Associative array of column names and values
-   * @param string $glue   Separator to use between assignments (eg. comma for updates).
-   *
-   * @return string SQL string with quoted values
-   */
-  public function chain(array $fields, $glue = ',')
-  {
-    $a = [];
-    foreach ($fields as $key => $value) {
-      $a[] = $key.'='.$this->quote($value);
-    }
-    $s = implode($glue, $a);
-
-    return $s;
-  }
-
   public function aliases($columns)
   {
     // single column
@@ -291,6 +270,17 @@ class coreDatabaseMySQL extends coreDatabase
     }
 
     return $query;
+  }
+
+  public function chain(array $fields, $glue = ',')
+  {
+    $a = [];
+    foreach ($fields as $key => $value) {
+      $a[] = $key.'='.$this->quote($value);
+    }
+    $s = implode($glue, $a);
+
+    return $s;
   }
 
   /**

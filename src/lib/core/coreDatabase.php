@@ -23,7 +23,7 @@ abstract class coreDatabase
    * Fetch mode to use for fetch(), fetchRow() and fetchAll().
    *
    * FETCH_NUM:   return each row as an enumerated array
-   * 
+   *
    * FETCH_ASSOC: return data in an array of associative arrays. The array keys are
    *              column names, as strings. This is the default fetch mode.
    *
@@ -330,6 +330,19 @@ abstract class coreDatabase
    * @return string
    */
   abstract public function bind($query, $bindParams);
+
+  /**
+   * Transform a hash into a SQL string of key and value assignments :
+   *  "key=value,key=value,(...)".
+   *
+   * If using something else than comma for glue, make sure to use spaces! (" AND ").
+   *
+   * @param array  $fields Associative array of column names and values
+   * @param string $glue   Separator to use between assignments (eg. comma for updates).
+   *
+   * @return string SQL string with quoted values
+   */
+  abstract public function chain(array $fields, $glue = ',');
 
   /**
    * Output a html table with the resultset (or single rowdata), including column names.

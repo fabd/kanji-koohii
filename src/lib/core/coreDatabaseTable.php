@@ -8,7 +8,16 @@
  * Avoid hard coding a table name by using ->getName() method. The table name
  * is automatically guessed from the class name (eg. MyTablePeer).
  *
- * insert() and update() also handle the setting and updating of timestamps.
+ * Methods:
+ *   initialize()                        override this to do some setup when class is instanced
+ *   getName()                           returns table name, use this in queries
+ *   getColumns()                        returns $columns array
+ *   select()                            start a query using this table as FROM clause
+ *   count($where, $params)              count rows with optional where clause
+ *   insert($data)                       insert row
+ *   update($data, $where, $params)      update row and timestamps
+ *   replace($data, $primaryKeys)        update or insert (upsert)
+ *   delete($where, $params)
  *
  * @author     Fabrice Denis
  */
@@ -41,10 +50,8 @@ abstract class coreDatabaseTable
 
   /**
    * coreDatabase reference is static for convenience in peer methods.
-   *
-   * @var coreDatabaseMySQL
    */
-  protected static $db;
+  protected static coreDatabase $db;
 
   /**
    * Name of the table in the database (may be different than the class name).
@@ -115,25 +122,27 @@ abstract class coreDatabaseTable
    * If application-specific logic needs to be initialized when a table class is instanced,
    * override this function.
    */
-  public function initialize() {}
+  public function initialize(): void {}
 
   /**
    * Return name of table in the database.
    */
-  public function getName()
+  public function getName(): string
   {
     return $this->tableName;
   }
 
   /**
    * Return name of table in the database.
+   *
+   * @return string[]
    */
-  public function getColumns()
+  public function getColumns(): array
   {
     return $this->columns;
   }
 
-  public function getDb()
+  public function getDb(): coreDatabase
   {
     return self::$db;
   }
@@ -141,11 +150,11 @@ abstract class coreDatabaseTable
   /**
    * Build a select query using this table as FROM clause.
    *
-   * @param array|string $columns
+   * @param string|string[] $columns
    *
    * @return coreDatabaseSelect
    */
-  public function select($columns = [])
+  public function select(array|string $columns = [])
   {
     return self::$db->select($columns)->from($this->getName());
   }
@@ -174,7 +183,7 @@ abstract class coreDatabaseTable
    *
    * This method updates the CREATED_ON and UPDATED_ON timestamps if present.
    *
-   * @param array $data an associative array of properties (column names) and data
+   * @param array<string, mixed> $data column names and data
    *
    * @return bool TRUE on success, FALSE on error
    */
@@ -198,9 +207,9 @@ abstract class coreDatabaseTable
    *
    * Automatically update the UPDATED_ON timestamp if present.
    *
-   * @param array       $data       an associative array of properties (column names) and data
-   * @param string|null $where      where clause with optional '?' quoted parameters
-   * @param mixed       $bindParams single value or array of values for quoted parameters
+   * @param array<string, mixed> $data       column names and data
+   * @param string|null          $where      where clause with optional '?' quoted parameters
+   * @param mixed                $bindParams single value or array of values for quoted parameters
    *
    * @return bool TRUE on success, FALSE on error
    */
@@ -220,8 +229,8 @@ abstract class coreDatabaseTable
    * replace statement. This is a shortcut for the insert() and update()
    * methods.
    *
-   * @param array $data        an associative array of properties (column names) and data
-   * @param array $primaryKeys an associative array of primary key column names and values
+   * @param array<string, mixed> $data        column names and data
+   * @param array<string, mixed> $primaryKeys primary key column names and values
    *
    * @return bool TRUE on success, FALSE on error
    */

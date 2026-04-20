@@ -180,6 +180,15 @@ class coreDatabaseMySQL extends coreDatabase
     return $result;
   }
 
+  public function replace($table, $data = [])
+  {
+    $values = $this->chain($data);
+    $q      = "REPLACE {$table} SET {$values}";
+    $result = $this->query($q);
+
+    return $result;
+  }
+
   public function delete($table, $where = null, $bindParams = null)
   {
     $q = "DELETE FROM {$table}";

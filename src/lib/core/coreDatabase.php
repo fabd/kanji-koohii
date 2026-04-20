@@ -136,6 +136,8 @@ abstract class coreDatabase
    * @param array|string $bind  Parameters to substitute in the query string
    *
    * @return bool true if success, False if error
+   *
+   * @throws sfException
    */
   abstract public function query($query, $bind = null);
 
@@ -287,6 +289,21 @@ abstract class coreDatabase
    * @throws sfException if query fails
    */
   abstract public function update($table, $data, $where = null, $bind = null);
+
+  /**
+   * Insert a new row, or replace an existing row if a duplicate PRIMARY KEY or UNIQUE
+   * index is found. The old row is deleted and a new one is inserted in its place.
+   *
+   * @see    lastInsertId() to retrieve an auto_increment key
+   *
+   * @param string $table table name
+   * @param array  $data  an associative array of properties (column names) and data
+   *
+   * @return bool TRUE on success, FALSE on error
+   *
+   * @throws sfException if query fails
+   */
+  abstract public function replace($table, $data = []);
 
   /**
    * Delete all rows, or matching rows with optional where clause.

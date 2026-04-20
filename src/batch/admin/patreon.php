@@ -32,7 +32,13 @@ class Patreon_CLI extends Command_CLI
       if ($this->getFlag('campaign')) {
         $this->showCampaigns($api);
       } elseif ($this->getFlag('members')) {
-        $this->showMembers($api, $credentials['CAMPAIGN_ID']);
+        $campaignId = $credentials['CAMPAIGN_ID'];
+        if ($campaignId === '') {
+          $this->throwError(
+            "CAMPAIGN_ID is not set.\nRun --campaign first to get your campaign ID."
+          );
+        }
+        $this->showMembers($api->getAllCampaignMembers($campaignId));
       }
     } catch (RuntimeException $e) {
       $this->throwError($e->getMessage());
@@ -62,16 +68,11 @@ class Patreon_CLI extends Command_CLI
     }
   }
 
-  private function showMembers(PatreonAPI $api, string $campaignId): void
+  /**
+   * @param array<int, array<string, mixed>> $members
+   */
+  private function showMembers(array $members): void
   {
-    if ($campaignId === '') {
-      $this->throwError(
-        "CAMPAIGN_ID is not set.\nRun --campaign first to get your campaign ID."
-      );
-    }
-
-    $members = $api->getAllCampaignMembers($campaignId);
-
     $activeCount = 0;
     $formerCount = 0;
     foreach ($members as $member) {

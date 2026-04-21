@@ -1,32 +1,32 @@
 ---
 name: fix-with-phpstan
-description: Runs PHPStan on a file, and fix the errors.
+description: Fix PHPStan static analysis errors in PHP files. Use this skill whenever the user asks to "fix PHPStan errors", "run PHPStan on", or "clean up types in" one or more PHP files or a module directory.
 disable-model-invocation: true
+argument-hint: "[filename.php or path/to/module/]"
 ---
 
-Run PHPStan on $ARGUMENTS and fix the errors.
+Fix PHPStan errors in the file(s) or directory specified in $ARGUMENTS.
 
 ## When making changes to a function
 
-- add types to the function signature
-- add the return type to the function signature if possible, eg. `function foo(): string {}`, EXCEPT for `void`
-- when you see a parameter of type mixed, try to infer a more narrow type and update it. Look at the caller sites to see if there is an obvious type which is more narrow than `mixed`. If there are several options, ask the user which to use.
+- Add types to parameters where you can infer them confidently from call sites
+- Add the return type to the signature where possible, e.g. `function foo(): string {}`
+- When a parameter is typed `mixed`, look at call sites for a narrower type. If there are multiple plausible options, ask the user.
 
 ## Fixing "Access to an undefined property" in a Symfony action
 
-Symfony sets template variables by assigning them as properties on $this in the action.
+Symfony actions set template variables as `$this->varName` inside action methods,
+which triggers this PHPStan error. The correct fix is a class PHPDoc declaration:
 
-This will trigger PHPStan error "Access to an undefined property".
-
-The simplest fix is to declare those properties in the class PHPDoc like so:
-
-```
+```php
 /**
- *
  * @property string $templateVar
  */
 class aboutActions extends sfActions
 {
-  // action sets a template variable dynamically
-  $this->templateVar = "lol cat";
+    public function executeIndex(): void
+    {
+        $this->templateVar = "value";
+    }
+}
 ```

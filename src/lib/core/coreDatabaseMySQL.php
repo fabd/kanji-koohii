@@ -6,9 +6,9 @@
  */
 class coreDatabaseMySQL extends coreDatabase
 {
-  protected $result;
+  protected bool|mysqli_result|null $result = null;
 
-  public function connect()
+  public function connect(): void
   {
     // get parameters
     $database = $this->getParameter('database');
@@ -45,7 +45,7 @@ class coreDatabaseMySQL extends coreDatabase
     return $this->connection;
   }
 
-  public function query($sql, $bindParams = null)
+  public function query(string $sql, mixed $bindParams = null): true
   {
     if ($bindParams !== null) {
       $sql = $this->bind($sql, $bindParams);
@@ -106,9 +106,6 @@ class coreDatabaseMySQL extends coreDatabase
     return $result ?? false;
   }
 
-  /**
-   * @param array|string $columns
-   */
   public function select($columns = null)
   {
     return new coreDatabaseSelect($this, $columns);
@@ -200,17 +197,7 @@ class coreDatabaseMySQL extends coreDatabase
     return $result;
   }
 
-  /**
-   * Safely quote a parameter for the SQL string, do not quote integers and coreDbExpr instances.
-   *
-   * If an array is passed as the value, the array values are quoted
-   * and then returned as a comma-separated string.
-   *
-   * @param mixed $value the value to quote
-   *
-   * @return mixed an SQL-safe quoted value (or string of separated values)
-   */
-  public function quote($value)
+  public function quote($value): string
   {
     if ($value instanceof coreDbExpr) {
       return $value->__toString();
@@ -227,16 +214,16 @@ class coreDatabaseMySQL extends coreDatabase
     return $this->_quote($value);
   }
 
-  private function _quote($value)
+  private function _quote(mixed $value): string
   {
     if (is_int($value) || is_float($value)) {
-      return $value;
+      return (string) $value;
     }
 
     return '\''.$this->connection->real_escape_string($value).'\'';
   }
 
-  public function aliases($columns)
+  public function aliases($columns): string
   {
     // single column
     if (is_string($columns)) {
@@ -281,7 +268,7 @@ class coreDatabaseMySQL extends coreDatabase
     return $query;
   }
 
-  public function chain(array $fields, $glue = ',')
+  public function chain(array $fields, $glue = ','): string
   {
     $a = [];
     foreach ($fields as $key => $value) {
@@ -304,7 +291,7 @@ class coreDatabaseMySQL extends coreDatabase
    *
    * @todo  Move to RevTK extension of core class
    */
-  public function localTime($column = 'NOW()')
+  public function localTime($column = 'NOW()'): string
   {
     $timezone = sfContext::getInstance()->get('auth')->getTimezone();
     $timediff = $timezone - sfConfig::get('app_server_timezone', 0);
@@ -321,7 +308,7 @@ class coreDatabaseMySQL extends coreDatabase
    *
    * @param mixed $resultset
    */
-  public function dumpResultSet($resultset)
+  public function dumpResultSet($resultset): void
   {
     // display column names
     echo '<table cellspacing="1" style="border:1px solid #B3DCFF;border-collapse:collapse;">';
@@ -398,13 +385,6 @@ class coreDatabaseStatementMySQL extends coreDatabaseStatement
     $this->_stmt = $stmt;
   }
 
-  /**
-   * Executes a prepared statement.
-   *
-   * @param array $params OPTIONAL Values to bind to parameter placeholders
-   *
-   * @throws sfException
-   */
   protected function _execute(?array $params = null): bool
   {
     if (!$this->_stmt) {

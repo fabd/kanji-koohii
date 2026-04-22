@@ -1,3 +1,26 @@
+/* HANAMI seasonal animation on the homepage (late March - early April)
+
+  Include in layout.php :
+
+<!-- ~*~*~*~*~*~*~*~*~*~*~*~* HANAMI ~*~*~*~*~*~*~*~*~*~*~*~* -->
+<?php if ($pageId === 'home-index'): ?>
+<script type="text/javascript" src="/koohii/hanami.js?v=20260328" defer="1"></script>
+<style>
+#k-nav_d, #k-nav_m { background: linear-gradient(45deg, #216daa, #882761) !important; }
+.petal {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 9999;
+  clip-path: polygon(50% 15%, 70% 0%, 90% 10%, 100% 35%, 100% 70%, 50% 100%, 0% 70%, 0% 35%, 10% 10%, 30% 0%);
+  border-radius: 20% 20% 50% 50% / 10% 10% 80% 80%;
+}
+</style>
+<?php endif; ?>
+<!-- ~*~*~*~*~*~*~*~*~*~*~*~* HANAMI ~*~*~*~*~*~*~*~*~*~*~*~* -->
+*/
+
 const petalCount = 45;
 
 const petalcolors = [

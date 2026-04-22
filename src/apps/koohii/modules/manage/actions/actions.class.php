@@ -52,6 +52,12 @@ class manageActions extends sfActions
     $this->forward('manage', 'addorder');
   }
 
+  /**
+   * Manage Flashards > Add Cards > In order
+   *
+   * @param coreRequest $request
+   * @return void
+   */
   public function executeAddOrderProcess(coreRequest $request)
   {
     // cancel action

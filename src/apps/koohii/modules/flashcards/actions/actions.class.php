@@ -14,6 +14,14 @@ class flashcardsActions extends sfActions
     throw new sfException('Woopsies');
   }
 
+  /**
+   * flashcards/add API endpoint
+   * 
+   *   Used by Study page "Add Flashcard" button.
+   *
+   * @param coreRequest $request
+   * @return void
+   */
   public function executeAdd(coreRequest $request)
   {
     $json  = $request->getContentJson();

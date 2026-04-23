@@ -42,34 +42,7 @@ with_footer();
       </div>
     </div>
  
-    <h3>Patrons (past &amp; present)</h3>
-
-    <p class="mb-2"><strong>Thank you for supporting Kanji Koohii!</strong></p>
-
-    <?php $patrons = PatreonPeer::getPatronsList(); ?>
-  
-    <div class="ko-Box">
-      <ul class="ko-PatronsList">
-<?php // DBG::printr($patrons);?>
-<?php
-$sf_user_name = $sf_user->getUserName();
-
-foreach ($patrons as $pa) {
-  $style        = $pa['username'] == $sf_user_name ? ['class' => 'is-patron'] : [];
-  $display_name = !empty($pa['username'])
-    ? link_to_member($pa['username'], $style)
-    : escape_once($pa['pa_full_name']);
-  echo <<<HTML
-      <li class="ko-PatronsList-item">
-        <span class="whitespace-nowrap">{$display_name}</span>
-      </li>
-      HTML;
-}
-?>
-      </ul>
-    </div>
-
-<?php /* include_partial('__amazon_wishlist') */ ?>
+<?php include_partial('PatronsList'); ?>  
 
   </div>
 </div><!-- /row -->

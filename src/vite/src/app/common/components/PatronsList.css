@@ -1,0 +1,37 @@
+.ko-PatronsList {
+  color: #433f39;
+}
+
+.ko-PatronsList h2 {
+  color: inherit;
+  font-family: "Lora", serif;
+}
+
+.ko-PatronsList-hairline {
+  border-color: #d4cdba;
+}
+
+.ko-PatronsList-tableHead {
+  background-color: #ede8de;
+}
+
+.ko-PatronsList-row {
+  @apply pt-[12px] pb-[10px] px-6 md:pt-[16px] md:pb-[14px] leading-none;
+  background-color: #f8f6ef;
+  border-bottom: 1px solid #e6e8ec;
+}
+
+.ko-PatronsList-row:last-child {
+  border-bottom: 1px solid #d4cdba;
+}
+
+.ko-PatronsList-past {
+  @apply columns-2 sm:columns-3;
+  column-gap: 3rem;
+  column-rule: 1px solid #d4cdba;
+  div {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: clip;
+  }
+}

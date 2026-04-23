@@ -61,20 +61,4 @@ class PatreonPeer extends coreDatabaseTable
 
     return $db->fetch();
   }
-
-  /**
-   * Return list of active patrons (regardless if amount meets the perks/reward level).
-   */
-  public static function getPatronsList()
-  {
-    $db = self::getInstance()->getDb();
-    // $select = self::getInstance()->select('pa_full_name')->where('is_active = 1');
-    $select = $db->select(['u.username', 'p.userid', 'p.pa_full_name'])
-      ->from(['p' => self::getInstance()->getName()])
-      ->joinLeftUsing(['u' => 'users'], 'userid')
-      ->where('is_active = 1')
-    ;
-
-    return $db->fetchAll($select);
-  }
 }

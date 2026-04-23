@@ -2,22 +2,23 @@
 /**
  * Custom Keywords - this table stores user's edited keywords.
  *
- * Methods:
- *   getCustomKeyword($userId, $ucsId)
+ * Static:
+ *   getInstance()
  *
+ *   getCustomKeyword($userId, $ucsId)
  *   getCoalescedKeyword($userId, $ucsId)
- *   getCoalescedKeywords($userid)
+ *   getCoalescedKeywords($userId)
  *
  *   updateCustomKeyword($userId, $ucsId, $keyword)
  *   deleteCustomKeyword($userId, $ucsId)
  *
- *   importList($userId, array $keywords, $request)
+ *   importList($userId, $keywords, $request)
  *
- *   getUserKeywordsMapJS($userId, array $ucsIds = [])
+ *   getUserKeywordsMapJS($userId, $ucsIds = [])
  *
- * Helpers:
  *   coalesceExpr()
  *   addCustomKeywordJoin($select, $userId)
+ *   addCustomKeywordJoinUsing($select)
  */
 class CustkeywordsPeer extends coreDatabaseTable
 {

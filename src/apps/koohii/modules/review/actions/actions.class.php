@@ -1,6 +1,25 @@
 <?php
 
 /**
+ * Review module actions.
+ *
+ * Methods:
+ *   executeIndex($request)
+ *   executeCustom($request)            Custom Review modes.
+ *   executeVocab($request)             Vocab shuffle review page.
+ *   executeFree($request)              Kanji Flashcard review WITHOUT SRS.
+ *   executeReview($request)            Kanji Flashcard review page with FlashcardReview.
+ *   executeSummary($request)           Review Summary (SRS and Custom Reviews).
+ *   executeAjaxsrs($request)           Ajax handler for SRS flashcard reviews.
+ *   executeAjaxfree($request)          Ajax handler for Free mode reviews.
+ *   executeSummaryTable($request)      Summary Table ajax.
+ *
+ * Static:
+ *   dummyUpdate($id, $oData)           Dummy handler for Free mode flashcard answers.
+ *
+ * Private:
+ *   handleFlashcardRequest($request, $options)  Handle flashcard request and render JSON response.
+ *
  * @property string        $filter
  * @property int           $flashcard_count
  * @property int           $knowncount
@@ -44,30 +63,6 @@ class reviewActions extends sfActions
   {
     $userId             = kk_get_user()->getUserId();
     $this->learnedcount = ReviewsPeer::getReviewedFlashcardCount($userId, rtkLabs::VOCABSHUFFLE_MINBOX);
-  }
-
-  /**
-   * Review graph filter actions.
-   */
-  public function executeAjaxLeitnerGraph(coreRequest $request)
-  {
-    $filter = $request->getParameter('filter', '');
-    if (!preg_match('/^(all|rtk1|rtk3)$/', $filter)) {
-      throw new rtkAjaxException('Invalid parameters.');
-    }
-
-    if ($filter == 'all') {
-      $filter = '';
-    }
-
-    // remember last filter selected
-    kk_get_user()->getLocalPrefs()->sync('review.graph.filter', $filter, '');
-
-    $tron = new JsTron();
-
-    $tron->setHtml($this->getComponent('review', 'LeitnerChart'));
-
-    return $this->renderJson($tron);
   }
 
   /**

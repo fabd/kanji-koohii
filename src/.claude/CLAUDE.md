@@ -138,6 +138,7 @@ Here is a table matching entries and what pages they are served on:
 - use the pattern `ko-(component name)-(descendant)--(modifier)` (eg. `ko-Dialog-title`)
 - BEM modifier `--` for component variants, eg. `ko-Dialog--small`
 - use `is-` prefix for runtime state (eg. `is-active`)
+- **Tailwind**: prefer using Tailwind for layout utilities while keeping component-specific styling (colors, borders, backgrounds) in custom CSS files
 
 ### PHP
 

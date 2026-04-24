@@ -1,6 +1,7 @@
 /* ==================================================================== */
 /* LAYOUT */
 /* ==================================================================== */
+@media only screen and (width >= 40rem) { /* = tailwind sm ( 640px) */ }
 @media only screen and (width >= 48rem) { /* = tailwind md ( 768px) */ }
 @media only screen and (width >= 64rem) { /* = tailwind lg (1024px) */ }
 @media only screen and (width >= 80rem) { /* = tailwind xl (1280px) */ }

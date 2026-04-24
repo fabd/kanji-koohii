@@ -26,7 +26,7 @@ class Patreon_CLI extends Command_CLI
     ]);
 
     /** @var array{CLIENT_ID: string, CLIENT_SECRET: string, CREATOR_ACCESS_TOKEN: string, CREATOR_REFRESH_TOKEN: string, CAMPAIGN_ID: string} */
-    $credentials = require SF_ROOT_DIR.'/.secrets/koohii_patreon.php';
+    $credentials = require SF_ROOT_DIR.'/.secrets/__patreon_tokens.php';
     $api         = new PatreonAPI($credentials);
     $campaignId  = $credentials['CAMPAIGN_ID'];
 
@@ -43,6 +43,7 @@ class Patreon_CLI extends Command_CLI
         $this->showMembers($api, $campaignId);
       } elseif ($this->getFlag('update-table')) {
         $this->updateTable($api, $campaignId);
+        LOG::out(date('Y-m-d H:i')." patreon_members table succesfully updated.");
       }
     } catch (RuntimeException $e) {
       $this->throwError($e->getMessage());

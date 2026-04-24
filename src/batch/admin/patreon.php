@@ -82,7 +82,7 @@ class Patreon_CLI extends Command_CLI
 
     foreach ($members as $member) {
       $attrs  = $member['attributes'];
-      $status = $attrs['patron_status'] ?? null;
+      $status = $attrs['patron_status'] ?? '';
 
       if ($status !== 'active_patron' && $status !== 'former_patron') {
         continue;

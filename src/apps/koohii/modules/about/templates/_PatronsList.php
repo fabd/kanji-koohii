@@ -1,7 +1,7 @@
 <?php
-use_stylesheet('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+// use_stylesheet('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
 
-// use_stylesheet('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+use_stylesheet('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
 ?>
 <div class="ko-PatronsList mt-16">
 
@@ -14,9 +14,9 @@ use_stylesheet('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,
   <!-- Active Patrons Section -->
   <section class="mb-20">
     <div class="flex items-center gap-4 mb-6">
-      <div class="text-sm font-semibold uppercase tracking-widest">
-        Active Support (39 patrons)
-      </div>
+      <h3 class="">
+        Active Support <span class="opacity-70 font-medium">(39 patrons)</span>
+      </h3>
       <div class="flex-grow h-px ko-PatronsList-hairline border-t"></div>
     </div>
 
@@ -73,7 +73,7 @@ use_stylesheet('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,
 
       <!-- Anonymous Footer -->
       <div class="ko-PatronsList-footer px-6 py-6 text-center italic opacity-60 text-md bg-white/20">
-        And <strong>24</strong> anonymous patrons, thank you!
+        And <strong>24</strong> anonymous patrons
       </div>
     </div>
   </section>
@@ -81,11 +81,13 @@ use_stylesheet('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,
   <!-- Past Patrons Section -->
   <section>
     <div class="flex items-center gap-4 mb-8">
-      <div class="text-sm font-semibold uppercase tracking-widest">Past Patrons</div>
+      <h3 class="">
+        Past Patrons
+      </h3>
       <div class="flex-grow h-px ko-PatronsList-hairline border-t"></div>
     </div>
 
-    <div class="ko-PatronsList-past text-md opacity-70 leading-relaxed">
+    <div class="ko-PatronsList-past space-y-1 mb-4">
       <div>Aaron Smith</div>
       <div>Abigail Vance</div>
       <div>Ben Thompson</div>
@@ -117,6 +119,8 @@ use_stylesheet('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,
       <div>Xavier Rudd</div>
       <div>Zadie Smith</div>
     </div>
+
+    <div class="italic text-sm opacity-50">+ 50 anonymous<div>
 
   </section>
 

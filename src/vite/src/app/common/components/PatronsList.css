@@ -1,10 +1,14 @@
 .ko-PatronsList {
   color: #433f39;
+  font-family: Inter, sans-serif;
+  h2, h3 {
+    color: inherit;
+    font-family: "Lora", serif;
+  }
 }
 
-.ko-PatronsList h2 {
-  color: inherit;
-  font-family: "Lora", serif;
+.ko-PatronsList h3 {
+  @apply text-xl font-semibold uppercase tracking-widest mb-0;
 }
 
 .ko-PatronsList-hairline {
@@ -29,6 +33,10 @@
   @apply columns-2 sm:columns-3;
   column-gap: 3rem;
   column-rule: 1px solid #d4cdba;
+
+  @apply opacity-70 leading-relaxed;
+  font-size: 13px;
+
   div {
     text-overflow: ellipsis;
     white-space: nowrap;

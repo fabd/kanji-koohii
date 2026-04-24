@@ -8,7 +8,7 @@
 }
 
 .ko-PatronsList h3 {
-  @apply text-xl font-semibold uppercase tracking-widest mb-0;
+  @apply text-lg sm:text-xl font-semibold uppercase tracking-widest mb-0;
 }
 
 .ko-PatronsList-hairline {

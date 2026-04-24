@@ -10,7 +10,8 @@
       "Bash(* --version)",
       "Bash(* --help *)",
       "Bash(./vendor/bin/phpstan analyse:*)",
-      "Bash(./vendor/bin/php-cs-fixer fix:*)"
+      "Bash(./vendor/bin/php-cs-fixer fix:*)",
+      "Bash(./vendor/bin/php-cs-fixer -q fix *)"
     ],
     "deny": [],
     "ask": ["Bash(git push *)", "Bash(rm *)"]

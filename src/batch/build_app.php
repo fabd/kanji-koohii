@@ -12,7 +12,7 @@
  *   $ vite build
  *   $ php batch/build_app.php -v --vite web/build/dist/manifest.json -o config/vite-build.inc.php
  */
-require_once realpath(dirname(__FILE__).'/..').'/lib/batch/Command_CLI.php';
+require_once realpath(dirname(__FILE__).'/..').'/lib/Batch/Command_CLI.php';
 
 class BuildViteManifest extends Command_CLI
 {

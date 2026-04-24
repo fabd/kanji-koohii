@@ -70,7 +70,10 @@ class exportAction extends sfAction
     return $this->renderText($csvText);
   }
 
-  private function mergeStarredStories($db, int $userId, array &$tabularData)
+  /**
+   * @param array<int, array<int, mixed>> $tabularData
+   */
+  private function mergeStarredStories(coreDatabaseMySQL $db, int $userId, array &$tabularData): void
   {
     // 1) get SIDs of starred stories
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

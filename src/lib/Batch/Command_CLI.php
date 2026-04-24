@@ -63,12 +63,10 @@ define('DEFAULT_ENV', 'dev');
 // Composer
 require_once SF_ROOT_DIR.'/vendor/autoload.php';
 
-// Console colour output
-require_once SF_ROOT_DIR.'/lib/batch/ConsoleFormatter.php';
-
 use GetOpt\ArgumentException;
 use GetOpt\GetOpt;
 use GetOpt\Option;
+use Koohii\Batch\ConsoleFormatter;
 
 class Command_CLI
 {

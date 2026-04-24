@@ -1,32 +1,3 @@
-.ko-PatronsList {
-  margin-top: -0.5em;
-  padding: 1em 0 0;
-  list-style: none;
-  border-top: 1px solid #e7e1d3;
-
-  a {
-    text-decoration: none;
-  }
-
-  a.is-patron {
-    /*background:#d6f6b7;*/
-    color: #159815;
-    font-weight: bold;
-    padding: 0.2em 0.8em;
-  }
-}
-
-.ko-PatronsList-item {
-  list-style: none;
-  display: inline-block;
-  width: 50%;
-  text-align: center;
-  font-size: 14px;
-  line-height: 1.5em;
-
-  @apply md:w-[33.33%] md:text-base;
-}
-
 .ko-PaypalForm {
   /* this fixes a vertical gap when paypal's `pixel.gif` is not yet loaded */
   /* stylelint-disable-next-line selector-max-type */

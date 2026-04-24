@@ -1,29 +1,28 @@
 <?php
-/**
+/*
  * Simple file logger with colorized output.
  *
  *   - colorized output to make it easier to parse
- *   - no excess information from error_log(), cleans up the output
+ *   - cleaner output than error_log()
  *   - dump variables into a readable format
  *
  * USE ONLY FOR LOCAL DEBUGGING.
  *
  * Usage:
  *
- *   Message (string):
- *     LOG::info('message');
- *
- *   Message with 2nd argument to dump in a readable way:
- *     LOG::info('Request params: ', $request->getParameterHolder()->getAll());
- *
- *   No message, just dump 1st argument:
- *     LOG::info($_COOKIE);
+ *   LOG::out('message');
+ *   LOG::out('Request params: ', $_REQUEST);
+ *   LOG::out($_COOKIE);
  *
  *
  * To view the log:
- *
  *   $ tail -f ./koohii-log.txt
  */
+
+use Koohii\Batch\ConsoleFormatter;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+
 class LOG
 {
   // name of the log file to be created/updated, relative to sf root
@@ -49,12 +48,10 @@ class LOG
 
   public function __construct()
   {
-    $this->formatter = $this->getFormatter();
+    $this->formatter = new ConsoleFormatter();
 
     // directory for log files (use sf1.x's root path).
     $fileName = $this->getSfRootDir().'/'.self::LOG_FILE_NAME;
-
-    $this->checkLogFile($fileName);
 
     $this->fileHandle = $this->getFileHandle($fileName);
   }
@@ -76,32 +73,13 @@ class LOG
     return $sfRootDir;
   }
 
-  private function getFormatter()
-  {
-    require_once realpath($this->getSfRootDir().'/lib/batch/ConsoleFormatter.php');
-
-    return new ConsoleFormatter();
-  }
-
-  // create a writable log file if it doesn't exist
-  private function checkLogFile(string $fileName)
-  {
-    if (!file_exists($fileName)) {
-      if (false === ($handle = fopen($fileName, 'w'))) {
-        exit(__CLASS__.":: Can't create log file {$fileName}.");
-      }
-
-      fclose($handle);
-    }
-  }
-
   /**
    * @return resource
    */
   private function getFileHandle(string $fileName)
   {
     if (false === ($handle = fopen($fileName, 'a'))) {
-      throw new Exception(__CLASS__.":: Can't open {$fileName}!");
+      throw new Exception(__CLASS__.":: Can't create/open {$fileName}!");
     }
 
     return $handle;
@@ -111,14 +89,8 @@ class LOG
    * @param mixed ...$args Message string, or variable to dump if only 1 argument.
    *                       Optionally pass a 2nd argument to dump alongside the message.
    */
-  public static function info(mixed ...$args)
+  public static function out(mixed ...$args)
   {
-    // in case we mistakenly committed a LOG::info() somewhere
-    //  (cf. koohiiConfiguration.class.php)
-    if (defined('KK_ENV_PROD') && KK_ENV_PROD === true) {
-      return;
-    }
-
     if (!count($args)) {
       throw new Exception(__CLASS__.': no arguments');
     }
@@ -133,17 +105,10 @@ class LOG
     ]);
   }
 
-  public static function session()
-  {
-    self::inst()->output([
-      'msg' => 'LOG::Session()',
-      'tag' => ' SESSION ',
-      'var' => $_SESSION,
-    ]);
-  }
-
   /**
    * Write to log file with colorized output.
+   *
+   * @param array{tag?: string, msg?: string, var?: mixed} $args
    */
   private function output(array $args = [])
   {
@@ -160,7 +125,7 @@ class LOG
       $output[] = $formatter
         ->setForeground('red')
         ->setOption('bold')
-        ->apply("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n")
+        ->apply("\n".str_repeat('- ', 40)."\n\n")
       ;
     }
 
@@ -183,7 +148,8 @@ class LOG
     ;
 
     if ($args['var'] !== self::UNDEFINED) {
-      $txt_var  = $this->dump($args['var']);
+      $txt_var = $this->dump_to_string($args['var']);
+
       $output[] = $formatter
         ->setForeground('yellow')
         ->apply(' '.$txt_var)
@@ -195,25 +161,15 @@ class LOG
     $this->lineNr++;
   }
 
-  private function dump($expr)
+  private function dump_to_string(mixed $var): string
   {
-    $s = '';
+    $cloner = new VarCloner();
+    $dumper = new CliDumper();
 
-    if (is_bool($expr)) {
-      $s = $expr === true ? 'true' : 'false';
-    } elseif (is_null($expr)) {
-      $s = 'null';
-    } elseif (is_string($expr)) {
-      $s = '"'.addcslashes($expr, "\0..\37\n\r\t\v").'"';
-    } elseif (is_object($expr) || is_array($expr)) {
-      // ob_start();
-      // var_dump($expr);
-      // $s = ob_get_contents();
-      $s = var_export($expr, true);
-    } else {
-      $s = $expr;
-    }
+    // enable CLI colored output
+    $dumper->setColors(true);
 
-    return $s;
+    // true to return as string instead of echoing
+    return $dumper->dump($cloner->cloneVar($var), true);
   }
 }

@@ -22,6 +22,8 @@ abstract class coreDatabase
   /**
    * Fetch mode to use for fetch(), fetchRow() and fetchAll().
    *
+   * FETCH_NUM:   return each row as an enumerated array
+   *
    * FETCH_ASSOC: return data in an array of associative arrays. The array keys are
    *              column names, as strings. This is the default fetch mode.
    *
@@ -130,17 +132,18 @@ abstract class coreDatabase
   /**
    * Run a SQL query directly.
    *
-   * @param string       $query SQL query string where '?' can be used for quoted parameters
-   * @param array|string $bind  Parameters to substitute in the query string
+   * @param string $sql SQL query string where '?' can be used for quoted parameters
    *
-   * @return bool true if success, False if error
+   * @return true if success, otherwise throws
+   *
+   * @throws sfException
    */
-  abstract public function query($query, $bind = null);
+  abstract public function query(string $sql, mixed $bindParams = null): true;
 
   /**
    * Start building a new query with the coreDatabaseSelect object.
    *
-   * @param mixed|null $columns
+   * @param array<int|string, string>|string|null $columns
    *
    * @return coreDatabaseSelect query object for building queries
    */
@@ -189,20 +192,20 @@ abstract class coreDatabase
    *                            - self::FETCH_OBJ: Fetch as an object
    *                            - self::FETCH_ASSOC: Fetch as an associative array
    *
-   * @return array|false|object returns the fetched row as an array or object depending on
-   *                            the fetch mode, or false if there are no more rows or on error
+   * @return array<mixed>|false|object returns the fetched row as an array or object depending on
+   *                                   the fetch mode, or false if there are no more rows or on error
    */
   abstract public function fetch($fetchMode = null);
 
   /**
    * Fetches the next row and returns it as an object.
    *
-   * @param string $class  OPTIONAL Name of the class to create
-   * @param array  $config OPTIONAL Constructor arguments for the class
+   * @param string       $class            OPTIONAL Name of the class to create
+   * @param array<mixed> $constructor_args OPTIONAL Constructor arguments for the class
    *
    * @return mixed one object instance of the specified class, or false
    */
-  abstract public function fetchObject($class = 'stdClass', array $config = []);
+  abstract public function fetchObject($class = 'stdClass', array $constructor_args = []);
 
   /**
    * Returns first column from first row of the result set (useful for "count (*)" querries).
@@ -231,7 +234,7 @@ abstract class coreDatabase
    * @param coreDatabaseSelect|string $query an SQL SELECT statement
    * @param mixed                     $bind  data to bind into SELECT placeholders
    *
-   * @return array
+   * @return array<mixed>
    */
   abstract public function fetchAll($query, $bind = null);
 
@@ -243,7 +246,7 @@ abstract class coreDatabase
    * @param coreDatabaseSelect|string $query an SQL SELECT statement
    * @param mixed                     $bind  data to bind into SELECT placeholders
    *
-   * @return array
+   * @return list<mixed>
    */
   abstract public function fetchCol($query, $bind = null);
 
@@ -253,8 +256,8 @@ abstract class coreDatabase
    *
    * @see    lastInsertId() to retrieve an auto_increment key
    *
-   * @param string $table table name
-   * @param array  $data  an associative array of properties (column names) and data
+   * @param string               $table table name
+   * @param array<string, mixed> $data  an associative array of properties (column names) and data
    *
    * @return bool TRUE on success, FALSE on error
    *
@@ -275,16 +278,31 @@ abstract class coreDatabase
   /**
    * Updates columns (key => values) in matching row(s) with optional where clause.
    *
-   * @param string $table table name
-   * @param array  $data  an associative array of properties (column names) and data
-   * @param string $where where clause with optional '?' quoted parameters
-   * @param mixed  $bind  single value or array of values for quoted parameters
+   * @param string               $table table name
+   * @param array<string, mixed> $data  an associative array of properties (column names) and data
+   * @param string               $where where clause with optional '?' quoted parameters
+   * @param mixed                $bind  single value or array of values for quoted parameters
    *
    * @return bool TRUE on success, FALSE on error
    *
    * @throws sfException if query fails
    */
   abstract public function update($table, $data, $where = null, $bind = null);
+
+  /**
+   * Insert a new row, or replace an existing row if a duplicate PRIMARY KEY or UNIQUE
+   * index is found. The old row is deleted and a new one is inserted in its place.
+   *
+   * @see    lastInsertId() to retrieve an auto_increment key
+   *
+   * @param string               $table table name
+   * @param array<string, mixed> $data  an associative array of properties (column names) and data
+   *
+   * @return bool TRUE on success, FALSE on error
+   *
+   * @throws sfException if query fails
+   */
+  abstract public function replace($table, $data = []);
 
   /**
    * Delete all rows, or matching rows with optional where clause.
@@ -300,34 +318,48 @@ abstract class coreDatabase
   abstract public function delete($table, $where = null, $bind = null);
 
   /**
-   * Safely quotes a value for an SQL statement using database specific implementation.
+   * Safely quote a parameter for the SQL string, do not quote integers and coreDbExpr instances.
    *
-   * @param mixed $value
+   * If an array is passed as the value, the array values are quoted
+   * and then returned as a comma-separated string.
    *
-   * @return string
+   * @param mixed $value the value to quote
+   *
+   * @return string an SQL-safe quoted value (or string of separated values)
    */
-  abstract public function quote($value);
+  abstract public function quote($value): string;
 
   /**
    * Creates a SQL string of selected columns or expressions.
    * Array keys become AS aliases: ['alias' => 'expr'] → "expr AS alias".
    *
-   * @param array|string $columns
-   *
-   * @return string
+   * @param array<int|string, mixed>|string $columns
    */
-  abstract public function aliases($columns);
+  abstract public function aliases($columns): string;
 
   /**
    * Bind and quote parameters into a query string.
    * Each '?' placeholder is replaced by the corresponding quoted parameter.
    *
-   * @param string     $query
    * @param mixed|null $bindParams Single value or array of values
+   * @param mixed      $query
    *
    * @return string
    */
   abstract public function bind($query, $bindParams);
+
+  /**
+   * Transform a hash into a SQL string of key and value assignments :
+   *  "key=value,key=value,(...)".
+   *
+   * If using something else than comma for glue, make sure to use spaces! (" AND ").
+   *
+   * @param array<string, mixed> $fields Associative array of column names and values
+   * @param string               $glue   Separator to use between assignments (eg. comma for updates).
+   *
+   * @return string SQL string with quoted values
+   */
+  abstract public function chain(array $fields, $glue = ','): string;
 
   /**
    * Output a html table with the resultset (or single rowdata), including column names.
@@ -742,16 +774,23 @@ abstract class coreDatabaseStatement
 
   abstract protected function _prepare(string $sql): void;
 
-  abstract protected function _execute(?array $params): bool;
+  /**
+   * Executes a prepared statement.
+   *
+   * @param array<mixed>|null $params OPTIONAL Values to bind to parameter placeholders
+   *
+   * @throws sfException
+   */
+  abstract protected function _execute(?array $params = null): bool;
 
   /**
    * Executes a prepared statement.
    *
-   * @param array $params OPTIONAL Values to bind to parameter placeholders
+   * @param array<mixed>|null $params OPTIONAL Values to bind to parameter placeholders
    *
    * @return bool TRUE on success or FALSE on failure
    */
-  public function execute(?array $params = null)
+  public function execute(?array $params = null): bool
   {
     return $this->_execute($params);
   }

@@ -14,13 +14,9 @@ npm should be run in the container, eg. `dcweb -c "cd vite; npm install (package
 dcweb -c "cd vite; npm run dev"       # Vite dev server (HMR)
 dcweb -c "cd vite; npm run build"     # production build
 dcweb -c "cd vite; vue-tsc --noEmit"  # type-check Typescript code (including .vue files)
+./vendor/bin/php-cs-fixer -q fix (filename.php)    # format PHP and fix coding standards issues
+./vendor/bin/phpstan analyse (filename.php)        # check PHP code with PHPStan
 ```
-
-These commands can be run from the host directly:
-
-- `./vendor/bin/php-cs-fixer fix (filename.php)` to format PHP and fix coding standards issues.
-
-- `./vendor/bin/phpstan analyse (filename.php)` to check PHP code with PHPStan. PHPStan config file at `./phpstan.neon`.
 
 ## Tech Stack & Project Structure
 
@@ -142,6 +138,7 @@ Here is a table matching entries and what pages they are served on:
 - use the pattern `ko-(component name)-(descendant)--(modifier)` (eg. `ko-Dialog-title`)
 - BEM modifier `--` for component variants, eg. `ko-Dialog--small`
 - use `is-` prefix for runtime state (eg. `is-active`)
+- **Tailwind**: prefer using Tailwind for layout utilities while keeping component-specific styling (colors, borders, backgrounds) in custom CSS files
 
 ### PHP
 

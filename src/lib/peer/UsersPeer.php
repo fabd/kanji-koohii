@@ -266,7 +266,7 @@ class UsersPeer extends coreDatabaseTable
    *
    * Data must be trimmed and validated!
    *
-   * 'raw_password' will be hashed into 'password'.
+   * If present, 'raw_password' will be hashed into 'password'.
    *
    * @param int   $userid
    * @param array $columns Column data

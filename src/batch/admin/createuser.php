@@ -25,7 +25,7 @@
  * @author  Fabrice Denis
  */
 
-require_once(realpath(dirname(__FILE__).'/../..').'/lib/batch/Command_CLI.php');
+require_once(realpath(dirname(__FILE__).'/../..').'/lib/Batch/Command_CLI.php');
 
 define('EMAIL_DEFAULT',    'created@localhost');
 define('LOCATION_DEFAULT', 'Localhost City');

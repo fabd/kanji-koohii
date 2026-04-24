@@ -40,6 +40,7 @@
 @import "../home/KoPctBar.css";
 @import "../nav/_navbar.css";
 @import "../nav/_mobile-nav.css";
+@import "../common/components/PatronsList.css";
 
 /* pages */
 @import "../admin/_admin.css";

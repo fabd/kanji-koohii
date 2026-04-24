@@ -1,19 +1,27 @@
 <?php
 /**
- * Actions:
- *   executeIndex()
- *   executeClear()
- *   executeFailedlist()
- *   executeFailedlisttable
- *   executeSharedStoriesList()
- *   executeMystories()
- *   executeMyStoriesTable()
- *   executeEditstory()
- *   executeEditkeyword()
- *   executeAjax()
- *   executeDict()
- *   executeVocabpick()
- *   executeVocabdelete().
+ * Study module actions.
+ *
+ * Methods:
+ *   executeIndex($request)
+ *   executeEdit($request)
+ *   getLessonTitleForIndex($frameNr)
+ *   executeClear($request)
+ *   executeFailedlist($request)
+ *   executeFailedlisttable($request)
+ *   executeSharedStoriesList($request)
+ *   executeMystories($request)
+ *   executeMyStoriesTable($request)
+ *   executeEditstory($request)
+ *   executeEditkeyword($request)
+ *   executeAjax($request)
+ *   executeDict($request)
+ *   executeVocabpick($request)
+ *   executeVocabdelete($request)
+ *
+ * Private:
+ *   getUCSForSearch($sSearch, $userId)
+ *   getDictListItems($ucsId)
  *
  * @property bool         $isBeginRestudy
  * @property false|object $kanjiData

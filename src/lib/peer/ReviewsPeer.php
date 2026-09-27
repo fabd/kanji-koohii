@@ -664,8 +664,7 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getSequencePosition($userId)
   {
     $select = self::getInstance()->select();
-    $select = self::filterByRtk($select, 'rtk1+3');
-    $select->where(rtkIndex::getSqlCol().' <= ?', rtkIndex::inst()->getNumCharactersVol3());
+    $select = self::filterByRtk($select, 'rtk1+3-nosupp');
     $select = self::filterByUserId($select, $userId);
     $select->columns(['idx' => rtkIndex::getSqlCol()]);
 
@@ -1137,7 +1136,9 @@ class ReviewsPeer extends coreDatabaseTable
    * (or no filter = all).
    *
    * @param coreDatabaseSelect $select
-   * @param string             $filter 'rtk1', 'rtk3', 'rtk1+3', '' (no filter)
+   * @param string             $filter 'rtk1', 'rtk3', 'rtk1+3', 'rtk1+3-nosupp', '' (no filter)
+   *                                    'rtk1+3' includes the Old Edition supplement,
+   *                                    'rtk1+3-nosupp' stops at the end of Volume 3
    *
    * @return coreDatabaseSelect Returns modified select object
    */
@@ -1163,6 +1164,11 @@ class ReviewsPeer extends coreDatabaseTable
 
         case 'rtk1+3':
           $select->where($idxCol.' <= ?', $curSeq->getNumCharacters());
+
+          break;
+
+        case 'rtk1+3-nosupp':
+          $select->where($idxCol.' <= ?', $curSeq->getNumCharactersVol3());
 
           break;
 

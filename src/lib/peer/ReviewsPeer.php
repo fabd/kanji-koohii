@@ -655,6 +655,8 @@ class ReviewsPeer extends coreDatabaseTable
    * Returns the last kanji card index in an uninterrupted sequence
    * starting at 1 -- any cards after a gap are ignored.
    *
+   * Covers RTK Volume 1 and Volume 3 (excludes the Old Edition supplement).
+   *
    * @param mixed $userId
    *
    * @return int Sequence number of last kanji in sequence (starts at 1), or 0
@@ -662,7 +664,8 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getSequencePosition($userId)
   {
     $select = self::getInstance()->select();
-    $select = self::filterByRtk($select, 'rtk1');
+    $select = self::filterByRtk($select, 'rtk1+3');
+    $select->where(rtkIndex::getSqlCol().' <= ?', rtkIndex::inst()->getNumCharactersVol3());
     $select = self::filterByUserId($select, $userId);
     $select->columns(['idx' => rtkIndex::getSqlCol()]);
 

@@ -19,14 +19,12 @@ if ($isVol3) {
   $progressName       = 'RTK Volume 3';
   $isSequenceComplete = $studyPos >= $maxVol3;
   $studyMax           = $maxVol3 - $maxVol1;
-  // count of flashcards part of Volume 3
-  $flashcardCount = ReviewsPeer::getFlashcardCount($userId, 'rtk3');
+  $flashcardCount     = ReviewsPeer::getFlashcardCount($userId, 'rtk3');
 } else {
   $progressName       = $sequenceName;
   $isSequenceComplete = $studyPos === $maxVol1;
   $studyMax           = $maxVol1;
-  // count of flashcards part of current  sequence
-  $flashcardCount = ReviewsPeer::getFlashcardCount($userId, 'rtk1');
+  $flashcardCount     = ReviewsPeer::getFlashcardCount($userId, 'rtk1');
 }
 
 // if there are no flashcards, default to 1st lesson

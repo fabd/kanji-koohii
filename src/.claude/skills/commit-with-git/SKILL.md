@@ -2,6 +2,7 @@
 name: commit-with-git
 description: Commits ONLY the staged changes with git.
 disable-model-invocation: true
+model: sonnet
 ---
 
 Commit **staged changes only** with git.

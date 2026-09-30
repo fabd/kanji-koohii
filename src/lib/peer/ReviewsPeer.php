@@ -1153,12 +1153,12 @@ class ReviewsPeer extends coreDatabaseTable
 
       switch ($filter) {
         case 'rtk1':
-          $select->where($idxCol.' <= ?', $curSeq->getNumCharactersVol1());
+          $select->where($idxCol.' <= ?', $curSeq->getMaxIndexVol1());
 
           break;
 
         case 'rtk3':
-          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', [$curSeq->getNumCharactersVol1(), $curSeq->getNumCharactersVol3()]);
+          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', [$curSeq->getMaxIndexVol1(), $curSeq->getMaxIndexVol3()]);
 
           break;
 
@@ -1168,7 +1168,7 @@ class ReviewsPeer extends coreDatabaseTable
           break;
 
         case 'rtk1+3-nosupp':
-          $select->where($idxCol.' <= ?', $curSeq->getNumCharactersVol3());
+          $select->where($idxCol.' <= ?', $curSeq->getMaxIndexVol3());
 
           break;
 

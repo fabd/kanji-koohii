@@ -25,8 +25,8 @@
  * Methods:
  *
  *  getNumCharacters()
- *  getNumCharactersVol1()
- *  getNumCharactersVol3()
+ *  getMaxIndexVol1()
+ *  getMaxIndexVol3()
  *  getNumLessonsVol1()
  *
  *  getSequences()
@@ -151,12 +151,12 @@ class rtkIndex
     return $this->MAXKANJI_RTK;
   }
 
-  public function getNumCharactersVol1()
+  public function getMaxIndexVol1()
   {
     return $this->MAXKANJI_VOL1;
   }
 
-  public function getNumCharactersVol3()
+  public function getMaxIndexVol3()
   {
     return $this->MAXKANJI_VOL3;
   }

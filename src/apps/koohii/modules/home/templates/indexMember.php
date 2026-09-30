@@ -9,8 +9,8 @@ $studyPos  = ReviewsPeer::getSequencePosition($userId);
 $studyNext = $studyPos + 1;
 
 $sequenceName = rtkIndex::inst()->getSequenceName();
-$maxVol1      = rtkIndex::inst()->getNumCharactersVol1();
-$maxVol3      = rtkIndex::inst()->getNumCharactersVol3();
+$maxVol1      = rtkIndex::inst()->getMaxIndexVol1();
+$maxVol3      = rtkIndex::inst()->getMaxIndexVol3();
 
 // once Volume 1 is complete and the next kanji is added, track Volume 3
 $isVol3 = $studyPos > $maxVol1;

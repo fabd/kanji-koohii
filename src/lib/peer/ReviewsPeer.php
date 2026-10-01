@@ -655,6 +655,8 @@ class ReviewsPeer extends coreDatabaseTable
    * Returns the last kanji card index in an uninterrupted sequence
    * starting at 1 -- any cards after a gap are ignored.
    *
+   * Covers RTK Volume 1 and Volume 3 (excludes the Old Edition supplement).
+   *
    * @param mixed $userId
    *
    * @return int Sequence number of last kanji in sequence (starts at 1), or 0
@@ -662,7 +664,7 @@ class ReviewsPeer extends coreDatabaseTable
   public static function getSequencePosition($userId)
   {
     $select = self::getInstance()->select();
-    $select = self::filterByRtk($select, 'rtk1');
+    $select = self::filterByRtk($select, 'rtk1+3-nosupp');
     $select = self::filterByUserId($select, $userId);
     $select->columns(['idx' => rtkIndex::getSqlCol()]);
 
@@ -1134,7 +1136,9 @@ class ReviewsPeer extends coreDatabaseTable
    * (or no filter = all).
    *
    * @param coreDatabaseSelect $select
-   * @param string             $filter 'rtk1', 'rtk3', 'rtk1+3', '' (no filter)
+   * @param string             $filter 'rtk1', 'rtk3', 'rtk1+3', 'rtk1+3-nosupp', '' (no filter)
+   *                                    'rtk1+3' includes the Old Edition supplement,
+   *                                    'rtk1+3-nosupp' stops at the end of Volume 3
    *
    * @return coreDatabaseSelect Returns modified select object
    */
@@ -1149,17 +1153,22 @@ class ReviewsPeer extends coreDatabaseTable
 
       switch ($filter) {
         case 'rtk1':
-          $select->where($idxCol.' <= ?', $curSeq->getNumCharactersVol1());
+          $select->where($idxCol.' <= ?', $curSeq->getMaxIndexVol1());
 
           break;
 
         case 'rtk3':
-          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', [$curSeq->getNumCharactersVol1(), $curSeq->getNumCharactersVol3()]);
+          $select->where($idxCol.' > ? AND '.$idxCol.' <= ?', [$curSeq->getMaxIndexVol1(), $curSeq->getMaxIndexVol3()]);
 
           break;
 
         case 'rtk1+3':
           $select->where($idxCol.' <= ?', $curSeq->getNumCharacters());
+
+          break;
+
+        case 'rtk1+3-nosupp':
+          $select->where($idxCol.' <= ?', $curSeq->getMaxIndexVol3());
 
           break;
 

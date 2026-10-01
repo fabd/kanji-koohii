@@ -8,13 +8,28 @@ $userId = $sf_user->getUserId();
 $studyPos  = ReviewsPeer::getSequencePosition($userId);
 $studyNext = $studyPos + 1;
 
-$sequenceName       = rtkIndex::inst()->getSequenceName();
-$isSequenceComplete = $studyPos === rtkIndex::inst()->getNumCharactersVol1();
+$sequenceName = rtkIndex::inst()->getSequenceName();
+$maxVol1      = rtkIndex::inst()->getMaxIndexVol1();
+$maxVol3      = rtkIndex::inst()->getMaxIndexVol3();
 
-$studyMax = rtkIndex::inst()->getNumCharactersVol1();
+// once Volume 1 is complete and the next kanji is added, track Volume 3
+$isVol3 = $studyPos > $maxVol1;
+
+if ($isVol3) {
+  $progressName       = 'RTK Volume 3';
+  $isSequenceComplete = $studyPos >= $maxVol3;
+  $studyMax           = $maxVol3 - $maxVol1;
+  $flashcardCount     = ReviewsPeer::getFlashcardCount($userId, 'rtk3');
+} else {
+  $progressName       = $sequenceName;
+  $isSequenceComplete = $studyPos === $maxVol1;
+  $studyMax           = $maxVol1;
+  $flashcardCount     = ReviewsPeer::getFlashcardCount($userId, 'rtk1');
+}
 
 // if there are no flashcards, default to 1st lesson
-$lessonId  = rtkIndex::getLessonForIndex($studyPos ?: 1);
+// (Volume 3 is a single large "lesson", keep the lesson panel within Volume 1)
+$lessonId  = rtkIndex::getLessonForIndex(min($studyPos ?: 1, $maxVol1));
 $curLesson = rtkIndex::getLessonData($lessonId);
 
 $studyLesson = $curLesson['lesson_nr'];
@@ -23,9 +38,6 @@ $studyLesson = $curLesson['lesson_nr'];
 $restudyCount = ReviewsPeer::getRestudyKanjiCount($userId);
 
 $numLessons = rtkIndex::inst()->getNumLessonsVol1();
-
-// count of flashcards part of current  sequence
-$flashcardCount = ReviewsPeer::getFlashcardCount($userId, 'rtk1');
 
 // is the SRS active? (*ANY* flashcards, not just current sequence)
 $hasFlashcards = ReviewsPeer::getFlashcardCount($userId);
@@ -50,11 +62,11 @@ $urls = [
 
 <?php if ($isSequenceComplete): ?>
       <div class="text-smx mb-3">
-        <span class="text-[#2C892C] font-bold">Well done! <?= $sequenceName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
+        <span class="text-[#2C892C] font-bold">Well done! <?= $progressName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 <?php else: ?>
       <div class="text-smx mb-3">
-        <strong><?= $flashcardCount; ?></strong> / <?= $studyMax; ?> kanji in <strong><?= $sequenceName; ?></strong>
+        <strong><?= $flashcardCount; ?></strong> / <?= $studyMax; ?> kanji in <strong><?= $progressName; ?></strong>
         <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 <?php endif; ?>
@@ -62,9 +74,9 @@ $urls = [
       <div id="JsHomePctBar" class="mb-4"><!-- vue --></div>
 
       <div>
-<?php if ($isSequenceComplete): ?>
+<?php if ($studyPos >= $maxVol3): ?>
 <?= link_to(
-  // generic study button when sequence is complete
+  // generic study button when Volume 1 and 3 are complete
   'Go to Study <i class="fa fa-book-open ml-2"></i>',
   url_for('@study_edit?id=1'),
   ['class' => 'ko-Btn ko-Btn--success ko-Btn--large is-ghost']

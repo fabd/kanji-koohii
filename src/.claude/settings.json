@@ -4,7 +4,7 @@
       "Bash(dcweb *)",
       "Bash(ls *)",
       "Bash(grep *)",
-      "Bash(git * main)",
+      "Bash(git status *)",
       "Bash(npm run *)",
       "Bash(sed -n *)",
       "Bash(* --version)",

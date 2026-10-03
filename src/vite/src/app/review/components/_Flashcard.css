@@ -14,9 +14,9 @@
   top: 3px;
   z-index: var(--z-toast);
   padding: 0.5em 0.8em;
-  background: #4a9dd6;
+  background: var(--clr-4a9dd6);
   border-radius: 3px;
-  color: #fff;
+  color: var(--clr-ffffff);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
@@ -35,23 +35,23 @@
   top: 3px;
   z-index: var(--z-toast);
   padding: 0.5em 0.8em;
-  background: #c0392b;
+  background: var(--clr-c0392b);
   border-radius: 3px;
-  color: #ffc9c3;
+  color: var(--clr-ffc9c3);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
 }
 #uiFcAjaxError a {
-  color: #fff;
+  color: var(--clr-ffffff);
   font-weight: bold;
 }
 
 /* we'll turn this into a theme some day, for now it's just a background */
 .uiFcLayout {
   /* http://colorzilla.com/gradient-editor/#c4e6ff+0,92c3e4+100 */
-  background: #92c3e4;
-  background: #92c3e4 linear-gradient(to bottom, #c4e6ff 0%, #92c3e4 100%)
+  background: var(--clr-92c3e4);
+  background: var(--clr-92c3e4) linear-gradient(to bottom, var(--clr-c4e6ff) 0%, var(--clr-92c3e4) 100%)
     100%/200% no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
@@ -68,21 +68,21 @@
   font:
     bold 14px/1em Arial,
     sans-serif;
-  color: #fff;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+  color: var(--clr-ffffff);
+  text-shadow: 0 -1px var(--clr-00000080);
   -webkit-border-radius: 5px;
   border-radius: 0 0 5px 5px;
-  background-color: #50abeb;
-  background-image: linear-gradient(to bottom, #50abeb 0%, #489ad4 100%);
+  background-color: var(--clr-50abeb);
+  background-image: linear-gradient(to bottom, var(--clr-50abeb) 0%, var(--clr-489ad4) 100%);
 }
 .uiFcOptBtn:hover,
 .uiFcOptBtn:focus {
-  color: #e6eefb;
-  background-color: #007be3;
-  background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
+  color: var(--clr-e6eefb);
+  background-color: var(--clr-007be3);
+  background-image: linear-gradient(to bottom, var(--clr-268bd2) 0%, var(--clr-227dbd) 100%);
 }
 .uiFcOptBtn u {
-  color: #eaf6ff;
+  color: var(--clr-eaf6ff);
   padding-right: 1px;
 }
 .uiFcOptBtn,
@@ -118,7 +118,7 @@
   font:
     17px/33px Arial,
     sans-serif;
-  color: #408fc6;
+  color: var(--clr-408fc6);
   text-align: center;
   margin: 0;
   padding: 0 0 5px;
@@ -132,18 +132,18 @@
 /* -------------------------------------------------------- */
 .ko-FcStBox {
   border-radius: 5px;
-  background-color: #94d3ff;
+  background-color: var(--clr-94d3ff);
   padding: 5px;
 }
 
 .ko-FcStBox-hd {
-  @apply text-sm text-[#408fc6] text-center leading-none;
+  @apply text-sm text-(--clr-408fc6) text-center leading-none;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .ko-FcStBox-hd em {
   font-style: normal;
-  color: #0a3e62;
+  color: var(--clr-0a3e62);
 }
 
 #uiFcProgressBar .ko-FcStBox-hd {
@@ -158,20 +158,20 @@
 .ko-FcStCnt {
   font-size: 21px;
   line-height: 1;
-  color: #0a3e62;
+  color: var(--clr-0a3e62);
 
   .fa {
     font-size: 24px;
     margin-right: 0.2em;
   }
   span {
-    color: #474747;
+    color: var(--clr-474747);
   }
   .fa-check {
-    color: #27ae60;
+    color: var(--clr-27ae60);
   }
   .fa-times {
-    color: #c0392b;
+    color: var(--clr-c0392b);
   }
 }
 
@@ -184,20 +184,20 @@
   font:
     bold 14px/29px Arial,
     sans-serif;
-  color: #0097ff;
-  background-color: #94d3ff;
+  color: var(--clr-0097ff);
+  background-color: var(--clr-94d3ff);
   border-radius: 6px;
   @apply px-3 py-1;
   text-decoration: none;
   /* make it look like a button! */
-  border-bottom: 4px solid #268bd2;
+  border-bottom: 4px solid var(--clr-268bd2);
 
   &:active,
   &:hover {
     margin-top: 2px;
     border-bottom-width: 2px;
-    background-color: #7dc2f3;
-    color: #fff;
+    background-color: var(--clr-7dc2f3);
+    color: var(--clr-ffffff);
   }
 }
 
@@ -302,11 +302,11 @@
   }
 
   #uiFcProgressBar .ko-FcStBox-hd {
-    color: #ddd;
+    color: var(--clr-dddddd);
     font-weight: normal;
   }
   #uiFcProgressBar .ko-FcStBox-hd em {
-    color: #fff;
+    color: var(--clr-ffffff);
   }
 
   /* hide the keyboard shortcuts help */
@@ -342,11 +342,11 @@
   display: block;
   position: relative;
   margin: 0 auto; /* center within TD */
-  background: #fff;
+  background: var(--clr-ffffff);
 
   /* card size */
 
   width: 100%;
   height: 366px;
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2); /* works in Firefox 25 */
+  box-shadow: 0px 1px 5px 0px var(--clr-00000033); /* works in Firefox 25 */
 }

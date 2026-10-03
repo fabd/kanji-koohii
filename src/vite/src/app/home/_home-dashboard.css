@@ -24,17 +24,18 @@
 /*//////////////////////////////////////////////////////////////// */
 .ko-Dash-srsIcoBtn {
   /* note: the height of these "buttons" comes from the parent's `items-stretch` */
-  @apply text-smx text-[#42413d] no-underline cursor-pointer rounded-md;
+  @apply text-smx text-(--clr-42413d) no-underline cursor-pointer rounded-md;
 
   &:hover {
     @apply no-underline;
 
     &.is-new,
     &:focus.is-new {
-      background-color: #32b1fc4d; /* color.change(#40a8e5, $alpha: 0.3); */
+      /* color.change(#40a8e5, $alpha: 0.3); */
+      background-color: var(--clr-32b1fc4d);
     }
     &.is-due {
-      background-color: #ff982a6e; /*color.change(#f7a247, $alpha: 0.3); */
+      background-color: var(--clr-ff982a6e); /*color.change(#f7a247, $alpha: 0.3); */
     }
   }
 }
@@ -54,12 +55,12 @@
 /* -------------------------------------------------------------------- */
 .ko-LessonPane {
   /* default card tag colors for the kanji grid */
-  --ko-cardmap-new: #a3a197;
-  --ko-cardmap-res: #ef5e4f;
-  --ko-cardmap-L1: #5cb85c; /*#83d37d; */
-  --ko-cardmap-L2: #5cb85c; /*#63b95c; */
-  --ko-cardmap-L3: #5cb85c; /*#4ea747; */
-  --ko-cardmap-L4: #5cb85c; /*#3b8f35; */
+  --ko-cardmap-new: var(--clr-a3a197);
+  --ko-cardmap-res: var(--clr-ef5e4f);
+  --ko-cardmap-L1: var(--clr-5cb85c); /*#83d37d; */
+  --ko-cardmap-L2: var(--clr-5cb85c); /*#63b95c; */
+  --ko-cardmap-L3: var(--clr-5cb85c); /*#4ea747; */
+  --ko-cardmap-L4: var(--clr-5cb85c); /*#3b8f35; */
 }
 /*//////////////////////////////////////////////////////////////// */
 /* on the home page, use max-height and scrollbar, to limit the */
@@ -71,8 +72,8 @@
   overflow-y: auto;
   padding-right: 1rem; /* breathing room between cards and scrollbar */
 
-  --trackColor: #c7c3ba;
-  --thumbColor: #f0f0f0;
+  --trackColor: var(--clr-c7c3ba);
+  --thumbColor: var(--clr-f0f0f0);
   --trackRadius: 6px;
 
   /* Works on Firefox */
@@ -113,7 +114,7 @@
 
   /*//////////////////////////////////////////////////////////////// */
   /*//////////////////////////////////////////////////////////////// */
-  background-color: #696866;
+  background-color: var(--clr-696866);
   padding: var(--ko-lmap-p);
   height: var(--ko-lmap-h);
   @apply rounded-md;
@@ -125,7 +126,7 @@
   @apply flex;
   height: 100%;
   gap: 1px;
-  color: #8f897c; /* color of the "off" items (empty cells) */
+  color: var(--clr-8f897c); /* color of the "off" items (empty cells) */
   text-align: center;
 }
 
@@ -135,27 +136,27 @@
   /* ----- @include card-tag-colors(); ----- */
   /* classes that match getColorForCard() in JS */
   &.is-new {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-new);
   }
   &.is-res {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-res);
   }
   &.is-L1 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L1);
   }
   &.is-L2 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L2);
   }
   &.is-L3 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L3);
   }
   &.is-L4 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L4);
   }
   /* --------------------------------------- */
@@ -245,7 +246,7 @@
   text-align: center;
 
   background-color: transparent;
-  border: 1px dashed rgba(73, 70, 63, 0.2);
+  border: 1px dashed var(--clr-49463f33);
   border-radius: 6px;
 }
 
@@ -253,14 +254,14 @@
 .ko-KanjiCard.is-on {
   background: linear-gradient(
     148.74deg,
-    #f8f7f6 0%,
-    #f8f8f8 80%,
-    #ffffff 93%,
-    #eaeaea 100%
+    var(--clr-f8f7f6) 0%,
+    var(--clr-f8f8f8) 80%,
+    var(--clr-ffffff) 93%,
+    var(--clr-eaeaea) 100%
   );
 
   border: 0;
-  border-bottom: 1px solid #bab6ae; /* hexa(#6c6c6c, .37) */
+  border-bottom: 1px solid var(--clr-bab6ae); /* hexa(#6c6c6c, .37) */
   border-radius: 0;
 }
 
@@ -270,7 +271,7 @@
 .ko-KanjiCard-idx,
 .ko-KanjiCard-kwd {
   @apply font-serif;
-  color: #3c3c3c;
+  color: var(--clr-3c3c3c);
   font-size: 15px;
   line-height: calc(19 / 15 * 1em);
 }
@@ -288,7 +289,7 @@
 .ko-KanjiCard-chr {
   font-size: 60px;
   line-height: 1;
-  color: #313130;
+  color: var(--clr-313130);
   @apply mt-auto mb-auto; /* flex spacings */
 }
 
@@ -296,35 +297,35 @@
   @apply rounded-md text-xs px-2 font-light;
   height: 27px;
   line-height: 27px;
-  background-color: #d7d1c4;
-  @apply text-[#42413d];
+  background-color: var(--clr-d7d1c4);
+  @apply text-(--clr-42413d);
 }
 
 .ko-KanjiCard-tag {
   /* ----- @include card-tag-colors(); ----- */
   /* classes that match getColorForCard() in JS */
   &.is-new {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-new);
   }
   &.is-res {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-res);
   }
   &.is-L1 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L1);
   }
   &.is-L2 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L2);
   }
   &.is-L3 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L3);
   }
   &.is-L4 {
-    color: #fff;
+    color: var(--clr-ffffff);
     background-color: var(--ko-cardmap-L4);
   }
   /* ----------------------------------------- */

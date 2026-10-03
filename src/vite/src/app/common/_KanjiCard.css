@@ -17,13 +17,13 @@
 .ko-FlashcardBg {
   background: linear-gradient(
     148.74deg,
-    #f8f7f6 0%,
-    #f8f8f8 80%,
-    #ffffff 93%,
-    #eaeaea 100%
+    var(--clr-f8f7f6) 0%,
+    var(--clr-f8f8f8) 80%,
+    var(--clr-ffffff) 93%,
+    var(--clr-eaeaea) 100%
   );
 
   border: 0;
-  border-bottom: 1px solid #bab6ae; /* hexa(#6c6c6c, .37); */
+  border-bottom: 1px solid var(--clr-bab6ae); /* hexa(#6c6c6c, .37); */
   border-radius: 0;
 }

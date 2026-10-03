@@ -28,7 +28,7 @@
       <div class="d-keyword flex-grow-0">
         <div
           v-if="cardData.isAgain"
-          class="text-[#aeaeae] text-md leading-none inline-block"
+          class="text-(--clr-aeaeae) text-md leading-none inline-block"
           ><i class="fa fa-redo mr-2"></i
         ></div>
         <a
@@ -70,7 +70,7 @@
                     ></cjk-lang-ja>
                   </div>
                   <div
-                    class="vyg text-[#858280] italic text-xl leading-[1.2em] pl-3 max-sm:ml-2 mt-4"
+                    class="vyg text-(--clr-858280) italic text-xl leading-[1.2em] pl-3 max-sm:ml-2 mt-4"
                   >
                     {{ $item.gloss }}
                   </div>

@@ -60,7 +60,7 @@
     14px/1em Georgia,
     Times New Roman,
     sans-serif;
-  color: #a0a0a0;
+  color: var(--clr-a0a0a0);
 }
 .d-strokec .kanji {
   font-size: 20pt;
@@ -75,16 +75,16 @@
   position: absolute;
   bottom: 0.5rem;
   right: 8px;
-  color: #a0a0a0;
+  color: var(--clr-a0a0a0);
 }
 
 /* states :: default review mode */
 .uiFcState-0 .d-keyword {
-  color: #000;
+  color: var(--clr-000000);
 }
 .uiFcState-0 .d-kanji {
   visibility: hidden;
-  color: #fff;
+  color: var(--clr-ffffff);
 }
 .uiFcState-0 .d-strokec {
   visibility: hidden;
@@ -97,11 +97,11 @@
 }
 
 .uiFcState-1 .d-keyword {
-  color: #a0a0a0;
+  color: var(--clr-a0a0a0);
 }
 .uiFcState-1 .d-kanji {
   visibility: visible;
-  color: #000;
+  color: var(--clr-000000);
 }
 .uiFcState-1 .d-strokec {
   visibility: visible;
@@ -117,7 +117,7 @@
 }
 .uiFcState-0.is-reverse .d-kanji {
   visibility: visible;
-  color: #000;
+  color: var(--clr-000000);
 }
 .uiFcState-0.is-reverse .d-yomi {
   display: block;
@@ -139,18 +139,18 @@
   top: 0;
   width: 40px;
   height: 38px;
-  background: #f2f2f2;
+  background: var(--clr-f2f2f2);
   text-decoration: none;
   text-align: center;
 }
 #uiFcMenu .fa {
   font-size: 18px;
   line-height: 38px;
-  color: #9b9b9b;
+  color: var(--clr-9b9b9b);
 }
 #uiFcMenu:hover,
 #uiFcMenu.active {
-  background: #e8e8e8;
+  background: var(--clr-e8e8e8);
 }
 
 /* Onyomi */
@@ -166,7 +166,7 @@
 
 /* cloze deletion <span.cloze><u>(kanji)</u></span> */
 .d-yomi .cloze {
-  color: #e21107;
+  color: var(--clr-e21107);
   text-decoration: none;
 }
 .d-yomi .cloze u {
@@ -180,7 +180,7 @@
 }
 .uiFcState-1 .d-yomi .cloze u {
   display: inline;
-  color: #000;
+  color: var(--clr-000000);
 }
 
 .uiFcYomi {
@@ -191,7 +191,7 @@
   margin-top: 10px;
 }
 .uiFcYomi:hover {
-  background: #efeeed;
+  background: var(--clr-efeeed);
   border-radius: 8px;
 }
 

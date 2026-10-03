@@ -8,7 +8,7 @@
 #fm-summary {
   margin: 10px 0 5px;
   overflow: auto;
-  color: #716e57;
+  color: var(--clr-716e57);
 }
 #fm-summary p {
   margin: 0 0 20px;
@@ -30,10 +30,10 @@
 #fm-summary li a {
   text-decoration: none;
   display: block;
-  color: #000;
+  color: var(--clr-000000);
 }
 #fm-summary li a:hover {
-  color: #005cb1;
+  color: var(--clr-005cb1);
 }
 
 #fm-summary .rbn {
@@ -53,7 +53,7 @@
   line-height: 1em;
 }
 #fm-summary .inf {
-  color: #888;
+  color: var(--clr-888888);
   font-size: 12px;
   line-height: 1.2em;
 }
@@ -69,27 +69,27 @@
 // -------------------------------------------------------------------- */
 .SummaryTableRating {
   @apply px-[.5em] py-[.35em] rounded-sm;
-  --bg: #ccc;
-  --fg: #fff;
+  --bg: var(--clr-cccccc);
+  --fg: var(--clr-ffffff);
 
   /* No and Again cards are both in the failed pile */
   &.is-no,
   &.is-again {
-    --bg: #a53000;
+    --bg: var(--clr-a53000);
   }
 
   /* Again-* cards are lapsed (forgotten), slightly different shade of red */
   &.is-again-hard,
   &.is-again-yes,
   &.is-again-easy {
-    --bg: #b84314;
+    --bg: var(--clr-b84314);
   }
 
   &.is-hard,
   &.is-yes,
   &.is-easy {
     /* --bg: #ea8212;   orange hard */
-    --bg: #5aa107;
+    --bg: var(--clr-5aa107);
     /* --bg: #269189;  easy */
   }
 

@@ -53,33 +53,33 @@
 .uiIBtnDefault {
   border-radius: 5px;
   /* default colour */
-  background: #6fa300;
-  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
+  background: var(--clr-6fa300);
+  background: linear-gradient(to bottom, var(--clr-6fa300) 0%, var(--clr-649300) 100%);
 
-  color: #fff;
+  color: var(--clr-ffffff);
   font: bold 15px/34px Arial, sans-serif;
   height: 34px;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 -1px var(--clr-00000080);
 }
 .uiIBtn:hover {
-  color: #fff;
+  color: var(--clr-ffffff);
 }
 .uiIBtnDefault:hover {
-  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 1px var(--clr-00000033);
 }
 
 /* uiIBtn :: additional colours */
 .uiIBtnRed {
-  background: #cb4b16;
-  background: linear-gradient(to bottom, #cb4b16 0%, #b74314 100%);
+  background: var(--clr-cb4b16);
+  background: linear-gradient(to bottom, var(--clr-cb4b16) 0%, var(--clr-b74314) 100%);
 }
 .uiIBtnGreen {
-  background: #6fa300;
-  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
+  background: var(--clr-6fa300);
+  background: linear-gradient(to bottom, var(--clr-6fa300) 0%, var(--clr-649300) 100%);
 }
 .uiIBtnOrange {
-  background: #e68f06;
-  background: linear-gradient(to bottom, #e68f06 0%, #bb7404 100%);
+  background: var(--clr-e68f06);
+  background: linear-gradient(to bottom, var(--clr-e68f06) 0%, var(--clr-bb7404) 100%);
 }
 
 /**
@@ -100,7 +100,7 @@
   left: 5px;
   bottom: 0;
   height: 56px;
-  background: #c1bea3;
+  background: var(--clr-c1bea3);
 }
 .uiChartVs p {
   width: 50%;
@@ -110,10 +110,10 @@
 .uiChartVs p .ttl {
   display: block;
   font: bold italic 14px/1em Georgia, serif;
-  color: #4b4b4b;
+  color: var(--clr-4b4b4b);
 }
 .uiChartVs p .zero {
-  color: #979797;
+  color: var(--clr-979797);
 } /* gray out title */
 .uiChartVs em {
   font-weight: normal;
@@ -130,28 +130,28 @@
   position: absolute;
   bottom: 5px;
   height: 50px;
-  border-bottom: 8px solid #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-bottom: 8px solid var(--clr-ffffff);
+  box-shadow: 0 2px 5px var(--clr-0000004d);
 }
 .uiChartVs a.pct {
   text-decoration: none;
 }
 .uiChartVs .left .pct {
   left: 0;
-  background: #b1fe66;
-  border-bottom-color: #82ba4b;
+  background: var(--clr-b1fe66);
+  border-bottom-color: var(--clr-82ba4b);
 }
 .uiChartVs .right .pct {
   right: 0;
-  background: #dd5d3a;
-  border-bottom-color: #a2442b;
+  background: var(--clr-dd5d3a);
+  border-bottom-color: var(--clr-a2442b);
 }
 .uiChartVs .pct span {
   position: absolute;
   top: 7px;
   font: 27px/1em Georgia, serif;
-  color: #000;
-  text-shadow: 0 1px rgba(255, 255, 255, 0.4);
+  color: var(--clr-000000);
+  text-shadow: 0 1px var(--clr-ffffff66);
 }
 .uiChartVs .left .pct span {
   left: 10px;
@@ -183,7 +183,7 @@
   --border-radius: 4px;
   border-radius: var(--border-radius);
   
-  box-shadow: 0 4px 10px #4448;
+  box-shadow: 0 4px 10px var(--clr-44444488);
 
   /* the dark gray background with stripe motif */
   div {
@@ -193,7 +193,7 @@
 
     background-attachment: fixed;
     background-image: repeating-linear-gradient(
-      -45deg, #222, #222 10px, #444 10px, #444 20px
+      -45deg, var(--clr-222222), var(--clr-222222) 10px, var(--clr-444444) 10px, var(--clr-444444) 20px
     );
   }
 
@@ -211,16 +211,16 @@
     height: 100%;
     
     background-attachment: fixed;
-    background-color: #72a311;
+    background-color: var(--clr-72a311);
     background-image: repeating-linear-gradient(
-      -45deg, #5db200, #5db200 10px, #73df00 10px, #73df00 20px
+      -45deg, var(--clr-5db200), var(--clr-5db200) 10px, var(--clr-73df00) 10px, var(--clr-73df00) 20px
     );
   }
 
   /* the gloss effect overlay */
   span.x {
     @apply absolute left-0 top-0 w-full h-full;
-    background: linear-gradient( #b7d468, #666 9px, #222 9px, #444 20px );
+    background: linear-gradient( var(--clr-b7d468), var(--clr-666666) 9px, var(--clr-222222) 9px, var(--clr-444444) 20px );
     border-radius: var(--border-radius);
     opacity: 0.5;
   }
@@ -230,7 +230,7 @@
  * Side tabs navigation.
  */
 .side-menu {
-  @apply border border-[#d4cdba] rounded-sm mb-4 text-sm;
+  @apply border border-(--clr-d4cdba) rounded-sm mb-4 text-sm;
 }
 .side-menu h2 {
   padding: 8px 10px;
@@ -239,7 +239,7 @@
   font-weight: normal;
   background-color: var(--clr-bg-1);
   border-bottom: 1px solid var(--clr-bg-1m);
-  color: #525150;
+  color: var(--clr-525150);
 }
 .side-menu ul {
   margin: 0;
@@ -264,7 +264,7 @@
 .side-menu li.active {
 }
 .side-menu li.active a {
-  border-left: 3px solid #8c8;
-  color: #222;
+  border-left: 3px solid var(--clr-88cc88);
+  color: var(--clr-222222);
   font-weight: bold;
 }

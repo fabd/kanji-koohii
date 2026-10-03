@@ -1,6 +1,6 @@
 .ko-PctBar {
-  background-color: #cdcdcd;
-  border-bottom: 3px solid #a8a8a8;
+  background-color: var(--clr-cdcdcd);
+  border-bottom: 3px solid var(--clr-a8a8a8);
 
   --ko-pct-bar-h: 42px; /* height total with borders */
   --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);
@@ -13,11 +13,11 @@
 .ko-PctBar-fill {
   @apply inline-block h-full px-3;
   @apply rounded-md;
-  border-bottom: 3px solid #4b9227;
+  border-bottom: 3px solid var(--clr-4b9227);
   border-radius: var(--ko-pct-bar-radius);
-  box-shadow: 1px 3px 5px 0px #0002; /* very subtle depth :) */
+  box-shadow: 1px 3px 5px 0px var(--clr-00000022); /* very subtle depth :) */
   background-color: var(--color-btn-success);
-  color: #fff;
+  color: var(--clr-ffffff);
   font-size: 20px;
   text-align: right;
   line-height: var(--ko-pct-bar-fill-h);
@@ -27,5 +27,5 @@
   background-color: transparent;
   border: none;
   box-shadow: none;
-  color: #2228;
+  color: var(--clr-22222288);
 }

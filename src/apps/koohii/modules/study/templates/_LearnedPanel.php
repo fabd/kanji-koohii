@@ -3,9 +3,9 @@ $ofTotal = $restudyCount > 0 ? " of {$restudyCount}" : '';
 ?>
 <div class="ko-Box ko-Box--success lg:mb-4 max-lg:flex max-lg:items-center max-lg:px-2 max-lg:py-2">
   <div class="lg:mb-2">
-    <h3 class="text-[#3a7c3a] font-bold leading-none inline-block mb-0">Learned</h3>
+    <h3 class="text-(--clr-3a7c3a) font-bold leading-none inline-block mb-0">Learned</h3>
     <?= link_to('List', 'study/failedlist', ['class' => 'text-sm leading-none  ml-2 max-lg:ml-4']); ?>
-    <div class="text-[#2C892C] text-sm">
+    <div class="text-(--clr-2c892c) text-sm">
       <strong><?= $learnedCount; ?></strong>
       of
       <strong><?= $restudyCount; ?></strong> Forgotten Kanji

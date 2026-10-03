@@ -14,7 +14,7 @@ $todayCount = ReviewsPeer::getTodayCount($sf_user->getUserId());
 
 <div class="text-lg mb-2">
   <span class="mr-4"><strong><?= $flashcard_count; ?></strong> flashcards</span>
-  <span class="text-[#484] mr-4"><strong><?= $todayCount; ?></strong> reviews today</span>
+  <span class="text-(--clr-448844) mr-4"><strong><?= $todayCount; ?></strong> reviews today</span>
 </div>
 
 <div class="mb-8">

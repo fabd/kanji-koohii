@@ -23,6 +23,7 @@
 
 /* koohii specific resets (*after* Bootstrap/tailwind resets) */
 @import "../css/_base.css";
+@import "../css/_colors.css";
 @import "../css/_variables.css";
 @import "../css/_layout.css";
 
@@ -66,16 +67,16 @@
   color: var(--clr-srs-undue);
 }
 .clr-srs-fail {
-  color: #f1311a;
+  color: var(--clr-f1311a);
 }
 .clr-srs-new {
-  color: #1c90d4;
+  color: var(--clr-1c90d4);
 }
 
 /* gradients */
 .gdt-ocean-blue {
-  background: #deeef8; /* Old browsers */
-  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%);
+  background: var(--clr-deeef8); /* Old browsers */
+  background: linear-gradient(to bottom, var(--clr-deeef8) 0%, var(--clr-c4e7ff) 100%);
 }
 
 /* ---------------------------- */
@@ -168,7 +169,7 @@ div.col-box-bis {
 
 /* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
 .kkSymfonyCache {
-  border: 1px solid #f00;
+  border: 1px solid var(--clr-ff0000);
 }
 
 /* ---------------------------- */
@@ -177,7 +178,7 @@ div.col-box-bis {
 
 /* extend the footer end of gradient color to bottom of page */
 body.with-footer {
-  background: #f0ddd4;
+  background: var(--clr-f0ddd4);
 }
 main {
   background: var(--clr-bg-body);
@@ -201,29 +202,29 @@ main {
 /* ---------------------------- */
 .ko-PageFooter-grad {
   /* http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
-  background: #f8c5e4; /* Old browsers */
-  background: linear-gradient(to bottom, #f8c5e4 0%, #f0ddd4 100%);
+  background: var(--clr-f8c5e4); /* Old browsers */
+  background: linear-gradient(to bottom, var(--clr-f8c5e4) 0%, var(--clr-f0ddd4) 100%);
 }
 
 .ko-PageFooter {
   text-align: center;
   padding: 0 0 5em;
-  color: #8b1566;
+  color: var(--clr-8b1566);
   @apply text-smx sm:text-base;
 
   a {
-    color: #e400b1;
+    color: var(--clr-e400b1);
     text-decoration: none;
   }
 
   a:hover {
-    color: #e400b1;
+    color: var(--clr-e400b1);
     text-decoration: underline;
   }
 
   /* fontawesome icons */
   .fa {
-    color: #9c3d7b;
+    color: var(--clr-9c3d7b);
     margin-right: 0.5em;
   }
 }
@@ -232,7 +233,7 @@ main {
   a {
     padding-left: 0.8em;
     padding-right: 0.8em; /*tap target*/
-    color: #9c3d7b;
+    color: var(--clr-9c3d7b);
     text-decoration: none;
   }
 }
@@ -251,7 +252,7 @@ main {
 /* Site news (posts using markdown) */
 .ko-SiteNews .markdown h2,
 .ko-SiteNews .markdown h3 {
-  color: #000;
+  color: var(--clr-000000);
   font-weight: normal;
   font-size: 1.2em;
   margin-bottom: 1em;
@@ -269,7 +270,7 @@ main {
 /*.layout-news span.news-date { font-size:16px; color:#69664E; white-space:nowrap; }*/
 
 .ko-SiteNews {
-  --color-blog-heading: #fa3d60;
+  --color-blog-heading: var(--clr-fa3d60);
   line-height: 1.5em;
   font-family: Arial, sans-serif;
 }
@@ -298,14 +299,14 @@ main {
   padding: 4px 5px;
   margin-top: -4px;
   border-radius: 3px;
-  color: #568249;
-  background: #dff7d3;
+  color: var(--clr-568249);
+  background: var(--clr-dff7d3);
 }
 
 .ko-SiteNews-body {
   margin: 0 0 25px;
   padding: 0 0 2em; /*border-bottom:1px solid var(--clr-bg-1);*/
-  color: #3c3c3c;
+  color: var(--clr-3c3c3c);
   clear: both;
 }
 
@@ -317,7 +318,7 @@ main {
   font-style: italic;
 }
 .ko-SiteNews a.readmore {
-  color: #8fb052;
+  color: var(--clr-8fb052);
   font-weight: bold;
   text-decoration: none;
 }
@@ -337,13 +338,13 @@ main {
     padding: 5px 10px;
     display: block;
     text-decoration: none;
-    @apply border-dotted border-[#d4cdba] border-b;
+    @apply border-dotted border-(--clr-d4cdba) border-b;
     &:hover {
       background-color: var(--clr-bg-1);
     }
   }
   span {
-    color: #454545;
+    color: var(--clr-454545);
   }
 }
 
@@ -352,9 +353,9 @@ main {
 /* ---------------------------- */
 
 .actionconfirmationmessage {
-  border: 1px solid #ccc;
+  border: 1px solid var(--clr-cccccc);
   padding: 10px;
-  background: #ffffcc;
+  background: var(--clr-ffffcc);
   margin: 1em 0;
 }
 .actionconfirmationmessage p {
@@ -365,15 +366,15 @@ main {
 
 .confirmwhatwasdone {
   padding: 10px;
-  background: #cdecae;
+  background: var(--clr-cdecae);
   margin: 1em 0;
   border-radius: 5px;
-  box-shadow: 0 1px 2px 0 rgba(170, 165, 130, 0.3);
+  box-shadow: 0 1px 2px 0 var(--clr-aaa5824d);
   /* -webkit-transition:background-color 0.5s; transition:background-color 0.5s;*/
 }
 .confirmwhatwasdone p {
   margin: 0 0 10px;
-  color: #262;
+  color: var(--clr-226622);
 }
 
 .rounded-css3 {
@@ -381,11 +382,11 @@ main {
 }
 
 .formerrormessage {
-  border: 1px solid #f5ab8f;
+  border: 1px solid var(--clr-f5ab8f);
   padding: 10px;
-  background: #ffe0a8;
+  background: var(--clr-ffe0a8);
   margin: 1em 0;
-  color: #f33;
+  color: var(--clr-ff3333);
 }
 .formerrormessage p {
   margin-top: 0;
@@ -394,9 +395,9 @@ main {
 }
 
 .warningmessagebox {
-  border: 1px solid #f5ab8f;
+  border: 1px solid var(--clr-f5ab8f);
   padding: 10px;
-  background: #ffe0a8;
+  background: var(--clr-ffe0a8);
   margin: 1em 0;
 }
 .warningmessagebox p {
@@ -420,21 +421,21 @@ a.delete:hover {
 }
 
 a.proceed {
-  color: #005cb1;
+  color: var(--clr-005cb1);
   padding: 1px;
 }
 a.proceed:hover {
   color: white;
-  background: #005cb1;
+  background: var(--clr-005cb1);
 }
 
 a.subdued {
-  color: #666;
+  color: var(--clr-666666);
   padding: 1px;
 }
 a:hover.subdued {
-  background: #666;
-  color: #fff;
+  background: var(--clr-666666);
+  color: var(--clr-ffffff);
   padding: 1px;
 }
 
@@ -456,7 +457,7 @@ a:hover.subdued {
   /* small "learned" tag in the Restudy List */
   &-learned {
     @apply px-[.4em] py-[.3em] rounded-sm;
-    @apply bg-[#6cbe6b] text-[#fff];
+    @apply bg-(--clr-6cbe6b) text-(--clr-ffffff);
   }
 }
 

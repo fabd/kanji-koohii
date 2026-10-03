@@ -14,7 +14,7 @@ kk_globals_put('CUSTOM_REVIEW_PROPS', [
 <section>
 
     <div class="mb-8">
-      <p class="text-[#cc2d7a] mb-4">
+      <p class="text-(--clr-cc2d7a) mb-4">
         <i class="fas fa-info-circle mr-2"></i><strong>Custom review modes do <u>not</u> use Spaced Repetition (SRS).</strong>
       </p>
 

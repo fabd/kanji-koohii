@@ -11,34 +11,34 @@
 .uiFilterStd .lbl {
   float: left;
   font-size: 12px;
-  color: #666;
+  color: var(--clr-666666);
   padding-left: 0;
 }
 .uiFilterStd .tb {
   float: left;
-  background: #444;
+  background: var(--clr-444444);
   padding: 1px 0;
   margin: 0 1px;
 }
 .uiFilterStd .lr {
   float: left;
   position: relative;
-  border-left: 1px solid #444;
+  border-left: 1px solid var(--clr-444444);
   margin: 0 -1px;
 }
 .uiFilterStd a {
   float: left;
-  border-right: 1px solid #444;
-  background: linear-gradient(#fff, #ccc);
-  color: #000;
+  border-right: 1px solid var(--clr-444444);
+  background: linear-gradient(var(--clr-ffffff), var(--clr-cccccc));
+  color: var(--clr-000000);
   outline: none;
 }
 .uiFilterStd a:hover {
   text-decoration: none;
-  background: linear-gradient(#ddd, #aaa);
+  background: linear-gradient(var(--clr-dddddd), var(--clr-aaaaaa));
 }
 .uiFilterStd a.active,
 .uiFilterStd a.active:hover {
-  color: #fff;
-  background: linear-gradient(#666, #aaa);
+  color: var(--clr-ffffff);
+  background: linear-gradient(var(--clr-666666), var(--clr-aaaaaa));
 }

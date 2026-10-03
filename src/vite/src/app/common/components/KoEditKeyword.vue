@@ -34,7 +34,7 @@
 
           <a
             href="#"
-            class="inline-block text-[#f37200] hover:text-[#f37200] mr-4"
+            class="inline-block text-(--clr-f37200) hover:text-(--clr-f37200) mr-4"
             @click.stop.prevent="onReset"
           >
             Reset

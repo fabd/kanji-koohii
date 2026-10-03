@@ -1,18 +1,18 @@
 .dict-list {
-  background: #444;
+  background: var(--clr-444444);
 }
 
 .dict-list .dl_item {
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: var(--clr-ffffff);
+  border-bottom: 1px solid var(--clr-eeeeee);
   position: relative;
 }
 .dict-list .dl_item:hover {
-  background: #eee;
+  background: var(--clr-eeeeee);
   cursor: pointer;
 }
 .dict-list .dl_item:hover .vocab_c {
-  background: #fff;
+  background: var(--clr-ffffff);
 }
 
 .dict-list .dl_item .cj-k {
@@ -29,7 +29,7 @@
   padding: 0;
   display: inline-block;
   margin-left: 0.5rem;
-  color: #543;
+  color: var(--clr-554433);
 }
 
 .dict-list .dl_t_menu {
@@ -37,29 +37,29 @@
   right: 10px;
   top: 15px;
   font-size: 20px;
-  color: #ccc;
+  color: var(--clr-cccccc);
 }
 .dict-list .dl_item:hover .dl_t_menu {
-  color: #888;
+  color: var(--clr-888888);
 }
 
 /* picked item */
 .dict-list .dl_item--pick .dl_t_menu,
 .dict-list .dl_item--pick:hover .dl_t_menu {
-  color: #e2b437;
+  color: var(--clr-e2b437);
 }
 
 /* "known" word (contains known kanji) */
 .dict-list .dl_t .known,
 .dict-list .dl_item:hover .known {
-  background: #e6f2cd;
-  color: #206717;
+  background: var(--clr-e6f2cd);
+  color: var(--clr-206717);
 }
 
 .dict-list .dl_d {
   padding: 0 20px 1em;
   font: 14px/1.3em Arial, sans-serif;
-  color: #444;
+  color: var(--clr-444444);
 }
 
 /* --------------------------------------------------------------------
@@ -67,15 +67,15 @@
 //   FIXME : should go to a future "dict dialog" Vue comp.
 // -------------------------------------------------------------------- */
 .dict-panel {
-  background: #fff;
+  background: var(--clr-ffffff);
   max-height: 80vh;
   overflow-y: auto;
 }
 
 .dict-list_info {
   padding: 1em 20px 1px;
-  color: #838279;
-  background: #fff;
+  color: var(--clr-838279);
+  background: var(--clr-ffffff);
 }
 
 /* ===================================================== */
@@ -87,12 +87,12 @@
   display: inline-block;
   padding: 3px 8px 4px;
   border-radius: 8px;
-  background: #efeeed;
-  color: #210;
+  background: var(--clr-efeeed);
+  color: var(--clr-221100);
 }
 
 /* the <em> surrounding tags originate in KoohiiFormat mixin, used by DictEntry.r and VocabPick.reading */
 .vocab_r em {
-  border-bottom: 2px solid #ff4e4e; /*color:#ff4e4e;*/
+  border-bottom: 2px solid var(--clr-ff4e4e); /*color:#ff4e4e;*/
   font-style: normal;
 }

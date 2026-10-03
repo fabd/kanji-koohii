@@ -45,7 +45,7 @@
                   <span v-html="formGetErrors()"></span>
                 </div>
 
-                <div v-if="cantsaveChars.length > 0" class="text-[#9f0e0b] mb-4">
+                <div v-if="cantsaveChars.length > 0" class="text-(--clr-9f0e0b) mb-4">
                   <span class="font-bold">
                     Sorry, the database currently is not able to store unicode
                     characters above hexadecimal 0xFFFF. Typically, this means
@@ -129,7 +129,7 @@
                   </template>
 
                   <template v-else>
-                    <div class="text-[#888]">[ click here to enter your story ]</div>
+                    <div class="text-(--clr-888888)">[ click here to enter your story ]</div>
                   </template>
                 </div>
 
@@ -149,7 +149,7 @@
 
                   <div
                     v-if="showLearnedMessage"
-                    class="text-right text-[#61932b] pt-3"
+                    class="text-right text-(--clr-61932b) pt-3"
                   >
                     This kanji is ready for review in the
                     <strong>learned</strong> list.

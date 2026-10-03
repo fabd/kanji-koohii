@@ -24,7 +24,7 @@ with_footer();
         <td><b><?= esc_specialchars($user['username']); ?></b></td></tr>
     <tr><th>Email</th>
         <td><?= esc_specialchars($user['email']); ?>
-        <div style="font:11px/1em Verdana, sans-serif;color:#484;font-style:italic;white-space:nowrap">(your email is not visible to anyone else)</div>
+        <div style="font:11px/1em Verdana, sans-serif;color:var(--clr-448844);font-style:italic;white-space:nowrap">(your email is not visible to anyone else)</div>
         </td></tr>
     <tr><th>Location</th>
         <td><?= esc_specialchars($user['location']); ?></td></tr>
@@ -52,7 +52,7 @@ if (!KK_ENV_FORK) {
 
 <?php else: ?>
   <p><strong>Support Kanji Koohii development</strong> and (soon) enjoy some perks!</p>
-  <p><a href="https://www.patreon.com/kanjikoohii" style="color:#e6461a;font-size:120%;">Become a patron</a></p>
+  <p><a href="https://www.patreon.com/kanjikoohii" style="color:var(--clr-e6461a);font-size:120%;">Become a patron</a></p>
   <p>Already a patron? <?= kkPatreon::get_login_link('Link your account'); ?></p>
 <?php endif; ?>
   </div>

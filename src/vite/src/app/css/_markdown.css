@@ -59,7 +59,7 @@
 
 // blockquote
 .markdown blockquote {
-  @apply text-[#7f7d75] pl-[2em] italic;
+  @apply text-(--clr-7f7d75) pl-[2em] italic;
 }
 
 /* lists */
@@ -70,14 +70,14 @@
 /* images */
 .markdown img {
   padding: 3px;
-  border: 1px solid #c9c7b5;
+  border: 1px solid var(--clr-c9c7b5);
   display: block;
   margin: 0 auto;
   max-width: 100%;
   height: auto;
 }
 .markdown .img-block {
-  @apply border-[#d4cdba];
+  @apply border-(--clr-d4cdba);
 }
 
 /* tables */
@@ -89,12 +89,12 @@
 .markdown th {
   background-color: var(--clr-bg-1);
   border-top-width: 0;
-  color: #4f4e45;
+  color: var(--clr-4f4e45);
 }
 .markdown th,
 .markdown td {
-  border-top: 1px solid #e8e5ca;
-  border-right: 1px solid #e8e5ca;
+  border-top: 1px solid var(--clr-e8e5ca);
+  border-right: 1px solid var(--clr-e8e5ca);
   padding: 5px 10px;
   text-align: left;
 }

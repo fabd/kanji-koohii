@@ -10,18 +10,18 @@
 /* extend our base buttons */
 .ko-Btn--patreon {
   /* use Patreon's "Fiery Coral" https://www.patreon.com/brand */
-  --ko-btn-bg: #ff424d;
-  --ko-btn-border: #ff424d;
-  --ko-btn-text: #fff;
-  --ko-btn-bg-darker: #ff222f;
-  --ko-btn-hover-bg: #eb3741;
-  --ko-btn-hover-border: #eb3741;
+  --ko-btn-bg: var(--clr-ff424d);
+  --ko-btn-border: var(--clr-ff424d);
+  --ko-btn-text: var(--clr-ffffff);
+  --ko-btn-bg-darker: var(--clr-ff222f);
+  --ko-btn-hover-bg: var(--clr-eb3741);
+  --ko-btn-hover-border: var(--clr-eb3741);
 }
 
 .ko-Btn--paypal {
-  --ko-btn-bg: #40acda;
-  --ko-btn-border: #40acda;
-  --ko-btn-bg-darker: #27a2d7;
-  --ko-btn-hover-bg: #51b5df;
-  --ko-btn-hover-border: #51b5df;
+  --ko-btn-bg: var(--clr-40acda);
+  --ko-btn-border: var(--clr-40acda);
+  --ko-btn-bg-darker: var(--clr-27a2d7);
+  --ko-btn-hover-bg: var(--clr-51b5df);
+  --ko-btn-hover-border: var(--clr-51b5df);
 }

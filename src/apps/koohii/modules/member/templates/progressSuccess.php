@@ -22,7 +22,7 @@ kk_globals_put([
 Here you can explore all lessons in <strong><?= $sequenceName; ?></strong> - as well as check your overall progress.
 </p>
 
-<p class="text-[#cc2d7a] mb-4">
+<p class="text-(--clr-cc2d7a) mb-4">
   <i class="fas fa-info-circle mr-2"></i>
   Your progress through lessons is tracked by <?= link_to('adding flashcards', '@manage'); ?> (reviewing them is optional).
 </p>

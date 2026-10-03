@@ -24,7 +24,7 @@
 /* view pane styles */
 .views,
 .views p {
-  color: #3f3f3b;
+  color: var(--clr-3f3f3b);
 }
 .views .warning {
   color: red;
@@ -36,19 +36,19 @@
   cursor: pointer;
 }
 .selection-table .uiTabular tr.selected td {
-  background: #fdf9d2;
-  color: #9b9878;
+  background: var(--clr-fdf9d2);
+  color: var(--clr-9b9878);
 }
 
 /* Pencil edit */
 .edit-icon {
   padding: 4px 5px;
   border-radius: 3px 3px;
-  background-color: #f3f1dc;
+  background-color: var(--clr-f3f1dc);
   cursor: pointer;
 }
 .edit-icon:hover {
-  background-color: #478ac0;
+  background-color: var(--clr-478ac0);
 }
 
 /* Character Selection list on the confirmation views with "lifelike" flashcards. */
@@ -71,13 +71,13 @@
 }
 #mng-cards .cj-k {
   display: block;
-  color: #000;
+  color: var(--clr-000000);
   font-size: 72px;
   line-height: 1em;
   padding: 0 0 9px;
 }
 #mng-cards .n {
-  color: #888;
+  color: var(--clr-888888);
   font: Verdana, Arial, sans-serif;
 }
 

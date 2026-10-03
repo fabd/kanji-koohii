@@ -9,8 +9,8 @@
 :root {
   --main-px: 1.5rem;
 
-  --admin-bg: #f4f4f4;
-  --admin-text: #425065;
+  --admin-bg: var(--clr-f4f4f4);
+  --admin-text: var(--clr-425065);
 }
 
 .ko-Admin {
@@ -23,7 +23,7 @@
   // Generic admin styles (override koohii's)
   // -------------------------------------------------------------------- */
   h2 {
-    color: #7d7f85;
+    color: var(--clr-7d7f85);
   }
 }
 .ko-Admin-main {
@@ -32,7 +32,7 @@
 }
 
 .ko-AdminNav {
-  @apply bg-[#36557d] pt-3;
+  @apply bg-(--clr-36557d) pt-3;
   padding-left: var(--main-px);
   padding-right: var(--main-px);
 }
@@ -40,19 +40,19 @@
   padding-left: 25px;
   background: url(/backend/brick_go.png) no-repeat 0 50%;
   @apply font-bold text-[20px] mb-0;
-  color: #849dbe;
+  color: var(--clr-849dbe);
 }
 
 .ko-AdminNav-toprightItem {
   @apply inline-block ml-4;
-  @apply text-[#ededed] hover:text-[#fff] no-underline text-sm;
+  @apply text-(--clr-ededed) hover:text-(--clr-ffffff) no-underline text-sm;
 
   &.is-user {
     padding: 3px 8px;
-    @apply rounded-sm text-[#A9C8E1];
+    @apply rounded-sm text-(--clr-a9c8e1);
     padding-left: calc(8px + 16px + 4px);
-    background: #0004 url(/backend/user.png) no-repeat 6px 50%;
-    box-shadow: 0 0.5px 0 rgb(255 255 255 / 25%);
+    background: var(--clr-00000044) url(/backend/user.png) no-repeat 6px 50%;
+    box-shadow: 0 0.5px 0 var(--clr-ffffff40);
   }
 }
 
@@ -65,34 +65,34 @@
 
   a {
     @apply block;
-    @apply font-bold text-sm text-[#fff] no-underline hover:underline;
+    @apply font-bold text-sm text-(--clr-ffffff) no-underline hover:underline;
     padding: 4px 12px 3px;
-    background-color: #5c9fd6;
+    background-color: var(--clr-5c9fd6);
   }
 
   .is-active {
     background: var(--admin-bg);
-    color: #000c;
+    color: var(--clr-000000cc);
   }
 }
 
 .ko-AdminBox {
   --padding: 11px;
 
-  border: 1px solid #dddddd;
+  border: 1px solid var(--clr-dddddd);
   padding: var(--padding);
   margin-bottom: 1rem;
-  color: #222222;
+  color: var(--clr-222222);
 
   font-size: 1rem;
   line-height: calc(20 / 16 * 1rem);
 
-  background-color: #fff;
+  background-color: var(--clr-ffffff);
 
   /* default main title (large) for the main view */
   h2 {
     font: bold 18px/1.1em Arial, sans-serif;
-    color: #36557d;
+    color: var(--clr-36557d);
     text-transform: none;
   }
 
@@ -108,14 +108,14 @@
 
   li::marker {
     font-size: 1.25em;
-    color: #70c2f5;
+    color: var(--clr-70c2f5);
   }
 
   /* misc */
   samp,
   code {
-    background-color: #e0e2e5;
-    color: #444;
+    background-color: var(--clr-e0e2e5);
+    color: var(--clr-444444);
     font-size: 0.9em;
     padding: 0.1em 0.2em;
   }
@@ -125,15 +125,15 @@
 .ko-AdminBox-title {
   margin: calc(-1 * var(--padding)) calc(-1 * var(--padding)) 1rem;
   padding: 7px var(--padding) 7px;
-  background-color: #dddddd;
+  background-color: var(--clr-dddddd);
 }
 
 /* --------------------------------------------------------------------
 // Colorize print_r() output (cf. DocHelper.php)
 // -------------------------------------------------------------------- */
 pre {
-  background-color: #222;
-  color: #fff;
+  background-color: var(--clr-222222);
+  color: var(--clr-ffffff);
   @apply font-mono;
   font-size: 13px;
   line-height: 17px;
@@ -143,8 +143,8 @@ pre {
 
   &.info,
   &.printr {
-    background-color: #404e65;
-    color: #e4e5eb;
+    background-color: var(--clr-404e65);
+    color: var(--clr-e4e5eb);
   }
 
   /* --------------------------------------------------------------------
@@ -152,21 +152,21 @@ pre {
   // -------------------------------------------------------------------- */
   &.printr {
     .key {
-      color: #4df45b;
+      color: var(--clr-4df45b);
       font-weight: bold;
     }
 
     .arrow {
-      color: #888;
+      color: var(--clr-888888);
     }
   }
 
   .comment {
-    color: #888;
+    color: var(--clr-888888);
   }
 
   .var {
-    color: #c047cb;
+    color: var(--clr-c047cb);
   }
 
   .php {
@@ -174,7 +174,7 @@ pre {
   }
 
   .static {
-    color: #4ff;
+    color: var(--clr-44ffff);
     font-weight: bold;
   }
 
@@ -183,20 +183,20 @@ pre {
   }
 
   .string {
-    color: #4df45b;
+    color: var(--clr-4df45b);
   }
 
   .keyword {
-    color: #ccc;
+    color: var(--clr-cccccc);
   }
 
   /* PhpDoc */
   .phpdoc {
-    color: #49987c;
+    color: var(--clr-49987c);
   }
 
   .type {
-    color: #49987c;
+    color: var(--clr-49987c);
     font-weight: bold;
   }
 }

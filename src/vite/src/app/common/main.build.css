@@ -411,13 +411,13 @@ main {
  */
 a.cancel,
 a.delete {
-  color: red;
+  color: var(--clr-ff0000);
   padding: 1px;
 }
 a.cancel:hover,
 a.delete:hover {
-  color: white;
-  background: red;
+  color: var(--color-white);
+  background: var(--clr-ff0000);
 }
 
 a.proceed {
@@ -425,7 +425,7 @@ a.proceed {
   padding: 1px;
 }
 a.proceed:hover {
-  color: white;
+  color: var(--color-white);
   background: var(--clr-005cb1);
 }
 

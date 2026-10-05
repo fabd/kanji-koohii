@@ -19,7 +19,7 @@ $posts = $post ? [$post] : false;
     <h2>New Post</h2>
 
 <?php if (KK_ENV_DEV && $sf_response::$USE_DEV_SERVER === true): ?>
-  <div class="bg-[red] text-white p-4 mb-4 rounded-sm">
+  <div class="bg-(--clr-ff0000) text-white p-4 mb-4 rounded-sm">
     WARNING: VITE DEV SERVER may reload the page if editing & saving code!
   </div>
 <?php endif; ?>

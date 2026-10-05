@@ -15,7 +15,7 @@
 }
 
 #manage-cards em.note {
-  color: green;
+  color: var(--clr-008000);
   font-style: italic;
   display: inline-block;
   margin: 0 0 0 1em;
@@ -27,7 +27,7 @@
   color: var(--clr-3f3f3b);
 }
 .views .warning {
-  color: red;
+  color: var(--clr-ff0000);
   font-weight: bold;
 }
 

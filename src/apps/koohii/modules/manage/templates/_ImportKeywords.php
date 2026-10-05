@@ -3,7 +3,7 @@
 <div class="markdown">
   <p> To import customized keywords each line should contain the following two fields, separated by spaces (tabs, comma):</p>
   <ul>
-    <li><?= _CJ_U('kanji'); ?> <em style="color:green">or</em> index number ("frame number") <em style="color:green">or</em> <?= link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set'); ?> code.</li>
+    <li><?= _CJ_U('kanji'); ?> <em style="color:var(--clr-008000)">or</em> index number ("frame number") <em style="color:var(--clr-008000)">or</em> <?= link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set'); ?> code.</li>
     <li>Custom keyword.</li>
   </ul>
 

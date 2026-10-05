@@ -28,7 +28,7 @@
   a {
     font-style: normal;
     font-weight: normal;
-    color: blue;
+    color: var(--clr-0000ff);
     text-decoration: none;
   }
   a:hover {

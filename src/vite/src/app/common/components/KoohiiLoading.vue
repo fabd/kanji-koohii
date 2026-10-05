@@ -78,7 +78,7 @@ export default defineComponent({
   width: 40px;
   height: 40px;
   border: 4px solid var(--clr-c8e0ab);
-  border-top: 4px solid white;
+  border-top: 4px solid var(--color-white);
   border-radius: 50%;
 
   /* animation */

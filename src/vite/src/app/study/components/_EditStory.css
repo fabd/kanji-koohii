@@ -25,7 +25,7 @@
 .rtkframe {
   clear: both;
   position: relative;
-  background: white;
+  background: var(--color-white);
   padding: 15px;
 
   .framenum {

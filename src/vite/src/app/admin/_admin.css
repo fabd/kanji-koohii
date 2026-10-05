@@ -9,7 +9,7 @@
 :root {
   --main-px: 1.5rem;
 
-  --admin-bg: var(--clr-f4f4f4);
+  --admin-bg: var(--color-neutral-50);
   --admin-text: var(--clr-425065);
 }
 
@@ -45,7 +45,7 @@
 
 .ko-AdminNav-toprightItem {
   @apply inline-block ml-4;
-  @apply text-(--clr-ededed) hover:text-(--clr-ffffff) no-underline text-sm;
+  @apply text-neutral-100 hover:text-white no-underline text-sm;
 
   &.is-user {
     padding: 3px 8px;
@@ -65,7 +65,7 @@
 
   a {
     @apply block;
-    @apply font-bold text-sm text-(--clr-ffffff) no-underline hover:underline;
+    @apply font-bold text-sm text-white no-underline hover:underline;
     padding: 4px 12px 3px;
     background-color: var(--clr-5c9fd6);
   }
@@ -79,15 +79,15 @@
 .ko-AdminBox {
   --padding: 11px;
 
-  border: 1px solid var(--clr-dddddd);
+  border: 1px solid var(--color-neutral-200);
   padding: var(--padding);
   margin-bottom: 1rem;
-  color: var(--clr-222222);
+  color: var(--color-neutral-950);
 
   font-size: 1rem;
   line-height: calc(20 / 16 * 1rem);
 
-  background-color: var(--clr-ffffff);
+  background-color: var(--color-white);
 
   /* default main title (large) for the main view */
   h2 {
@@ -115,7 +115,7 @@
   samp,
   code {
     background-color: var(--clr-e0e2e5);
-    color: var(--clr-444444);
+    color: var(--color-neutral-800);
     font-size: 0.9em;
     padding: 0.1em 0.2em;
   }
@@ -125,15 +125,15 @@
 .ko-AdminBox-title {
   margin: calc(-1 * var(--padding)) calc(-1 * var(--padding)) 1rem;
   padding: 7px var(--padding) 7px;
-  background-color: var(--clr-dddddd);
+  background-color: var(--color-neutral-200);
 }
 
 /* --------------------------------------------------------------------
 // Colorize print_r() output (cf. DocHelper.php)
 // -------------------------------------------------------------------- */
 pre {
-  background-color: var(--clr-222222);
-  color: var(--clr-ffffff);
+  background-color: var(--color-neutral-950);
+  color: var(--color-white);
   @apply font-mono;
   font-size: 13px;
   line-height: 17px;
@@ -157,12 +157,12 @@ pre {
     }
 
     .arrow {
-      color: var(--clr-888888);
+      color: var(--color-neutral-500);
     }
   }
 
   .comment {
-    color: var(--clr-888888);
+    color: var(--color-neutral-500);
   }
 
   .var {
@@ -187,7 +187,7 @@ pre {
   }
 
   .keyword {
-    color: var(--clr-cccccc);
+    color: var(--color-neutral-300);
   }
 
   /* PhpDoc */

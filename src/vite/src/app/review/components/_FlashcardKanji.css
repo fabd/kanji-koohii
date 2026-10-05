@@ -60,7 +60,7 @@
     14px/1em Georgia,
     Times New Roman,
     sans-serif;
-  color: var(--clr-a0a0a0);
+  color: var(--color-neutral-400);
 }
 .d-strokec .kanji {
   font-size: 20pt;
@@ -75,16 +75,16 @@
   position: absolute;
   bottom: 0.5rem;
   right: 8px;
-  color: var(--clr-a0a0a0);
+  color: var(--color-neutral-400);
 }
 
 /* states :: default review mode */
 .uiFcState-0 .d-keyword {
-  color: var(--clr-000000);
+  color: var(--color-black);
 }
 .uiFcState-0 .d-kanji {
   visibility: hidden;
-  color: var(--clr-ffffff);
+  color: var(--color-white);
 }
 .uiFcState-0 .d-strokec {
   visibility: hidden;
@@ -97,11 +97,11 @@
 }
 
 .uiFcState-1 .d-keyword {
-  color: var(--clr-a0a0a0);
+  color: var(--color-neutral-400);
 }
 .uiFcState-1 .d-kanji {
   visibility: visible;
-  color: var(--clr-000000);
+  color: var(--color-black);
 }
 .uiFcState-1 .d-strokec {
   visibility: visible;
@@ -117,7 +117,7 @@
 }
 .uiFcState-0.is-reverse .d-kanji {
   visibility: visible;
-  color: var(--clr-000000);
+  color: var(--color-black);
 }
 .uiFcState-0.is-reverse .d-yomi {
   display: block;
@@ -139,18 +139,18 @@
   top: 0;
   width: 40px;
   height: 38px;
-  background: var(--clr-f2f2f2);
+  background: var(--color-neutral-50);
   text-decoration: none;
   text-align: center;
 }
 #uiFcMenu .fa {
   font-size: 18px;
   line-height: 38px;
-  color: var(--clr-9b9b9b);
+  color: var(--color-neutral-400);
 }
 #uiFcMenu:hover,
 #uiFcMenu.active {
-  background: var(--clr-e8e8e8);
+  background: var(--color-neutral-100);
 }
 
 /* Onyomi */
@@ -180,7 +180,7 @@
 }
 .uiFcState-1 .d-yomi .cloze u {
   display: inline;
-  color: var(--clr-000000);
+  color: var(--color-black);
 }
 
 .uiFcYomi {

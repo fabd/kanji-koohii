@@ -16,7 +16,7 @@
   padding: 0.5em 0.8em;
   background: var(--clr-4a9dd6);
   border-radius: 3px;
-  color: var(--clr-ffffff);
+  color: var(--color-white);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
@@ -43,7 +43,7 @@
   line-height: 16px;
 }
 #uiFcAjaxError a {
-  color: var(--clr-ffffff);
+  color: var(--color-white);
   font-weight: bold;
 }
 
@@ -68,7 +68,7 @@
   font:
     bold 14px/1em Arial,
     sans-serif;
-  color: var(--clr-ffffff);
+  color: var(--color-white);
   text-shadow: 0 -1px var(--clr-00000080);
   -webkit-border-radius: 5px;
   border-radius: 0 0 5px 5px;
@@ -165,7 +165,7 @@
     margin-right: 0.2em;
   }
   span {
-    color: var(--clr-454545);
+    color: var(--color-neutral-800);
   }
   .fa-check {
     color: var(--clr-27ae60);
@@ -197,7 +197,7 @@
     margin-top: 2px;
     border-bottom-width: 2px;
     background-color: var(--clr-7dc2f3);
-    color: var(--clr-ffffff);
+    color: var(--color-white);
   }
 }
 
@@ -302,11 +302,11 @@
   }
 
   #uiFcProgressBar .ko-FcStBox-hd {
-    color: var(--clr-dddddd);
+    color: var(--color-neutral-200);
     font-weight: normal;
   }
   #uiFcProgressBar .ko-FcStBox-hd em {
-    color: var(--clr-ffffff);
+    color: var(--color-white);
   }
 
   /* hide the keyboard shortcuts help */
@@ -342,7 +342,7 @@
   display: block;
   position: relative;
   margin: 0 auto; /* center within TD */
-  background: var(--clr-ffffff);
+  background: var(--color-white);
 
   /* card size */
 

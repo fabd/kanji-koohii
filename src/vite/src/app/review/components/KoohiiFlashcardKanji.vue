@@ -28,7 +28,7 @@
       <div class="d-keyword flex-grow-0">
         <div
           v-if="cardData.isAgain"
-          class="text-(--clr-aeaeae) text-md leading-none inline-block"
+          class="text-neutral-400 text-md leading-none inline-block"
           ><i class="fa fa-redo mr-2"></i
         ></div>
         <a

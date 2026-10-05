@@ -16,7 +16,7 @@
     text-align: left;
   }
   th {
-    color: var(--clr-757575);
+    color: var(--color-neutral-600);
     width: 30%;
     white-space: nowrap;
   }
@@ -109,7 +109,7 @@
   -webkit-tap-highlight-color: transparent;
   outline: none;
   --tooltip-bg: var(--clr-605c58);
-  --tooltip-fg: var(--clr-ffffff);
+  --tooltip-fg: var(--color-white);
 
   &::before {
     content: attr(data-tooltip);

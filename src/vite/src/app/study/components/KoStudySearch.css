@@ -47,11 +47,11 @@
 .ko-StudySearchDD-kanji {
   font-size: calc(24 / 16 * 1em);
   line-height: 1;
-  color: var(--clr-222222);
+  color: var(--color-neutral-950);
 }
 
 .ko-StudySearchDD-index {
   margin-left: auto;
   font-size: 0.875em;
-  color: var(--clr-888888);
+  color: var(--color-neutral-500);
 }

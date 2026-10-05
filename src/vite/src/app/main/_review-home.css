@@ -33,7 +33,7 @@
   bottom: 0;
   width: 100%;
   height: 4px;
-  background: var(--clr-cccccc);
+  background: var(--color-neutral-300);
 }
 .barchart-cols {
   margin: 0;
@@ -59,7 +59,7 @@
   transition: height 0.3s ease-out;
 }
 .barchart-cols .lbl {
-  color: var(--clr-929292);
+  color: var(--color-neutral-500);
   font-size: 12px;
   line-height: 19px;
   white-space: nowrap;
@@ -72,7 +72,7 @@
   margin-bottom: 4px;
 }
 .barchart-cols .lbl strong {
-  color: var(--clr-444444);
+  color: var(--color-neutral-800);
 }
 .barchart-cols .val {
   /*font-size:15px;*/
@@ -87,7 +87,7 @@
   margin-left: -24px;
 }
 .barchart-cols .bar.zero {
-  background: var(--clr-888888);
+  background: var(--color-neutral-500);
 }
 .barchart-cols .bar.zero .val {
   color: var(--clr-a5a59c);

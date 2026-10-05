@@ -87,14 +87,14 @@
 .ko-Btn {
   --ko-btn-bg: var(--color-btn-default);
   --ko-btn-border: var(--color-btn-default);
-  --ko-btn-text: var(--clr-ffffff);
+  --ko-btn-text: var(--color-white);
   --ko-btn-bg-darker: var(--clr-867f77);
-  --ko-btn-hover-text: var(--clr-ffffff);
+  --ko-btn-hover-text: var(--color-white);
   --ko-btn-hover-bg: var(--clr-88837e);
   --ko-btn-hover-border: var(--clr-88837e);
-  --ko-btn-disabled-bg: var(--clr-cdcdcd);
-  --ko-btn-disabled-border: var(--clr-cdcdcd);
-  --ko-btn-disabled-text: var(--clr-757575);
+  --ko-btn-disabled-bg: var(--color-neutral-300);
+  --ko-btn-disabled-border: var(--color-neutral-300);
+  --ko-btn-disabled-text: var(--color-neutral-600);
 
   /* (override) warm color for the default outline button */
   &.is-ghost {
@@ -115,9 +115,9 @@
   --ko-btn-hover-border: var(--clr-2b69c6);
   &.is-ghost {
     --ko-btn-border: var(--clr-3272d1);
-    --ko-btn-text: color-mix(in srgb, var(--clr-3272d1), var(--clr-000000) 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-000000) 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-000000) 10%);
+    --ko-btn-text: color-mix(in srgb, var(--clr-3272d1), var(--color-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--color-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--color-black) 10%);
   }
 }
 .ko-Btn--danger {
@@ -128,9 +128,9 @@
   --ko-btn-hover-border: var(--clr-e84646);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-danger);
-    --ko-btn-text: color-mix(in srgb, var(--color-btn-danger), var(--clr-000000) 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-000000) 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-000000) 10%);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-danger), var(--color-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--color-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--color-black) 10%);
   }
 }
 .ko-Btn--success {
@@ -141,9 +141,9 @@
   --ko-btn-hover-border: color-mix(in srgb, var(--color-btn-success), var(--clr-002200) 5%);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-success);
-    --ko-btn-text: color-mix(in srgb, var(--color-btn-success), var(--clr-000000) 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-000000) 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-000000) 10%);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-success), var(--color-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--color-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--color-black) 10%);
   }
 }
 
@@ -193,7 +193,7 @@
 /* used on legacy homepage, maybe reuse for something else later */
 /*  <button class="ko-Btn ko-Btn--push ko-Btn--xl">... */
 .ko-Btn--push {
-  --ko-btn-text: var(--clr-ffffff);
+  --ko-btn-text: var(--color-white);
   --ko-btn-bg: var(--clr-5cb85c);
   --ko-btn-hover-bg: var(--clr-5cb85c);
   border-radius: var(--border-radius-md);
@@ -229,7 +229,7 @@
 
   /* flashcard count on the button label */
   strong {
-    color: var(--clr-ffffff);
+    color: var(--color-white);
   }
 
   &:active,
@@ -278,12 +278,12 @@
 }
 .ko-ExBtn--danger {
   border-color: var(--color-btn-danger);
-  color: color-mix(in srgb, var(--color-btn-danger), var(--clr-000000) 5%);
+  color: color-mix(in srgb, var(--color-btn-danger), var(--color-black) 5%);
 }
 
 .ko-ExBtn--success {
   border-color: var(--color-btn-success);
-  color: color-mix(in srgb, var(--color-btn-success), var(--clr-000000) 5%);
+  color: color-mix(in srgb, var(--color-btn-success), var(--color-black) 5%);
 }
 
 

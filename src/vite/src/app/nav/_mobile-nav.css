@@ -54,7 +54,7 @@
 
 /* is-opened state & transition */
 .k-nav-menu-item.is-opened .k-nav-menu-item__label {
-  color: var(--clr-ffffff);
+  color: var(--color-white);
 }
 
 /* applies to a collapse container WITHOUT any margins or padding */

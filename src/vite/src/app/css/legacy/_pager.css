@@ -5,9 +5,9 @@
 
 .uiPager { margin:0; padding:0; float:right; }
 .uiPager li { float:left; list-style:none; background:none; border-right:1px solid var(--clr-e3e0c9); font:11px/1.1em Arial, sans-serif; padding:0; margin:0; }
-.uiPager li.active { background:none; font-weight:bold; padding:4px 8px; color:var(--clr-000000); }
-.uiPager li.disabled { background:none; font-weight:bold; padding:4px 8px; color:var(--clr-888888); }
-.uiPager li.etc { background:none; padding:4px 8px; color:var(--clr-888888); }
+.uiPager li.active { background:none; font-weight:bold; padding:4px 8px; color:var(--color-black); }
+.uiPager li.disabled { background:none; font-weight:bold; padding:4px 8px; color:var(--color-neutral-500); }
+.uiPager li.etc { background:none; padding:4px 8px; color:var(--color-neutral-500); }
 .uiPager li a { padding:4px 8px; float:left; }
 .uiPager li a:hover { background:var(--clr-e3e0c9); color:var(--clr-005cb1); text-decoration:underline; }
 .uiPager li.next { border:0; }

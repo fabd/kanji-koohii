@@ -52,11 +52,11 @@ export default defineComponent({
   display: inline-block;
   padding: 1px 4px;
   border-radius: 3px;
-  color: var(--clr-b7b7b7);
+  color: var(--color-neutral-400);
 }
 .ko-charsleft--invalid {
   background-color: var(--clr-ff7876);
-  color: var(--clr-ffffff);
+  color: var(--color-white);
   font-weight: bold;
 }
 .ko-charsleft--warning {

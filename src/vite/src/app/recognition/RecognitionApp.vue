@@ -19,7 +19,7 @@
             <textarea
               ref="input"
               v-model="japaneseText"
-              class="form-control w-full mb-2 p-2 min-h-[300px] border border-(--clr-dddddd) rounded-lg text-lg"
+              class="form-control w-full mb-2 p-2 min-h-[300px] border border-neutral-200 rounded-lg text-lg"
             ></textarea>
             <input
               type="submit"
@@ -184,7 +184,7 @@
                     :known-kanji="knownKanji"
                   />
                 </template>
-                <div v-else class="bg-(--clr-ffffff) mx-2 rounded-sm">
+                <div v-else class="bg-white mx-2 rounded-sm">
                   <ko-dict-empty :ucs-id="curKanji.ucsId" />
                 </div>
               </div>

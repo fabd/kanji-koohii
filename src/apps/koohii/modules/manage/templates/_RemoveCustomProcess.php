@@ -11,7 +11,7 @@
 
   <p> The following <strong><?= $count; ?></strong> <?= _CJ('kanji'); ?> flashcard(s) have been removed:</p>
   
-  <div style="background:var(--clr-e7f5cd);color:var(--clr-000000);padding:5px;margin:0 0 1em;">
+  <div style="background:var(--clr-e7f5cd);color:var(--color-black);padding:5px;margin:0 0 1em;">
 <?php
   $kanjis = [];
   foreach ($cards as $id) {

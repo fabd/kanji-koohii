@@ -9,6 +9,28 @@
 }
 
 /*---------------------------------------------------------------------
+  Pure grays (identical R, G, B), replaces Tailwind's default "neutral"
+
+  "static" so the variables are always output, as they are also used
+  with var() in Vue <style> blocks, which Tailwind does not scan.
+  ---------------------------------------------------------------------*/
+@theme static {
+  --color-black: #000000;
+  --color-neutral-950: #222222;
+  --color-neutral-900: #333333;
+  --color-neutral-800: #444444;
+  --color-neutral-700: #666666;
+  --color-neutral-600: #757575;
+  --color-neutral-500: #888888;
+  --color-neutral-400: #aaaaaa;
+  --color-neutral-300: #cccccc;
+  --color-neutral-200: #dddddd;
+  --color-neutral-100: #eeeeee;
+  --color-neutral-50: #f5f5f5;
+  --color-white: #ffffff;
+}
+
+/*---------------------------------------------------------------------
   See 
     https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources
   ---------------------------------------------------------------------*/

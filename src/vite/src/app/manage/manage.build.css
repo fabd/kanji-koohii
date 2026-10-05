@@ -71,13 +71,13 @@
 }
 #mng-cards .cj-k {
   display: block;
-  color: var(--clr-000000);
+  color: var(--color-black);
   font-size: 72px;
   line-height: 1em;
   padding: 0 0 9px;
 }
 #mng-cards .n {
-  color: var(--clr-888888);
+  color: var(--color-neutral-500);
   font: Verdana, Arial, sans-serif;
 }
 

@@ -1,6 +1,6 @@
 .ko-PctBar {
-  background-color: var(--clr-cdcdcd);
-  border-bottom: 3px solid var(--clr-a8a8a8);
+  background-color: var(--color-neutral-300);
+  border-bottom: 3px solid var(--color-neutral-400);
 
   --ko-pct-bar-h: 42px; /* height total with borders */
   --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);
@@ -17,7 +17,7 @@
   border-radius: var(--ko-pct-bar-radius);
   box-shadow: 1px 3px 5px 0px var(--clr-00000022); /* very subtle depth :) */
   background-color: var(--color-btn-success);
-  color: var(--clr-ffffff);
+  color: var(--color-white);
   font-size: 20px;
   text-align: right;
   line-height: var(--ko-pct-bar-fill-h);

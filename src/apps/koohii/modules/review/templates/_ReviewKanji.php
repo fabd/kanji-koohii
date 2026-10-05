@@ -48,7 +48,7 @@
     <div id="uiFcProgressBar">
       <div class="ko-FcStBox max-md:p-0 max-md:bg-transparent">
         <div class="pt-0 md:pt-6">
-          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']); ?>
+          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress']); ?>
         </div>
         <h3 class="ko-FcStBox-hd JSCardsCount">Cards left: <em>.</em></h3>
       </div>

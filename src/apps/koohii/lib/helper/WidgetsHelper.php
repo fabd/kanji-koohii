@@ -270,8 +270,6 @@ function ui_chart_vs(array $options)
  *
  * Options:
  * - optional attributes, as for the tag helpers
- * - "borderColor" with a proper css color value ("red" or "#f00") to override the default gray
- *   border from the stylesheet.
  *
  * @param array $bars     Associative array definitions for bars
  * @param int   $maxValue The max value corresponds to 100% of the bar width, related to each bar's value
@@ -280,17 +278,6 @@ function ui_chart_vs(array $options)
  */
 function ui_progress_bar(array $bars, int $maxValue, array $options = []): string
 {
-  // border color for the bar, override border-color from the stylesheet
-
-  $innerDivOptions = [];
-  if (isset($options['borderColor'])) {
-    // override background color on outer div
-    $options['style'] = "border-color:{$options['borderColor']};";
-    // override border-color on inner div
-    // $innerDivOptions['style'] = "border-color:{$options['borderColor']};";
-    unset($options['borderColor']);
-  }
-
   // merge widget class name
   $options['class'] = merge_html_classes($options['class'] ?? [], ['ko-StripedProgressBar']);
 
@@ -316,7 +303,7 @@ function ui_progress_bar(array $bars, int $maxValue, array $options = []): strin
   // span for the gloss overlay
   $spans[] = '<span class="x"></span>';
 
-  $content = content_tag('div', implode('', $spans), $innerDivOptions);
+  $content = content_tag('div', implode('', $spans));
 
   // generate the outer div
   return content_tag('div', $content, $options);

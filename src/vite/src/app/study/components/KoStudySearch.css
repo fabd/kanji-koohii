@@ -1,7 +1,7 @@
 .ko-StudySearchDD {
   --color-highlight: var(--clr-1d4ed8);
 
-  @apply mt-1 bg-white border border-gray-200 rounded-lg shadow-xl;
+  @apply mt-1 bg-white border border-(--clr-e5e7eb) rounded-lg shadow-xl;
   z-index: var(--z-overlay);
 
   /* slightly wider, and larger font size on smartphone */
@@ -18,7 +18,7 @@
 }
 
 .ko-StudySearchDD-item {
-  @apply px-4 py-2 border-b last:border-b-0 border-gray-100 transition-colors;
+  @apply px-4 py-2 border-b last:border-b-0 border-(--clr-f3f4f6) transition-colors;
 
   display: flex;
   align-items: center;

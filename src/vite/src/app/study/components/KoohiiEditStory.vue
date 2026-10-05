@@ -41,7 +41,7 @@
               <!-- view / edit story -->
 
               <div v-if="isEditing">
-                <div v-if="formHasErrors()" class="text-red-500 mb-4">
+                <div v-if="formHasErrors()" class="text-(--clr-fb2c36) mb-4">
                   <span v-html="formGetErrors()"></span>
                 </div>
 

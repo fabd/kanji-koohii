@@ -1,20 +1,66 @@
 /* ==================================================================== */
 /* COLORS */
 /* ==================================================================== */
-/*
-  Every RGB color used in the stylesheets and templates, named after its
-  hex value, eg. "#42413d" => var(--clr-42413d).
-
-  This is a first step towards dark mode: next, similar colors will be
-  merged and given semantic names.
-
-  Sorted by grays first (by lightness), then by hue, so similar colors
-  are side by side.
-
-  In Tailwind classes use the variable shorthand, eg. "bg-(--clr-42413d)".
-*/
 
 :root {
+  /* -------------------------------------------------------------------- */
+  /* Colors / Brand  (should match tailwind config) */
+  /* -------------------------------------------------------------------- */
+  --color-btn-default: var(--clr-8e8d8c);
+
+  /* main primary color (saturated blue/cyan) */
+  --color-btn-primary: var(--clr-3272d1);
+
+  /* main red color */
+  --color-btn-danger: var(--clr-ea5b5b); /*#d9534f; */
+
+  /* main green color */
+  --color-btn-success: var(--clr-58ac50); /*#6fa300;*/
+
+  /* utilities */
+  --color-mix-white: var(--clr-ffffff);
+
+  /* -------------------------------------------------------------------- */
+  /* Colors / Text */
+  /* -------------------------------------------------------------------- */
+  --color-text-body: var(--clr-42413d);
+
+  /* -------------------------------------------------------------------- */
+  /* Colors ( legacy sass stuff - needs renaming/merging ) */
+  /* -------------------------------------------------------------------- */
+  --clr-bg-body: var(--clr-f5efe5);
+  --clr-bg-1: var(--clr-e7e1d3); /* shaded background 1 */
+  --clr-bg-nav: var(--clr-ede8de); /* top nav background color */
+
+  --clr-bg-1m: var(--clr-ede8de); /* subdued background 1 (lighter) */
+
+  --clr-bg-gl: var(--clr-d7ebb4); /* green backgrounds & text */
+  --clr-bg-gd: var(--clr-4c7424);
+  /* widgets: table row (slightly brighter than CSS_BG_1) */
+  --clr-tbl-bg: var(--clr-f8f6ef);
+
+  --clr-srs-due: var(--clr-f7a247); /* text color for due/undue cards */
+  --clr-srs-undue: var(--clr-72c569);
+
+  --clr-danger-bg: var(--clr-d9534f);
+
+  --clr-lime-600: var(--clr-6fa300);
+
+  /* -------------------------------------------------------------------- */
+  /* MERGE WIP  */
+  /* -------------------------------------------------------------------- */
+  /*
+    Every RGB color used in the stylesheets and templates, named after its
+    hex value, eg. "#42413d" => var(--clr-42413d).
+
+    This is a first step towards dark mode: next, similar colors will be
+    merged and given semantic names.
+
+    Sorted by grays first (by lightness), then by hue, so similar colors
+    are side by side.
+
+    In Tailwind classes use the variable shorthand, eg. "bg-(--clr-42413d)".
+  */
   --clr-000000: #000000;
   --clr-202020: #202020;
   --clr-222222: #222222;

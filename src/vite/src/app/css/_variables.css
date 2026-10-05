@@ -32,49 +32,6 @@
   --button-font-size-xl: 18px;
 
   /* -------------------------------------------------------------------- */
-  /* Colors / Brand  (should match tailwind config) */
-  /* -------------------------------------------------------------------- */
-  --color-btn-default: var(--clr-8e8d8c);
-
-  /* main primary color (saturated blue/cyan) */
-  --color-btn-primary: var(--clr-3272d1);
-
-  /* main red color */
-  --color-btn-danger: var(--clr-ea5b5b); /*#d9534f; */
-
-  /* main green color */
-  --color-btn-success: var(--clr-58ac50); /*#6fa300;*/
-
-  /* utilities */
-  --color-mix-white: var(--clr-ffffff);
-
-  /* -------------------------------------------------------------------- */
-  /* Colors / Text */
-  /* -------------------------------------------------------------------- */
-  --color-text-body: var(--clr-42413d);
-
-  /* -------------------------------------------------------------------- */
-  /* Colors ( legacy sass stuff - needs renaming/merging ) */
-  /* -------------------------------------------------------------------- */
-  --clr-bg-body: var(--clr-f5efe5);
-  --clr-bg-1: var(--clr-e7e1d3); /* shaded background 1 */
-  --clr-bg-nav: var(--clr-ede8de); /* top nav background color */
-
-  --clr-bg-1m: var(--clr-ede8de); /* subdued background 1 (lighter) */
-
-  --clr-bg-gl: var(--clr-d7ebb4); /* green backgrounds & text */
-  --clr-bg-gd: var(--clr-4c7424);
-  /* widgets: table row (slightly brighter than CSS_BG_1) */
-  --clr-tbl-bg: var(--clr-f8f6ef);
-
-  --clr-srs-due: var(--clr-f7a247); /* text color for due/undue cards */
-  --clr-srs-undue: var(--clr-72c569);
-
-  --clr-danger-bg: var(--clr-d9534f);
-
-  --clr-lime-600: var(--clr-6fa300);
-
-  /* -------------------------------------------------------------------- */
   /* background color for the loading mask used in dialogs & ajax panels */
   /* -------------------------------------------------------------------- */
   --ko-loading-bg-white: var(--clr-ffffffcc);

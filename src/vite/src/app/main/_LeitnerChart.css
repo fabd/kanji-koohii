@@ -12,7 +12,7 @@
   width: 7px;
   height: 100%;
   left: 100%;
-  background-color: var(--clr-777777);
+  background-color: var(--clr-757575);
   transform: skew(0, -45deg);
   transform-origin: top left;
 }

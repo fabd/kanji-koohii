@@ -166,11 +166,11 @@ The SRS bar chart represents stacks of flashcards. Stacks are shown from left to
 
 <img class="img-block img-responsive" src="/koohii/help/help-review-srs.png" />
 
-The first box contains <span class="clr-srs-fail">**forgotten cards**</span> in red, and <span class="clr-srs-new">**new cards**</span> in blue. You can select the blue pile or use the button above, both will take you to a review of new cards.
+The first box contains <span class="text-srs-fail">**forgotten cards**</span> in red, and <span class="text-srs-new">**new cards**</span> in blue. You can select the blue pile or use the button above, both will take you to a review of new cards.
 
 The boxes labelled "1", "2", etc. represents cards that have been reviewed succesfully that many times _in a row_. Therefore the higher boxes represent better knowledge!
 
-Each of the review boxes comes in two piles of cards: <span class="clr-srs-due">**due cards**</span> in orange (ready to review), and <span class="clr-srs-undue">**undue cards**</span> in green (scheduled for review later).
+Each of the review boxes comes in two piles of cards: <span class="text-srs-due">**due cards**</span> in orange (ready to review), and <span class="text-srs-undue">**undue cards**</span> in green (scheduled for review later).
 
 #### Review Chart Colors
 

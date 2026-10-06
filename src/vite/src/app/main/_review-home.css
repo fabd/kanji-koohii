@@ -53,7 +53,7 @@
 .barchart-cols .bar {
   position: absolute;
   bottom: 0;
-  background: var(--clr-72c569);
+  background: var(--color-srs-undue);
   width: 75%;
   left: 12%;
   transition: height 0.3s ease-out;
@@ -77,7 +77,7 @@
 .barchart-cols .val {
   /*font-size:15px;*/
   white-space: nowrap;
-  color: var(--clr-72c569);
+  color: var(--color-srs-undue);
   font-weight: bold;
   position: absolute;
   top: -26px;

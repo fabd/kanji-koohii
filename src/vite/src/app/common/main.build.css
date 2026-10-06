@@ -59,20 +59,6 @@
   color: var(--clr-bg-gd);
 }
 
-/* SRS color coding used for text */
-.clr-srs-due {
-  color: var(--clr-srs-due);
-}
-.clr-srs-undue {
-  color: var(--clr-srs-undue);
-}
-.clr-srs-fail {
-  color: var(--clr-f1311a);
-}
-.clr-srs-new {
-  color: var(--clr-1c90d4);
-}
-
 /* gradients */
 .gdt-ocean-blue {
   background: var(--clr-deeef8); /* Old browsers */

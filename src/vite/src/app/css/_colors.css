@@ -11,11 +11,6 @@
   /* widgets: table row (slightly brighter than CSS_BG_1) */
   --clr-tbl-bg: var(--clr-stone-50);
 
-  --clr-srs-due: var(--clr-f7a247); /* text color for due/undue cards */
-  --clr-srs-undue: var(--clr-72c569);
-
-  --clr-danger-bg: var(--clr-d9534f);
-
   --clr-lime-600: var(--clr-6fa300);
 
   /* -------------------------------------------------------------------- */
@@ -78,7 +73,6 @@
   --clr-8e8d8c: #8e8d8c;
   --clr-adb2b6: #adb2b6;
   --clr-e0e2e5: #e0e2e5;
-  --clr-601008: #601008;
   --clr-880000: #880000;
   --clr-882222: #882222;
   --clr-9f0e0b: #9f0e0b;
@@ -90,9 +84,7 @@
   --clr-a94442: #a94442;
   --clr-c0392b: #c0392b;
   --clr-ff0000: #ff0000;
-  --clr-f1311a: #f1311a;
   --clr-d23c3c: #d23c3c;
-  --clr-d9534f: #d9534f;
   --clr-ff3333: #ff3333;
   --clr-ef5e4f: #ef5e4f;
   --clr-ea5b5b: #ea5b5b;
@@ -113,14 +105,12 @@
   --clr-ca4a15: #ca4a15;
   --clr-cb4b16: #cb4b16;
   --clr-e6461a: #e6461a;
-  --clr-d2633f: #d2633f;
   --clr-dd5d3a: #dd5d3a;
   --clr-f5ab8f: #f5ab8f;
   --clr-f0ddd4: #f0ddd4;
   --clr-ffd1c9: #ffd1c9;
   --clr-100800: #100800;
   --clr-221100: #221100;
-  --clr-502a00: #502a00;
   --clr-554433: #554433;
   --clr-935a00: #935a00;
   --clr-bb7404: #bb7404;
@@ -217,13 +207,10 @@
   --clr-44ffff: #44ffff;
   --clr-11364b: #11364b;
   --clr-0b486b: #0b486b;
-  --clr-3d83ac: #3d83ac;
-  --clr-1c90d4: #1c90d4;
   --clr-6a8898: #6a8898;
   --clr-40acda: #40acda;
   --clr-40a8e5: #40a8e5;
   --clr-51b5df: #51b5df;
-  --clr-0c2b5a: #0c2b5a;
   --clr-0a3e62: #0a3e62;
   --clr-395269: #395269;
   --clr-404e65: #404e65;
@@ -247,7 +234,6 @@
   --clr-4faeec: #4faeec;
   --clr-50abeb: #50abeb;
   --clr-849dbe: #849dbe;
-  --clr-79b8e9: #79b8e9;
   --clr-70c2f5: #70c2f5;
   --clr-7dc2f3: #7dc2f3;
   --clr-99bddb: #99bddb;
@@ -312,9 +298,7 @@
   --clr-ffffffbf: rgba(255, 255, 255, 0.75);
   --clr-ffffffcc: #ffffffcc;
   --clr-c39a5cbd: #c39a5cbd;
-  --clr-ff982a6e: #ff982a6e;
   --clr-f5efe580: #f5efe580;
   --clr-aaa5824d: rgba(170, 165, 130, 0.3);
-  --clr-32b1fc4d: #32b1fc4d;
   --clr-337ab740: #337ab740;
 }

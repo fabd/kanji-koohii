@@ -31,11 +31,10 @@
 
     &.is-new,
     &:focus.is-new {
-      /* color.change(#40a8e5, $alpha: 0.3); */
-      background-color: var(--clr-32b1fc4d);
+      background-color: color-mix(in srgb, var(--color-srs-new) 30%, transparent);
     }
     &.is-due {
-      background-color: var(--clr-ff982a6e); /*color.change(#f7a247, $alpha: 0.3); */
+      background-color: color-mix(in srgb, var(--color-srs-due) 43%, transparent);
     }
   }
 }

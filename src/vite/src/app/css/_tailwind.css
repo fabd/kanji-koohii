@@ -53,6 +53,12 @@
   --color-fg-invalid: var(--clr-a94442);
   --color-border-invalid: var(--clr-a94442);
 
+  /* SRS status colors, variants are derived with color-mix() */
+  --color-srs-fail: var(--clr-f86464); /* red */
+  --color-srs-due: var(--clr-f7a247); /* orange */
+  --color-srs-undue: var(--clr-72c569); /* green, aka "fresh" */
+  --color-srs-new: var(--clr-40a8e5); /* blue */
+
   /* navigation */
   --color-bg-nav: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
 

@@ -228,27 +228,25 @@
     margin-top: 2px;
   }
 
-  /* srs button colors */
+  /* srs button colors, derived from the SRS status color (--ko-srs) */
+  &.is-srs-due,
+  &.is-srs-failed,
+  &.is-srs-new {
+    --ko-btn-text: color-mix(in srgb, var(--ko-srs), var(--clr-black) 65%);
+    --ko-btn-hover-text: var(--ko-btn-text);
+    --ko-btn-bg: var(--ko-srs);
+    --ko-btn-hover-bg: var(--ko-btn-bg);
+    border-bottom-color: color-mix(in srgb, var(--ko-srs), var(--clr-black) 25%);
+  }
   &.is-srs-due {
-    --ko-btn-text: var(--clr-502a00);
-    --ko-btn-hover-text: var(--clr-502a00);
-    --ko-btn-bg: var(--clr-f7a247);
-    --ko-btn-hover-bg: var(--clr-f7a247);
-    border-bottom-color: var(--clr-d2633f);
+    --ko-srs: var(--color-srs-due);
   }
   &.is-srs-failed {
-    --ko-btn-text: var(--clr-601008);
-    --ko-btn-hover-text: var(--clr-601008);
-    --ko-btn-bg: var(--clr-f86464);
-    --ko-btn-hover-bg: var(--clr-f86464);
-    border-bottom-color: var(--clr-d2633f);
+    --ko-srs: var(--color-srs-fail);
   }
   &.is-srs-new {
-    --ko-btn-text: var(--clr-0c2b5a);
-    --ko-btn-hover-text: var(--clr-0c2b5a);
-    --ko-btn-bg: var(--clr-79b8e9);
-    --ko-btn-hover-bg: var(--clr-79b8e9);
-    border-bottom-color: var(--clr-3d83ac);
+    --ko-srs: var(--color-srs-new);
+    --ko-btn-bg: color-mix(in srgb, var(--ko-srs), var(--clr-white) 30%);
   }
 }
 

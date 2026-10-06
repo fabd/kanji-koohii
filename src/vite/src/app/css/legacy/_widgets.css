@@ -56,13 +56,13 @@
   background: var(--clr-6fa300);
   background: linear-gradient(to bottom, var(--clr-6fa300) 0%, var(--clr-649300) 100%);
 
-  color: var(--color-white);
+  color: var(--clr-white);
   font: bold 15px/34px Arial, sans-serif;
   height: 34px;
   text-shadow: 0 -1px var(--clr-00000080);
 }
 .uiIBtn:hover {
-  color: var(--color-white);
+  color: var(--clr-white);
 }
 .uiIBtnDefault:hover {
   box-shadow: 0 1px 2px 1px var(--clr-00000033);
@@ -110,10 +110,10 @@
 .uiChartVs p .ttl {
   display: block;
   font: bold italic 14px/1em Georgia, serif;
-  color: var(--color-neutral-800);
+  color: var(--clr-neutral-800);
 }
 .uiChartVs p .zero {
-  color: var(--color-neutral-400);
+  color: var(--clr-neutral-400);
 } /* gray out title */
 .uiChartVs em {
   font-weight: normal;
@@ -130,7 +130,7 @@
   position: absolute;
   bottom: 5px;
   height: 50px;
-  border-bottom: 8px solid var(--color-white);
+  border-bottom: 8px solid var(--clr-white);
   box-shadow: 0 2px 5px var(--clr-0000004d);
 }
 .uiChartVs a.pct {
@@ -150,7 +150,7 @@
   position: absolute;
   top: 7px;
   font: 27px/1em Georgia, serif;
-  color: var(--color-black);
+  color: var(--clr-black);
   text-shadow: 0 1px var(--clr-ffffff66);
 }
 .uiChartVs .left .pct span {
@@ -193,7 +193,7 @@
 
     background-attachment: fixed;
     background-image: repeating-linear-gradient(
-      -45deg, var(--color-neutral-950), var(--color-neutral-950) 10px, var(--color-neutral-800) 10px, var(--color-neutral-800) 20px
+      -45deg, var(--clr-neutral-950), var(--clr-neutral-950) 10px, var(--clr-neutral-800) 10px, var(--clr-neutral-800) 20px
     );
   }
 
@@ -220,7 +220,7 @@
   /* the gloss effect overlay */
   span.x {
     @apply absolute left-0 top-0 w-full h-full;
-    background: linear-gradient( var(--clr-b7d468), var(--color-neutral-700) 9px, var(--color-neutral-950) 9px, var(--color-neutral-800) 20px );
+    background: linear-gradient( var(--clr-b7d468), var(--clr-neutral-700) 9px, var(--clr-neutral-950) 9px, var(--clr-neutral-800) 20px );
     border-radius: var(--border-radius);
     opacity: 0.5;
   }
@@ -265,6 +265,6 @@
 }
 .side-menu li.active a {
   border-left: 3px solid var(--clr-88cc88);
-  color: var(--color-neutral-950);
+  color: var(--clr-neutral-950);
   font-weight: bold;
 }

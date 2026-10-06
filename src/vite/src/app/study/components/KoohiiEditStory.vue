@@ -129,7 +129,7 @@
                   </template>
 
                   <template v-else>
-                    <div class="text-neutral-500">[ click here to enter your story ]</div>
+                    <div class="text-(--clr-neutral-500)">[ click here to enter your story ]</div>
                   </template>
                 </div>
 

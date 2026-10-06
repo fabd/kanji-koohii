@@ -1,7 +1,7 @@
 .ko-StudySearchDD {
   --color-highlight: var(--clr-1d4ed8);
 
-  @apply mt-1 bg-white border border-(--clr-e5e7eb) rounded-lg shadow-xl;
+  @apply mt-1 bg-(--clr-white) border border-(--clr-e5e7eb) rounded-lg shadow-xl;
   z-index: var(--z-overlay);
 
   /* slightly wider, and larger font size on smartphone */
@@ -47,11 +47,11 @@
 .ko-StudySearchDD-kanji {
   font-size: calc(24 / 16 * 1em);
   line-height: 1;
-  color: var(--color-neutral-950);
+  color: var(--clr-neutral-950);
 }
 
 .ko-StudySearchDD-index {
   margin-left: auto;
   font-size: 0.875em;
-  color: var(--color-neutral-500);
+  color: var(--clr-neutral-500);
 }

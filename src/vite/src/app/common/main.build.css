@@ -252,7 +252,7 @@ main {
 /* Site news (posts using markdown) */
 .ko-SiteNews .markdown h2,
 .ko-SiteNews .markdown h3 {
-  color: var(--color-black);
+  color: var(--clr-black);
   font-weight: normal;
   font-size: 1.2em;
   margin-bottom: 1em;
@@ -306,7 +306,7 @@ main {
 .ko-SiteNews-body {
   margin: 0 0 25px;
   padding: 0 0 2em; /*border-bottom:1px solid var(--clr-bg-1);*/
-  color: var(--color-neutral-900);
+  color: var(--clr-neutral-900);
   clear: both;
 }
 
@@ -344,7 +344,7 @@ main {
     }
   }
   span {
-    color: var(--color-neutral-800);
+    color: var(--clr-neutral-800);
   }
 }
 
@@ -353,7 +353,7 @@ main {
 /* ---------------------------- */
 
 .actionconfirmationmessage {
-  border: 1px solid var(--color-neutral-300);
+  border: 1px solid var(--clr-neutral-300);
   padding: 10px;
   background: var(--clr-ffffcc);
   margin: 1em 0;
@@ -416,7 +416,7 @@ a.delete {
 }
 a.cancel:hover,
 a.delete:hover {
-  color: var(--color-white);
+  color: var(--clr-white);
   background: var(--clr-ff0000);
 }
 
@@ -425,17 +425,17 @@ a.proceed {
   padding: 1px;
 }
 a.proceed:hover {
-  color: var(--color-white);
+  color: var(--clr-white);
   background: var(--clr-005cb1);
 }
 
 a.subdued {
-  color: var(--color-neutral-700);
+  color: var(--clr-neutral-700);
   padding: 1px;
 }
 a:hover.subdued {
-  background: var(--color-neutral-700);
-  color: var(--color-white);
+  background: var(--clr-neutral-700);
+  color: var(--clr-white);
   padding: 1px;
 }
 
@@ -457,7 +457,7 @@ a:hover.subdued {
   /* small "learned" tag in the Restudy List */
   &-learned {
     @apply px-[.4em] py-[.3em] rounded-sm;
-    @apply bg-(--clr-6cbe6b) text-white;
+    @apply bg-(--clr-6cbe6b) text-(--clr-white);
   }
 }
 

@@ -18,7 +18,7 @@
   --color-btn-success: var(--clr-58ac50); /*#6fa300;*/
 
   /* utilities */
-  --color-mix-white: var(--color-white);
+  --color-mix-white: var(--clr-white);
 
   /* -------------------------------------------------------------------- */
   /* Colors / Text */
@@ -47,6 +47,30 @@
   --clr-lime-600: var(--clr-6fa300);
 
   /* -------------------------------------------------------------------- */
+  /* Palette */
+  /* -------------------------------------------------------------------- */
+  /*
+    Non-semantic color scales. These are plain CSS variables, not Tailwind
+    theme colors: semantic colors go in the Tailwind theme, and refer to
+    these, eg. var(--clr-neutral-600) or in Tailwind "text-(--clr-neutral-600)".
+  */
+
+  /* pure grays (identical R, G, B) */
+  --clr-black: #000000;
+  --clr-neutral-950: #222222;
+  --clr-neutral-900: #333333;
+  --clr-neutral-800: #444444;
+  --clr-neutral-700: #666666;
+  --clr-neutral-600: #757575;
+  --clr-neutral-500: #888888;
+  --clr-neutral-400: #aaaaaa;
+  --clr-neutral-300: #cccccc;
+  --clr-neutral-200: #dddddd;
+  --clr-neutral-100: #eeeeee;
+  --clr-neutral-50: #f5f5f5;
+  --clr-white: #ffffff;
+
+  /* -------------------------------------------------------------------- */
   /* MERGE WIP  */
   /* -------------------------------------------------------------------- */
   /*
@@ -54,10 +78,7 @@
     hex value, eg. "#42413d" => var(--clr-42413d).
 
     This is a first step towards dark mode: next, similar colors will be
-    merged and given semantic names.
-
-    Pure grays (identical R, G, B) have been merged into the "neutral"
-    scale in _tailwind.css (eg. var(--color-neutral-600), text-neutral-600).
+    merged into the palette above, then given semantic names.
 
     Sorted by near-grays first (by lightness), then by hue, so similar
     colors are side by side.

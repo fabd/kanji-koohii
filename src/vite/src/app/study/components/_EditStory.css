@@ -3,7 +3,7 @@
 /* self story */
 .ko-MyStory {
   position: relative;
-  background: var(--color-white);
+  background: var(--clr-white);
   --ko-loading-bg: var(--ko-loading-bg-white);
   border: 1px solid var(--clr-e8e5c9);
   box-shadow: 0 1px 2px 0px var(--clr-aaa5824d);
@@ -13,11 +13,11 @@
     height: 23px;
     overflow: hidden;
     clear: both;
-    background: var(--color-white);
+    background: var(--clr-white);
     background: linear-gradient(
       to bottom,
-      var(--color-white) 0%,
-      var(--color-neutral-50) 100%
+      var(--clr-white) 0%,
+      var(--clr-neutral-50) 100%
     );
   }
 }
@@ -25,7 +25,7 @@
 .rtkframe {
   clear: both;
   position: relative;
-  background: var(--color-white);
+  background: var(--clr-white);
   padding: 15px;
 
   .framenum {
@@ -41,7 +41,7 @@
     line-height: 1em;
   }
   .strokecount {
-    color: var(--color-neutral-500);
+    color: var(--clr-neutral-500);
   }
   .keyword {
     font:
@@ -56,11 +56,11 @@
 
   .favstory {
     margin: 1em 0 0;
-    color: var(--color-neutral-700);
+    color: var(--clr-neutral-700);
     font-style: italic;
     i {
       margin-right: 0.5em;
-      color: var(--color-neutral-700);
+      color: var(--clr-neutral-700);
     }
   }
 }
@@ -70,7 +70,7 @@
   height: auto;
   min-height: 100px;
   &:hover {
-    background: var(--color-neutral-50);
+    background: var(--clr-neutral-50);
   }
 }
 
@@ -79,7 +79,7 @@
   height: 153px;
   padding: 5px;
   border: 1px solid var(--clr-e8e5c9);
-  background: var(--color-neutral-50);
+  background: var(--clr-neutral-50);
   box-sizing: border-box;
 }
 
@@ -126,15 +126,15 @@
 .ko-MyStory .onhover {
   span {
     visibility: hidden;
-    color: var(--color-white);
+    color: var(--clr-white);
   }
 
   &:hover {
     background: none;
     span {
       visibility: visible;
-      color: var(--color-black);
-      background: var(--color-white);
+      color: var(--clr-black);
+      background: var(--clr-white);
     }
   }
 }
@@ -163,7 +163,7 @@
 
   .ko-MyStoryView-textarea {
     /* make the story edit area visible for touch */
-    background: var(--color-neutral-50);
+    background: var(--clr-neutral-50);
     border-radius: 5px;
   }
 }
@@ -174,6 +174,6 @@
   border-radius: 3px 3px;
 
   &:hover {
-    background: var(--color-neutral-100);
+    background: var(--clr-neutral-100);
   }
 }

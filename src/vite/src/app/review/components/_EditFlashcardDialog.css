@@ -16,7 +16,7 @@
     text-align: left;
   }
   th {
-    color: var(--color-neutral-600);
+    color: var(--clr-neutral-600);
     width: 30%;
     white-space: nowrap;
   }
@@ -42,7 +42,7 @@
 
   .is-spinner {
     border: 2px solid var(--clr-ffffff4d);
-    border-top-color: var(--color-white);
+    border-top-color: var(--clr-white);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
@@ -83,7 +83,7 @@
   left: 50%;
   transform: translateX(-50%) translateY(-100px);
   background-color: var(--clr-73ac50);
-  color: var(--color-white);
+  color: var(--clr-white);
   padding: 16px 32px;
   border-radius: 8px;
   box-shadow: 0 4px 12px var(--clr-00000033);
@@ -109,7 +109,7 @@
   -webkit-tap-highlight-color: transparent;
   outline: none;
   --tooltip-bg: var(--clr-605c58);
-  --tooltip-fg: var(--color-white);
+  --tooltip-fg: var(--clr-white);
 
   &::before {
     content: attr(data-tooltip);

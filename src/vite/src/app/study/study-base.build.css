@@ -18,7 +18,7 @@
 .edition {
   padding-left: 0.5em;
   font-size: 0.83em; /* 10px */
-  color: var(--color-neutral-400);
+  color: var(--clr-neutral-400);
 }
 
 #rtkmain {
@@ -168,7 +168,7 @@
 
 .sharedstory.rtkframe {
   padding: 8px 15px 5px;
-  border-bottom: 1px solid var(--color-neutral-300);
+  border-bottom: 1px solid var(--clr-neutral-300);
 }
 /*.sharedstory.rtkframe strong  { font-weight:bold; }*/
 /*.sharedstory.rtkframe em  { font-weight:normal; font-style:italic; }*/
@@ -188,7 +188,7 @@
 
   .lastmodified,
   .sharedstory_btn {
-    color: var(--color-neutral-400);
+    color: var(--clr-neutral-400);
   }
 }
 
@@ -210,7 +210,7 @@
 
 /* desktop :hover */
 .sharedstory_btn:hover {
-  color: var(--color-neutral-800);
+  color: var(--clr-neutral-800);
   text-decoration: none;
 }
 .sharedstory_btn:hover .fa-exclamation,
@@ -242,7 +242,7 @@
 /* big kanji on desktop, line up with framenum on mobile */
 .mystories-kanji {
   float: left;
-  color: var(--color-black);
+  color: var(--clr-black);
   text-align: center;
   line-height: 1em;
   font-size: 1.5em;
@@ -256,7 +256,7 @@
 .mystories-hd {
   display: table; /*width:100%;*/
   margin: 0 0 0.7em;
-  color: var(--color-neutral-800);
+  color: var(--clr-neutral-800);
 }
 .mystories-hd .td {
   display: table-cell;
@@ -264,7 +264,7 @@
 .mystories-hd_fn {
   width: 1%;
   padding: 0.5em 0.25em 0;
-  color: var(--color-neutral-600);
+  color: var(--clr-neutral-600);
   vertical-align: top;
 }
 .mystories-hd_kw {

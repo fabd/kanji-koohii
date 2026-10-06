@@ -12,7 +12,7 @@
   width: 7px;
   height: 100%;
   left: 100%;
-  background-color: var(--color-neutral-600);
+  background-color: var(--clr-neutral-600);
   transform: skew(0, -45deg);
   transform-origin: top left;
 }
@@ -21,7 +21,7 @@
   width: 100%;
   height: 7px;
   bottom: 100%;
-  background-color: var(--color-neutral-400);
+  background-color: var(--clr-neutral-400);
   transform: skew(-45deg);
   transform-origin: bottom right;
 }
@@ -32,7 +32,7 @@
   left: 11%;
   bottom: 0;
   width: 39%;
-  background: var(--color-neutral-50);
+  background: var(--clr-neutral-50);
 }
 .box .bar2 {
   position: absolute;
@@ -65,7 +65,7 @@
   top: -28px;
   width: 100%;
   padding: 0;
-  color: var(--color-neutral-800);
+  color: var(--clr-neutral-800);
   font-size: 14px;
   font-weight: normal;
   white-space: nowrap;

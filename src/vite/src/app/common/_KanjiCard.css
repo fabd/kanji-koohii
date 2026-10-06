@@ -18,9 +18,9 @@
   background: linear-gradient(
     148.74deg,
     var(--clr-f8f7f6) 0%,
-    var(--color-neutral-50) 80%,
-    var(--color-white) 93%,
-    var(--color-neutral-100) 100%
+    var(--clr-neutral-50) 80%,
+    var(--clr-white) 93%,
+    var(--clr-neutral-100) 100%
   );
 
   border: 0;

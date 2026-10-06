@@ -34,7 +34,7 @@ $anonFormerCount = PatreonMembersPeer::countFormerAnonymous();
       <!-- Patron Rows -->
       <div class="">
         <?php foreach ($activePatrons as $patron): ?>
-        <div class="ko-PatronsList-row flex justify-between items-center transition-colors hover:bg-white/50">
+        <div class="ko-PatronsList-row flex justify-between items-center transition-colors hover:bg-(--clr-white)/50">
           <span class="font-medium"><?= $patron['full_name'] ?></span>
           <span class="text-sm font-mono opacity-70"><?= date('M Y', strtotime($patron['pledge_start'])) ?></span>
         </div>
@@ -43,7 +43,7 @@ $anonFormerCount = PatreonMembersPeer::countFormerAnonymous();
 
       <!-- Anonymous Footer -->
       <?php if ($anonActiveCount > 0): ?>
-      <div class="ko-PatronsList-footer px-6 py-6 text-center italic opacity-60 text-md bg-white/20">
+      <div class="ko-PatronsList-footer px-6 py-6 text-center italic opacity-60 text-md bg-(--clr-white)/20">
         And <strong><?= $anonActiveCount ?></strong> anonymous patrons
       </div>
       <?php endif; ?>

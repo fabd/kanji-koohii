@@ -16,7 +16,7 @@
 
   --ko-srs-iso-w: 1.8em;
   --ko-srs-iso-h: var(--ko-srs-iso-w);
-  --ko-srs-iso-bg: var(--color-neutral-400);
+  --ko-srs-iso-bg: var(--clr-neutral-400);
 
   display: inline-block;
 

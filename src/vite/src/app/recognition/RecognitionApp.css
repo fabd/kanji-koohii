@@ -22,9 +22,9 @@
   @apply p-4;
   font-size: 24px;
   line-height: 1.6em;
-  background: var(--color-white);
+  background: var(--clr-white);
   border-radius: var(--rounded);
-  color: var(--color-neutral-800);
+  color: var(--clr-neutral-800);
   a {
     font-style: normal;
     font-weight: normal;
@@ -32,8 +32,8 @@
     text-decoration: none;
   }
   a:hover {
-    background: var(--color-white);
-    color: var(--color-black);
+    background: var(--clr-white);
+    color: var(--clr-black);
   }
 
   .cj-k {
@@ -56,7 +56,7 @@
 .ko-Recognition-k:hover span {
   @apply rounded-sm cursor-pointer;
   background: var(--clr-faefc6);
-  color: var(--color-black);
+  color: var(--clr-black);
 }
 .ko-Recognition-k.is-known span {
   color: var(--clr-0000ff);
@@ -76,11 +76,11 @@
 }
 .ko-RecognitionPane-h3 {
   @apply text-sm font-sans uppercase;
-  color: var(--color-neutral-600);
+  color: var(--clr-neutral-600);
 }
 
 .ko-RecognitionPane-kanji {
-  @apply block bg-white text-[55px];
+  @apply block bg-(--clr-white) text-[55px];
   @apply flex; /* flex auto margins trick */
   border-radius: var(--rounded);
   font-size: 55px;

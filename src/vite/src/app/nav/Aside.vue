@@ -134,7 +134,7 @@ export default defineComponent({
   font-size: 24px;
   text-align: center;
   vertical-align: middle;
-  color: var(--color-neutral-700);
+  color: var(--clr-neutral-700);
   cursor: pointer;
 }
 .aside_close_icon {
@@ -186,7 +186,7 @@ export default defineComponent({
   right: 0;
   bottom: 0;
   z-index: calc(var(--z-aside) - 1);
-  background-color: var(--color-black);
+  background-color: var(--clr-black);
 
   opacity: 0.5;
   transition: opacity 0.3s ease;

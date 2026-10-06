@@ -60,7 +60,7 @@
     14px/1em Georgia,
     Times New Roman,
     sans-serif;
-  color: var(--color-neutral-400);
+  color: var(--clr-neutral-400);
 }
 .d-strokec .kanji {
   font-size: 20pt;
@@ -75,16 +75,16 @@
   position: absolute;
   bottom: 0.5rem;
   right: 8px;
-  color: var(--color-neutral-400);
+  color: var(--clr-neutral-400);
 }
 
 /* states :: default review mode */
 .uiFcState-0 .d-keyword {
-  color: var(--color-black);
+  color: var(--clr-black);
 }
 .uiFcState-0 .d-kanji {
   visibility: hidden;
-  color: var(--color-white);
+  color: var(--clr-white);
 }
 .uiFcState-0 .d-strokec {
   visibility: hidden;
@@ -97,11 +97,11 @@
 }
 
 .uiFcState-1 .d-keyword {
-  color: var(--color-neutral-400);
+  color: var(--clr-neutral-400);
 }
 .uiFcState-1 .d-kanji {
   visibility: visible;
-  color: var(--color-black);
+  color: var(--clr-black);
 }
 .uiFcState-1 .d-strokec {
   visibility: visible;
@@ -117,7 +117,7 @@
 }
 .uiFcState-0.is-reverse .d-kanji {
   visibility: visible;
-  color: var(--color-black);
+  color: var(--clr-black);
 }
 .uiFcState-0.is-reverse .d-yomi {
   display: block;
@@ -139,18 +139,18 @@
   top: 0;
   width: 40px;
   height: 38px;
-  background: var(--color-neutral-50);
+  background: var(--clr-neutral-50);
   text-decoration: none;
   text-align: center;
 }
 #uiFcMenu .fa {
   font-size: 18px;
   line-height: 38px;
-  color: var(--color-neutral-400);
+  color: var(--clr-neutral-400);
 }
 #uiFcMenu:hover,
 #uiFcMenu.active {
-  background: var(--color-neutral-100);
+  background: var(--clr-neutral-100);
 }
 
 /* Onyomi */
@@ -180,7 +180,7 @@
 }
 .uiFcState-1 .d-yomi .cloze u {
   display: inline;
-  color: var(--color-black);
+  color: var(--clr-black);
 }
 
 .uiFcYomi {

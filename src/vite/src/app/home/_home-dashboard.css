@@ -73,7 +73,7 @@
   padding-right: 1rem; /* breathing room between cards and scrollbar */
 
   --trackColor: var(--clr-c7c3ba);
-  --thumbColor: var(--color-neutral-50);
+  --thumbColor: var(--clr-neutral-50);
   --trackRadius: 6px;
 
   /* Works on Firefox */
@@ -136,27 +136,27 @@
   /* ----- @include card-tag-colors(); ----- */
   /* classes that match getColorForCard() in JS */
   &.is-new {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-new);
   }
   &.is-res {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-res);
   }
   &.is-L1 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L1);
   }
   &.is-L2 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L2);
   }
   &.is-L3 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L3);
   }
   &.is-L4 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L4);
   }
   /* --------------------------------------- */
@@ -255,9 +255,9 @@
   background: linear-gradient(
     148.74deg,
     var(--clr-f8f7f6) 0%,
-    var(--color-neutral-50) 80%,
-    var(--color-white) 93%,
-    var(--color-neutral-100) 100%
+    var(--clr-neutral-50) 80%,
+    var(--clr-white) 93%,
+    var(--clr-neutral-100) 100%
   );
 
   border: 0;
@@ -271,7 +271,7 @@
 .ko-KanjiCard-idx,
 .ko-KanjiCard-kwd {
   @apply font-serif;
-  color: var(--color-neutral-900);
+  color: var(--clr-neutral-900);
   font-size: 15px;
   line-height: calc(19 / 15 * 1em);
 }
@@ -305,27 +305,27 @@
   /* ----- @include card-tag-colors(); ----- */
   /* classes that match getColorForCard() in JS */
   &.is-new {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-new);
   }
   &.is-res {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-res);
   }
   &.is-L1 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L1);
   }
   &.is-L2 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L2);
   }
   &.is-L3 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L3);
   }
   &.is-L4 {
-    color: var(--color-white);
+    color: var(--clr-white);
     background-color: var(--ko-cardmap-L4);
   }
   /* ----------------------------------------- */

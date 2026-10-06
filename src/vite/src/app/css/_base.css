@@ -87,8 +87,8 @@ h3 {
 kbd {
   border-radius: 3px;
   box-shadow: 0 1px 0px var(--clr-0000004d);
-  background: var(--color-neutral-200);
-  color: var(--color-neutral-900);
+  background: var(--clr-neutral-200);
+  color: var(--clr-neutral-900);
   font: 100%/1em "Andale Mono", "Consolas", monospace;
   margin: 2px 1px 2px 0;
   min-width: 1em;

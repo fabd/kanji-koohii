@@ -11,34 +11,34 @@
 .uiFilterStd .lbl {
   float: left;
   font-size: 12px;
-  color: var(--color-neutral-700);
+  color: var(--clr-neutral-700);
   padding-left: 0;
 }
 .uiFilterStd .tb {
   float: left;
-  background: var(--color-neutral-800);
+  background: var(--clr-neutral-800);
   padding: 1px 0;
   margin: 0 1px;
 }
 .uiFilterStd .lr {
   float: left;
   position: relative;
-  border-left: 1px solid var(--color-neutral-800);
+  border-left: 1px solid var(--clr-neutral-800);
   margin: 0 -1px;
 }
 .uiFilterStd a {
   float: left;
-  border-right: 1px solid var(--color-neutral-800);
-  background: linear-gradient(var(--color-white), var(--color-neutral-300));
-  color: var(--color-black);
+  border-right: 1px solid var(--clr-neutral-800);
+  background: linear-gradient(var(--clr-white), var(--clr-neutral-300));
+  color: var(--clr-black);
   outline: none;
 }
 .uiFilterStd a:hover {
   text-decoration: none;
-  background: linear-gradient(var(--color-neutral-200), var(--color-neutral-400));
+  background: linear-gradient(var(--clr-neutral-200), var(--clr-neutral-400));
 }
 .uiFilterStd a.active,
 .uiFilterStd a.active:hover {
-  color: var(--color-white);
-  background: linear-gradient(var(--color-neutral-700), var(--color-neutral-400));
+  color: var(--clr-white);
+  background: linear-gradient(var(--clr-neutral-700), var(--clr-neutral-400));
 }

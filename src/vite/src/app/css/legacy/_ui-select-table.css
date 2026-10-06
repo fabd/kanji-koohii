@@ -33,7 +33,7 @@
     padding: 0;
     font: 13px Arial, sans-serif;
     color: var(--clr-5c5b52);
-    border-bottom: 1px solid var(--color-neutral-400);
+    border-bottom: 1px solid var(--clr-neutral-400);
     text-align: left;
     background: var(--clr-d9d6b7) url(/assets/legacy/widgets-selecttable.gif) repeat-x 0 0;
   }
@@ -57,11 +57,11 @@
     text-decoration: underline;
     color: var(--clr-005cb1);
     padding-right: 12px;
-    background-color: var(--color-white);
+    background-color: var(--clr-white);
   }
 
   th a.active {
-    color: var(--color-black);
+    color: var(--clr-black);
   }
 
   /* sort icon */
@@ -86,7 +86,7 @@
   /* tbody */
   td {
     padding: 10px 10px;
-    color: var(--color-neutral-700);
+    color: var(--clr-neutral-700);
     font-size: 13px;
     line-height: 1.1em;
     border-bottom: 1px solid var(--clr-e8e5ca);
@@ -102,16 +102,16 @@
   }
 
   .odd td {
-    background-color: var(--color-white);
+    background-color: var(--clr-white);
   }
 
   /* uiTable hover */
   tbody tr.hover {
-    background-color: var(--color-white);
+    background-color: var(--clr-white);
   }
 
   tbody var {
-    color: var(--color-black);
+    color: var(--clr-black);
     font-size: 13px;
   }
 
@@ -127,7 +127,7 @@
 
   /* failed reviews */
   td.compound {
-    color: var(--color-black);
+    color: var(--clr-black);
     padding-top: 0;
     padding-bottom: 0;
   }
@@ -136,7 +136,7 @@
     text-align: center;
     font-size: 24px;
     line-height: 1em;
-    color: var(--color-black);
+    color: var(--clr-black);
     padding-top: 4px;
     padding-bottom: 4px;
   }

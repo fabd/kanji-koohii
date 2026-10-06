@@ -28,7 +28,7 @@ $koohii_tweet_params = koohii_get_tweet_q(sfConfig::get('app_website_url'), 'Kan
   padding: 4px 8px;
   font-weight: bold;
   font-size: 18px;
-  color: var(--color-white);
+  color: var(--clr-white);
   cursor: pointer;
   text-decoration: none;
   background: var(--clr-4faeec); /*1b95e0*/
@@ -38,7 +38,7 @@ $koohii_tweet_params = koohii_get_tweet_q(sfConfig::get('app_website_url'), 'Kan
   width: 16px;
   padding: 0 0.5em 0 0;
   text-align: center;
-  color: var(--color-white);
+  color: var(--clr-white);
 }
 #custom-tweet-button span {
   font-family: "Helvetica Neue", Arial, sans-serif;

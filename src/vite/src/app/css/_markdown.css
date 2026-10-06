@@ -77,17 +77,17 @@
   height: auto;
 }
 .markdown .img-block {
-  @apply border-(--clr-stone-400);
+  @apply border-(--color-bg-box-dark);
 }
 
 /* tables */
 .markdown table {
   width: 100%;
-  border-left: 1px solid var(--clr-bg-1m);
+  border-left: 1px solid var(--color-bg-box-light);
   border-collapse: collapse;
 }
 .markdown th {
-  background-color: var(--clr-bg-1);
+  background-color: var(--color-bg-box);
   border-top-width: 0;
   color: var(--clr-stone-900);
 }
@@ -99,20 +99,20 @@
   text-align: left;
 }
 .markdown td {
-  background: var(--clr-bg-nav);
+  background: var(--color-bg-box-light);
 }
 
 /* code : applies to `this` */
 .markdown code {
-  background: var(--clr-bg-nav);
+  background: var(--color-bg-box-light);
   padding: 0.2em 0.5em;
 }
 
 /* code : applies to ```code blocks``` */
 .markdown pre {
-  background: var(--clr-bg-nav);
+  background: var(--color-bg-box-light);
   padding: calc(var(--vunit) / 2) 1em;
-  border-left: 4px solid var(--clr-bg-1);
+  border-left: 4px solid var(--color-bg-box);
 }
 
 /* stylelint-disable-next-line selector-max-type */

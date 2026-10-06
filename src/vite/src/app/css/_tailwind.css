@@ -9,6 +9,41 @@
 }
 
 /*---------------------------------------------------------------------
+  Semantic colors, they point to the palette in _colors.css, and their
+  value will change with the selected theme.
+
+  "static" so the variables are always output (also when only used with
+  var() in CSS), and can be edited live in the browser dev tools.
+  ---------------------------------------------------------------------*/
+@theme static {
+  /* foundation colors */
+  --color-bg-page: var(--clr-stone-100);
+  --color-bg-box: var(--clr-stone-300);
+  /* #d4cdba; */
+
+  /* variants */
+  --color-bg-box-dark: color-mix(
+    in srgb,
+    var(--color-bg-box),
+    #000 10%
+  );
+  --color-bg-box-light: color-mix(
+    in srgb,
+    var(--color-bg-box),
+    var(--clr-white) 25%
+  );
+
+  /* text */
+  --color-fg-bd: var(--clr-stone-950); /* body text */
+  --color-fg-muted: color-mix(in srgb, var(--color-fg-bd), #0000 30%);
+  --color-fg-hd: var(--clr-7f7d85); /* headings */
+  --color-fg-link: var(--clr-005cb1);
+
+  /* borders */
+  --color-border: var(--color-bg-box-dark);
+}
+
+/*---------------------------------------------------------------------
   See 
     https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources
   ---------------------------------------------------------------------*/

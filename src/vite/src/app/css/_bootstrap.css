@@ -20,9 +20,9 @@
   --form-label-font-weight: bold;
   --form-text-color: var(--clr-stone-700);
   --form-text-font-size: 14px;
-  --input-border-color: var(--clr-stone-400); /* tailwind "bg-[#d4cdba]" */
+  --input-border-color: var(--color-bg-box-dark); /* tailwind "bg-[#d4cdba]" */
   --input-disabled-bg: transparent;
-  --input-disabled-border-color: var(--clr-stone-400); /* tailwind "bg-[#d4cdba]" */
+  --input-disabled-border-color: var(--color-bg-box-dark); /* tailwind "bg-[#d4cdba]" */
   --input-font-size: 15px;
   --input-placeholder-color: var(--clr-neutral-400);
   --form-feedback-invalid-color: var(--clr-a94442);
@@ -71,7 +71,7 @@
   appearance: none;
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
-  border: var(--bs-border-width) solid var(--clr-stone-400);
+  border: var(--bs-border-width) solid var(--color-bg-box-dark);
   border-radius: var(--bs-border-radius);
   transition:
     border-color 0.15s ease-in-out,
@@ -108,7 +108,7 @@
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 16px 12px;
-  border: var(--bs-border-width) solid var(--clr-stone-400);
+  border: var(--bs-border-width) solid var(--color-bg-box-dark);
   border-radius: var(--bs-border-radius);
   transition:
     border-color 0.15s ease-in-out,

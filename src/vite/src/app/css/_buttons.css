@@ -100,7 +100,7 @@
   &.is-ghost {
     --ko-btn-bg: transparent;
     --ko-btn-hover-bg: transparent;
-    --ko-btn-border: var(--clr-stone-400);
+    --ko-btn-border: var(--color-bg-box-dark);
     --ko-btn-text: var(--clr-stone-800);
     --ko-btn-hover-text: var(--clr-stone-950);
     --ko-btn-hover-border: var(--clr-stone-700);
@@ -273,7 +273,7 @@
   padding: 0.2em 0.4em;
   border-radius: 0.25em;
   margin: 0 0.25em;
-  border: 1px solid var(--clr-stone-400);
+  border: 1px solid var(--color-bg-box-dark);
   color: var(--clr-stone-800);
 }
 .ko-ExBtn--danger {

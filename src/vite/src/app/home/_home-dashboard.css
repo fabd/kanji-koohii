@@ -72,7 +72,7 @@
   overflow-y: auto;
   padding-right: 1rem; /* breathing room between cards and scrollbar */
 
-  --trackColor: var(--clr-stone-400);
+  --trackColor: var(--color-bg-box-dark);
   --thumbColor: var(--clr-neutral-50);
   --trackRadius: 6px;
 
@@ -297,7 +297,7 @@
   @apply rounded-md text-xs px-2 font-light;
   height: 27px;
   line-height: 27px;
-  background-color: var(--clr-stone-400);
+  background-color: var(--color-bg-box-dark);
   @apply text-(--clr-stone-950);
 }
 

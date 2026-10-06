@@ -12,7 +12,7 @@
 }
 
 .ko-PatronsList-hairline {
-  border-color: var(--clr-stone-400);
+  border-color: var(--color-bg-box-dark);
 }
 
 .ko-PatronsList-tableHead {
@@ -26,13 +26,13 @@
 }
 
 .ko-PatronsList-row:last-child {
-  border-bottom: 1px solid var(--clr-stone-400);
+  border-bottom: 1px solid var(--color-bg-box-dark);
 }
 
 .ko-PatronsList-past {
   @apply columns-2 sm:columns-3;
   column-gap: 3rem;
-  column-rule: 1px solid var(--clr-stone-400);
+  column-rule: 1px solid var(--color-bg-box-dark);
 
   @apply opacity-70 leading-relaxed;
   font-size: 13px;

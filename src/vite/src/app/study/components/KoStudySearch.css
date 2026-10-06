@@ -41,7 +41,7 @@
   width: 74%;
   font-size: 1em;
   line-height: 1.2em;
-  color: var(--color-text-body);
+  color: var(--color-fg-bd);
 }
 
 .ko-StudySearchDD-kanji {

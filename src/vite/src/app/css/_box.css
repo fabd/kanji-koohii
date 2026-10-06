@@ -9,7 +9,7 @@
 /* ==================================================================== */
 
 .ko-Box {
-  --ko-box-bg: var(--clr-bg-1);
+  --ko-box-bg: var(--color-bg-box);
 
   background-color: var(--ko-box-bg);
   border-color: var(--ko-box-bg);

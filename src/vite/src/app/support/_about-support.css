@@ -13,7 +13,6 @@
   --ko-btn-bg: var(--clr-ff424d);
   --ko-btn-border: var(--clr-ff424d);
   --ko-btn-text: var(--clr-white);
-  --ko-btn-bg-darker: var(--clr-ff222f);
   --ko-btn-hover-bg: var(--clr-eb3741);
   --ko-btn-hover-border: var(--clr-eb3741);
 }
@@ -21,7 +20,6 @@
 .ko-Btn--paypal {
   --ko-btn-bg: var(--clr-40acda);
   --ko-btn-border: var(--clr-40acda);
-  --ko-btn-bg-darker: var(--clr-27a2d7);
   --ko-btn-hover-bg: var(--clr-51b5df);
   --ko-btn-hover-border: var(--clr-51b5df);
 }

@@ -35,6 +35,15 @@
   /* borders */
   --color-border: var(--color-bg-box-dark);
 
+  /* buttons : hover colors are derived from these */
+  --color-btn-default: var(--clr-8e8d8c); /* default warm gray bg color */
+  --color-btn-primary: var(--clr-3272d1); /* saturated blue */
+  --color-btn-danger: var(--clr-ea5b5b);
+  --color-btn-success: var(--clr-58ac50);
+  --color-fg-btn: var(--clr-white);
+  --color-bg-btn-disabled: var(--clr-neutral-300);
+  --color-fg-btn-disabled: var(--clr-neutral-600);
+
   /* blog (site news) */
   --color-fg-blog-hd: var(--clr-fa3d60); /* post titles, and their underline */
   --color-fg-blog-date: var(--clr-568249);

@@ -3,20 +3,6 @@
 /* ==================================================================== */
 
 :root {
-  /* -------------------------------------------------------------------- */
-  /* Colors / Brand  (should match tailwind config) */
-  /* -------------------------------------------------------------------- */
-  --color-btn-default: var(--clr-8e8d8c);
-
-  /* main primary color (saturated blue/cyan) */
-  --color-btn-primary: var(--clr-3272d1);
-
-  /* main red color */
-  --color-btn-danger: var(--clr-ea5b5b); /*#d9534f; */
-
-  /* main green color */
-  --color-btn-success: var(--clr-58ac50); /*#6fa300;*/
-
   /* utilities */
   --color-mix-white: var(--clr-white);
 
@@ -110,9 +96,7 @@
   --clr-ff0000: #ff0000;
   --clr-f1311a: #f1311a;
   --clr-d23c3c: #d23c3c;
-  --clr-e83d3d: #e83d3d;
   --clr-d9534f: #d9534f;
-  --clr-e84646: #e84646;
   --clr-ff3333: #ff3333;
   --clr-ef5e4f: #ef5e4f;
   --clr-ea5b5b: #ea5b5b;
@@ -222,7 +206,6 @@
   --clr-318a31: #318a31;
   --clr-457a45: #457a45;
   --clr-448844: #448844;
-  --clr-449e44: #449e44;
   --clr-58ac50: #58ac50;
   --clr-5cb85c: #5cb85c;
   --clr-6cbe6b: #6cbe6b;
@@ -240,7 +223,6 @@
   --clr-0b486b: #0b486b;
   --clr-3d83ac: #3d83ac;
   --clr-1c90d4: #1c90d4;
-  --clr-27a2d7: #27a2d7;
   --clr-6a8898: #6a8898;
   --clr-40acda: #40acda;
   --clr-40a8e5: #40a8e5;
@@ -256,8 +238,6 @@
   --clr-36557d: #36557d;
   --clr-227dbd: #227dbd;
   --clr-007be3: #007be3;
-  --clr-2966c1: #2966c1;
-  --clr-2b69c6: #2b69c6;
   --clr-268bd2: #268bd2;
   --clr-0097ff: #0097ff;
   --clr-3272d1: #3272d1;
@@ -307,7 +287,6 @@
   --clr-f8c5e4: #f8c5e4;
   --clr-e70053: #e70053;
   --clr-fa3d60: #fa3d60;
-  --clr-ff222f: #ff222f;
   --clr-fb2c36: #fb2c36;
   --clr-eb3741: #eb3741;
   --clr-e9575e: #e9575e;

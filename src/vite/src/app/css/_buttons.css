@@ -87,14 +87,13 @@
 .ko-Btn {
   --ko-btn-bg: var(--color-btn-default);
   --ko-btn-border: var(--color-btn-default);
-  --ko-btn-text: var(--clr-white);
-  --ko-btn-bg-darker: var(--clr-stone-700);
-  --ko-btn-hover-text: var(--clr-white);
-  --ko-btn-hover-bg: var(--clr-stone-700);
-  --ko-btn-hover-border: var(--clr-stone-700);
-  --ko-btn-disabled-bg: var(--clr-neutral-300);
-  --ko-btn-disabled-border: var(--clr-neutral-300);
-  --ko-btn-disabled-text: var(--clr-neutral-600);
+  --ko-btn-text: var(--color-fg-btn);
+  --ko-btn-hover-text: var(--color-fg-btn);
+  --ko-btn-hover-bg: color-mix(in srgb, var(--ko-btn-bg), var(--clr-black) 8%);
+  --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 8%);
+  --ko-btn-disabled-bg: var(--color-bg-btn-disabled);
+  --ko-btn-disabled-border: var(--color-bg-btn-disabled);
+  --ko-btn-disabled-text: var(--color-fg-btn-disabled);
 
   /* (override) warm color for the default outline button */
   &.is-ghost {
@@ -102,20 +101,17 @@
     --ko-btn-hover-bg: transparent;
     --ko-btn-border: var(--color-bg-box-dark);
     --ko-btn-text: var(--clr-stone-800);
-    --ko-btn-hover-text: var(--clr-stone-950);
+    --ko-btn-hover-text: var(--color-fg-bd);
     --ko-btn-hover-border: var(--clr-stone-700);
   }
 }
 
 .ko-Btn--primary {
-  --ko-btn-bg: var(--clr-3272d1);
-  --ko-btn-border: var(--clr-3272d1);
-  --ko-btn-bg-darker: var(--clr-2966c1);
-  --ko-btn-hover-bg: var(--clr-2b69c6);
-  --ko-btn-hover-border: var(--clr-2b69c6);
+  --ko-btn-bg: var(--color-btn-primary);
+  --ko-btn-border: var(--color-btn-primary);
   &.is-ghost {
-    --ko-btn-border: var(--clr-3272d1);
-    --ko-btn-text: color-mix(in srgb, var(--clr-3272d1), var(--clr-black) 5%);
+    --ko-btn-border: var(--color-btn-primary);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-primary), var(--clr-black) 5%);
     --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
     --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
   }
@@ -123,9 +119,6 @@
 .ko-Btn--danger {
   --ko-btn-bg: var(--color-btn-danger);
   --ko-btn-border: var(--color-btn-danger);
-  --ko-btn-bg-darker: var(--clr-e83d3d);
-  --ko-btn-hover-bg: var(--clr-e84646);
-  --ko-btn-hover-border: var(--clr-e84646);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-danger);
     --ko-btn-text: color-mix(in srgb, var(--color-btn-danger), var(--clr-black) 5%);
@@ -136,9 +129,6 @@
 .ko-Btn--success {
   --ko-btn-bg: var(--color-btn-success);
   --ko-btn-border: var(--color-btn-success);
-  --ko-btn-bg-darker: var(--clr-449e44);
-  --ko-btn-hover-bg: color-mix(in srgb, var(--color-btn-success), var(--clr-002200) 5%);
-  --ko-btn-hover-border: color-mix(in srgb, var(--color-btn-success), var(--clr-002200) 5%);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-success);
     --ko-btn-text: color-mix(in srgb, var(--color-btn-success), var(--clr-black) 5%);
@@ -152,7 +142,6 @@
   --ko-btn-bg: var(--clr-lime-600);
   --ko-btn-image: linear-gradient(to bottom, var(--clr-6fa300) 0%, var(--clr-649300) 100%);
   --ko-btn-border: var(--clr-649300);
-  --ko-btn-bg-darker: var(--clr-449e44);
   --ko-btn-hover-bg: color-mix(in srgb, var(--clr-lime-600), var(--clr-002200) 5%);
   --ko-btn-hover-border: color-mix(in srgb, var(--clr-lime-600), var(--clr-002200) 5%);
 }

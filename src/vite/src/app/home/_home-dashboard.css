@@ -54,12 +54,13 @@
 /* -------------------------------------------------------------------- */
 .ko-LessonPane {
   /* default card tag colors for the kanji grid */
-  --ko-cardmap-new: var(--clr-stone-600);
-  --ko-cardmap-res: var(--clr-ef5e4f);
-  --ko-cardmap-L1: var(--clr-5cb85c); /*#83d37d; */
-  --ko-cardmap-L2: var(--clr-5cb85c); /*#63b95c; */
-  --ko-cardmap-L3: var(--clr-5cb85c); /*#4ea747; */
-  --ko-cardmap-L4: var(--clr-5cb85c); /*#3b8f35; */
+  /* card status colors, see getColorForCard() : same meaning as the SRS colors */
+  --ko-cardmap-new: var(--color-srs-new);
+  --ko-cardmap-res: var(--color-srs-fail);
+  --ko-cardmap-L1: var(--color-srs-undue);
+  --ko-cardmap-L2: var(--color-srs-undue);
+  --ko-cardmap-L3: var(--color-srs-undue);
+  --ko-cardmap-L4: var(--color-srs-undue);
 }
 /*//////////////////////////////////////////////////////////////// */
 /* on the home page, use max-height and scrollbar, to limit the */

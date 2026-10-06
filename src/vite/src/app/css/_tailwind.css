@@ -56,6 +56,12 @@
   /* navigation */
   --color-bg-nav: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
 
+  /* footer */
+  --color-bg-ft-top: var(--clr-f8c5e4); /* the dots, and top of the gradient */
+  --color-bg-ft-end: var(--clr-f0ddd4); /* gradient bottom, and below */
+  --color-fg-ft: var(--clr-8b1566); /* text, icons */
+  --color-fg-ft-link: var(--clr-e400b1);
+
   /* blog (site news) */
   --color-fg-blog-hd: var(--clr-fa3d60); /* post titles, and their underline */
   --color-fg-blog-date: var(--clr-568249);

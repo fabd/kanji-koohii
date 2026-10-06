@@ -44,6 +44,15 @@
   --color-bg-btn-disabled: var(--clr-neutral-300);
   --color-fg-btn-disabled: var(--clr-neutral-600);
 
+  /* forms : inputs, textareas, selects (see _bootstrap.css) */
+  --color-bg-input: var(--clr-white);
+  --color-fg-input: var(--clr-neutral-950);
+  --color-border-input: var(--color-border);
+  --color-border-input-focus: var(--clr-99bddb);
+  --color-focus-glow: var(--clr-337ab740);
+  --color-fg-invalid: var(--clr-a94442);
+  --color-border-invalid: var(--clr-a94442);
+
   /* blog (site news) */
   --color-fg-blog-hd: var(--clr-fa3d60); /* post titles, and their underline */
   --color-fg-blog-date: var(--clr-568249);

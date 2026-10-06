@@ -22,11 +22,7 @@
   /* #d4cdba; */
 
   /* variants */
-  --color-bg-box-dark: color-mix(
-    in srgb,
-    var(--color-bg-box),
-    #000 10%
-  );
+  --color-bg-box-dark: #dbd4c3;
   --color-bg-box-light: color-mix(
     in srgb,
     var(--color-bg-box),

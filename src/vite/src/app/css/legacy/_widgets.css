@@ -239,7 +239,7 @@
   font-weight: normal;
   background-color: var(--color-bg-box);
   border-bottom: 1px solid var(--color-bg-box-light);
-  color: var(--clr-neutral-800);
+  color: var(--clr-stone-900);
 }
 .side-menu ul {
   margin: 0;

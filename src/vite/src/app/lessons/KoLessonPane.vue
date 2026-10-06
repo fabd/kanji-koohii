@@ -16,7 +16,7 @@
       <!-- <div class="text-warm text-lg ml-auto">{{ lessonPos }} / {{ lessonCount }} kanji</div> -->
 
       <div
-        class="px-2 py-1 rounded-sm bg-(--clr-e1ffc2) ux-text-lg text-(--clr-3a7c3a) font-bold leading-none whitespace-nowrap ml-auto"
+        class="px-2 py-1 rounded-sm ux-text-md text-(--color-fg-muted) font-bold leading-none whitespace-nowrap ml-auto"
         >{{ `${kanjiCount} / ${lessonCount}` }}<span class="hidden md:inline"> kanji</span></div
       >
     </div>

@@ -66,6 +66,7 @@
   --clr-stone-700: #7f7d75;
   --clr-stone-600: #a19e97;
   --clr-stone-500: #c2bdaf;
+  --clr-stone-400: #dbd4c3;
   --clr-stone-300: #e7e1d3;
   --clr-stone-200: #ede8de;
   --clr-stone-100: #f5efe5;
@@ -76,7 +77,7 @@
   /* -------------------------------------------------------------------- */
   /*
     Every RGB color used in the stylesheets and templates, named after its
-    hex value, eg. "#42413d" => var(--clr-stone-950).
+    hex value, eg. "#7f7d85" => var(--clr-7f7d85).
 
     This is a first step towards dark mode: next, similar colors will be
     merged into the palette above, then given semantic names.
@@ -84,7 +85,7 @@
     Sorted by near-grays first (by lightness), then by hue, so similar
     colors are side by side.
 
-    In Tailwind classes use the variable shorthand, eg. "bg-(--clr-stone-950)".
+    In Tailwind classes use the variable shorthand, eg. "bg-(--clr-7f7d85)".
   */
 
   --clr-2b3034: #2b3034;

@@ -19,10 +19,7 @@
   /* foundation colors */
   --color-bg-page: var(--clr-stone-100);
   --color-bg-box: var(--clr-stone-300);
-  /* #d4cdba; */
-
-  /* variants */
-  --color-bg-box-dark: #dbd4c3;
+  --color-bg-box-dark: var(--clr-stone-400);
   --color-bg-box-light: color-mix(
     in srgb,
     var(--color-bg-box),

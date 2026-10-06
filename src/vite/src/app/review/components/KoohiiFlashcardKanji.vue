@@ -70,7 +70,7 @@
                     ></cjk-lang-ja>
                   </div>
                   <div
-                    class="vyg text-(--clr-858280) italic text-xl leading-[1.2em] pl-3 max-sm:ml-2 mt-4"
+                    class="vyg text-(--clr-stone-700) italic text-xl leading-[1.2em] pl-3 max-sm:ml-2 mt-4"
                   >
                     {{ $item.gloss }}
                   </div>

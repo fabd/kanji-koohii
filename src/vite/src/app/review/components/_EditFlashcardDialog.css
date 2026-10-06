@@ -29,8 +29,8 @@
   }
 
   .is-loading {
-    background: var(--clr-a19e97);
-    border-color: var(--clr-a19e97);
+    background: var(--clr-stone-600);
+    border-color: var(--clr-stone-600);
     cursor: not-allowed;
   }
 
@@ -58,7 +58,7 @@
   --ko-btn-bg: var(--clr-bg-1);
   --ko-btn-hover-bg: var(--clr-bg-1);
   --ko-btn-border: var(--clr-bg-1);
-  --ko-btn-hover-border: var(--clr-cdc5af);
+  --ko-btn-hover-border: var(--clr-stone-400);
   --ko-btn-hover-text: var(--clr-005cb1);
   font-weight: bold;
   color: var(--color-btn-primary);
@@ -108,7 +108,7 @@
   transition: color 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   outline: none;
-  --tooltip-bg: var(--clr-605c58);
+  --tooltip-bg: var(--clr-stone-800);
   --tooltip-fg: var(--clr-white);
 
   &::before {

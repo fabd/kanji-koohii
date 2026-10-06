@@ -24,7 +24,7 @@
 /* view pane styles */
 .views,
 .views p {
-  color: var(--clr-3f3f3b);
+  color: var(--clr-stone-950);
 }
 .views .warning {
   color: var(--clr-ff0000);

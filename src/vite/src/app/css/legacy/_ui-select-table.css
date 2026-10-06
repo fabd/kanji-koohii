@@ -32,7 +32,7 @@
   th {
     padding: 0;
     font: 13px Arial, sans-serif;
-    color: var(--clr-5c5b52);
+    color: var(--clr-stone-900);
     border-bottom: 1px solid var(--clr-neutral-400);
     text-align: left;
     background: var(--clr-d9d6b7) url(/assets/legacy/widgets-selecttable.gif) repeat-x 0 0;
@@ -98,7 +98,7 @@
 
   tbody td {
     background-color: var(--clr-tbl-bg);
-    color: var(--clr-5c5b52);
+    color: var(--clr-stone-900);
   }
 
   .odd td {

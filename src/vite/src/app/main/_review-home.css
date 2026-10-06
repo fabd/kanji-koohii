@@ -90,7 +90,7 @@
   background: var(--clr-neutral-500);
 }
 .barchart-cols .bar.zero .val {
-  color: var(--clr-a5a59c);
+  color: var(--clr-stone-600);
 }
 .barchart-cols .bar.zero .lbl {
 }

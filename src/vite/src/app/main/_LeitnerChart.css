@@ -48,7 +48,7 @@
   right: 0;
   bottom: -37px; /*width:100%; height:24px; */
   margin-bottom: 4px;
-  color: var(--clr-a9a396);
+  color: var(--clr-stone-600);
   font-size: 17px;
   line-height: 1.1em;
   white-space: nowrap;
@@ -73,7 +73,7 @@
   z-index: var(--z-overlay); /* fix "due" label overlapped by a taller "undue" bar */
 }
 .box .val-zero {
-  color: var(--clr-a09a8b);
+  color: var(--clr-stone-600);
   display: none;
 }
 

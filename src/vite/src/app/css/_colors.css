@@ -23,21 +23,21 @@
   /* -------------------------------------------------------------------- */
   /* Colors / Text */
   /* -------------------------------------------------------------------- */
-  --color-text-body: var(--clr-42413d);
+  --color-text-body: var(--clr-stone-950);
 
   /* -------------------------------------------------------------------- */
   /* Colors ( legacy sass stuff - needs renaming/merging ) */
   /* -------------------------------------------------------------------- */
-  --clr-bg-body: var(--clr-f5efe5);
-  --clr-bg-1: var(--clr-e7e1d3); /* shaded background 1 */
-  --clr-bg-nav: var(--clr-ede8de); /* top nav background color */
+  --clr-bg-body: var(--clr-stone-100);
+  --clr-bg-1: var(--clr-stone-300); /* shaded background 1 */
+  --clr-bg-nav: var(--clr-stone-200); /* top nav background color */
 
-  --clr-bg-1m: var(--clr-ede8de); /* subdued background 1 (lighter) */
+  --clr-bg-1m: var(--clr-stone-200); /* subdued background 1 (lighter) */
 
   --clr-bg-gl: var(--clr-d7ebb4); /* green backgrounds & text */
   --clr-bg-gd: var(--clr-4c7424);
   /* widgets: table row (slightly brighter than CSS_BG_1) */
-  --clr-tbl-bg: var(--clr-f8f6ef);
+  --clr-tbl-bg: var(--clr-stone-50);
 
   --clr-srs-due: var(--clr-f7a247); /* text color for due/undue cards */
   --clr-srs-undue: var(--clr-72c569);
@@ -70,12 +70,25 @@
   --clr-neutral-50: #f5f5f5;
   --clr-white: #ffffff;
 
+  /* warm grays */
+  --clr-stone-950: #42413d;
+  --clr-stone-900: #5c5b52;
+  --clr-stone-800: #6f6961;
+  --clr-stone-700: #7f7d75;
+  --clr-stone-600: #a19e97;
+  --clr-stone-500: #c2bdaf;
+  --clr-stone-400: #d4cdba;
+  --clr-stone-300: #e7e1d3;
+  --clr-stone-200: #ede8de;
+  --clr-stone-100: #f5efe5;
+  --clr-stone-50: #f8f6ef;
+
   /* -------------------------------------------------------------------- */
   /* MERGE WIP  */
   /* -------------------------------------------------------------------- */
   /*
     Every RGB color used in the stylesheets and templates, named after its
-    hex value, eg. "#42413d" => var(--clr-42413d).
+    hex value, eg. "#42413d" => var(--clr-stone-950).
 
     This is a first step towards dark mode: next, similar colors will be
     merged into the palette above, then given semantic names.
@@ -83,50 +96,17 @@
     Sorted by near-grays first (by lightness), then by hue, so similar
     colors are side by side.
 
-    In Tailwind classes use the variable shorthand, eg. "bg-(--clr-42413d)".
+    In Tailwind classes use the variable shorthand, eg. "bg-(--clr-stone-950)".
   */
 
-  --clr-322f2c: #322f2c;
   --clr-2b3034: #2b3034;
-  --clr-313130: #313130;
-  --clr-3f3f3b: #3f3f3b;
-  --clr-433f39: #433f39;
-  --clr-42413d: #42413d;
-  --clr-434241: #434241;
-  --clr-4f4e45: #4f4e45;
-  --clr-564e44: #564e44;
-  --clr-525150: #525150;
-  --clr-5c5b52: #5c5b52;
   --clr-646250: #646250;
-  --clr-605c58: #605c58;
-  --clr-62615d: #62615d;
-  --clr-696866: #696866;
-  --clr-6f6961: #6f6961;
-  --clr-6e6c64: #6e6c64;
-  --clr-7b7975: #7b7975;
-  --clr-7f7d75: #7f7d75;
-  --clr-838279: #838279;
-  --clr-867f77: #867f77;
   --clr-7d7f85: #7d7f85;
   --clr-7f7d85: #7f7d85;
-  --clr-858280: #858280;
-  --clr-88837e: #88837e;
-  --clr-8f897c: #8f897c;
-  --clr-928c7d: #928c7d;
   --clr-8e8d8c: #8e8d8c;
-  --clr-a09a8b: #a09a8b;
-  --clr-a19e97: #a19e97;
-  --clr-a3a197: #a3a197;
-  --clr-a4a19b: #a4a19b;
-  --clr-a9a396: #a9a396;
-  --clr-a5a59c: #a5a59c;
   --clr-adb2b6: #adb2b6;
-  --clr-bab6ae: #bab6ae;
-  --clr-c7c3ba: #c7c3ba;
   --clr-c1c8cc: #c1c8cc;
-  --clr-d8d3ce: #d8d3ce;
   --clr-e0e2e5: #e0e2e5;
-  --clr-efeeed: #efeeed;
   --clr-601008: #601008;
   --clr-880000: #880000;
   --clr-882222: #882222;
@@ -169,43 +149,28 @@
   --clr-f5ab8f: #f5ab8f;
   --clr-f0ddd4: #f0ddd4;
   --clr-ffd1c9: #ffd1c9;
-  --clr-020100: #020100;
   --clr-100800: #100800;
   --clr-221100: #221100;
   --clr-502a00: #502a00;
-  --clr-3f3931: #3f3931;
   --clr-554433: #554433;
   --clr-935a00: #935a00;
   --clr-bb7404: #bb7404;
   --clr-e68f06: #e68f06;
   --clr-f37200: #f37200;
   --clr-f7a247: #f7a247;
-  --clr-f5efe5: #f5efe5;
   --clr-f8f7f6: #f8f7f6;
   --clr-5e440a: #5e440a;
   --clr-f0c000: #f0c000;
   --clr-e2b437: #e2b437;
   --clr-ffca52: #ffca52;
   --clr-ffd230: #ffd230;
-  --clr-c2bdaf: #c2bdaf;
-  --clr-cdc5af: #cdc5af;
-  --clr-cbc4b3: #cbc4b3;
   --clr-daccb1: #daccb1;
-  --clr-d4cdba: #d4cdba;
-  --clr-d7d1c4: #d7d1c4;
-  --clr-dbd4c3: #dbd4c3;
-  --clr-dcd7cb: #dcd7cb;
   --clr-ffe0a8: #ffe0a8;
   --clr-dfdbce: #dfdbce;
   --clr-ffe5b2: #ffe5b2;
-  --clr-e7e1d3: #e7e1d3;
   --clr-faefc6: #faefc6;
   --clr-fef3c6: #fef3c6;
   --clr-eae6db: #eae6db;
-  --clr-ede8de: #ede8de;
-  --clr-ece9e2: #ece9e2;
-  --clr-f5f2ec: #f5f2ec;
-  --clr-f8f6ef: #f8f6ef;
   --clr-716e57: #716e57;
   --clr-9b9878: #9b9878;
   --clr-cfd67f: #cfd67f;

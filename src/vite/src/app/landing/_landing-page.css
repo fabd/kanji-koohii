@@ -7,8 +7,8 @@
 // ==================================================================== */
 
 body {
-  background: var(--clr-ece9e2);
-  color: var(--clr-42413d);
+  background: var(--clr-stone-200);
+  color: var(--clr-stone-950);
 }
 
 /* ---------------------------- */
@@ -24,7 +24,7 @@ section {
     font-size: 1.61em;
     line-height: 1em;
     margin-bottom: 0.5em;
-    color: var(--clr-434241);
+    color: var(--clr-neutral-800);
   }
 
   p {
@@ -59,10 +59,10 @@ section {
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 .k_bg_even {
-  background: var(--clr-ece9e2);
+  background: var(--clr-stone-200);
 }
 .k_bg_odd {
-  background: var(--clr-f5f2ec);
+  background: var(--clr-stone-50);
 }
 .k_bg_free {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
@@ -243,7 +243,7 @@ section {
   }
   a {
     padding: 0 0.8em; /*tap target*/
-    color: var(--clr-a4a19b);
+    color: var(--clr-stone-600);
     text-decoration: none;
   }
   a:hover {

@@ -170,7 +170,7 @@
 }
 #k-nav_d .active a,
 #k-nav_d .k-nav_dropdown a {
-  color: var(--clr-42413d);
+  color: var(--clr-stone-950);
 }
 
 /* hover states */
@@ -226,7 +226,7 @@
 #k-nav_d .k-nav_dropdown li {
   float: none;
   white-space: nowrap;
-  @apply border-0 border-t border-(--clr-d4cdba);
+  @apply border-0 border-t border-(--clr-stone-400);
 }
 #k-nav_d .k-nav_dropdown li:first-child {
   border-top: none;
@@ -236,7 +236,7 @@
 }
 #k-nav_d .k-nav_dropdown a:hover {
   background: var(--clr-c7ecac);
-  color: var(--clr-42413d);
+  color: var(--clr-stone-950);
 }
 #k-nav_d .k-nav_dropdown .fa {
   vertical-align: text-top;
@@ -255,7 +255,7 @@
   margin: 0 0 0 8px;
 }
 #k-nav_d .active .arrow {
-  border-top-color: var(--clr-6e6c64);
+  border-top-color: var(--clr-stone-800);
 }
 
 /* ---------------------------- */

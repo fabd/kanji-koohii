@@ -338,7 +338,7 @@ main {
     padding: 5px 10px;
     display: block;
     text-decoration: none;
-    @apply border-dotted border-(--clr-d4cdba) border-b;
+    @apply border-dotted border-(--clr-stone-400) border-b;
     &:hover {
       background-color: var(--clr-bg-1);
     }

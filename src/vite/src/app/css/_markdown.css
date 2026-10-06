@@ -59,7 +59,7 @@
 
 // blockquote
 .markdown blockquote {
-  @apply text-(--clr-7f7d75) pl-[2em] italic;
+  @apply text-(--clr-stone-700) pl-[2em] italic;
 }
 
 /* lists */
@@ -77,7 +77,7 @@
   height: auto;
 }
 .markdown .img-block {
-  @apply border-(--clr-d4cdba);
+  @apply border-(--clr-stone-400);
 }
 
 /* tables */
@@ -89,7 +89,7 @@
 .markdown th {
   background-color: var(--clr-bg-1);
   border-top-width: 0;
-  color: var(--clr-4f4e45);
+  color: var(--clr-stone-900);
 }
 .markdown th,
 .markdown td {

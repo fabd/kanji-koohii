@@ -22,13 +22,13 @@ html {
 body {
   background: var(--clr-bg-body);
   --ko-loading-bg: var(--clr-f5efe580);
-  color: var(--clr-42413d);
+  color: var(--clr-stone-950);
 }
 
 blockquote {
   font-size: inherit;
   border-left: none;
-  color: var(--clr-7f7d75);
+  color: var(--clr-stone-700);
 }
 
 /* tailwind fix - `bolder` doesn't look good, no idea */

@@ -143,7 +143,7 @@ if ($restudyCount) {
       </div>
 <?php endif; ?>
 
-      <div class="bg-(--clr-c2bdaf) h-px mb-3"></div>
+      <div class="bg-(--clr-stone-500) h-px mb-3"></div>
 
       <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 

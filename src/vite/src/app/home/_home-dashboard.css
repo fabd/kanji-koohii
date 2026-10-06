@@ -24,7 +24,7 @@
 /*//////////////////////////////////////////////////////////////// */
 .ko-Dash-srsIcoBtn {
   /* note: the height of these "buttons" comes from the parent's `items-stretch` */
-  @apply text-smx text-(--clr-42413d) no-underline cursor-pointer rounded-md;
+  @apply text-smx text-(--clr-stone-950) no-underline cursor-pointer rounded-md;
 
   &:hover {
     @apply no-underline;
@@ -55,7 +55,7 @@
 /* -------------------------------------------------------------------- */
 .ko-LessonPane {
   /* default card tag colors for the kanji grid */
-  --ko-cardmap-new: var(--clr-a3a197);
+  --ko-cardmap-new: var(--clr-stone-600);
   --ko-cardmap-res: var(--clr-ef5e4f);
   --ko-cardmap-L1: var(--clr-5cb85c); /*#83d37d; */
   --ko-cardmap-L2: var(--clr-5cb85c); /*#63b95c; */
@@ -72,7 +72,7 @@
   overflow-y: auto;
   padding-right: 1rem; /* breathing room between cards and scrollbar */
 
-  --trackColor: var(--clr-c7c3ba);
+  --trackColor: var(--clr-stone-400);
   --thumbColor: var(--clr-neutral-50);
   --trackRadius: 6px;
 
@@ -114,7 +114,7 @@
 
   /*//////////////////////////////////////////////////////////////// */
   /*//////////////////////////////////////////////////////////////// */
-  background-color: var(--clr-696866);
+  background-color: var(--clr-neutral-700);
   padding: var(--ko-lmap-p);
   height: var(--ko-lmap-h);
   @apply rounded-md;
@@ -126,7 +126,7 @@
   @apply flex;
   height: 100%;
   gap: 1px;
-  color: var(--clr-8f897c); /* color of the "off" items (empty cells) */
+  color: var(--clr-stone-700); /* color of the "off" items (empty cells) */
   text-align: center;
 }
 
@@ -261,7 +261,7 @@
   );
 
   border: 0;
-  border-bottom: 1px solid var(--clr-bab6ae); /* hexa(#6c6c6c, .37) */
+  border-bottom: 1px solid var(--clr-stone-500); /* hexa(#6c6c6c, .37) */
   border-radius: 0;
 }
 
@@ -289,7 +289,7 @@
 .ko-KanjiCard-chr {
   font-size: 60px;
   line-height: 1;
-  color: var(--clr-313130);
+  color: var(--clr-neutral-900);
   @apply mt-auto mb-auto; /* flex spacings */
 }
 
@@ -297,8 +297,8 @@
   @apply rounded-md text-xs px-2 font-light;
   height: 27px;
   line-height: 27px;
-  background-color: var(--clr-d7d1c4);
-  @apply text-(--clr-42413d);
+  background-color: var(--clr-stone-400);
+  @apply text-(--clr-stone-950);
 }
 
 .ko-KanjiCard-tag {

@@ -18,20 +18,20 @@
   /*  if the keyword is clipped then it's fine, allow for smaller padding on the right end */
   @apply p-1 pl-2;
 
-  @apply hover:bg-(--clr-dbd4c3);
+  @apply hover:bg-(--clr-stone-400);
 
   &.is-active {
-    @apply bg-(--clr-dbd4c3);
+    @apply bg-(--clr-stone-400);
   }
 }
 
 .ko-LastViewed-kan {
-  @apply text-(--clr-42413d) mr-3;
+  @apply text-(--clr-stone-950) mr-3;
 }
 
 .ko-LastViewed-idx {
   flex: 0 0 auto;
-  @apply w-[40px] mr-3 text-center text-(--clr-42413d);
+  @apply w-[40px] mr-3 text-center text-(--clr-stone-950);
 }
 
 .ko-LastViewed-kwd {

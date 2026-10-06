@@ -45,6 +45,6 @@
 }
 
 .ko-Box-title {
-  @apply font-bold text-(--clr-42413d);
+  @apply font-bold text-(--clr-stone-950);
   font-size: min(15px + 0.5vw, 18px);
 }

@@ -1,5 +1,5 @@
 .ko-PatronsList {
-  color: var(--clr-433f39);
+  color: var(--clr-stone-950);
   font-family: Inter, sans-serif;
   h2, h3 {
     color: inherit;
@@ -12,27 +12,27 @@
 }
 
 .ko-PatronsList-hairline {
-  border-color: var(--clr-d4cdba);
+  border-color: var(--clr-stone-400);
 }
 
 .ko-PatronsList-tableHead {
-  background-color: var(--clr-ede8de);
+  background-color: var(--clr-stone-200);
 }
 
 .ko-PatronsList-row {
   @apply pt-[12px] pb-[10px] px-6 md:pt-[16px] md:pb-[14px] leading-none;
-  background-color: var(--clr-f8f6ef);
+  background-color: var(--clr-stone-50);
   border-bottom: 1px solid var(--clr-e6e8ec);
 }
 
 .ko-PatronsList-row:last-child {
-  border-bottom: 1px solid var(--clr-d4cdba);
+  border-bottom: 1px solid var(--clr-stone-400);
 }
 
 .ko-PatronsList-past {
   @apply columns-2 sm:columns-3;
   column-gap: 3rem;
-  column-rule: 1px solid var(--clr-d4cdba);
+  column-rule: 1px solid var(--clr-stone-400);
 
   @apply opacity-70 leading-relaxed;
   font-size: 13px;

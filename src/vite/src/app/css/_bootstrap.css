@@ -18,11 +18,11 @@
   --bs-danger: var(--clr-d9534f);
   --form-label-font-size: 14px;
   --form-label-font-weight: bold;
-  --form-text-color: var(--clr-7f7d75);
+  --form-text-color: var(--clr-stone-700);
   --form-text-font-size: 14px;
-  --input-border-color: var(--clr-d4cdba); /* tailwind "bg-[#d4cdba]" */
+  --input-border-color: var(--clr-stone-400); /* tailwind "bg-[#d4cdba]" */
   --input-disabled-bg: transparent;
-  --input-disabled-border-color: var(--clr-d4cdba); /* tailwind "bg-[#d4cdba]" */
+  --input-disabled-border-color: var(--clr-stone-400); /* tailwind "bg-[#d4cdba]" */
   --input-font-size: 15px;
   --input-placeholder-color: var(--clr-neutral-400);
   --form-feedback-invalid-color: var(--clr-a94442);
@@ -57,7 +57,7 @@
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 0.875rem;
-  color: var(--clr-7f7d75);
+  color: var(--clr-stone-700);
 }
 
 .form-control {
@@ -71,7 +71,7 @@
   appearance: none;
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
-  border: var(--bs-border-width) solid var(--clr-d4cdba);
+  border: var(--bs-border-width) solid var(--clr-stone-400);
   border-radius: var(--bs-border-radius);
   transition:
     border-color 0.15s ease-in-out,
@@ -108,7 +108,7 @@
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 16px 12px;
-  border: var(--bs-border-width) solid var(--clr-d4cdba);
+  border: var(--bs-border-width) solid var(--clr-stone-400);
   border-radius: var(--bs-border-radius);
   transition:
     border-color 0.15s ease-in-out,
@@ -141,7 +141,7 @@
 /* next to label of optional inputs:
    <label for=...>Location</label><span class="form-optional">(optional)</span> */
 .form-optional {
-  @apply text-(--clr-7f7d75) ml-4;
+  @apply text-(--clr-stone-700) ml-4;
   font-size: var(--form-label-font-size);
 }
 

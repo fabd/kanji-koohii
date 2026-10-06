@@ -325,27 +325,27 @@
 
 .ko-Btn--search {
   @apply block;
-  --ko-btn-text: var(--clr-62615d);
-  --ko-btn-bg: var(--clr-dbd4c3);
-  --ko-btn-border: var(--clr-dbd4c3);
+  --ko-btn-text: var(--clr-stone-800);
+  --ko-btn-bg: var(--clr-stone-400);
+  --ko-btn-border: var(--clr-stone-400);
   --ko-btn-bg-darker: var(--clr-e83d3d);
-  --ko-btn-hover-bg: var(--clr-cbc4b3);
-  --ko-btn-hover-border: var(--clr-cbc4b3);
-  --ko-btn-hover-text: var(--clr-42413d);
+  --ko-btn-hover-bg: var(--clr-stone-500);
+  --ko-btn-hover-border: var(--clr-stone-500);
+  --ko-btn-hover-text: var(--clr-stone-950);
 }
 
 /* switch search box to dark mode in mobile */
 @media only screen and (max-width: 1023px) {
   #browse {
-    background-color: var(--clr-434241);
+    background-color: var(--clr-neutral-800);
   }
   .ko-Btn--search {
-    --bg: var(--clr-322f2c);
-    --ko-btn-text: var(--clr-7b7975);
+    --bg: var(--clr-neutral-900);
+    --ko-btn-text: var(--clr-stone-700);
     --ko-btn-bg: var(--bg);
     --ko-btn-border: var(--bg);
-    --ko-btn-hover-bg: var(--clr-020100);
-    --ko-btn-hover-border: var(--clr-020100);
+    --ko-btn-hover-bg: var(--clr-black);
+    --ko-btn-hover-border: var(--clr-black);
   }
 }
 

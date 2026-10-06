@@ -230,7 +230,7 @@
  * Side tabs navigation.
  */
 .side-menu {
-  @apply border border-(--clr-d4cdba) rounded-sm mb-4 text-sm;
+  @apply border border-(--clr-stone-400) rounded-sm mb-4 text-sm;
 }
 .side-menu h2 {
   padding: 8px 10px;
@@ -239,7 +239,7 @@
   font-weight: normal;
   background-color: var(--clr-bg-1);
   border-bottom: 1px solid var(--clr-bg-1m);
-  color: var(--clr-525150);
+  color: var(--clr-neutral-800);
 }
 .side-menu ul {
   margin: 0;

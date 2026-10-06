@@ -71,7 +71,7 @@
 // the side pane
 // -------------------------------------------------------------------- */
 .ko-RecognitionPane {
-  @apply bg-(--clr-e7e1d3) p-4;
+  @apply bg-(--clr-stone-300) p-4;
   border-radius: var(--rounded);
 }
 .ko-RecognitionPane-h3 {

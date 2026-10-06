@@ -24,6 +24,6 @@
   );
 
   border: 0;
-  border-bottom: 1px solid var(--clr-bab6ae); /* hexa(#6c6c6c, .37); */
+  border-bottom: 1px solid var(--clr-stone-500); /* hexa(#6c6c6c, .37); */
   border-radius: 0;
 }

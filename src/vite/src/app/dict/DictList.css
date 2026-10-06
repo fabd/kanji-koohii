@@ -74,7 +74,7 @@
 
 .dict-list_info {
   padding: 1em 20px 1px;
-  color: var(--clr-838279);
+  color: var(--clr-stone-700);
   background: var(--clr-white);
 }
 
@@ -87,7 +87,7 @@
   display: inline-block;
   padding: 3px 8px 4px;
   border-radius: 8px;
-  background: var(--clr-efeeed);
+  background: var(--clr-neutral-100);
   color: var(--clr-221100);
 }
 

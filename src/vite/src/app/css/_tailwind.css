@@ -53,6 +53,9 @@
   --color-fg-invalid: var(--clr-a94442);
   --color-border-invalid: var(--clr-a94442);
 
+  /* navigation */
+  --color-bg-nav: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
+
   /* blog (site news) */
   --color-fg-blog-hd: var(--clr-fa3d60); /* post titles, and their underline */
   --color-fg-blog-date: var(--clr-568249);

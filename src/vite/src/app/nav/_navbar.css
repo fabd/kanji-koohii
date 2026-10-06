@@ -27,9 +27,11 @@
   padding: 0;
 }
 
-#k-nav_d,
+#k-nav_d {
+  background: var(--color-bg-nav);
+}
 #k-nav_m {
-  background: var(--clr-0b486b);
+  background: var(--color-bg-nav);
 }
 
 /* hires logo, 105px = 33% */
@@ -101,7 +103,7 @@
 #k-nav_m .k-nav_btn .fa {
   padding-top: 10px;
   font-size: 24px;
-  color: var(--clr-c1c8cc);
+  color: var(--clr-neutral-300);
 }
 
 #k-nav_m .k-nav_brand {
@@ -155,7 +157,7 @@
 #k-nav_d li a {
   padding: 16px 19px;
   display: block;
-  color: var(--clr-c1c8cc);
+  color: var(--clr-neutral-300);
   font: 14px/1em Arial, sans-serif;
   text-decoration: none;
 }

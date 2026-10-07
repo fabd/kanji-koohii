@@ -8,7 +8,7 @@
   <p> The Study area is where you can browse the <?= _CJ('kanji'); ?>, edit your stories, and
     share your best stories (mnemonics) with other members.
   </p>
-  <p><?= ui_ibtn('Start with '._CJ('kanji').'  #1', '@study_edit?id=1'); ?> ... or <strong>enter a number/keyword in the search box</strong>!</p>
+  <p><?= link_to('Start with '._CJ('kanji').'  #1', '@study_edit?id=1', ['class' => 'ko-Btn ko-Btn--success']); ?> ... or <strong>enter a number/keyword in the search box</strong>!</p>
 
 <h3>Searching</h3>
 

@@ -50,8 +50,6 @@ $koohii_tweet_params = koohii_get_tweet_q(sfConfig::get('app_website_url'), 'Kan
   <div id="home-partners">
     <?php // echo image_tag('/images/2.0/home/sidebar-'.CJ_MODE.'-badge.gif', 'size="131x131" style="margin:0 0 0 5px;"')?>
 
-    <?php // echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block'))?>
-
     <div id="custom-tweet-button">
       <a href="https://twitter.com/intent/tweet?<?= $koohii_tweet_params; ?>" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i><span>Tweet</span></a>
     </div>

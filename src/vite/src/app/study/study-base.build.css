@@ -299,14 +299,6 @@
   }
 }
 
-@media only screen and (min-width: 1024px) {
-  /* up lg */
-  #study-restudy,
-  #study-learned {
-    border-radius: 4px;
-  }
-}
-
 /* ------------------ */
 /* Study Search       */
 /* ------------------ */
@@ -345,31 +337,6 @@
     --ko-btn-border: var(--bg);
     --ko-btn-hover-bg: var(--clr-black);
     --ko-btn-hover-border: var(--clr-black);
-  }
-}
-
-/* ------------------ */
-/* Learned            */
-/* ------------------ */
-
-/* learned pane */
-#study-learned {
-  background: var(--clr-c7dfa9);
-}
-#study-learned h3 {
-  color: var(--clr-457a45);
-}
-#study-learned h3 span {
-  color: var(--clr-0f7439);
-}
-
-/* up lg */
-@media only screen and (min-width: 1024px) {
-  /* less contrating themes for desktop sidebar */
-
-  #study-restudy,
-  #study-learned {
-    border-radius: 4px;
   }
 }
 

@@ -2,7 +2,7 @@
 
 <?php // DBG::request()?>
 
-<div id="MyStoriesTableError" class="warningmessagebox" style="display:none"></div>
+<div id="MyStoriesTableError" class="ko-Box ko-Box--warning my-4" style="display:none"></div>
 
 <div id="my-stories" class="no-gutter-xs-sm">
 <?= form_tag('study/MyStoriesTable'); ?>

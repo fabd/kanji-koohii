@@ -20,7 +20,7 @@
         <p>
           Please note the attribution clause in the license:
         </p>
-        <p class="actionconfirmationmessage">
+        <p class="ko-Box ko-Box--warning">
           <strong>Attribution</strong> — You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).
         </p>
         <p>

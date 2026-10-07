@@ -108,7 +108,7 @@ EOD;
     $rowData['_learned'] = $isLearned
       ? '<span class="ko-RestudyList-learned">LEARNED</span>'
       : link_to_keyword('Study', $rowData['kanji'], [
-        'class'        => 'text-(--clr-9f0e0b)',
+        'class'        => 'text-danger',
         'query_string' => 'from=restudy-list',
       ]);
   }

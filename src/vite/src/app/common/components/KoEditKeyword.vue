@@ -7,7 +7,7 @@
         Tip: press <kbd>TAB</kbd> to save and edit the next keyword.
       </p>
 
-      <div v-if="formHasErrors()" class="formerrormessage">
+      <div v-if="formHasErrors()" class="ko-Box ko-Box--danger my-4">
         <span v-html="formGetErrors()"></span>
       </div>
 

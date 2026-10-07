@@ -346,18 +346,6 @@ main {
 /* Confirmation & error boxes */
 /* ---------------------------- */
 
-.actionconfirmationmessage {
-  border: 1px solid var(--clr-neutral-300);
-  padding: 10px;
-  background: var(--clr-ffffcc);
-  margin: 1em 0;
-}
-.actionconfirmationmessage p {
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
 .confirmwhatwasdone {
   padding: 10px;
   background: var(--clr-cdecae);
@@ -375,30 +363,6 @@ main {
   border-radius: 5px;
 }
 
-.formerrormessage {
-  border: 1px solid var(--clr-f5ab8f);
-  padding: 10px;
-  background: var(--clr-ffe0a8);
-  margin: 1em 0;
-  color: var(--clr-ff3333);
-}
-.formerrormessage p {
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-.warningmessagebox {
-  border: 1px solid var(--clr-f5ab8f);
-  padding: 10px;
-  background: var(--clr-ffe0a8);
-  margin: 1em 0;
-}
-.warningmessagebox p {
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
 
 /**
  * Links bound to user interface actions.

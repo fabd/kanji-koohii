@@ -30,7 +30,7 @@ Here you can explore all lessons in <strong><?= $sequenceName; ?></strong> - as 
 <div class="h-4"></div>
 
 <?php if (isset($extraFlashcards)): ?>
-  <div class="warningmessagebox">
+  <div class="ko-Box ko-Box--warning my-4">
     Note: <?= $extraFlashcards->total; ?> flashcards in your deck which are not part of <strong><?= rtkIndex::inst()->getSequenceName(); ?></strong>
     are ignored in the chart.
   </div>

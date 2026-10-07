@@ -77,32 +77,6 @@
   }
 }
 
-.ko-Notification {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-100px);
-  background-color: var(--clr-73ac50);
-  color: var(--clr-white);
-  padding: 16px 32px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px var(--clr-00000033);
-  opacity: 0;
-  transition:
-    transform 0.4s ease,
-    opacity 0.3s ease;
-  z-index: var(--z-toast);
-
-  &.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-
-  &.hide {
-    opacity: 0;
-  }
-}
-
 .ko-Tooltip {
   position: relative;
   transition: color 0.3s ease;

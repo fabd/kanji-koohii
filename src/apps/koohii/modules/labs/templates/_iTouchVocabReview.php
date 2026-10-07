@@ -55,7 +55,7 @@
         <div id="uiFcButtons0" style="display:none">
           <div class="uiFcButtons-prompt">Press Spacebar to continue</div>
 <button
-  class="ko-Btn ko-Btn--review uiFcBtnAF uiFcAction w-full"
+  class="ko-Btn ko-Btn--review ko-Btn--flip uiFcAction w-full"
   data-action="flip">
   <span><u>F</u>lip Card</span>
 </button>
@@ -64,7 +64,7 @@
         <div id="uiFcButtons1" style="display:none">
           <div class="uiFcButtons-prompt">Press Spacebar to continue</div>
 <button
-  class="ko-Btn ko-Btn--review uiFcBtnAC uiFcAction w-full"
+  class="ko-Btn ko-Btn--review ko-Btn--continue uiFcAction w-full"
   data-action="flip">
   <span>Continue</span>
 </button>
@@ -81,7 +81,7 @@
 
        <?= link_to('Search on google.co.jp', '/',
          ['id'     => 'search-google-jp',
-           'class' => 'ko-Btn ko-Btn--success block uiFcBtnAY', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
+           'class' => 'ko-Btn ko-Btn--success block ko-Btn--yes', 'title' => 'Search this word on Google Japan', 'target' => '_blank']); ?>
 
     </div><!-- /JSFcStats -->    
   </div>

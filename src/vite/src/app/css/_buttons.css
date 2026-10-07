@@ -280,7 +280,7 @@
 /* -------------------------------------------------------------------- */
 
 /* Flip Card */
-.uiFcBtnAF {
+.ko-Btn--flip {
   background-color: var(--clr-268bd2);
   background-image: linear-gradient(to bottom, var(--clr-268bd2) 0%, var(--clr-227dbd) 100%);
   --ko-btn-border: var(--clr-227dbd);
@@ -288,28 +288,29 @@
 }
 
 /* No */
-.uiFcBtnAN {
+.ko-Btn--no {
   background-image: linear-gradient(to bottom, var(--clr-b83600) 0%, var(--clr-a53000) 100%);
   --ko-btn-border: var(--clr-a53000);
   --ko-btn-hover-border: var(--clr-a53000);
 }
 
 /* Again */
-.uiFcBtnAG {
+.ko-Btn--again {
   background-image: linear-gradient(to bottom, var(--clr-ca4a15) 0%, var(--clr-b84314) 100%);
   --ko-btn-border: var(--clr-b84314);
   --ko-btn-hover-border: var(--clr-b84314);
 }
 
 /* Hard */
-.uiFcBtnAH {
+.ko-Btn--hard {
   background: var(--clr-e68f06);
   background: linear-gradient(to bottom, var(--clr-e68f06) 0%, var(--clr-bb7404) 100%);
   --ko-btn-border: var(--clr-bb7404);
   --ko-btn-hover-border: var(--clr-bb7404);
 }
 
-.uiFcBtnAY {
+/* Yes */
+.ko-Btn--yes {
   background: var(--clr-6fa300);
   background: linear-gradient(to bottom, var(--clr-6fa300) 0%, var(--clr-649300) 100%);
   --ko-btn-border: var(--clr-649300);
@@ -317,7 +318,7 @@
 }
 
 /* Easy */
-.uiFcBtnAE {
+.ko-Btn--easy {
   background-color: var(--clr-2aa198);
   background-image: linear-gradient(to bottom, var(--clr-2aa198) 0%, var(--clr-269189) 100%);
   --ko-btn-border: var(--clr-269189);
@@ -325,7 +326,7 @@
 }
 
 /* "Continue" button (Vocab Shuffle) */
-.uiFcBtnAC {
+.ko-Btn--continue {
   background: var(--clr-6fa300);
   background: linear-gradient(to bottom, var(--clr-6fa300) 0%, var(--clr-649300) 100%);
   --ko-btn-border: var(--clr-649300);

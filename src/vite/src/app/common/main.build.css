@@ -53,10 +53,10 @@
 /* Bootstrap 5 minimal build (forms) */
 
 .bg-confirm {
-  background-color: var(--clr-bg-gl);
+  background-color: color-mix(in srgb, var(--color-success), var(--clr-white) 75%);
 }
 .text-confirm {
-  color: var(--clr-bg-gd);
+  color: var(--color-success);
 }
 
 /* gradients */
@@ -348,7 +348,7 @@ main {
 
 .confirmwhatwasdone {
   padding: 10px;
-  background: var(--clr-cdecae);
+  background: color-mix(in srgb, var(--color-success), var(--clr-white) 75%);
   margin: 1em 0;
   border-radius: 5px;
   box-shadow: 0 1px 2px 0 var(--clr-aaa5824d);
@@ -356,7 +356,7 @@ main {
 }
 .confirmwhatwasdone p {
   margin: 0 0 10px;
-  color: var(--clr-226622);
+  color: var(--color-success);
 }
 
 .rounded-css3 {

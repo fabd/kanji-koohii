@@ -59,6 +59,12 @@
   --color-srs-undue: var(--clr-72c569); /* green, aka "fresh" */
   --color-srs-new: var(--clr-40a8e5); /* blue */
 
+  /* messages: one color per kind, the ko-Box background
+     and border are derived with color-mix() (see _box.css) */
+  --color-danger: var(--clr-d23c3c);
+  --color-success: var(--clr-3a7c3a);
+  --color-warning: var(--clr-d57600);
+
   /* navigation */
   --color-bg-nav: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
 

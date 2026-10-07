@@ -24,27 +24,39 @@
   border-color: var(--ko-box-bg, transparent);
 }
 
-/* colors */
+/* colors : derived from the message colors, see _tailwind.css */
 .ko-Box--danger {
-  --ko-box-bg: var(--clr-ffd1c9);
-  @apply text-(--clr-d23c3c);
-}
-.ko-Box--danger .ko-Box-title {
-  @apply text-(--clr-d23c3c);
+  --ko-box-bg: color-mix(in srgb, var(--color-danger), var(--clr-white) 75%);
+  color: var(--color-danger);
+  .ko-Box-title {
+    color: var(--color-danger);
+  }
 }
 .ko-Box--danger.ko-Box--stroke {
-  --ko-box-bg: var(--clr-f2a5a5); /* slightly darker for border variant */
+  /* slightly darker for border variant */
+  --ko-box-bg: color-mix(in srgb, var(--color-danger), var(--clr-white) 50%);
 }
 
 .ko-Box--success {
-  --ko-box-bg: var(--clr-d1e2bb);
-  @apply text-(--clr-3a7c3a);
+  --ko-box-bg: color-mix(in srgb, var(--color-success), var(--clr-white) 75%);
+  color: var(--color-success);
+
+  .ko-Box-title {
+    color: var(--color-success);
+  }
 }
-.ko-Box--success .ko-Box-title {
-  @apply text-(--clr-2c892c);
+
+.ko-Box--warning {
+  --ko-box-bg: color-mix(in srgb, var(--color-warning), var(--clr-white) 75%);
+  color: var(--color-warning);
+
+  .ko-Box-title {
+    color: var(--color-warning);
+  }
 }
 
 .ko-Box-title {
-  @apply font-bold text-(--clr-stone-950);
+  @apply font-bold;
+  color: var(--color-fg-bd);
   font-size: min(15px + 0.5vw, 18px);
 }

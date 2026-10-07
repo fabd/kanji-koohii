@@ -41,11 +41,11 @@
               <!-- view / edit story -->
 
               <div v-if="isEditing">
-                <div v-if="formHasErrors()" class="text-(--clr-fb2c36) mb-4">
+                <div v-if="formHasErrors()" class="text-danger mb-4">
                   <span v-html="formGetErrors()"></span>
                 </div>
 
-                <div v-if="cantsaveChars.length > 0" class="text-(--clr-9f0e0b) mb-4">
+                <div v-if="cantsaveChars.length > 0" class="text-danger mb-4">
                   <span class="font-bold">
                     Sorry, the database currently is not able to store unicode
                     characters above hexadecimal 0xFFFF. Typically, this means
@@ -60,12 +60,12 @@
                   <br />
                   <br />
                   <span class=""
-                    >Characters which can't be saved in the story:</span
+                    >Characters which can't be saved in the story: </span
                   >
                   <span
                     v-for="(chr, i) in cantsaveChars"
                     :key="i"
-                    class="bg-danger bg-opacity-10 mr-1 p-[0.25em] rounded-sm"
+                    class="mr-1"
                     >{{ chr }}</span
                   >
                 </div>

@@ -102,13 +102,6 @@
 .uiFcOptBtnStory {
 } /* EditStory window */
 
-/* answer button styles */
-.uiFcButtons .uiIBtnDefault {
-  font-size: 16px;
-  line-height: 41px;
-  height: 42px;
-} /* larger buttons for touch/mobile */
-
 /* flashcard answer area */
 .uiFcButtons {
   padding: 15px 0 25px;

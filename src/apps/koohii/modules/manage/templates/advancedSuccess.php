@@ -50,11 +50,11 @@
 
 </form>
 
-  <p> <em style="color:var(--clr-880000)">If the flashcard does not exist it is created.</em></p>
+  <p> <em style="color:var(--clr-882222)">If the flashcard does not exist it is created.</em></p>
 
   <p> <strong>Failed cards</strong> : use BOX 1,  DUE days 0</p>
 
-  <p> <strong>NEW cards</strong> : <em style="color:var(--clr-880000)">do NOT use this page</em>. Use <?= link_to('Add Custom selection', 'manage/addcustom'); ?> instead.</p>
+  <p> <strong>NEW cards</strong> : <em style="color:var(--clr-882222)">do NOT use this page</em>. Use <?= link_to('Add Custom selection', 'manage/addcustom'); ?> instead.</p>
 
   <p> <strong>Total reviews</strong> = fail count + success count.</p>
 

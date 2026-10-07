@@ -139,12 +139,12 @@
 .uiChartVs .left .pct {
   left: 0;
   background: var(--clr-b1fe66);
-  border-bottom-color: var(--clr-82ba4b);
+  border-bottom-color: color-mix(in srgb, var(--clr-b1fe66), var(--clr-black) 27%);
 }
 .uiChartVs .right .pct {
   right: 0;
   background: var(--clr-dd5d3a);
-  border-bottom-color: var(--clr-a2442b);
+  border-bottom-color: color-mix(in srgb, var(--clr-dd5d3a), var(--clr-black) 27%);
 }
 .uiChartVs .pct span {
   position: absolute;

@@ -62,7 +62,7 @@ $urls = [
 
 <?php if ($isSequenceComplete): ?>
       <div class="text-smx mb-3">
-        <span class="text-(--clr-2c892c) font-bold">Well done! <?= $progressName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
+        <span class="text-success font-bold">Well done! <?= $progressName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 <?php else: ?>
       <div class="text-smx mb-3">

@@ -88,9 +88,7 @@
   &.is-hard,
   &.is-yes,
   &.is-easy {
-    /* --bg: #ea8212;   orange hard */
-    --bg: var(--clr-5aa107);
-    /* --bg: #269189;  easy */
+    --bg: var(--clr-lime-700);
   }
 
   color: var(--fg);

@@ -233,7 +233,7 @@
   padding: 15px 35px;
 }
 #k-nav_d .k-nav_dropdown a:hover {
-  background: var(--clr-c7ecac);
+  background: var(--clr-lime-300);
   color: var(--clr-stone-950);
 }
 #k-nav_d .k-nav_dropdown .fa {

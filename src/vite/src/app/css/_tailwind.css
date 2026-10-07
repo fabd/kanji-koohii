@@ -77,7 +77,7 @@
   /* blog (site news) */
   --color-fg-blog-hd: var(--clr-fa3d60); /* post titles, and their underline */
   --color-fg-blog-date: var(--clr-568249);
-  --color-bg-blog-date: var(--clr-dff7d3);
+  --color-bg-blog-date: var(--clr-lime-100);
 }
 
 /*---------------------------------------------------------------------

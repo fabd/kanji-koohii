@@ -9,8 +9,6 @@
   /* widgets: table row (slightly brighter than CSS_BG_1) */
   --clr-tbl-bg: var(--clr-stone-50);
 
-  --clr-lime-600: var(--clr-6fa300);
-
   /* -------------------------------------------------------------------- */
   /* Palette */
   /* -------------------------------------------------------------------- */
@@ -48,6 +46,13 @@
   --clr-stone-200: #ede8de;
   --clr-stone-100: #f5efe5;
   --clr-stone-50: #f8f6ef;
+
+  /* lime greens ("golf" green) */
+  --clr-lime-900: #485f27;
+  --clr-lime-700: #6fa300;
+  --clr-lime-500: #8fb052;
+  --clr-lime-300: #c8e0ab;
+  --clr-lime-100: #e7f5cd;
 
   /* -------------------------------------------------------------------- */
   /* MERGE WIP  */
@@ -91,10 +96,8 @@
   --clr-ffc9c3: #ffc9c3;
   --clr-fbcfcf: #fbcfcf;
   --clr-a53000: #a53000;
-  --clr-b83600: #b83600;
   --clr-b74314: #b74314;
   --clr-b84314: #b84314;
-  --clr-ca4a15: #ca4a15;
   --clr-cb4b16: #cb4b16;
   --clr-e6461a: #e6461a;
   --clr-dd5d3a: #dd5d3a;
@@ -138,41 +141,21 @@
   --clr-f3f1dc: #f3f1dc;
   --clr-fdf9d2: #fdf9d2;
   --clr-649300: #649300;
-  --clr-6fa300: #6fa300;
   --clr-72a311: #72a311;
-  --clr-82b110: #82b110;
-  --clr-8fb052: #8fb052;
   --clr-b7d468: #b7d468;
-  --clr-aab38a: #aab38a;
-  --clr-d7e0b5: #d7e0b5;
   --clr-e3ecb1: #e3ecb1;
-  --clr-ecf1cd: #ecf1cd;
-  --clr-e6f2cd: #e6f2cd;
-  --clr-e7f5cd: #e7f5cd;
   --clr-42651d: #42651d;
-  --clr-485f27: #485f27;
-  --clr-5aa107: #5aa107;
   --clr-5db200: #5db200;
-  --clr-61932b: #61932b;
   --clr-73df00: #73df00;
-  --clr-73ac50: #73ac50;
   --clr-b1fe66: #b1fe66;
   --clr-bccdac: #bccdac;
-  --clr-c7dfa9: #c7dfa9;
-  --clr-c8e0ab: #c8e0ab;
   --clr-cde8ad: #cde8ad;
-  --clr-c7ecac: #c7ecac;
   --clr-d9f5bf: #d9f5bf;
-  --clr-e1ffc2: #e1ffc2;
-  --clr-4b9227: #4b9227;
   --clr-568249: #568249;
-  --clr-dff7d3: #dff7d3;
-  --clr-002200: #002200;
   --clr-008000: #008000;
   --clr-206717: #206717;
   --clr-3a7c3a: #3a7c3a;
   --clr-318a31: #318a31;
-  --clr-457a45: #457a45;
   --clr-448844: #448844;
   --clr-58ac50: #58ac50;
   --clr-5cb85c: #5cb85c;
@@ -180,12 +163,9 @@
   --clr-72c569: #72c569;
   --clr-4df45b: #4df45b;
   --clr-88cc88: #88cc88;
-  --clr-0f7439: #0f7439;
   --clr-27ae60: #27ae60;
   --clr-008236: #008236;
   --clr-49987c: #49987c;
-  --clr-269189: #269189;
-  --clr-2aa198: #2aa198;
   --clr-44ffff: #44ffff;
   --clr-11364b: #11364b;
   --clr-0b486b: #0b486b;
@@ -246,7 +226,6 @@
   --clr-e400b1: #e400b1;
   --clr-fc8dda: #fc8dda;
   --clr-a4156c: #a4156c;
-  --clr-adb2b6: #adb2b6;
   --clr-cc2d7a: #cc2d7a;
   --clr-f8c5e4: #f8c5e4;
   --clr-e70053: #e70053;

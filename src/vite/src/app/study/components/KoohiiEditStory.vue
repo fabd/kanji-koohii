@@ -149,7 +149,7 @@
 
                   <div
                     v-if="showLearnedMessage"
-                    class="text-right text-(--clr-61932b) pt-3"
+                    class="text-right text-success pt-3"
                   >
                     This kanji is ready for review in the
                     <strong>learned</strong> list.

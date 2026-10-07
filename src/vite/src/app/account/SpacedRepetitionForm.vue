@@ -112,7 +112,7 @@
           <span
             v-for="(i, k) in intervals"
             :key="k"
-            class="mr-2 pt-2 pb-1 px-2 leading-none font-mono bg-(--clr-d7e0b5) text-(--clr-485f27) border-b border-(--clr-aab38a) rounded-md"
+            class="mr-2 pt-2 pb-1 px-2 leading-none font-mono bg-(--clr-lime-300) text-(--clr-lime-900) border-b border-(--clr-lime-500) rounded-md"
             >{{ i.days }}</span
           >
         </div>

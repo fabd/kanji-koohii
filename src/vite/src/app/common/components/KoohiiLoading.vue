@@ -77,7 +77,7 @@ export default defineComponent({
   display: inline-block;
   width: 40px;
   height: 40px;
-  border: 4px solid var(--clr-c8e0ab);
+  border: 4px solid var(--clr-lime-300);
   border-top: 4px solid var(--clr-white);
   border-radius: 50%;
 

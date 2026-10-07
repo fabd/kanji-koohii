@@ -312,7 +312,7 @@ main {
   font-style: italic;
 }
 .ko-SiteNews a.readmore {
-  color: var(--clr-8fb052);
+  color: var(--clr-lime-500);
   font-weight: bold;
   text-decoration: none;
 }

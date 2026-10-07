@@ -52,7 +52,7 @@
 /* "known" word (contains known kanji) */
 .dict-list .dl_t .known,
 .dict-list .dl_item:hover .known {
-  background: var(--clr-e6f2cd);
+  background: var(--clr-lime-100);
   color: var(--clr-206717);
 }
 

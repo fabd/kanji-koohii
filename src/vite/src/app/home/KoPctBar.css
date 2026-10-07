@@ -13,7 +13,7 @@
 .ko-PctBar-fill {
   @apply inline-block h-full px-3;
   @apply rounded-md;
-  border-bottom: 3px solid var(--clr-4b9227);
+  border-bottom: 3px solid #4b9227;
   border-radius: var(--ko-pct-bar-radius);
   box-shadow: 1px 3px 5px 0px var(--clr-00000022); /* very subtle depth :) */
   background-color: var(--color-btn-success);

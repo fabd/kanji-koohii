@@ -38,7 +38,12 @@
 }
 
 .ko-Box--success {
-  --ko-box-bg: color-mix(in srgb, var(--color-success), var(--clr-white) 75%);
+  /* lighten, then a touch of yellow for a warmer "golf" green (~#d1e2bb) */
+  --ko-box-bg: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--color-success), var(--clr-white) 75%),
+    var(--clr-yellow) 10%
+  );
   color: var(--color-success);
 
   .ko-Box-title {

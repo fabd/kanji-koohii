@@ -185,10 +185,6 @@
 #k-nav_d .align-right {
   float: right;
 }
-#k-nav_d .sign-up a {
-  background: var(--clr-82b110);
-  color: var(--clr-white);
-}
 
 /* donate tab */
 #k-nav_d .donate a {

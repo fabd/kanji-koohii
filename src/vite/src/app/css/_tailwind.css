@@ -70,6 +70,17 @@
   --color-card-fg: var(--clr-neutral-900);
   --color-card-border-empty: color-mix(in srgb, var(--color-bd-fg) 20%, transparent);
 
+  /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
+  --color-story-bg: var(--clr-white);
+  --color-story-bg-dark: color-mix(
+    in srgb,
+    var(--color-story-bg),
+    var(--clr-black) 4%
+  );
+  --color-story-fg: var(--clr-100800);
+  --color-story-fg-link: var(--clr-448844); /* kanji links in story (eg. #123) */
+  --color-story-border: var(--clr-e8e5c9);
+
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: var(--clr-neutral-700);
 

@@ -18,7 +18,7 @@
 .edition {
   padding-left: 0.5em;
   font-size: 0.83em; /* 10px */
-  color: var(--clr-neutral-400);
+  color: var(--color-muted-fg);
 }
 
 #rtkmain {

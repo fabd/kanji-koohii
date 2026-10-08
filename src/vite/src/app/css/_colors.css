@@ -54,6 +54,13 @@
   --clr-lime-300: #c8e0ab;
   --clr-lime-100: #e7f5cd;
 
+  /* reds */
+  --clr-red-900: #882222;
+  --clr-red-700: #bd2420;
+  --clr-red-500: #d23c3c;
+  --clr-red-300: #f86464;
+  --clr-red-100: #fbcfcf;
+
   /* -------------------------------------------------------------------- */
   /* MERGE WIP  */
   /* -------------------------------------------------------------------- */
@@ -77,26 +84,11 @@
   --clr-8e8d8c: #8e8d8c;
   --clr-adb2b6: #adb2b6;
   --clr-e0e2e5: #e0e2e5;
-  --clr-882222: #882222;
-  --clr-bd2420: #bd2420;
-  --clr-e21107: #e21107;
-  --clr-e7000b: #e7000b;
-  --clr-c82222: #c82222;
   --clr-a94442: #a94442;
-  --clr-c0392b: #c0392b;
-  --clr-ff0000: #ff0000;
   --clr-d23c3c: #d23c3c;
   --clr-ea5b5b: #ea5b5b;
-  --clr-ff4d4d: #ff4d4d;
-  --clr-ff4e4e: #ff4e4e;
-  --clr-cc8888: #cc8888;
   --clr-f86464: #f86464;
-  --clr-ff7876: #ff7876;
-  --clr-ff9a9a: #ff9a9a;
-  --clr-ffc9c3: #ffc9c3;
-  --clr-fbcfcf: #fbcfcf;
   --clr-a53000: #a53000;
-  --clr-b74314: #b74314;
   --clr-b84314: #b84314;
   --clr-e6461a: #e6461a;
   --clr-dd5d3a: #dd5d3a;

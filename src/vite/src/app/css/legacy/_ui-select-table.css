@@ -117,12 +117,12 @@
 
   /* errors */
   tbody td.error {
-    background-color: var(--clr-fbcfcf);
+    background-color: var(--clr-red-100);
   }
 
   /* CELL STYLES */
   td.red {
-    color: var(--clr-c82222);
+    color: var(--clr-red-700);
   }
 
   /* failed reviews */

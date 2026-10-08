@@ -215,7 +215,7 @@
 }
 .sharedstory_btn:hover .fa-exclamation,
 #my-stories .fa-exclamation {
-  color: var(--clr-ff9a9a);
+  color: var(--clr-red-300);
 }
 .sharedstory_btn:hover .fa-star:before,
 #my-stories .fa-star:before {
@@ -224,7 +224,7 @@
 
 /* shared stories hide/unhide reported stories */
 .sharedstory .JsUnhide {
-  color: var(--clr-cc8888);
+  color: var(--clr-red-500);
   font-size: 10px;
   margin-left: 1em;
 }

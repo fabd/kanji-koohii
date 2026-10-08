@@ -153,11 +153,6 @@ div.col-box-bis {
   padding: 15px 10px;
 }
 
-/* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
-.kkSymfonyCache {
-  border: 1px solid var(--clr-ff0000);
-}
-
 /* ---------------------------- */
 /* Main Layout                  */
 /* ---------------------------- */
@@ -357,44 +352,6 @@ main {
 .confirmwhatwasdone p {
   margin: 0 0 10px;
   color: var(--color-success);
-}
-
-.rounded-css3 {
-  border-radius: 5px;
-}
-
-
-/**
- * Links bound to user interface actions.
- */
-a.cancel,
-a.delete {
-  color: var(--clr-ff0000);
-  padding: 1px;
-}
-a.cancel:hover,
-a.delete:hover {
-  color: var(--clr-white);
-  background: var(--clr-ff0000);
-}
-
-a.proceed {
-  color: var(--clr-005cb1);
-  padding: 1px;
-}
-a.proceed:hover {
-  color: var(--clr-white);
-  background: var(--clr-005cb1);
-}
-
-a.subdued {
-  color: var(--clr-neutral-700);
-  padding: 1px;
-}
-a:hover.subdued {
-  background: var(--clr-neutral-700);
-  color: var(--clr-white);
-  padding: 1px;
 }
 
 /* ------------------ */

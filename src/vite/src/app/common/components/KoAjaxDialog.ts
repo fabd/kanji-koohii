@@ -47,7 +47,7 @@ export class KoAjaxDialog extends KoDialog {
     const body = this.getBody();
     body.innerHTML = `
 <div class="">
-  <div class="bg-(--clr-e7000b) text-(--clr-white) px-2 py-1 text-md">
+  <div class="bg-(--clr-red-700) text-(--clr-white) px-2 py-1 text-md">
     ${message} <a href="#" class="text-(--clr-ffd230) font-bold is-retry">Reconnect</a>
   </div>
   <div>

@@ -78,13 +78,13 @@ If you like, you can also:
 
 <?php elseif (0 && $sf_user->isAuthenticated()): ?>
 
-  <p style="color:var(--clr-882222)">
+  <p style="color:var(--clr-red-900)">
       The <strong>contact form</strong> is currently disabled, please use the email shown above.
     </p>
 
 <?php else: ?>
 
-    <p style="color:var(--clr-882222)">
+    <p style="color:var(--clr-red-900)">
       The <strong>contact form</strong> is available to members only (please <?= link_to('sign in', '@login'); ?>).
     </p>
 

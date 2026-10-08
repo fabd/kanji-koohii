@@ -44,7 +44,7 @@
 
 .ko-Dialog-closeBtn {
   border: none;
-  color: var(--clr-ff4d4d);
+  color: var(--clr-red-300);
   cursor: pointer;
   line-height: 1;
   padding: 0;

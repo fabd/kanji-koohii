@@ -19,7 +19,7 @@
   </ul>
 
 <?php } else { ?>
-  <p style="color:var(--clr-ff0000);">Woops, the session may have expired. The review summary is no longer available.</p>
+  <p style="color:var(--clr-red-500);">Woops, the session may have expired. The review summary is no longer available.</p>
 <?php } ?>
 </div>
 

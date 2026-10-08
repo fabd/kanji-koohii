@@ -7,7 +7,7 @@ with_footer();
 
 <p>Enter your email address below and you will receive new password instructions.</p>
 
-<p class="text-(--clr-882222) font-bold">If you do not receive an email please check the SPAM folder!</p>
+<p class="text-(--clr-red-900) font-bold">If you do not receive an email please check the SPAM folder!</p>
 
 <div class="ko-Box mb-3 max-w-[380px]">
   <?php

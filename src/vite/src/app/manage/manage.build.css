@@ -27,7 +27,7 @@
   color: var(--clr-stone-950);
 }
 .views .warning {
-  color: var(--clr-ff0000);
+  color: var(--clr-red-500);
   font-weight: bold;
 }
 

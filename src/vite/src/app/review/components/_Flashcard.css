@@ -35,9 +35,9 @@
   top: 3px;
   z-index: var(--z-toast);
   padding: 0.5em 0.8em;
-  background: var(--clr-c0392b);
+  background: var(--clr-red-700);
   border-radius: 3px;
-  color: var(--clr-ffc9c3);
+  color: var(--clr-red-100);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
@@ -171,7 +171,7 @@
     color: var(--clr-27ae60);
   }
   .fa-times {
-    color: var(--clr-c0392b);
+    color: var(--clr-red-700);
   }
 }
 
@@ -252,7 +252,7 @@
   font-size: 18px;
   line-height: 1.2em;
   letter-spacing: 4px;
-  color: var(--clr-ff0000);
+  color: var(--clr-red-500);
 }
 
 /* ================================================================================= */

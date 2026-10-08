@@ -166,7 +166,7 @@
 
 /* cloze deletion <span.cloze><u>(kanji)</u></span> */
 .d-yomi .cloze {
-  color: var(--clr-e21107);
+  color: var(--clr-red-700);
   text-decoration: none;
 }
 .d-yomi .cloze u {

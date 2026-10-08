@@ -93,6 +93,6 @@
 
 /* the <em> surrounding tags originate in KoohiiFormat mixin, used by DictEntry.r and VocabPick.reading */
 .vocab_r em {
-  border-bottom: 2px solid var(--clr-ff4e4e); /*color:#ff4e4e;*/
+  border-bottom: 2px solid var(--clr-red-300); /*color:#ff4e4e;*/
   font-style: normal;
 }

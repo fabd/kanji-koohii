@@ -55,12 +55,12 @@ export default defineComponent({
   color: var(--clr-neutral-400);
 }
 .ko-charsleft--invalid {
-  background-color: var(--clr-ff7876);
+  background-color: var(--clr-red-300);
   color: var(--clr-white);
   font-weight: bold;
 }
 .ko-charsleft--warning {
-  color: var(--clr-ff7876);
+  color: var(--clr-red-300);
   font-weight: bold;
 }
 </style>

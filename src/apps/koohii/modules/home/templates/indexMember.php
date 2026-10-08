@@ -112,7 +112,7 @@ if ($restudyCount) {
 
 <?php if (!$hasFlashcards): ?>
   <div class="flex items-start mb-4">
-    <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-(--clr-42413d40) rounded-xs"/>
+    <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-black/10 rounded-xs"/>
     <div class="text-smx ml-4">
       <strong>Spaced Repetition</strong> will be available after you <?= link_to('add kanji flashcards', '@manage', ['class' => 'whitespace-nowrap']); ?>.
     </div> 

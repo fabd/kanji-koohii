@@ -68,21 +68,28 @@
   font:
     bold 14px/1em Arial,
     sans-serif;
-  color: var(--clr-white);
+  color: var(--color-btn-fg);
   text-shadow: 0 -1px var(--clr-00000080);
   -webkit-border-radius: 5px;
   border-radius: 0 0 5px 5px;
-  background-color: var(--clr-50abeb);
-  background-image: linear-gradient(to bottom, var(--clr-50abeb) 0%, var(--clr-489ad4) 100%);
+  background-color: var(--color-fc-btn);
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-fc-btn) 0%,
+    color-mix(in srgb, var(--color-fc-btn), var(--clr-black) 10%) 100%
+  );
 }
 .uiFcOptBtn:hover,
 .uiFcOptBtn:focus {
-  color: var(--clr-e6eefb);
-  background-color: var(--clr-007be3);
-  background-image: linear-gradient(to bottom, var(--clr-268bd2) 0%, var(--clr-227dbd) 100%);
+  color: color-mix(in srgb, var(--color-fc-btn), var(--clr-white) 85%);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-fc-btn), var(--clr-black) 15%) 0%,
+    color-mix(in srgb, var(--color-fc-btn), var(--clr-black) 25%) 100%
+  );
 }
 .uiFcOptBtn u {
-  color: var(--clr-eaf6ff);
+  color: color-mix(in srgb, var(--color-fc-btn), var(--clr-white) 88%);
   padding-right: 1px;
 }
 .uiFcOptBtn,

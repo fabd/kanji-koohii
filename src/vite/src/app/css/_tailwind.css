@@ -65,6 +65,14 @@
   --color-success: var(--clr-3a7c3a);
   --color-warning: var(--clr-d57600);
 
+  /* cards : flashcards, kanji cards (dashboard lesson pane) */
+  --color-card-bg: var(--clr-white);
+  --color-card-fg: var(--clr-neutral-900);
+  --color-card-border-empty: color-mix(in srgb, var(--color-bd-fg) 20%, transparent);
+
+  /* lesson map (dashboard lesson pane) */
+  --color-lessonmap-bg: var(--clr-neutral-700);
+
   /* navigation */
   --color-nav-bg: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
 

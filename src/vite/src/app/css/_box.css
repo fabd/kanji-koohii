@@ -26,7 +26,8 @@
 
 /* colors : derived from the message colors, see _tailwind.css */
 .ko-Box--danger {
-  --ko-box-bg: color-mix(in srgb, var(--color-danger), var(--clr-white) 75%);
+  /* a light, warm shade of the danger color (#ffd1c9 with the default theme) */
+  --ko-box-bg: oklch(from var(--color-danger) 0.898 calc(c * 0.285) calc(h + 4.4));
   color: var(--color-danger);
   .ko-Box-title {
     color: var(--color-danger);

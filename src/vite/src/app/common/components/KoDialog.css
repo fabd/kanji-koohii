@@ -68,7 +68,8 @@
   font-size: 14px;
   line-height: 1.4;
 
-  background: var(--clr-white);
+  background: var(--color-story-bg);
+  color: var(--color-story-fg);
   border-radius: 3px;
 
   box-shadow: inset 0 1px 3px var(--clr-00000033);

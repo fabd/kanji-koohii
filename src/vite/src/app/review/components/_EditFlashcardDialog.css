@@ -16,7 +16,7 @@
     text-align: left;
   }
   th {
-    color: var(--clr-neutral-600);
+    color: var(--color-story-fg);
     width: 30%;
     white-space: nowrap;
   }

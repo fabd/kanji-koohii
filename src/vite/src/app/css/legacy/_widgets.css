@@ -160,15 +160,15 @@
  * Side tabs navigation.
  */
 .side-menu {
-  @apply border border-(--color-bg-box-dark) rounded-sm mb-4 text-sm;
+  @apply border border-(--color-box-bg-dark) rounded-sm mb-4 text-sm;
 }
 .side-menu h2 {
   padding: 8px 10px;
   margin: 0;
   font-size: 14px;
   font-weight: normal;
-  background-color: var(--color-bg-box);
-  border-bottom: 1px solid var(--color-bg-box-light);
+  background-color: var(--color-box-bg);
+  border-bottom: 1px solid var(--color-box-bg-light);
   color: var(--clr-stone-900);
 }
 .side-menu ul {
@@ -178,7 +178,7 @@
 }
 .side-menu li {
   margin: 0;
-  border-bottom: 1px solid var(--color-bg-box-light);
+  border-bottom: 1px solid var(--color-box-bg-light);
 }
 .side-menu li:last-child {
   border-bottom: none;
@@ -189,7 +189,7 @@
   text-decoration: none;
 }
 .side-menu li a:hover {
-  background-color: var(--color-bg-box);
+  background-color: var(--color-box-bg);
 }
 .side-menu li.active {
 }

@@ -55,10 +55,10 @@
 }
 
 .ko-StudyNewCount {
-  --ko-btn-bg: var(--color-bg-box);
-  --ko-btn-hover-bg: var(--color-bg-box);
-  --ko-btn-border: var(--color-bg-box);
-  --ko-btn-hover-border: var(--color-bg-box-dark);
+  --ko-btn-bg: var(--color-box-bg);
+  --ko-btn-hover-bg: var(--color-box-bg);
+  --ko-btn-border: var(--color-box-bg);
+  --ko-btn-hover-border: var(--color-box-bg-dark);
   --ko-btn-hover-text: var(--clr-005cb1);
   font-weight: bold;
   color: var(--color-btn-primary);
@@ -73,7 +73,7 @@
     position: absolute;
     left: -5px;
     top: -4px;
-    border: 3px solid var(--color-bg-page);
+    border: 3px solid var(--color-page-bg);
   }
 }
 

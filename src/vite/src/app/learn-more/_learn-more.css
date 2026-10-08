@@ -99,7 +99,7 @@
 
 .ko-DocMain-stacks {
   @apply mb-6 p-6;
-  background-color: var(--color-bg-box-light);
+  background-color: var(--color-box-bg-light);
 
   dt {
     float: left;

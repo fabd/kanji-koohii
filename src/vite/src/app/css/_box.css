@@ -9,7 +9,7 @@
 /* ==================================================================== */
 
 .ko-Box {
-  --ko-box-bg: var(--color-bg-box);
+  --ko-box-bg: var(--color-box-bg);
 
   background-color: var(--ko-box-bg);
   border-color: var(--ko-box-bg);
@@ -62,6 +62,6 @@
 
 .ko-Box-title {
   @apply font-bold;
-  color: var(--color-fg-bd);
+  color: var(--color-bd-fg);
   font-size: min(15px + 0.5vw, 18px);
 }

@@ -304,7 +304,7 @@
 /* ------------------ */
 
 #browse {
-  background: var(--color-bg-box);
+  background: var(--color-box-bg);
   padding: 10px 15px;
   border-bottom: 1px solid var(--clr-daccb1);
 }
@@ -318,8 +318,8 @@
 .ko-Btn--search {
   @apply block;
   --ko-btn-text: var(--clr-stone-800);
-  --ko-btn-bg: var(--color-bg-box-dark);
-  --ko-btn-border: var(--color-bg-box-dark);
+  --ko-btn-bg: var(--color-box-bg-dark);
+  --ko-btn-border: var(--color-box-bg-dark);
   --ko-btn-hover-bg: var(--clr-stone-500);
   --ko-btn-hover-border: var(--clr-stone-500);
   --ko-btn-hover-text: var(--clr-stone-950);

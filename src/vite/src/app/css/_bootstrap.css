@@ -46,7 +46,7 @@
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 0.875rem;
-  color: var(--color-fg-muted);
+  color: var(--color-muted-fg);
 }
 
 .form-control {
@@ -56,27 +56,27 @@
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.5;
-  color: var(--color-fg-input);
+  color: var(--color-input-fg);
   appearance: none;
-  background-color: var(--color-bg-input);
+  background-color: var(--color-input-bg);
   background-clip: padding-box;
-  border: var(--bs-border-width) solid var(--color-border-input);
+  border: var(--bs-border-width) solid var(--color-input-border);
   border-radius: var(--bs-border-radius);
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 
   &:focus {
-    color: var(--color-fg-input);
-    background-color: var(--color-bg-input);
-    border-color: var(--color-border-input-focus);
+    color: var(--color-input-fg);
+    background-color: var(--color-input-bg);
+    border-color: var(--color-input-border-focus);
     outline: 0;
     box-shadow: 0 0 0 0.25rem var(--color-focus-glow);
   }
 
   &:disabled {
     background-color: transparent;
-    border-color: var(--color-border-input);
+    border-color: var(--color-input-border);
     opacity: 0.8;
   }
 }
@@ -89,22 +89,22 @@
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.5;
-  color: var(--color-fg-input);
+  color: var(--color-input-fg);
   appearance: none;
-  background-color: var(--color-bg-input);
+  background-color: var(--color-input-bg);
   background-image:
     var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 16px 12px;
-  border: var(--bs-border-width) solid var(--color-border-input);
+  border: var(--bs-border-width) solid var(--color-input-border);
   border-radius: var(--bs-border-radius);
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 
   &:focus {
-    border-color: var(--color-border-input-focus);
+    border-color: var(--color-input-border-focus);
     outline: 0;
     box-shadow: 0 0 0 0.25rem var(--color-focus-glow);
   }
@@ -130,7 +130,7 @@
 /* next to label of optional inputs:
    <label for=...>Location</label><span class="form-optional">(optional)</span> */
 .form-optional {
-  @apply text-fg-muted ml-4;
+  @apply text-muted-fg ml-4;
   font-size: var(--form-label-font-size);
 }
 
@@ -151,12 +151,12 @@
   width: 100%;
   margin-top: 0.25rem;
   font-size: 0.875rem;
-  color: var(--color-fg-invalid);
+  color: var(--color-invalid-fg);
 }
 
 /* backend adds `.is-invalid` to invalid fields after a form is submitted */
 .form-control.is-invalid {
-  border-color: var(--color-border-invalid);
+  border-color: var(--color-invalid-border);
   padding-right: calc(1.5em + 0.75rem);
   background-image: var(--form-feedback-icon-invalid);
   background-repeat: no-repeat;
@@ -164,8 +164,8 @@
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 
   &:focus {
-    border-color: var(--color-border-invalid);
-    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--color-border-invalid) 25%, transparent);
+    border-color: var(--color-invalid-border);
+    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--color-invalid-border) 25%, transparent);
   }
 }
 

@@ -55,7 +55,7 @@
             </cjk-lang-ja>
           </div>
 
-          <div class="mb-4 pb-4 border-b border-(--color-bg-box-dark)">
+          <div class="mb-4 pb-4 border-b border-(--color-box-bg-dark)">
             <button class="ko-Btn ko-Btn--success" @click="onClickToEdit">{{
               "Enter more japanese text"
             }}</button>

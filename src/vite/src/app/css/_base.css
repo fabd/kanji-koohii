@@ -20,15 +20,15 @@ html {
 }
 
 body {
-  background: var(--color-bg-page);
+  background: var(--color-page-bg);
   --ko-loading-bg: var(--clr-f5efe580);
-  color: var(--color-fg-bd);
+  color: var(--color-bd-fg);
 }
 
 blockquote {
   font-size: inherit;
   border-left: none;
-  color: var(--color-fg-muted);
+  color: var(--color-muted-fg);
 }
 
 /* tailwind fix - `bolder` doesn't look good, no idea */
@@ -39,7 +39,7 @@ strong {
 
 /* links */
 a {
-  color: var(--color-fg-link);
+  color: var(--color-link-fg);
   text-decoration: underline;
 }
 a:hover {
@@ -64,7 +64,7 @@ h2,
 h3,
 h4,
 h5 {
-  color: var(--color-fg-hd);
+  color: var(--color-hd-fg);
   font-weight: normal;
   line-height: 1.2;
   margin-top: 0;

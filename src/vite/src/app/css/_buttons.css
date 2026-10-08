@@ -87,21 +87,21 @@
 .ko-Btn {
   --ko-btn-bg: var(--color-btn-default);
   --ko-btn-border: var(--color-btn-default);
-  --ko-btn-text: var(--color-fg-btn);
-  --ko-btn-hover-text: var(--color-fg-btn);
+  --ko-btn-text: var(--color-btn-fg);
+  --ko-btn-hover-text: var(--color-btn-fg);
   --ko-btn-hover-bg: color-mix(in srgb, var(--ko-btn-bg), var(--clr-black) 8%);
   --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 8%);
-  --ko-btn-disabled-bg: var(--color-bg-btn-disabled);
-  --ko-btn-disabled-border: var(--color-bg-btn-disabled);
-  --ko-btn-disabled-text: var(--color-fg-btn-disabled);
+  --ko-btn-disabled-bg: var(--color-btn-bg-disabled);
+  --ko-btn-disabled-border: var(--color-btn-bg-disabled);
+  --ko-btn-disabled-text: var(--color-btn-fg-disabled);
 
   /* (override) warm color for the default outline button */
   &.is-ghost {
     --ko-btn-bg: transparent;
     --ko-btn-hover-bg: transparent;
-    --ko-btn-border: var(--color-bg-box-dark);
+    --ko-btn-border: var(--color-box-bg-dark);
     --ko-btn-text: var(--clr-stone-800);
-    --ko-btn-hover-text: var(--color-fg-bd);
+    --ko-btn-hover-text: var(--color-bd-fg);
     --ko-btn-hover-border: var(--clr-stone-700);
   }
 }
@@ -251,7 +251,7 @@
   padding: 0.2em 0.4em;
   border-radius: 0.25em;
   margin: 0 0.25em;
-  border: 1px solid var(--color-bg-box-dark);
+  border: 1px solid var(--color-box-bg-dark);
   color: var(--clr-stone-800);
 }
 .ko-ExBtn--danger {

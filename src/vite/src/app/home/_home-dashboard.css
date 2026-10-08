@@ -24,7 +24,7 @@
 /*//////////////////////////////////////////////////////////////// */
 .ko-Dash-srsIcoBtn {
   /* note: the height of these "buttons" comes from the parent's `items-stretch` */
-  @apply text-smx text-(--clr-stone-950) no-underline cursor-pointer rounded-md;
+  @apply text-smx text-bd-fg no-underline cursor-pointer rounded-md;
 
   &:hover {
     @apply no-underline;
@@ -72,7 +72,7 @@
   overflow-y: auto;
   padding-right: 1rem; /* breathing room between cards and scrollbar */
 
-  --trackColor: var(--color-bg-box-dark);
+  --trackColor: var(--color-box-bg-dark);
   --thumbColor: var(--clr-neutral-50);
   --trackRadius: 6px;
 
@@ -297,7 +297,7 @@
   @apply rounded-md text-xs px-2 font-light;
   height: 27px;
   line-height: 27px;
-  background-color: var(--color-bg-box-dark);
+  background-color: var(--color-box-bg-dark);
   @apply text-(--clr-stone-950);
 }
 

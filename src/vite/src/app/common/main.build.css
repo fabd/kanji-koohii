@@ -110,22 +110,22 @@
   font-size: 14px;
   line-height: 1.2;
   width: 100%;
-  border-left: 1px solid var(--color-bg-box-light);
+  border-left: 1px solid var(--color-box-bg-light);
   border-collapse: collapse;
   text-align: left;
 
   th {
-    background-color: var(--color-bg-box);
+    background-color: var(--color-box-bg);
     border-top-width: 0;
   }
   th,
   td {
-    border-top: 1px solid var(--color-bg-box);
-    border-right: 1px solid var(--color-bg-box);
+    border-top: 1px solid var(--color-box-bg);
+    border-right: 1px solid var(--color-box-bg);
     padding: 0.7em 0.8em;
   }
   td {
-    background: var(--color-bg-box-light);
+    background: var(--color-box-bg-light);
   }
 }
 
@@ -149,7 +149,7 @@ div.col-box-bis {
 
 .box-side {
   border-radius: 3px;
-  background-color: var(--color-bg-box);
+  background-color: var(--color-box-bg);
   padding: 15px 10px;
 }
 
@@ -164,10 +164,10 @@ div.col-box-bis {
 
 /* extend the footer end of gradient color to bottom of page */
 body.with-footer {
-  background: var(--color-bg-ft-end);
+  background: var(--color-ft-bg-end);
 }
 main {
-  background: var(--color-bg-page);
+  background: var(--color-page-bg);
 }
 
 main {
@@ -188,28 +188,28 @@ main {
 /* ---------------------------- */
 .ko-PageFooter-grad {
   /* http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
-  background: linear-gradient(to bottom, var(--color-bg-ft-top) 0%, var(--color-bg-ft-end) 100%);
+  background: linear-gradient(to bottom, var(--color-ft-bg-top) 0%, var(--color-ft-bg-end) 100%);
 }
 
 .ko-PageFooter {
   text-align: center;
   padding: 0 0 5em;
-  color: var(--color-fg-ft);
+  color: var(--color-ft-fg);
   @apply text-smx sm:text-base;
 
   a {
-    color: var(--color-fg-ft-link);
+    color: var(--color-ft-fg-link);
     text-decoration: none;
   }
 
   a:hover {
-    color: var(--color-fg-ft-link);
+    color: var(--color-ft-fg-link);
     text-decoration: underline;
   }
 
   /* fontawesome icons */
   .fa {
-    color: var(--color-fg-ft);
+    color: var(--color-ft-fg);
     margin-right: 0.5em;
   }
 }
@@ -218,7 +218,7 @@ main {
   a {
     padding-left: 0.8em;
     padding-right: 0.8em; /*tap target*/
-    color: var(--color-fg-ft);
+    color: var(--color-ft-fg);
     text-decoration: none;
   }
 }
@@ -227,7 +227,7 @@ main {
   position: relative;
   width: 100%;
   height: 29px;
-  background-color: var(--color-bg-page);
+  background-color: var(--color-page-bg);
 
   /* the dots: the png is only used as a mask (its alpha channel), so the
      dots color comes from a variable */
@@ -235,7 +235,7 @@ main {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: var(--color-bg-ft-top);
+    background-color: var(--color-ft-bg-top);
     mask: url(/koohii/landing/bubbles_gdt.png) repeat-x 0 0;
   }
 }
@@ -279,11 +279,11 @@ main {
 
 .ko-SiteNews-hd {
   font-size: 18px;
-  border-bottom: 1px solid var(--color-fg-blog-hd);
+  border-bottom: 1px solid var(--color-blog-hd-fg);
 }
 
 .ko-SiteNews-hd a {
-  color: var(--color-fg-blog-hd);
+  color: var(--color-blog-hd-fg);
   text-decoration: none;
   font-weight: bold;
 }
@@ -293,13 +293,13 @@ main {
   padding: 4px 5px;
   margin-top: -4px;
   border-radius: 3px;
-  color: var(--color-fg-blog-date);
-  background: var(--color-bg-blog-date);
+  color: var(--color-blog-date-fg);
+  background: var(--color-blog-date-bg);
 }
 
 .ko-SiteNews-body {
   margin: 0 0 25px;
-  padding: 0 0 2em; /*border-bottom:1px solid var(--color-bg-box);*/
+  padding: 0 0 2em; /*border-bottom:1px solid var(--color-box-bg);*/
   color: var(--clr-neutral-900);
   clear: both;
 }
@@ -332,9 +332,9 @@ main {
     padding: 5px 10px;
     display: block;
     text-decoration: none;
-    @apply border-dotted border-(--color-bg-box-dark) border-b;
+    @apply border-dotted border-(--color-box-bg-dark) border-b;
     &:hover {
-      background-color: var(--color-bg-box);
+      background-color: var(--color-box-bg);
     }
   }
   span {

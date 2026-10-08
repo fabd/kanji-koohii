@@ -17,41 +17,41 @@
   ---------------------------------------------------------------------*/
 @theme static {
   /* foundation colors */
-  --color-bg-page: var(--clr-stone-100);
-  --color-bg-box: var(--clr-stone-300);
-  --color-bg-box-dark: var(--clr-stone-400);
-  --color-bg-box-light: color-mix(
+  --color-page-bg: var(--clr-stone-100);
+  --color-box-bg: var(--clr-stone-300);
+  --color-box-bg-dark: var(--clr-stone-400);
+  --color-box-bg-light: color-mix(
     in srgb,
-    var(--color-bg-box),
+    var(--color-box-bg),
     var(--clr-white) 25%
   );
 
   /* text */
-  --color-fg-bd: var(--clr-stone-950); /* body text */
-  --color-fg-muted: color-mix(in srgb, var(--color-fg-bd), #0000 30%);
-  --color-fg-hd: var(--clr-7f7d85); /* headings */
-  --color-fg-link: var(--clr-005cb1);
+  --color-bd-fg: var(--clr-stone-950); /* body text */
+  --color-muted-fg: color-mix(in srgb, var(--color-bd-fg), #0000 30%);
+  --color-hd-fg: var(--clr-7f7d85); /* headings */
+  --color-link-fg: var(--clr-005cb1);
 
   /* borders */
-  --color-border: var(--color-bg-box-dark);
+  --color-border: var(--color-box-bg-dark);
 
   /* buttons : hover colors are derived from these */
   --color-btn-default: var(--clr-8e8d8c); /* default warm gray bg color */
   --color-btn-primary: var(--clr-3272d1); /* saturated blue */
   --color-btn-danger: var(--clr-ea5b5b);
   --color-btn-success: var(--clr-58ac50);
-  --color-fg-btn: var(--clr-white);
-  --color-bg-btn-disabled: var(--clr-neutral-300);
-  --color-fg-btn-disabled: var(--clr-neutral-600);
+  --color-btn-fg: var(--clr-white);
+  --color-btn-bg-disabled: var(--clr-neutral-300);
+  --color-btn-fg-disabled: var(--clr-neutral-600);
 
   /* forms : inputs, textareas, selects (see _bootstrap.css) */
-  --color-bg-input: var(--clr-white);
-  --color-fg-input: var(--clr-neutral-950);
-  --color-border-input: var(--color-border);
-  --color-border-input-focus: var(--clr-99bddb);
+  --color-input-bg: var(--clr-white);
+  --color-input-fg: var(--clr-neutral-950);
+  --color-input-border: var(--color-border);
+  --color-input-border-focus: var(--clr-99bddb);
   --color-focus-glow: var(--clr-337ab740);
-  --color-fg-invalid: var(--clr-a94442);
-  --color-border-invalid: var(--clr-a94442);
+  --color-invalid-fg: var(--clr-a94442);
+  --color-invalid-border: var(--clr-a94442);
 
   /* SRS status colors, variants are derived with color-mix() */
   --color-srs-fail: var(--clr-f86464); /* red */
@@ -66,18 +66,18 @@
   --color-warning: var(--clr-d57600);
 
   /* navigation */
-  --color-bg-nav: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
+  --color-nav-bg: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
 
   /* footer */
-  --color-bg-ft-top: var(--clr-f8c5e4); /* the dots, and top of the gradient */
-  --color-bg-ft-end: var(--clr-f0ddd4); /* gradient bottom, and below */
-  --color-fg-ft: var(--clr-8b1566); /* text, icons */
-  --color-fg-ft-link: var(--clr-e400b1);
+  --color-ft-bg-top: var(--clr-f8c5e4); /* the dots, and top of the gradient */
+  --color-ft-bg-end: var(--clr-f0ddd4); /* gradient bottom, and below */
+  --color-ft-fg: var(--clr-8b1566); /* text, icons */
+  --color-ft-fg-link: var(--clr-e400b1);
 
   /* blog (site news) */
-  --color-fg-blog-hd: var(--clr-fa3d60); /* post titles, and their underline */
-  --color-fg-blog-date: var(--clr-568249);
-  --color-bg-blog-date: var(--clr-lime-100);
+  --color-blog-hd-fg: var(--clr-fa3d60); /* post titles, and their underline */
+  --color-blog-date-fg: var(--clr-568249);
+  --color-blog-date-bg: var(--clr-lime-100);
 }
 
 /*---------------------------------------------------------------------

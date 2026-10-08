@@ -28,10 +28,10 @@
 }
 
 #k-nav_d {
-  background: var(--color-bg-nav);
+  background: var(--color-nav-bg);
 }
 #k-nav_m {
-  background: var(--color-bg-nav);
+  background: var(--color-nav-bg);
 }
 
 /* hires logo, 105px = 33% */
@@ -129,7 +129,7 @@
 
 #k-nav_d .k-nav_ft {
   width: 100%;
-  background-color: var(--color-bg-box-light);
+  background-color: var(--color-box-bg-light);
   height: 5px;
   border-bottom: 2px solid var(--clr-d9d6bc);
   font-size: 1px;
@@ -168,7 +168,7 @@
 } /* comes first */
 #k-nav_d .active,
 #k-nav_d .active a:hover {
-  background-color: var(--color-bg-box-light);
+  background-color: var(--color-box-bg-light);
 }
 #k-nav_d .active a,
 #k-nav_d .k-nav_dropdown a {
@@ -216,7 +216,7 @@
   padding: 0;
   margin: 0;
   line-height: 32px;
-  background: var(--color-bg-box-light);
+  background: var(--color-box-bg-light);
   box-shadow: 0 2px 2px var(--clr-00000033);
   border-left: 1px solid var(--clr-d5d4c4);
   border-right: 1px solid var(--clr-d5d4c4);
@@ -224,7 +224,7 @@
 #k-nav_d .k-nav_dropdown li {
   float: none;
   white-space: nowrap;
-  @apply border-0 border-t border-(--color-bg-box-dark);
+  @apply border-0 border-t border-(--color-box-bg-dark);
 }
 #k-nav_d .k-nav_dropdown li:first-child {
   border-top: none;

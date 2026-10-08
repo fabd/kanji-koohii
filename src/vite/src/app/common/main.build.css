@@ -341,19 +341,6 @@ main {
 /* Confirmation & error boxes */
 /* ---------------------------- */
 
-.confirmwhatwasdone {
-  padding: 10px;
-  background: color-mix(in srgb, var(--color-success), var(--clr-white) 75%);
-  margin: 1em 0;
-  border-radius: 5px;
-  box-shadow: 0 1px 2px 0 var(--clr-aaa5824d);
-  /* -webkit-transition:background-color 0.5s; transition:background-color 0.5s;*/
-}
-.confirmwhatwasdone p {
-  margin: 0 0 10px;
-  color: var(--color-success);
-}
-
 /* ------------------ */
 /* CJK Fonts          */
 /* ------------------ */

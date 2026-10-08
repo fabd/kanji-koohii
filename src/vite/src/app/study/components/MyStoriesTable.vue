@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div v-if="selected === 'public'" class="confirmwhatwasdone">
+  <div v-if="selected === 'public'" class="ko-Box ko-Box--success my-4">
     Note: displaying only <strong>public stories</strong>.
   </div>
 </template>

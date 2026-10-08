@@ -1,6 +1,7 @@
+/* the progress bar colors are not themeable */
 .ko-PctBar {
-  background-color: var(--clr-neutral-300);
-  border-bottom: 3px solid var(--clr-neutral-400);
+  background-color: #cccccc;
+  border-bottom: 3px solid #aaaaaa;
 
   --ko-pct-bar-h: 42px; /* height total with borders */
   --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);
@@ -15,9 +16,9 @@
   @apply rounded-md;
   border-bottom: 3px solid #4b9227;
   border-radius: var(--ko-pct-bar-radius);
-  box-shadow: 1px 3px 5px 0px var(--clr-00000022); /* very subtle depth :) */
-  background-color: var(--color-btn-success);
-  color: var(--clr-white);
+  box-shadow: 1px 3px 5px 0px #00000022; /* very subtle depth :) */
+  background-color: #58ac50;
+  color: #ffffff;
   font-size: 20px;
   text-align: right;
   line-height: var(--ko-pct-bar-fill-h);
@@ -27,5 +28,5 @@
   background-color: transparent;
   border: none;
   box-shadow: none;
-  color: var(--clr-22222288);
+  color: #22222288;
 }

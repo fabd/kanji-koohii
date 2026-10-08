@@ -126,7 +126,7 @@
   @apply flex;
   height: 100%;
   gap: 1px;
-  color: var(--color-muted-fg); /* color of the "off" items (empty cells) */
+  color: #7f7d75; /* color of the "off" items (the dots) */
   text-align: center;
 }
 

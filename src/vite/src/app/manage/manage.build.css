@@ -21,16 +21,6 @@
   margin: 0 0 0 1em;
 }
 
-/* view pane styles */
-.views,
-.views p {
-  color: var(--clr-stone-950);
-}
-.views .warning {
-  color: var(--clr-red-500);
-  font-weight: bold;
-}
-
 /* remove flashcards list */
 .selection-table .uiTabular tbody td {
   cursor: pointer;

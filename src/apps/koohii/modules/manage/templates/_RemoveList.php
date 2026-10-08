@@ -6,7 +6,7 @@
 
 <?php else: ?>
 
-  <p> <span class="warning">Remove flashcards</span> by selecting items in the list below.</p>
+  <p> <span class="text-danger font-bold">Remove flashcards</span> by selecting items in the list below.</p>
   <p> Removing flashcards does <em>not</em> affect stories entered on the Study page.</p>
 
   <?= form_errors(); ?>

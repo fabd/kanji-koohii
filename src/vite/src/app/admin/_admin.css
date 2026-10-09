@@ -10,7 +10,26 @@
   --main-px: 1.5rem;
 
   --admin-bg: var(--clr-neutral-50);
-  --admin-text: var(--clr-425065);
+  --admin-text: var(--admin-425065);
+
+  /* admin colors (not themeable) */
+  --admin-425065: #425065;
+  --admin-7d7f85: #7d7f85;
+  --admin-36557d: #36557d;
+  --admin-849dbe: #849dbe;
+  --admin-a9c8e1: #a9c8e1;
+  --admin-00000044: #00000044;
+  --admin-ffffff40: rgb(255 255 255 / 25%);
+  --admin-5c9fd6: #5c9fd6;
+  --admin-000000cc: #000000cc;
+  --admin-70c2f5: #70c2f5;
+  --admin-e0e2e5: #e0e2e5;
+  --admin-404e65: #404e65;
+  --admin-e4e5eb: #e4e5eb;
+  --admin-4df45b: #4df45b;
+  --admin-c047cb: #c047cb;
+  --admin-44ffff: #44ffff;
+  --admin-49987c: #49987c;
 }
 
 .ko-Admin {
@@ -23,7 +42,7 @@
   // Generic admin styles (override koohii's)
   // -------------------------------------------------------------------- */
   h2 {
-    color: var(--clr-7d7f85);
+    color: var(--admin-7d7f85);
   }
 }
 .ko-Admin-main {
@@ -32,7 +51,7 @@
 }
 
 .ko-AdminNav {
-  @apply bg-(--clr-36557d) pt-3;
+  @apply bg-(--admin-36557d) pt-3;
   padding-left: var(--main-px);
   padding-right: var(--main-px);
 }
@@ -40,7 +59,7 @@
   padding-left: 25px;
   background: url(/backend/brick_go.png) no-repeat 0 50%;
   @apply font-bold text-[20px] mb-0;
-  color: var(--clr-849dbe);
+  color: var(--admin-849dbe);
 }
 
 .ko-AdminNav-toprightItem {
@@ -49,10 +68,10 @@
 
   &.is-user {
     padding: 3px 8px;
-    @apply rounded-sm text-(--clr-a9c8e1);
+    @apply rounded-sm text-(--admin-a9c8e1);
     padding-left: calc(8px + 16px + 4px);
-    background: var(--clr-00000044) url(/backend/user.png) no-repeat 6px 50%;
-    box-shadow: 0 0.5px 0 var(--clr-ffffff40);
+    background: var(--admin-00000044) url(/backend/user.png) no-repeat 6px 50%;
+    box-shadow: 0 0.5px 0 var(--admin-ffffff40);
   }
 }
 
@@ -67,12 +86,12 @@
     @apply block;
     @apply font-bold text-sm text-(--clr-white) no-underline hover:underline;
     padding: 4px 12px 3px;
-    background-color: var(--clr-5c9fd6);
+    background-color: var(--admin-5c9fd6);
   }
 
   .is-active {
     background: var(--admin-bg);
-    color: var(--clr-000000cc);
+    color: var(--admin-000000cc);
   }
 }
 
@@ -92,7 +111,7 @@
   /* default main title (large) for the main view */
   h2 {
     font: bold 18px/1.1em Arial, sans-serif;
-    color: var(--clr-36557d);
+    color: var(--admin-36557d);
     text-transform: none;
   }
 
@@ -108,13 +127,13 @@
 
   li::marker {
     font-size: 1.25em;
-    color: var(--clr-70c2f5);
+    color: var(--admin-70c2f5);
   }
 
   /* misc */
   samp,
   code {
-    background-color: var(--clr-e0e2e5);
+    background-color: var(--admin-e0e2e5);
     color: var(--clr-neutral-800);
     font-size: 0.9em;
     padding: 0.1em 0.2em;
@@ -143,8 +162,8 @@ pre {
 
   &.info,
   &.printr {
-    background-color: var(--clr-404e65);
-    color: var(--clr-e4e5eb);
+    background-color: var(--admin-404e65);
+    color: var(--admin-e4e5eb);
   }
 
   /* --------------------------------------------------------------------
@@ -152,7 +171,7 @@ pre {
   // -------------------------------------------------------------------- */
   &.printr {
     .key {
-      color: var(--clr-4df45b);
+      color: var(--admin-4df45b);
       font-weight: bold;
     }
 
@@ -166,7 +185,7 @@ pre {
   }
 
   .var {
-    color: var(--clr-c047cb);
+    color: var(--admin-c047cb);
   }
 
   .php {
@@ -174,7 +193,7 @@ pre {
   }
 
   .static {
-    color: var(--clr-44ffff);
+    color: var(--admin-44ffff);
     font-weight: bold;
   }
 
@@ -183,7 +202,7 @@ pre {
   }
 
   .string {
-    color: var(--clr-4df45b);
+    color: var(--admin-4df45b);
   }
 
   .keyword {
@@ -192,11 +211,11 @@ pre {
 
   /* PhpDoc */
   .phpdoc {
-    color: var(--clr-49987c);
+    color: var(--admin-49987c);
   }
 
   .type {
-    color: var(--clr-49987c);
+    color: var(--admin-49987c);
     font-weight: bold;
   }
 }

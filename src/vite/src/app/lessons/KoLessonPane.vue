@@ -16,7 +16,7 @@
       <!-- <div class="text-warm text-lg ml-auto">{{ lessonPos }} / {{ lessonCount }} kanji</div> -->
 
       <div
-        class="px-2 py-1 rounded-sm bg-[#E1FFC2] ux-text-lg text-[#3a7c3a] font-bold leading-none whitespace-nowrap ml-auto"
+        class="px-2 py-1 rounded-sm ux-text-md text-(--color-muted-fg) font-bold leading-none whitespace-nowrap ml-auto"
         >{{ `${kanjiCount} / ${lessonCount}` }}<span class="hidden md:inline"> kanji</span></div
       >
     </div>
@@ -42,7 +42,7 @@
     <!-- --- -->
     <!-- MID -->
     <!-- --- -->
-    <div v-if="isOpen" class="mt-5 pt-4 border-t border-[#c2bdaf]">
+    <div v-if="isOpen" class="mt-5 pt-4 border-t border-(--clr-stone-500)">
       <transition appear name="lesson-fadein">
         <div
           :class="{

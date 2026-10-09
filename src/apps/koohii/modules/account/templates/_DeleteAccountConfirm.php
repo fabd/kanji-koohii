@@ -28,7 +28,7 @@ echo _bs_form_group(
 );
 
 ?>
-  <p class="mt-8 mb-2 text-[#9f0e0b]">
+  <p class="mt-8 mb-2 text-danger">
     <strong>Account deletion is final</strong>. There will be no way to restore your account.
   </p>
   <?= _bs_form_group(

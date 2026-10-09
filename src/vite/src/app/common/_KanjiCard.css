@@ -17,13 +17,15 @@
 .ko-FlashcardBg {
   background: linear-gradient(
     148.74deg,
-    #f8f7f6 0%,
-    #f8f8f8 80%,
-    #ffffff 93%,
-    #eaeaea 100%
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 3%) 0%,
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 4%) 80%,
+    var(--color-card-bg) 93%,
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 7%) 100%
   );
 
   border: 0;
-  border-bottom: 1px solid #bab6ae; /* hexa(#6c6c6c, .37); */
+  /* not themeable for now : a darker shade of the card background */
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 24%);
   border-radius: 0;
 }

@@ -10,7 +10,7 @@
         </tbody>
       </table>
 
-      <div v-if="hasErrors()" class="text-red-500 mb-4">
+      <div v-if="hasErrors()" class="text-danger mb-4">
         <span v-html="getErrors()"></span>
       </div>
 
@@ -28,7 +28,7 @@
     </template>
 
     <template v-if="action === 'delete'">
-      <p class="text-md font-bold text-red-500 mb-2">Delete flashcard for {{ kanjiData.kanji }} (#{{ kanjiData.framenum }}) ?</p>
+      <p class="text-md font-bold text-danger mb-2">Delete flashcard for {{ kanjiData.kanji }} (#{{ kanjiData.framenum }}) ?</p>
       <p class="italic">Note: only the flashcard is deleted, stories are not affected.</p>
 
       <div class="text-right">
@@ -38,7 +38,7 @@
     </template>
 
     <template v-if="action === 'delete-done'">
-      <p class="text-md text-green-700 mb-2"><i class="fa fa-check mr-2"></i>Flashcard deleted.</p>
+      <p class="text-md text-(--clr-008236) mb-2"><i class="fa fa-check mr-2"></i>Flashcard deleted.</p>
       <div class="text-center">
         <button class="ko-Btn ko-Btn--success block w-full JSDialogHide">Close</button>
       </div>
@@ -87,8 +87,8 @@ export default defineComponent({
       let label: string;
       if (card.leitnerbox === 1) {
         label = card.totalreviews === 0
-          ? '<span class="text-blue-500 font-semibold">New cards (blue pile)</span>'
-          : '<span class="text-red-500 font-semibold">Restudy cards (red pile)</span>';
+          ? '<span class="text-(--clr-2b7fff) font-semibold">New cards (blue pile)</span>'
+          : '<span class="text-danger font-semibold">Restudy cards (red pile)</span>';
       }
       else {
         label = `${card.leitnerbox - 1}`;

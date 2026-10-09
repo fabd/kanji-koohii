@@ -28,17 +28,17 @@ $koohii_tweet_params = koohii_get_tweet_q(sfConfig::get('app_website_url'), 'Kan
   padding: 4px 8px;
   font-weight: bold;
   font-size: 18px;
-  color: #fff;
+  color: var(--clr-white);
   cursor: pointer;
   text-decoration: none;
-  background: #4faeec; /*1b95e0*/
+  background: var(--clr-4faeec); /*1b95e0*/
   border-radius: 3px;
 }
 #custom-tweet-button i {
   width: 16px;
   padding: 0 0.5em 0 0;
   text-align: center;
-  color: #fff;
+  color: var(--clr-white);
 }
 #custom-tweet-button span {
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -49,8 +49,6 @@ $koohii_tweet_params = koohii_get_tweet_q(sfConfig::get('app_website_url'), 'Kan
 <div class="col-sm-2">
   <div id="home-partners">
     <?php // echo image_tag('/images/2.0/home/sidebar-'.CJ_MODE.'-badge.gif', 'size="131x131" style="margin:0 0 0 5px;"')?>
-
-    <?php // echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block'))?>
 
     <div id="custom-tweet-button">
       <a href="https://twitter.com/intent/tweet?<?= $koohii_tweet_params; ?>" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i><span>Tweet</span></a>

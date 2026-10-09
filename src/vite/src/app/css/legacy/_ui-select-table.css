@@ -24,18 +24,18 @@
 //
 // -------------------------------------------------------------------- */
 .uiTabular {
-  border: 1px solid #bdbcaa;
-  border-top: 1px solid #d9d8ce;
+  border: 1px solid var(--clr-bdbcaa);
+  border-top: 1px solid var(--clr-d9d8ce);
   width: 100%;
 
   /* thead */
   th {
     padding: 0;
     font: 13px Arial, sans-serif;
-    color: #5c5b52;
-    border-bottom: 1px solid #a1a1a1;
+    color: var(--clr-stone-900);
+    border-bottom: 1px solid var(--clr-neutral-400);
     text-align: left;
-    background: #d9d6b7 url(/assets/legacy/widgets-selecttable.gif) repeat-x 0 0;
+    background: var(--clr-d9d6b7) url(/assets/legacy/widgets-selecttable.gif) repeat-x 0 0;
   }
 
   /* use `<span class="is-padded">` for labels within TH that are not links */
@@ -50,18 +50,18 @@
 
   /* non-sortable */
   th a {
-    color: #005cb1;
+    color: var(--clr-005cb1);
   }
 
   th a:hover {
     text-decoration: underline;
-    color: #005cb1;
+    color: var(--clr-005cb1);
     padding-right: 12px;
-    background-color: #fff;
+    background-color: var(--clr-white);
   }
 
   th a.active {
-    color: #000;
+    color: var(--clr-black);
   }
 
   /* sort icon */
@@ -86,10 +86,10 @@
   /* tbody */
   td {
     padding: 10px 10px;
-    color: #666;
+    color: var(--clr-neutral-700);
     font-size: 13px;
     line-height: 1.1em;
-    border-bottom: 1px solid #e8e5ca;
+    border-bottom: 1px solid var(--clr-e8e5ca);
   }
 
   &.is-dense td {
@@ -98,36 +98,36 @@
 
   tbody td {
     background-color: var(--clr-tbl-bg);
-    color: #5c5b52;
+    color: var(--clr-stone-900);
   }
 
   .odd td {
-    background-color: #fff;
+    background-color: var(--clr-white);
   }
 
   /* uiTable hover */
   tbody tr.hover {
-    background-color: #fff;
+    background-color: var(--clr-white);
   }
 
   tbody var {
-    color: #000;
+    color: var(--clr-black);
     font-size: 13px;
   }
 
   /* errors */
   tbody td.error {
-    background-color: #fbcfcf;
+    background-color: var(--clr-red-100);
   }
 
   /* CELL STYLES */
   td.red {
-    color: #c82222;
+    color: var(--clr-red-700);
   }
 
   /* failed reviews */
   td.compound {
-    color: #000;
+    color: var(--clr-black);
     padding-top: 0;
     padding-bottom: 0;
   }
@@ -136,7 +136,7 @@
     text-align: center;
     font-size: 24px;
     line-height: 1em;
-    color: #000;
+    color: var(--clr-black);
     padding-top: 4px;
     padding-bottom: 4px;
   }

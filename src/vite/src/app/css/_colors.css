@@ -1,0 +1,223 @@
+/* ==================================================================== */
+/* COLORS */
+/* ==================================================================== */
+
+:root {
+  /* -------------------------------------------------------------------- */
+  /* Colors ( legacy sass stuff - needs renaming/merging ) */
+  /* -------------------------------------------------------------------- */
+  /* widgets: table row (slightly brighter than CSS_BG_1) */
+  --clr-tbl-bg: var(--clr-stone-50);
+
+  /* -------------------------------------------------------------------- */
+  /* Palette */
+  /* -------------------------------------------------------------------- */
+  /*
+    Non-semantic color scales. These are plain CSS variables, not Tailwind
+    theme colors: semantic colors go in the Tailwind theme, and refer to
+    these, eg. var(--clr-neutral-600) or in Tailwind "text-(--clr-neutral-600)".
+  */
+
+  /* pure grays (identical R, G, B) */
+  --clr-black: #000000;
+  --clr-neutral-950: #222222;
+  --clr-neutral-900: #333333;
+  --clr-neutral-800: #444444;
+  --clr-neutral-700: #666666;
+  --clr-neutral-600: #757575;
+  --clr-neutral-500: #888888;
+  --clr-neutral-400: #aaaaaa;
+  --clr-neutral-300: #cccccc;
+  --clr-neutral-200: #dddddd;
+  --clr-neutral-100: #eeeeee;
+  --clr-neutral-50: #f5f5f5;
+  --clr-white: #ffffff;
+  --clr-yellow: #ffff00; /* for color-mix(), eg. warmer greens */
+
+  /* warm grays */
+  --clr-stone-950: #42413d;
+  --clr-stone-900: #5c5b52;
+  --clr-stone-800: #6f6961;
+  --clr-stone-700: #7f7d75;
+  --clr-stone-600: #a19e97;
+  --clr-stone-500: #c2bdaf;
+  --clr-stone-400: #dbd4c3;
+  --clr-stone-300: #e7e1d3;
+  --clr-stone-200: #ede8de;
+  --clr-stone-100: #f5efe5;
+  --clr-stone-50: #f8f6ef;
+
+  /* lime greens ("golf" green) */
+  --clr-lime-900: #485f27;
+  --clr-lime-700: #6fa300;
+  --clr-lime-500: #8fb052;
+  --clr-lime-300: #c8e0ab;
+  --clr-lime-100: #e7f5cd;
+
+  /* reds */
+  --clr-red-900: #882222;
+  --clr-red-700: #bd2420;
+  --clr-red-500: #d23c3c;
+  --clr-red-300: #f86464;
+  --clr-red-100: #fbcfcf;
+
+  /* -------------------------------------------------------------------- */
+  /* MERGE WIP  */
+  /* -------------------------------------------------------------------- */
+  /*
+    Every RGB color used in the stylesheets and templates, named after its
+    hex value, eg. "#7f7d85" => var(--clr-7f7d85).
+
+    This is a first step towards dark mode: next, similar colors will be
+    merged into the palette above, then given semantic names.
+
+    Sorted by near-grays first (by lightness), then by hue, so similar
+    colors are side by side.
+
+    In Tailwind classes use the variable shorthand, eg. "bg-(--clr-7f7d85)".
+  */
+
+  --clr-2b3034: #2b3034;
+  --clr-646250: #646250;
+  --clr-7f7d85: #7f7d85;
+  --clr-8e8d8c: #8e8d8c;
+  --clr-adb2b6: #adb2b6;
+  --clr-a94442: #a94442;
+  --clr-d23c3c: #d23c3c;
+  --clr-ea5b5b: #ea5b5b;
+  --clr-f86464: #f86464;
+  --clr-a53000: #a53000;
+  --clr-b84314: #b84314;
+  --clr-e6461a: #e6461a;
+  --clr-dd5d3a: #dd5d3a;
+  --clr-f0ddd4: #f0ddd4;
+  --clr-100800: #100800;
+  --clr-221100: #221100;
+  --clr-554433: #554433;
+  --clr-935a00: #935a00;
+  --clr-f37200: #f37200;
+  --clr-f7a247: #f7a247;
+  --clr-5e440a: #5e440a;
+  --clr-f0c000: #f0c000;
+  --clr-e2b437: #e2b437;
+  --clr-ffca52: #ffca52;
+  --clr-ffd230: #ffd230;
+  --clr-daccb1: #daccb1;
+  --clr-d57600: #d57600;
+  --clr-dfdbce: #dfdbce;
+  --clr-ffe5b2: #ffe5b2;
+  --clr-faefc6: #faefc6;
+  --clr-fef3c6: #fef3c6;
+  --clr-eae6db: #eae6db;
+  --clr-716e57: #716e57;
+  --clr-9b9878: #9b9878;
+  --clr-cfd67f: #cfd67f;
+  --clr-c1bea3: #c1bea3;
+  --clr-bdbcaa: #bdbcaa;
+  --clr-c9c7b5: #c9c7b5;
+  --clr-d9d6b7: #d9d6b7;
+  --clr-d9d6bc: #d9d6bc;
+  --clr-dad8bd: #dad8bd;
+  --clr-d5d4c4: #d5d4c4;
+  --clr-d9d8ce: #d9d8ce;
+  --clr-e3e0c9: #e3e0c9;
+  --clr-e8e5c9: #e8e5c9;
+  --clr-e8e5ca: #e8e5ca;
+  --clr-eeedd0: #eeedd0;
+  --clr-f3f1dc: #f3f1dc;
+  --clr-fdf9d2: #fdf9d2;
+  --clr-72a311: #72a311;
+  --clr-b7d468: #b7d468;
+  --clr-e3ecb1: #e3ecb1;
+  --clr-42651d: #42651d;
+  --clr-5db200: #5db200;
+  --clr-73df00: #73df00;
+  --clr-b1fe66: #b1fe66;
+  --clr-bccdac: #bccdac;
+  --clr-cde8ad: #cde8ad;
+  --clr-d9f5bf: #d9f5bf;
+  --clr-568249: #568249;
+  --clr-008000: #008000;
+  --clr-206717: #206717;
+  --clr-3a7c3a: #3a7c3a;
+  --clr-318a31: #318a31;
+  --clr-448844: #448844;
+  --clr-58ac50: #58ac50;
+  --clr-5cb85c: #5cb85c;
+  --clr-6cbe6b: #6cbe6b;
+  --clr-72c569: #72c569;
+  --clr-88cc88: #88cc88;
+  --clr-27ae60: #27ae60;
+  --clr-008236: #008236;
+  --clr-11364b: #11364b;
+  --clr-0b486b: #0b486b;
+  --clr-6a8898: #6a8898;
+  --clr-40acda: #40acda;
+  --clr-40a8e5: #40a8e5;
+  --clr-51b5df: #51b5df;
+  --clr-0a3e62: #0a3e62;
+  --clr-395269: #395269;
+  --clr-005cb1: #005cb1;
+  --clr-0064b2: #0064b2;
+  --clr-0065b2: #0065b2;
+  --clr-268bd2: #268bd2;
+  --clr-0097ff: #0097ff;
+  --clr-3272d1: #3272d1;
+  --clr-408fc6: #408fc6;
+  --clr-478ac0: #478ac0;
+  --clr-4a9dd6: #4a9dd6;
+  --clr-3b82f6: #3b82f6;
+  --clr-2b7fff: #2b7fff;
+  --clr-4faeec: #4faeec;
+  --clr-50abeb: #50abeb;
+  --clr-7dc2f3: #7dc2f3;
+  --clr-99bddb: #99bddb;
+  --clr-92c3e4: #92c3e4;
+  --clr-94d3ff: #94d3ff;
+  --clr-c4e6ff: #c4e6ff;
+  --clr-dbeafe: #dbeafe;
+  --clr-1d4ed8: #1d4ed8;
+  --clr-e5e7eb: #e5e7eb;
+  --clr-e6e8ec: #e6e8ec;
+  --clr-f3f4f6: #f3f4f6;
+  --clr-0000ff: #0000ff;
+  --clr-583d8a: #583d8a;
+  --clr-b5a5d5: #b5a5d5;
+  --clr-d2c8e5: #d2c8e5;
+  --clr-ddcdfc: #ddcdfc;
+  --clr-e4d9ff: #e4d9ff;
+  --clr-f8c8f8: #f8c8f8;
+  --clr-8b1566: #8b1566;
+  --clr-b10081: #b10081;
+  --clr-e400b1: #e400b1;
+  --clr-fc8dda: #fc8dda;
+  --clr-a4156c: #a4156c;
+  --clr-cc2d7a: #cc2d7a;
+  --clr-f8c5e4: #f8c5e4;
+  --clr-e70053: #e70053;
+  --clr-fa3d60: #fa3d60;
+  --clr-eb3741: #eb3741;
+  --clr-e9575e: #e9575e;
+  --clr-ff424d: #ff424d;
+
+  /* with alpha transparency */
+  --clr-00000026: rgba(0, 0, 0, 0.15);
+  --clr-00000033: #00000033;
+  --clr-00000040: rgba(0, 0, 0, 0.25);
+  --clr-0000004d: rgba(0, 0, 0, 0.3);
+  --clr-00000080: rgba(0, 0, 0, 0.5);
+  --clr-00000088: #00000088;
+  --clr-44444411: #44444411;
+  --clr-44444466: #44444466;
+  --clr-44444488: #44444488;
+  --clr-ffffff11: #ffffff11;
+  --clr-ffffff4d: rgba(255, 255, 255, 0.3);
+  --clr-ffffff66: rgba(255, 255, 255, 0.4);
+  --clr-ffffff88: #ffffff88;
+  --clr-ffffffbf: rgba(255, 255, 255, 0.75);
+  --clr-ffffffcc: #ffffffcc;
+  --clr-c39a5cbd: #c39a5cbd;
+  --clr-f5efe580: #f5efe580;
+  --clr-aaa5824d: rgba(170, 165, 130, 0.3);
+  --clr-337ab740: #337ab740;
+}

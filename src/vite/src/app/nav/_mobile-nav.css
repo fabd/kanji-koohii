@@ -14,11 +14,11 @@
   display: block;
   list-style: none;
   margin-bottom: 0.75rem;
-  color: #adb2b6;
+  color: var(--clr-adb2b6);
 
   a {
     display: block;
-    color: #adb2b6;
+    color: var(--clr-adb2b6);
     outline: none;
     text-decoration: none;
   }
@@ -54,7 +54,7 @@
 
 /* is-opened state & transition */
 .k-nav-menu-item.is-opened .k-nav-menu-item__label {
-  color: #fff;
+  color: var(--clr-white);
 }
 
 /* applies to a collapse container WITHOUT any margins or padding */

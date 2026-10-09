@@ -14,7 +14,7 @@ kk_globals_put('CUSTOM_REVIEW_PROPS', [
 <section>
 
     <div class="mb-8">
-      <p class="text-[#cc2d7a] mb-4">
+      <p class="text-(--clr-cc2d7a) mb-4">
         <i class="fas fa-info-circle mr-2"></i><strong>Custom review modes do <u>not</u> use Spaced Repetition (SRS).</strong>
       </p>
 
@@ -76,42 +76,3 @@ echo _bs_form_group(
 
   </div><!-- /col -->
 </div><!-- /row -->
-
-<?php
-// OBSOLETE?
-/*
-  <div class="ko-Box text-smx mb-4">
-
-    <h3 class="mb-4">Review from learned kanji</h3>
-
-    <p>You have <strong><?php echo $knowncount ?></strong> learned kanji (<strong class="clr-srs-due">due</strong> and <strong class="clr-srs-undue">scheduled</strong> cards).</p>
-
-<?php if ($knowncount > 0): ?>
-    <?php echo form_tag('review/free', ['method' => 'get']) ?>
-<?php
-    echo _bs_form_group(
-      _bs_input_checkbox('reverse', ['label' => 'Kanji to Keyword (reverse mode)'])
-    );
-?>
-    <div class="form-group">
-      Review
-      <?php echo input_tag('known', $knowndefault, ['class' => 'form-control form-control-i w-[4.5em] mx-2']) ?>
-      of <?php echo $knowncount ?> learned kanji.
-    </div>
-<?php
-    echo _bs_form_group(
-      ['class' => 'mb-2'],
-      _bs_submit_tag('Start Review')
-    );
-?>
-    </form>
-<?php else: ?>
-
-    <p><i class="fa fa-info-circle"></i> This mode is available once you <strong>add flashcards</strong> to the SRS
-      and have at least one succesful review.
-    </p>
-
-<?php endif ?>
-
-  </div>
-*/

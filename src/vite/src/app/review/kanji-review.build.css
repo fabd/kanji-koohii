@@ -27,7 +27,7 @@ body {
 .ko-Btn--review {
   height: 42px;
   font-weight: bold;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 -1px var(--clr-00000080);
 
   &:active {
     transform: scale(0.975, 0.95);

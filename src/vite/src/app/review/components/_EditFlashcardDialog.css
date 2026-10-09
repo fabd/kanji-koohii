@@ -16,7 +16,7 @@
     text-align: left;
   }
   th {
-    color: #737373;
+    color: var(--color-story-fg);
     width: 30%;
     white-space: nowrap;
   }
@@ -29,8 +29,8 @@
   }
 
   .is-loading {
-    background: #a19e97;
-    border-color: #a19e97;
+    background: var(--clr-stone-600);
+    border-color: var(--clr-stone-600);
     cursor: not-allowed;
   }
 
@@ -41,8 +41,8 @@
   }
 
   .is-spinner {
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
+    border: 2px solid var(--clr-ffffff4d);
+    border-top-color: var(--clr-white);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
@@ -55,11 +55,11 @@
 }
 
 .ko-StudyNewCount {
-  --ko-btn-bg: var(--clr-bg-1);
-  --ko-btn-hover-bg: var(--clr-bg-1);
-  --ko-btn-border: var(--clr-bg-1);
-  --ko-btn-hover-border: #cdc5af;
-  --ko-btn-hover-text: #005cb1;
+  --ko-btn-bg: var(--color-box-bg);
+  --ko-btn-hover-bg: var(--color-box-bg);
+  --ko-btn-border: var(--color-box-bg);
+  --ko-btn-hover-border: var(--color-box-bg-dark);
+  --ko-btn-hover-text: var(--clr-005cb1);
   font-weight: bold;
   color: var(--color-btn-primary);
 
@@ -68,38 +68,12 @@
     display: inline-block;
     width: 14px;
     height: 14px;
-    background: #005cb1;
+    background: var(--clr-005cb1);
     border-radius: 100%;
     position: absolute;
     left: -5px;
     top: -4px;
-    border: 3px solid var(--clr-bg-body);
-  }
-}
-
-.ko-Notification {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-100px);
-  background-color: #73ac50;
-  color: white;
-  padding: 16px 32px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transition:
-    transform 0.4s ease,
-    opacity 0.3s ease;
-  z-index: var(--z-toast);
-
-  &.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-
-  &.hide {
-    opacity: 0;
+    border: 3px solid var(--color-page-bg);
   }
 }
 
@@ -108,8 +82,8 @@
   transition: color 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   outline: none;
-  --tooltip-bg: #605c58;
-  --tooltip-fg: #fff;
+  --tooltip-bg: var(--clr-stone-800);
+  --tooltip-fg: var(--clr-white);
 
   &::before {
     content: attr(data-tooltip);
@@ -127,7 +101,7 @@
     transition:
       opacity 0.1s ease,
       transform 0.1s ease;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 3px var(--clr-00000026);
     z-index: var(--z-overlay);
   }
 

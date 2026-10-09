@@ -7,7 +7,7 @@
         Tip: press <kbd>TAB</kbd> to save and edit the next keyword.
       </p>
 
-      <div v-if="formHasErrors()" class="formerrormessage">
+      <div v-if="formHasErrors()" class="ko-Box ko-Box--danger my-4">
         <span v-html="formGetErrors()"></span>
       </div>
 
@@ -17,7 +17,7 @@
           type="text"
           name="keyword"
           v-model="keyword"
-          class="form-control bg-amber-100 focus:bg-amber-100"
+          class="form-control bg-(--clr-fef3c6) focus:bg-(--clr-fef3c6)"
           autocomplete="off"
           @keydown="onKeyDown($event)"
         />
@@ -34,7 +34,7 @@
 
           <a
             href="#"
-            class="inline-block text-[#f37200] hover:text-[#f37200] mr-4"
+            class="inline-block text-(--clr-f37200) hover:text-(--clr-f37200) mr-4"
             @click.stop.prevent="onReset"
           >
             Reset

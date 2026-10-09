@@ -87,74 +87,54 @@
 .ko-Btn {
   --ko-btn-bg: var(--color-btn-default);
   --ko-btn-border: var(--color-btn-default);
-  --ko-btn-text: #fff;
-  --ko-btn-bg-darker: #867f77;
-  --ko-btn-hover-text: #fff;
-  --ko-btn-hover-bg: #88837e;
-  --ko-btn-hover-border: #88837e;
-  --ko-btn-disabled-bg: #cdcdcd;
-  --ko-btn-disabled-border: #cdcdcd;
-  --ko-btn-disabled-text: #757575;
+  --ko-btn-text: var(--color-btn-fg);
+  --ko-btn-hover-text: var(--color-btn-fg);
+  --ko-btn-hover-bg: color-mix(in srgb, var(--ko-btn-bg), var(--clr-black) 8%);
+  --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 8%);
+  --ko-btn-disabled-bg: var(--color-btn-bg-disabled);
+  --ko-btn-disabled-border: var(--color-btn-bg-disabled);
+  --ko-btn-disabled-text: var(--color-btn-fg-disabled);
 
   /* (override) warm color for the default outline button */
   &.is-ghost {
     --ko-btn-bg: transparent;
     --ko-btn-hover-bg: transparent;
-    --ko-btn-border: #d4cdba;
-    --ko-btn-text: #6f6961;
-    --ko-btn-hover-text: #3f3931;
-    --ko-btn-hover-border: #928c7d;
+    --ko-btn-border: var(--color-box-bg-dark);
+    --ko-btn-text: var(--clr-stone-800);
+    --ko-btn-hover-text: var(--color-bd-fg);
+    --ko-btn-hover-border: var(--clr-stone-700);
   }
 }
 
 .ko-Btn--primary {
-  --ko-btn-bg: #3272d1;
-  --ko-btn-border: #3272d1;
-  --ko-btn-bg-darker: #2966c1;
-  --ko-btn-hover-bg: #2b69c6;
-  --ko-btn-hover-border: #2b69c6;
+  --ko-btn-bg: var(--color-btn-primary);
+  --ko-btn-border: var(--color-btn-primary);
   &.is-ghost {
-    --ko-btn-border: #3272d1;
-    --ko-btn-text: color-mix(in srgb, #3272d1, #000 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), #000 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), #000 10%);
+    --ko-btn-border: var(--color-btn-primary);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-primary), var(--clr-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
   }
 }
 .ko-Btn--danger {
   --ko-btn-bg: var(--color-btn-danger);
   --ko-btn-border: var(--color-btn-danger);
-  --ko-btn-bg-darker: #e83d3d;
-  --ko-btn-hover-bg: #e84646;
-  --ko-btn-hover-border: #e84646;
   &.is-ghost {
     --ko-btn-border: var(--color-btn-danger);
-    --ko-btn-text: color-mix(in srgb, var(--color-btn-danger), #000 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), #000 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), #000 10%);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-danger), var(--clr-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
   }
 }
 .ko-Btn--success {
   --ko-btn-bg: var(--color-btn-success);
   --ko-btn-border: var(--color-btn-success);
-  --ko-btn-bg-darker: #449e44;
-  --ko-btn-hover-bg: color-mix(in srgb, var(--color-btn-success), #020 5%);
-  --ko-btn-hover-border: color-mix(in srgb, var(--color-btn-success), #020 5%);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-success);
-    --ko-btn-text: color-mix(in srgb, var(--color-btn-success), #000 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), #000 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), #000 10%);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-success), var(--clr-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
   }
-}
-
-/* when we want a more "golf" green */
-.ko-Btn--lime {
-  --ko-btn-bg: var(--clr-lime-600);
-  --ko-btn-image: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
-  --ko-btn-border: #649300;
-  --ko-btn-bg-darker: #449e44;
-  --ko-btn-hover-bg: color-mix(in srgb, var(--clr-lime-600), #020 5%);
-  --ko-btn-hover-border: color-mix(in srgb, var(--clr-lime-600), #020 5%);
 }
 
 /* -------------------------------------------------------------------- */
@@ -193,12 +173,12 @@
 /* used on legacy homepage, maybe reuse for something else later */
 /*  <button class="ko-Btn ko-Btn--push ko-Btn--xl">... */
 .ko-Btn--push {
-  --ko-btn-text: #fff;
-  --ko-btn-bg: #5cb85c;
-  --ko-btn-hover-bg: #5cb85c;
+  --ko-btn-text: var(--clr-white);
+  --ko-btn-bg: var(--clr-5cb85c);
+  --ko-btn-hover-bg: var(--clr-5cb85c);
   border-radius: var(--border-radius-md);
   border-width: 0 0 0 0;
-  border-bottom: 3px solid #318a31;
+  border-bottom: 3px solid var(--clr-318a31);
 
   &:active,
   &:hover {
@@ -222,14 +202,14 @@
 .ko-Btn--srs {
   border-radius: var(--border-radius-lg);
   border-width: 0 0 0 0;
-  border-bottom: 3px solid #318a31;
+  border-bottom: 3px solid var(--clr-318a31);
 
   font-size: var(--button-font-size-xl);
   padding: 15px 1rem 13px; /* ~49px height */
 
   /* flashcard count on the button label */
   strong {
-    color: #fff;
+    color: var(--clr-white);
   }
 
   &:active,
@@ -239,27 +219,25 @@
     margin-top: 2px;
   }
 
-  /* srs button colors */
+  /* srs button colors, derived from the SRS status color (--ko-srs) */
+  &.is-srs-due,
+  &.is-srs-failed,
+  &.is-srs-new {
+    --ko-btn-text: color-mix(in srgb, var(--ko-srs), var(--clr-black) 65%);
+    --ko-btn-hover-text: var(--ko-btn-text);
+    --ko-btn-bg: var(--ko-srs);
+    --ko-btn-hover-bg: var(--ko-btn-bg);
+    border-bottom-color: color-mix(in srgb, var(--ko-srs), var(--clr-black) 25%);
+  }
   &.is-srs-due {
-    --ko-btn-text: #502a00;
-    --ko-btn-hover-text: #502a00;
-    --ko-btn-bg: #f7a247;
-    --ko-btn-hover-bg: #f7a247;
-    border-bottom-color: #d2633f;
+    --ko-srs: var(--color-srs-due);
   }
   &.is-srs-failed {
-    --ko-btn-text: #601008;
-    --ko-btn-hover-text: #601008;
-    --ko-btn-bg: #f86464;
-    --ko-btn-hover-bg: #f86464;
-    border-bottom-color: #d2633f;
+    --ko-srs: var(--color-srs-fail);
   }
   &.is-srs-new {
-    --ko-btn-text: #0c2b5a;
-    --ko-btn-hover-text: #0c2b5a;
-    --ko-btn-bg: #79b8e9;
-    --ko-btn-hover-bg: #79b8e9;
-    border-bottom-color: #3d83ac;
+    --ko-srs: var(--color-srs-new);
+    --ko-btn-bg: color-mix(in srgb, var(--ko-srs), var(--clr-white) 30%);
   }
 }
 
@@ -273,17 +251,17 @@
   padding: 0.2em 0.4em;
   border-radius: 0.25em;
   margin: 0 0.25em;
-  border: 1px solid #d4cdba;
-  color: #6f6961;
+  border: 1px solid var(--color-box-bg-dark);
+  color: var(--clr-stone-800);
 }
 .ko-ExBtn--danger {
   border-color: var(--color-btn-danger);
-  color: color-mix(in srgb, var(--color-btn-danger), #000 5%);
+  color: color-mix(in srgb, var(--color-btn-danger), var(--clr-black) 5%);
 }
 
 .ko-ExBtn--success {
   border-color: var(--color-btn-success);
-  color: color-mix(in srgb, var(--color-btn-success), #000 5%);
+  color: color-mix(in srgb, var(--color-btn-success), var(--clr-black) 5%);
 }
 
 
@@ -293,7 +271,7 @@
 /* -------------------------------------------------------------------- */
 
 /* Flip Card */
-.uiFcBtnAF {
+.ko-Btn--flip {
   background-color: #268bd2;
   background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
   --ko-btn-border: #227dbd;
@@ -301,28 +279,29 @@
 }
 
 /* No */
-.uiFcBtnAN {
+.ko-Btn--no {
   background-image: linear-gradient(to bottom, #b83600 0%, #a53000 100%);
   --ko-btn-border: #a53000;
   --ko-btn-hover-border: #a53000;
 }
 
 /* Again */
-.uiFcBtnAG {
+.ko-Btn--again {
   background-image: linear-gradient(to bottom, #ca4a15 0%, #b84314 100%);
   --ko-btn-border: #b84314;
   --ko-btn-hover-border: #b84314;
 }
 
 /* Hard */
-.uiFcBtnAH {
+.ko-Btn--hard {
   background: #e68f06;
   background: linear-gradient(to bottom, #e68f06 0%, #bb7404 100%);
   --ko-btn-border: #bb7404;
   --ko-btn-hover-border: #bb7404;
 }
 
-.uiFcBtnAY {
+/* Yes */
+.ko-Btn--yes {
   background: #6fa300;
   background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
   --ko-btn-border: #649300;
@@ -330,7 +309,7 @@
 }
 
 /* Easy */
-.uiFcBtnAE {
+.ko-Btn--easy {
   background-color: #2aa198;
   background-image: linear-gradient(to bottom, #2aa198 0%, #269189 100%);
   --ko-btn-border: #269189;
@@ -338,7 +317,7 @@
 }
 
 /* "Continue" button (Vocab Shuffle) */
-.uiFcBtnAC {
+.ko-Btn--continue {
   background: #6fa300;
   background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
   --ko-btn-border: #649300;

@@ -5,7 +5,7 @@ with_footer();
 
     <h2>Sign in</h2>
 
-  <div class="px-4 py-4 rounded-sm bg-[#e7e1d3] mb-8 max-w-[380px]">
+  <div class="px-4 py-4 rounded-sm bg-(--clr-stone-300) mb-8 max-w-[380px]">
 
 <?php
     echo form_errors();

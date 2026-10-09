@@ -6,7 +6,6 @@
  *    ui_select_pager()
  *    ui_select_table()
  *    ui_data_table()
- *    ui_ibtn()
  *    ui_chart_vs()
  *    ui_progress_bar()
  *
@@ -164,63 +163,6 @@ function ui_data_table(object $table, array $html_options = []): string
 }
 
 /**
- * Returns a uiIBtn element.
- *
- * The parameters are the same as for UrlHelper link_to().
- * The difference is an additional "type" option, and an empty uri will default to '#'.
- *
- * Example markup:
- *
- *  <code>
- *   <a href="#" class="uiIBtn uiIBtnDefault"><span><em class="icon icon-edit">Edit</em></span></a>
- *  </code>
- *
- * Additional options:
- *
- *  'type'     The type of button, defaults to "uiIBtnDefault". This sets the main class
- *             of the uiIBtn element.
- *  'icon'     Adds an EM element inside the SPAN, with classname "icon icon-XYZ" where XYZ
- *             is the given icon name.
- *
- * Examples:
- *
- *   echo ui_ibtn('Go');
- *   echo ui_ibtn('Disabled', '#', array('type' => 'uiIBtnDisabled'));
- *   echo ui_ibtn('Custom class', '#', array('class' => 'JsAction-something'));
- *   echo ui_ibtn('Google', 'http://www.google.com' );
- *   echo ui_ibtn('Click me!', '#', array('onclick' => 'alert("Hello world!");return false;') );
- *
- * @param string $name         Button text can contain HTML (eg. <span>), will NOT be escaped
- * @param string $internal_uri See link_to()
- * @param array  $options      See link_to()
- */
-function ui_ibtn(string $name, string $internal_uri = '', array $options = []): string
-{
-  $button_type = 'uiIBtnDefault';
-
-  if (isset($options['type'])) {
-    $button_type = $options['type'];
-    unset($options['type']);
-  }
-
-  $options['class'] = merge_html_classes($options['class'] ?? [], ['uiIBtn', $button_type]);
-
-  if (isset($options['icon'])) {
-    $name = '<em class="icon icon-'.$options['icon'].'">'.$name.'</em>';
-    unset($options['icon']);
-  }
-
-  $name = '<span>'.$name.'</span>';
-
-  if ($internal_uri == '') {
-    // $options['anchor'] = '';
-    // $options['absolute'] = true;
-  }
-
-  return link_to($name, $internal_uri, $options);
-}
-
-/**
  * uiChartVs.
  *
  * Options:
@@ -270,8 +212,6 @@ function ui_chart_vs(array $options)
  *
  * Options:
  * - optional attributes, as for the tag helpers
- * - "borderColor" with a proper css color value ("red" or "#f00") to override the default gray
- *   border from the stylesheet.
  *
  * @param array $bars     Associative array definitions for bars
  * @param int   $maxValue The max value corresponds to 100% of the bar width, related to each bar's value
@@ -280,17 +220,6 @@ function ui_chart_vs(array $options)
  */
 function ui_progress_bar(array $bars, int $maxValue, array $options = []): string
 {
-  // border color for the bar, override border-color from the stylesheet
-
-  $innerDivOptions = [];
-  if (isset($options['borderColor'])) {
-    // override background color on outer div
-    $options['style'] = "border-color:{$options['borderColor']};";
-    // override border-color on inner div
-    // $innerDivOptions['style'] = "border-color:{$options['borderColor']};";
-    unset($options['borderColor']);
-  }
-
   // merge widget class name
   $options['class'] = merge_html_classes($options['class'] ?? [], ['ko-StripedProgressBar']);
 
@@ -316,7 +245,7 @@ function ui_progress_bar(array $bars, int $maxValue, array $options = []): strin
   // span for the gloss overlay
   $spans[] = '<span class="x"></span>';
 
-  $content = content_tag('div', implode('', $spans), $innerDivOptions);
+  $content = content_tag('div', implode('', $spans));
 
   // generate the outer div
   return content_tag('div', $content, $options);

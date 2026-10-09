@@ -22,7 +22,7 @@ kk_globals_put([
 Here you can explore all lessons in <strong><?= $sequenceName; ?></strong> - as well as check your overall progress.
 </p>
 
-<p class="text-[#cc2d7a] mb-4">
+<p class="text-(--clr-cc2d7a) mb-4">
   <i class="fas fa-info-circle mr-2"></i>
   Your progress through lessons is tracked by <?= link_to('adding flashcards', '@manage'); ?> (reviewing them is optional).
 </p>
@@ -30,7 +30,7 @@ Here you can explore all lessons in <strong><?= $sequenceName; ?></strong> - as 
 <div class="h-4"></div>
 
 <?php if (isset($extraFlashcards)): ?>
-  <div class="warningmessagebox">
+  <div class="ko-Box ko-Box--warning my-4">
     Note: <?= $extraFlashcards->total; ?> flashcards in your deck which are not part of <strong><?= rtkIndex::inst()->getSequenceName(); ?></strong>
     are ignored in the chart.
   </div>

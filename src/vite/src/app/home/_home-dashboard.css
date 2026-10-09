@@ -24,17 +24,17 @@
 /*//////////////////////////////////////////////////////////////// */
 .ko-Dash-srsIcoBtn {
   /* note: the height of these "buttons" comes from the parent's `items-stretch` */
-  @apply text-smx text-[#42413d] no-underline cursor-pointer rounded-md;
+  @apply text-smx text-bd-fg no-underline cursor-pointer rounded-md;
 
   &:hover {
     @apply no-underline;
 
     &.is-new,
     &:focus.is-new {
-      background-color: #32b1fc4d; /* color.change(#40a8e5, $alpha: 0.3); */
+      background-color: color-mix(in srgb, var(--color-srs-new) 30%, transparent);
     }
     &.is-due {
-      background-color: #ff982a6e; /*color.change(#f7a247, $alpha: 0.3); */
+      background-color: color-mix(in srgb, var(--color-srs-due) 43%, transparent);
     }
   }
 }
@@ -54,12 +54,13 @@
 /* -------------------------------------------------------------------- */
 .ko-LessonPane {
   /* default card tag colors for the kanji grid */
-  --ko-cardmap-new: #a3a197;
-  --ko-cardmap-res: #ef5e4f;
-  --ko-cardmap-L1: #5cb85c; /*#83d37d; */
-  --ko-cardmap-L2: #5cb85c; /*#63b95c; */
-  --ko-cardmap-L3: #5cb85c; /*#4ea747; */
-  --ko-cardmap-L4: #5cb85c; /*#3b8f35; */
+  /* card status colors, see getColorForCard() : same meaning as the SRS colors */
+  --ko-cardmap-new: var(--color-srs-new);
+  --ko-cardmap-res: var(--color-srs-fail);
+  --ko-cardmap-L1: var(--color-srs-undue);
+  --ko-cardmap-L2: var(--color-srs-undue);
+  --ko-cardmap-L3: var(--color-srs-undue);
+  --ko-cardmap-L4: var(--color-srs-undue);
 }
 /*//////////////////////////////////////////////////////////////// */
 /* on the home page, use max-height and scrollbar, to limit the */
@@ -71,8 +72,8 @@
   overflow-y: auto;
   padding-right: 1rem; /* breathing room between cards and scrollbar */
 
-  --trackColor: #c7c3ba;
-  --thumbColor: #f0f0f0;
+  --trackColor: var(--color-box-bg-dark);
+  --thumbColor: var(--color-box-bg-light);
   --trackRadius: 6px;
 
   /* Works on Firefox */
@@ -113,7 +114,7 @@
 
   /*//////////////////////////////////////////////////////////////// */
   /*//////////////////////////////////////////////////////////////// */
-  background-color: #696866;
+  background-color: var(--color-lessonmap-bg);
   padding: var(--ko-lmap-p);
   height: var(--ko-lmap-h);
   @apply rounded-md;
@@ -125,7 +126,7 @@
   @apply flex;
   height: 100%;
   gap: 1px;
-  color: #8f897c; /* color of the "off" items (empty cells) */
+  color: #7f7d75; /* color of the "off" items (the dots) */
   text-align: center;
 }
 
@@ -135,27 +136,27 @@
   /* ----- @include card-tag-colors(); ----- */
   /* classes that match getColorForCard() in JS */
   &.is-new {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-new);
   }
   &.is-res {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-res);
   }
   &.is-L1 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L1);
   }
   &.is-L2 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L2);
   }
   &.is-L3 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L3);
   }
   &.is-L4 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L4);
   }
   /* --------------------------------------- */
@@ -245,7 +246,7 @@
   text-align: center;
 
   background-color: transparent;
-  border: 1px dashed rgba(73, 70, 63, 0.2);
+  border: 1px dashed var(--color-card-border-empty);
   border-radius: 6px;
 }
 
@@ -253,14 +254,16 @@
 .ko-KanjiCard.is-on {
   background: linear-gradient(
     148.74deg,
-    #f8f7f6 0%,
-    #f8f8f8 80%,
-    #ffffff 93%,
-    #eaeaea 100%
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 3%) 0%,
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 4%) 80%,
+    var(--color-card-bg) 93%,
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 7%) 100%
   );
 
   border: 0;
-  border-bottom: 1px solid #bab6ae; /* hexa(#6c6c6c, .37) */
+  /* not themeable for now : a darker shade of the card background */
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-card-bg), var(--clr-black) 24%);
   border-radius: 0;
 }
 
@@ -270,7 +273,7 @@
 .ko-KanjiCard-idx,
 .ko-KanjiCard-kwd {
   @apply font-serif;
-  color: #3c3c3c;
+  color: var(--color-card-fg);
   font-size: 15px;
   line-height: calc(19 / 15 * 1em);
 }
@@ -288,7 +291,7 @@
 .ko-KanjiCard-chr {
   font-size: 60px;
   line-height: 1;
-  color: #313130;
+  color: var(--color-card-fg);
   @apply mt-auto mb-auto; /* flex spacings */
 }
 
@@ -296,35 +299,35 @@
   @apply rounded-md text-xs px-2 font-light;
   height: 27px;
   line-height: 27px;
-  background-color: #d7d1c4;
-  @apply text-[#42413d];
+  background-color: var(--color-box-bg-dark);
+  @apply text-bd-fg;
 }
 
 .ko-KanjiCard-tag {
   /* ----- @include card-tag-colors(); ----- */
   /* classes that match getColorForCard() in JS */
   &.is-new {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-new);
   }
   &.is-res {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-res);
   }
   &.is-L1 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L1);
   }
   &.is-L2 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L2);
   }
   &.is-L3 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L3);
   }
   &.is-L4 {
-    color: #fff;
+    color: var(--color-btn-fg);
     background-color: var(--ko-cardmap-L4);
   }
   /* ----------------------------------------- */

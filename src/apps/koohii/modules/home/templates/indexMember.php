@@ -62,7 +62,7 @@ $urls = [
 
 <?php if ($isSequenceComplete): ?>
       <div class="text-smx mb-3">
-        <span class="text-[#2C892C] font-bold">Well done! <?= $progressName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
+        <span class="text-success font-bold">Well done! <?= $progressName; ?> completed!</span> <?= link_to('Change', 'account/sequence', ['class' => 'ml-2']); ?>
       </div>
 <?php else: ?>
       <div class="text-smx mb-3">
@@ -112,7 +112,7 @@ if ($restudyCount) {
 
 <?php if (!$hasFlashcards): ?>
   <div class="flex items-start mb-4">
-    <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-[#42413d40] rounded-xs"/>
+    <img src="/koohii/misc/home-dash-srs-no.png" alt="" width="157" height="50" class="block border border-black/10 rounded-xs"/>
     <div class="text-smx ml-4">
       <strong>Spaced Repetition</strong> will be available after you <?= link_to('add kanji flashcards', '@manage', ['class' => 'whitespace-nowrap']); ?>.
     </div> 
@@ -143,7 +143,7 @@ if ($restudyCount) {
       </div>
 <?php endif; ?>
 
-      <div class="bg-[#c2bdaf] h-px mb-3"></div>
+      <div class="bg-(--color-box-bg-dark) h-px mb-3"></div>
 
       <p class="text-smx mb-2"><strong>Custom Review</strong>. Does not use the SRS. <?= link_to('Learn More', '@learnmore#custom-review', ['class' => 'ml-2 whitespace-nowrap']); ?></p>
 

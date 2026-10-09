@@ -7,8 +7,8 @@
 // ==================================================================== */
 
 body {
-  background: #ece9e2;
-  color: #42413d;
+  background: var(--clr-stone-200);
+  color: var(--clr-stone-950);
 }
 
 /* ---------------------------- */
@@ -24,7 +24,7 @@ section {
     font-size: 1.61em;
     line-height: 1em;
     margin-bottom: 0.5em;
-    color: #434241;
+    color: var(--clr-neutral-800);
   }
 
   p {
@@ -51,26 +51,26 @@ section {
 /* backgrounds */
 /* ---------------------------- */
 .k_bg_head {
-  background: #eae6db; /* Old browsers */
+  background: var(--clr-eae6db); /* Old browsers */
   background: linear-gradient(
     to bottom,
-    #eae6db 0%,
-    #dfdbce 100%
+    var(--clr-eae6db) 0%,
+    var(--clr-dfdbce) 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 .k_bg_even {
-  background: #ece9e2;
+  background: var(--clr-stone-200);
 }
 .k_bg_odd {
-  background: #f5f2ec;
+  background: var(--clr-stone-50);
 }
 .k_bg_free {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
-  background: #f8c5e4; /* Old browsers */
+  background: var(--clr-f8c5e4); /* Old browsers */
   background: linear-gradient(
     to bottom,
-    #f8c5e4 0%,
-    #f0ddd4 100%
+    var(--clr-f8c5e4) 0%,
+    var(--clr-f0ddd4) 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
@@ -89,7 +89,7 @@ section {
 }
 
 .f_shadow {
-  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 1px var(--clr-00000033);
 }
 
 .f_dict {
@@ -137,7 +137,7 @@ section {
   padding: 1.5em 0.5em 1.2em;
   font-weight: bold;
   line-height: 1.1em;
-  color: #3c3c3c;
+  color: var(--clr-neutral-900);
 
   font-size: 40px;
 
@@ -197,26 +197,26 @@ section {
 }
 #its-free,
 #its-free h2 {
-  color: #8b1566;
+  color: var(--clr-8b1566);
 }
 #its-free a {
-  color: #e400b1;
+  color: var(--clr-e400b1);
   text-decoration: none;
 }
 
 #its-free .ko-ButtonSignup {
-  background-color: #a4156c;
+  background-color: var(--clr-a4156c);
   border-radius: 0.25rem;
   padding: 21px 82px;
-  color: #fff;
+  color: var(--clr-white);
   font-size: 21px;
   line-height: 1em;
   text-decoration: none;
-  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 1px var(--clr-00000033);
 }
 #its-free .learnmore {
   display: inline-block;
-  color: #b10081;
+  color: var(--clr-b10081);
   font-size: 21px;
   line-height: 3em;
   text-decoration: underline;
@@ -226,7 +226,7 @@ section {
 /* Footer */
 /* ---------------------------- */
 #footer-landing {
-  background: #232323;
+  background: var(--clr-neutral-950);
   padding: 2em 0 5em;
   text-align: center;
   font-size: 17px;
@@ -243,14 +243,14 @@ section {
   }
   a {
     padding: 0 0.8em; /*tap target*/
-    color: #a4a19b;
+    color: var(--clr-stone-600);
     text-decoration: none;
   }
   a:hover {
     text-decoration: none;
   }
   a:hover .fa {
-    color: #fff;
+    color: var(--clr-white);
   }
 
   /* fontawesome icons */

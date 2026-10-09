@@ -156,14 +156,4 @@ export default class VocabReview {
     pct = Math.min(pct, 100);
     this.elProgressBar.style.width = (pct > 0 ? pct : 0) + "%";
   }
-
-  /**
-   * Sets buttons (children of element) to default state, or disabled state
-   *
-   */
-  setButtonState(elParent: HTMLElement, bEnabled: boolean) {
-    $$(".uiIBtn", elParent).each((el) => {
-      el.classList.toggle("uiFcBtnDisabled", bEnabled);
-    });
-  }
 }

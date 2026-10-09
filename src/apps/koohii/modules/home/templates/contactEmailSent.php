@@ -5,7 +5,7 @@ with_footer();
 
     <h2>Message Sent</h2>
 
-    <div class="confirmwhatwasdone max-w-[30rem] p-4">
+    <div class="ko-Box ko-Box--success max-w-[30rem] p-4 my-4">
       <p>Your message has been sent succesfully.</p>
       <p>If you had a question, or account related request, I will try to answer soon, usually with 24h although sometimes
       I may be away from computer for a couple days.

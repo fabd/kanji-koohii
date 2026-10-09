@@ -51,7 +51,7 @@ export default class EditStoryDialog {
         this.editStory = VueInstance(KoohiiEditStory, mount, vueProps);
 
         this.dialog.getFooter().innerHTML = `
-<button class="ko-Btn ko-Btn--large ko-Btn--lime w-full JSDialogHide">Close</button>
+<button class="ko-Btn ko-Btn--large ko-Btn--yes w-full JSDialogHide">Close</button>
     `;
       }
     );

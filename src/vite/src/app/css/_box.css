@@ -9,7 +9,7 @@
 /* ==================================================================== */
 
 .ko-Box {
-  --ko-box-bg: var(--clr-bg-1);
+  --ko-box-bg: var(--color-box-bg);
 
   background-color: var(--ko-box-bg);
   border-color: var(--ko-box-bg);
@@ -24,27 +24,45 @@
   border-color: var(--ko-box-bg, transparent);
 }
 
-/* colors */
+/* colors : derived from the message colors, see _tailwind.css */
 .ko-Box--danger {
-  --ko-box-bg: #ffd1c9;
-  @apply text-[#D23C3C];
-}
-.ko-Box--danger .ko-Box-title {
-  @apply text-[#D23C3C];
+  /* a light, warm shade of the danger color (#ffd1c9 with the default theme) */
+  --ko-box-bg: oklch(from var(--color-danger) 0.898 calc(c * 0.285) calc(h + 4.4));
+  color: var(--color-danger);
+  .ko-Box-title {
+    color: var(--color-danger);
+  }
 }
 .ko-Box--danger.ko-Box--stroke {
-  --ko-box-bg: #f2a5a5; /* slightly darker for border variant */
+  /* slightly darker for border variant */
+  --ko-box-bg: color-mix(in srgb, var(--color-danger), var(--clr-white) 50%);
 }
 
 .ko-Box--success {
-  --ko-box-bg: #d1e2bb;
-  @apply text-[#3a7c3a];
+  /* lighten, then a touch of yellow for a warmer "golf" green (~#d1e2bb) */
+  --ko-box-bg: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--color-success), var(--clr-white) 75%),
+    var(--clr-yellow) 10%
+  );
+  color: var(--color-success);
+
+  .ko-Box-title {
+    color: var(--color-success);
+  }
 }
-.ko-Box--success .ko-Box-title {
-  @apply text-[#2C892C];
+
+.ko-Box--warning {
+  --ko-box-bg: color-mix(in srgb, var(--color-warning), var(--clr-white) 75%);
+  color: var(--color-warning);
+
+  .ko-Box-title {
+    color: var(--color-warning);
+  }
 }
 
 .ko-Box-title {
-  @apply font-bold text-[#42413d];
+  @apply font-bold;
+  color: var(--color-bd-fg);
   font-size: min(15px + 0.5vw, 18px);
 }

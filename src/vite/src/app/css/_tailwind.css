@@ -9,6 +9,103 @@
 }
 
 /*---------------------------------------------------------------------
+  Semantic colors, they point to the palette in _colors.css, and their
+  value will change with the selected theme.
+
+  "static" so the variables are always output (also when only used with
+  var() in CSS), and can be edited live in the browser dev tools.
+  ---------------------------------------------------------------------*/
+@theme static {
+  /* foundation colors */
+  --color-page-bg: var(--clr-stone-100);
+  --color-box-bg: var(--clr-stone-300);
+  --color-box-bg-dark: var(--clr-stone-400);
+  --color-box-bg-light: color-mix(
+    in srgb,
+    var(--color-box-bg),
+    var(--clr-white) 25%
+  );
+
+  /* text */
+  --color-bd-fg: var(--clr-stone-950); /* body text */
+  --color-muted-fg: color-mix(in srgb, var(--color-bd-fg), #0000 30%);
+  --color-hd-fg: var(--clr-7f7d85); /* headings */
+  --color-link-fg: var(--clr-005cb1);
+
+  /* borders */
+  --color-border: var(--color-box-bg-dark);
+
+  /* buttons : hover colors are derived from these */
+  --color-btn-default: var(--clr-8e8d8c); /* default warm gray bg color */
+  --color-btn-primary: var(--clr-3272d1); /* saturated blue */
+  --color-btn-danger: var(--clr-ea5b5b);
+  --color-btn-success: var(--clr-58ac50);
+  --color-btn-fg: var(--clr-white);
+  --color-btn-bg-disabled: var(--clr-neutral-300);
+  --color-btn-fg-disabled: var(--clr-neutral-600);
+
+  /* forms : inputs, textareas, selects (see _bootstrap.css) */
+  --color-input-bg: var(--clr-white);
+  --color-input-fg: var(--clr-neutral-950);
+  --color-input-border: var(--color-border);
+  --color-input-border-focus: var(--clr-99bddb);
+  --color-focus-glow: var(--clr-337ab740);
+  --color-invalid-fg: var(--clr-a94442);
+  --color-invalid-border: var(--clr-a94442);
+
+  /* SRS status colors, variants are derived with color-mix() */
+  --color-srs-fail: var(--clr-f86464); /* red */
+  --color-srs-due: var(--clr-f7a247); /* orange */
+  --color-srs-undue: var(--clr-72c569); /* green, aka "fresh" */
+  --color-srs-new: var(--clr-40a8e5); /* blue */
+
+  /* messages: one color per kind, the ko-Box background
+     and border are derived with color-mix() (see _box.css) */
+  --color-danger: var(--clr-d23c3c);
+  --color-success: var(--clr-3a7c3a);
+  --color-warning: var(--clr-d57600);
+
+  /* cards : flashcards, kanji cards (dashboard lesson pane) */
+  --color-card-bg: var(--clr-white);
+  --color-card-fg: var(--clr-neutral-900);
+  --color-card-border-empty: color-mix(in srgb, var(--color-bd-fg) 20%, transparent);
+
+  /* flashcard review : option buttons at the top */
+  --color-fc-btn: var(--clr-50abeb);
+  /* flashcard review : page background gradient */
+  --color-fc-bg-top: var(--clr-c4e6ff);
+  --color-fc-bg-end: var(--clr-92c3e4);
+
+  /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
+  --color-story-bg: var(--clr-white);
+  --color-story-bg-dark: color-mix(
+    in srgb,
+    var(--color-story-bg),
+    var(--clr-black) 4%
+  );
+  --color-story-fg: var(--clr-100800);
+  --color-story-fg-link: var(--clr-448844); /* kanji links in story (eg. #123) */
+  --color-story-border: var(--clr-e8e5c9);
+
+  /* lesson map (dashboard lesson pane) */
+  --color-lessonmap-bg: var(--clr-neutral-700);
+
+  /* navigation */
+  --color-nav-bg: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
+
+  /* footer */
+  --color-ft-bg-top: var(--clr-f8c5e4); /* the dots, and top of the gradient */
+  --color-ft-bg-end: var(--clr-f0ddd4); /* gradient bottom, and below */
+  --color-ft-fg: var(--clr-8b1566); /* text, icons */
+  --color-ft-fg-link: var(--clr-e400b1);
+
+  /* blog (site news) */
+  --color-blog-hd-fg: var(--clr-fa3d60); /* post titles, and their underline */
+  --color-blog-date-fg: var(--clr-568249);
+  --color-blog-date-bg: var(--clr-lime-100);
+}
+
+/*---------------------------------------------------------------------
   See 
     https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources
   ---------------------------------------------------------------------*/

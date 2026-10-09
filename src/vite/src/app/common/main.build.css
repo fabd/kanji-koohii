@@ -23,6 +23,7 @@
 
 /* koohii specific resets (*after* Bootstrap/tailwind resets) */
 @import "../css/_base.css";
+@import "../css/_colors.css";
 @import "../css/_variables.css";
 @import "../css/_layout.css";
 
@@ -52,30 +53,10 @@
 /* Bootstrap 5 minimal build (forms) */
 
 .bg-confirm {
-  background-color: var(--clr-bg-gl);
+  background-color: color-mix(in srgb, var(--color-success), var(--clr-white) 75%);
 }
 .text-confirm {
-  color: var(--clr-bg-gd);
-}
-
-/* SRS color coding used for text */
-.clr-srs-due {
-  color: var(--clr-srs-due);
-}
-.clr-srs-undue {
-  color: var(--clr-srs-undue);
-}
-.clr-srs-fail {
-  color: #f1311a;
-}
-.clr-srs-new {
-  color: #1c90d4;
-}
-
-/* gradients */
-.gdt-ocean-blue {
-  background: #deeef8; /* Old browsers */
-  background: linear-gradient(to bottom, #deeef8 0%, #c4e7ff 100%);
+  color: var(--color-success);
 }
 
 /* ---------------------------- */
@@ -123,22 +104,22 @@
   font-size: 14px;
   line-height: 1.2;
   width: 100%;
-  border-left: 1px solid var(--clr-bg-1m);
+  border-left: 1px solid var(--color-box-bg-light);
   border-collapse: collapse;
   text-align: left;
 
   th {
-    background-color: var(--clr-bg-1);
+    background-color: var(--color-box-bg);
     border-top-width: 0;
   }
   th,
   td {
-    border-top: 1px solid var(--clr-bg-1);
-    border-right: 1px solid var(--clr-bg-1);
+    border-top: 1px solid var(--color-box-bg);
+    border-right: 1px solid var(--color-box-bg);
     padding: 0.7em 0.8em;
   }
   td {
-    background: var(--clr-bg-nav);
+    background: var(--color-box-bg-light);
   }
 }
 
@@ -162,13 +143,8 @@ div.col-box-bis {
 
 .box-side {
   border-radius: 3px;
-  background-color: var(--clr-bg-1);
+  background-color: var(--color-box-bg);
   padding: 15px 10px;
-}
-
-/* custom class added to symfony cached content (see sfViewCacheManager.class.php) */
-.kkSymfonyCache {
-  border: 1px solid #f00;
 }
 
 /* ---------------------------- */
@@ -177,10 +153,10 @@ div.col-box-bis {
 
 /* extend the footer end of gradient color to bottom of page */
 body.with-footer {
-  background: #f0ddd4;
+  background: var(--color-ft-bg-end);
 }
 main {
-  background: var(--clr-bg-body);
+  background: var(--color-page-bg);
 }
 
 main {
@@ -201,29 +177,28 @@ main {
 /* ---------------------------- */
 .ko-PageFooter-grad {
   /* http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
-  background: #f8c5e4; /* Old browsers */
-  background: linear-gradient(to bottom, #f8c5e4 0%, #f0ddd4 100%);
+  background: linear-gradient(to bottom, var(--color-ft-bg-top) 0%, var(--color-ft-bg-end) 100%);
 }
 
 .ko-PageFooter {
   text-align: center;
   padding: 0 0 5em;
-  color: #8b1566;
+  color: var(--color-ft-fg);
   @apply text-smx sm:text-base;
 
   a {
-    color: #e400b1;
+    color: var(--color-ft-fg-link);
     text-decoration: none;
   }
 
   a:hover {
-    color: #e400b1;
+    color: var(--color-ft-fg-link);
     text-decoration: underline;
   }
 
   /* fontawesome icons */
   .fa {
-    color: #9c3d7b;
+    color: var(--color-ft-fg);
     margin-right: 0.5em;
   }
 }
@@ -232,16 +207,26 @@ main {
   a {
     padding-left: 0.8em;
     padding-right: 0.8em; /*tap target*/
-    color: #9c3d7b;
+    color: var(--color-ft-fg);
     text-decoration: none;
   }
 }
 
 .ko-PageFooter-dots {
+  position: relative;
   width: 100%;
   height: 29px;
-  background: var(--clr-bg-body) url(/koohii/landing/bubbles_gdt.png) repeat-x 0
-    0;
+  background-color: var(--color-page-bg);
+
+  /* the dots: the png is only used as a mask (its alpha channel), so the
+     dots color comes from a variable */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-ft-bg-top);
+    mask: url(/koohii/landing/bubbles_gdt.png) repeat-x 0 0;
+  }
 }
 
 /* ---------------------------- */
@@ -251,7 +236,7 @@ main {
 /* Site news (posts using markdown) */
 .ko-SiteNews .markdown h2,
 .ko-SiteNews .markdown h3 {
-  color: #000;
+  color: var(--clr-black);
   font-weight: normal;
   font-size: 1.2em;
   margin-bottom: 1em;
@@ -269,7 +254,6 @@ main {
 /*.layout-news span.news-date { font-size:16px; color:#69664E; white-space:nowrap; }*/
 
 .ko-SiteNews {
-  --color-blog-heading: #fa3d60;
   line-height: 1.5em;
   font-family: Arial, sans-serif;
 }
@@ -284,11 +268,11 @@ main {
 
 .ko-SiteNews-hd {
   font-size: 18px;
-  border-bottom: 1px solid var(--color-blog-heading);
+  border-bottom: 1px solid var(--color-blog-hd-fg);
 }
 
 .ko-SiteNews-hd a {
-  color: var(--color-blog-heading);
+  color: var(--color-blog-hd-fg);
   text-decoration: none;
   font-weight: bold;
 }
@@ -298,14 +282,14 @@ main {
   padding: 4px 5px;
   margin-top: -4px;
   border-radius: 3px;
-  color: #568249;
-  background: #dff7d3;
+  color: var(--color-blog-date-fg);
+  background: var(--color-blog-date-bg);
 }
 
 .ko-SiteNews-body {
   margin: 0 0 25px;
-  padding: 0 0 2em; /*border-bottom:1px solid var(--clr-bg-1);*/
-  color: #3c3c3c;
+  padding: 0 0 2em; /*border-bottom:1px solid var(--color-box-bg);*/
+  color: var(--clr-neutral-900);
   clear: both;
 }
 
@@ -317,7 +301,7 @@ main {
   font-style: italic;
 }
 .ko-SiteNews a.readmore {
-  color: #8fb052;
+  color: var(--clr-lime-500);
   font-weight: bold;
   text-decoration: none;
 }
@@ -337,106 +321,19 @@ main {
     padding: 5px 10px;
     display: block;
     text-decoration: none;
-    @apply border-dotted border-[#d4cdba] border-b;
+    @apply border-dotted border-(--color-box-bg-dark) border-b;
     &:hover {
-      background-color: var(--clr-bg-1);
+      background-color: var(--color-box-bg);
     }
   }
   span {
-    color: #454545;
+    color: var(--clr-neutral-800);
   }
 }
 
 /* ---------------------------- */
 /* Confirmation & error boxes */
 /* ---------------------------- */
-
-.actionconfirmationmessage {
-  border: 1px solid #ccc;
-  padding: 10px;
-  background: #ffffcc;
-  margin: 1em 0;
-}
-.actionconfirmationmessage p {
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-.confirmwhatwasdone {
-  padding: 10px;
-  background: #cdecae;
-  margin: 1em 0;
-  border-radius: 5px;
-  box-shadow: 0 1px 2px 0 rgba(170, 165, 130, 0.3);
-  /* -webkit-transition:background-color 0.5s; transition:background-color 0.5s;*/
-}
-.confirmwhatwasdone p {
-  margin: 0 0 10px;
-  color: #262;
-}
-
-.rounded-css3 {
-  border-radius: 5px;
-}
-
-.formerrormessage {
-  border: 1px solid #f5ab8f;
-  padding: 10px;
-  background: #ffe0a8;
-  margin: 1em 0;
-  color: #f33;
-}
-.formerrormessage p {
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-.warningmessagebox {
-  border: 1px solid #f5ab8f;
-  padding: 10px;
-  background: #ffe0a8;
-  margin: 1em 0;
-}
-.warningmessagebox p {
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-/**
- * Links bound to user interface actions.
- */
-a.cancel,
-a.delete {
-  color: red;
-  padding: 1px;
-}
-a.cancel:hover,
-a.delete:hover {
-  color: white;
-  background: red;
-}
-
-a.proceed {
-  color: #005cb1;
-  padding: 1px;
-}
-a.proceed:hover {
-  color: white;
-  background: #005cb1;
-}
-
-a.subdued {
-  color: #666;
-  padding: 1px;
-}
-a:hover.subdued {
-  background: #666;
-  color: #fff;
-  padding: 1px;
-}
 
 /* ------------------ */
 /* CJK Fonts          */
@@ -456,7 +353,7 @@ a:hover.subdued {
   /* small "learned" tag in the Restudy List */
   &-learned {
     @apply px-[.4em] py-[.3em] rounded-sm;
-    @apply bg-[#6cbe6b] text-[#fff];
+    @apply bg-(--clr-6cbe6b) text-(--clr-white);
   }
 }
 

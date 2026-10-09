@@ -54,7 +54,7 @@ export default defineComponent({
   /* the mask is appended asa child, the parent element is position:relative, this covers the area */
   position: absolute;
   z-index: calc(var(--z-base) + 1);
-  background-color: var(--ko-loading-bg, #fff8);
+  background-color: var(--ko-loading-bg, var(--clr-ffffff88));
   border-radius: 3px;
   margin: 0;
   top: 0;
@@ -77,8 +77,8 @@ export default defineComponent({
   display: inline-block;
   width: 40px;
   height: 40px;
-  border: 4px solid #c8e0ab;
-  border-top: 4px solid white;
+  border: 4px solid var(--clr-lime-300);
+  border-top: 4px solid var(--clr-white);
   border-radius: 50%;
 
   /* animation */

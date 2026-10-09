@@ -8,7 +8,7 @@
 
 
 <?php if ($status === 'success'): ?>
-<div class="confirmwhatwasdone rounded-css3" style="margin:0 0 1em;">
+<div class="ko-Box ko-Box--success mb-4">
   Flashcard succesfully updated / created.<br/>
   <em>( 'created_on' zero date is normal, it means a flashcard created before Jan 2015, which did not have this field)</em>
   <pre style="margin:0;">
@@ -50,11 +50,11 @@
 
 </form>
 
-  <p> <em style="color:#800">If the flashcard does not exist it is created.</em></p>
+  <p> <em style="color:var(--clr-red-900)">If the flashcard does not exist it is created.</em></p>
 
   <p> <strong>Failed cards</strong> : use BOX 1,  DUE days 0</p>
 
-  <p> <strong>NEW cards</strong> : <em style="color:#800">do NOT use this page</em>. Use <?= link_to('Add Custom selection', 'manage/addcustom'); ?> instead.</p>
+  <p> <strong>NEW cards</strong> : <em style="color:var(--clr-red-900)">do NOT use this page</em>. Use <?= link_to('Add Custom selection', 'manage/addcustom'); ?> instead.</p>
 
   <p> <strong>Total reviews</strong> = fail count + success count.</p>
 

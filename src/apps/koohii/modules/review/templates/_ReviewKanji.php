@@ -48,7 +48,7 @@
     <div id="uiFcProgressBar">
       <div class="ko-FcStBox max-md:p-0 max-md:bg-transparent">
         <div class="pt-0 md:pt-6">
-          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress', 'borderColor' => '#5FA2D0']); ?>
+          <?= ui_progress_bar([['value' => 0]], 100, ['id' => 'review-progress']); ?>
         </div>
         <h3 class="ko-FcStBox-hd JSCardsCount">Cards left: <em>.</em></h3>
       </div>
@@ -67,7 +67,7 @@
         <div id="uiFcButtons0" class="" style="display:none">
           <div class="uiFcButtons-prompt">Press Spacebar or F to flip card</div>
 <button 
-  class="ko-Btn ko-Btn--review uiFcBtnAF uiFcAction w-full"
+  class="ko-Btn ko-Btn--review ko-Btn--flip uiFcAction w-full"
   data-action="flip">
   <span><u>F</u>lip Card</span>
 </button>
@@ -78,13 +78,13 @@
 
           <div class="flex items-center justify-between -mx-1">
 <button
-  class="ko-Btn ko-Btn--review uiFcBtnAN uiFcAction flex-1 mx-1"
+  class="ko-Btn ko-Btn--review ko-Btn--no uiFcAction flex-1 mx-1"
   data-action="no" title="Forgotten">
   <span><u>N</u>o</span>
 </button>
 <?php if (1 /* !$freemode */) { ?>
 <button
-  class="ko-Btn ko-Btn--review uiFcAction uiFcBtnAG flex-1 mx-1"
+  class="ko-Btn ko-Btn--review uiFcAction ko-Btn--again flex-1 mx-1"
   data-action="again" title="Repeat card">
   <u>A</u>gain
 </button>
@@ -92,17 +92,17 @@
 
 <?php if (!$freemode) { ?>
 <button
- class="ko-Btn ko-Btn--review uiFcBtnAH uiFcAction flex-2 mx-1" 
+ class="ko-Btn ko-Btn--review ko-Btn--hard uiFcAction flex-2 mx-1" 
  data-action="hard" title="Hard">
   <span class="px-1"><u>H</u>ard</span>
 </button>
 <?php } ?>
-<button class="ko-Btn ko-Btn--review uiFcAction uiFcBtnAY flex-2 mx-1"
+<button class="ko-Btn ko-Btn--review uiFcAction ko-Btn--yes flex-2 mx-1"
   data-action="yes" title="Remembered with some effort">
   <span class="px-2"><u>Y</u>es</span>
 </button>
 <?php if (!$freemode) { ?>
-<button class="ko-Btn ko-Btn--review uiFcAction uiFcBtnAE flex-2 mx-1"
+<button class="ko-Btn ko-Btn--review uiFcAction ko-Btn--easy flex-2 mx-1"
   data-action="easy" title="Remembered easily">
   <span class="px-1"><u>E</u>asy</span>
 </button>

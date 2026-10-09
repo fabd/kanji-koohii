@@ -47,12 +47,11 @@
   font-weight: bold;
 }
 
-/* we'll turn this into a theme some day, for now it's just a background */
+/* flashcard review page background */
 .uiFcLayout {
-  /* http://colorzilla.com/gradient-editor/#c4e6ff+0,92c3e4+100 */
-  background: var(--clr-92c3e4);
-  background: var(--clr-92c3e4) linear-gradient(to bottom, var(--clr-c4e6ff) 0%, var(--clr-92c3e4) 100%)
-    100%/200% no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: var(--color-fc-bg-end)
+    linear-gradient(to bottom, var(--color-fc-bg-top) 0%, var(--color-fc-bg-end) 100%)
+    100%/200% no-repeat;
 }
 
 /* top row of option buttons */

@@ -59,12 +59,6 @@
   color: var(--color-success);
 }
 
-/* gradients */
-.gdt-ocean-blue {
-  background: var(--clr-deeef8); /* Old browsers */
-  background: linear-gradient(to bottom, var(--clr-deeef8) 0%, var(--clr-c4e7ff) 100%);
-}
-
 /* ---------------------------- */
 /* UI */
 /* ---------------------------- */

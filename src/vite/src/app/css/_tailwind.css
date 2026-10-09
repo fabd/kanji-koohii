@@ -70,9 +70,11 @@
   --color-card-fg: var(--clr-neutral-900);
   --color-card-border-empty: color-mix(in srgb, var(--color-bd-fg) 20%, transparent);
 
-  /* flashcard review : option buttons at the top of the flashcard (.uiFcOptBtn),
-     all their colors are derived from this one */
+  /* flashcard review : option buttons at the top */
   --color-fc-btn: var(--clr-50abeb);
+  /* flashcard review : page background gradient */
+  --color-fc-bg-top: var(--clr-c4e6ff);
+  --color-fc-bg-end: var(--clr-92c3e4);
 
   /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
   --color-story-bg: var(--clr-white);

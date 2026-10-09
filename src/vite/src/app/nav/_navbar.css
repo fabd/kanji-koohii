@@ -142,7 +142,7 @@
   float: left;
   margin: 0;
   padding: 0;
-  border-left: 1px solid var(--clr-395269);
+  border-left: 1px solid color-mix(in srgb, var(--color-nav-bg), var(--clr-neutral-500) 30%);
 }
 #k-nav_d ul.k-nav_right {
   float: right;
@@ -152,7 +152,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  border-right: 1px solid var(--clr-395269);
+  border-right: 1px solid color-mix(in srgb, var(--color-nav-bg), var(--clr-neutral-500) 30%);
 }
 #k-nav_d li a {
   padding: 16px 19px;
@@ -164,7 +164,7 @@
 
 /* highlighted tab */
 #k-nav_d .signed-in {
-  background: var(--clr-11364b);
+  background: color-mix(in srgb, var(--color-nav-bg), var(--clr-black) 25%);
 } /* comes first */
 #k-nav_d .active,
 #k-nav_d .active a:hover {
@@ -178,7 +178,7 @@
 /* hover states */
 #k-nav_d li a:hover,
 #k-nav_d li.active a.nav-home {
-  background-color: var(--clr-11364b);
+  background-color: color-mix(in srgb, var(--color-nav-bg), var(--clr-black) 25%);
 }
 
 /* profile / sign up area */
@@ -244,7 +244,7 @@
 /* dropdown arrows */
 #k-nav_d .arrow {
   border: 5px solid;
-  border-color: var(--clr-6a8898) transparent transparent;
+  border-color: color-mix(in srgb, var(--color-nav-bg), var(--clr-white) 35%) transparent transparent;
   width: 0;
   height: 0;
   display: inline-block;

@@ -90,8 +90,9 @@
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: var(--clr-neutral-700);
 
-  /* navigation */
-  --color-nav-bg: var(--clr-0b486b); /* site nav bg color, desktop & mobile */
+
+  /* main site navigation, desktop & mobile */
+  --color-nav-bg: var(--clr-0b486b);
 
   /* footer */
   --color-ft-bg-top: var(--clr-f8c5e4); /* the dots, and top of the gradient */

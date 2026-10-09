@@ -59,7 +59,7 @@
   --ko-btn-hover-bg: var(--color-box-bg);
   --ko-btn-border: var(--color-box-bg);
   --ko-btn-hover-border: var(--color-box-bg-dark);
-  --ko-btn-hover-text: var(--clr-005cb1);
+  --ko-btn-hover-text: var(--color-link-fg);
   font-weight: bold;
   color: var(--color-btn-primary);
 
@@ -68,7 +68,7 @@
     display: inline-block;
     width: 14px;
     height: 14px;
-    background: var(--clr-005cb1);
+    background: var(--color-link-fg);
     border-radius: 100%;
     position: absolute;
     left: -5px;

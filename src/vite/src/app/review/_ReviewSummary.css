@@ -33,7 +33,7 @@
   color: var(--clr-black);
 }
 #fm-summary li a:hover {
-  color: var(--clr-005cb1);
+  color: var(--color-link-fg);
 }
 
 #fm-summary .rbn {

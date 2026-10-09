@@ -50,12 +50,12 @@
 
   /* non-sortable */
   th a {
-    color: var(--clr-005cb1);
+    color: var(--color-link-fg);
   }
 
   th a:hover {
     text-decoration: underline;
-    color: var(--clr-005cb1);
+    color: var(--color-link-fg);
     padding-right: 12px;
     background-color: var(--clr-white);
   }

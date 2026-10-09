@@ -18,8 +18,9 @@
 }
 
 .ko-Btn--paypal {
-  --ko-btn-bg: var(--clr-40acda);
-  --ko-btn-border: var(--clr-40acda);
-  --ko-btn-hover-bg: var(--clr-51b5df);
-  --ko-btn-hover-border: var(--clr-51b5df);
+  /* PayPal brand colors, not themeable */
+  --ko-btn-bg: #40acda;
+  --ko-btn-border: #40acda;
+  --ko-btn-hover-bg: #51b5df;
+  --ko-btn-hover-border: #51b5df;
 }

@@ -1,7 +1,11 @@
 .ko-StudySearchDD {
-  --color-highlight: var(--clr-1d4ed8);
+  --color-highlight: color-mix(
+    in srgb,
+    var(--color-study-search-accent),
+    var(--clr-black) 20%
+  );
 
-  @apply mt-1 bg-(--clr-white) border border-(--clr-e5e7eb) rounded-lg shadow-xl;
+  @apply mt-1 bg-(--color-study-search-bg) border border-(--clr-e5e7eb) rounded-lg shadow-xl;
   z-index: var(--z-overlay);
 
   /* slightly wider, and larger font size on smartphone */
@@ -13,7 +17,7 @@
   em {
     font-style: normal;
     font-weight: 800;
-    color: var(--color-highlight); /*#1d4ed8;*/
+    color: var(--color-highlight);
   }
 }
 
@@ -24,8 +28,12 @@
   align-items: center;
 
   &.is-active {
-    background-color: var(--clr-dbeafe);
-    border-left: 4px solid var(--clr-3b82f6);
+    background-color: color-mix(
+      in srgb,
+      var(--color-study-search-accent),
+      var(--clr-white) 83%
+    );
+    border-left: 4px solid var(--color-study-search-accent);
 
     .ko-StudySearchDD-index {
       color: var(--color-highlight);

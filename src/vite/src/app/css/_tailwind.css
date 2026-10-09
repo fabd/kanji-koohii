@@ -90,6 +90,9 @@
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: var(--clr-neutral-700);
 
+  /* study search dropdown: the active item and the highlighted search term */
+  --color-study-search-accent: var(--clr-3b82f6);
+  --color-study-search-bg: var(--clr-white);
 
   /* main site navigation, desktop & mobile */
   --color-nav-bg: var(--clr-0b486b);

@@ -87,7 +87,7 @@ export default defineComponent({
       let label: string;
       if (card.leitnerbox === 1) {
         label = card.totalreviews === 0
-          ? '<span class="text-(--clr-2b7fff) font-semibold">New cards (blue pile)</span>'
+          ? '<span class="text-srs-new-dark font-semibold">New cards (blue pile)</span>'
           : '<span class="text-danger font-semibold">Restudy cards (red pile)</span>';
       }
       else {

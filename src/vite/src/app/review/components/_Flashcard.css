@@ -183,20 +183,21 @@
   font:
     bold 14px/29px Arial,
     sans-serif;
-  color: var(--clr-0097ff);
-  background-color: var(--clr-94d3ff);
+  color: var(--color-fc-end-btn);
+  background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--clr-white) 58%);
   border-radius: 6px;
   @apply px-3 py-1;
   text-decoration: none;
   /* make it look like a button! */
-  border-bottom: 4px solid var(--clr-268bd2);
+  border-bottom: 4px solid
+    color-mix(in srgb, var(--color-fc-end-btn), var(--clr-neutral-700) 25%);
 
   &:active,
   &:hover {
     margin-top: 2px;
     border-bottom-width: 2px;
-    background-color: var(--clr-7dc2f3);
-    color: var(--clr-white);
+    background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--clr-white) 45%);
+    color: var(--color-btn-fg);
   }
 }
 

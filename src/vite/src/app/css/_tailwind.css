@@ -75,6 +75,9 @@
   /* flashcard review : page background gradient */
   --color-fc-bg-top: var(--clr-c4e6ff);
   --color-fc-bg-end: var(--clr-92c3e4);
+  /* flashcard review : the "End" button (.ko-FcStEnd), text, background and
+     border are derived from this one */
+  --color-fc-end-btn: var(--clr-0097ff);
 
   /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
   --color-story-bg: var(--clr-white);

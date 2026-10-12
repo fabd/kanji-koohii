@@ -173,7 +173,7 @@
 
 <script lang="ts">
 import { defineComponent, nextTick } from "vue";
-import $$, { insertAfter } from "@/lib/dom";
+import $$ from "@/lib/dom";
 import { getApi } from "@/app/api/api";
 import type { KanjiData, PostUserStoryResponse } from "@/app/api/models";
 import { type TronInst } from "@/lib/tron";
@@ -342,7 +342,7 @@ export default defineComponent({
       if (!this.isReviewMode && props.isStoryShared) {
         // add the story in "new & updated"
         const elMount = document.createElement("div");
-        insertAfter(elMount, $$("#sharedstories-new .title")[0]!);
+        $$(".JsNewestSection .ko-StudySection-bd")[0]!.prepend(elMount);
 
         const propsData = {
           profileLink: props.sharedStoryAuthor,

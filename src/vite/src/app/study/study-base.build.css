@@ -25,123 +25,88 @@
   margin-bottom: 1em;
 }
 
-/* ------------------ */
-/* Dictionary         */
-/* ------------------ */
-#DictStudy {
-  padding-top: 0;
-  padding-bottom: 0;
+/* -------------------------------------------------------------------- */
+/* Study page sections : Dictionary, Favourites, New & updated, Shared   */
+/*   stories. Header with a title, and an optional chevron (collapsible) */
+/* -------------------------------------------------------------------- */
+.ko-StudySection {
   margin-bottom: 1em;
 }
 
-#DictHead {
-  font-size: 1.1em;
+.ko-StudySection-hd {
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 15px;
   line-height: 33px;
-  padding: 0 15px;
-  zoom: 1;
-  color: var(--clr-646250);
+  font-size: 1.1em;
+  color: var(--ko-section-fg);
+  text-shadow: 0 1px var(--clr-ffffffbf);
+  background: linear-gradient(
+    to bottom,
+    var(--ko-section-bg-top) 0%,
+    var(--ko-section-bg-end) 100%
+  );
+  border-bottom: 1px solid var(--ko-section-border, transparent);
+}
+.ko-StudySection.is-toggle .ko-StudySection-hd {
   cursor: pointer;
-  text-shadow: 0 1px var(--clr-ffffffbf);
-
-  background: var(--clr-cfd67f); /* Old browsers */
-  background: -webkit-linear-gradient(
-    top,
-    var(--clr-cfd67f) 0%,
-    var(--clr-e3ecb1) 100%
-  ); /* Chrome10+,Safari5.1+ */
-  background: linear-gradient(
-    to bottom,
-    var(--clr-e3ecb1) 0%,
-    var(--clr-cfd67f) 100%
-  ); /* W3C */
 }
 
-/* ------------------ */
-/* Shared Stories     */
-/* ------------------ */
-
-#SharedStoriesComponent {
-  padding-top: 0;
+.ko-StudySection-title {
+  flex: 1;
+  margin: 0;
+  font: inherit;
+  color: inherit;
 }
 
-.sharedstories_title {
-  margin: 0 0 12px;
-  font-size: 1.1em;
-  line-height: 33px;
-  padding: 0 15px;
-  zoom: 1;
-  text-shadow: 0 1px var(--clr-ffffffbf);
-  position: relative; /* for the toggle icon */
+/* points down when collapsed, up when expanded */
+.ko-StudySection-chevron {
+  width: 33px;
+  text-align: center;
+  transform: rotate(180deg);
+}
+.ko-StudySection.is-collapsed .ko-StudySection-chevron {
+  transform: none;
 }
 
-/* "Favourites" */
-#sharedstories-top {
-  padding: 0 0 4px;
-}
-#sharedstories-top .title {
-  margin: 0 0 1em;
-  color: var(--clr-583d8a);
-  text-shadow: 0 1px var(--clr-ffffffbf);
-
-  background: var(--clr-ddcdfc); /* Old browsers */
-  background: linear-gradient(
-    to bottom,
-    var(--clr-e4d9ff) 0%,
-    var(--clr-d2c8e5) 100%
-  ); /* W3C */
-
-  border-bottom: 1px solid var(--clr-b5a5d5);
-}
-
-/* when a story is favourited, do not show the report icon (this avoids some inconsistencies) */
-#sharedstories-top .report {
+.ko-StudySection.is-collapsed .ko-StudySection-bd {
   display: none;
 }
 
-/* New & updated" */
-#sharedstories-new .title {
-  color: var(--clr-646250);
-  cursor: pointer;
-
-  /* http://colorzilla.com/gradient-editor/#eeedd0+0,d9d6b7+100 */
-  background: var(--clr-eeedd0); /* Old browsers */
-  background: linear-gradient(
-    to bottom,
-    var(--clr-eeedd0) 0%,
-    var(--clr-d9d6b7) 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-  border-bottom: 1px solid var(--clr-bdbcaa);
+/* section colors */
+.ko-StudySection--dict {
+  --ko-section-fg: var(--clr-646250);
+  --ko-section-bg-top: var(--clr-e3ecb1);
+  --ko-section-bg-end: var(--clr-cfd67f);
+}
+.ko-StudySection--favourites {
+  --ko-section-fg: var(--clr-583d8a);
+  --ko-section-bg-top: var(--clr-e4d9ff);
+  --ko-section-bg-end: var(--clr-d2c8e5);
+  --ko-section-border: var(--clr-b5a5d5);
+}
+.ko-StudySection--newest {
+  --ko-section-fg: var(--clr-646250);
+  --ko-section-bg-top: var(--clr-eeedd0);
+  --ko-section-bg-end: var(--clr-d9d6b7);
+  --ko-section-border: var(--clr-bdbcaa);
+}
+.ko-StudySection--shared {
+  --ko-section-fg: var(--clr-42651d);
+  --ko-section-bg-top: var(--clr-d9f5bf);
+  --ko-section-bg-end: var(--clr-cde8ad);
+  --ko-section-border: var(--clr-bccdac);
 }
 
-/* Shared stories (main section) */
-#sharedstories-fav .title {
-  color: var(--clr-42651d);
-  margin-top: 1.5em;
-
-  /* http://colorzilla.com/gradient-editor/#d9f5bf+0,cde8ad+100 */
-  background: var(--clr-d9f5bf); /* Old browsers */
-  background: linear-gradient(
-    to bottom,
-    var(--clr-d9f5bf) 0%,
-    var(--clr-cde8ad) 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-  border-bottom: 1px solid var(--clr-bccdac);
-}
-
-/* newest stories toggle */
-#sharedstories-new.JsHide .title {
-  margin-bottom: -1.5em;
-}
-#sharedstories-new.JsHide .sharedstory {
+/* when a story is favourited, do not show the report icon (this avoids some inconsistencies) */
+.ko-StudySection--favourites .report {
   display: none;
 }
 
 /* shared stories paged list */
 #SharedStoriesListComponent .uiPagerDiv {
   background: var(--clr-lime-100);
-  margin: -12px 0 15px;
+  margin: 0 0 0.5em;
   padding: 6px 20px;
 }
 #SharedStoriesError p {
@@ -228,13 +193,7 @@
   font-size: 10px;
   margin-left: 1em;
 }
-#SharedStoriesComponent .is-moderated .rtkframe {
-  opacity: 0.5;
-  background: none;
-  border: none;
-  padding: 0 0 6px;
-}
-#SharedStoriesComponent .is-moderated .story {
+.sharedstory.is-moderated .story {
   display: none;
 }
 

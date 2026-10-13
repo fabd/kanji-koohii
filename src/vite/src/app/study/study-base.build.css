@@ -95,13 +95,6 @@
   margin: 0 0 0.5em;
   padding: 6px 20px;
 }
-#SharedStoriesError p {
-  color: var(--clr-935a00);
-  background: var(--clr-ffe5b2);
-  border-radius: 5px;
-  padding: 10px;
-  margin: 0 0 1em;
-}
 
 /* single public story */
 .sharedstory {

@@ -29,7 +29,7 @@
   padding: 0;
   display: inline-block;
   margin-left: 0.5rem;
-  color: var(--clr-554433);
+  color: var(--color-text-body);
 }
 
 .dict-list .dl_t_menu {

@@ -129,7 +129,7 @@
                   </template>
 
                   <template v-else>
-                    <div class="text-muted-fg">[ click here to enter your story ]</div>
+                    <div class="text-text-muted">[ click here to enter your story ]</div>
                   </template>
                 </div>
 

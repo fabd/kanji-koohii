@@ -25,8 +25,9 @@
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 25%);
 
   /* text */
-  --color-bd-fg: #42413d; /* body text */
-  --color-muted-fg: color-mix(in srgb, var(--color-bd-fg), #0000 30%);
+  --color-text-body: #42413d; /* body text */
+  --color-text-dark: #22211d;
+  --color-text-muted: color-mix(in srgb, var(--color-text-body), #0000 30%);
   --color-hd-fg: #7f7d85; /* headings */
   --color-link-fg: #005cb1;
 
@@ -67,7 +68,7 @@
   /* cards : flashcards, kanji cards (dashboard lesson pane) */
   --color-card-bg: #ffffff;
   --color-card-fg: #333333;
-  --color-card-border-empty: color-mix(in srgb, var(--color-bd-fg) 20%, transparent);
+  --color-card-border-empty: color-mix(in srgb, var(--color-text-body) 20%, transparent);
 
   /* flashcard review : option buttons at the top */
   --color-fc-btn: #50abeb;

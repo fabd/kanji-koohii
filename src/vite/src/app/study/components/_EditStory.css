@@ -40,7 +40,7 @@
     line-height: 1em;
   }
   .strokecount {
-    color: var(--color-muted-fg);
+    color: var(--color-text-muted);
   }
   .keyword {
     font:
@@ -55,11 +55,11 @@
 
   .favstory {
     margin: 1em 0 0;
-    color: var(--color-muted-fg);
+    color: var(--color-text-muted);
     font-style: italic;
     i {
       margin-right: 0.5em;
-      color: var(--color-muted-fg);
+      color: var(--color-text-muted);
     }
   }
 }

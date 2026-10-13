@@ -24,7 +24,7 @@
 /*//////////////////////////////////////////////////////////////// */
 .ko-Dash-srsIcoBtn {
   /* note: the height of these "buttons" comes from the parent's `items-stretch` */
-  @apply text-smx text-bd-fg no-underline cursor-pointer rounded-md;
+  @apply text-smx text-text-body no-underline cursor-pointer rounded-md;
 
   &:hover {
     @apply no-underline;
@@ -300,7 +300,7 @@
   height: 27px;
   line-height: 27px;
   background-color: var(--color-box-bg-dark);
-  @apply text-bd-fg;
+  @apply text-text-body;
 }
 
 .ko-KanjiCard-tag {

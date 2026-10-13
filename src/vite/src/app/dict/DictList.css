@@ -88,7 +88,7 @@
   padding: 3px 8px 4px;
   border-radius: 8px;
   background: var(--clr-neutral-100);
-  color: var(--clr-221100);
+  color: var(--color-text-dark);
 }
 
 /* the <em> surrounding tags originate in KoohiiFormat mixin, used by DictEntry.r and VocabPick.reading */

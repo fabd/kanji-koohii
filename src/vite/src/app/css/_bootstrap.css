@@ -46,7 +46,7 @@
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 0.875rem;
-  color: var(--color-muted-fg);
+  color: var(--color-text-muted);
 }
 
 .form-control {
@@ -130,7 +130,7 @@
 /* next to label of optional inputs:
    <label for=...>Location</label><span class="form-optional">(optional)</span> */
 .form-optional {
-  @apply text-muted-fg ml-4;
+  @apply text-text-muted ml-4;
   font-size: var(--form-label-font-size);
 }
 

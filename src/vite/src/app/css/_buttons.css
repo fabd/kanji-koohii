@@ -101,7 +101,7 @@
     --ko-btn-hover-bg: transparent;
     --ko-btn-border: var(--color-box-bg-dark);
     --ko-btn-text: var(--clr-stone-800);
-    --ko-btn-hover-text: var(--color-bd-fg);
+    --ko-btn-hover-text: var(--color-text-body);
     --ko-btn-hover-border: var(--clr-stone-700);
   }
 }

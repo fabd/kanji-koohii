@@ -39,14 +39,11 @@
   padding: 0 0 0 15px;
   line-height: 33px;
   font-size: 1.1em;
-  color: var(--ko-section-fg);
+  color: oklch(from var(--ko-section-bg) calc(l * 0.6) calc(c * 1.2) h);
   text-shadow: 0 1px var(--clr-ffffffbf);
-  background: linear-gradient(
-    to bottom,
-    var(--ko-section-bg-top) 0%,
-    var(--ko-section-bg-end) 100%
-  );
-  border-bottom: 1px solid var(--ko-section-border, transparent);
+  background: var(--ko-section-bg);
+  border-bottom: 1px solid color-mix(in srgb, var(--ko-section-bg), #000 10%);
+  border-radius: 4px;
 }
 .ko-StudySection.is-toggle .ko-StudySection-hd {
   cursor: pointer;
@@ -75,27 +72,16 @@
 
 /* section colors */
 .ko-StudySection--dict {
-  --ko-section-fg: var(--clr-646250);
-  --ko-section-bg-top: var(--clr-e3ecb1);
-  --ko-section-bg-end: var(--clr-cfd67f);
+  --ko-section-bg: var(--clr-e3ecb1);
 }
 .ko-StudySection--favourites {
-  --ko-section-fg: var(--clr-583d8a);
-  --ko-section-bg-top: var(--clr-e4d9ff);
-  --ko-section-bg-end: var(--clr-d2c8e5);
-  --ko-section-border: var(--clr-b5a5d5);
+  --ko-section-bg: var(--clr-e4d9ff);
 }
 .ko-StudySection--newest {
-  --ko-section-fg: var(--clr-646250);
-  --ko-section-bg-top: var(--clr-eeedd0);
-  --ko-section-bg-end: var(--clr-d9d6b7);
-  --ko-section-border: var(--clr-bdbcaa);
+  --ko-section-bg: #E1DFC1;
 }
 .ko-StudySection--shared {
-  --ko-section-fg: var(--clr-42651d);
-  --ko-section-bg-top: var(--clr-d9f5bf);
-  --ko-section-bg-end: var(--clr-cde8ad);
-  --ko-section-border: var(--clr-bccdac);
+  --ko-section-bg: var(--clr-cde8ad);
 }
 
 /* when a story is favourited, do not show the report icon (this avoids some inconsistencies) */

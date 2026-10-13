@@ -75,14 +75,11 @@
     In Tailwind classes use the variable shorthand, eg. "bg-(--clr-7f7d85)".
   */
 
-  --clr-5e440a: #5e440a;
   --clr-f0c000: #f0c000;
   --clr-e2b437: #e2b437;
-  --clr-ffca52: #ffca52;
   --clr-ffd230: #ffd230;
   --clr-daccb1: #daccb1;
   --clr-dfdbce: #dfdbce;
-  --clr-faefc6: #faefc6;
   --clr-fef3c6: #fef3c6;
   --clr-eae6db: #eae6db;
   --clr-716e57: #716e57;
@@ -129,7 +126,6 @@
   --clr-e5e7eb: #e5e7eb;
   --clr-e6e8ec: #e6e8ec;
   --clr-f3f4f6: #f3f4f6;
-  --clr-0000ff: #0000ff;
   --clr-b5a5d5: #b5a5d5;
   --clr-d2c8e5: #d2c8e5;
   --clr-ddcdfc: #ddcdfc;

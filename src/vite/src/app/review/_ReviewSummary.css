@@ -75,20 +75,20 @@
   /* No and Again cards are both in the failed pile */
   &.is-no,
   &.is-again {
-    --bg: var(--clr-a53000);
+    --bg: var(--color-btn-danger);
   }
 
   /* Again-* cards are lapsed (forgotten), slightly different shade of red */
   &.is-again-hard,
   &.is-again-yes,
   &.is-again-easy {
-    --bg: var(--clr-b84314);
+    --bg: var(--color-btn-danger);
   }
 
   &.is-hard,
   &.is-yes,
   &.is-easy {
-    --bg: var(--clr-lime-700);
+    --bg: var(--color-btn-success);
   }
 
   color: var(--fg);

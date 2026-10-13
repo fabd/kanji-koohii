@@ -51,12 +51,11 @@ section {
 /* backgrounds */
 /* ---------------------------- */
 .k_bg_head {
-  background: var(--clr-eae6db); /* Old browsers */
   background: linear-gradient(
     to bottom,
     var(--clr-eae6db) 0%,
     var(--clr-dfdbce) 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  );
 }
 .k_bg_even {
   background: var(--clr-stone-200);
@@ -65,13 +64,12 @@ section {
   background: var(--clr-stone-50);
 }
 .k_bg_free {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
-  background: var(--clr-f8c5e4); /* Old browsers */
+  /* Permalink http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
   background: linear-gradient(
     to bottom,
-    var(--clr-f8c5e4) 0%,
-    var(--clr-f0ddd4) 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    var(--color-ft-bg-top) 0%,
+    var(--color-ft-bg-end) 100%
+  );
 }
 
 /* illustrations */

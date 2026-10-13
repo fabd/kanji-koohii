@@ -67,14 +67,16 @@
   text-decoration: none;
 }
 .uiChartVs .left .pct {
+  --bg: #a5e36a;
   left: 0;
-  background: var(--clr-b1fe66);
-  border-bottom-color: color-mix(in srgb, var(--clr-b1fe66), var(--clr-black) 27%);
+  background: var(--bg);
+  border-bottom-color: color-mix(in srgb, var(--bg), var(--clr-black) 27%);
 }
 .uiChartVs .right .pct {
+  --bg: #dd5d3a;
   right: 0;
-  background: var(--clr-dd5d3a);
-  border-bottom-color: color-mix(in srgb, var(--clr-dd5d3a), var(--clr-black) 27%);
+  background: var(--bg);
+  border-bottom-color: color-mix(in srgb, var(--bg), var(--clr-black) 27%);
 }
 .uiChartVs .pct span {
   position: absolute;

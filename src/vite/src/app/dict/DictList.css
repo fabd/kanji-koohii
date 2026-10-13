@@ -46,7 +46,7 @@
 /* picked item */
 .dict-list .dl_item--pick .dl_t_menu,
 .dict-list .dl_item--pick:hover .dl_t_menu {
-  color: var(--clr-e2b437);
+  color: var(--color-gold);
 }
 
 /* "known" word (contains known kanji) */

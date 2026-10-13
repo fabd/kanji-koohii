@@ -163,7 +163,7 @@
 }
 .sharedstory_btn:hover .fa-star:before,
 #my-stories .fa-star:before {
-  color: var(--clr-f0c000);
+  color: var(--color-gold);
 }
 
 /* shared stories hide/unhide reported stories */

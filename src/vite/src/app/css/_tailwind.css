@@ -43,6 +43,9 @@
   --color-btn-bg-disabled: #cccccc;
   --color-btn-fg-disabled: #757575;
 
+  /* misc: icons */
+  --color-gold: #e2b437; /* star icons (favorite story, picked dictionary entry) */
+
   /* forms : inputs, textareas, selects (see _bootstrap.css) */
   --color-input-bg: #ffffff;
   --color-input-fg: #222222;

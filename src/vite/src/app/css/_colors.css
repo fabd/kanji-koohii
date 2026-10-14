@@ -69,72 +69,90 @@
     This is a first step towards dark mode: next, similar colors will be
     merged into the palette above, then given semantic names.
 
-    Sorted by near-grays first (by lightness), then by hue, so similar
-    colors are side by side.
+    Grouped by similar hue, then sorted by lightness (OKLCH) from dark
+    to light within each group.
 
     In Tailwind classes use the variable shorthand, eg. "bg-(--clr-7f7d85)".
   */
 
-  --clr-daccb1: #daccb1;
-  --clr-dfdbce: #dfdbce;
-  --clr-fef3c6: #fef3c6;
-  --clr-eae6db: #eae6db;
-  --clr-716e57: #716e57;
-  --clr-9b9878: #9b9878;
-  --clr-cfd67f: #cfd67f;
-  --clr-c1bea3: #c1bea3;
+  /* warm grays (low chroma) */
   --clr-bdbcaa: #bdbcaa;
   --clr-c9c7b5: #c9c7b5;
+  --clr-d5d4c4: #d5d4c4;
+  --clr-d9d8ce: #d9d8ce;
+  --clr-dfdbce: #dfdbce;
+  --clr-eae6db: #eae6db;
+
+  /* olive / khaki */
+  --clr-716e57: #716e57;
+  --clr-9b9878: #9b9878;
+  --clr-c1bea3: #c1bea3;
   --clr-d9d6b7: #d9d6b7;
   --clr-d9d6bc: #d9d6bc;
   --clr-dad8bd: #dad8bd;
-  --clr-d5d4c4: #d5d4c4;
-  --clr-d9d8ce: #d9d8ce;
   --clr-e3e0c9: #e3e0c9;
   --clr-e8e5ca: #e8e5ca;
   --clr-eeedd0: #eeedd0;
   --clr-f3f1dc: #f3f1dc;
+
+  /* pale yellows */
+  --clr-fef3c6: #fef3c6;
   --clr-fdf9d2: #fdf9d2;
+
+  /* yellow greens */
   --clr-72a311: #72a311;
-  --clr-b7d468: #b7d468;
-  --clr-e3ecb1: #e3ecb1;
   --clr-5db200: #5db200;
   --clr-73df00: #73df00;
+  --clr-b7d468: #b7d468;
   --clr-bccdac: #bccdac;
+  --clr-cfd67f: #cfd67f;
   --clr-cde8ad: #cde8ad;
+  --clr-e3ecb1: #e3ecb1;
   --clr-d9f5bf: #d9f5bf;
-  --clr-008000: #008000;
+
+  /* greens */
   --clr-206717: #206717;
+  --clr-008000: #008000;
+  --clr-008236: #008236;
   --clr-318a31: #318a31;
   --clr-448844: #448844;
+  --clr-27ae60: #27ae60;
   --clr-5cb85c: #5cb85c;
   --clr-6cbe6b: #6cbe6b;
   --clr-88cc88: #88cc88;
-  --clr-27ae60: #27ae60;
-  --clr-008236: #008236;
+
+  /* blues */
   --clr-0a3e62: #0a3e62;
   --clr-0064b2: #0064b2;
   --clr-0065b2: #0065b2;
-  --clr-408fc6: #408fc6;
   --clr-478ac0: #478ac0;
+  --clr-408fc6: #408fc6;
   --clr-4a9dd6: #4a9dd6;
   --clr-4faeec: #4faeec;
   --clr-94d3ff: #94d3ff;
+
+  /* cool grays */
   --clr-e5e7eb: #e5e7eb;
   --clr-e6e8ec: #e6e8ec;
   --clr-f3f4f6: #f3f4f6;
+
+  /* violets */
   --clr-b5a5d5: #b5a5d5;
   --clr-d2c8e5: #d2c8e5;
   --clr-ddcdfc: #ddcdfc;
   --clr-e4d9ff: #e4d9ff;
-  --clr-f8c8f8: #f8c8f8;
+
+  /* pinks & magentas */
   --clr-8b1566: #8b1566;
+  --clr-a4156c: #a4156c;
   --clr-b10081: #b10081;
+  --clr-cc2d7a: #cc2d7a;
   --clr-e400b1: #e400b1;
   --clr-fc8dda: #fc8dda;
-  --clr-a4156c: #a4156c;
-  --clr-cc2d7a: #cc2d7a;
   --clr-f8c5e4: #f8c5e4;
+  --clr-f8c8f8: #f8c8f8;
+
+  /* reds */
   --clr-e70053: #e70053;
   --clr-eb3741: #eb3741;
   --clr-e9575e: #e9575e;

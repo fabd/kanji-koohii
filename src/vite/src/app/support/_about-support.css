@@ -9,12 +9,12 @@
 
 /* extend our base buttons */
 .ko-Btn--patreon {
-  /* use Patreon's "Fiery Coral" https://www.patreon.com/brand */
-  --ko-btn-bg: var(--clr-ff424d);
-  --ko-btn-border: var(--clr-ff424d);
-  --ko-btn-text: var(--clr-white);
-  --ko-btn-hover-bg: var(--clr-eb3741);
-  --ko-btn-hover-border: var(--clr-eb3741);
+  /* Patreon's "Fiery Coral" https://www.patreon.com/brand, not themeable */
+  --ko-btn-bg: #ff424d;
+  --ko-btn-border: #ff424d;
+  --ko-btn-text: #ffffff;
+  --ko-btn-hover-bg: #eb3741;
+  --ko-btn-hover-border: #eb3741;
 }
 
 .ko-Btn--paypal {

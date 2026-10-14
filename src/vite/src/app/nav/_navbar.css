@@ -188,12 +188,10 @@
 
 /* donate tab */
 #k-nav_d .donate a {
-  color: var(--clr-e9575e);
+  color: #e9575e;
 }
 #k-nav_d .donate a:hover {
-  color: var(--clr-e70053);
-  background-color: var(--clr-fc8dda);
-  -webkit-transition: background-color 0.2s;
+  background-color: #fc8dda;
   transition: background-color 0.2s;
 }
 

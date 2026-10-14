@@ -72,16 +72,16 @@
 
 /* section colors */
 .ko-StudySection--dict {
-  --ko-section-bg: var(--clr-e3ecb1);
+  --ko-section-bg: #e3ecb1;
 }
 .ko-StudySection--favourites {
-  --ko-section-bg: var(--clr-e4d9ff);
+  --ko-section-bg: #e4d9ff;
 }
 .ko-StudySection--newest {
-  --ko-section-bg: #E1DFC1;
+  --ko-section-bg: #e7e0ca;
 }
 .ko-StudySection--shared {
-  --ko-section-bg: var(--clr-cde8ad);
+  --ko-section-bg: #cde8ad;
 }
 
 /* when a story is favourited, do not show the report icon (this avoids some inconsistencies) */

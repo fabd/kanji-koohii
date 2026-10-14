@@ -78,7 +78,7 @@
   height: 153px;
   padding: 5px;
   border: 1px solid var(--color-story-border);
-  background: var(--color-story-bg-dark);
+  background: var(--color-input-bg-dark);
   box-sizing: border-box;
 }
 

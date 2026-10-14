@@ -48,6 +48,7 @@
 
   /* forms : inputs, textareas, selects (see _bootstrap.css) */
   --color-input-bg: #ffffff;
+  --color-input-bg-dark: #fef3c6; /* on white background */
   --color-input-fg: #222222;
   --color-input-border: var(--color-border);
   --color-input-border-focus: #99bddb;
@@ -98,6 +99,7 @@
   --color-tbl-hd-border: #a9a6a7;
   --color-tbl-bg: #f8f6ef;
   --color-tbl-fg: #5c5b52;
+  --color-tbl-bg-high: #fdf9d2; /* row highlight bg */
 
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: #666666;

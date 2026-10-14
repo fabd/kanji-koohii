@@ -20,22 +20,22 @@
 // DATA TABLES (as output by uiSelectTable php component)
 //
 //   <table class="uiTabular">
-//   <table class="uiTabular is-dense">   for compact rows
 //
 // -------------------------------------------------------------------- */
 .uiTabular {
-  border: 1px solid var(--clr-bdbcaa);
-  border-top: 1px solid var(--clr-d9d8ce);
+  border: 1px solid var(--color-tbl-border);
+  border-top: 1px solid var(--color-tbl-border-top);
   width: 100%;
 
-  /* thead */
   th {
     padding: 0;
     font: 13px Arial, sans-serif;
-    color: var(--clr-stone-900);
-    border-bottom: 1px solid var(--clr-neutral-400);
+    border-bottom: 1px solid var(--color-tbl-hd-border);
     text-align: left;
-    background: var(--clr-d9d6b7) url(/assets/legacy/widgets-selecttable.gif) repeat-x 0 0;
+    background: linear-gradient(
+      var(--color-tbl-hd-bg-top),
+      var(--color-tbl-hd-bg-end) 31px
+    );
   }
 
   /* use `<span class="is-padded">` for labels within TH that are not links */
@@ -57,11 +57,10 @@
     text-decoration: underline;
     color: var(--color-link-fg);
     padding-right: 12px;
-    background-color: var(--clr-white);
   }
 
   th a.active {
-    color: var(--clr-black);
+    color: var(--color-tbl-fg);
   }
 
   /* sort icon */
@@ -70,73 +69,50 @@
   }
 
   th a.sort:hover {
-    background: url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% 50%;
+    background: none;
   }
 
-  th a.sortasc {
-    padding-right: 12px;
-    background: url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% -37px;
-  }
-
+  th a.sortasc,
   th a.sortdesc {
+    position: relative;
     padding-right: 12px;
-    background: url(/assets/legacy/widgets-selecttable.gif) no-repeat 100% -72px;
+
+    &::after {
+      position: absolute;
+      right: 1px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      line-height: 1;
+      color: #21c635; /* not themeable */
+    }
+  }
+
+  th a.sortasc::after {
+    content: "\2191"; /* ↑ */
+  }
+
+  th a.sortdesc::after {
+    content: "\2193"; /* ↓ */
   }
 
   /* tbody */
   td {
     padding: 10px 10px;
-    color: var(--clr-neutral-700);
     font-size: 13px;
     line-height: 1.1em;
-    border-bottom: 1px solid var(--clr-e8e5ca);
+    border-bottom: 1px solid var(--color-tbl-border-row);
   }
 
-  &.is-dense td {
-    padding: 5px 10px;
-  }
-
-  tbody td {
-    background-color: var(--clr-tbl-bg);
-    color: var(--clr-stone-900);
-  }
-
-  .odd td {
-    background-color: var(--clr-white);
-  }
-
-  /* uiTable hover */
-  tbody tr.hover {
-    background-color: var(--clr-white);
-  }
-
-  tbody var {
-    color: var(--clr-black);
-    font-size: 13px;
-  }
-
-  /* errors */
-  tbody td.error {
-    background-color: var(--clr-red-100);
-  }
-
-  /* CELL STYLES */
-  td.red {
-    color: var(--clr-red-700);
-  }
-
-  /* failed reviews */
-  td.compound {
-    color: var(--clr-black);
-    padding-top: 0;
-    padding-bottom: 0;
+  td {
+    background-color: var(--color-tbl-bg);
+    color: var(--color-tbl-fg);
   }
 
   td.kanji {
     text-align: center;
     font-size: 24px;
     line-height: 1em;
-    color: var(--clr-black);
     padding-top: 4px;
     padding-bottom: 4px;
   }

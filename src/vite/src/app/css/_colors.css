@@ -4,12 +4,6 @@
 
 :root {
   /* -------------------------------------------------------------------- */
-  /* Colors ( legacy sass stuff - needs renaming/merging ) */
-  /* -------------------------------------------------------------------- */
-  /* widgets: table row (slightly brighter than CSS_BG_1) */
-  --clr-tbl-bg: var(--clr-stone-50);
-
-  /* -------------------------------------------------------------------- */
   /* Palette */
   /* -------------------------------------------------------------------- */
   /*
@@ -76,10 +70,8 @@
   */
 
   /* warm grays (low chroma) */
-  --clr-bdbcaa: #bdbcaa;
   --clr-c9c7b5: #c9c7b5;
   --clr-d5d4c4: #d5d4c4;
-  --clr-d9d8ce: #d9d8ce;
   --clr-dfdbce: #dfdbce;
   --clr-eae6db: #eae6db;
 
@@ -87,7 +79,6 @@
   --clr-716e57: #716e57;
   --clr-9b9878: #9b9878;
   --clr-c1bea3: #c1bea3;
-  --clr-d9d6b7: #d9d6b7;
   --clr-d9d6bc: #d9d6bc;
   --clr-dad8bd: #dad8bd;
   --clr-e3e0c9: #e3e0c9;

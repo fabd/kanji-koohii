@@ -89,6 +89,16 @@
   --color-story-fg-link: #448844; /* kanji links in story (eg. #123) */
   --color-story-border: #e8e5c9;
 
+  /* data tables (.uiTabular, legacy uiSelectTable php component) */
+  --color-tbl-border: #bdbcaa;
+  --color-tbl-border-top: #d9d8ce;
+  --color-tbl-border-row: #e8e5ca; /* border between rows */
+  --color-tbl-hd-bg-top: #efedd2; /* header gradient */
+  --color-tbl-hd-bg-end: #d9d6b7;
+  --color-tbl-hd-border: #a9a6a7;
+  --color-tbl-bg: #f8f6ef;
+  --color-tbl-fg: #5c5b52;
+
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: #666666;
 

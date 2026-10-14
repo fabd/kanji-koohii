@@ -5,7 +5,7 @@
     var(--clr-black) 20%
   );
 
-  @apply mt-1 bg-(--color-study-search-bg) border border-(--clr-e5e7eb) rounded-lg shadow-xl;
+  @apply mt-1 bg-(--color-study-search-bg) border border-(--color-study-search-border) rounded-lg shadow-xl;
   z-index: var(--z-overlay);
 
   /* slightly wider, and larger font size on smartphone */
@@ -22,7 +22,9 @@
 }
 
 .ko-StudySearchDD-item {
-  @apply px-4 py-2 border-b last:border-b-0 border-(--clr-f3f4f6) transition-colors;
+  --color-border: color-mix(in srgb, var(--color-study-search-bg), #000 5%);
+  border-bottom: 1px solid var(--color-border);
+  @apply px-4 py-2 last:border-b-0 transition-colors;
 
   display: flex;
   align-items: center;
@@ -40,7 +42,7 @@
     }
   }
   &:hover {
-    background-color: var(--clr-f3f4f6);
+    background-color: var(--color-border);
     cursor: pointer;
   }
 }

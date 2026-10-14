@@ -92,7 +92,7 @@
   /* data tables (.ko-DataTable, legacy uiSelectTable php component) */
   --color-tbl-border: #bdbcaa;
   --color-tbl-border-top: #d9d8ce;
-  --color-tbl-border-row: #e8e5ca; /* border between rows */
+  --color-tbl-border-row: #e8e5da; /* border between rows */
   --color-tbl-hd-bg-top: #efedd2; /* header gradient */
   --color-tbl-hd-bg-end: #d9d6b7;
   --color-tbl-hd-border: #a9a6a7;
@@ -105,6 +105,7 @@
   /* study search dropdown: the active item and the highlighted search term */
   --color-study-search-accent: #3b82f6;
   --color-study-search-bg: #ffffff;
+  --color-study-search-border: #e5e7eb;
 
   /* main site navigation, desktop & mobile */
   --color-nav-bg: #0b486b;

@@ -56,7 +56,7 @@ class FailedListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Keyword",
           "width":     19,
-          "cssClass":  "keyword",
+          "cssClass":  "ko-DataTable-keyword",
           "colData":  "keyword",
           "colDisplay":  "_keyword"
         },
@@ -70,7 +70,7 @@ class FailedListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Fail",
           "width":     8,
-          "cssClass":  "text-center red",
+          "cssClass":  "text-center",
           "colData":  "failurecount",
           "colDisplay": "_failurecount"
         },

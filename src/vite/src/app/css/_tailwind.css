@@ -89,7 +89,7 @@
   --color-story-fg-link: #448844; /* kanji links in story (eg. #123) */
   --color-story-border: #e8e5c9;
 
-  /* data tables (.uiTabular, legacy uiSelectTable php component) */
+  /* data tables (.ko-DataTable, legacy uiSelectTable php component) */
   --color-tbl-border: #bdbcaa;
   --color-tbl-border-top: #d9d8ce;
   --color-tbl-border-row: #e8e5ca; /* border between rows */

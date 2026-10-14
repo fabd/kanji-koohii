@@ -22,10 +22,10 @@
 }
 
 /* remove flashcards list */
-.selection-table .uiTabular tbody td {
+.selection-table .ko-DataTable tbody td {
   cursor: pointer;
 }
-.selection-table .uiTabular tr.selected td {
+.selection-table .ko-DataTable tr.selected td {
   background: var(--clr-fdf9d2);
   color: var(--clr-9b9878);
 }

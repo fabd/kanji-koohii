@@ -128,7 +128,7 @@ function ui_select_table(uiSelectTable $table, ?uiSelectPager $pager = null, arr
     echo ui_select_pager($pager);
   }
 
-  $html_options['class'] = merge_html_classes('uiTabular', $html_options['class'] ?? []);
+  $html_options['class'] = merge_html_classes('ko-DataTable', $html_options['class'] ?? []);
 
   echo _widgets_render('ui_select_table', ['table' => $table, 'table_options' => $html_options]);
 
@@ -155,7 +155,7 @@ function ui_data_table(object $table, array $html_options = []): string
 
   ob_start();
 
-  $html_options['class'] = merge_html_classes('uiTabular', $html_options['class'] ?? []);
+  $html_options['class'] = merge_html_classes('ko-DataTable', $html_options['class'] ?? []);
 
   echo _widgets_render('ui_select_table', ['table' => $table, 'table_options' => $html_options]);
 

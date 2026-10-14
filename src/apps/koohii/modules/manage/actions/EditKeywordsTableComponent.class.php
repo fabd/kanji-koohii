@@ -64,21 +64,21 @@ class EditKeywordsTableBinding implements uiSelectTableBinding
         {
           "caption":   "Char.",
           "width":     7,
-          "cssClass":  "kanji",
+          "cssClass":  "ko-DataTable-kanji",
           "colData":  "kanji",
           "colDisplay":  "_kanji"
         },
         {
           "caption":   "Heisig&nbsp;Keyword",
           "width":     20,
-          "cssClass":  "keyword",
+          "cssClass":  "ko-DataTable-keyword",
           "colData":  "keyword",
           "colDisplay":  "_keyword"
         },
         {
           "caption":   "Customized&nbsp;Keyword",
           "width":     20,
-          "cssClass":  "keyword JSCkwTd",
+          "cssClass":  "ko-DataTable-keyword JSCkwTd",
           "colData":   "custkeyword",
           "colDisplay":  "_custkeyword"
         },

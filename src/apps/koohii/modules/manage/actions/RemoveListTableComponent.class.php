@@ -66,14 +66,14 @@ class RemoveListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Char.",
           "width":     7,
-          "cssClass":  "kanji",
+          "cssClass":  "ko-DataTable-kanji",
           "colData":  "kanji",
           "colDisplay":  "_kanji"
         },
         {
           "caption":   "Keyword",
           "width":     10,
-          "cssClass":  "keyword",
+          "cssClass":  "ko-DataTable-keyword",
           "colData":  "keyword"
         },
         
@@ -86,7 +86,7 @@ class RemoveListTableBinding implements uiSelectTableBinding
         {
           "caption":   "Fail",
           "width":     1,
-          "cssClass":  "text-center red",
+          "cssClass":  "text-center",
           "colData":  "failurecount",
           "colDisplay": "_failurecount"
         },

@@ -175,7 +175,7 @@
 .ko-Btn--srs {
   border-radius: var(--border-radius-lg);
   border-width: 0 0 0 0;
-  border-bottom: 3px solid var(--clr-318a31);
+  border-bottom: 3px solid #888;
 
   font-size: var(--button-font-size-xl);
   padding: 15px 1rem 13px; /* ~49px height */

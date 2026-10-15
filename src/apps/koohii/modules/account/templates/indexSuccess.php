@@ -24,7 +24,7 @@ with_footer();
         <td><b><?= esc_specialchars($user['username']); ?></b></td></tr>
     <tr><th>Email</th>
         <td><?= esc_specialchars($user['email']); ?>
-        <div style="font:11px/1em Verdana, sans-serif;color:var(--clr-448844);font-style:italic;white-space:nowrap">(your email is not visible to anyone else)</div>
+        <div class="text-success" style="font:11px/1em Verdana, sans-serif;font-style:italic;white-space:nowrap">(your email is not visible to anyone else)</div>
         </td></tr>
     <tr><th>Location</th>
         <td><?= esc_specialchars($user['location']); ?></td></tr>

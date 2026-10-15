@@ -76,11 +76,12 @@
   --color-card-border-empty: color-mix(in srgb, var(--color-text-body) 20%, transparent);
 
   /* flashcard review */
-  --color-fc-btn: #50abeb; /* option buttons at the top */
-  --color-fc-bg-top: #c4e6ff; /* page background gradient */
-  --color-fc-bg-end: #92c3e4;
-  --color-fc-end-btn: #0097ff; /* the "End" button */
-  --color-fc-status-bg: #94d3ff; /* status box ("Cards left") */
+  --color-fc-base: #50abeb; /* base theme color for the flashcard page */
+  --color-fc-btn: var(--color-fc-base); /* option buttons at the top */
+  --color-fc-bg-top: oklch(from var(--color-fc-base) calc(l + 0.195) calc(c * 0.39) h); /* page background gradient */
+  --color-fc-bg-end: oklch(from var(--color-fc-base) calc(l + 0.081) calc(c * 0.55) h);
+  --color-fc-end-btn: oklch(from var(--color-fc-base) calc(l - 0.048) calc(c * 1.45) calc(h + 7)); /* the "End" button */
+  --color-fc-status-bg: oklch(from var(--color-fc-base) calc(l + 0.127) calc(c * 0.7) h); /* status box ("Cards left") */
 
   /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
   --color-story-bg: #ffffff;

@@ -14,7 +14,7 @@
   top: 3px;
   z-index: var(--z-toast);
   padding: 0.5em 0.8em;
-  background: var(--clr-4a9dd6);
+  background: oklch(from var(--color-fc-base) calc(l - 0.044) calc(c * 0.91) h);
   border-radius: 3px;
   color: var(--clr-white);
   font-size: 14px;
@@ -117,7 +117,7 @@
   font:
     17px/33px Arial,
     sans-serif;
-  color: var(--clr-408fc6);
+  color: oklch(from var(--color-fc-base) calc(l - 0.088) calc(c * 0.88) h);
   text-align: center;
   margin: 0;
   padding: 0 0 5px;

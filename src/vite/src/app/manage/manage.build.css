@@ -14,13 +14,6 @@
   margin-bottom: 0;
 }
 
-#manage-cards em.note {
-  color: var(--clr-008000);
-  font-style: italic;
-  display: inline-block;
-  margin: 0 0 0 1em;
-}
-
 /* remove flashcards list */
 .selection-table .ko-DataTable tbody td {
   cursor: pointer;

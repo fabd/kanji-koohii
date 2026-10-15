@@ -18,7 +18,7 @@
 <div class="mt-3 mb-8">
 <?= form_tag('manage/removeListConfirm', ['class' => 'main-form']); ?>
 <?php
-  echo _bs_submit_tag('Remove Cards').'<em class="note">Note: there will be a confirmation step.</em>';
+  echo _bs_submit_tag('Remove Cards').'<em class="inline-block ml-[1em] text-success">Note: there will be a confirmation step.</em>';
   echo _bs_button_to(
     'Clear selection',
     'manage/removelist',

@@ -16,6 +16,6 @@
   <?= form_errors(); ?>
   
   <?= textarea_tag('txtSelection', '' /* '4 56 一　二三' */, ['class' => 'form-control mb-3', 'rows' => 5]); ?>
-  <?= _bs_submit_tag('Remove Flashcards'); ?><em class="note">Note: there will be a confirmation step.</em>
+  <?= _bs_submit_tag('Remove Flashcards'); ?><em class="inline-block ml-[1em] text-success">Note: there will be a confirmation step.</em>
 
 </form>

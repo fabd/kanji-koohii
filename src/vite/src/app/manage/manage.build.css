@@ -35,7 +35,7 @@
   display: inline-block;
   border: 0;
   font: inherit;
-  padding: 4px 5px;
+  padding: 6px 5px;
   border-radius: 3px 3px;
   background-color: var(--color-box-bg-light);
   color: var(--color-text-muted);

@@ -85,7 +85,7 @@ class EditKeywordsTableBinding implements uiSelectTableBinding
         {
           "caption":   "Edit",
           "width":     5,
-          "cssClass":  "text-center edit-keyword",
+          "cssClass":  "text-center ko-DataTable-icon",
           "colDisplay":   "_edit"
         }
         

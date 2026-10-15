@@ -112,6 +112,11 @@
       serif;
     white-space: nowrap;
   }
+
+  /* for things like edit icon, remove extra padding so icon can be larger */
+  .ko-DataTable-icon {
+    padding: 0;
+  }
 }
 
 @media (max-width: 767px) {

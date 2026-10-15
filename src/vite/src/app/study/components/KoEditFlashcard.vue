@@ -38,7 +38,7 @@
     </template>
 
     <template v-if="action === 'delete-done'">
-      <p class="text-md text-(--clr-008236) mb-2"><i class="fa fa-check mr-2"></i>Flashcard deleted.</p>
+      <p class="text-md text-success mb-2"><i class="fa fa-check mr-2"></i>Flashcard deleted.</p>
       <div class="text-center">
         <button class="ko-Btn ko-Btn--success block w-full JSDialogHide">Close</button>
       </div>

@@ -32,14 +32,12 @@
   left: 11%;
   bottom: 0;
   width: 39%;
-  background: var(--clr-neutral-50);
 }
 .box .bar2 {
   position: absolute;
   left: 50%;
   bottom: 0;
   width: 39%;
-  background: var(--clr-f8c8f8);
 }
 
 .box .lbl {

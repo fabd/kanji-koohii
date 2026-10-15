@@ -68,6 +68,7 @@
   --color-danger: #d23c3c;
   --color-success: #3a7c3a;
   --color-warning: #e17809;
+  --color-info: #cc2d7a; /* info notes (eg. with a fa-info-circle icon) */
 
   /* cards : flashcards, kanji cards (dashboard lesson pane) */
   --color-card-bg: #ffffff;

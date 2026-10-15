@@ -216,8 +216,8 @@
   line-height: 32px;
   background: var(--color-box-bg-light);
   box-shadow: 0 2px 2px var(--clr-00000033);
-  border-left: 1px solid var(--clr-d5d4c4);
-  border-right: 1px solid var(--clr-d5d4c4);
+  border-left: 1px solid var(--color-box-bg-dark);
+  border-right: 1px solid var(--color-box-bg-dark);
 }
 #k-nav_d .k-nav_dropdown li {
   float: none;

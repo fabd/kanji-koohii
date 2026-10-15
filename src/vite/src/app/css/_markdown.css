@@ -70,7 +70,7 @@
 /* images */
 .markdown img {
   padding: 3px;
-  border: 1px solid var(--clr-c9c7b5);
+  border: 1px solid var(--color-box-bg-dark);
   display: block;
   margin: 0 auto;
   max-width: 100%;

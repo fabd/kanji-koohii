@@ -46,7 +46,7 @@ class EditKeywordsTableBinding implements uiSelectTableBinding
 
   public function getConfig()
   {
-    sfProjectConfiguration::getActive()->loadHelpers(['Asset', 'SimpleDate', 'CJK']);
+    sfProjectConfiguration::getActive()->loadHelpers(['SimpleDate', 'CJK']);
 
     // MUST BE VALID JSON! ! !
     return <<< EOD
@@ -105,11 +105,8 @@ EOD;
     // create edit keyword link
     $rowData['_custkeyword'] = esc_specialchars($rowData['custkeyword']); // '<span class="JSEditKeyword" data-url="'.$url.'">'.$rowData['custkeyword'].'</span>';
 
-    $rowData['_edit'] = image_tag('/images/ui/icons/pencil.png', [
-      'size'    => '16x16',
-      'class'   => 'edit-icon JSEditKeyword',
-      'data-id' => $rowData['ucs_id'],
-    ]);
+    $rowData['_edit'] = '<button type="button" class="edit-icon JSEditKeyword" data-id="'.$rowData['ucs_id'].'"'
+      .' title="Edit keyword" aria-label="Edit keyword"><i class="fa fa-edit"></i></button>';
 
     // $tsLastReview = (int)$rowData['ts_lastreview'];
     // $rowData['_lastreview'] = $tsLastReview ? simple_format_date($tsLastReview, rtkLocale::DATE_SHORT) : '-';

@@ -59,21 +59,21 @@ export default defineComponent({
   padding: 50px 0 40px;
 }
 .fc-vshuffle .dispword a {
-  color: var(--clr-0065b2);
+  color: var(--color-link-fg);
   text-decoration: none;
 }
 .fc-vshuffle .dispword a:hover {
-  background: var(--clr-neutral-100);
-  color: var(--clr-black);
+  background: #0001;
+  color: var(--color-text-dark);
 }
 .fc-vshuffle .reading {
   display: block;
   font-size: 27px;
-  color: var(--clr-0064b2);
+  color: var(--color-text-muted);
 }
 .fc-vshuffle .glossary {
   font: 18px/1.2em Arial, sans-serif;
-  color: var(--clr-neutral-700);
+  color: var(--color-text-body);
   padding: 40px 1em 0;
 }
 
@@ -83,7 +83,6 @@ export default defineComponent({
 }
 .uiFcState-0 .fc-vshuffle .glossary {
   visibility: hidden;
-  color: var(--clr-white);
 }
 
 .uiFcState-1 .fc-vshuffle .reading {

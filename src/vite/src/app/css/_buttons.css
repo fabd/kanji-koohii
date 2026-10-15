@@ -167,33 +167,6 @@
 /* -------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------- */
-/* Misc. special styles */
-/* -------------------------------------------------------------------- */
-
-/* used on legacy homepage, maybe reuse for something else later */
-/*  <button class="ko-Btn ko-Btn--push ko-Btn--xl">... */
-.ko-Btn--push {
-  --ko-btn-text: var(--clr-white);
-  --ko-btn-bg: var(--clr-5cb85c);
-  --ko-btn-hover-bg: var(--clr-5cb85c);
-  border-radius: var(--border-radius-md);
-  border-width: 0 0 0 0;
-  border-bottom: 3px solid var(--clr-318a31);
-
-  &:active,
-  &:hover {
-    border-bottom-width: 1px;
-    margin-top: 2px;
-  }
-}
-
-.ko-Btn--xl {
-  font-size: var(--button-font-size-xl);
-  border-radius: var(--border-radius-lg);
-  padding: 15px 1rem 15px; /* ~51px height */
-}
-
-/* -------------------------------------------------------------------- */
 /* SRS buttons : used at top of Leitner Chart */
 /*   <button ... class="ko-Btn ko-Btn--srs is-srs-new"> */
 /*     <strong>15</strong> lorem ipsum */

@@ -131,18 +131,21 @@
 /* -------------------------------------------------------- */
 .ko-FcStBox {
   border-radius: 5px;
-  background-color: var(--clr-94d3ff);
+  background-color: var(--color-fc-status-bg);
   padding: 5px;
 }
 
 .ko-FcStBox-hd {
-  @apply text-sm text-(--clr-408fc6) text-center leading-none;
+  @apply text-sm text-center leading-none;
   font-family: Arial, Helvetica, sans-serif;
+  /* a darker, more saturated shade of the box background */
+  color: oklch(from var(--color-fc-status-bg) calc(l - 0.215) calc(c * 1.27) h);
 }
 
 .ko-FcStBox-hd em {
   font-style: normal;
-  color: var(--clr-0a3e62);
+  /* the counts : a much darker shade of the box background */
+  color: oklch(from var(--color-fc-status-bg) calc(l - 0.49) c h);
 }
 
 #uiFcProgressBar .ko-FcStBox-hd {
@@ -157,7 +160,6 @@
 .ko-FcStCnt {
   font-size: 21px;
   line-height: 1;
-  color: var(--clr-0a3e62);
 
   .fa {
     font-size: 24px;

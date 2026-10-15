@@ -75,14 +75,12 @@
   --color-card-fg: #333333;
   --color-card-border-empty: color-mix(in srgb, var(--color-text-body) 20%, transparent);
 
-  /* flashcard review : option buttons at the top */
-  --color-fc-btn: #50abeb;
-  /* flashcard review : page background gradient */
-  --color-fc-bg-top: #c4e6ff;
+  /* flashcard review */
+  --color-fc-btn: #50abeb; /* option buttons at the top */
+  --color-fc-bg-top: #c4e6ff; /* page background gradient */
   --color-fc-bg-end: #92c3e4;
-  /* flashcard review : the "End" button (.ko-FcStEnd), text, background and
-     border are derived from this one */
-  --color-fc-end-btn: #0097ff;
+  --color-fc-end-btn: #0097ff; /* the "End" button */
+  --color-fc-status-bg: #94d3ff; /* status box ("Cards left") */
 
   /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
   --color-story-bg: #ffffff;

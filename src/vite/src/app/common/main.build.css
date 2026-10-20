@@ -30,8 +30,9 @@
 /* components */
 @import "../css/_box.css";
 @import "../css/_buttons.css";
-@import "../css/_transitions.css";
 @import "../css/_markdown.css";
+@import "../css/_pager.css";
+@import "../css/_transitions.css";
 @import "../css/_widgets.css";
 @import "../css/legacy/_widgets.css";
 @import "../common/components/KoDialog.css";
@@ -81,9 +82,6 @@
 }
 .uiPagerDiv .uiFilterStd {
   float: left;
-}
-.uiPagerDiv .uiPager {
-  float: right;
 }
 /* smaller */
 .uiPagerDiv .uiFilterStd .lbl {

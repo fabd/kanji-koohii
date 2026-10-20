@@ -14,27 +14,27 @@
   }
 ?>
 
-  <ul class="uiPager">
+  <ul class="ko-Pager">
     <?php if ($p = $pager->getPreviousPage()): ?>
-    <li class="prev"><?= $pager->getPageLink($p, '&laquo;&nbsp;Previous'); ?></li>
+    <li class="ko-Pager-item ko-Pager-item--prev"><?= $pager->getPageLink($p, '&laquo;&nbsp;Previous'); ?></li>
   <?php else: ?>
-    <li class="prev disabled">&laquo;&nbsp;Previous</li>
+    <li class="ko-Pager-item ko-Pager-item--prev is-disabled">&laquo;&nbsp;Previous</li>
   <?php endif; ?>
     
   <?php foreach ($pager->getLinks() as $p): ?>
     <?php if ($p === false): ?>
-      <li class="etc">&hellip;</li>
+      <li class="ko-Pager-item ko-Pager-item--etc">&hellip;</li>
     <?php elseif ($p == $pager->getPage()): ?>
-      <li class="active"><?= $p; ?></li>
+      <li class="ko-Pager-item is-active"><?= $p; ?></li>
     <?php else: ?>
-      <li><?= $pager->getPageLink($p); ?></li>
+      <li class="ko-Pager-item"><?= $pager->getPageLink($p); ?></li>
     <?php endif; ?>
   <?php endforeach; ?>
 
     <?php if ($p = $pager->getNextPage()): ?>
-    <li class="next"><?= $pager->getPageLink($p, 'Next&nbsp;&raquo;'); ?></li>
+    <li class="ko-Pager-item ko-Pager-item--next"><?= $pager->getPageLink($p, 'Next&nbsp;&raquo;'); ?></li>
   <?php else: ?>
-    <li class="next disabled">Next&nbsp;&raquo;</li>
+    <li class="ko-Pager-item ko-Pager-item--next is-disabled">Next&nbsp;&raquo;</li>
   <?php endif; ?>
   </ul>
   

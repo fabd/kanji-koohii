@@ -1,0 +1,62 @@
+/* --------------------------------------------------------------------
+   Paging links, output by the ui_select_pager() helper.
+
+   Example
+
+      <ul class="ko-Pager">
+        <li class="ko-Pager-item ko-Pager-item--prev is-disabled">« Previous</li>
+        <li class="ko-Pager-item is-active">1</li>
+        <li class="ko-Pager-item"><a href="...">2</a></li>
+        <li class="ko-Pager-item ko-Pager-item--etc">…</li>
+        <li class="ko-Pager-item ko-Pager-item--next"><a href="...">Next »</a></li>
+      </ul>
+   -------------------------------------------------------------------- */
+
+.ko-Pager {
+  @apply flex items-center;
+  float: right;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ko-Pager-item {
+  margin: 0;
+  border-right: 1px solid var(--clr-e3e0c9);
+  font-size: 0.75rem;
+
+  & a {
+    padding: 4px 8px;
+  }
+
+  & > a:hover {
+    background: var(--clr-e3e0c9);
+    color: var(--color-link-fg);
+    text-decoration: underline;
+  }
+
+  &.is-active {
+    padding: 4px 8px;
+    font-weight: bold;
+    color: var(--clr-black);
+  }
+  &.is-disabled {
+    padding: 4px 8px;
+    font-weight: bold;
+    color: var(--clr-neutral-500);
+  }
+}
+
+.ko-Pager-item--etc {
+  padding: 4px 8px;
+  color: var(--clr-neutral-500);
+}
+
+.ko-Pager-item--prev > a,
+.ko-Pager-item--next > a {
+  font-weight: bold;
+}
+
+.ko-Pager-item--next {
+  border: 0;
+}

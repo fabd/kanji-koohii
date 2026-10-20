@@ -83,8 +83,9 @@
 /* tables */
 .markdown table {
   width: 100%;
-  border-left: 1px solid var(--color-box-bg-light);
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
+  border-color: var(--color-tbl-border-row);
+  border-width: 1px 0 0 1px;
 }
 .markdown th {
   background-color: var(--color-box-bg);
@@ -93,13 +94,13 @@
 }
 .markdown th,
 .markdown td {
-  border-top: 1px solid var(--clr-e8e5ca);
-  border-right: 1px solid var(--clr-e8e5ca);
   padding: 5px 10px;
   text-align: left;
 }
 .markdown td {
-  background: var(--color-box-bg-light);
+  background-color: var(--color-tbl-bg);
+  border-color: var(--color-tbl-border-row);
+  border-width: 0 1px 1px 0;
 }
 
 /* code : applies to `this` */

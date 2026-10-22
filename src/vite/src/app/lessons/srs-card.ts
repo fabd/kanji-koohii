@@ -2,16 +2,19 @@
  * Helpers to display the SRS status of kanji cards (lesson map, kanji grid).
  *
  */
+import * as RTK from "@/lib/rtk";
+import { getUserKanji } from "@/lib/user";
 
-const isCardNew = (card: TKanjiCardData) => card.isNew;
-const isCardRestudy = (card: TKanjiCardData) => card.box === 1;
+export const getColorForCard = (card?: TUserKanjiCard) => {
+  if (!card) {
+    return "";
+  }
 
-export const getColorForCard = (card: TKanjiCardData) => {
   if (!card.box) {
     return "is-off";
-  } else if (isCardNew(card)) {
+  } else if (card.new) {
     return "is-new";
-  } else if (isCardRestudy(card)) {
+  } else if (card.box === 1) {
     return "is-res";
   }
 
@@ -20,9 +23,9 @@ export const getColorForCard = (card: TKanjiCardData) => {
   return levels[card.box] || "is-L4";
 };
 
-export const getTagTextForCard = (card: TKanjiCardData) => {
+export const getTagTextForCard = (card?: TUserKanjiCard) => {
   const labels = [
-    "NOT LEARNED",
+    "",
     "Restudy",
     "Box 1",
     "Box 2",
@@ -36,18 +39,39 @@ export const getTagTextForCard = (card: TKanjiCardData) => {
     "Box 10",
   ];
 
-  if (isCardNew(card)) {
+  if (card && card.new) {
     return "New";
+  } else if (card) {
+    return labels[card.box] as string;
   }
 
-  return labels[card.box] || "-";
+  return "NOT LEARNED";
 };
 
 /**
- * Map SRS card data to the generic data displayed by KoKanjiCard.
+ * Create a range of flashcards as used by dumb components, eg. a kanji grid.
+ *
+ *   - merge the user's flashcard data where available
+ *   - set all other cards to an empty state (ie. "Not learned")
+ *
  */
-export const toKanjiCardItem = (card: TKanjiCardData): TKanjiCardItem => ({
-  ucsId: card.ucsId,
-  isOn: !!card.box,
-  tag: { text: getTagTextForCard(card), css: getColorForCard(card) },
-});
+export function getKanjiCardDataForRange(
+  from: number,
+  to: number
+): TKanjiCardItem[] {
+  const cards: TKanjiCardItem[] = [];
+  const userKanji = getUserKanji();
+
+  for (let index = from; index <= to; index++) {
+    const ucsId = RTK.getUCSForIndex(index) as number;
+    const userCard = userKanji.get(ucsId);
+
+    cards.push({
+      ucsId: ucsId,
+      box: (userCard && userCard.box) || 0,
+      tag: { text: getTagTextForCard(userCard), css: getColorForCard(userCard) },
+    });
+  }
+
+  return cards;
+}

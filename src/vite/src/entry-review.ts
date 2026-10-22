@@ -45,7 +45,7 @@ domContentLoaded(() => {
     const cards: TKanjiCardItem[] = kk_globals_get("REVIEW_SUMMARY_CARDS").map(
       ({ ucsId, pass }) => ({
         ucsId,
-        isOn: true,
+        box: 1, // not zero, so it shows flashcard bg
         tag: pass ? { text: "Pass", css: "is-pass" } : { text: "Fail", css: "is-fail" },
       })
     );

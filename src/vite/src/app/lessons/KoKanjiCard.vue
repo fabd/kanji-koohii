@@ -1,7 +1,7 @@
 <template>
   <div
     class="ko-KanjiCard"
-    :class="[{ 'is-on': card.isOn }]"
+    :class="[{ 'is-on': card.box }]"
   >
     <div class="ko-KanjiCard-idx">
       <span>{{ getIndex() }}</span>

@@ -17,7 +17,8 @@
 
       <div
         class="px-2 py-1 rounded-sm ux-text-md text-(--color-text-muted) font-bold leading-none whitespace-nowrap ml-auto"
-        >{{ `${kanjiCount} / ${lessonCount}` }}<span class="hidden md:inline"> kanji</span></div
+        >{{ `${kanjiCount} / ${lessonCount}`
+        }}<span class="hidden md:inline"> kanji</span></div
       >
     </div>
 
@@ -49,7 +50,7 @@
             'ko-LessonPane--maxHeight': maxHeight,
           }"
         >
-          <ko-kanji-grid :cards="gridCards" />
+          <ko-kanji-grid :cards="cards" />
         </div>
       </transition>
     </div>
@@ -58,8 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import * as USER from "@/lib/user";
-import { toKanjiCardItem } from "@/app/lessons/srs-card";
+import { getKanjiCardDataForRange } from "@/app/lessons/srs-card";
 
 import KoKanjiGrid from "@/app/lessons/KoKanjiGrid.vue";
 import KoLessonMap from "@/app/lessons/KoLessonMap.vue";
@@ -87,15 +87,11 @@ export default defineComponent({
   data() {
     return {
       isOpen: false,
-      cards: [] as TKanjiCardData[],
+      cards: [] as TKanjiCardItem[],
     };
   },
 
   computed: {
-    gridCards(): TKanjiCardItem[] {
-      return this.cards.map(toKanjiCardItem);
-    },
-
     kanjiCount(): number {
       // count user's flashcards in this range (leitnerbox is not zero)
       return this.cards.reduce((count, { box }) => count + (box ? 1 : 0), 0);
@@ -110,7 +106,7 @@ export default defineComponent({
   },
 
   beforeMount() {
-    this.cards = USER.getKanjiCardDataForRange(
+    this.cards = getKanjiCardDataForRange(
       this.lessonFrom,
       this.lessonFrom + this.lessonCount - 1
     );

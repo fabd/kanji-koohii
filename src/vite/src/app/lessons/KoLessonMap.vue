@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import { getColorForCard } from "@/app/lessons/KoKanjiCard.vue";
+import { getColorForCard } from "@/app/lessons/srs-card";
 
 export default defineComponent({
   name: "KoLessonMap",

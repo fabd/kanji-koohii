@@ -296,7 +296,7 @@
 }
 
 .ko-KanjiCard-tag {
-  @apply rounded-md text-xs px-2 font-light;
+  @apply rounded-md text-sm px-2 uppercase;
   height: 27px;
   line-height: 27px;
   background-color: var(--color-box-bg-dark);
@@ -331,6 +331,18 @@
     background-color: var(--ko-cardmap-L4);
   }
   /* ----------------------------------------- */
+
+  /* pass / fail answers (Custom Review summary) */
+  &.is-pass {
+    align-self: center;
+    color: var(--color-btn-fg);
+    background-color: var(--color-srs-undue);
+  }
+  &.is-fail {
+    align-self: center;
+    color: var(--color-btn-fg);
+    background-color: var(--color-srs-fail);
+  }
 }
 
 /* FIXME : cleanup, add mixin for button icons? */

@@ -11,3 +11,12 @@ type TKanjiCardData = {
   box: number;
   isNew: boolean;
 };
+
+// generic kanji card data, as displayed by KoKanjiCard
+type TKanjiCardItem = {
+  ucsId: TUcsId;
+  // a flashcard exists for this kanji (filled card background vs empty with dashed border)
+  isOn: boolean;
+  // optional label at the bottom of the card, eg. { text: "Fail", css: "is-fail" }
+  tag?: { text: string; css: string };
+};

@@ -19,6 +19,8 @@ reviewSuccess:
 summarySuccess:
   metas:
     title: "Review Summary - Kanji Koohii"
+  javascripts:
+    - src/entry-review.ts
 
 vocabSuccess:
   metas:

@@ -17,6 +17,7 @@ import LeitnerChart from "@/app/main/LeitnerChart.vue";
 import KanjiReview from "@/app/review/review-kanji";
 import VocabReview from "@/app/review/review-vocab";
 import CustomReviewFromJapText from "@/app/review-custom/CustomReviewFromJapText.vue";
+import KoKanjiGrid from "@/app/lessons/KoKanjiGrid.vue";
 
 domContentLoaded(() => {
   console.log("@entry-review");
@@ -36,6 +37,19 @@ domContentLoaded(() => {
   elMount = $$("#CustomReviewFromJapText")[0];
   if (elMount) {
     VueInstance(CustomReviewFromJapText, elMount, kk_globals_get("CUSTOM_REVIEW_PROPS"));
+  }
+
+  // Custom Review summary
+  elMount = $$("#JsSimpleReviewSummaryGrid")[0];
+  if (elMount) {
+    const cards: TKanjiCardItem[] = kk_globals_get("REVIEW_SUMMARY_CARDS").map(
+      ({ ucsId, pass }) => ({
+        ucsId,
+        isOn: true,
+        tag: pass ? { text: "Pass", css: "is-pass" } : { text: "Fail", css: "is-fail" },
+      })
+    );
+    VueInstance(KoKanjiGrid, elMount, { cards });
   }
 
   // Review page

@@ -49,7 +49,7 @@
             'ko-LessonPane--maxHeight': maxHeight,
           }"
         >
-          <ko-kanji-grid :cards="cards" />
+          <ko-kanji-grid :cards="gridCards" />
         </div>
       </transition>
     </div>
@@ -59,6 +59,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import * as USER from "@/lib/user";
+import { toKanjiCardItem } from "@/app/lessons/srs-card";
 
 import KoKanjiGrid from "@/app/lessons/KoKanjiGrid.vue";
 import KoLessonMap from "@/app/lessons/KoLessonMap.vue";
@@ -91,6 +92,10 @@ export default defineComponent({
   },
 
   computed: {
+    gridCards(): TKanjiCardItem[] {
+      return this.cards.map(toKanjiCardItem);
+    },
+
     kanjiCount(): number {
       // count user's flashcards in this range (leitnerbox is not zero)
       return this.cards.reduce((count, { box }) => count + (box ? 1 : 0), 0);

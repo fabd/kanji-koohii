@@ -9,13 +9,13 @@ class summarySimpleComponent extends sfComponent
   {
     $answers = FlashcardReview::getInstance()->getCachedAnswers();
 
-    // ------ sample data for debugging
+    /* ------ sample data for debugging (cf. DBGX3045YT)
     // echo json_encode($answers, JSON_PRETTY_PRINT);
     $DATA = <<<EOD
 { "20013": "yes", "30334": "yes", "33258": "yes", "20024": "yes", "21315": "yes", "30333": "yes", "32920": "no", "21331": "no", "26397": "no", "19979": "no", "26119": "no", "21344": "no", "21319": "no", "19978": "no", "21338": "no" }
 EOD;
     $answers = json_decode($DATA, true);
-    // ------
+    // ------ */
 
     $this->cards = [];
 

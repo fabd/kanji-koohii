@@ -7,6 +7,12 @@ $ts_start = $sf_params->get('ts_start', 0);
 $stats = FlashcardReview::getInstance()->getStats();
 extract($stats);
 
+// ----- SAMPLE data for debugging (cf. DBGX3045YT)
+// $fcr_pass =10;
+// $fcr_fail = 9;
+// $fcr_total = 19;
+// $fc_free = 1;
+
 if ($fcr_pass === $fcr_total) {
   $title = 'Hurrah! All remembered!';
 } elseif ($fcr_fail === $fcr_total && $fcr_total > 1) {

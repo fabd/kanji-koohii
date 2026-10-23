@@ -16,7 +16,7 @@
   padding: 0.5em 0.8em;
   background: oklch(from var(--color-fc-base) calc(l - 0.044) calc(c * 0.91) h);
   border-radius: 3px;
-  color: var(--clr-white);
+  color: var(--color-white);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
@@ -43,7 +43,7 @@
   line-height: 16px;
 }
 #uiFcAjaxError a {
-  color: var(--clr-white);
+  color: var(--color-white);
   font-weight: bold;
 }
 
@@ -80,7 +80,7 @@
 }
 .uiFcOptBtn:hover,
 .uiFcOptBtn:focus {
-  color: color-mix(in srgb, var(--color-fc-btn), var(--clr-white) 85%);
+  color: color-mix(in srgb, var(--color-fc-btn), var(--color-white) 85%);
   background-image: linear-gradient(
     to bottom,
     color-mix(in srgb, var(--color-fc-btn), var(--clr-black) 15%) 0%,
@@ -88,7 +88,7 @@
   );
 }
 .uiFcOptBtn u {
-  color: color-mix(in srgb, var(--color-fc-btn), var(--clr-white) 88%);
+  color: color-mix(in srgb, var(--color-fc-btn), var(--color-white) 88%);
   padding-right: 1px;
 }
 .uiFcOptBtn,
@@ -186,7 +186,7 @@
     bold 14px/29px Arial,
     sans-serif;
   color: var(--color-fc-end-btn);
-  background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--clr-white) 58%);
+  background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-white) 58%);
   border-radius: 6px;
   @apply px-3 py-1;
   text-decoration: none;
@@ -198,7 +198,7 @@
   &:hover {
     margin-top: 2px;
     border-bottom-width: 2px;
-    background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--clr-white) 45%);
+    background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-white) 45%);
     color: var(--color-btn-fg);
   }
 }
@@ -308,7 +308,7 @@
     font-weight: normal;
   }
   #uiFcProgressBar .ko-FcStBox-hd em {
-    color: var(--clr-white);
+    color: var(--color-white);
   }
 
   /* hide the keyboard shortcuts help */
@@ -344,7 +344,7 @@
   display: block;
   position: relative;
   margin: 0 auto; /* center within TD */
-  background: var(--clr-white);
+  background: var(--color-white);
 
   /* card size */
 

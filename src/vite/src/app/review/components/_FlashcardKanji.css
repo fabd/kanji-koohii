@@ -84,7 +84,7 @@
 }
 .uiFcState-0 .d-kanji {
   visibility: hidden;
-  color: var(--clr-white);
+  color: var(--color-white);
 }
 .uiFcState-0 .d-strokec {
   visibility: hidden;

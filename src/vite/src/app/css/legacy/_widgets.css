@@ -51,7 +51,7 @@
   position: absolute;
   bottom: 5px;
   height: 50px;
-  border-bottom: 8px solid var(--clr-white);
+  border-bottom: 8px solid var(--color-white);
   box-shadow: 0 2px 5px var(--clr-0000004d);
 }
 .uiChartVs a.pct {

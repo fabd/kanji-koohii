@@ -54,7 +54,7 @@
 /* Bootstrap 5 minimal build (forms) */
 
 .bg-confirm {
-  background-color: color-mix(in srgb, var(--color-success), var(--clr-white) 75%);
+  background-color: color-mix(in srgb, var(--color-success), var(--color-white) 75%);
 }
 .text-confirm {
   color: var(--color-success);
@@ -354,7 +354,7 @@ main {
 .ko-RestudyList-learned {
   /* small "learned" tag in the Restudy List */
   @apply px-[.4em] py-[.3em] rounded-sm;
-  @apply bg-(--color-srs-undue) text-(--clr-white);
+  @apply bg-(--color-srs-undue) text-(--color-white);
 }
 
 /* -------------------------------------------------------------------- */

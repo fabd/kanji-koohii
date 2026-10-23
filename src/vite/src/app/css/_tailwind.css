@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------
-  See 
+  See
     https://tailwindcss.com/docs/theme
   ---------------------------------------------------------------------*/
 @theme {
@@ -15,6 +15,10 @@
   var() in CSS), and can be edited live in the browser dev tools.
   ---------------------------------------------------------------------*/
 @theme static {
+  /* for mixing colors with eg. color-mix() - NOT THEME BASED */
+  --color-white: #ffffff;
+  --color-yellow: #ffff00; /* eg. warmer greens */
+
   /* utilities */
   --color-dialog-mask: #00000040; /* backdrop mask color behind mobile nav & dialogs */
 

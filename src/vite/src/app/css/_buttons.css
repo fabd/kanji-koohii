@@ -182,7 +182,7 @@
 
   /* flashcard count on the button label */
   strong {
-    color: var(--clr-white);
+    color: var(--color-white);
   }
 
   &:active,
@@ -210,7 +210,7 @@
   }
   &.is-srs-new {
     --ko-srs: var(--color-srs-new);
-    --ko-btn-bg: color-mix(in srgb, var(--ko-srs), var(--clr-white) 30%);
+    --ko-btn-bg: color-mix(in srgb, var(--ko-srs), var(--color-white) 30%);
   }
 }
 

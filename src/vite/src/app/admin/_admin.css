@@ -62,7 +62,7 @@
 
 .ko-AdminNav-toprightItem {
   @apply inline-block ml-4;
-  @apply text-(--clr-neutral-100) hover:text-(--clr-white) no-underline text-sm;
+  @apply text-(--clr-neutral-100) hover:text-(--color-white) no-underline text-sm;
 
   &.is-user {
     padding: 3px 8px;
@@ -82,7 +82,7 @@
 
   a {
     @apply block;
-    @apply font-bold text-sm text-(--clr-white) no-underline hover:underline;
+    @apply font-bold text-sm text-(--color-white) no-underline hover:underline;
     padding: 4px 12px 3px;
     background-color: var(--admin-sky-500);
   }
@@ -104,7 +104,7 @@
   font-size: 1rem;
   line-height: calc(20 / 16 * 1rem);
 
-  background-color: var(--clr-white);
+  background-color: var(--color-white);
 
   /* default main title (large) for the main view */
   h2 {
@@ -150,7 +150,7 @@
 // -------------------------------------------------------------------- */
 pre {
   background-color: var(--clr-neutral-950);
-  color: var(--clr-white);
+  color: var(--color-white);
   @apply font-mono;
   font-size: 13px;
   line-height: 17px;

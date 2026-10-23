@@ -29,7 +29,7 @@
 .uiFilterStd a {
   float: left;
   border-right: 1px solid var(--clr-neutral-800);
-  background: linear-gradient(var(--clr-white), var(--clr-neutral-300));
+  background: linear-gradient(var(--color-white), var(--clr-neutral-300));
   color: var(--clr-black);
   outline: none;
 }
@@ -39,6 +39,6 @@
 }
 .uiFilterStd a.active,
 .uiFilterStd a.active:hover {
-  color: var(--clr-white);
+  color: var(--color-white);
   background: linear-gradient(var(--clr-neutral-700), var(--clr-neutral-400));
 }

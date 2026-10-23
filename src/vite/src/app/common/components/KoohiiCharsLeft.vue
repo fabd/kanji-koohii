@@ -56,7 +56,7 @@ export default defineComponent({
 }
 .ko-charsleft--invalid {
   background-color: var(--clr-red-300);
-  color: var(--clr-white);
+  color: var(--color-white);
   font-weight: bold;
 }
 .ko-charsleft--warning {

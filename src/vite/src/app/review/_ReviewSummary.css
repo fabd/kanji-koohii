@@ -8,7 +8,7 @@
 .SummaryTableRating {
   @apply px-[.5em] py-[.35em] rounded-sm;
   --bg: var(--clr-neutral-300);
-  --fg: var(--clr-white);
+  --fg: var(--color-white);
 
   /* No and Again cards are both in the failed pile */
   &.is-no,

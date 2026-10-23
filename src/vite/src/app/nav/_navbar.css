@@ -229,7 +229,7 @@
 /* dropdown arrows */
 #k-nav_d .arrow {
   border: 5px solid;
-  border-color: color-mix(in srgb, var(--color-nav-bg), var(--clr-white) 35%) transparent transparent;
+  border-color: color-mix(in srgb, var(--color-nav-bg), var(--color-white) 35%) transparent transparent;
   width: 0;
   height: 0;
   display: inline-block;

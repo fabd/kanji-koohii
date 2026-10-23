@@ -7,10 +7,6 @@ import { getUserKanji } from "@/lib/user";
 
 export const getColorForCard = (card?: TUserKanjiCard) => {
   if (!card) {
-    return "";
-  }
-
-  if (!card.box) {
     return "is-off";
   } else if (card.new) {
     return "is-new";

@@ -16,8 +16,9 @@
   ---------------------------------------------------------------------*/
 @theme static {
   /* for mixing colors with eg. color-mix() - NOT THEME BASED */
-  --color-white: #ffffff;
-  --color-yellow: #ffff00; /* eg. warmer greens */
+  --color-mix-white: #ffffff;
+  --color-mix-black: #000000;
+  --color-mix-yellow: #ffff00; /* eg. warmer greens */
 
   /* utilities */
   --color-dialog-mask: #00000040; /* backdrop mask color behind mobile nav & dialogs */

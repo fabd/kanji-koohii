@@ -35,15 +35,15 @@
 }
 .ko-Box--danger.ko-Box--stroke {
   /* slightly darker for border variant */
-  --ko-box-bg: color-mix(in srgb, var(--color-danger), var(--color-white) 50%);
+  --ko-box-bg: color-mix(in srgb, var(--color-danger), var(--color-mix-white) 50%);
 }
 
 .ko-Box--success {
   /* lighten, then a touch of yellow for a warmer "golf" green (~#d1e2bb) */
   --ko-box-bg: color-mix(
     in srgb,
-    color-mix(in srgb, var(--color-success), var(--color-white) 75%),
-    var(--color-yellow) 10%
+    color-mix(in srgb, var(--color-success), var(--color-mix-white) 75%),
+    var(--color-mix-yellow) 10%
   );
   color: var(--color-success);
 
@@ -53,7 +53,7 @@
 }
 
 .ko-Box--warning {
-  --ko-box-bg: color-mix(in srgb, var(--color-warning), var(--color-white) 75%);
+  --ko-box-bg: color-mix(in srgb, var(--color-warning), var(--color-mix-white) 75%);
   color: var(--color-warning);
 
   .ko-Box-title {

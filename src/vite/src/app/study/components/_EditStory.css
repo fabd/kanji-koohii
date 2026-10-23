@@ -173,6 +173,6 @@
   border-radius: 3px 3px;
 
   &:hover {
-    background: color-mix(in srgb, var(--color-story-bg), var(--clr-black) 7%);
+    background: color-mix(in srgb, var(--color-story-bg), var(--color-mix-black) 7%);
   }
 }

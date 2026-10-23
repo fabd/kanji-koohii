@@ -6,7 +6,7 @@
 }
 
 .dict-list .dl_item {
-  background: var(--color-white);
+  background: var(--color-mix-white);
   border-bottom: 1px solid var(--clr-neutral-100);
   position: relative;
 }
@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 .dict-list .dl_item:hover .vocab_c {
-  background: var(--color-white);
+  background: var(--color-mix-white);
 }
 
 .dict-list .dl_item .cj-k {
@@ -70,7 +70,7 @@
 //   FIXME : should go to a future "dict dialog" Vue comp.
 // -------------------------------------------------------------------- */
 .dict-panel {
-  background: var(--color-white);
+  background: var(--color-mix-white);
   max-height: 80vh;
   overflow-y: auto;
 }
@@ -78,7 +78,7 @@
 .dict-list_info {
   padding: 1em 20px 1px;
   color: var(--clr-stone-700);
-  background: var(--color-white);
+  background: var(--color-mix-white);
 }
 
 /* ===================================================== */

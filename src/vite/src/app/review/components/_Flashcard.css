@@ -16,7 +16,7 @@
   padding: 0.5em 0.8em;
   background: oklch(from var(--color-fc-base) calc(l - 0.044) calc(c * 0.91) h);
   border-radius: 3px;
-  color: var(--color-white);
+  color: var(--color-mix-white);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
@@ -43,7 +43,7 @@
   line-height: 16px;
 }
 #uiFcAjaxError a {
-  color: var(--color-white);
+  color: var(--color-mix-white);
   font-weight: bold;
 }
 
@@ -75,20 +75,20 @@
   background-image: linear-gradient(
     to bottom,
     var(--color-fc-btn) 0%,
-    color-mix(in srgb, var(--color-fc-btn), var(--clr-black) 10%) 100%
+    color-mix(in srgb, var(--color-fc-btn), var(--color-mix-black) 10%) 100%
   );
 }
 .uiFcOptBtn:hover,
 .uiFcOptBtn:focus {
-  color: color-mix(in srgb, var(--color-fc-btn), var(--color-white) 85%);
+  color: color-mix(in srgb, var(--color-fc-btn), var(--color-mix-white) 85%);
   background-image: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--color-fc-btn), var(--clr-black) 15%) 0%,
-    color-mix(in srgb, var(--color-fc-btn), var(--clr-black) 25%) 100%
+    color-mix(in srgb, var(--color-fc-btn), var(--color-mix-black) 15%) 0%,
+    color-mix(in srgb, var(--color-fc-btn), var(--color-mix-black) 25%) 100%
   );
 }
 .uiFcOptBtn u {
-  color: color-mix(in srgb, var(--color-fc-btn), var(--color-white) 88%);
+  color: color-mix(in srgb, var(--color-fc-btn), var(--color-mix-white) 88%);
   padding-right: 1px;
 }
 .uiFcOptBtn,
@@ -186,7 +186,7 @@
     bold 14px/29px Arial,
     sans-serif;
   color: var(--color-fc-end-btn);
-  background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-white) 58%);
+  background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-mix-white) 58%);
   border-radius: 6px;
   @apply px-3 py-1;
   text-decoration: none;
@@ -198,7 +198,7 @@
   &:hover {
     margin-top: 2px;
     border-bottom-width: 2px;
-    background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-white) 45%);
+    background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-mix-white) 45%);
     color: var(--color-btn-fg);
   }
 }
@@ -308,7 +308,7 @@
     font-weight: normal;
   }
   #uiFcProgressBar .ko-FcStBox-hd em {
-    color: var(--color-white);
+    color: var(--color-mix-white);
   }
 
   /* hide the keyboard shortcuts help */
@@ -344,7 +344,7 @@
   display: block;
   position: relative;
   margin: 0 auto; /* center within TD */
-  background: var(--color-white);
+  background: var(--color-mix-white);
 
   /* card size */
 

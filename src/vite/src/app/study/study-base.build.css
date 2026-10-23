@@ -180,7 +180,7 @@
 /* big kanji on desktop, line up with framenum on mobile */
 .mystories-kanji {
   float: left;
-  color: var(--clr-black);
+  color: var(--color-text-dark);
   text-align: center;
   line-height: 1em;
   font-size: 1.5em;
@@ -273,8 +273,8 @@
     --ko-btn-text: var(--clr-stone-700);
     --ko-btn-bg: var(--bg);
     --ko-btn-border: var(--bg);
-    --ko-btn-hover-bg: var(--clr-black);
-    --ko-btn-hover-border: var(--clr-black);
+    --ko-btn-hover-bg: var(--color-mix-black);
+    --ko-btn-hover-border: var(--color-mix-black);
   }
 }
 

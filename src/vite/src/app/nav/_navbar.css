@@ -151,7 +151,7 @@
 
 /* highlighted tab */
 #k-nav_d .signed-in {
-  background: color-mix(in srgb, var(--color-nav-bg), var(--clr-black) 25%);
+  background: color-mix(in srgb, var(--color-nav-bg), var(--color-mix-black) 25%);
 } /* comes first */
 #k-nav_d .active,
 #k-nav_d .active a:hover {
@@ -165,7 +165,7 @@
 /* hover states */
 #k-nav_d li a:hover,
 #k-nav_d li.active a.nav-home {
-  background-color: color-mix(in srgb, var(--color-nav-bg), var(--clr-black) 25%);
+  background-color: color-mix(in srgb, var(--color-nav-bg), var(--color-mix-black) 25%);
 }
 
 /* profile / sign up area */
@@ -229,7 +229,7 @@
 /* dropdown arrows */
 #k-nav_d .arrow {
   border: 5px solid;
-  border-color: color-mix(in srgb, var(--color-nav-bg), var(--color-white) 35%) transparent transparent;
+  border-color: color-mix(in srgb, var(--color-nav-bg), var(--color-mix-white) 35%) transparent transparent;
   width: 0;
   height: 0;
   display: inline-block;

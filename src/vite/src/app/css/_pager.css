@@ -38,7 +38,7 @@
   &.is-active {
     padding: 4px 8px;
     font-weight: bold;
-    color: var(--clr-black);
+    color: var(--color-text-dark);
   }
   &.is-disabled {
     padding: 4px 8px;

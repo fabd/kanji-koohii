@@ -89,8 +89,8 @@
   --ko-btn-border: var(--color-btn-default);
   --ko-btn-text: var(--color-btn-fg);
   --ko-btn-hover-text: var(--color-btn-fg);
-  --ko-btn-hover-bg: color-mix(in srgb, var(--ko-btn-bg), var(--clr-black) 8%);
-  --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 8%);
+  --ko-btn-hover-bg: color-mix(in srgb, var(--ko-btn-bg), var(--color-mix-black) 8%);
+  --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--color-mix-black) 8%);
   --ko-btn-disabled-bg: var(--color-btn-bg-disabled);
   --ko-btn-disabled-border: var(--color-btn-bg-disabled);
   --ko-btn-disabled-text: var(--color-btn-fg-disabled);
@@ -111,9 +111,9 @@
   --ko-btn-border: var(--color-btn-primary);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-primary);
-    --ko-btn-text: color-mix(in srgb, var(--color-btn-primary), var(--clr-black) 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-primary), var(--color-mix-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--color-mix-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--color-mix-black) 10%);
   }
 }
 .ko-Btn--danger {
@@ -121,9 +121,9 @@
   --ko-btn-border: var(--color-btn-danger);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-danger);
-    --ko-btn-text: color-mix(in srgb, var(--color-btn-danger), var(--clr-black) 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-danger), var(--color-mix-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--color-mix-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--color-mix-black) 10%);
   }
 }
 .ko-Btn--success {
@@ -131,9 +131,9 @@
   --ko-btn-border: var(--color-btn-success);
   &.is-ghost {
     --ko-btn-border: var(--color-btn-success);
-    --ko-btn-text: color-mix(in srgb, var(--color-btn-success), var(--clr-black) 5%);
-    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
-    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--clr-black) 10%);
+    --ko-btn-text: color-mix(in srgb, var(--color-btn-success), var(--color-mix-black) 5%);
+    --ko-btn-hover-text: color-mix(in srgb, var(--ko-btn-border), var(--color-mix-black) 10%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), var(--color-mix-black) 10%);
   }
 }
 
@@ -182,7 +182,7 @@
 
   /* flashcard count on the button label */
   strong {
-    color: var(--color-white);
+    color: var(--color-mix-white);
   }
 
   &:active,
@@ -196,11 +196,11 @@
   &.is-srs-due,
   &.is-srs-failed,
   &.is-srs-new {
-    --ko-btn-text: color-mix(in srgb, var(--ko-srs), var(--clr-black) 65%);
+    --ko-btn-text: color-mix(in srgb, var(--ko-srs), var(--color-mix-black) 65%);
     --ko-btn-hover-text: var(--ko-btn-text);
     --ko-btn-bg: var(--ko-srs);
     --ko-btn-hover-bg: var(--ko-btn-bg);
-    border-bottom-color: color-mix(in srgb, var(--ko-srs), var(--clr-black) 25%);
+    border-bottom-color: color-mix(in srgb, var(--ko-srs), var(--color-mix-black) 25%);
   }
   &.is-srs-due {
     --ko-srs: var(--color-srs-due);
@@ -210,7 +210,7 @@
   }
   &.is-srs-new {
     --ko-srs: var(--color-srs-new);
-    --ko-btn-bg: color-mix(in srgb, var(--ko-srs), var(--color-white) 30%);
+    --ko-btn-bg: color-mix(in srgb, var(--ko-srs), var(--color-mix-white) 30%);
   }
 }
 
@@ -229,12 +229,12 @@
 }
 .ko-ExBtn--danger {
   border-color: var(--color-btn-danger);
-  color: color-mix(in srgb, var(--color-btn-danger), var(--clr-black) 5%);
+  color: color-mix(in srgb, var(--color-btn-danger), var(--color-mix-black) 5%);
 }
 
 .ko-ExBtn--success {
   border-color: var(--color-btn-success);
-  color: color-mix(in srgb, var(--color-btn-success), var(--clr-black) 5%);
+  color: color-mix(in srgb, var(--color-btn-success), var(--color-mix-black) 5%);
 }
 
 

@@ -80,11 +80,11 @@
 
 /* states :: default review mode */
 .uiFcState-0 .d-keyword {
-  color: var(--clr-black);
+  color: var(--color-text-dark);
 }
 .uiFcState-0 .d-kanji {
   visibility: hidden;
-  color: var(--color-white);
+  color: var(--color-mix-white);
 }
 .uiFcState-0 .d-strokec {
   visibility: hidden;
@@ -101,7 +101,7 @@
 }
 .uiFcState-1 .d-kanji {
   visibility: visible;
-  color: var(--clr-black);
+  color: var(--color-text-dark);
 }
 .uiFcState-1 .d-strokec {
   visibility: visible;
@@ -117,7 +117,7 @@
 }
 .uiFcState-0.is-reverse .d-kanji {
   visibility: visible;
-  color: var(--clr-black);
+  color: var(--color-text-dark);
 }
 .uiFcState-0.is-reverse .d-yomi {
   display: block;
@@ -180,7 +180,7 @@
 }
 .uiFcState-1 .d-yomi .cloze u {
   display: inline;
-  color: var(--clr-black);
+  color: var(--color-text-dark);
 }
 
 .uiFcYomi {

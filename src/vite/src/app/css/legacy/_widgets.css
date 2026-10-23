@@ -51,7 +51,7 @@
   position: absolute;
   bottom: 5px;
   height: 50px;
-  border-bottom: 8px solid var(--color-white);
+  border-bottom: 8px solid var(--color-mix-white);
   box-shadow: 0 2px 5px var(--clr-0000004d);
 }
 .uiChartVs a.pct {
@@ -61,19 +61,19 @@
   --bg: #a5e36a;
   left: 0;
   background: var(--bg);
-  border-bottom-color: color-mix(in srgb, var(--bg), var(--clr-black) 27%);
+  border-bottom-color: color-mix(in srgb, var(--bg), var(--color-mix-black) 27%);
 }
 .uiChartVs .right .pct {
   --bg: #dd5d3a;
   right: 0;
   background: var(--bg);
-  border-bottom-color: color-mix(in srgb, var(--bg), var(--clr-black) 27%);
+  border-bottom-color: color-mix(in srgb, var(--bg), var(--color-mix-black) 27%);
 }
 .uiChartVs .pct span {
   position: absolute;
   top: 7px;
   font: 27px/1em Georgia, serif;
-  color: var(--clr-black);
+  color: var(--color-text-dark);
   text-shadow: 0 1px var(--clr-ffffff66);
 }
 .uiChartVs .left .pct span {

@@ -61,7 +61,7 @@
 }
 #mng-cards .cj-k {
   display: block;
-  color: var(--clr-black);
+  color: var(--color-text-dark);
   font-size: 72px;
   line-height: 1em;
   padding: 0 0 9px;

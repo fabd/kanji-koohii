@@ -54,7 +54,7 @@
 /* Bootstrap 5 minimal build (forms) */
 
 .bg-confirm {
-  background-color: color-mix(in srgb, var(--color-success), var(--color-white) 75%);
+  background-color: color-mix(in srgb, var(--color-success), var(--color-mix-white) 75%);
 }
 .text-confirm {
   color: var(--color-success);
@@ -238,7 +238,7 @@ main {
 /* Site news (posts using markdown) */
 .ko-SiteNews .markdown h2,
 .ko-SiteNews .markdown h3 {
-  color: var(--clr-black);
+  color: var(--color-text-dark);
   font-weight: normal;
   font-size: 1.2em;
   margin-bottom: 1em;
@@ -354,7 +354,7 @@ main {
 .ko-RestudyList-learned {
   /* small "learned" tag in the Restudy List */
   @apply px-[.4em] py-[.3em] rounded-sm;
-  @apply bg-(--color-srs-undue) text-(--color-white);
+  @apply bg-(--color-srs-undue) text-(--color-mix-white);
 }
 
 /* -------------------------------------------------------------------- */

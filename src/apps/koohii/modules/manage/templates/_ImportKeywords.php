@@ -3,7 +3,7 @@
 <div class="markdown">
   <p> To import customized keywords each line should contain the following two fields, separated by spaces (tabs, comma):</p>
   <ul>
-    <li><?= _CJ_U('kanji'); ?> <em style="color:green">or</em> index number ("frame number") <em style="color:green">or</em> <?= link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set'); ?> code.</li>
+    <li><?= _CJ_U('kanji'); ?> <em class="text-success">or</em> index number ("frame number") <em class="text-success">or</em> <?= link_to('UCS', 'http://en.wikipedia.org/wiki/Universal_Character_Set'); ?> code.</li>
     <li>Custom keyword.</li>
   </ul>
 
@@ -27,6 +27,6 @@
 30000 "champs de ""riz-o-lait"""
 EOT*/ '', ['class' => 'form-control mb-3', 'rows' => 5]); ?>
 
-  <?= _bs_submit_tag('Import Keywords'); ?><em class="note">Note: there will be a confirmation step.</em>
+  <?= _bs_submit_tag('Import Keywords'); ?><em class="inline-block ml-[1em] text-success">Note: there will be a confirmation step.</em>
 
 </form>

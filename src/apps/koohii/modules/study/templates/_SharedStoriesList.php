@@ -11,7 +11,7 @@
 
   <?= ui_select_pager($pager); ?>
 
-  <div id="SharedStoriesError"></div>
+  <div id="SharedStoriesError" class="text-(--color-danger)"></div>
 
 <?php
   foreach ($rows as $o) {

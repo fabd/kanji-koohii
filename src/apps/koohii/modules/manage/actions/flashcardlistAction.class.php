@@ -63,14 +63,14 @@ class FlashcardListBinding implements uiSelectTableBinding
         {
           "caption":   "Char.",
           "width":     7,
-          "cssClass":  "kanji",
+          "cssClass":  "ko-DataTable-kanji",
           "colData":  "kanji",
           "colDisplay":  "_kanji"
         },
         {
           "caption":   "Keyword",
           "width":     19,
-          "cssClass":  "keyword",
+          "cssClass":  "ko-DataTable-keyword",
           "colData":  "keyword",
           "colDisplay":  "_keyword"
         },
@@ -96,7 +96,7 @@ class FlashcardListBinding implements uiSelectTableBinding
         {
           "caption":   "Fail",
           "width":     8,
-          "cssClass":  "text-center red",
+          "cssClass":  "text-center",
           "colData":  "failurecount"
         },
         {

@@ -6,7 +6,7 @@
 
 <?php else: ?>
 
-  <p> <span class="warning">Remove flashcards</span> by selecting items in the list below.</p>
+  <p> <span class="text-danger font-bold">Remove flashcards</span> by selecting items in the list below.</p>
   <p> Removing flashcards does <em>not</em> affect stories entered on the Study page.</p>
 
   <?= form_errors(); ?>
@@ -18,7 +18,7 @@
 <div class="mt-3 mb-8">
 <?= form_tag('manage/removeListConfirm', ['class' => 'main-form']); ?>
 <?php
-  echo _bs_submit_tag('Remove Cards').'<em class="note">Note: there will be a confirmation step.</em>';
+  echo _bs_submit_tag('Remove Cards').'<em class="inline-block ml-[1em] text-success">Note: there will be a confirmation step.</em>';
   echo _bs_button_to(
     'Clear selection',
     'manage/removelist',

@@ -13,7 +13,7 @@
  * TODO
  * - Only print 7 chars of the checksum for row id validation purposes,
  *   reduce the html footprint with many rows (think git sha eg. 98c317e)
- * - Add odd/even rows (cf. uiTabular css .odd) to getTableBody.
+ * - Add odd/even rows (cf. .ko-DataTable css) to getTableBody.
  *
  * NICETOHAVE
  * - Do not require 'primaryKey' if not using editable rows.
@@ -441,10 +441,10 @@ EOD;
 
     // set css hook for sort order icon
     if ($this->sortColumn == $colDef->colSort) {
-      $classAttr  = 'class="JSTableSort active sort'.strtolower($this->sortOrders[$this->sortOrder]).'" ';
+      $classAttr  = 'class="JSTableSort is-'.strtolower($this->sortOrders[$this->sortOrder]).'" ';
       $next_order = $this->sortOrder ? 0 : 1;
     } elseif (isset($colDef->colSort)) {
-      $classAttr  = 'class="JSTableSort sort" ';
+      $classAttr  = 'class="JSTableSort" ';
       $next_order = 0;
     }
 

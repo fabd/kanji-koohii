@@ -1,7 +1,11 @@
 .ko-StudySearchDD {
-  --color-highlight: #1d4ed8;
+  --color-highlight: color-mix(
+    in srgb,
+    var(--color-study-search-accent),
+    var(--color-mix-black) 20%
+  );
 
-  @apply mt-1 bg-white border border-gray-200 rounded-lg shadow-xl;
+  @apply mt-1 bg-(--color-study-search-bg) border border-(--color-study-search-border) rounded-lg shadow-xl;
   z-index: var(--z-overlay);
 
   /* slightly wider, and larger font size on smartphone */
@@ -13,26 +17,32 @@
   em {
     font-style: normal;
     font-weight: 800;
-    color: var(--color-highlight); /*#1d4ed8;*/
+    color: var(--color-highlight);
   }
 }
 
 .ko-StudySearchDD-item {
-  @apply px-4 py-2 border-b last:border-b-0 border-gray-100 transition-colors;
+  --color-border: color-mix(in srgb, var(--color-study-search-bg), #000 5%);
+  border-bottom: 1px solid var(--color-border);
+  @apply px-4 py-2 last:border-b-0 transition-colors;
 
   display: flex;
   align-items: center;
 
   &.is-active {
-    background-color: #dbeafe;
-    border-left: 4px solid #3b82f6;
+    background-color: color-mix(
+      in srgb,
+      var(--color-study-search-accent),
+      var(--color-mix-white) 83%
+    );
+    border-left: 4px solid var(--color-study-search-accent);
 
     .ko-StudySearchDD-index {
       color: var(--color-highlight);
     }
   }
   &:hover {
-    background-color: #f3f4f6;
+    background-color: var(--color-border);
     cursor: pointer;
   }
 }
@@ -47,11 +57,11 @@
 .ko-StudySearchDD-kanji {
   font-size: calc(24 / 16 * 1em);
   line-height: 1;
-  color: #222;
+  color: var(--clr-neutral-950);
 }
 
 .ko-StudySearchDD-index {
   margin-left: auto;
   font-size: 0.875em;
-  color: #888;
+  color: var(--clr-neutral-500);
 }

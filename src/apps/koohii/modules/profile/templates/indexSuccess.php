@@ -47,7 +47,7 @@ $sf_request->setParameter(uiSelectTable::QUERY_SORTCOLUMN, $sortkey);
 
 <?php else: ?>
 
-  <div class="warningmessagebox">
+  <div class="ko-Box ko-Box--warning my-4">
     Please sign in to view the user's shared stories.
   </div>
 

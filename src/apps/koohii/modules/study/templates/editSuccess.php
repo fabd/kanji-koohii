@@ -96,23 +96,24 @@ kk_globals_put('NEW_CARDS_COUNT', ReviewsPeer::getCountUntested($userId));
     </div>
   </div>
 
-  <div id="DictStudy" class="col-box no-gutter-xs-sm">
-    <div id="DictHead" class="JsToggle">
-      <i class="fa fa-chevron-down" style="position:absolute;right:0;top:0;width:33px;height:33px;line-height:33px;"></i>
-      Dictionary
+  <section class="ko-StudySection ko-StudySection--dict is-toggle is-collapsed no-gutter-xs-sm JsDictSection">
+    <div class="ko-StudySection-hd JsToggle">
+      <h3 class="ko-StudySection-title">Dictionary</h3>
+      <i class="ko-StudySection-chevron fa fa-chevron-down"></i>
     </div>
-    <div id="JsDictBody" data-ucs="<?= $kanjiData->ucs_id; ?>" style="display:none">
+    <div class="ko-StudySection-bd" data-ucs="<?= $kanjiData->ucs_id; ?>">
       <div class="JsMount"></div>
     </div>
-  </div>
+  </section>
 
 
-  <div id="SharedStoriesComponent" class="col-box no-gutter-xs-sm">
+  <div class="no-gutter-xs-sm JsSharedStories">
 
-    <div id="sharedstories-top">
-      <div class="sharedstories_title title">
-        Favourite(s)
+    <section class="ko-StudySection ko-StudySection--favourites JsFavourites">
+      <div class="ko-StudySection-hd">
+        <h3 class="ko-StudySection-title">Favourite(s)</h3>
       </div>
+      <div class="ko-StudySection-bd">
 <?php
 // req. ucsId, userId
 use_helper('Links');
@@ -145,7 +146,8 @@ foreach ($stories as $o) {
       </div>
 
 <?php } ?>
-    </div>
+      </div>
+    </section>
 
     <?php
       // Caching of this partial is dynamically enabled in study/edit action. Use sf_cache_key for removals.

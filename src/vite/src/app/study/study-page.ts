@@ -29,6 +29,7 @@ export default {
   newCount: 0,
   oEditFlashcard: null as EditFlashcardDialog | null,
   resetFlashcardDialog: false,
+  elDictStudy: null as HTMLElement | null,
   dictVisible: false,
   dictPanel: false,
 
@@ -85,12 +86,12 @@ export default {
       VueInstance(KoStudyLastViewed, elLastViewed);
     }
 
-    const elDictStudy = domGetById("DictStudy");
+    const elDictStudy = $$<HTMLElement>(".JsDictSection")[0];
     if (elDictStudy) {
       this.initDictionary(elDictStudy);
     }
 
-    const elSharedStories = domGetById("SharedStoriesComponent");
+    const elSharedStories = $$<HTMLElement>(".JsSharedStories")[0];
     if (elSharedStories) {
       new SharedStoriesComponent(elSharedStories);
     }
@@ -157,17 +158,18 @@ export default {
     this.elEditFlashcard!.innerHTML = html;
   },
 
-  initDictionary(_el: Element) {
-    $$("#DictHead").on("click", this.toggleDictionary.bind(this));
+  initDictionary(el: HTMLElement) {
+    this.elDictStudy = el;
+    $$(".JsToggle", el).on("click", this.toggleDictionary.bind(this));
     this.dictVisible = false;
     this.dictPanel = false;
   },
 
   toggleDictionary(_evt: Event) {
     const visible = !this.dictVisible;
-    const $elBody = $$<HTMLElement>("#JsDictBody");
+    const $elBody = $$<HTMLElement>(".ko-StudySection-bd", this.elDictStudy!);
 
-    $elBody.display(visible);
+    this.elDictStudy!.classList.toggle("is-collapsed", !visible);
     this.dictVisible = visible;
 
     if (!this.dictPanel) {

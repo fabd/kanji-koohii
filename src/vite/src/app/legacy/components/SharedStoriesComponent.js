@@ -1,7 +1,7 @@
 /* global Koohii */
 // FIXME: legacy componet, should become a Vue at some point
 
-import $$, { domGetById, insertBefore } from "@/lib/dom";
+import $$, { insertBefore } from "@/lib/dom";
 import { getApi } from "@/app/api/api";
 import AjaxTable from "@/app/legacy/ajaxtable";
 import EventDelegator from "@/lib/EventDelegator";
@@ -21,7 +21,7 @@ class SharedStoriesComponent {
   constructor(elContainer) {
     // handling of votes, etc
     this.evtDel = (new EventDelegator(elContainer))
-      .on("click", ".JsNewest", this.onNewestClick, this)
+      .on("click", ".JsToggle", this.onNewestClick, this)
       .on("click", ".JsCopy", this.onCopy, this)
       .on("click", ".JsReport", this.onReport, this)
       .on("click", ".JsStar", this.onStar, this);
@@ -53,18 +53,12 @@ class SharedStoriesComponent {
     return false;
   }
 
+  // "New & updated stories" section : expand / collapse
   onNewestClick(ev, el) {
-    if (ev.type === "click") {
-      var div = domGetById("sharedstories-new");
-
-      this.hideStories = !this.hideStories;
-      div.classList.toggle("JsHide", this.hideStories);
-
-      return false;
-    } else {
-      var ofs = ev.type === "mouseover" ? -33 : 0;
-      $$(el).css("backgroundPosition", "0 " + ofs + "px");
-    }
+    const elSection = el.closest(".ko-StudySection");
+    this.hideStories = !this.hideStories;
+    elSection.classList.toggle("is-collapsed", this.hideStories);
+    return false;
   }
 
   onCopy(ev, el) {
@@ -225,7 +219,7 @@ class SharedStoriesComponent {
    * @param {string} storyId 
    */
   moveStoryToFavourites(elSharedStory, storyId) {
-    var elFavourites = domGetById("sharedstories-top");
+    var elFavourites = $$(".JsFavourites .ko-StudySection-bd")[0];
 
     if (!this.movedStory) {
       this.movedStory = {};

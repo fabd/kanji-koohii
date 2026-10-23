@@ -63,7 +63,7 @@ if ($restudyCount && $restudyCount > $learnedCount) {
           <?= link_to(
             '<i class="fa fa-times mr-2"></i>Clear learned list ',
             'study/clear?goto=restudy',
-            ['class' => 'leading-none text-[#BD2420] hover:underline ml-auto']
+            ['class' => 'leading-none text-(--clr-red-700) hover:underline ml-auto']
           ); ?>
 <?php endif; ?>
       </div>

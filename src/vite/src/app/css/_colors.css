@@ -1,0 +1,39 @@
+/* ==================================================================== */
+/* COLORS */
+/* ==================================================================== */
+
+:root {
+  /* -------------------------------------------------------------------- */
+  /* MERGE WIP  */
+  /* -------------------------------------------------------------------- */
+  /*
+    Every RGB color used in the stylesheets and templates, named after its
+    hex value, eg. "#7f7d85" => var(--clr-7f7d85).
+
+    This is a first step towards dark mode: next, similar colors will be
+    merged into the palette above, then given semantic names.
+
+    Grouped by similar hue, then sorted by lightness (OKLCH) from dark
+    to light within each group.
+
+    In Tailwind classes use the variable shorthand, eg. "bg-(--clr-7f7d85)".
+  */
+
+  /* with alpha transparency */
+  --clr-00000026: rgba(0, 0, 0, 0.15);
+  --clr-00000033: #00000033;
+  --clr-0000004d: rgba(0, 0, 0, 0.3);
+  --clr-00000080: rgba(0, 0, 0, 0.5);
+  --clr-00000088: #00000088;
+  --clr-44444411: #44444411;
+  --clr-44444466: #44444466;
+  --clr-ffffff11: #ffffff11;
+  --clr-ffffff4d: rgba(255, 255, 255, 0.3);
+  --clr-ffffff66: rgba(255, 255, 255, 0.4);
+  --clr-ffffff88: #ffffff88;
+  --clr-ffffffbf: rgba(255, 255, 255, 0.75);
+  --clr-ffffffcc: #ffffffcc;
+  --clr-c39a5cbd: #c39a5cbd;
+  --clr-f5efe580: #f5efe580;
+  --clr-aaa5824d: rgba(170, 165, 130, 0.3);
+}

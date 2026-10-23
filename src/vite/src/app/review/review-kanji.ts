@@ -453,14 +453,4 @@ export default class KanjiReview {
   getDeletedCards() {
     return "&#" + this.deletedCards.join(";&#") + ";";
   }
-
-  /**
-   * Sets buttons (children of element) to default state, or disabled state
-   *
-   */
-  setButtonState(elParent: HTMLElement, bEnabled: boolean) {
-    $$(".uiIBtn", elParent).each((el) => {
-      el.classList.toggle("uiFcBtnDisabled", bEnabled);
-    });
-  }
 }

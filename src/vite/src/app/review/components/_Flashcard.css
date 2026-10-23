@@ -14,9 +14,9 @@
   top: 3px;
   z-index: var(--z-toast);
   padding: 0.5em 0.8em;
-  background: #4a9dd6;
+  background: oklch(from var(--color-fc-base) calc(l - 0.044) calc(c * 0.91) h);
   border-radius: 3px;
-  color: #fff;
+  color: var(--color-mix-white);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
@@ -35,24 +35,23 @@
   top: 3px;
   z-index: var(--z-toast);
   padding: 0.5em 0.8em;
-  background: #c0392b;
+  background: var(--clr-red-700);
   border-radius: 3px;
-  color: #ffc9c3;
+  color: var(--clr-red-100);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
 }
 #uiFcAjaxError a {
-  color: #fff;
+  color: var(--color-mix-white);
   font-weight: bold;
 }
 
-/* we'll turn this into a theme some day, for now it's just a background */
+/* flashcard review page background */
 .uiFcLayout {
-  /* http://colorzilla.com/gradient-editor/#c4e6ff+0,92c3e4+100 */
-  background: #92c3e4;
-  background: #92c3e4 linear-gradient(to bottom, #c4e6ff 0%, #92c3e4 100%)
-    100%/200% no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: var(--color-fc-bg-end)
+    linear-gradient(to bottom, var(--color-fc-bg-top) 0%, var(--color-fc-bg-end) 100%)
+    100%/200% no-repeat;
 }
 
 /* top row of option buttons */
@@ -68,21 +67,28 @@
   font:
     bold 14px/1em Arial,
     sans-serif;
-  color: #fff;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+  color: var(--color-btn-fg);
+  text-shadow: 0 -1px var(--clr-00000080);
   -webkit-border-radius: 5px;
   border-radius: 0 0 5px 5px;
-  background-color: #50abeb;
-  background-image: linear-gradient(to bottom, #50abeb 0%, #489ad4 100%);
+  background-color: var(--color-fc-btn);
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-fc-btn) 0%,
+    color-mix(in srgb, var(--color-fc-btn), var(--color-mix-black) 10%) 100%
+  );
 }
 .uiFcOptBtn:hover,
 .uiFcOptBtn:focus {
-  color: #e6eefb;
-  background-color: #007be3;
-  background-image: linear-gradient(to bottom, #268bd2 0%, #227dbd 100%);
+  color: color-mix(in srgb, var(--color-fc-btn), var(--color-mix-white) 85%);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-fc-btn), var(--color-mix-black) 15%) 0%,
+    color-mix(in srgb, var(--color-fc-btn), var(--color-mix-black) 25%) 100%
+  );
 }
 .uiFcOptBtn u {
-  color: #eaf6ff;
+  color: color-mix(in srgb, var(--color-fc-btn), var(--color-mix-white) 88%);
   padding-right: 1px;
 }
 .uiFcOptBtn,
@@ -102,13 +108,6 @@
 .uiFcOptBtnStory {
 } /* EditStory window */
 
-/* answer button styles */
-.uiFcButtons .uiIBtnDefault {
-  font-size: 16px;
-  line-height: 41px;
-  height: 42px;
-} /* larger buttons for touch/mobile */
-
 /* flashcard answer area */
 .uiFcButtons {
   padding: 15px 0 25px;
@@ -118,7 +117,7 @@
   font:
     17px/33px Arial,
     sans-serif;
-  color: #408fc6;
+  color: oklch(from var(--color-fc-base) calc(l - 0.088) calc(c * 0.88) h);
   text-align: center;
   margin: 0;
   padding: 0 0 5px;
@@ -132,18 +131,21 @@
 /* -------------------------------------------------------- */
 .ko-FcStBox {
   border-radius: 5px;
-  background-color: #94d3ff;
+  background-color: var(--color-fc-status-bg);
   padding: 5px;
 }
 
 .ko-FcStBox-hd {
-  @apply text-sm text-[#408fc6] text-center leading-none;
+  @apply text-sm text-center leading-none;
   font-family: Arial, Helvetica, sans-serif;
+  /* a darker, more saturated shade of the box background */
+  color: oklch(from var(--color-fc-status-bg) calc(l - 0.215) calc(c * 1.27) h);
 }
 
 .ko-FcStBox-hd em {
   font-style: normal;
-  color: #0a3e62;
+  /* the counts : a much darker shade of the box background */
+  color: oklch(from var(--color-fc-status-bg) calc(l - 0.49) c h);
 }
 
 #uiFcProgressBar .ko-FcStBox-hd {
@@ -158,20 +160,19 @@
 .ko-FcStCnt {
   font-size: 21px;
   line-height: 1;
-  color: #0a3e62;
 
   .fa {
     font-size: 24px;
     margin-right: 0.2em;
   }
   span {
-    color: #474747;
+    color: var(--clr-neutral-800);
   }
   .fa-check {
-    color: #27ae60;
+    color: color-mix(in srgb, var(--color-success), #fff 20%);
   }
   .fa-times {
-    color: #c0392b;
+    color: var(--clr-red-700);
   }
 }
 
@@ -184,20 +185,21 @@
   font:
     bold 14px/29px Arial,
     sans-serif;
-  color: #0097ff;
-  background-color: #94d3ff;
+  color: var(--color-fc-end-btn);
+  background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-mix-white) 58%);
   border-radius: 6px;
   @apply px-3 py-1;
   text-decoration: none;
   /* make it look like a button! */
-  border-bottom: 4px solid #268bd2;
+  border-bottom: 4px solid
+    color-mix(in srgb, var(--color-fc-end-btn), var(--clr-neutral-700) 25%);
 
   &:active,
   &:hover {
     margin-top: 2px;
     border-bottom-width: 2px;
-    background-color: #7dc2f3;
-    color: #fff;
+    background-color: color-mix(in srgb, var(--color-fc-end-btn), var(--color-mix-white) 45%);
+    color: var(--color-btn-fg);
   }
 }
 
@@ -252,7 +254,7 @@
   font-size: 18px;
   line-height: 1.2em;
   letter-spacing: 4px;
-  color: red;
+  color: var(--clr-red-500);
 }
 
 /* ================================================================================= */
@@ -302,11 +304,11 @@
   }
 
   #uiFcProgressBar .ko-FcStBox-hd {
-    color: #ddd;
+    color: var(--clr-neutral-200);
     font-weight: normal;
   }
   #uiFcProgressBar .ko-FcStBox-hd em {
-    color: #fff;
+    color: var(--color-mix-white);
   }
 
   /* hide the keyboard shortcuts help */
@@ -342,11 +344,11 @@
   display: block;
   position: relative;
   margin: 0 auto; /* center within TD */
-  background: #fff;
+  background: var(--color-mix-white);
 
   /* card size */
 
   width: 100%;
   height: 366px;
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2); /* works in Firefox 25 */
+  box-shadow: 0px 1px 5px 0px var(--clr-00000033); /* works in Firefox 25 */
 }

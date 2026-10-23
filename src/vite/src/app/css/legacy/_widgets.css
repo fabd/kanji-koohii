@@ -9,78 +9,7 @@
  */
 
 @import "./_filterstd.css";
-@import "./_pager.css";
 @import "./_ui-select-table.css";
-
-/**
- * uiIBtn - Inline Block Buttons
- * 
- * Example:
- * 
- *  <code>
- *    <a href="#" class="uiIBtn uiIBtnDefault"><span><em>Button text</em></span></a>
- *  </code>
- *  
- * Example adding an icon on the EM element:
- * 
- *  <code>
- *   <a href="#" class="uiIBtn uiIBtnDefault"><span><em class="ico ico-cross">Delete</em></span></a>
- *  </code>
- *  
- */
-
-.uiIBtn {
-  display: inline-block;
-  padding: 0 10px;
-  @apply outline-hidden select-none;
-}
-
-.uiIBtn span {
-  white-space: nowrap;
-}
-.uiIBtn,
-.uiIBtn:hover,
-.uiIBtn:hover span {
-  text-decoration: none;
-}
-
-/* em is used for adding an icon (optional) */
-.uiIBtn em {
-  font-style: normal;
-}
-
-/* uiIBtn :: default green */
-.uiIBtnDefault {
-  border-radius: 5px;
-  /* default colour */
-  background: #6fa300;
-  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
-
-  color: #fff;
-  font: bold 15px/34px Arial, sans-serif;
-  height: 34px;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
-}
-.uiIBtn:hover {
-  color: #fff;
-}
-.uiIBtnDefault:hover {
-  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-/* uiIBtn :: additional colours */
-.uiIBtnRed {
-  background: #cb4b16;
-  background: linear-gradient(to bottom, #cb4b16 0%, #b74314 100%);
-}
-.uiIBtnGreen {
-  background: #6fa300;
-  background: linear-gradient(to bottom, #6fa300 0%, #649300 100%);
-}
-.uiIBtnOrange {
-  background: #e68f06;
-  background: linear-gradient(to bottom, #e68f06 0%, #bb7404 100%);
-}
 
 /**
  * uiChartVs
@@ -94,14 +23,6 @@
   overflow: visible;
   position: relative;
 }
-.uiChartVs .shadow {
-  position: absolute;
-  width: 100%;
-  left: 5px;
-  bottom: 0;
-  height: 56px;
-  background: #c1bea3;
-}
 .uiChartVs p {
   width: 50%;
   margin: 0;
@@ -110,10 +31,10 @@
 .uiChartVs p .ttl {
   display: block;
   font: bold italic 14px/1em Georgia, serif;
-  color: #4b4b4b;
+  color: var(--clr-neutral-800);
 }
 .uiChartVs p .zero {
-  color: #979797;
+  color: var(--clr-neutral-400);
 } /* gray out title */
 .uiChartVs em {
   font-weight: normal;
@@ -130,28 +51,30 @@
   position: absolute;
   bottom: 5px;
   height: 50px;
-  border-bottom: 8px solid #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-bottom: 8px solid var(--color-mix-white);
+  box-shadow: 0 2px 5px var(--clr-0000004d);
 }
 .uiChartVs a.pct {
   text-decoration: none;
 }
 .uiChartVs .left .pct {
+  --bg: #a5e36a;
   left: 0;
-  background: #b1fe66;
-  border-bottom-color: #82ba4b;
+  background: var(--bg);
+  border-bottom-color: color-mix(in srgb, var(--bg), var(--color-mix-black) 27%);
 }
 .uiChartVs .right .pct {
+  --bg: #dd5d3a;
   right: 0;
-  background: #dd5d3a;
-  border-bottom-color: #a2442b;
+  background: var(--bg);
+  border-bottom-color: color-mix(in srgb, var(--bg), var(--color-mix-black) 27%);
 }
 .uiChartVs .pct span {
   position: absolute;
   top: 7px;
   font: 27px/1em Georgia, serif;
-  color: #000;
-  text-shadow: 0 1px rgba(255, 255, 255, 0.4);
+  color: var(--color-text-dark);
+  text-shadow: 0 1px var(--clr-ffffff66);
 }
 .uiChartVs .left .pct span {
   left: 10px;
@@ -180,10 +103,23 @@
  * @see   ui_progress_bar()
  */
 .ko-StripedProgressBar {
+  --striped-shadow: #44444488;
+  /* background stripes */
+  --striped-bg-1: #222222;
+  --striped-bg-2: #444444;
+  /* progress bar stripes */
+  --striped-fg-1: #5db200;
+  --striped-fg-2: #73df00;
+  /* gloss overlay */
+  --striped-gloss-1: #b7d468;
+  --striped-gloss-2: #666666;
+  --striped-gloss-3: #222222;
+  --striped-gloss-4: #444444;
+
   --border-radius: 4px;
   border-radius: var(--border-radius);
   
-  box-shadow: 0 4px 10px #4448;
+  box-shadow: 0 4px 10px var(--striped-shadow);
 
   /* the dark gray background with stripe motif */
   div {
@@ -193,7 +129,7 @@
 
     background-attachment: fixed;
     background-image: repeating-linear-gradient(
-      -45deg, #222, #222 10px, #444 10px, #444 20px
+      -45deg, var(--striped-bg-1), var(--striped-bg-1) 10px, var(--striped-bg-2) 10px, var(--striped-bg-2) 20px
     );
   }
 
@@ -211,16 +147,16 @@
     height: 100%;
     
     background-attachment: fixed;
-    background-color: #72a311;
+    background-color: var(--striped-fg-1);
     background-image: repeating-linear-gradient(
-      -45deg, #5db200, #5db200 10px, #73df00 10px, #73df00 20px
+      -45deg, var(--striped-fg-1), var(--striped-fg-1) 10px, var(--striped-fg-2) 10px, var(--striped-fg-2) 20px
     );
   }
 
   /* the gloss effect overlay */
   span.x {
     @apply absolute left-0 top-0 w-full h-full;
-    background: linear-gradient( #b7d468, #666 9px, #222 9px, #444 20px );
+    background: linear-gradient( var(--striped-gloss-1), var(--striped-gloss-2) 9px, var(--striped-gloss-3) 9px, var(--striped-gloss-4) 20px );
     border-radius: var(--border-radius);
     opacity: 0.5;
   }
@@ -230,16 +166,16 @@
  * Side tabs navigation.
  */
 .side-menu {
-  @apply border border-[#d4cdba] rounded-sm mb-4 text-sm;
+  @apply border border-(--color-box-bg-dark) rounded-sm mb-4 text-sm;
 }
 .side-menu h2 {
   padding: 8px 10px;
   margin: 0;
   font-size: 14px;
   font-weight: normal;
-  background-color: var(--clr-bg-1);
-  border-bottom: 1px solid var(--clr-bg-1m);
-  color: #525150;
+  background-color: var(--color-box-bg);
+  border-bottom: 1px solid var(--color-box-bg-light);
+  color: var(--clr-stone-900);
 }
 .side-menu ul {
   margin: 0;
@@ -248,7 +184,7 @@
 }
 .side-menu li {
   margin: 0;
-  border-bottom: 1px solid var(--clr-bg-1m);
+  border-bottom: 1px solid var(--color-box-bg-light);
 }
 .side-menu li:last-child {
   border-bottom: none;
@@ -259,12 +195,12 @@
   text-decoration: none;
 }
 .side-menu li a:hover {
-  background-color: var(--clr-bg-1);
+  background-color: var(--color-box-bg);
 }
 .side-menu li.active {
 }
 .side-menu li.active a {
-  border-left: 3px solid #8c8;
-  color: #222;
+  border-left: 3px solid var(--color-btn-success);
+  color: var(--clr-neutral-950);
   font-weight: bold;
 }

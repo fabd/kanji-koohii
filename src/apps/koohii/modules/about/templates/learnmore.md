@@ -166,11 +166,11 @@ The SRS bar chart represents stacks of flashcards. Stacks are shown from left to
 
 <img class="img-block img-responsive" src="/koohii/help/help-review-srs.png" />
 
-The first box contains <span class="clr-srs-fail">**forgotten cards**</span> in red, and <span class="clr-srs-new">**new cards**</span> in blue. You can select the blue pile or use the button above, both will take you to a review of new cards.
+The first box contains <span class="text-srs-fail">**forgotten cards**</span> in red, and <span class="text-srs-new">**new cards**</span> in blue. You can select the blue pile or use the button above, both will take you to a review of new cards.
 
 The boxes labelled "1", "2", etc. represents cards that have been reviewed succesfully that many times _in a row_. Therefore the higher boxes represent better knowledge!
 
-Each of the review boxes comes in two piles of cards: <span class="clr-srs-due">**due cards**</span> in orange (ready to review), and <span class="clr-srs-undue">**undue cards**</span> in green (scheduled for review later).
+Each of the review boxes comes in two piles of cards: <span class="text-srs-due">**due cards**</span> in orange (ready to review), and <span class="text-srs-undue">**undue cards**</span> in green (scheduled for review later).
 
 #### Review Chart Colors
 
@@ -255,9 +255,9 @@ The "Stats" panel shows you how many kanji you have been testing in this session
 
 #### Card Ratings {#rating}
 
-- <span markdown="true"><div class="ko-Btn uiFcBtnAN"><span>No</span></div></span> : send card back to the restudy pile. You can work through your failed kanji later by using the [restudy feature](#restudy-list). Or, you can also directly review the Restudy pile at a later time, by clicking the red button in the [Restudy List](/study/failedlist).
+- <span markdown="true"><div class="ko-Btn ko-Btn--no"><span>No</span></div></span> : send card back to the restudy pile. You can work through your failed kanji later by using the [restudy feature](#restudy-list). Or, you can also directly review the Restudy pile at a later time, by clicking the red button in the [Restudy List](/study/failedlist).
 
-- <span markdown="true"><div class="ko-Btn uiFcBtnAG"><span>Again</span></div></span> : moves the card to the end of the review pile, and lets you repeat it _in the same review session_. Use _Again_ rating the same way you would use No : you were not able to recall the kanji. However instead of sending the card to the Restudy pile, you will review it again at the end of this session.
+- <span markdown="true"><div class="ko-Btn ko-Btn--again"><span>Again</span></div></span> : moves the card to the end of the review pile, and lets you repeat it _in the same review session_. Use _Again_ rating the same way you would use No : you were not able to recall the kanji. However instead of sending the card to the Restudy pile, you will review it again at the end of this session.
 
   The result is the same as answering No, followed by Hard/Yes/Easy : the card will be "reset" to the 1+ review box with 1-6 days interval depending if you used Hard, Yes or Easy.
 
@@ -267,7 +267,7 @@ The "Stats" panel shows you how many kanji you have been testing in this session
 
   Keep in mind using _Again_ a lot, even for new cards, can make your reviews feel very long! Try to use **the Hard rating** with New & Restudy cards for a fixed 1 day interval without increasing the length of your review, and be careful of over-using rote memorization as that defeats the purpose of the RTK method.
 
-- <span markdown="true"><div class="ko-Btn uiFcBtnAH"><span>Hard</span></div></span> : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
+- <span markdown="true"><div class="ko-Btn ko-Btn--hard"><span>Hard</span></div></span> : demotes a card to a lower pile. The next review is scheduled at a lower interval according to the scheduling (see below).
 
   The "Hard" rating is very useful if you prefer not to use the Study page > Relearn > Review cycle. Even when your story is not effective, you can edit it from the Review page (shortcut <kbd>S</kbd>), and answer "Hard". That way you never have to deal with the restudy pile.
 
@@ -275,9 +275,9 @@ The "Stats" panel shows you how many kanji you have been testing in this session
 
   **Tip #2**! You can set _"Maximum box for cards marked 'Hard'"_ in Account Settings > Spaced Repetition. You can make sure for example that Hard Rating will never have an interval of more than a month. Alternatively you can set it to "1". This will cause a Hard answer to "reset" the card to the first review box, _and_ ; because of the special behaviour described above ; you will also get a review in +1 day always. You may prefer this over using "Again", if you do not want to make the review longer (instead of repeating the card, it will be scheduled tomorrow, for as long as you rate this card "Hard").
 
-- <span markdown="true"><div class="ko-Btn uiFcBtnAY"><span>Yes</span></div></span> : use "Yes" to promote a card to the next box, it will be scheduled for review at a longer interval. _Only use this rating if you completely remember the kanji, otherwise you should use "Hard" or "No"._
+- <span markdown="true"><div class="ko-Btn ko-Btn--yes"><span>Yes</span></div></span> : use "Yes" to promote a card to the next box, it will be scheduled for review at a longer interval. _Only use this rating if you completely remember the kanji, otherwise you should use "Hard" or "No"._
 
-- <span markdown="true"><div class="ko-Btn uiFcBtnAE"><span>Easy</span></div></span> : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that are easy to remember, such as very common kanji. Using "Easy" on the long run will reduce the amount of daily reviews.
+- <span markdown="true"><div class="ko-Btn ko-Btn--easy"><span>Easy</span></div></span> : rating a card "Easy" increases the interval by 50% compared to the "Yes" answer. This is best used on cards that are easy to remember, such as very common kanji. Using "Easy" on the long run will reduce the amount of daily reviews.
 
 **When a card is not answered correctly it will move back to the first compartment!** This is why you can gauge your current level of knowledge just by looking at the count of cards in each compartment : cards in the last compartment have not only been tested four times or more, they also have passed the test at least four times _in a row_. Thus, the cards in the last compartments correspond to the kanji you know best.
 

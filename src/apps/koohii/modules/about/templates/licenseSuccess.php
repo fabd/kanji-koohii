@@ -3,7 +3,6 @@
 
   <div class="col-lg-3 mb-8">
     <?= image_tag('/images/1.0/nav/about_photo2.gif', ['class' => 'block mx-auto rounded-full', 'size' => '140x140']); ?>
-    <?php // echo ui_ibtn('&nbsp;&nbsp;Contact', '@contact', array('icon' => 'edit', 'style' => 'display:block'))?>
   </div>
 
   <div class="col-lg-9 markdown">
@@ -20,7 +19,7 @@
         <p>
           Please note the attribution clause in the license:
         </p>
-        <p class="actionconfirmationmessage">
+        <p class="ko-Box ko-Box--warning">
           <strong>Attribution</strong> — You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).
         </p>
         <p>

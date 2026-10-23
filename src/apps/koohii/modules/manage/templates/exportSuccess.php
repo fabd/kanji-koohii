@@ -8,6 +8,6 @@
              is exported as a CSV file, using UTF-8 encoding.
              
 
-          <p><?= ui_ibtn('Export flashcards', 'manage/exportflashcards', ['icon' => 'export']); ?></p>
+          <p><?= link_to('Export flashcards', 'manage/exportflashcards', ['class' => 'ko-Btn ko-Btn--success']); ?></p>
           
 <?php decorate_end(); ?>

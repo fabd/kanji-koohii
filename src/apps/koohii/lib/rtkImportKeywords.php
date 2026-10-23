@@ -158,9 +158,9 @@ class rtkImportKeywords
   public function getTableHead()
   {
     return <<<HTML
-      <th width="5%"><span class="is-padded">Index#</span></th>
-      <th width="10%"><span class="is-padded">Kanji</span></th>
-      <th><span class="is-padded whitespace-nowrap">Imported Keyword</span></th>
+      <th width="5%"><span class="ko-DataTable-label">Index#</span></th>
+      <th width="10%"><span class="ko-DataTable-label">Kanji</span></th>
+      <th><span class="ko-DataTable-label whitespace-nowrap">Imported Keyword</span></th>
     HTML;
   }
 
@@ -177,7 +177,7 @@ class rtkImportKeywords
 
       // framenumber (extended), kanji, keyword
       $rows[] = '<tr><td class="text-center">'.$c_ext.'</td>'
-              .'<td class="kanji">'.cjk_lang_ja('&#'.$ucs.';').'</td>'
+              .'<td class="ko-DataTable-kanji">'.cjk_lang_ja('&#'.$ucs.';').'</td>'
               .'<td>'.esc_specialchars($keyword).'</td></tr>';
     }
 

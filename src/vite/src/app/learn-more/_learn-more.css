@@ -16,7 +16,7 @@
     a {
       @apply block py-1;
       @apply no-underline hover:underline;
-      @apply font-bold text-[#564e44];
+      @apply font-bold text-(--clr-stone-900);
     }
   }
 
@@ -44,8 +44,8 @@
       }
 
       a {
-        @apply pl-[1em] border-l border-[#e7e1d3];
-        @apply text-[#42413d] font-normal;
+        @apply pl-[1em] border-l border-(--clr-stone-300);
+        @apply text-(--clr-stone-950) font-normal;
       }
     }
   }
@@ -56,7 +56,7 @@
   /* this selector overrides `.markdown img` when appearing in the Help page */
   img {
     @apply border-none p-0;
-    box-shadow: 7px 7px 0px 0px #c39a5cbd;
+    box-shadow: 7px 7px 0px 0px var(--clr-c39a5cbd);
   }
 }
 
@@ -64,7 +64,7 @@
   @media only screen and (min-width: 768px) {
     /* up md */
     /* vertical separator & guiding line */
-    @apply pl-4 border-l border-[#e7e1d3];
+    @apply pl-4 border-l border-(--clr-stone-300);
   }
   @media only screen and (min-width: 1024px) {
     /* up lg */
@@ -83,7 +83,7 @@
 
   /* improve vertical separation */
   h2 {
-    border-bottom: 1px solid #d8d3ce;
+    border-bottom: 1px solid var(--clr-stone-300);
     padding-bottom: 0.3em;
   }
 }
@@ -99,7 +99,7 @@
 
 .ko-DocMain-stacks {
   @apply mb-6 p-6;
-  background-color: var(--clr-bg-nav);
+  background-color: var(--color-box-bg-light);
 
   dt {
     float: left;

@@ -12,7 +12,7 @@ $post_id = $posts ? $posts[0]->id : 0;
 
 <?php else: ?>
 
-  <div class="formerrormessage">
+  <div class="ko-Box ko-Box--danger my-4">
     Oops, this news post can not be found.
   </div>
 

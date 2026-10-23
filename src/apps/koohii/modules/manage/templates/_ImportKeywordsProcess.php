@@ -3,7 +3,7 @@
   <?= form_errors(); ?>
 
 <?php if (!$sf_request->hasErrors()): ?>
-  <div class="confirmwhatwasdone">
+  <div class="ko-Box ko-Box--success my-4">
     <p>Import successful.</p>
   </div>
 <?php endif; ?>

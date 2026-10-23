@@ -69,17 +69,6 @@
     In Tailwind classes use the variable shorthand, eg. "bg-(--clr-7f7d85)".
   */
 
-  /* warm grays (low chroma) */
-
-  /* olive / khaki */
-  --clr-716e57: #716e57;
-
-  --clr-c1bea3: #c1bea3;
-
-  --clr-d9d6bc: #d9d6bc;
-  --clr-dad8bd: #dad8bd;
-  --clr-e3e0c9: #e3e0c9;
-
   /* yellow greens */
   --clr-72a311: #72a311;
   --clr-5db200: #5db200;

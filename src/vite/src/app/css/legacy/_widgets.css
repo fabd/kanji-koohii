@@ -23,14 +23,6 @@
   overflow: visible;
   position: relative;
 }
-.uiChartVs .shadow {
-  position: absolute;
-  width: 100%;
-  left: 5px;
-  bottom: 0;
-  height: 56px;
-  background: var(--clr-c1bea3);
-}
 .uiChartVs p {
   width: 50%;
   margin: 0;

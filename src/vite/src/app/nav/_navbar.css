@@ -47,12 +47,6 @@
     auto;
 }
 
-#k-nav .k-nav_ft {
-  width: 100%;
-  font-size: 1px;
-  clear: both;
-}
-
 /* donate icons */
 #k-nav_d_pp {
   display: inline-block;
@@ -127,13 +121,6 @@
   touch-action: none;
 }
 
-#k-nav_d .k-nav_ft {
-  width: 100%;
-  background-color: var(--color-box-bg-light);
-  height: 5px;
-  border-bottom: 2px solid var(--clr-d9d6bc);
-  font-size: 1px;
-}
 /* layout*/
 #k-nav_d .k-nav_brand {
   float: left;

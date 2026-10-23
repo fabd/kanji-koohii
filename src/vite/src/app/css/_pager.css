@@ -22,7 +22,7 @@
 
 .ko-Pager-item {
   margin: 0;
-  border-right: 1px solid var(--clr-e3e0c9);
+  border-right: 1px solid var(--color-box-bg);
   font-size: 0.75rem;
 
   & a {
@@ -30,7 +30,7 @@
   }
 
   & > a:hover {
-    background: var(--clr-e3e0c9);
+    background: var(--color-box-bg);
     color: var(--color-link-fg);
     text-decoration: underline;
   }

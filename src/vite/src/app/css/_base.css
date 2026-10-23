@@ -54,7 +54,7 @@ ul {
 
 abbr,
 acronym {
-  border-bottom: 1px dotted var(--clr-dad8bd);
+  border-bottom: 1px dotted var(--color-text-muted);
   cursor: help;
 }
 

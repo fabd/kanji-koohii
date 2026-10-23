@@ -103,10 +103,23 @@
  * @see   ui_progress_bar()
  */
 .ko-StripedProgressBar {
+  --striped-shadow: #44444488;
+  /* background stripes */
+  --striped-bg-1: #222222;
+  --striped-bg-2: #444444;
+  /* progress bar stripes */
+  --striped-fg-1: #5db200;
+  --striped-fg-2: #73df00;
+  /* gloss overlay */
+  --striped-gloss-1: #b7d468;
+  --striped-gloss-2: #666666;
+  --striped-gloss-3: #222222;
+  --striped-gloss-4: #444444;
+
   --border-radius: 4px;
   border-radius: var(--border-radius);
   
-  box-shadow: 0 4px 10px var(--clr-44444488);
+  box-shadow: 0 4px 10px var(--striped-shadow);
 
   /* the dark gray background with stripe motif */
   div {
@@ -116,7 +129,7 @@
 
     background-attachment: fixed;
     background-image: repeating-linear-gradient(
-      -45deg, var(--clr-neutral-950), var(--clr-neutral-950) 10px, var(--clr-neutral-800) 10px, var(--clr-neutral-800) 20px
+      -45deg, var(--striped-bg-1), var(--striped-bg-1) 10px, var(--striped-bg-2) 10px, var(--striped-bg-2) 20px
     );
   }
 
@@ -134,16 +147,16 @@
     height: 100%;
     
     background-attachment: fixed;
-    background-color: var(--clr-72a311);
+    background-color: var(--striped-fg-1);
     background-image: repeating-linear-gradient(
-      -45deg, var(--clr-5db200), var(--clr-5db200) 10px, var(--clr-73df00) 10px, var(--clr-73df00) 20px
+      -45deg, var(--striped-fg-1), var(--striped-fg-1) 10px, var(--striped-fg-2) 10px, var(--striped-fg-2) 20px
     );
   }
 
   /* the gloss effect overlay */
   span.x {
     @apply absolute left-0 top-0 w-full h-full;
-    background: linear-gradient( var(--clr-b7d468), var(--clr-neutral-700) 9px, var(--clr-neutral-950) 9px, var(--clr-neutral-800) 20px );
+    background: linear-gradient( var(--striped-gloss-1), var(--striped-gloss-2) 9px, var(--striped-gloss-3) 9px, var(--striped-gloss-4) 20px );
     border-radius: var(--border-radius);
     opacity: 0.5;
   }
@@ -187,7 +200,7 @@
 .side-menu li.active {
 }
 .side-menu li.active a {
-  border-left: 3px solid var(--clr-88cc88);
+  border-left: 3px solid var(--color-btn-success);
   color: var(--clr-neutral-950);
   font-weight: bold;
 }

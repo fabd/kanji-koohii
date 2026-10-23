@@ -69,30 +69,14 @@
     In Tailwind classes use the variable shorthand, eg. "bg-(--clr-7f7d85)".
   */
 
-  /* yellow greens */
-  --clr-72a311: #72a311;
-  --clr-5db200: #5db200;
-  --clr-73df00: #73df00;
-  --clr-b7d468: #b7d468;
-  --clr-bccdac: #bccdac;
-  --clr-cfd67f: #cfd67f;
-  --clr-d9f5bf: #d9f5bf;
-
-  /* greens */
-  --clr-6cbe6b: #6cbe6b;
-  
-  --clr-88cc88: #88cc88;
-
   /* with alpha transparency */
   --clr-00000026: rgba(0, 0, 0, 0.15);
   --clr-00000033: #00000033;
-  --clr-00000040: rgba(0, 0, 0, 0.25);
   --clr-0000004d: rgba(0, 0, 0, 0.3);
   --clr-00000080: rgba(0, 0, 0, 0.5);
   --clr-00000088: #00000088;
   --clr-44444411: #44444411;
   --clr-44444466: #44444466;
-  --clr-44444488: #44444488;
   --clr-ffffff11: #ffffff11;
   --clr-ffffff4d: rgba(255, 255, 255, 0.3);
   --clr-ffffff66: rgba(255, 255, 255, 0.4);

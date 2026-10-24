@@ -291,7 +291,6 @@ main {
 .ko-SiteNews-body {
   margin: 0 0 25px;
   padding: 0 0 2em; /*border-bottom:1px solid var(--color-box-bg);*/
-  color: var(--clr-neutral-900);
   clear: both;
 }
 
@@ -329,7 +328,7 @@ main {
     }
   }
   span {
-    color: var(--clr-neutral-800);
+    color: var(--color-text-muted);
   }
 }
 

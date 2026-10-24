@@ -1,21 +1,37 @@
 .dict-list {
-  background: var(--clr-neutral-800);
-
   /* medium green : the "known" word colors are derived from it */
+  --dl-bg: var(--color-mix-white);
+  --dl-bg-shade: color-mix(in srgb, var(--dl-bg), var(--color-mix-black) 5%);
   --color-known: #5cb85c;
 }
 
 .dict-list .dl_item {
   background: var(--color-mix-white);
-  border-bottom: 1px solid var(--clr-neutral-100);
+  border-bottom: 1px solid var(--dl-bg-shade);
   position: relative;
+
+  &:hover {
+    background-color: var(--dl-bg-shade);
+    cursor: pointer;
+  }
+  &:hover .vocab_c {
+    background: #00000010;
+  }
 }
-.dict-list .dl_item:hover {
-  background: var(--clr-neutral-100);
-  cursor: pointer;
+
+/* box-ing the compound for separation */
+.vocab_c {
+  display: inline-block;
+  padding: 3px 8px 4px;
+  border-radius: 8px;
+  background: var(--dl-bg-shade);
+  color: var(--color-text-dark);
 }
-.dict-list .dl_item:hover .vocab_c {
-  background: var(--color-mix-white);
+
+/* the <em> surrounding tags originate in KoohiiFormat mixin, used by DictEntry.r and VocabPick.reading */
+.vocab_r em {
+  border-bottom: 2px solid var(--color-red-300); /*color:#ff4e4e;*/
+  font-style: normal;
 }
 
 .dict-list .dl_item .cj-k {
@@ -40,10 +56,10 @@
   right: 10px;
   top: 15px;
   font-size: 20px;
-  color: var(--clr-neutral-300);
+  color: var(--color-neutral-300);
 }
 .dict-list .dl_item:hover .dl_t_menu {
-  color: var(--clr-neutral-500);
+  color: var(--color-neutral-500);
 }
 
 /* picked item */
@@ -55,14 +71,18 @@
 /* "known" word (contains known kanji) */
 .dict-list .dl_t .known,
 .dict-list .dl_item:hover .known {
-  background: oklch(from var(--color-known) calc(l + 0.245) calc(c * 0.35) calc(h - 20));
+  background: oklch(
+    from var(--color-known) calc(l + 0.245) calc(c * 0.35) calc(h - 20)
+  );
   color: oklch(from var(--color-known) calc(l - 0.251) calc(c * 0.85) h);
 }
 
 .dict-list .dl_d {
   padding: 0 20px 1em;
-  font: 14px/1.3em Arial, sans-serif;
-  color: var(--clr-neutral-800);
+  font:
+    14px/1.3em Arial,
+    sans-serif;
+  color: var(--color-text-body);
 }
 
 /* --------------------------------------------------------------------
@@ -79,23 +99,4 @@
   padding: 1em 20px 1px;
   color: var(--clr-stone-700);
   background: var(--color-mix-white);
-}
-
-/* ===================================================== */
-/* Visual formatting shared by DictList & FlashcardKanji */
-/* ===================================================== */
-
-/* box-ing the compound for separation */
-.vocab_c {
-  display: inline-block;
-  padding: 3px 8px 4px;
-  border-radius: 8px;
-  background: var(--clr-neutral-100);
-  color: var(--color-text-dark);
-}
-
-/* the <em> surrounding tags originate in KoohiiFormat mixin, used by DictEntry.r and VocabPick.reading */
-.vocab_r em {
-  border-bottom: 2px solid var(--clr-red-300); /*color:#ff4e4e;*/
-  font-style: normal;
 }

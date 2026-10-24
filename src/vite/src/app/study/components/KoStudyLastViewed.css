@@ -26,12 +26,12 @@
 }
 
 .ko-LastViewed-kan {
-  @apply text-(--clr-stone-950) mr-3;
+  @apply text-(--color-text-body) mr-3;
 }
 
 .ko-LastViewed-idx {
   flex: 0 0 auto;
-  @apply w-[40px] mr-3 text-center text-(--clr-stone-950);
+  @apply w-[40px] mr-3 text-center text-(--color-text-body);
 }
 
 .ko-LastViewed-kwd {

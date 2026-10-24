@@ -16,7 +16,7 @@
     a {
       @apply block py-1;
       @apply no-underline hover:underline;
-      @apply font-bold text-(--clr-stone-900);
+      @apply font-bold text-text-body;
     }
   }
 
@@ -44,8 +44,8 @@
       }
 
       a {
-        @apply pl-[1em] border-l border-(--clr-stone-300);
-        @apply text-(--clr-stone-950) font-normal;
+        @apply pl-[1em] border-l border-(--color-box-bg);
+        @apply text-text-body font-normal;
       }
     }
   }
@@ -64,7 +64,7 @@
   @media only screen and (min-width: 768px) {
     /* up md */
     /* vertical separator & guiding line */
-    @apply pl-4 border-l border-(--clr-stone-300);
+    @apply pl-4 border-l border-(--color-box-bg);
   }
   @media only screen and (min-width: 1024px) {
     /* up lg */

@@ -4,28 +4,6 @@
 
 :root {
   /* -------------------------------------------------------------------- */
-  /* Palette */
-  /* -------------------------------------------------------------------- */
-  /*
-    Non-semantic color scales. These are plain CSS variables, not Tailwind
-    theme colors: semantic colors go in the Tailwind theme, and refer to
-    these, eg. var(--clr-neutral-600) or in Tailwind "text-(--clr-neutral-600)".
-  */
-
-  /* pure grays (identical R, G, B) */
-  --clr-neutral-950: #222222;
-  --clr-neutral-900: #333333;
-  --clr-neutral-800: #444444;
-  --clr-neutral-700: #666666;
-  --clr-neutral-600: #757575;
-  --clr-neutral-500: #888888;
-  --clr-neutral-400: #aaaaaa;
-  --clr-neutral-300: #cccccc;
-  --clr-neutral-200: #dddddd;
-  --clr-neutral-100: #eeeeee;
-  --clr-neutral-50: #f5f5f5;
-
-  /* -------------------------------------------------------------------- */
   /* MERGE WIP  */
   /* -------------------------------------------------------------------- */
   /*

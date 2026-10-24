@@ -43,13 +43,13 @@
   &.is-disabled {
     padding: 4px 8px;
     font-weight: bold;
-    color: var(--clr-neutral-500);
+    color: var(--color-text-light);
   }
 }
 
 .ko-Pager-item--etc {
   padding: 4px 8px;
-  color: var(--clr-neutral-500);
+  color: var(--color-text-light);
 }
 
 .ko-Pager-item--prev > a,

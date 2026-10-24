@@ -60,7 +60,7 @@
     14px/1em Georgia,
     Times New Roman,
     sans-serif;
-  color: var(--clr-neutral-400);
+  color: var(--color-text-light);
 }
 .d-strokec .kanji {
   font-size: 20pt;
@@ -75,7 +75,7 @@
   position: absolute;
   bottom: 0.5rem;
   right: 8px;
-  color: var(--clr-neutral-400);
+  color: var(--color-text-light);
 }
 
 /* states :: default review mode */
@@ -97,7 +97,7 @@
 }
 
 .uiFcState-1 .d-keyword {
-  color: var(--clr-neutral-400);
+  color: var(--color-text-light);
 }
 .uiFcState-1 .d-kanji {
   visibility: visible;
@@ -139,18 +139,18 @@
   top: 0;
   width: 40px;
   height: 38px;
-  background: var(--clr-neutral-50);
+  background: color-mix(in srgb, var(--color-neutral-500), #0000 85%);
   text-decoration: none;
   text-align: center;
 }
 #uiFcMenu .fa {
   font-size: 18px;
   line-height: 38px;
-  color: var(--clr-neutral-400);
+  color: var(--color-neutral-500);
 }
 #uiFcMenu:hover,
 #uiFcMenu.active {
-  background: var(--clr-neutral-100);
+  background: color-mix(in srgb, var(--color-neutral-500), #0000 75%);
 }
 
 /* Onyomi */
@@ -166,7 +166,7 @@
 
 /* cloze deletion <span.cloze><u>(kanji)</u></span> */
 .d-yomi .cloze {
-  color: var(--clr-red-700);
+  color: var(--color-red-700);
   text-decoration: none;
 }
 .d-yomi .cloze u {
@@ -191,7 +191,7 @@
   margin-top: 10px;
 }
 .uiFcYomi:hover {
-  background: var(--clr-neutral-100);
+  background: #00000010;
   border-radius: 8px;
 }
 

@@ -9,8 +9,17 @@
 :root {
   --main-px: 1.5rem;
 
-  --admin-bg: var(--clr-neutral-50);
+  /* admin grays (not themeable) */
+  --admin-neutral-800: #444444;
+  --admin-neutral-500: #888888;
+  --admin-neutral-300: #cccccc;
+  --admin-neutral-200: #dddddd;
+  --admin-neutral-100: #eeeeee;
+  --admin-neutral-50: #f5f5f5;
+
+  --admin-bg: var(--admin-neutral-50);
   --admin-text: var(--admin-slate-600);
+  --admin-text-dark: #22211d;
 
   /* admin colors (not themeable), named after the closest Tailwind color */
   --admin-slate-600: #425065;
@@ -63,7 +72,7 @@
 
 .ko-AdminNav-toprightItem {
   @apply inline-block ml-4;
-  @apply text-(--clr-neutral-100) hover:text-(--admin-white) no-underline text-sm;
+  @apply text-(--admin-neutral-100) hover:text-(--admin-white) no-underline text-sm;
 
   &.is-user {
     padding: 3px 8px;
@@ -97,10 +106,10 @@
 .ko-AdminBox {
   --padding: 11px;
 
-  border: 1px solid var(--clr-neutral-200);
+  border: 1px solid var(--admin-neutral-200);
   padding: var(--padding);
   margin-bottom: 1rem;
-  color: var(--clr-neutral-950);
+  color: var(--admin-text-dark);
 
   font-size: 1rem;
   line-height: calc(20 / 16 * 1rem);
@@ -133,7 +142,7 @@
   samp,
   code {
     background-color: var(--admin-zinc-200);
-    color: var(--clr-neutral-800);
+    color: var(--admin-neutral-800);
     font-size: 0.9em;
     padding: 0.1em 0.2em;
   }
@@ -143,14 +152,14 @@
 .ko-AdminBox-title {
   margin: calc(-1 * var(--padding)) calc(-1 * var(--padding)) 1rem;
   padding: 7px var(--padding) 7px;
-  background-color: var(--clr-neutral-200);
+  background-color: var(--admin-neutral-200);
 }
 
 /* --------------------------------------------------------------------
 // Colorize print_r() output (cf. DocHelper.php)
 // -------------------------------------------------------------------- */
 pre {
-  background-color: var(--clr-neutral-950);
+  background-color: #222;
   color: var(--admin-white);
   @apply font-mono;
   font-size: 13px;
@@ -175,12 +184,12 @@ pre {
     }
 
     .arrow {
-      color: var(--clr-neutral-500);
+      color: var(--admin-neutral-500);
     }
   }
 
   .comment {
-    color: var(--clr-neutral-500);
+    color: var(--admin-neutral-500);
   }
 
   .var {
@@ -205,7 +214,7 @@ pre {
   }
 
   .keyword {
-    color: var(--clr-neutral-300);
+    color: var(--admin-neutral-300);
   }
 
   /* PhpDoc */

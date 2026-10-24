@@ -15,11 +15,30 @@
   var() in CSS), and can be edited live in the browser dev tools.
   ---------------------------------------------------------------------*/
 @theme static {
+  /* =============================================================================== */
+  /* FIXED / NON-THEMEABLE COLORS                                                    */
+  /* =============================================================================== */
   /* for mixing colors with eg. color-mix() - NOT THEME BASED */
   --color-mix-white: #ffffff;
   --color-mix-black: #000000;
   --color-mix-yellow: #ffff00; /* eg. warmer greens */
 
+  /* neutral grays */
+  --color-neutral-200: #dddddd;
+  --color-neutral-300: #cccccc;
+  --color-neutral-500: #888888;
+  --color-neutral-800: #444444;
+  --color-neutral-900: #333333;
+  /* reds */
+  --color-red-900: #882222; 
+  --color-red-700: #bd2420;
+  --color-red-500: #d23c3c;
+  --color-red-300: #f86464;
+  --color-red-100: #fbcfcf;
+
+  /* =============================================================================== */
+  /* THEME COLORS                                                                    */
+  /* =============================================================================== */
   /* utilities */
   --color-dialog-mask: #00000040; /* backdrop mask color behind mobile nav & dialogs */
 
@@ -30,9 +49,10 @@
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 25%);
 
   /* text */
-  --color-text-body: #42413d; /* body text */
-  --color-text-dark: #22211d;
+  --color-text-dark: #22211d; /* body text, darker */
+  --color-text-body: #42413d; /* body text, medium */
   --color-text-muted: color-mix(in srgb, var(--color-text-body), #0000 30%);
+  --color-text-light: #a9a7a1;
   --color-hd-fg: #7f7d85; /* headings */
   --color-link-fg: #005cb1;
 

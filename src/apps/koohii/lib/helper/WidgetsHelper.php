@@ -185,8 +185,6 @@ function ui_chart_vs(array $options)
   $options = array_merge($options, [
     'pctLeft'      => $pctLeft,
     'pctRight'     => $pctRight,
-    'bZeroLeft'    => $pctLeft  == 0,
-    'bZeroRight'   => $pctRight == 0,
     'captionLeft'  => $captionLeft,
     'captionRight' => $captionRight,
   ]);

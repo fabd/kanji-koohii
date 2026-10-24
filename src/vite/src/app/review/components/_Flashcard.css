@@ -35,9 +35,9 @@
   top: 3px;
   z-index: var(--z-toast);
   padding: 0.5em 0.8em;
-  background: var(--clr-red-700);
+  background: var(--color-red-700);
   border-radius: 3px;
-  color: var(--clr-red-100);
+  color: var(--color-red-100);
   font-size: 14px;
   font-weight: bold;
   line-height: 16px;
@@ -166,13 +166,13 @@
     margin-right: 0.2em;
   }
   span {
-    color: var(--clr-neutral-800);
+    color: var(--color-neutral-800);
   }
   .fa-check {
     color: color-mix(in srgb, var(--color-success), #fff 20%);
   }
   .fa-times {
-    color: var(--clr-red-700);
+    color: var(--color-red-700);
   }
 }
 
@@ -192,7 +192,7 @@
   text-decoration: none;
   /* make it look like a button! */
   border-bottom: 4px solid
-    color-mix(in srgb, var(--color-fc-end-btn), var(--clr-neutral-700) 25%);
+    color-mix(in srgb, var(--color-fc-end-btn), var(--color-neutral-800) 25%);
 
   &:active,
   &:hover {
@@ -254,7 +254,7 @@
   font-size: 18px;
   line-height: 1.2em;
   letter-spacing: 4px;
-  color: var(--clr-red-500);
+  color: var(--color-red-500);
 }
 
 /* ================================================================================= */

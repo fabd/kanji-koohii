@@ -97,7 +97,7 @@
 #k-nav_m .k-nav_btn .fa {
   padding-top: 10px;
   font-size: 24px;
-  color: var(--clr-neutral-300);
+  color: var(--color-neutral-300);
 }
 
 #k-nav_m .k-nav_brand {
@@ -144,7 +144,7 @@
 #k-nav_d li a {
   padding: 16px 19px;
   display: block;
-  color: var(--clr-neutral-300);
+  color: var(--color-neutral-300);
   font: 14px/1em Arial, sans-serif;
   text-decoration: none;
 }
@@ -159,7 +159,7 @@
 }
 #k-nav_d .active a,
 #k-nav_d .k-nav_dropdown a {
-  color: var(--clr-stone-950);
+  color: var(--clr-text-body);
 }
 
 /* hover states */
@@ -219,7 +219,7 @@
 }
 #k-nav_d .k-nav_dropdown a:hover {
   background: var(--clr-lime-300);
-  color: var(--clr-stone-950);
+  color: var(--clr-text-body);
 }
 #k-nav_d .k-nav_dropdown .fa {
   vertical-align: text-top;

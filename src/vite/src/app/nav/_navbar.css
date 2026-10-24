@@ -19,7 +19,7 @@
   right: 0;
   z-index: var(--z-navbar);
 
-  box-shadow: 0 0 4px var(--clr-00000080);
+  box-shadow: 0 0 4px var(--color-shadow);
 }
 
 #k-nav nav {
@@ -202,7 +202,7 @@
   margin: 0;
   line-height: 32px;
   background: var(--color-box-bg-light);
-  box-shadow: 0 2px 2px var(--clr-00000033);
+  box-shadow: 0 2px 2px var(--color-shadow-light);
   border-left: 1px solid var(--color-box-bg-dark);
   border-right: 1px solid var(--color-box-bg-dark);
 }

@@ -49,7 +49,7 @@
   bottom: 5px;
   height: 50px;
   border-bottom: 8px solid var(--color-mix-white);
-  box-shadow: 0 2px 5px var(--clr-0000004d);
+  box-shadow: 0 2px 5px var(--color-shadow-light);
 }
 .uiChartVs a.pct {
   text-decoration: none;

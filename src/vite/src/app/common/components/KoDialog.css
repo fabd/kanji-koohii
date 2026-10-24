@@ -11,7 +11,7 @@
 }
 
 .ko-Dialog {
-  --dialog-bg: var(--clr-00000088);
+  --dialog-bg: #00000088;
   --dialog-radius: 8px;
   --dialog-padding: 10px;
 
@@ -19,7 +19,7 @@
   background: var(--dialog-bg);
   border-radius: var(--dialog-radius);
   padding: var(--dialog-padding);
-  box-shadow: 0 10px 25px var(--clr-00000080);
+  box-shadow: 0 10px 25px var(--color-shadow);
   z-index: var(--z-overlay);
   backdrop-filter: blur(4px);
 }
@@ -71,8 +71,6 @@
   background: var(--color-story-bg);
   color: var(--color-story-fg);
   border-radius: 3px;
-
-  box-shadow: inset 0 1px 3px var(--clr-00000033);
 }
 
 .ko-Dialog-footer {

@@ -1,12 +1,21 @@
+.dict-panel {
+  background: var(--color-mix-white);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.dict-list_info {
+  padding: 1em 20px 1px;
+  color: var(--clr-stone-700);
+  background: var(--color-mix-white);
+}
+
 .dict-list {
-  /* medium green : the "known" word colors are derived from it */
-  --dl-bg: var(--color-mix-white);
-  --dl-bg-shade: color-mix(in srgb, var(--dl-bg), var(--color-mix-black) 5%);
-  --color-known: #5cb85c;
+  --dl-bg-shade: color-mix(in srgb, var(--color-mix-white), var(--color-mix-black) 5%);
+  --color-known: #5cb85c; /* medium green, base color for *known* words */
 }
 
 .dict-list .dl_item {
-  background: var(--color-mix-white);
   border-bottom: 1px solid var(--dl-bg-shade);
   position: relative;
 
@@ -83,20 +92,4 @@
     14px/1.3em Arial,
     sans-serif;
   color: var(--color-text-body);
-}
-
-/* --------------------------------------------------------------------
-// Dictionary Lookup Component
-//   FIXME : should go to a future "dict dialog" Vue comp.
-// -------------------------------------------------------------------- */
-.dict-panel {
-  background: var(--color-mix-white);
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.dict-list_info {
-  padding: 1em 20px 1px;
-  color: var(--clr-stone-700);
-  background: var(--color-mix-white);
 }

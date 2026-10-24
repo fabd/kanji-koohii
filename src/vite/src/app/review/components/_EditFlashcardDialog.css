@@ -101,7 +101,7 @@
     transition:
       opacity 0.1s ease,
       transform 0.1s ease;
-    box-shadow: 0 2px 3px var(--clr-00000026);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
     z-index: var(--z-overlay);
   }
 

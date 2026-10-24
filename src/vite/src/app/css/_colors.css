@@ -20,15 +20,8 @@
   */
 
   /* with alpha transparency */
-  --clr-44444411: #44444411;
-  --clr-44444466: #44444466;
-  --clr-ffffff11: #ffffff11;
-  --clr-ffffff4d: rgba(255, 255, 255, 0.3);
-  --clr-ffffff66: rgba(255, 255, 255, 0.4);
-  --clr-ffffff88: #ffffff88;
   --clr-ffffffbf: rgba(255, 255, 255, 0.75);
   --clr-ffffffcc: #ffffffcc;
   --clr-c39a5cbd: #c39a5cbd;
-  --clr-f5efe580: #f5efe580;
   --clr-aaa5824d: rgba(170, 165, 130, 0.3);
 }

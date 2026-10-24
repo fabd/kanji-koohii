@@ -21,7 +21,6 @@ html {
 
 body {
   background: var(--color-page-bg);
-  --ko-loading-bg: var(--clr-f5efe580);
   color: var(--color-text-body);
 }
 

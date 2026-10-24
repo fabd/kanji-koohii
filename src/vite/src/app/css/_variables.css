@@ -32,11 +32,6 @@
   --button-font-size-xl: 18px;
 
   /* -------------------------------------------------------------------- */
-  /* background color for the loading mask used in dialogs & ajax panels */
-  /* -------------------------------------------------------------------- */
-  --ko-loading-bg-white: var(--clr-ffffffcc);
-
-  /* -------------------------------------------------------------------- */
   /* z-index tokens   ( https://css-tricks.com/the-value-of-z-index/ ) */
   /* -------------------------------------------------------------------- */
   --z-top: 1; /* use for local stacking context */

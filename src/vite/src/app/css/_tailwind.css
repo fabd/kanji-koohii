@@ -52,6 +52,9 @@
   --color-box-bg-dark: #dbd4c3;
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 25%);
 
+  /* background color for the loading mask used in dialogs & ajax panels */
+  --color-loading-bg: color-mix(in srgb, var(--color-mix-white), transparent 25%);
+
   /* text */
   --color-text-dark: #22211d; /* body text, darker */
   --color-text-body: #42413d; /* body text, medium */
@@ -64,7 +67,7 @@
   --color-border: var(--color-box-bg-dark);
 
   /* buttons : hover colors are derived from these */
-  --color-btn-default: #8e8d8c; /* default warm gray bg color */
+  --color-btn-default: #a19e97; /* default warm gray bg color */
   --color-btn-primary: #3272d1; /* saturated blue */
   --color-btn-danger: #ea5b5b;
   --color-btn-success: #58ac50;

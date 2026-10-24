@@ -29,8 +29,8 @@
   }
 
   .is-loading {
-    background: var(--clr-stone-600);
-    border-color: var(--clr-stone-600);
+    background: var(--color-btn-default);
+    border-color: var(--color-btn-default);
     cursor: not-allowed;
   }
 
@@ -41,7 +41,7 @@
   }
 
   .is-spinner {
-    border: 2px solid var(--clr-ffffff4d);
+    border: 2px solid color-mix(in srgb, var(--color-mix-white), transparent 70%);
     border-top-color: var(--color-mix-white);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;

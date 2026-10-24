@@ -71,7 +71,6 @@
   top: 7px;
   font: 27px/1em Georgia, serif;
   color: var(--color-text-dark);
-  text-shadow: 0 1px var(--clr-ffffff66);
 }
 .uiChartVs .left .pct span {
   left: 10px;

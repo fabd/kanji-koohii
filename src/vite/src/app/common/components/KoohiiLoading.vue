@@ -54,7 +54,7 @@ export default defineComponent({
   /* the mask is appended asa child, the parent element is position:relative, this covers the area */
   position: absolute;
   z-index: calc(var(--z-base) + 1);
-  background-color: var(--ko-loading-bg, var(--clr-ffffff88));
+  background-color: var(--color-loading-bg);
   border-radius: 3px;
   margin: 0;
   top: 0;

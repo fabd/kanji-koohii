@@ -29,12 +29,20 @@
   --color-neutral-500: #888888;
   --color-neutral-800: #444444;
   --color-neutral-900: #333333;
+  
   /* reds */
   --color-red-900: #882222; 
   --color-red-700: #bd2420;
   --color-red-500: #d23c3c;
   --color-red-300: #f86464;
   --color-red-100: #fbcfcf;
+
+  /* lime greens ("golf" green) */
+  --color-lime-900: #485f27;
+  --color-lime-700: #6fa300;
+  --color-lime-500: #8fb052;
+  --color-lime-300: #c8e0ab;
+  --color-lime-100: #e7f5cd;
 
   /* subtle shadows */
   --color-shadow-light: #00000033;

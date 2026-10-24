@@ -11,7 +11,7 @@
 
   <p> The following <strong><?= $count; ?></strong> <?= _CJ('kanji'); ?> have been removed from your flashcards:</p>
   
-  <div style="background:var(--clr-lime-100);color:var(--color-text-dark);padding:5px;margin:0 0 1em;font-size:24px;">
+  <div class="ko-Box ko-Box--success mb-4 text-2xl">
 <?php
   use_helper('CJK');
   $kanjis = [];

@@ -91,7 +91,7 @@
 
 /* shared stories paged list */
 #SharedStoriesListComponent .uiPagerDiv {
-  background: var(--clr-lime-100);
+  background: var(--color-lime-100);
   margin: 0 0 0.5em;
   padding: 6px 20px;
 }

@@ -40,7 +40,6 @@
   line-height: 33px;
   font-size: 1.1em;
   color: oklch(from var(--ko-section-bg) calc(l * 0.6) calc(c * 1.2) h);
-  text-shadow: 0 1px var(--clr-ffffffbf);
   background: var(--ko-section-bg);
   border-bottom: 1px solid color-mix(in srgb, var(--ko-section-bg), #000 10%);
   border-radius: 4px;

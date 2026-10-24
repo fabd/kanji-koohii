@@ -56,7 +56,7 @@
   /* this selector overrides `.markdown img` when appearing in the Help page */
   img {
     @apply border-none p-0;
-    box-shadow: 7px 7px 0px 0px var(--clr-c39a5cbd);
+    box-shadow: 7px 7px 0px 0px color-mix(in srgb, var(--ko-box-bg), #c39a5c 50%);
   }
 }
 

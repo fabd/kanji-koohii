@@ -61,7 +61,7 @@
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 25%);
 
   /* background color for the loading mask used in dialogs & ajax panels */
-  --color-loading-bg: color-mix(in srgb, var(--color-mix-white), transparent 25%);
+  --color-loading-bg: color-mix(in srgb, var(--color-page-bg), transparent 25%);
 
   /* text */
   --color-text-dark: #22211d; /* body text, darker */

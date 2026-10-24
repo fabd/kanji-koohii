@@ -66,6 +66,8 @@
   line-height: 1.4;
 
   background: var(--color-story-bg);
+  --color-loading-bg: color-mix(in srgb, var(--color-story-bg), transparent 25%);
+
   color: var(--color-story-fg);
   border-radius: 3px;
 }

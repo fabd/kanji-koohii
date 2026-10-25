@@ -101,6 +101,12 @@ Templates are plain PHP files. Variables set in the action via `$this->varName` 
 // Variables passed in the array are available directly as $param, etc.
 ```
 
+The following variables are available in all Symfony php templates:
+
+  * `$sf_user` : instance of rtkUser, same as kk_get_user()
+  * `$sf_request` : instance of coreRequest (which itself extends Symfony's sfWebRequest)
+  * `$sf_response` : instance of coreWebResponse (which extends Symfony's sfWebResponse)
+
 ### 4. Add a route
 
 Add a named route to `apps/koohii/config/routing.yml`. Named routes take precedence over the generic catch-all rules at the bottom of the file.

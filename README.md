@@ -29,8 +29,6 @@ Keep in mind I started the website all the way back in the [August 2005](https:/
 
 Installation is fairly simple with Docker CE. The MySQL (Mariadb) container includes a sample database with a selection of the top-voted kanji stories. See [Installation](doc/Installation.md) and [Database](doc/Database.md) guides.
 
-For any questions related to the codebase, you may be able to reach me [on discord](https://discord.gg/VseqVcy3vS).
-
 ## LICENSE
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)

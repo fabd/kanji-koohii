@@ -10,6 +10,7 @@ import type {
   PostUserKeywordResponse,
   PostVoteStoryRequest,
   PostVoteStoryResponse,
+  PostThemeResponse,
 } from "./models";
 
 /**
@@ -109,6 +110,10 @@ export class LegacyApi extends HttpClient {
 
   deleteVocabForCard(ucs: number) {
     return this.post("/study/vocabdelete", { ucs });
+  }
+
+  postTheme(theme: string) {
+    return this.post<PostThemeResponse>("/account/themesave", { theme });
   }
 }
 

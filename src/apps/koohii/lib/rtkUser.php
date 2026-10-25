@@ -216,6 +216,7 @@ class rtkUser extends sfBasicSecurityUser
       'usertimezone' => $user['timezone'],
       // user application settings
       'usersequence' => $user['opt_sequence'],
+      'usertheme'    => $user['opt_theme'],
     ]);
 
     $this->clearCredentials();

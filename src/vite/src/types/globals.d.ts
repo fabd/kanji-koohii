@@ -75,6 +75,12 @@ interface Window {
     MYSTORIES_SORT_OPTIONS: Dictionary;
 
     ACCOUNT_SRS: Dictionary;
+    
+    // (Account) for the theme selection form: available themes, and the user's current theme id
+    ACCOUNT_THEMES: {
+      themes: Record<string, { label: string; themeColor: string; dark: boolean }>;
+      current: string;
+    };
 
     // Old/New edition RTK keywords and kanji
     SEQ_KANJIS: string;

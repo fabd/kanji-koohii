@@ -32,6 +32,12 @@ spacedrepetitionSuccess:
   javascripts:
     - src/entry-account.ts
 
+themeSuccess:
+  metas:
+    title: "Select a theme"
+  javascripts:
+    - src/entry-account.ts
+
 all:
   metas:
     robots: "noindex, nofollow"

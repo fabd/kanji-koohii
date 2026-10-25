@@ -155,6 +155,7 @@ DOM
     <<<DOM
 <ul class="k-nav_dropdown">
   <li><a href="@/account">Account Settings</a></li>
+  <li><a href="@/account/theme">Change Theme</a></li>
   <li><a href="@/profile">Member Profile</a></li>
   <li><a href="@/logout">Log out</a></li>
 </ul>

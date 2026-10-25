@@ -1,0 +1,37 @@
+/*---------------------------------------------------------------------
+  Koohii Dark
+  ---------------------------------------------------------------------*/
+html[data-theme="darkmode"] {
+  color-scheme: dark;
+
+  /* foundation colors */
+  --color-page-bg: #1c1b19;
+  --color-box-bg: #2b2a27;
+  --color-box-bg-dark: #383632;
+  --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 8%);
+
+  /* text */
+  --color-text-dark: #f2f0ea;
+  --color-text-body: #d2d0c9;
+  --color-text-light: #7d7b75;
+  --color-hd-fg: #a09eaa;
+  --color-link-fg: #6aaeee;
+
+  /* forms */
+  --color-input-bg: #2b2a27;
+  --color-input-bg-dark: #3d3a2a;
+  --color-input-fg: #e8e6e0;
+
+  /* cards, stories */
+  --color-card-bg: #2b2a27;
+  --color-card-fg: #d2d0c9;
+  --color-story-bg: #25241f;
+  --color-story-fg: #e8e6e0;
+  --color-story-border: #3d3b30;
+
+  /* footer */
+  --color-ft-bg-top: #2a2024;
+  --color-ft-bg-end: #1c1917;
+  --color-ft-fg: #d98ec0;
+  --color-ft-fg-link: #f06bd0;
+}

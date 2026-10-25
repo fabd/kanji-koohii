@@ -1,0 +1,2 @@
+/* Import all themes other than the default "classic" (which lives in _tailwind.css). */
+@import "./darkmode.css";

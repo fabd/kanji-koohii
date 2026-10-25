@@ -5,6 +5,7 @@
 
 /* tailwind customization */
 @import "../css/_tailwind.css";
+@import "../css/themes/_index.css";
 
 /* old css for components not using Vue */
 @import "../review/components/_EditFlashcardDialog.css";

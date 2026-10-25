@@ -25,8 +25,9 @@ Use `.claude/scripts/screenshot.mjs` to check visual changes. Run it on the **ho
 By default pages are fetched signed out (fresh temporary profile). Use `--profile` for pages that require a sign in: it uses a persistent profile (`~/snap/chromium/common/claude-puppeteer-profile`) that the user signs into with `--login`. If a `--profile` screenshot shows the landing page or a sign-in form, ask the user to run `--login`; do not run it yourself.
 
 ```bash
-node .claude/scripts/screenshot.mjs <url> [selector] <output.png> [--width=1280] [--height=800] [--full] [--dark] [--wait=ms] [--profile]
+node .claude/scripts/screenshot.mjs <url> [selector] <output.png> [--width=1280] [--height=800] [--full] [--dark] [--theme=id] [--wait=ms] [--profile]
 node .claude/scripts/screenshot.mjs http://localhost/ '.ko-Dialog' shot.png --dark
+node .claude/scripts/screenshot.mjs http://localhost/ shot.png --theme=darkmode   # sets data-theme on <html>
 node .claude/scripts/screenshot.mjs --login [url]   # (user only) open Chromium to sign in/out of the persistent profile
 ```
 

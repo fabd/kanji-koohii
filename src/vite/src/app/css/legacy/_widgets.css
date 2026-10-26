@@ -70,7 +70,7 @@
   position: absolute;
   top: 7px;
   font: 27px/1em Georgia, serif;
-  color: var(--color-text-dark);
+  color: #000c;
 }
 .uiChartVs .left .pct span {
   left: 10px;

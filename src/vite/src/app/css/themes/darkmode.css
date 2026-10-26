@@ -20,6 +20,10 @@ html[data-theme="darkmode"] {
   --color-box-bg-dark: #383632;
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 8%);
   --color-box-title: #bdbcb9;
+  
+  /* buttons : hover colors are derived from these */
+  --color-btn-danger: #da4b4b;
+  --color-btn-success: #489c40;
 
   /* forms */
   --color-input-bg: #2b2a27;

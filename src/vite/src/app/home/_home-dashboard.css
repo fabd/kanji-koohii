@@ -266,7 +266,7 @@
   /* not themeable for now : a darker shade of the card background */
   border-bottom: 1px solid
     color-mix(in srgb, var(--color-card-bg), var(--color-mix-black) 24%);
-  border-radius: 0;
+
 }
 
 /*//////////////////////////////////////////////////////////////// */

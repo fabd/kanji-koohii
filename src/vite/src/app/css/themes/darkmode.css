@@ -38,8 +38,9 @@ html[data-theme="darkmode"] {
   --color-srs-new-dark: #005ea9; /* eg. text on light backgrounds */
 
   /* cards : flashcards, kanji cards (dashboard lesson pane) */
-  --color-card-bg: #2b2a27;
+  --color-card-bg: #3b3a37;
   --color-card-fg: #d2d0c9;
+  --color-card-border-empty: color-mix(in srgb, var(--color-text-body) 20%, transparent);
 
   /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
   --color-story-bg: #25241f;

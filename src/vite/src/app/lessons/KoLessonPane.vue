@@ -29,7 +29,7 @@
       <ko-lesson-map :cards="cards" class="flex-1 mr-4" />
 
       <button
-        class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary"
+        class="ko-Btn is-ghost ko-Btn--large"
         @click="isOpen = !isOpen"
       >
         <span class="max-lg:hidden mr-2">Show Kanji</span>

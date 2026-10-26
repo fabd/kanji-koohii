@@ -83,7 +83,7 @@
 
   /* improve vertical separation */
   h2 {
-    border-bottom: 1px solid var(--clr-stone-300);
+    border-bottom: 1px solid var(--color-box-bg-dark);
     padding-bottom: 0.3em;
   }
 }

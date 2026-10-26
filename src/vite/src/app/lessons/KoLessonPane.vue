@@ -43,7 +43,7 @@
     <!-- --- -->
     <!-- MID -->
     <!-- --- -->
-    <div v-if="isOpen" class="mt-5 pt-4 border-t border-(--clr-stone-500)">
+    <div v-if="isOpen" class="mt-5 pt-4 border-t border-(--color-box-bg-dark)">
       <transition appear name="lesson-fadein">
         <div
           :class="{

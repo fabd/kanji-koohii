@@ -82,7 +82,7 @@
   transition: color 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   outline: none;
-  --tooltip-bg: var(--clr-stone-800);
+  --tooltip-bg: #202020;
   --tooltip-fg: var(--color-mix-white);
 
   &::before {

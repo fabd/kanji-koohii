@@ -38,13 +38,13 @@
           </label>
         </div>
 
-        <div class="bg-(--clr-stone-300) rounded-lg p-4">
+        <div class="ko-Box">
           <transition name="lesson-fadein">
             <div v-if="showPreview" class="flex items-center justify-center">
               <template v-for="front in [1, 0]" :key="front">
                 <div class="ko-FlashcardBg p-2 w-[140px]">
                   <div>
-                    <span v-if="front && isSrsReverse" class="text-(--clr-stone-700)"
+                    <span v-if="front && isSrsReverse" class="text-(--color-text-muted)"
                       >&middot; &middot; &middot;</span
                     >
                     <span v-else class="text-link">apricot</span>
@@ -60,13 +60,13 @@
 
                   <div class="text-right">
                     <span v-if="!front">203</span>
-                    <span v-else class="text-(--clr-stone-700)"
+                    <span v-else class="text-(--color-text-muted)"
                       >&middot; &middot; &middot;</span
                     >
                   </div>
                 </div>
 
-                <span v-if="front" class="mx-8 text-[86px] text-(--clr-stone-300)"
+                <span v-if="front" class="mx-8 text-[86px] text-(--color-box-bg-dark)"
                   ><i class="fa fa-chevron-right"></i
                 ></span>
               </template>

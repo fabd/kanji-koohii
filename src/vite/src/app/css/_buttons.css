@@ -100,9 +100,9 @@
     --ko-btn-bg: transparent;
     --ko-btn-hover-bg: transparent;
     --ko-btn-border: var(--color-box-bg-dark);
-    --ko-btn-text: var(--clr-stone-800);
+    --ko-btn-text: var(--color-text-muted);
     --ko-btn-hover-text: var(--color-text-body);
-    --ko-btn-hover-border: var(--clr-stone-700);
+    --ko-btn-hover-border: color-mix(in srgb, var(--color-box-bg-dark), #000 25%);
   }
 }
 
@@ -225,7 +225,6 @@
   border-radius: 0.25em;
   margin: 0 0.25em;
   border: 1px solid var(--color-box-bg-dark);
-  color: var(--clr-stone-800);
 }
 .ko-ExBtn--danger {
   border-color: var(--color-btn-danger);

@@ -238,7 +238,7 @@
   margin: 0 0 0 8px;
 }
 #k-nav_d .active .arrow {
-  border-top-color: var(--clr-stone-800);
+  border-top-color: var(--color-text-muted);
 }
 
 /* ---------------------------- */

@@ -55,12 +55,13 @@
 .ko-LessonPane {
   /* default card tag colors for the kanji grid */
   /* card status colors, see getColorForCard() : same meaning as the SRS colors */
-  --ko-cardmap-new: var(--color-srs-new);
-  --ko-cardmap-res: var(--color-srs-fail);
-  --ko-cardmap-L1: var(--color-srs-undue);
-  --ko-cardmap-L2: var(--color-srs-undue);
-  --ko-cardmap-L3: var(--color-srs-undue);
-  --ko-cardmap-L4: var(--color-srs-undue);
+  --ko-cardmap-new: oklch(from var(--color-srs-new) l calc(c * var(--color-chroma)) h);
+  --ko-cardmap-new: oklch(from var(--color-srs-new) l calc(c * var(--color-chroma)) h);
+  --ko-cardmap-res: oklch(from var(--color-srs-fail) l calc(c * var(--color-chroma)) h);
+  --ko-cardmap-L1: oklch(from var(--color-srs-undue) l calc(c * var(--color-chroma)) h);;
+  --ko-cardmap-L2: oklch(from var(--color-srs-undue) l calc(c * var(--color-chroma)) h);;
+  --ko-cardmap-L3: oklch(from var(--color-srs-undue) l calc(c * var(--color-chroma)) h);;
+  --ko-cardmap-L4: oklch(from var(--color-srs-undue) l calc(c * var(--color-chroma)) h);;
 }
 /*//////////////////////////////////////////////////////////////// */
 /* on the home page, use max-height and scrollbar, to limit the */

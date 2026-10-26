@@ -63,6 +63,6 @@
 
 .ko-Box-title {
   @apply font-bold;
-  color: var(--color-text-body);
+  color: var(--color-box-title);
   font-size: min(15px + 0.5vw, 18px);
 }

@@ -1,7 +1,7 @@
 /* the progress bar colors are not themeable */
 .ko-PctBar {
-  background-color: #cccccc;
-  border-bottom: 3px solid #aaaaaa;
+  background-color: var(--color-pctbar-bg);
+  border-bottom: 3px solid color-mix(in srgb, var(--color-pctbar-bg), #000 20%);
 
   --ko-pct-bar-h: 42px; /* height total with borders */
   --ko-pct-bar-fill-h: calc(var(--ko-pct-bar-h) - 3px);

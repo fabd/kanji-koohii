@@ -5,29 +5,49 @@ html[data-theme="darkmode"] {
   color-scheme: dark;
 
   /* foundation colors */
-  --color-page-bg: #1c1b19;
-  --color-box-bg: #2b2a27;
+  --color-page-bg: ##191919;
+  --color-text-dark: #738784;
+  --color-text-body: #ffffed;
+  --color-text-light: #7d7b75;
+  --color-hd-fg: #ffffed;
+  --color-link-fg: #6aaeee;
+  
+  /* desaturation, ie. oklch(from var(--color-x) l calc(c * var(--color-chroma)) h) */
+  --color-chroma: 0.8;
+  
+  /* boxes */
+  --color-box-bg: #252525;
   --color-box-bg-dark: #383632;
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 8%);
-
-  /* text */
-  --color-text-dark: #f2f0ea;
-  --color-text-body: #d2d0c9;
-  --color-text-light: #7d7b75;
-  --color-hd-fg: #a09eaa;
-  --color-link-fg: #6aaeee;
+  --color-box-title: #bdbcb9;
 
   /* forms */
   --color-input-bg: #2b2a27;
   --color-input-bg-dark: #3d3a2a;
   --color-input-fg: #e8e6e0;
+  
+  /* SRS status colors, variants are derived with color-mix() */
+  --color-srs-fail: #c83434; /* red */
+  /* --color-srs-due: #e78e2f; */
+  --color-srs-undue: #429539; /* green, aka "fresh" */
+  --color-srs-new: #1078b5; /* blue */
+  --color-srs-new-dark: #005ea9; /* eg. text on light backgrounds */
 
-  /* cards, stories */
+  /* cards : flashcards, kanji cards (dashboard lesson pane) */
   --color-card-bg: #2b2a27;
   --color-card-fg: #d2d0c9;
+
+  /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
   --color-story-bg: #25241f;
   --color-story-fg: #e8e6e0;
+  --color-story-fg-link: #448844; /* kanji links in story (eg. #123) */
   --color-story-border: #3d3b30;
+  
+  /* dashboard > progress bar */
+  --color-pctbar-bg: #484848;
+  
+  /* lesson map (dashboard lesson pane) */
+  --color-lessonmap-bg: #000000;
 
   /* footer */
   --color-ft-bg-top: #2a2024;

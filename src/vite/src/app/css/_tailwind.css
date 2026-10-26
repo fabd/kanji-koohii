@@ -16,7 +16,7 @@
   ---------------------------------------------------------------------*/
 @theme static {
   /* =============================================================================== */
-  /* FIXED / NON-THEMEABLE COLORS                                                    */
+  /* FIXED / NON-SEMANTIC COLORS                                                     */
   /* =============================================================================== */
   /* for mixing colors with eg. color-mix() - NOT THEME BASED */
   --color-mix-white: #ffffff;
@@ -47,29 +47,34 @@
   /* subtle shadows */
   --color-shadow-light: #00000033;
   --color-shadow: #00000080;
-
-  /* =============================================================================== */
-  /* THEME COLORS                                                                    */
-  /* =============================================================================== */
+  
   /* utilities */
   --color-dialog-mask: #00000040; /* backdrop mask color behind mobile nav & dialogs */
-
-  /* foundation colors */
-  --color-page-bg: #f5efe5;
-  --color-box-bg: #e7e1d3;
-  --color-box-bg-dark: #dbd4c3;
-  --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 25%);
 
   /* background color for the loading mask used in dialogs & ajax panels */
   --color-loading-bg: color-mix(in srgb, var(--color-page-bg), transparent 25%);
 
-  /* text */
+  /* =============================================================================== */
+  /* THEME COLORS                                                                    */
+  /* =============================================================================== */
+
+  /* foundation colors */
+  --color-page-bg: #f5efe5;
   --color-text-dark: #22211d; /* body text, darker */
   --color-text-body: #42413d; /* body text, medium */
   --color-text-muted: color-mix(in srgb, var(--color-text-body), #0000 30%);
   --color-text-light: #a9a7a1;
   --color-hd-fg: #7f7d85; /* headings */
-  --color-link-fg: #005cb1;
+  --color-link-fg: #005cb1; /* links */
+  
+  /* desaturation, ie. oklch(from var(--color-x) l calc(c * var(--color-chroma)) h) */
+  --color-chroma: 1.0;
+
+  /* boxes */
+  --color-box-bg: #e7e1d3;
+  --color-box-bg-dark: #dbd4c3;
+  --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 25%);
+  --color-box-title: var(--color-text-muted);
 
   /* borders */
   --color-border: var(--color-box-bg-dark);
@@ -140,6 +145,9 @@
   --color-tbl-bg: #f8f6ef;
   --color-tbl-fg: #5c5b52;
   --color-tbl-bg-high: #fdf9d2; /* row highlight bg */
+
+  /* dashboard > progress bar */
+  --color-pctbar-bg: #cdcdcd;
 
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: #666666;

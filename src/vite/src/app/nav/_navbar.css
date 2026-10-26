@@ -159,7 +159,7 @@
 }
 #k-nav_d .active a,
 #k-nav_d .k-nav_dropdown a {
-  color: var(--clr-text-body);
+  color: var(--color-text-body);
 }
 
 /* hover states */
@@ -218,7 +218,7 @@
   padding: 15px 35px;
 }
 #k-nav_d .k-nav_dropdown a:hover {
-  background: var(--color-lime-300);
+  background: var(--color-nav-dd-hover);
   color: var(--clr-text-body);
 }
 #k-nav_d .k-nav_dropdown .fa {

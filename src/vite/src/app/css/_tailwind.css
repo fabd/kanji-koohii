@@ -159,6 +159,7 @@
 
   /* main site navigation, desktop & mobile */
   --color-nav-bg: #0b486b;
+  --color-nav-dd-hover: color-mix(in srgb, var(--color-box-bg-light), #D3E2B9 80%); /* menus hover */
 
   /* mobile navigation (Aside.vue, _mobile-nav.css) */
   --color-aside-bg: #2b3034;

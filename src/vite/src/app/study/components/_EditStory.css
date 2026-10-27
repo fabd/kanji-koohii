@@ -29,16 +29,31 @@
     line-height: 1em;
     margin: 8px 0 10px;
   }
+
   .kanji {
     width: 100%;
     min-height: 50px;
     margin: 0 0 8px;
-    font-size: 50pt;
+    font-size: 58px;
     line-height: 1em;
   }
+
+  /* Study page: click/tap the kanji to copy it to the clipboard */
+  .kanji.is-copyable {
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      background-color: #20202010;
+    }
+  }
+
   .strokecount {
     color: #8e8e8e;
   }
+
   .keyword {
     font:
       20px Georgia,

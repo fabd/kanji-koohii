@@ -6,7 +6,7 @@ Kanji Koohii is a web app for Japanese language learners to study and review kan
 
 ## Commands
 
-`dcweb` is an alias for `docker exec web bash`. The `web` docker container is setup with Apache, PHP and nodeJS. Use `docker compose up -d` to start the dev environment.
+`dcweb` is an alias for `docker compose exec web bash`. The `web` docker container is setup with Apache, PHP and nodeJS. Use `docker compose up -d` to start the dev environment.
 
 npm should be run in the container, eg. `dcweb -c "cd vite; npm install (package)"`.
 
@@ -17,6 +17,20 @@ dcweb -c "cd vite; vue-tsc --noEmit"  # type-check Typescript code (including .v
 ./vendor/bin/php-cs-fixer -q fix (filename.php)    # format PHP and fix coding standards issues
 ./vendor/bin/phpstan analyse (filename.php)        # check PHP code with PHPStan
 ```
+
+### Screenshots
+
+Use `.claude/scripts/screenshot.mjs` to check visual changes. Run it on the **host** (not via `dcweb`); it uses Chromium. The Vite dev server must be running or pages render unstyled. Always assume vite dev server is running, do not run it yourself (ask the user).
+
+By default pages are fetched signed out (fresh temporary profile). Use `--profile` for pages that require a sign in: it uses a persistent profile (`~/snap/chromium/common/claude-puppeteer-profile`) that the user signs into with `--login`. If a `--profile` screenshot shows the landing page or a sign-in form, ask the user to run `--login`; do not run it yourself.
+
+```bash
+node .claude/scripts/screenshot.mjs <url> [selector] <output.png> [--width=1280] [--height=800] [--full] [--dark] [--wait=ms] [--profile]
+node .claude/scripts/screenshot.mjs http://localhost/ '.ko-Dialog' shot.png --dark
+node .claude/scripts/screenshot.mjs --login [url]   # (user only) open Chromium to sign in/out of the persistent profile
+```
+
+Save screenshots to the scratchpad directory, then view them with the Read tool.
 
 ## Tech Stack & Project Structure
 

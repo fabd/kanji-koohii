@@ -29,8 +29,9 @@
 /* components */
 @import "../css/_box.css";
 @import "../css/_buttons.css";
-@import "../css/_transitions.css";
 @import "../css/_markdown.css";
+@import "../css/_tooltip.css";
+@import "../css/_transitions.css";
 @import "../css/_widgets.css";
 @import "../css/legacy/_widgets.css";
 @import "../common/components/KoDialog.css";

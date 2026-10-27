@@ -9,10 +9,10 @@ html[data-theme="darkmode"] {
 
   /* foundation colors */
   --color-page-bg: ##191919;
-  --color-text-dark: #738784;
-  --color-text-body: #ffffed;
+  --color-text-dark: #8c8784;
+  --color-text-body: #cbc5c0;
   --color-text-light: #7d7b75;
-  --color-hd-fg: #ffffed;
+  --color-hd-fg: #787674;
   --color-link-fg: #6aaeee;
   
   /* desaturation, ie. oklch(from var(--color-x) l calc(c * var(--color-chroma)) h) */
@@ -22,7 +22,7 @@ html[data-theme="darkmode"] {
   --color-box-bg: #252525;
   --color-box-bg-dark: #383632;
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 8%);
-  --color-box-title: #bdbcb9;
+  --color-box-title: #8e8980;
   
   /* buttons : hover colors are derived from these */
   --color-btn-danger: #da4b4b;
@@ -65,4 +65,14 @@ html[data-theme="darkmode"] {
   --color-ft-bg-end: #1c1917;
   --color-ft-fg: #d98ec0;
   --color-ft-fg-link: #f06bd0;
+  
+  /* blog (site news) */
+  --color-blog-hd-fg: #db2547;
+  --color-blog-date-fg: #e7f5cd;
+  --color-blog-date-bg: #568249;
+}
+
+/* tweaks */
+html[data-theme="darkmode"] .is-ghost {
+  /* --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), #e0e0e0 10%); */
 }

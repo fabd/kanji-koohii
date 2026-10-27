@@ -13,7 +13,19 @@
               kanjiData.framenum
             }}</div>
 
-            <div class="kanji" :class="{ onhover: isReviewMode }">
+            <div v-if="isReviewMode" class="kanji onhover">
+              <cjk-lang-ja>{{ kanjiData.kanji }}</cjk-lang-ja>
+            </div>
+            <div
+              v-else
+              ref="copyKanji"
+              class="kanji ko-Tooltip is-copyable"
+              role="button"
+              tabindex="0"
+              title="Copy to clipboard"
+              @click="onCopyKanji"
+              @keydown.enter.prevent="onCopyKanji"
+            >
               <cjk-lang-ja>{{ kanjiData.kanji }}</cjk-lang-ja>
             </div>
 
@@ -178,6 +190,8 @@ import { getApi } from "@/app/api/api";
 import type { KanjiData, PostUserStoryResponse } from "@/app/api/models";
 import { type TronInst } from "@/lib/tron";
 import { checkForUnsupportedUtf } from "@/lib/cjk";
+import { copyToClipboard } from "@/lib/clipboard";
+import { flashTooltip } from "@/lib/tooltip";
 import VueInstance from "@/lib/helpers/vue-instance";
 import EditKeywordDialog from "@/app/common/components/EditKeywordDialog";
 
@@ -285,6 +299,14 @@ export default defineComponent({
 
     formHandleResponse(tron: TronInst<any>) {
       this.formErrors = tron.getErrors();
+    },
+
+    async onCopyKanji() {
+      const el = this.$refs.copyKanji as HTMLElement;
+      // if the copy fails, the user can still select & copy the usual way
+      if (await copyToClipboard(this.kanjiData.kanji, el)) {
+        flashTooltip(el, "Copied!");
+      }
     },
 
     onEditStory() {

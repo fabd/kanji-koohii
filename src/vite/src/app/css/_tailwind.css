@@ -57,6 +57,9 @@
   /* =============================================================================== */
   /* THEME COLORS                                                                    */
   /* =============================================================================== */
+  
+  /* color-mix values for hover states and such where we want lighter instead of darker in dark mode */
+  --color-hover-shift: #000;
 
   /* foundation colors */
   --color-page-bg: #f5efe5;

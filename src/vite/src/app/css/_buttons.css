@@ -102,7 +102,7 @@
     --ko-btn-border: color-mix(in srgb, var(--color-box-bg-dark), #000 10%);
     --ko-btn-text: var(--color-text-muted);
     --ko-btn-hover-text: var(--color-text-body);
-    --ko-btn-hover-border: color-mix(in srgb, var(--color-box-bg-dark), #000 25%);
+    --ko-btn-hover-border: color-mix(in srgb, var(--color-box-bg-dark), var(--color-hover-shift) 25%);
   }
 }
 

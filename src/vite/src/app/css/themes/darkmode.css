@@ -4,6 +4,9 @@
 html[data-theme="darkmode"] {
   color-scheme: dark;
 
+  /* color-mix values for hover states and such where we want lighter instead of darker in dark mode */
+  --color-hover-shift: #fff;
+
   /* foundation colors */
   --color-page-bg: ##191919;
   --color-text-dark: #738784;

@@ -16,7 +16,7 @@
             @change="previewTheme"
           />
           <span
-            class="inline-block w-6 h-6 rounded-md mr-3 border border-(--color-border)"
+            class="inline-block w-6 h-6 rounded-md mr-3 border border-(--color-box-bg-dark)"
             :style="{ backgroundColor: theme.themeColor }"
           ></span>
           <span>{{ theme.label }}</span>

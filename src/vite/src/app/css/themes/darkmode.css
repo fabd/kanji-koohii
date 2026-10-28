@@ -8,7 +8,7 @@ html[data-theme="darkmode"] {
   --color-hover-shift: #fff;
 
   /* foundation colors */
-  --color-page-bg: #191919;
+  --color-page-bg: #191817;
   --color-text-dark: #8c8784;
   --color-text-body: #cbc5c0;
   --color-text-light: #7d7b75;
@@ -23,7 +23,7 @@ html[data-theme="darkmode"] {
   --color-box-bg-dark: #383632;
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 8%);
   --color-box-title: #8e8980;
-  
+
   /* buttons : hover colors are derived from these */
   --color-btn-danger: #da4b4b;
   --color-btn-success: #489c40;
@@ -32,6 +32,12 @@ html[data-theme="darkmode"] {
   --color-input-bg: #2b2a27;
   --color-input-bg-dark: #3d3a2a;
   --color-input-fg: #e8e6e0;
+  --color-input-border: var(--color-box-bg-dark);
+  --color-focus-glow: #337ab740;
+  --color-input-focus-border: var(--color-box-bg-dark);
+  --color-input-focus-glow: 0 0 0 2px #000, 0 0 0 4px #337ab7;
+  --color-invalid-fg: #a94442;
+  --color-invalid-border: #a94442;
   
   /* SRS status colors, variants are derived with color-mix() */
   --color-srs-fail: #c83434; /* red */

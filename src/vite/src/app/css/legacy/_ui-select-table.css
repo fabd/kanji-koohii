@@ -11,6 +11,7 @@
   /* crude solution for horizontal scrolling on small screens */
   overflow-y: auto;
   margin: 0 0 1em;
+  border:1px solid var(--color-tbl-border);
 }
 
 /* --------------------------------------------------------------------
@@ -26,8 +27,6 @@
 //
 // -------------------------------------------------------------------- */
 .ko-DataTable {
-  border: 1px solid var(--color-tbl-border);
-  border-top-color: var(--color-tbl-border-top);
   width: 100%;
 
   th {
@@ -47,7 +46,7 @@
     .ko-DataTable-label {
       display: block;
       float: left;
-      padding: 6px 10px;
+      padding: 8px 10px;
       text-align: left;
       text-decoration: none;
     }
@@ -93,6 +92,10 @@
     line-height: 1.1em;
     color: var(--color-tbl-fg);
     background-color: var(--color-tbl-bg);
+  }
+
+  /* stylelint-disable-next-line selector-max-type */
+  tr:not(:last-child) td {
     border-bottom: 1px solid var(--color-tbl-border-row);
   }
 

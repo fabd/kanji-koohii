@@ -75,6 +75,7 @@
   }
 
   &:disabled {
+    cursor: not-allowed;
     background-color: transparent;
     border-color: var(--color-input-border);
     opacity: 0.8;

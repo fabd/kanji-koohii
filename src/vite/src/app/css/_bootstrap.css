@@ -111,6 +111,79 @@
   }
 }
 
+input[type="radio"] {
+  accent-color: var(--color-input-accent);
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--color-input-border);
+  border-radius: 50%;
+  background-color: var(--color-input-bg);
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background-color: var(--color-input-accent);
+  border-color: var(--color-input-accent);
+  box-shadow: inset 0 0 0 4px var(--color-input-bg);
+}
+
+/* flat checkbox: the tick is a masked pseudo-element, so its color is a plain var */
+input[type="checkbox"] {
+  --ko-checkbox-bg: #337ab7;
+  --ko-checkbox-tick: #ffffff;
+
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  vertical-align: middle;
+  background-color: var(--color-input-bg);
+  border: 2px solid var(--color-input-border);
+  border-radius: 4px;
+  cursor: pointer;
+
+  /* checkbox placed inside a label */
+  label & {
+    margin-right: 0.3em;
+    vertical-align: text-bottom;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--ko-checkbox-tick);
+    mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m5 10 3.5 3.5L15 7'/%3e%3c/svg%3e")
+      center / 100% no-repeat;
+    transform: scale(0);
+  }
+
+  &:checked {
+    background-color: var(--color-input-accent);
+    border-color: var(--color-input-accent);
+
+    &::before {
+      transform: scale(1);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-input-accent);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
 /* space out sections of a form */
 .form-group {
   @apply mb-4;

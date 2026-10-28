@@ -92,6 +92,7 @@
   --color-gold: #e2b437; /* star icons (favorite story, picked dictionary entry) */
 
   /* forms : inputs, textareas, selects (see _bootstrap.css) */
+  --color-input-accent: #5693ed; /* checkboxes, radio buttons */
   --color-input-bg: #ffffff;
   --color-input-bg-dark: #fef3c6; /* on white background */
   --color-input-fg: #222222;

@@ -8,7 +8,7 @@ html[data-theme="darkmode"] {
   --color-hover-shift: #fff;
 
   /* foundation colors */
-  --color-page-bg: ##191919;
+  --color-page-bg: #191919;
   --color-text-dark: #8c8784;
   --color-text-body: #cbc5c0;
   --color-text-light: #7d7b75;
@@ -61,10 +61,10 @@ html[data-theme="darkmode"] {
   --color-nav-dd-hover: color-mix(in srgb, var(--color-box-bg-light), #000 20%); /* menus hover */
 
   /* footer */
-  --color-ft-bg-top: #2a2024;
-  --color-ft-bg-end: #1c1917;
-  --color-ft-fg: #d98ec0;
-  --color-ft-fg-link: #f06bd0;
+  --color-ft-bg-top: #2b2c2d;
+  --color-ft-bg-end: #3f3e3c;
+  --color-ft-fg: #b79584;
+  --color-ft-fg-link: #f0aa6b;
   
   /* blog (site news) */
   --color-blog-hd-fg: #db2547;

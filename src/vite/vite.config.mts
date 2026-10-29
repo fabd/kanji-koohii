@@ -7,7 +7,7 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // import { visualizer } from 'rollup-plugin-visualizer'
 
-const srcDir = path.resolve(__dirname, "./src");
+const srcDir = path.resolve(import.meta.dirname, "./src");
 
 export default defineConfig({
   build: {
@@ -22,7 +22,7 @@ export default defineConfig({
     target: "es2020",
 
     // output dir for production build
-    outDir: path.resolve(__dirname, "../web/build/dist"),
+    outDir: path.resolve(import.meta.dirname, "../web/build/dist"),
 
     // outDir is outside root, confirm it can be emptied on build
     emptyOutDir: true,

@@ -8,26 +8,19 @@
     }"
   >
     <div class="ko-LessonMap-items">
-      <div v-for="(card, i) in cards" :key="i" :class="getCss(card)"></div>
+      <div v-for="(card, i) in cards" :key="i" :class="card.tag.css"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import { getColorForCard } from "@/app/lessons/KoKanjiCard.vue";
 
 export default defineComponent({
   name: "KoLessonMap",
 
   props: {
-    cards: { type: Array as PropType<TKanjiCardData[]>, required: true },
-  },
-
-  methods: {
-    getCss(card: TKanjiCardData) {
-      return getColorForCard(card);
-    },
+    cards: { type: Array as PropType<TKanjiCardItem[]>, required: true },
   },
 });
 </script>

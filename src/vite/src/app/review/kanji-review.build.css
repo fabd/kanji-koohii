@@ -5,6 +5,7 @@
 
 /* tailwind customization */
 @import "../css/_tailwind.css";
+@import "../css/themes/_index.css";
 
 /* old css for components not using Vue */
 @import "../review/components/_EditFlashcardDialog.css";
@@ -27,7 +28,7 @@ body {
 .ko-Btn--review {
   height: 42px;
   font-weight: bold;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 -1px var(--color-shadow);
 
   &:active {
     transform: scale(0.975, 0.95);

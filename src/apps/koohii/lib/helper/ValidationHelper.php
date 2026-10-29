@@ -18,7 +18,7 @@ function form_errors(): string
     foreach ($request->getErrors() as $message) {
       $s .= '<strong>'.esc_specialchars($message).'</strong><br />'."\n";
     }
-    $s = content_tag('div', $s, ['class' => 'formerrormessage']);
+    $s = content_tag('div', $s, ['class' => 'ko-Box ko-Box--danger my-4']);
   }
 
   return $s;

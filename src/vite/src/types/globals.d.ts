@@ -67,12 +67,20 @@ interface Window {
 
     REVIEW_OPTIONS: { fcrOptions: TReviewOptions; props: TKanjiReviewProps };
     REVIEW_MODE: Dictionary;
+    // (Custom Review summary) cards from the last review session
+    REVIEW_SUMMARY_CARDS: { ucsId: TUcsId; pass: boolean }[];
 
     // study > My Stories
     MYSTORIES_SORT_ACTIVE: string;
     MYSTORIES_SORT_OPTIONS: Dictionary;
 
     ACCOUNT_SRS: Dictionary;
+    
+    // (Account) for the theme selection form: available themes, and the user's current theme id
+    ACCOUNT_THEMES: {
+      themes: Record<string, { label: string; themeColor: string; dark: boolean }>;
+      current: string;
+    };
 
     // Old/New edition RTK keywords and kanji
     SEQ_KANJIS: string;

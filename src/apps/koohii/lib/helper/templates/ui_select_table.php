@@ -1,5 +1,5 @@
 <div class="no-gutter-xs-sm">
-  <div class="uiTable">
+  <div class="ko-DataTableWrap">
 <?= tag('table', $table_options, true); ?>
     <thead>
       <tr>

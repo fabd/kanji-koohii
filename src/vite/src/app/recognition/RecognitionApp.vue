@@ -19,7 +19,7 @@
             <textarea
               ref="input"
               v-model="japaneseText"
-              class="form-control w-full mb-2 p-2 min-h-[300px] border border-[#ddd] rounded-lg text-lg"
+              class="form-control w-full mb-2 p-2 min-h-[300px] border border-[#dddddd] rounded-lg text-lg"
             ></textarea>
             <input
               type="submit"
@@ -55,7 +55,7 @@
             </cjk-lang-ja>
           </div>
 
-          <div class="mb-4 pb-4 border-b border-[#d4cdba]">
+          <div class="mb-4 pb-4 border-b border-[#dbd4c3]">
             <button class="ko-Btn ko-Btn--success" @click="onClickToEdit">{{
               "Enter more japanese text"
             }}</button>
@@ -184,7 +184,7 @@
                     :known-kanji="knownKanji"
                   />
                 </template>
-                <div v-else class="bg-[#fff] mx-2 rounded-sm">
+                <div v-else class="bg-[#ffffff] mx-2 rounded-sm">
                   <ko-dict-empty :ucs-id="curKanji.ucsId" />
                 </div>
               </div>

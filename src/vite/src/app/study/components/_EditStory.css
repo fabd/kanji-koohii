@@ -3,25 +3,30 @@
 /* self story */
 .ko-MyStory {
   position: relative;
-  background: #fff;
-  --ko-loading-bg: var(--ko-loading-bg-white);
-  border: 1px solid #e8e5c9;
-  box-shadow: 0 1px 2px 0px rgba(170, 165, 130, 0.3);
+
+  background: var(--color-story-bg);
+  --color-loading-bg: color-mix(in srgb, var(--color-story-bg), transparent 25%);
+
+  border: 1px solid var(--color-story-border);
+  box-shadow: 0 1px 2px 0px #20100020;
 
   .bottom {
     width: 100%;
     height: 23px;
     overflow: hidden;
     clear: both;
-    background: #fff;
-    background: linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
+    background: linear-gradient(
+      to bottom,
+      var(--color-story-bg) 0%,
+      var(--color-story-bg-dark) 100%
+    );
   }
 }
 
 .rtkframe {
   clear: both;
   position: relative;
-  background: white;
+  background: var(--color-story-bg);
   padding: 15px;
 
   .framenum {
@@ -51,7 +56,7 @@
   }
 
   .strokecount {
-    color: #8e8e8e;
+    color: var(--color-text-muted);
   }
 
   .keyword {
@@ -67,11 +72,11 @@
 
   .favstory {
     margin: 1em 0 0;
-    color: #666;
+    color: var(--color-text-muted);
     font-style: italic;
     i {
       margin-right: 0.5em;
-      color: #666;
+      color: var(--color-text-muted);
     }
   }
 }
@@ -81,7 +86,7 @@
   height: auto;
   min-height: 100px;
   &:hover {
-    background: #f5f5f5;
+    background: var(--color-story-bg-dark);
   }
 }
 
@@ -89,8 +94,8 @@
   width: 100%;
   height: 153px;
   padding: 5px;
-  border: 1px solid #e8e5c9;
-  background: #f5f5f5;
+  border: 1px solid var(--color-story-border);
+  background: var(--color-input-bg-dark);
   box-sizing: border-box;
 }
 
@@ -108,7 +113,7 @@
 /* story content styling (My Stories and Shared Stories) */
 
 .ko-BookStyle {
-  color: #100800;
+  color: var(--color-story-fg);
   @apply text-sm md:text-base;
   line-height: 1.5em;
   text-align: justify;
@@ -128,7 +133,7 @@
   }
 
   .is-framenr {
-    color: #484;
+    color: var(--color-story-fg-link);
     font-family: sans-serif;
   }
 }
@@ -137,15 +142,15 @@
 .ko-MyStory .onhover {
   span {
     visibility: hidden;
-    color: #fff;
+    color: var(--color-story-bg);
   }
 
   &:hover {
     background: none;
     span {
       visibility: visible;
-      color: #000;
-      background: #fff;
+      color: var(--color-story-fg);
+      background: var(--color-story-bg);
     }
   }
 }
@@ -174,7 +179,7 @@
 
   .ko-MyStoryView-textarea {
     /* make the story edit area visible for touch */
-    background: #f5f5f5;
+    background: var(--color-story-bg-dark);
     border-radius: 5px;
   }
 }
@@ -185,6 +190,6 @@
   border-radius: 3px 3px;
 
   &:hover {
-    background: #e9e9e9;
+    background: color-mix(in srgb, var(--color-story-bg), var(--color-mix-black) 7%);
   }
 }

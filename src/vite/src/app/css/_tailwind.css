@@ -1,11 +1,185 @@
 /*---------------------------------------------------------------------
-  See 
+  See
     https://tailwindcss.com/docs/theme
   ---------------------------------------------------------------------*/
 @theme {
   --text-smx: 15px;
   --text-md: 16px; /* alias for text-base */
   --color-mint-500: powderblue;
+}
+
+/*---------------------------------------------------------------------
+  Semantic colors, their value will change with the selected theme.
+
+  "static" so the variables are always output (also when only used with
+  var() in CSS), and can be edited live in the browser dev tools.
+  ---------------------------------------------------------------------*/
+@theme static {
+  /* =============================================================================== */
+  /* FIXED / NON-SEMANTIC COLORS                                                     */
+  /* =============================================================================== */
+  /* for mixing colors with eg. color-mix() - NOT THEME BASED */
+  --color-mix-white: #ffffff;
+  --color-mix-black: #000000;
+  --color-mix-yellow: #ffff00; /* eg. warmer greens */
+
+  /* neutral grays */
+  --color-neutral-200: #dddddd;
+  --color-neutral-300: #cccccc;
+  --color-neutral-500: #888888;
+  --color-neutral-800: #444444;
+  --color-neutral-900: #333333;
+  
+  /* reds */
+  --color-red-900: #882222; 
+  --color-red-700: #bd2420;
+  --color-red-500: #d23c3c;
+  --color-red-300: #f86464;
+  --color-red-100: #fbcfcf;
+
+  /* lime greens ("golf" green) */
+  --color-lime-900: #485f27;
+  --color-lime-700: #6fa300;
+  --color-lime-500: #8fb052;
+  --color-lime-300: #c8e0ab;
+  --color-lime-100: #e7f5cd;
+
+  /* subtle shadows */
+  --color-shadow-light: #00000033;
+  --color-shadow: #00000080;
+  
+  /* utilities */
+  --color-dialog-mask: #00000040; /* backdrop mask color behind mobile nav & dialogs */
+
+  /* background color for the loading mask used in dialogs & ajax panels */
+  --color-loading-bg: color-mix(in srgb, var(--color-page-bg), transparent 25%);
+
+  /* =============================================================================== */
+  /* THEME COLORS                                                                    */
+  /* =============================================================================== */
+  
+  /* color-mix values for hover states and such where we want lighter instead of darker in dark mode */
+  --color-hover-shift: #000;
+
+  /* foundation colors */
+  --color-page-bg: #f5efe5;
+  --color-text-dark: #22211d; /* body text, darker */
+  --color-text-body: #42413d; /* body text, medium */
+  --color-text-muted: color-mix(in srgb, var(--color-text-body), #0000 30%);
+  --color-text-light: #a9a7a1;
+  --color-hd-fg: #7f7d85; /* headings */
+  --color-link-fg: #005cb1; /* links */
+  
+  /* desaturation, ie. oklch(from var(--color-x) l calc(c * var(--color-chroma)) h) */
+  --color-chroma: 1.0;
+
+  /* boxes */
+  --color-box-bg: #e7e1d3;
+  --color-box-bg-dark: #dbd4c3;
+  --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 25%);
+  --color-box-title: var(--color-text-muted);
+
+  /* borders */
+  --color-border: var(--color-box-bg-dark);
+
+  /* buttons : hover colors are derived from these */
+  --color-btn-default: #a19e97; /* default warm gray bg color */
+  --color-btn-primary: #3272d1; /* saturated blue */
+  --color-btn-danger: #ea5b5b;
+  --color-btn-success: #58ac50;
+  --color-btn-fg: #ffffff;
+  --color-btn-bg-disabled: #cccccc;
+  --color-btn-fg-disabled: #757575;
+
+  /* misc: icons */
+  --color-gold: #e2b437; /* star icons (favorite story, picked dictionary entry) */
+
+  /* forms : inputs, textareas, selects (see _bootstrap.css) */
+  --color-input-bg: #ffffff;
+  --color-input-bg-dark: #fef3c6; /* on white background */
+  --color-input-fg: #222222;
+  --color-input-border: var(--color-border);
+  --color-input-border-focus: #99bddb;
+  --color-focus-glow: #337ab740;
+  --color-invalid-fg: #a94442;
+  --color-invalid-border: #a94442;
+
+  /* SRS status colors, variants are derived with color-mix() */
+  --color-srs-fail: #f86464; /* red */
+  --color-srs-due: #f7a247; /* orange */
+  --color-srs-undue: #72c569; /* green, aka "fresh" */
+  --color-srs-new: #40a8e5; /* blue */
+  --color-srs-new-dark: #007ec9; /* eg. text on light backgrounds */
+
+  /* messages: one color per kind, the ko-Box background
+     and border are derived with color-mix() (see _box.css) */
+  --color-danger: #d23c3c;
+  --color-success: #3a7c3a;
+  --color-warning: #e17809;
+  --color-info: #cc2d7a; /* info notes (eg. with a fa-info-circle icon) */
+
+  /* cards : flashcards, kanji cards (dashboard lesson pane) */
+  --color-card-bg: #ffffff;
+  --color-card-fg: #333333;
+  --color-card-border-empty: color-mix(in srgb, var(--color-text-body) 20%, transparent);
+
+  /* flashcard review */
+  --color-fc-base: #50abeb; /* base theme color for the flashcard page */
+  --color-fc-btn: var(--color-fc-base); /* option buttons at the top */
+  --color-fc-bg-top: oklch(from var(--color-fc-base) calc(l + 0.195) calc(c * 0.39) h); /* page background gradient */
+  --color-fc-bg-end: oklch(from var(--color-fc-base) calc(l + 0.081) calc(c * 0.55) h);
+  --color-fc-end-btn: oklch(from var(--color-fc-base) calc(l - 0.048) calc(c * 1.45) calc(h + 7)); /* the "End" button */
+  --color-fc-status-bg: oklch(from var(--color-fc-base) calc(l + 0.127) calc(c * 0.7) h); /* status box ("Cards left") */
+
+  /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
+  --color-story-bg: #ffffff;
+  --color-story-bg-dark: color-mix(in srgb, var(--color-story-bg), #000000 4%);
+  --color-story-fg: #100800;
+  --color-story-fg-link: #448844; /* kanji links in story (eg. #123) */
+  --color-story-border: #e8e5c9;
+
+  /* data tables (.ko-DataTable, legacy uiSelectTable php component) */
+  --color-tbl-border: #bdbcaa;
+  --color-tbl-border-top: #d9d8ce;
+  --color-tbl-border-row: #e8e5da; /* border between rows */
+  --color-tbl-hd-bg-top: #efedd2; /* header gradient */
+  --color-tbl-hd-bg-end: #d9d6b7;
+  --color-tbl-hd-border: #a9a6a7;
+  --color-tbl-bg: #f8f6ef;
+  --color-tbl-fg: #5c5b52;
+  --color-tbl-bg-high: #fdf9d2; /* row highlight bg */
+
+  /* dashboard > progress bar */
+  --color-pctbar-bg: #cdcdcd;
+
+  /* lesson map (dashboard lesson pane) */
+  --color-lessonmap-bg: #666666;
+
+  /* study search dropdown: the active item and the highlighted search term */
+  --color-study-search-accent: #3b82f6;
+  --color-study-search-bg: #ffffff;
+  --color-study-search-border: #e5e7eb;
+
+  /* main site navigation, desktop & mobile */
+  --color-nav-bg: #0b486b;
+  --color-nav-dd-hover: color-mix(in srgb, var(--color-box-bg-light), #D3E2B9 80%); /* menus hover */
+
+  /* mobile navigation (Aside.vue, _mobile-nav.css) */
+  --color-aside-bg: #2b3034;
+  --color-aside-fg: #adb2b6; /* menu items */
+  --color-aside-fg-active: #ffffff; /* opened menu item */
+  --color-aside-fg-close: #666666; /* close button */
+
+  /* footer */
+  --color-ft-bg-top: #f8c5e4; /* the dots, and top of the gradient */
+  --color-ft-bg-end: #f0ddd4; /* gradient bottom, and below */
+  --color-ft-fg: #8b1566; /* text, icons */
+  --color-ft-fg-link: #e400b1;
+
+  /* blog (site news) */
+  --color-blog-hd-fg: #fa3d60; /* post titles, and their underline */
+  --color-blog-date-fg: #568249;
+  --color-blog-date-bg: #e7f5cd;
 }
 
 /*---------------------------------------------------------------------

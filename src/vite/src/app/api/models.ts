@@ -96,3 +96,8 @@ export type PostUserStoryResponse = {
 export type PostUserKeywordResponse = {
   keyword?: string;
 };
+
+// Account > Change Theme form
+export type PostThemeResponse = {
+  theme: string;
+};

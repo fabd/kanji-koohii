@@ -9,19 +9,18 @@
 
 /* extend our base buttons */
 .ko-Btn--patreon {
-  /* use Patreon's "Fiery Coral" https://www.patreon.com/brand */
+  /* Patreon's "Fiery Coral" https://www.patreon.com/brand, not themeable */
   --ko-btn-bg: #ff424d;
   --ko-btn-border: #ff424d;
-  --ko-btn-text: #fff;
-  --ko-btn-bg-darker: #ff222f;
+  --ko-btn-text: #ffffff;
   --ko-btn-hover-bg: #eb3741;
   --ko-btn-hover-border: #eb3741;
 }
 
 .ko-Btn--paypal {
+  /* PayPal brand colors, not themeable */
   --ko-btn-bg: #40acda;
   --ko-btn-border: #40acda;
-  --ko-btn-bg-darker: #27a2d7;
   --ko-btn-hover-bg: #51b5df;
   --ko-btn-hover-border: #51b5df;
 }

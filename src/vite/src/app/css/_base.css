@@ -20,15 +20,14 @@ html {
 }
 
 body {
-  background: var(--clr-bg-body);
-  --ko-loading-bg: #f5efe580;
-  color: #42413d;
+  background: var(--color-page-bg);
+  color: var(--color-text-body);
 }
 
 blockquote {
   font-size: inherit;
   border-left: none;
-  color: #7f7d75;
+  color: var(--color-text-muted);
 }
 
 /* tailwind fix - `bolder` doesn't look good, no idea */
@@ -39,7 +38,7 @@ strong {
 
 /* links */
 a {
-  color: #005cb1;
+  color: var(--color-link-fg);
   text-decoration: underline;
 }
 a:hover {
@@ -54,7 +53,7 @@ ul {
 
 abbr,
 acronym {
-  border-bottom: 1px dotted #dad8bd;
+  border-bottom: 1px dotted var(--color-text-muted);
   cursor: help;
 }
 
@@ -64,7 +63,7 @@ h2,
 h3,
 h4,
 h5 {
-  color: #7f7d85;
+  color: var(--color-hd-fg);
   font-weight: normal;
   line-height: 1.2;
   margin-top: 0;
@@ -86,9 +85,9 @@ h3 {
 /* misc. effects */
 kbd {
   border-radius: 3px;
-  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.3);
-  background: #ddd;
-  color: #333;
+  box-shadow: 0 1px 0px #0004;
+  background: var(--color-neutral-200);
+  color: var(--color-text-dark);
   font: 100%/1em "Andale Mono", "Consolas", monospace;
   margin: 2px 1px 2px 0;
   min-width: 1em;

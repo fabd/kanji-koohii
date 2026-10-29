@@ -9,6 +9,7 @@
 
 /* tailwind customization */
 @import "../css/_tailwind.css";
+@import "../css/themes/_index.css";
 
 /* koohii specific resets (*after* Bootstrap/tailwind resets) */
 @import "../css/_base.css";

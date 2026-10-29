@@ -24,6 +24,12 @@
             >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p
           >
         </div>
+        <div class="min-w-[200px] ko-Box ko-Box--warning">
+          <h3 class="ko-Box-title">Card Title</h3>
+          <p class="mb-0"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p
+          >
+        </div>
       </div>
 
       <p>Stroke style</p>

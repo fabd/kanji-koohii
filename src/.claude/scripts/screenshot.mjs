@@ -13,6 +13,7 @@
  *   --height=800      viewport height
  *   --full            full page screenshot (ignored when a selector is given)
  *   --dark            emulate prefers-color-scheme: dark
+ *   --theme=<id>      set data-theme="<id>" on <html> after load (eg. darkmode)
  *   --wait=0          extra delay in ms after load (eg. for transitions)
  *   --profile         use the persistent profile (keeps cookies, eg. signed in)
  *   --login           open a browser window with the persistent profile, to
@@ -52,7 +53,7 @@ function usage(msg) {
     console.error(`Error: ${msg}\n`);
   }
   console.error(
-    "Usage: node .claude/scripts/screenshot.mjs <url> [selector] <output.png> [--width=N] [--height=N] [--full] [--dark] [--wait=ms] [--profile]\n" +
+    "Usage: node .claude/scripts/screenshot.mjs <url> [selector] <output.png> [--width=N] [--height=N] [--full] [--dark] [--theme=id] [--wait=ms] [--profile]\n" +
       "       node .claude/scripts/screenshot.mjs --login [url]"
   );
   process.exit(1);
@@ -144,6 +145,9 @@ async function screenshot() {
     const response = await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
     if (response && !response.ok()) {
       console.error(`Warning: HTTP ${response.status()} for ${url}`);
+    }
+    if (flags.theme && flags.theme !== true) {
+      await page.evaluate((id) => document.documentElement.setAttribute("data-theme", id), flags.theme);
     }
     if (flags.wait) {
       await new Promise((r) => setTimeout(r, Number(flags.wait)));

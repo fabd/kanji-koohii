@@ -18,6 +18,13 @@ function output_sidenav_item($id, $text, $internal_uri)
 </div>
 
 <div class="side-menu">
+  <h2>Appearance</h2>
+  <ul>
+    <?php output_sidenav_item('theme', 'Color theme', 'account/theme'); ?></li>
+  </ul>
+</div>
+
+<div class="side-menu">
   <h2>Settings</h2>
   <ul>
     <?php output_sidenav_item('sequence', 'RTK Edition', 'account/sequence'); ?></li>

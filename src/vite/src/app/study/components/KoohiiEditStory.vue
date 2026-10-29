@@ -53,11 +53,11 @@
               <!-- view / edit story -->
 
               <div v-if="isEditing">
-                <div v-if="formHasErrors()" class="text-red-500 mb-4">
+                <div v-if="formHasErrors()" class="text-danger mb-4">
                   <span v-html="formGetErrors()"></span>
                 </div>
 
-                <div v-if="cantsaveChars.length > 0" class="text-[#9f0e0b] mb-4">
+                <div v-if="cantsaveChars.length > 0" class="text-danger mb-4">
                   <span class="font-bold">
                     Sorry, the database currently is not able to store unicode
                     characters above hexadecimal 0xFFFF. Typically, this means
@@ -72,12 +72,12 @@
                   <br />
                   <br />
                   <span class=""
-                    >Characters which can't be saved in the story:</span
+                    >Characters which can't be saved in the story: </span
                   >
                   <span
                     v-for="(chr, i) in cantsaveChars"
                     :key="i"
-                    class="bg-danger bg-opacity-10 mr-1 p-[0.25em] rounded-sm"
+                    class="mr-1"
                     >{{ chr }}</span
                   >
                 </div>
@@ -141,7 +141,7 @@
                   </template>
 
                   <template v-else>
-                    <div class="text-[#888]">[ click here to enter your story ]</div>
+                    <div class="text-text-muted">[ click here to enter your story ]</div>
                   </template>
                 </div>
 
@@ -161,7 +161,7 @@
 
                   <div
                     v-if="showLearnedMessage"
-                    class="text-right text-[#61932b] pt-3"
+                    class="text-right text-success pt-3"
                   >
                     This kanji is ready for review in the
                     <strong>learned</strong> list.
@@ -185,7 +185,7 @@
 
 <script lang="ts">
 import { defineComponent, nextTick } from "vue";
-import $$, { insertAfter } from "@/lib/dom";
+import $$ from "@/lib/dom";
 import { getApi } from "@/app/api/api";
 import type { KanjiData, PostUserStoryResponse } from "@/app/api/models";
 import { type TronInst } from "@/lib/tron";
@@ -364,7 +364,7 @@ export default defineComponent({
       if (!this.isReviewMode && props.isStoryShared) {
         // add the story in "new & updated"
         const elMount = document.createElement("div");
-        insertAfter(elMount, $$("#sharedstories-new .title")[0]!);
+        $$(".JsNewestSection .ko-StudySection-bd")[0]!.prepend(elMount);
 
         const propsData = {
           profileLink: props.sharedStoryAuthor,

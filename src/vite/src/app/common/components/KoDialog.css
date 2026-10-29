@@ -4,14 +4,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--color-dialog-mask);
   /* the mask is created before the dialog, so it shows behind the dialog even
      if it is on the same z-index */
   z-index: var(--z-overlay);
 }
 
 .ko-Dialog {
-  --dialog-bg: #0008;
+  --dialog-bg: #00000088;
   --dialog-radius: 8px;
   --dialog-padding: 10px;
 
@@ -19,7 +19,7 @@
   background: var(--dialog-bg);
   border-radius: var(--dialog-radius);
   padding: var(--dialog-padding);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 25px var(--color-shadow);
   z-index: var(--z-overlay);
   backdrop-filter: blur(4px);
 }
@@ -39,12 +39,12 @@
   font:
     16px/1em Verdana,
     sans-serif;
-  color: #ddd;
+  color: var(--clr-neutral-200);
 }
 
 .ko-Dialog-closeBtn {
   border: none;
-  color: #ff4d4d;
+  color: var(--color-red-300);
   cursor: pointer;
   line-height: 1;
   padding: 0;
@@ -62,16 +62,14 @@
 }
 
 .ko-Dialog-body {
-  /* background for the KoohiiLoading mask when AjaxPanel is used in the dialog */
-  --ko-loading-bg: var(--ko-loading-bg-white);
-
   font-size: 14px;
   line-height: 1.4;
 
-  background: #fff;
-  border-radius: 3px;
+  background: var(--color-story-bg);
+  --color-loading-bg: color-mix(in srgb, var(--color-story-bg), transparent 25%);
 
-  box-shadow: inset 0 1px 3px #0003;
+  color: var(--color-story-fg);
+  border-radius: 3px;
 }
 
 .ko-Dialog-footer {

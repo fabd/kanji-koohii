@@ -493,6 +493,44 @@ class accountActions extends sfActions
   }
 
   /**
+   * Appearance > Select a theme.
+   */
+  public function executeTheme(coreRequest $request)
+  {
+    kk_globals_put([
+      'ACCOUNT_THEMES' => [
+        'themes'  => rtkThemes::THEMES,
+        'current' => kk_get_user()->getUserTheme(),
+      ],
+    ]);
+  }
+
+  /**
+   * Save the selected theme (async, JSON).
+   */
+  public function executeThemesave(coreRequest $request)
+  {
+    $params = $request->getContentJson();
+    $theme  = $params->theme ?? null;
+
+    $tron = new JsTron();
+
+    if (!is_string($theme) || !isset(rtkThemes::THEMES[$theme])) {
+      $tron->addError('Invalid theme.');
+      $tron->setStatus(JsTron::STATUS_FAILED);
+
+      return $this->renderJson($tron);
+    }
+
+    UsersPeer::updateUser(kk_get_user()->getUserId(), ['opt_theme' => $theme]);
+    kk_get_user()->setAttribute('usertheme', $theme);
+
+    $tron->set('theme', $theme);
+
+    return $this->renderJson($tron);
+  }
+
+  /**
    * Patreon login redirect (OAuth).
    *
    *  https://kanji.koohii.com/account/patreon ? code=<single use code> & state=<string>

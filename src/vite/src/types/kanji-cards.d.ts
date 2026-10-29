@@ -5,9 +5,11 @@ type TUserKanjiCard = {
   new: number;
 };
 
-// kanji card data, as used by the components
-type TKanjiCardData = {
+// generic kanji card data, as displayed by KoKanjiCard
+type TKanjiCardItem = {
   ucsId: TUcsId;
+  // SRS box, 0 means no flashcard
   box: number;
-  isNew: boolean;
+  // optional label at the bottom of the card, eg. { text: "Fail", css: "is-fail" }
+  tag: { text: string; css: string };
 };

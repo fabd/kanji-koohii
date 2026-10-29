@@ -3,11 +3,12 @@ use_helper('Links');
 $userId = $sf_user->getUserId();
 $ucsId  = $kanjiData->ucs_id;
 ?>
-  <div id="sharedstories-new">
-    <div class="sharedstories_title title JsNewest">
-      <i class="fa fa-chevron-down" style="position:absolute;right:0;top:0;width:33px;height:33px;line-height:33px;"></i>
-      New &amp; updated stories
+  <section class="ko-StudySection ko-StudySection--newest is-toggle JsNewestSection">
+    <div class="ko-StudySection-hd JsToggle">
+      <h3 class="ko-StudySection-title">New &amp; updated stories</h3>
+      <i class="ko-StudySection-chevron fa fa-chevron-down"></i>
     </div>
+    <div class="ko-StudySection-bd">
 <?php
   $stories = StoriesPeer::getSharedStories((int) $kanjiData->ucs_id, $kanjiData->keyword, $sf_user->getUserId(), 'newest');
 foreach ($stories as $o) {
@@ -41,16 +42,17 @@ foreach ($stories as $o) {
 <?php
 }
 ?>
-  </div>
+    </div>
+  </section>
 
-  <div id="sharedstories-fav">
-    <div class="sharedstories_title title">
-      Shared stories
+  <section class="ko-StudySection ko-StudySection--shared">
+    <div class="ko-StudySection-hd">
+      <h3 class="ko-StudySection-title">Shared stories</h3>
     </div>
 
-    <?php // See /web/revtk/components/SharedStoriesComponent.js?>
-    <div id="SharedStoriesListComponent">
+    <?php // See vite/src/app/legacy/components/SharedStoriesComponent.js?>
+    <div id="SharedStoriesListComponent" class="ko-StudySection-bd">
       <?php include_component('study', 'SharedStoriesList'); ?>
     </div>
-  </div>
+  </section>
 

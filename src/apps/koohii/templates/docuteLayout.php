@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="classic">
 <head>
 <?php include_http_metas(); ?>
   <meta name="viewport" content="width=device-width, initial-scale=1">

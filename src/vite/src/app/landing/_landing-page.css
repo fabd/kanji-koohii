@@ -7,7 +7,7 @@
 // ==================================================================== */
 
 body {
-  background: #ece9e2;
+  background: #ede8de;
   color: #42413d;
 }
 
@@ -24,7 +24,7 @@ section {
     font-size: 1.61em;
     line-height: 1em;
     margin-bottom: 0.5em;
-    color: #434241;
+    color: #444444;
   }
 
   p {
@@ -51,27 +51,25 @@ section {
 /* backgrounds */
 /* ---------------------------- */
 .k_bg_head {
-  background: #eae6db; /* Old browsers */
   background: linear-gradient(
     to bottom,
     #eae6db 0%,
     #dfdbce 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  );
 }
 .k_bg_even {
-  background: #ece9e2;
+  background: #ede8de;
 }
 .k_bg_odd {
-  background: #f5f2ec;
+  background: #f8f6ef;
 }
 .k_bg_free {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
-  background: #f8c5e4; /* Old browsers */
+  /* Permalink http://colorzilla.com/gradient-editor/#f8c5e4+0,f0ddd4+100 */
   background: linear-gradient(
     to bottom,
     #f8c5e4 0%,
     #f0ddd4 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  );
 }
 
 /* illustrations */
@@ -89,7 +87,7 @@ section {
 }
 
 .f_shadow {
-  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 1px #00000033;
 }
 
 .f_dict {
@@ -137,7 +135,7 @@ section {
   padding: 1.5em 0.5em 1.2em;
   font-weight: bold;
   line-height: 1.1em;
-  color: #3c3c3c;
+  color: #333333;
 
   font-size: 40px;
 
@@ -208,11 +206,11 @@ section {
   background-color: #a4156c;
   border-radius: 0.25rem;
   padding: 21px 82px;
-  color: #fff;
+  color: #ffffff;
   font-size: 21px;
   line-height: 1em;
   text-decoration: none;
-  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 1px #00000033;
 }
 #its-free .learnmore {
   display: inline-block;
@@ -226,7 +224,7 @@ section {
 /* Footer */
 /* ---------------------------- */
 #footer-landing {
-  background: #232323;
+  background: #222222;
   padding: 2em 0 5em;
   text-align: center;
   font-size: 17px;
@@ -243,14 +241,14 @@ section {
   }
   a {
     padding: 0 0.8em; /*tap target*/
-    color: #a4a19b;
+    color: #a19e97;
     text-decoration: none;
   }
   a:hover {
     text-decoration: none;
   }
   a:hover .fa {
-    color: #fff;
+    color: #ffffff;
   }
 
   /* fontawesome icons */

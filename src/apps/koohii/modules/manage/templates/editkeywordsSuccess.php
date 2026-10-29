@@ -12,7 +12,7 @@ To edit keywords for kanji not currently in your flashcards, click the keyword o
 
 <?php if (!ReviewsPeer::getFlashcardCount($sf_user->getUserId())): ?>
 
-<div class="confirmwhatwasdone">
+<div class="ko-Box ko-Box--success my-4">
   <p>
   There aren't any flashcards to edit.<br/>
   <br/>

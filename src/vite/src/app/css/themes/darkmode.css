@@ -1,0 +1,78 @@
+/*---------------------------------------------------------------------
+  Koohii Dark
+  ---------------------------------------------------------------------*/
+html[data-theme="darkmode"] {
+  color-scheme: dark;
+
+  /* color-mix values for hover states and such where we want lighter instead of darker in dark mode */
+  --color-hover-shift: #fff;
+
+  /* foundation colors */
+  --color-page-bg: ##191919;
+  --color-text-dark: #8c8784;
+  --color-text-body: #cbc5c0;
+  --color-text-light: #7d7b75;
+  --color-hd-fg: #787674;
+  --color-link-fg: #6aaeee;
+  
+  /* desaturation, ie. oklch(from var(--color-x) l calc(c * var(--color-chroma)) h) */
+  --color-chroma: 0.8;
+  
+  /* boxes */
+  --color-box-bg: #252525;
+  --color-box-bg-dark: #383632;
+  --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 8%);
+  --color-box-title: #8e8980;
+  
+  /* buttons : hover colors are derived from these */
+  --color-btn-danger: #da4b4b;
+  --color-btn-success: #489c40;
+
+  /* forms */
+  --color-input-bg: #2b2a27;
+  --color-input-bg-dark: #3d3a2a;
+  --color-input-fg: #e8e6e0;
+  
+  /* SRS status colors, variants are derived with color-mix() */
+  --color-srs-fail: #c83434; /* red */
+  /* --color-srs-due: #e78e2f; */
+  --color-srs-undue: #429539; /* green, aka "fresh" */
+  --color-srs-new: #1078b5; /* blue */
+  --color-srs-new-dark: #005ea9; /* eg. text on light backgrounds */
+
+  /* cards : flashcards, kanji cards (dashboard lesson pane) */
+  --color-card-bg: #3b3a37;
+  --color-card-fg: #d2d0c9;
+  --color-card-border-empty: color-mix(in srgb, var(--color-text-body) 20%, transparent);
+
+  /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
+  --color-story-bg: #25241f;
+  --color-story-fg: #e8e6e0;
+  --color-story-fg-link: #448844; /* kanji links in story (eg. #123) */
+  --color-story-border: #3d3b30;
+  
+  /* dashboard > progress bar */
+  --color-pctbar-bg: #484848;
+  
+  /* lesson map (dashboard lesson pane) */
+  --color-lessonmap-bg: #000000;
+  
+  /* main site navigation, desktop & mobile */
+  --color-nav-dd-hover: color-mix(in srgb, var(--color-box-bg-light), #000 20%); /* menus hover */
+
+  /* footer */
+  --color-ft-bg-top: #2a2024;
+  --color-ft-bg-end: #1c1917;
+  --color-ft-fg: #d98ec0;
+  --color-ft-fg-link: #f06bd0;
+  
+  /* blog (site news) */
+  --color-blog-hd-fg: #db2547;
+  --color-blog-date-fg: #e7f5cd;
+  --color-blog-date-bg: #568249;
+}
+
+/* tweaks */
+html[data-theme="darkmode"] .is-ghost {
+  /* --ko-btn-hover-border: color-mix(in srgb, var(--ko-btn-border), #e0e0e0 10%); */
+}

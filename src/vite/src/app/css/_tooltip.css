@@ -14,8 +14,8 @@
   transition: color 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   outline: none;
-  --tooltip-bg: #605c58;
-  --tooltip-fg: #fff;
+  --tooltip-bg: #202020;
+  --tooltip-fg: var(--color-mix-white);
 
   /* the bubble */
   &::before {

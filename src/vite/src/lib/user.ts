@@ -18,31 +18,3 @@ export function getUserKanji() {
 
   return userKanji;
 }
-
-/**
- * Create a range of flashcards as used by dumb components, eg. a kanji grid.
- *
- *   - merge the user's flashcard data where available
- *   - set all other cards to an empty state (ie. "Not learned")
- *
- */
-export function getKanjiCardDataForRange(
-  from: number,
-  to: number
-): TKanjiCardData[] {
-  const cards: TKanjiCardData[] = [];
-  const userKanji = getUserKanji();
-
-  for (let index = from; index <= to; index++) {
-    const ucsId = RTK.getUCSForIndex(index) as number;
-    const userCard = userKanji.get(ucsId);
-
-    cards.push({
-      ucsId: ucsId,
-      box: (userCard && userCard.box) || 0,
-      isNew: (userCard && userCard.new > 0) || false,
-    });
-  }
-
-  return cards;
-}

@@ -5,7 +5,7 @@
 
   <p> The following <strong><?= $count; ?></strong> <?= _CJ('kanji'); ?> have been added to your flashcards:</p>
   
-  <div style="background:#E7F5CD;color:#000;padding:5px;margin:0 0 1em;">
+  <div class="ko-Box ko-Box--success mb-4">
 <?php
   $kanjis = [];
 foreach ($cards as $id) {

@@ -19,7 +19,7 @@ export default defineComponent({
   },
 
   props: {
-    cards: { type: Array as PropType<TKanjiCardData[]>, required: true },
+    cards: { type: Array as PropType<TKanjiCardItem[]>, required: true },
   },
 
 });

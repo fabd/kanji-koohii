@@ -16,8 +16,9 @@
       <!-- <div class="text-warm text-lg ml-auto">{{ lessonPos }} / {{ lessonCount }} kanji</div> -->
 
       <div
-        class="px-2 py-1 rounded-sm bg-[#E1FFC2] ux-text-lg text-[#3a7c3a] font-bold leading-none whitespace-nowrap ml-auto"
-        >{{ `${kanjiCount} / ${lessonCount}` }}<span class="hidden md:inline"> kanji</span></div
+        class="px-2 py-1 rounded-sm ux-text-md text-(--color-text-muted) font-bold leading-none whitespace-nowrap ml-auto"
+        >{{ `${kanjiCount} / ${lessonCount}`
+        }}<span class="hidden md:inline"> kanji</span></div
       >
     </div>
 
@@ -28,7 +29,7 @@
       <ko-lesson-map :cards="cards" class="flex-1 mr-4" />
 
       <button
-        class="ko-Btn is-ghost ko-Btn--large ko-Btn--primary"
+        class="ko-Btn is-ghost ko-Btn--large"
         @click="isOpen = !isOpen"
       >
         <span class="max-lg:hidden mr-2">Show Kanji</span>
@@ -42,7 +43,7 @@
     <!-- --- -->
     <!-- MID -->
     <!-- --- -->
-    <div v-if="isOpen" class="mt-5 pt-4 border-t border-[#c2bdaf]">
+    <div v-if="isOpen" class="mt-5 pt-4 border-t border-(--color-box-bg-dark)">
       <transition appear name="lesson-fadein">
         <div
           :class="{
@@ -58,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import * as USER from "@/lib/user";
+import { getKanjiCardDataForRange } from "@/app/lessons/srs-card";
 
 import KoKanjiGrid from "@/app/lessons/KoKanjiGrid.vue";
 import KoLessonMap from "@/app/lessons/KoLessonMap.vue";
@@ -86,7 +87,7 @@ export default defineComponent({
   data() {
     return {
       isOpen: false,
-      cards: [] as TKanjiCardData[],
+      cards: [] as TKanjiCardItem[],
     };
   },
 
@@ -105,7 +106,7 @@ export default defineComponent({
   },
 
   beforeMount() {
-    this.cards = USER.getKanjiCardDataForRange(
+    this.cards = getKanjiCardDataForRange(
       this.lessonFrom,
       this.lessonFrom + this.lessonCount - 1
     );

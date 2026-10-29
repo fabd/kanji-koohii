@@ -514,6 +514,7 @@ CREATE TABLE `storyvotes` (
 --                (midnight time adjusted by timezone).
 --   opt_sequence RTK index edition (0 = old edition, 1 = new edition) determines
 --                whether to use idx_olded or idx_newed in the kanjis table.
+--   opt_theme    Color theme id (cf. rtkThemes), eg. 'classic' or 'darkmode'.
 -- ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS users;
@@ -530,6 +531,7 @@ CREATE TABLE `users` (
   `regip`        VARCHAR(45) NOT NULL DEFAULT '',
   `timezone`     FLOAT NOT NULL DEFAULT '-6',
   `opt_sequence` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `opt_theme`    VARCHAR(16) NOT NULL DEFAULT 'classic',
   
   PRIMARY KEY  (`userid`),
   UNIQUE KEY `username` (`username`),

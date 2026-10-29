@@ -7,6 +7,7 @@
  *   getUserName()
  *   getUserTimeZone()
  *   getUserSequence()
+ *   getUserTheme()
  *   getUserKnownKanji()        Cache a string of all the kanji known by user.
  *
  *   getUserSetting()           Proxy and cache for UsersSettingsPeer (account settings)
@@ -93,6 +94,14 @@ class rtkUser extends sfBasicSecurityUser
   public function getUserSequence(): mixed
   {
     return $this->getAttribute('usersequence', 0);
+  }
+
+  /**
+   * Always a valid theme id ('classic' when signed out or not set).
+   */
+  public function getUserTheme(): string
+  {
+    return rtkThemes::sanitize($this->getAttribute('usertheme'));
   }
 
   /**
@@ -207,6 +216,7 @@ class rtkUser extends sfBasicSecurityUser
       'usertimezone' => $user['timezone'],
       // user application settings
       'usersequence' => $user['opt_sequence'],
+      'usertheme'    => $user['opt_theme'],
     ]);
 
     $this->clearCredentials();

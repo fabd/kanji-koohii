@@ -13,7 +13,7 @@ html[data-theme="darkmode"] {
   --color-text-body: #cbc5c0;
   --color-text-light: #7d7b75;
   --color-hd-fg: #787674;
-  --color-link-fg: #6aaeee;
+  --color-link-fg: #4493f8;
 
   /* desaturation, ie. oklch(from var(--color-x) l calc(c * var(--color-chroma)) h) */
   --color-chroma: 0.8;

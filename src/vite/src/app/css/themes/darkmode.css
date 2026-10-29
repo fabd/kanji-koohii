@@ -67,9 +67,9 @@ html[data-theme="darkmode"] {
   --color-tbl-hd-bg-top: var(--color-box-bg); /* header gradient #42403d */
   --color-tbl-hd-bg-end: var(--color-box-bg);
   --color-tbl-hd-border: #000000;
-  --color-tbl-bg: var(--color-box-bg-dark);
-  --color-tbl-fg: #b9b9b5;
-  --color-tbl-bg-high: #fdf9d2; /* row highlight bg */
+  --color-tbl-bg: #2d2c2a;
+  --color-tbl-fg: #a19891;
+  --color-tbl-bg-high: #3d483b; /* row highlight bg */
 
   /* dashboard > progress bar */
   --color-pctbar-bg: #484848;

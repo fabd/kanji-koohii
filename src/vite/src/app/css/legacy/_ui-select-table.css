@@ -100,7 +100,7 @@
   }
 
   .ko-DataTable-kanji {
-    color: var(--color-text-dark);
+    color: var(--color-text-body);
     padding-top: 4px;
     padding-bottom: 4px;
     text-align: center;

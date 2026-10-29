@@ -14,10 +14,10 @@ html[data-theme="darkmode"] {
   --color-text-light: #7d7b75;
   --color-hd-fg: #787674;
   --color-link-fg: #6aaeee;
-  
+
   /* desaturation, ie. oklch(from var(--color-x) l calc(c * var(--color-chroma)) h) */
   --color-chroma: 0.8;
-  
+
   /* boxes */
   --color-box-bg: #252525;
   --color-box-bg-dark: #383632;
@@ -38,7 +38,7 @@ html[data-theme="darkmode"] {
   --color-input-focus-glow: 0 0 0 2px #000, 0 0 0 4px #337ab7;
   --color-invalid-fg: #a94442;
   --color-invalid-border: #a94442;
-  
+
   /* SRS status colors, variants are derived with color-mix() */
   --color-srs-fail: #c83434; /* red */
   /* --color-srs-due: #e78e2f; */
@@ -49,29 +49,47 @@ html[data-theme="darkmode"] {
   /* cards : flashcards, kanji cards (dashboard lesson pane) */
   --color-card-bg: #3b3a37;
   --color-card-fg: #d2d0c9;
-  --color-card-border-empty: color-mix(in srgb, var(--color-text-body) 20%, transparent);
+  --color-card-border-empty: color-mix(
+    in srgb,
+    var(--color-text-body) 20%,
+    transparent
+  );
 
   /* user stories : My Story (.ko-MyStory) and shared stories (.rtkframe) */
   --color-story-bg: #25241f;
   --color-story-fg: #e8e6e0;
   --color-story-fg-link: #448844; /* kanji links in story (eg. #123) */
   --color-story-border: #3d3b30;
-  
+
+  /* data tables (.ko-DataTable, legacy uiSelectTable php component) */
+  --color-tbl-border: #000000;
+  --color-tbl-border-row: #000000; /* border between rows */
+  --color-tbl-hd-bg-top: var(--color-box-bg); /* header gradient #42403d */
+  --color-tbl-hd-bg-end: var(--color-box-bg);
+  --color-tbl-hd-border: #000000;
+  --color-tbl-bg: var(--color-box-bg-dark);
+  --color-tbl-fg: #b9b9b5;
+  --color-tbl-bg-high: #fdf9d2; /* row highlight bg */
+
   /* dashboard > progress bar */
   --color-pctbar-bg: #484848;
-  
+
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: #000000;
-  
+
   /* main site navigation, desktop & mobile */
-  --color-nav-dd-hover: color-mix(in srgb, var(--color-box-bg-light), #000 20%); /* menus hover */
+  --color-nav-dd-hover: color-mix(
+    in srgb,
+    var(--color-box-bg-light),
+    #000 20%
+  ); /* menus hover */
 
   /* footer */
   --color-ft-bg-top: #2b2c2d;
   --color-ft-bg-end: #3f3e3c;
   --color-ft-fg: #b79584;
   --color-ft-fg-link: #f0aa6b;
-  
+
   /* blog (site news) */
   --color-blog-hd-fg: #db2547;
   --color-blog-date-fg: #e7f5cd;

@@ -6,6 +6,7 @@ html[data-theme="darkmode"] {
 
   /* color-mix values for hover states and such where we want lighter instead of darker in dark mode */
   --color-hover-shift: #fff;
+  --color-inv-white: #000;
 
   /* foundation colors */
   --color-page-bg: #191817;
@@ -20,7 +21,7 @@ html[data-theme="darkmode"] {
 
   /* boxes */
   --color-box-bg: #252525;
-  --color-box-bg-dark: #383632;
+  --color-box-bg-dark: #363636;
   --color-box-bg-light: color-mix(in srgb, var(--color-box-bg), #ffffff 8%);
   --color-box-title: #8e8980;
 
@@ -29,13 +30,13 @@ html[data-theme="darkmode"] {
   --color-btn-success: #489c40;
 
   /* forms */
-  --color-input-bg: #2b2a27;
-  --color-input-bg-dark: #3d3a2a;
+  --color-input-bg: #080604;
+  --color-input-bg-dark: #101010;
   --color-input-fg: #e8e6e0;
   --color-input-border: var(--color-box-bg-dark);
   --color-focus-glow: #337ab740;
-  --color-input-focus-border: var(--color-box-bg-dark);
-  --color-input-focus-glow: 0 0 0 2px #000, 0 0 0 4px #337ab7;
+  --color-input-focus-border: color-mix(in srgb, var(--color-box-bg-dark), #fff 25%);
+  --color-input-focus-glow: ; /*0 0 0 2px #000, 0 0 0 4px #337ab7;*/
   --color-invalid-fg: #a94442;
   --color-invalid-border: #a94442;
 
@@ -45,10 +46,17 @@ html[data-theme="darkmode"] {
   --color-srs-undue: #429539; /* green, aka "fresh" */
   --color-srs-new: #1078b5; /* blue */
   --color-srs-new-dark: #005ea9; /* eg. text on light backgrounds */
+  
+  /* messages: one color per kind, the ko-Box background
+     and border are derived with color-mix() (see _box.css) */
+  --color-danger: #e12138;
+  --color-success: #3a7c3a;
+  --color-warning: #e17809;
+  --color-info: #cc2d7a; /* info notes (eg. with a fa-info-circle icon) */
 
   /* cards : flashcards, kanji cards (dashboard lesson pane) */
-  --color-card-bg: #3b3a37;
-  --color-card-fg: #d2d0c9;
+  --color-card-bg: #3a3a3a;
+  --color-card-fg: #d2d0ce;
   --color-card-border-empty: color-mix(
     in srgb,
     var(--color-text-body) 20%,

@@ -60,6 +60,7 @@
   
   /* color-mix values for hover states and such where we want lighter instead of darker in dark mode */
   --color-hover-shift: #000;
+  --color-inv-white: #fff;
 
   /* foundation colors */
   --color-page-bg: #f5efe5;
@@ -111,7 +112,7 @@
 
   /* messages: one color per kind, the ko-Box background
      and border are derived with color-mix() (see _box.css) */
-  --color-danger: #d23c3c;
+  --color-danger: #e50038;
   --color-success: #3a7c3a;
   --color-warning: #e17809;
   --color-info: #cc2d7a; /* info notes (eg. with a fa-info-circle icon) */

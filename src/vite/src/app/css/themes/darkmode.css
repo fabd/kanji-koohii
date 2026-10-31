@@ -85,6 +85,11 @@ html[data-theme="darkmode"] {
   /* lesson map (dashboard lesson pane) */
   --color-lessonmap-bg: #000000;
 
+  /* study search dropdown: the active item and the highlighted search term */
+  --color-study-search-accent: #3b82f6;
+  --color-study-search-bg: #434241;
+  --color-study-search-active: #555553;
+
   /* main site navigation, desktop & mobile */
   --color-nav-dd-hover: color-mix(
     in srgb,

@@ -156,8 +156,8 @@
   /* study search dropdown: the active item and the highlighted search term */
   --color-study-search-accent: #3b82f6;
   --color-study-search-bg: #ffffff;
-  --color-study-search-border: #e5e7eb;
-
+  --color-study-search-active: color-mix(in srgb, var(--color-study-search-accent), #fff 83%);
+  
   /* main site navigation, desktop & mobile */
   --color-nav-bg: #0b486b;
   --color-nav-dd-hover: color-mix(in srgb, var(--color-box-bg-light), #D3E2B9 80%); /* menus hover */

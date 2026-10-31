@@ -1,12 +1,15 @@
 .ko-StudySearchDD {
-  --color-highlight: color-mix(
-    in srgb,
-    var(--color-study-search-accent),
-    var(--color-mix-black) 20%
-  );
+  --color-border-out: color-mix(in srgb, var(--color-study-search-bg), #000 10%);
 
-  @apply mt-1 bg-(--color-study-search-bg) border border-(--color-study-search-border) rounded-lg shadow-xl;
+  --color-highlight: var(--color-study-search-accent);
+
+  --color-border-row: color-mix(in srgb, var(--color-study-search-bg), #000 5%);
+
+  @apply mt-1 rounded-lg shadow-xl;
   z-index: var(--z-overlay);
+
+  background-color: var(--color-study-search-bg);
+  border: 1px solid var(--color-border-out);
 
   /* slightly wider, and larger font size on smartphone */
   @apply w-[250px] max-sm:w-[300px];
@@ -22,27 +25,18 @@
 }
 
 .ko-StudySearchDD-item {
-  --color-border: color-mix(in srgb, var(--color-study-search-bg), #000 5%);
-  border-bottom: 1px solid var(--color-border);
-  @apply px-4 py-2 last:border-b-0 transition-colors;
+  border-bottom: 1px solid var(--color-border-row);
+  @apply px-4 py-2 last:border-b-0;
 
   display: flex;
   align-items: center;
 
   &.is-active {
-    background-color: color-mix(
-      in srgb,
-      var(--color-study-search-accent),
-      var(--color-mix-white) 83%
-    );
+    background-color: var(--color-study-search-active);
     border-left: 4px solid var(--color-study-search-accent);
-
-    .ko-StudySearchDD-index {
-      color: var(--color-highlight);
-    }
   }
   &:hover {
-    background-color: var(--color-border);
+    background-color: var(--color-border-row);
     cursor: pointer;
   }
 }
